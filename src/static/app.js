@@ -7,9 +7,10 @@ function switchTab(name) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   document.getElementById('panel-' + name).classList.add('active');
-  if (name === 'index') loadStats();
-  if (name === 'query') loadSmmSites();
+  if (name === 'query') loadQuerySites();
+  if (name === 'smm') loadSmmSites();
   if (name === 'competitor') loadCompetitorSites();
+  if (name === 'analysis') loadAnalysisSites();
 }
 
 // ---- Analyse form ----
@@ -320,4 +321,51 @@ async function loadStats() {
           '<span style="color:var(--accent);font-weight:700;">' + entry[1] + '</span></div>';
       }).join('');
   } catch (_) {}
+}
+
+// ---- Gap Analysis ----
+async function loadAnalysisSites() {
+  try {
+    const res = await fetch('/api/sites');
+    const sites = await res.json();
+    const select = document.getElementById('analysis-site');
+    
+    if (sites.length === 0) {
+      select.innerHTML = '<option value="">No businesses analysed yet</option>';
+      return;
+    }
+    
+    select.innerHTML = sites.map(s => 
+      '<option value="' + s.url + '">' + s.name + ' (' + s.url + ')</option>'
+    ).join('');
+  } catch (err) {
+    console.error("Failed to load analysis sites:", err);
+  }
+}
+
+async function runAnalysis() {
+  const site = (document.getElementById('analysis-site').value || '').trim();
+  const ansDiv = document.getElementById('analysis-answer');
+  const textDiv = document.getElementById('analysis-text');
+
+  if (!site) { alert('Please select a business memory first.'); return; }
+
+  ansDiv.style.display = 'block';
+  textDiv.innerHTML = '<em style="color:var(--text-muted)">Invading competitors and generating strategic roadmap... (this will take 1-3 minutes)</em>';
+
+  try {
+    const res = await fetch('/api/gap-analysis', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ websiteUrl: site })
+    });
+    
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    
+    const formatMd = (text) => text.replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>');
+    textDiv.innerHTML = formatMd(data.report || 'No analysis generated.');
+  } catch (err) {
+    textDiv.innerHTML = '<span style="color:var(--error)">Error: ' + err.message + '</span>';
+  }
 }

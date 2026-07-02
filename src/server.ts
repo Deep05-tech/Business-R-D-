@@ -22,6 +22,7 @@ import { OrchestratorAgent } from "./orchestrator.js";
 import { QueryMemoryAgent } from "./agents/queryMemoryAgent.js";
 import { SmmAgent } from "./agents/smmAgent.js";
 import { CompetitorAgent } from "./agents/competitorAgent.js";
+import { CompetitiveAnalysisAgent } from "./agents/competitiveAnalysisAgent.js";
 import { createLogger } from "./utils/logger.js";
 
 const logger = createLogger("Server");
@@ -33,6 +34,7 @@ const app = express();
 const orchestrator = new OrchestratorAgent();
 const smmAgent = new SmmAgent();
 const competitorAgent = new CompetitorAgent();
+const competitiveAnalysisAgent = new CompetitiveAnalysisAgent();
 const memoryStore = new MemoryStore();
 const port = Number(process.env.PORT ?? 3000);
 
@@ -396,6 +398,7 @@ app.get("/", (_request, response) => {
         <button type="button" class="tab" id="tab-query"   onclick="switchTab('query')">💬 Query Memory</button>
         <button type="button" class="tab" id="tab-index"   onclick="switchTab('index')">📚 Index Stats</button>
         <button type="button" class="tab" id="tab-competitor" onclick="switchTab('competitor')">🎯 Competitors</button>
+        <button type="button" class="tab" id="tab-analysis" onclick="switchTab('analysis')">⚔️ Gap Analysis</button>
       </div>
 
       <!-- ===== ANALYSE TAB ===== -->
@@ -544,6 +547,31 @@ app.get("/", (_request, response) => {
           <div id="competitor-answer" class="query-answer" style="display:none;margin-top:20px;">
             <div class="answer-label">Competitor Analysis</div>
             <div id="competitor-text" class="answer-text" style="white-space:pre-wrap;"></div>
+          </div>
+      </div>
+      </div>
+
+      <!-- ===== GAP ANALYSIS TAB ===== -->
+      <div class="tab-panel" id="panel-analysis">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+            <h2 style="font-size:18px;font-weight:700;">Competitive Gap Analysis</h2>
+          </div>
+          <p style="color:var(--text-dim);font-size:14px;margin-bottom:20px;">Crawl competitor websites and generate a strategic roadmap scoped strictly to your current product lines.</p>
+          <div style="display:flex;gap:12px;margin-bottom:16px;">
+            <label style="flex:1;">
+              Business Memory
+              <select id="analysis-site" style="width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);margin-top:6px;">
+                <option value="">Loading businesses...</option>
+              </select>
+            </label>
+          </div>
+          <div class="btn-row">
+            <button id="analysis-btn" class="btn btn-primary" onclick="runAnalysis()">Run Gap Analysis</button>
+          </div>
+          <div id="analysis-answer" class="query-answer" style="display:none;margin-top:20px;">
+            <div class="answer-label">Strategy Report</div>
+            <div id="analysis-text" class="answer-text" style="white-space:pre-wrap;"></div>
           </div>
         </div>
       </div>
@@ -785,6 +813,52 @@ app.post("/api/competitors", async (request, response) => {
     response.json({ report });
   } catch (error: any) {
     logger.error(`Competitor Intelligence error: ${error.message}`);
+    response.status(500).json({ error: error.message });
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Gap Analysis endpoint
+// ---------------------------------------------------------------------------
+
+app.post("/api/gap-analysis", async (request, response) => {
+  try {
+    const { websiteUrl } = request.body;
+    if (!websiteUrl) {
+      response.status(400).json({ error: "Missing required parameter: websiteUrl" });
+      return;
+    }
+
+    let memory = knowledgeIndex.get(websiteUrl);
+    if (!memory) {
+      memory = await memoryStore.loadBySite(websiteUrl) ?? undefined;
+    }
+
+    if (!memory) {
+      response.status(404).json({ error: "No memory found for this URL." });
+      return;
+    }
+    
+    logger.info(`Running competitor extraction for gap analysis...`);
+    const compRes = await competitorAgent.run(memory);
+    
+    const urlRegex = /\-\s*\*\*Website:\*\*\s*(https?:\/\/[^\s\)]+)/g;
+    const urls: string[] = [];
+    let match;
+    while ((match = urlRegex.exec(compRes)) !== null) {
+      urls.push(match[1]);
+    }
+    
+    if (urls.length === 0) {
+       response.json({ report: "No competitor URLs found to analyze." });
+       return;
+    }
+
+    logger.info(`Extracted ${urls.length} URLs. Running deep analysis...`);
+    const report = await competitiveAnalysisAgent.run(memory, urls);
+    response.json({ report });
+  } catch (error: any) {
+    logger.error(`Gap Analysis error: ${error.message}`);
     response.status(500).json({ error: error.message });
   }
 });
