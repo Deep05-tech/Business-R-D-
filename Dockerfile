@@ -25,7 +25,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install app dependencies (ignoring devDependencies in production, though we need them for build)
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 # Copy the rest of the application
 COPY . .
