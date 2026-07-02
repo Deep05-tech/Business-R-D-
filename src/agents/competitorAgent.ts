@@ -41,8 +41,8 @@ BUSINESS EXACT CORE PRODUCTS & CAPACITIES:
 ${coreProductsDetailed}
 
 INSTRUCTIONS:
-1. Analyze the technical specifications, products, and manufacturing industry listed above.
-2. Formulate 3 search queries that an industry expert would use to find companies manufacturing these exact products at this exact scale.
+1. Analyze the technical specifications, products, and manufacturing industry listed above. Pay special attention to the maximum weight/size capacities (e.g., up to 3 Metric Tons).
+2. Formulate 3 search queries that an industry expert would use to find companies manufacturing these exact products at an EQUAL OR GREATER scale. Use the business's maximum capacity as a minimum threshold (e.g., "manufacturers of forged steel rings over 3 tons").
 3. **MATERIAL & PROCESS ENFORCEMENT:** You MUST include the exact manufacturing process and material (e.g., "forged steel", "metal", "heavy alloy") in your queries. Never search for generic terms like "rings" which will return rubber or plastic manufacturers.
 4. **ANTI-BLOG FILTERING:** Append the following exact string to the end of all 3 queries to exclude non-manufacturers: '-blog -news -directory -indiamart -thomasnet'
 5. Query 1 should focus on finding local manufacturers in the business's region (if known, otherwise general region like India).
@@ -123,7 +123,7 @@ ${tavilyContext}
 INSTRUCTIONS:
 1. Identify EXACTLY 10 highly relevant competitors (a mix of local and global companies).
 2. ONLY select companies that actually manufacture similar core products. 
-3. **CRITICAL SCALING MATCH:** Pay extremely close attention to the specific technical specifications and capacities of the business. If this business manufactures heavy parts up to 3 Metric Tons, the competitor MUST be a heavy-duty manufacturer operating at that exact massive scale, NOT a small shop.
+3. **ASPIRATIONAL SCALING MATCH (EQUAL OR GREATER):** Pay extremely close attention to the specific technical specifications and maximum capacities of the business. A true competitor is someone who manufactures at an EQUAL or GREATER scale. If this business manufactures heavy parts up to 3 Metric Tons, you MUST instantly reject any company whose maximum capacity is smaller (e.g. only 100kg). You are hunting for peers and industry giants who match or beat the target business's top-end manufacturing limit.
 4. **MATERIAL & PROCESS RULE:** You MUST instantly reject any company that manufactures using the wrong base material (e.g., if the business makes forged steel rings, reject anyone making rubber, plastic, or ceramic rings).
 5. **BUSINESS MODEL RULE:** You MUST instantly reject any website that is a blog, news article, B2B directory (like IndiaMart, TradeIndia, ThomasNet), or informational wiki. Only include actual corporate websites of competing manufacturing companies.
 6. **URL VERIFICATION:** The results provided in the context have already been mathematically verified to be ALIVE and FUNCTIONAL right now. Rely heavily on these verified results. Filter out any results that do not match the specific sub-industry and scale.
