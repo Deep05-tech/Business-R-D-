@@ -42,12 +42,11 @@ ${coreProductsDetailed}
 
 INSTRUCTIONS:
 1. Analyze the technical specifications, products, and manufacturing industry listed above.
-2. Formulate 3 search queries that an industry expert would use to find the top massive companies manufacturing these products. 
-3. **DO NOT USE NARROW WEIGHT LIMITS IN QUERIES:** Do NOT include specific weight capacities (e.g., "over 3 tons") in the search queries, because companies do not use those exact phrases on their homepages. Instead, use broad, high-ranking industry terms (e.g., "Top heavy forging companies", "Leading manufacturers of seamless rolled rings").
-4. **MATERIAL & PROCESS ENFORCEMENT:** You MUST include the exact manufacturing process and material (e.g., "forged steel", "metal", "heavy alloy") in your queries to prevent finding rubber/plastic manufacturers.
-4. **ANTI-BLOG FILTERING:** Append the following exact string to the end of all 3 queries to exclude non-manufacturers: '-blog -news -directory -indiamart -thomasnet'
+2. Formulate 3 search queries that an industry expert would use to find companies manufacturing these exact products at this exact scale.
+3. **PRODUCT & SIZE ENFORCEMENT:** You MUST include the EXACT product name AND the maximum size/weight capacities directly in the search queries (e.g., "seamless rolled rings up to 3000mm 3 metric tons manufacturers" or "heavy forged steel rings 3 metric tons capacity").
+4. **MATERIAL ENFORCEMENT:** You MUST include the exact base material (e.g., "forged steel", "metal") to prevent finding rubber/plastic manufacturers.
 5. Query 1 should focus on finding local manufacturers in the business's region (if known, otherwise general region like India).
-6. Query 2 should focus on the highest-value core product and its specific technical capacity.
+6. Query 2 should focus exclusively on the highest-value core product and its specific technical capacity.
 7. Query 3 should focus on finding global leaders producing these exact components.
 8. Output ONLY the 3 queries, separated by a newline. Do not use quotes or numbering.
 
