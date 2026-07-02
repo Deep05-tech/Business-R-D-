@@ -42,8 +42,8 @@ ${coreProductsDetailed}
 
 INSTRUCTIONS:
 1. Analyze the technical specifications, products, and manufacturing industry listed above.
-2. Formulate 3 search queries that an industry expert would use to find companies manufacturing these exact products at this exact scale.
-3. **PRODUCT & SIZE ENFORCEMENT:** You MUST include the EXACT product name AND the maximum size/weight capacities directly in the search queries (e.g., "seamless rolled rings up to 3000mm 3 metric tons manufacturers" or "heavy forged steel rings 3 metric tons capacity").
+2. Formulate 3 search queries that an industry expert would use to find the absolute GIANTS of this industry. 
+3. **THE GIANT HUNTER STRATEGY:** Do NOT include specific, narrow weight limits (like "up to 3 tons") in the search query. Massive global leaders (e.g. Iraeta) produce 170-Ton products, and if you search for "3 tons" you will never find them. Instead, you MUST search for the extremes of the industry (e.g., "giant forged ring manufacturers", "largest seamless rolled ring manufacturers globally", "heavy forging companies wind power nuclear").
 4. **MATERIAL ENFORCEMENT:** You MUST include the exact base material (e.g., "forged steel", "metal") to prevent finding rubber/plastic manufacturers.
 5. Query 1 should focus on finding local manufacturers in the business's region (if known, otherwise general region like India).
 6. Query 2 should focus exclusively on the highest-value core product and its specific technical capacity.
