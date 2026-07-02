@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: business-rd-agent
+    env: docker
+    region: oregon
+    plan: starter
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: NODE_ENV
+        value: production
