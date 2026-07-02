@@ -162,9 +162,9 @@ export class MemoryStore {
       if (text) rawFacts.push({ text, source });
     };
 
-    if (memory.businessIdentity.officialName) addFact(`Official Name: ${memory.businessIdentity.officialName}`, "Identity");
-    if (memory.industryClassification.industry) addFact(`Industry: ${memory.industryClassification.industry}`, "Identity");
-    if (memory.businessIdentity.businessModel) addFact(`Business Model: ${memory.businessIdentity.businessModel}`, "Identity");
+    if (memory.businessIdentity?.officialName) addFact(`Official Name: ${memory.businessIdentity.officialName}`, "Identity");
+    if (memory.industryClassification?.industry) addFact(`Industry: ${memory.industryClassification.industry}`, "Identity");
+    if (memory.businessIdentity?.businessModel) addFact(`Business Model: ${memory.businessIdentity.businessModel}`, "Identity");
     
     (memory.offerings?.products || []).forEach(p => {
       const features = Array.isArray(p.keyFeatures) ? p.keyFeatures.join(", ") : (p.keyFeatures || "N/A");
@@ -180,11 +180,11 @@ export class MemoryStore {
       addFact(`Process: ${p.name}\nDescription: ${p.description || "N/A"}`, "Processes");
     });
 
-    memory.audience?.buyerPersonas?.forEach(b => addFact(`Target Persona: ${b}`, "Audience"));
-    memory.audience?.targetIndustries?.forEach(i => addFact(`Target Industry: ${i}`, "Audience"));
-    memory.offerings.valuePropositions.forEach(v => addFact(`Value Proposition / USP: ${v}`, "Value Prop"));
+    (memory.audience?.buyerPersonas || []).forEach(b => addFact(`Target Persona: ${b}`, "Audience"));
+    (memory.audience?.targetIndustries || []).forEach(i => addFact(`Target Industry: ${i}`, "Audience"));
+    (memory.offerings?.valuePropositions || []).forEach(v => addFact(`Value Proposition / USP: ${v}`, "Value Prop"));
 
-    memory.rdInsights.opportunities.forEach(o => addFact(`R&D Opportunity: ${o}`, "R&D"));
+    (memory.rdInsights?.opportunities || []).forEach(o => addFact(`R&D Opportunity: ${o}`, "R&D"));
 
     if (rawFacts.length === 0) return { facts };
 
