@@ -41,9 +41,10 @@ BUSINESS EXACT CORE PRODUCTS & CAPACITIES:
 ${coreProductsDetailed}
 
 INSTRUCTIONS:
-1. Analyze the technical specifications, products, and manufacturing industry listed above. Pay special attention to the maximum weight/size capacities (e.g., up to 3 Metric Tons).
-2. Formulate 3 search queries that an industry expert would use to find companies manufacturing these exact products at an EQUAL OR GREATER scale. Use the business's maximum capacity as a minimum threshold (e.g., "manufacturers of forged steel rings over 3 tons").
-3. **MATERIAL & PROCESS ENFORCEMENT:** You MUST include the exact manufacturing process and material (e.g., "forged steel", "metal", "heavy alloy") in your queries. Never search for generic terms like "rings" which will return rubber or plastic manufacturers.
+1. Analyze the technical specifications, products, and manufacturing industry listed above.
+2. Formulate 3 search queries that an industry expert would use to find the top massive companies manufacturing these products. 
+3. **DO NOT USE NARROW WEIGHT LIMITS IN QUERIES:** Do NOT include specific weight capacities (e.g., "over 3 tons") in the search queries, because companies do not use those exact phrases on their homepages. Instead, use broad, high-ranking industry terms (e.g., "Top heavy forging companies", "Leading manufacturers of seamless rolled rings").
+4. **MATERIAL & PROCESS ENFORCEMENT:** You MUST include the exact manufacturing process and material (e.g., "forged steel", "metal", "heavy alloy") in your queries to prevent finding rubber/plastic manufacturers.
 4. **ANTI-BLOG FILTERING:** Append the following exact string to the end of all 3 queries to exclude non-manufacturers: '-blog -news -directory -indiamart -thomasnet'
 5. Query 1 should focus on finding local manufacturers in the business's region (if known, otherwise general region like India).
 6. Query 2 should focus on the highest-value core product and its specific technical capacity.
@@ -68,7 +69,7 @@ Begin generating queries:`;
     // --- PHASE 2: Execution & Synthesis ---
     let tavilyContext = "";
     try {
-      const tavily = new TavilySearch({ maxResults: 15, searchDepth: "advanced" });
+      const tavily = new TavilySearch({ maxResults: 20, searchDepth: "advanced" });
       logger.info(`Phase 2: Executing advanced live web searches...`);
       
       for (const query of generatedQueries) {
