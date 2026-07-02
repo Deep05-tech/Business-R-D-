@@ -154,7 +154,7 @@ Begin generating queries:`;
       tavilyContext = "Live search failed. Relying on baseline knowledge.";
     }
 
-    const synthesisPrompt = `You are an elite B2B Market Research Analyst. Your task is to identify the top 20 most relevant competitors for the given business based on their explicit memory footprint and live web search results.
+    const synthesisPrompt = `You are an elite B2B Market Research Analyst. Your task is to identify up to 20 highly relevant competitors for the given business based on their explicit memory footprint and live web search results.
 
 BUSINESS CONTEXT:
 ${memoryContext}
@@ -163,9 +163,10 @@ LIVE WEB SEARCH RESULTS:
 ${tavilyContext}
 
 INSTRUCTIONS:
-1. Identify EXACTLY 20 highly relevant competitors (EXACTLY 10 Local companies and EXACTLY 10 Global companies).
+1. Identify UP TO 20 highly relevant competitors (UP TO 10 Local companies and UP TO 10 Global companies). 
 2. ONLY select companies that actually manufacture similar core products. 
-3. **ASPIRATIONAL SCALING MATCH (EQUAL OR GREATER):** Pay extremely close attention to the specific technical specifications and maximum capacities of the business. A true competitor is someone who manufactures at an EQUAL or GREATER scale. If this business manufactures heavy parts up to 3 Metric Tons, you MUST instantly reject any company whose maximum capacity is explicitly proven to be smaller (e.g. only 100kg).
+3. **ASPIRATIONAL SCALING MATCH (EQUAL OR GREATER):** A true competitor is someone who is BETTER than us. If there is a business making BIGGER products than our business, then ONLY they will be a competitor. Pay extremely close attention to the specific technical specifications and maximum capacities of the business. You MUST instantly reject any company whose maximum capacity is explicitly proven to be smaller (e.g., if this business manufactures rings up to 3000mm, reject anyone who only makes up to 1000mm).
+   - **NO QUOTA FILLING:** DO NOT lower your standards just to reach 10 companies. If you can only find 6 local companies that are truly bigger/equal, then only output 6. NEVER include a smaller company just to fill the list.
    - **THE GIANT RULE:** If the company is clearly a massive industrial manufacturer, heavy engineering firm, or global leader, you must ASSUME they meet the heavy capacity requirements even if the exact tonnage isn't listed in the snippet. Give industry giants the benefit of the doubt.
 4. **MATERIAL & PROCESS RULE:** You MUST instantly reject any company that manufactures using the wrong base material (e.g., if the business makes forged steel rings, reject anyone making rubber, plastic, or ceramic rings).
 5. **BUSINESS MODEL RULE:** You MUST instantly reject any website that is a blog, news article, B2B directory (like IndiaMart, TradeIndia, ThomasNet), or informational wiki. Only include actual corporate websites of competing manufacturing companies.
@@ -173,23 +174,23 @@ INSTRUCTIONS:
 7. Provide a structured markdown response.
 
 Format your response EXACTLY like this:
-## Top 20 Competitors for ${businessName}
+## Top Competitors for ${businessName}
 
-### 10 Local Competitors
+### Local Competitors (Up to 10)
 
 **1. [Competitor Name]** (Local)
 - **Website:** [ROOT DOMAIN ONLY (e.g. https://ferralloy.com). Do NOT output deep product page links. If found, otherwise N/A]
 - **Why they compete:** [1-2 sentences detailing how their specific capacities and products overlap with the business]
 
-(Repeat for all 10 local competitors)
+(Repeat for all valid local competitors found)
 
-### 10 Global Competitors
+### Global Competitors (Up to 10)
 
-**11. [Competitor Name]** (Global)
+**[N]. [Competitor Name]** (Global)
 - **Website:** [ROOT DOMAIN ONLY (e.g. https://ferralloy.com). Do NOT output deep product page links. If found, otherwise N/A]
 - **Why they compete:** [1-2 sentences detailing how their specific capacities and products overlap with the business]
 
-(Repeat for all 10 global competitors)
+(Repeat for all valid global competitors found)
 
 Begin your analysis:`;
 
