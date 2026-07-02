@@ -70,6 +70,7 @@ Begin generating queries:`;
     try {
       const tavily = new TavilySearch({ maxResults: 20, searchDepth: "advanced" });
       logger.info(`Phase 2: Executing advanced live web searches...`);
+      const processedDomains = new Set<string>();
       
       for (const query of generatedQueries) {
         logger.info(`Running search: "${query}"`);
@@ -82,6 +83,18 @@ Begin generating queries:`;
             if (!item.url) continue;
 
             const urlLower = item.url.toLowerCase();
+            
+            // Deduplicate by base domain
+            try {
+              const baseDomain = new URL(urlLower).origin;
+              if (processedDomains.has(baseDomain)) {
+                 continue;
+              }
+              processedDomains.add(baseDomain);
+            } catch (e) {
+              continue; // Invalid URL
+            }
+
             if (urlLower.includes("exportersindia") || 
                 urlLower.includes("indiamart") || 
                 urlLower.includes("tradeindia") || 
@@ -115,7 +128,12 @@ Begin generating queries:`;
                                  (lowerText.includes("godaddy") && lowerText.includes("parked"));
                 
                 if (!isParked) {
-                  aliveResults.push(item);
+                  // Minify payload to save tokens
+                  aliveResults.push({
+                    url: item.url,
+                    title: item.title,
+                    content: item.content ? item.content.substring(0, 600) : ""
+                  });
                 } else {
                   logger.debug(`Discarding parked domain: ${item.url}`);
                 }
@@ -126,10 +144,10 @@ Begin generating queries:`;
               logger.debug(`Discarding unreachable URL: ${item.url}`);
             }
           }
-          tavilyContext += `\\nSearch Query: ${query}\\nVerified Alive Results: ${JSON.stringify(aliveResults)}\n`;
+          tavilyContext += `\nSearch Query: ${query}\nVerified Alive Results: ${JSON.stringify(aliveResults)}\n`;
         } catch (parseErr) {
           // Fallback if resultRaw isn't standard JSON array
-          tavilyContext += `\\nSearch Query: ${query}\\nResults: ${JSON.stringify(resultRaw)}\\n`;
+          tavilyContext += `\nSearch Query: ${query}\nResults: "Parse error or invalid format."\n`;
         }
       }
     } catch (e: any) {
