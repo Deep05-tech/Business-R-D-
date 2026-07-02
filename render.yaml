@@ -3,7 +3,7 @@ services:
     name: business-rd-agent
     env: docker
     region: oregon
-    plan: starter
+    plan: free
     healthCheckPath: /
     envVars:
       - key: PORT
