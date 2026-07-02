@@ -35,20 +35,20 @@ export class CompetitorAgent {
 
     // --- PHASE 1: Query Generation ---
     logger.info(`Phase 1: Generating custom search queries for ${businessName}...`);
-    const queryGenerationPrompt = `You are an elite B2B Market Research Analyst. Your task is to generate exactly 3 highly technical search queries to find the truest competitors for the following business.
+    const queryGenerationPrompt = `You are an elite B2B Market Research Analyst. Your task is to generate exactly 5 highly technical search queries to find the truest competitors for the following business.
     
 BUSINESS EXACT CORE PRODUCTS & CAPACITIES:
 ${coreProductsDetailed}
 
 INSTRUCTIONS:
 1. Analyze the technical specifications, products, and manufacturing industry listed above.
-2. Formulate 3 search queries that an industry expert would use to find the absolute GIANTS of this industry. 
+2. Formulate 5 search queries that an industry expert would use to find the absolute GIANTS of this industry. 
 3. **THE GIANT HUNTER STRATEGY (FOR EVERY PRODUCT):** Do NOT include specific, narrow weight limits (like "up to 3 tons") in the search query. Massive global leaders (e.g. Iraeta) produce 170-Ton products, and if you search for "3 tons" you will never find them. Instead, you MUST search for the extremes of the industry. Apply this logic to EVERY core product listed. (e.g., if they make flanges, search for "giant heavy flange manufacturers"; if they make shafts, search for "largest forged shaft manufacturers globally").
 4. **MATERIAL ENFORCEMENT:** You MUST include the exact base material (e.g., "forged steel", "metal") to prevent finding rubber/plastic manufacturers.
-5. Query 1 should focus on finding local manufacturers in the business's region (if known, otherwise general region like India).
-6. Query 2 should focus exclusively on the highest-value core product and its specific technical capacity.
-7. Query 3 should focus on finding global leaders producing these exact components.
-8. Output ONLY the 3 queries, separated by a newline. Do not use quotes or numbering.
+5. Queries 1 and 2 should focus on finding local manufacturers in the business's region (if known, otherwise general region like India).
+6. Query 3 should focus exclusively on the highest-value core product and its specific technical capacity.
+7. Queries 4 and 5 should focus on finding global leaders producing these exact components.
+8. Output ONLY the 5 queries, separated by a newline. Do not use quotes or numbering.
 
 Begin generating queries:`;
 
@@ -56,7 +56,7 @@ Begin generating queries:`;
     try {
       const queryResponse = await llm.invoke(queryGenerationPrompt);
       const queryText = typeof queryResponse.content === "string" ? queryResponse.content : "";
-      generatedQueries = queryText.split("\\n").map(q => q.trim().replace(/^\\d+\\.\\s*/, "")).filter(q => q.length > 5).slice(0, 3);
+      generatedQueries = queryText.split("\n").map(q => q.trim().replace(/^\d+\.\s*/, "")).filter(q => q.length > 5).slice(0, 5);
     } catch (e: any) {
       logger.warn(`Failed to generate custom queries, falling back to defaults: ${e.message}`);
       generatedQueries = [
@@ -80,6 +80,19 @@ Begin generating queries:`;
           
           for (const item of results) {
             if (!item.url) continue;
+
+            const urlLower = item.url.toLowerCase();
+            if (urlLower.includes("exportersindia") || 
+                urlLower.includes("indiamart") || 
+                urlLower.includes("tradeindia") || 
+                urlLower.includes("thomasnet") || 
+                urlLower.includes("kompass") || 
+                urlLower.includes("alibaba") || 
+                urlLower.includes("made-in-china") ||
+                urlLower.includes("globalsources")) {
+              logger.debug(`Hard-blocking directory URL: ${item.url}`);
+              continue;
+            }
             
             try {
               const controller = new AbortController();
@@ -146,7 +159,7 @@ Format your response EXACTLY like this:
 ## Top 10 Competitors for ${businessName}
 
 **1. [Competitor Name]** ([Local or Global])
-- **Website:** [If found, otherwise N/A]
+- **Website:** [ROOT DOMAIN ONLY (e.g. https://ferralloy.com). Do NOT output deep product page links. If found, otherwise N/A]
 - **Why they compete:** [1-2 sentences detailing how their specific capacities and products overlap with the business]
 
 (Repeat for all 10)
