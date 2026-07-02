@@ -42,7 +42,10 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 app.use(express.json({ limit: "32kb" }));
 // Serve plain JS assets from src/static/ at /static/
-app.use("/static", express.static(join(__dirname, "static")));
+const staticPath = __dirname.endsWith("dist") 
+  ? join(__dirname, "..", "src", "static")
+  : join(__dirname, "static");
+app.use("/static", express.static(staticPath));
 
 // ---------------------------------------------------------------------------
 // UI
