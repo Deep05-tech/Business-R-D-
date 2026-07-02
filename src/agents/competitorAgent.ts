@@ -67,7 +67,7 @@ Begin generating queries:`;
     // --- PHASE 2: Execution & Synthesis ---
     let tavilyContext = "";
     try {
-      const tavily = new TavilySearch({ maxResults: 20, searchDepth: "advanced" });
+      const tavily = new TavilySearch({ maxResults: 30, searchDepth: "advanced" });
       logger.info(`Phase 2: Executing advanced live web searches...`);
       const processedDomains = new Set<string>();
       
@@ -131,7 +131,7 @@ Begin generating queries:`;
                   aliveResults.push({
                     url: item.url,
                     title: item.title,
-                    content: item.content ? item.content.substring(0, 600) : ""
+                    content: item.content ? item.content.substring(0, 1000) : ""
                   });
                 } else {
                   logger.debug(`Discarding parked domain: ${item.url}`);
@@ -165,12 +165,10 @@ ${tavilyContext}
 INSTRUCTIONS:
 1. Identify EXACTLY 20 highly relevant competitors (EXACTLY 10 Local companies and EXACTLY 10 Global companies). 
 2. ONLY select companies that actually manufacture similar core products. 
-3. **WATERFALL PRIORITY SCALING:** You MUST output exactly 10 Local and 10 Global companies using the following priority system:
-   - **Priority 1 (The Proven Giants):** First, prioritize companies whose search text explicitly proves they have an equal or greater capacity than our business (e.g., if we make up to 3000mm, they explicitly state they make >3000mm).
-   - **Priority 2 (The Quota Fillers):** If you cannot find exactly 10 companies that meet Priority 1, you MUST fill the remaining slots with the largest, most credible heavy industrial manufacturers remaining in the search results. Give these companies the benefit of the doubt on scale in order to reach exactly 10. DO NOT hallucinate companies.
+3. **ZERO COMPROMISE SCALING (EQUAL OR GREATER):** You must output EXACTLY 10 local and 10 global competitors. EVERY single one must be a true, heavy-industrial manufacturer with equal or greater capacity. If the live search runs out of perfect matches, you MUST use your own pre-trained industry knowledge to find the remaining perfect matches. DO NOT lower your standards just to reach exactly 10. DO NOT hallucinate fake companies.
 4. **MATERIAL & PROCESS RULE:** You MUST instantly reject any company that manufactures using the wrong base material (e.g., if the business makes forged steel rings, reject anyone making rubber, plastic, or ceramic rings).
 5. **BUSINESS MODEL RULE (PURE MANUFACTURERS ONLY):** You MUST aggressively reject any company that identifies as a stockist, supplier, trader, distributor, or exporter. Only select pure, heavy-industrial manufacturers with their own massive forging facilities. Additionally, reject any website that is a blog, news article, B2B directory, or informational wiki.
-6. **URL VERIFICATION & NO N/A RULE:** The results provided in the context have already been mathematically verified to be ALIVE and FUNCTIONAL right now. You MUST NOT output a competitor if you cannot find their actual corporate website URL in the search results. If the website is N/A, DO NOT include them in the list. Only output companies with mathematically verified, live website URLs.
+6. **URL FALLBACK RULE:** You MUST NOT output \`N/A\` for a website. If a company is a universally recognized heavy-manufacturing giant and perfectly meets all criteria, but their official URL is missing from the search results, you MUST pull their official root domain (e.g., https://www.bharatforge.com) from your own pre-trained memory. Only output companies with valid, live website URLs.
 7. Provide a structured markdown response.
 
 Format your response EXACTLY like this:
