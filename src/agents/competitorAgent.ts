@@ -41,12 +41,14 @@ BUSINESS EXACT CORE PRODUCTS & CAPACITIES:
 ${coreProductsDetailed}
 
 INSTRUCTIONS:
-1. Analyze the technical specifications (e.g., weights, dimensions, materials) and products listed above.
+1. Analyze the technical specifications, products, and manufacturing industry listed above.
 2. Formulate 3 search queries that an industry expert would use to find companies manufacturing these exact products at this exact scale.
-3. Query 1 should focus on finding local manufacturers in the business's region (if known, otherwise general region like India).
-4. Query 2 should focus on the highest-value core product and its specific technical capacity.
-5. Query 3 should focus on finding global leaders producing these exact components.
-6. Output ONLY the 3 queries, separated by a newline. Do not use quotes or numbering.
+3. **MATERIAL & PROCESS ENFORCEMENT:** You MUST include the exact manufacturing process and material (e.g., "forged steel", "metal", "heavy alloy") in your queries. Never search for generic terms like "rings" which will return rubber or plastic manufacturers.
+4. **ANTI-BLOG FILTERING:** Append the following exact string to the end of all 3 queries to exclude non-manufacturers: '-blog -news -directory -indiamart -thomasnet'
+5. Query 1 should focus on finding local manufacturers in the business's region (if known, otherwise general region like India).
+6. Query 2 should focus on the highest-value core product and its specific technical capacity.
+7. Query 3 should focus on finding global leaders producing these exact components.
+8. Output ONLY the 3 queries, separated by a newline. Do not use quotes or numbering.
 
 Begin generating queries:`;
 
@@ -121,9 +123,11 @@ ${tavilyContext}
 INSTRUCTIONS:
 1. Identify EXACTLY 10 highly relevant competitors (a mix of local and global companies).
 2. ONLY select companies that actually manufacture similar core products. 
-3. **CRITICAL SCALING MATCH:** Pay extremely close attention to the specific technical specifications and capacities of the business. If this business manufactures rings up to 3 Metric Tons, the competitor MUST be a heavy-duty manufacturer operating at that exact massive scale, NOT a small shop.
-4. **URL VERIFICATION:** The results provided in the context have already been mathematically verified to be ALIVE and FUNCTIONAL right now. Rely heavily on these verified results. Filter out any results that do not match the specific sub-industry and scale.
-5. Provide a structured markdown response.
+3. **CRITICAL SCALING MATCH:** Pay extremely close attention to the specific technical specifications and capacities of the business. If this business manufactures heavy parts up to 3 Metric Tons, the competitor MUST be a heavy-duty manufacturer operating at that exact massive scale, NOT a small shop.
+4. **MATERIAL & PROCESS RULE:** You MUST instantly reject any company that manufactures using the wrong base material (e.g., if the business makes forged steel rings, reject anyone making rubber, plastic, or ceramic rings).
+5. **BUSINESS MODEL RULE:** You MUST instantly reject any website that is a blog, news article, B2B directory (like IndiaMart, TradeIndia, ThomasNet), or informational wiki. Only include actual corporate websites of competing manufacturing companies.
+6. **URL VERIFICATION:** The results provided in the context have already been mathematically verified to be ALIVE and FUNCTIONAL right now. Rely heavily on these verified results. Filter out any results that do not match the specific sub-industry and scale.
+7. Provide a structured markdown response.
 
 Format your response EXACTLY like this:
 ## Top 10 Competitors for ${businessName}
