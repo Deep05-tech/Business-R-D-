@@ -68,8 +68,8 @@ Begin generating queries:`;
     // --- PHASE 2: Execution & Synthesis ---
     let tavilyContext = "";
     try {
-      const tavily = new TavilySearch({ maxResults: 15 });
-      logger.info(`Phase 2: Executing live web searches...`);
+      const tavily = new TavilySearch({ maxResults: 15, searchDepth: "advanced" });
+      logger.info(`Phase 2: Executing advanced live web searches...`);
       
       for (const query of generatedQueries) {
         logger.info(`Running search: "${query}"`);
@@ -93,7 +93,19 @@ Begin generating queries:`;
               clearTimeout(timeoutId);
               
               if (res.ok && res.status < 400) {
-                aliveResults.push(item);
+                // Read a small chunk of text to check for parked domains
+                const text = await res.text();
+                const lowerText = text.toLowerCase();
+                const isParked = lowerText.includes("domain for sale") || 
+                                 lowerText.includes("buy this domain") || 
+                                 lowerText.includes("this domain is parked") || 
+                                 (lowerText.includes("godaddy") && lowerText.includes("parked"));
+                
+                if (!isParked) {
+                  aliveResults.push(item);
+                } else {
+                  logger.debug(`Discarding parked domain: ${item.url}`);
+                }
               } else {
                 logger.debug(`Discarding dead URL: ${item.url} (Status: ${res.status})`);
               }
@@ -123,7 +135,8 @@ ${tavilyContext}
 INSTRUCTIONS:
 1. Identify EXACTLY 10 highly relevant competitors (a mix of local and global companies).
 2. ONLY select companies that actually manufacture similar core products. 
-3. **ASPIRATIONAL SCALING MATCH (EQUAL OR GREATER):** Pay extremely close attention to the specific technical specifications and maximum capacities of the business. A true competitor is someone who manufactures at an EQUAL or GREATER scale. If this business manufactures heavy parts up to 3 Metric Tons, you MUST instantly reject any company whose maximum capacity is smaller (e.g. only 100kg). You are hunting for peers and industry giants who match or beat the target business's top-end manufacturing limit.
+3. **ASPIRATIONAL SCALING MATCH (EQUAL OR GREATER):** Pay extremely close attention to the specific technical specifications and maximum capacities of the business. A true competitor is someone who manufactures at an EQUAL or GREATER scale. If this business manufactures heavy parts up to 3 Metric Tons, you MUST instantly reject any company whose maximum capacity is explicitly proven to be smaller (e.g. only 100kg).
+   - **THE GIANT RULE:** If the company is clearly a massive industrial manufacturer, heavy engineering firm, or global leader, you must ASSUME they meet the heavy capacity requirements even if the exact tonnage isn't listed in the snippet. Give industry giants the benefit of the doubt.
 4. **MATERIAL & PROCESS RULE:** You MUST instantly reject any company that manufactures using the wrong base material (e.g., if the business makes forged steel rings, reject anyone making rubber, plastic, or ceramic rings).
 5. **BUSINESS MODEL RULE:** You MUST instantly reject any website that is a blog, news article, B2B directory (like IndiaMart, TradeIndia, ThomasNet), or informational wiki. Only include actual corporate websites of competing manufacturing companies.
 6. **URL VERIFICATION:** The results provided in the context have already been mathematically verified to be ALIVE and FUNCTIONAL right now. Rely heavily on these verified results. Filter out any results that do not match the specific sub-industry and scale.
