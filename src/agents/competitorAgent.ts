@@ -154,7 +154,7 @@ Begin generating queries:`;
       tavilyContext = "Live search failed. Relying on baseline knowledge.";
     }
 
-    const synthesisPrompt = `You are an elite B2B Market Research Analyst. Your task is to identify EXACTLY 20 highly relevant competitors for the given business based on their explicit memory footprint and live web search results.
+    const synthesisPrompt = `You are an elite B2B Market Research Analyst. Your task is to identify up to 20 highly relevant competitors for the given business based on their explicit memory footprint and live web search results.
 
 BUSINESS CONTEXT:
 ${memoryContext}
@@ -163,32 +163,32 @@ LIVE WEB SEARCH RESULTS:
 ${tavilyContext}
 
 INSTRUCTIONS:
-1. Identify EXACTLY 20 highly relevant competitors (EXACTLY 10 Local companies and EXACTLY 10 Global companies). 
-2. ONLY select companies that actually manufacture similar core products. 
-3. **ZERO COMPROMISE SCALING (EQUAL OR GREATER):** You must output EXACTLY 10 local and 10 global competitors. EVERY single one must be a true, heavy-industrial manufacturer with equal or greater capacity. If the live search runs out of perfect matches, you MUST use your own pre-trained industry knowledge to find the remaining perfect matches. DO NOT lower your standards just to reach exactly 10. DO NOT hallucinate fake companies.
+1. Identify UP TO 20 highly relevant competitors (UP TO 10 Local companies and UP TO 10 Global companies). 
+2. **STRICT PRODUCT MATCH:** ONLY select companies that explicitly manufacture similar core products on their website. If a company only makes generic "steel pipes" or "automotive forgings" and not the specific heavy products (e.g. seamless rolled rings, heavy flanges), you MUST reject them.
+3. **ZERO HALLUCINATION SCALING (EQUAL OR GREATER):** EVERY single competitor must be a true, heavy-industrial manufacturer with equal or greater capacity. If you can only find 4 local companies that perfectly match the criteria, ONLY output 4. DO NOT invent products or hallucinate capabilities for a company just to fill a quota. DO NOT hallucinate fake companies.
 4. **MATERIAL & PROCESS RULE:** You MUST instantly reject any company that manufactures using the wrong base material (e.g., if the business makes forged steel rings, reject anyone making rubber, plastic, or ceramic rings).
 5. **BUSINESS MODEL RULE (PURE MANUFACTURERS ONLY):** You MUST aggressively reject any company that identifies as a stockist, supplier, trader, distributor, or exporter. Only select pure, heavy-industrial manufacturers with their own massive forging facilities. Additionally, reject any website that is a blog, news article, B2B directory, or informational wiki.
 6. **URL FALLBACK RULE:** You MUST NOT output \`N/A\` for a website. If a company is a universally recognized heavy-manufacturing giant and perfectly meets all criteria, but their official URL is missing from the search results, you MUST pull their official root domain (e.g., https://www.bharatforge.com) from your own pre-trained memory. Only output companies with valid, live website URLs.
 7. Provide a structured markdown response.
 
 Format your response EXACTLY like this:
-## Top 20 Competitors for ${businessName}
+## Top Competitors for ${businessName}
 
-### 10 Local Competitors
+### Local Competitors (Up to 10)
 
 **1. [Competitor Name]** (Local)
 - **Website:** [ROOT DOMAIN ONLY (e.g. https://ferralloy.com). NO N/A ALLOWED]
 - **Why they compete:** [1-2 sentences detailing how their specific capacities and products overlap with the business]
 
-(Repeat for exactly 10 local competitors)
+(Repeat for all valid local competitors found)
 
-### 10 Global Competitors
+### Global Competitors (Up to 10)
 
-**11. [Competitor Name]** (Global)
+**[N]. [Competitor Name]** (Global)
 - **Website:** [ROOT DOMAIN ONLY (e.g. https://ferralloy.com). NO N/A ALLOWED]
 - **Why they compete:** [1-2 sentences detailing how their specific capacities and products overlap with the business]
 
-(Repeat for exactly 10 global competitors)
+(Repeat for all valid global competitors found)
 
 Begin your analysis:`;
 
