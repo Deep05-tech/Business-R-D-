@@ -73,9 +73,9 @@ Begin generating queries:`;
       
       for (const query of generatedQueries) {
         logger.info(`Running search: "${query}"`);
-        const resultString = await tavily.invoke({ query });
+        const resultRaw = await tavily.invoke({ query });
         try {
-          const results = JSON.parse(resultString);
+          const results = typeof resultRaw === "string" ? JSON.parse(resultRaw) : (resultRaw.results || resultRaw);
           const aliveResults = [];
           
           for (const item of results) {
@@ -115,8 +115,8 @@ Begin generating queries:`;
           }
           tavilyContext += `\\nSearch Query: ${query}\\nVerified Alive Results: ${JSON.stringify(aliveResults)}\n`;
         } catch (parseErr) {
-          // Fallback if resultString isn't standard JSON array
-          tavilyContext += `\\nSearch Query: ${query}\\nResults: ${resultString}\\n`;
+          // Fallback if resultRaw isn't standard JSON array
+          tavilyContext += `\\nSearch Query: ${query}\\nResults: ${JSON.stringify(resultRaw)}\\n`;
         }
       }
     } catch (e: any) {
