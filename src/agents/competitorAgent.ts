@@ -43,7 +43,7 @@ ${coreProductsDetailed}
 INSTRUCTIONS:
 1. Analyze the technical specifications, products, and manufacturing industry listed above.
 2. Formulate 6 search queries that an industry expert would use to find the absolute GIANTS of this industry. 
-3. **THE GIANT HUNTER STRATEGY (FOR EVERY PRODUCT):** Do NOT include specific, narrow weight limits (like "up to 3 tons") in the search query. Massive global leaders (e.g. Iraeta) produce 170-Ton products, and if you search for "3 tons" you will never find them. Instead, you MUST search for the extremes of the industry. Apply this logic to EVERY core product listed. (e.g., if they make flanges, search for "giant heavy flange manufacturers"; if they make shafts, search for "largest forged shaft manufacturers globally").
+3. **THE GIANT HUNTER STRATEGY (FOR EVERY PRODUCT):** Do NOT use overly narrow, long-tail keywords (like "largest forged steel seamless rolled ring manufacturers India") because you will miss the true multi-billion-dollar corporate giants (like Bharat Forge, Rolex Rings, Iraeta) whose SEO isn't optimized for that exact sentence. Instead, you MUST use broader, elite queries (e.g., "Top heavy forging companies in India", "Largest global industrial forging manufacturers") to ensure you capture true giants. Apply this broad logic to EVERY core product listed.
 4. **MATERIAL ENFORCEMENT:** You MUST include the exact base material (e.g., "forged steel", "metal") to prevent finding rubber/plastic manufacturers.
 5. Queries 1, 2, and 3 should focus on finding LOCAL manufacturers in the business's region (if known, otherwise general region like India). Ensure variety in the core products searched.
 6. Queries 4, 5, and 6 should focus on finding GLOBAL leaders and massive international corporations producing these exact components.
@@ -169,8 +169,8 @@ INSTRUCTIONS:
    - **Priority 1 (The Proven Giants):** First, prioritize companies whose search text explicitly proves they have an equal or greater capacity than our business (e.g., if we make up to 3000mm, they explicitly state they make >3000mm).
    - **Priority 2 (The Quota Fillers):** If you cannot find exactly 10 companies that meet Priority 1, you MUST fill the remaining slots with the largest, most credible heavy industrial manufacturers remaining in the search results. Give these companies the benefit of the doubt on scale in order to reach exactly 10. DO NOT hallucinate companies.
 4. **MATERIAL & PROCESS RULE:** You MUST instantly reject any company that manufactures using the wrong base material (e.g., if the business makes forged steel rings, reject anyone making rubber, plastic, or ceramic rings).
-5. **BUSINESS MODEL RULE:** You MUST instantly reject any website that is a blog, news article, B2B directory (like IndiaMart, TradeIndia, ThomasNet), or informational wiki. Only include actual corporate websites of competing manufacturing companies.
-6. **URL VERIFICATION:** The results provided in the context have already been mathematically verified to be ALIVE and FUNCTIONAL right now. Rely heavily on these verified results. Filter out any results that do not match the specific sub-industry and scale.
+5. **BUSINESS MODEL RULE (PURE MANUFACTURERS ONLY):** You MUST aggressively reject any company that identifies as a stockist, supplier, trader, distributor, or exporter. Only select pure, heavy-industrial manufacturers with their own massive forging facilities. Additionally, reject any website that is a blog, news article, B2B directory, or informational wiki.
+6. **URL VERIFICATION & NO N/A RULE:** The results provided in the context have already been mathematically verified to be ALIVE and FUNCTIONAL right now. You MUST NOT output a competitor if you cannot find their actual corporate website URL in the search results. If the website is N/A, DO NOT include them in the list. Only output companies with mathematically verified, live website URLs.
 7. Provide a structured markdown response.
 
 Format your response EXACTLY like this:
@@ -179,7 +179,7 @@ Format your response EXACTLY like this:
 ### 10 Local Competitors
 
 **1. [Competitor Name]** (Local)
-- **Website:** [ROOT DOMAIN ONLY (e.g. https://ferralloy.com). Do NOT output deep product page links. If found, otherwise N/A]
+- **Website:** [ROOT DOMAIN ONLY (e.g. https://ferralloy.com). NO N/A ALLOWED]
 - **Why they compete:** [1-2 sentences detailing how their specific capacities and products overlap with the business]
 
 (Repeat for exactly 10 local competitors)
@@ -187,7 +187,7 @@ Format your response EXACTLY like this:
 ### 10 Global Competitors
 
 **11. [Competitor Name]** (Global)
-- **Website:** [ROOT DOMAIN ONLY (e.g. https://ferralloy.com). Do NOT output deep product page links. If found, otherwise N/A]
+- **Website:** [ROOT DOMAIN ONLY (e.g. https://ferralloy.com). NO N/A ALLOWED]
 - **Why they compete:** [1-2 sentences detailing how their specific capacities and products overlap with the business]
 
 (Repeat for exactly 10 global competitors)
