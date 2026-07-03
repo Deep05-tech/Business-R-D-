@@ -72,13 +72,27 @@ export class CronAgent {
               searchTool.invoke({ query: ytQuery })
             ]);
             
-            const checkQuota = (raw: any) => {
+            const checkQuota = (raw: any, isLinkedIn = false) => {
               if (typeof raw === 'string' && raw.includes('HTTP error! status: 432')) throw new Error("Tavily API Quota Exceeded (HTTP 432)");
-              if (raw && raw.error) throw new Error(raw.error);
-              return typeof raw === "string" ? JSON.parse(raw) : raw;
+              if (raw && raw.error) {
+                if (raw.error.includes("No search results found")) return { results: [] };
+                throw new Error(raw.error);
+              }
+              const parsedRaw = typeof raw === "string" ? JSON.parse(raw) : raw;
+              
+              if (parsedRaw && parsedRaw.results) {
+                // Filter out non-post junk (like generic bios) in TS to save tokens
+                if (isLinkedIn) {
+                  parsedRaw.results = parsedRaw.results.filter((r: any) => r.url.includes('/posts/'));
+                }
+                // Cap results to prevent OpenAI 429 TPM limits (30,000 limit)
+                parsedRaw.results = parsedRaw.results.slice(0, 4);
+              }
+              
+              return parsedRaw;
             };
 
-            const parsedLi = checkQuota(liRaw);
+            const parsedLi = checkQuota(liRaw, true);
             
             // MATH HACK: Decode LinkedIn Snowflake IDs to extract the exact millisecond timestamp of the post.
             // This completely bypasses Google's inaccurate "2 days ago" cache dates.
