@@ -52,7 +52,7 @@ export class CronAgent {
       const searchTool = new TavilySearch({ maxResults: 15 });
       
       const targetCompetitors = memory.competitors;
-      const chunkSize = 5;
+      const chunkSize = 1; // Process 1 competitor at a time to prevent LLM extraction truncation/laziness
       
       for (let i = 0; i < targetCompetitors.length; i += chunkSize) {
         const chunk = targetCompetitors.slice(i, i + chunkSize);
@@ -140,15 +140,16 @@ ${tavilyContext}
 
 INSTRUCTIONS:
 1. Review the search results and meticulously extract ONLY genuine social media posts, videos, or news updates made by the competitors.
-2. The current date is ${currentDate}. You MUST ONLY extract posts that are genuinely recent (from the last 30 days).
-3. We have mathematically calculated the 'exact_post_date' for LinkedIn posts and injected it into the JSON. YOU MUST USE THIS 'exact_post_date' as the ultimate source of truth!
-4. If a LinkedIn post's 'exact_post_date' is older than 30 days from today, YOU MUST IGNORE IT ENTIRELY! Do not extract it!
-5. For other platforms (YouTube, Twitter), if a search result explicitly says "2023", "2024", "2025", "10 years ago", or is clearly an old post (older than 30 days), YOU MUST IGNORE IT ENTIRELY!
-6. If a post is verified as recent, set the 'date' field to its 'exact_post_date' (if available), otherwise use "Recent Update".
-7. DO NOT extract company bio snippets, "About Us" sections, or generic profile text.
-8. If there are NO genuine recent posts from the last 30 days, return an empty array []. Do not hallucinate posts.
-9. For the 'link' field, you MUST extract the EXACT 'url' property provided in the search result JSON. Do not alter or hallucinate URLs.
-10. Output the feed as a structured JSON array.`;
+2. EXHAUSTIVE EXTRACTION: You MUST extract EVERY SINGLE VALID POST you find in the context. Do not stop after 1 or 2 posts. If there are 10 valid posts across the platforms, you MUST output all 10!
+3. The current date is ${currentDate}. You MUST ONLY extract posts that are genuinely recent (from the last 30 days).
+4. We have mathematically calculated the 'exact_post_date' for LinkedIn posts and injected it into the JSON. YOU MUST USE THIS 'exact_post_date' as the ultimate source of truth!
+5. If a LinkedIn post's 'exact_post_date' is older than 30 days from today, YOU MUST IGNORE IT ENTIRELY! Do not extract it!
+6. For other platforms (YouTube, Twitter), if a search result explicitly says "2023", "2024", "2025", "10 years ago", or is clearly an old post (older than 30 days), YOU MUST IGNORE IT ENTIRELY!
+7. If a post is verified as recent, set the 'date' field to its 'exact_post_date' (if available), otherwise use "Recent Update".
+8. DO NOT extract company bio snippets, "About Us" sections, or generic profile text.
+9. If there are NO genuine recent posts from the last 30 days, return an empty array []. Do not hallucinate posts.
+10. For the 'link' field, you MUST extract the EXACT 'url' property provided in the search result JSON. Do not alter or hallucinate URLs.
+11. Output the feed as a structured JSON array.`;
 
         try {
           const structuredLlm = llm.withStructuredOutput(feedSchema);
