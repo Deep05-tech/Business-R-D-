@@ -297,7 +297,7 @@ async function loadFeedUI() {
     const data = await res.json();
     
     if (!data.feed || data.feed.length === 0) {
-      list.innerHTML = '<div class="empty-state">No competitor posts found yet.</div>';
+      list.innerHTML = '<div class="empty-state">No recent posts found in the last 30 days. These competitors may not be very active on social media.</div>';
       return;
     }
     
