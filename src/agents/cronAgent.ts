@@ -40,7 +40,7 @@ export class CronAgent {
         platform: z.string().describe("Platform name, e.g. LinkedIn, YouTube, Twitter"),
         platformIcon: z.string().describe("Emoji icon for platform, e.g. 🟦, ▶️, 𝕏"),
         competitorName: z.string().describe("Name of the competitor who posted"),
-        date: z.string().describe("Estimated date (e.g., 'Today', '2 days ago', or exact date)"),
+        date: z.string().describe("The exact relative or absolute date from the source (e.g., '3 months ago', '2 days ago', 'Oct 12'). NEVER use vague terms like 'Recent'."),
         content: z.string().describe("The caption, transcript, or summary of the post"),
         link: z.string().nullable().describe("Direct URL to the post. You MUST copy the exact 'url' field from the search result JSON. DO NOT GUESS OR MODIFY IT.")
       }))
@@ -91,13 +91,14 @@ SEARCH CONTEXT:
 ${tavilyContext}
 
 INSTRUCTIONS:
-1. Review the search results and meticulously extract ONLY genuine, recent social media posts, videos, or news updates made by the competitors.
-2. The current date is ${currentDate}. DO NOT extract any posts older than 6 months. If a search result explicitly mentions 2022, 2023, 2024, or 2025, IGNORE IT entirely!
-3. DO NOT extract company bio snippets, "About Us" sections, or generic profile text.
-4. If a search result does not explicitly look like a time-stamped social media post or news article from recent months, IGNORE IT.
-5. If there are NO genuine recent posts in the context, return an empty array []. Do not invent or hallucinate posts under any circumstances.
-6. For the 'link' field, you MUST extract the EXACT 'url' property provided in the search result JSON. The url MUST be from a social media domain (linkedin, twitter, youtube, facebook). Do not alter or hallucinate URLs.
-7. Output the feed as a structured JSON array.`;
+1. Review the search results and meticulously extract ONLY genuine social media posts, videos, or news updates made by the competitors.
+2. The current date is ${currentDate}. DO NOT extract any posts older than 3 months. If a search result explicitly mentions 2022, 2023, 2024, or 2025, IGNORE IT entirely!
+3. For the 'date' field, you MUST use the exact time provided by the search engine (e.g., "3 months ago", "2w", "Oct 12"). Do NOT invent vague terms like "Recent" or "Today".
+4. DO NOT extract company bio snippets, "About Us" sections, or generic profile text.
+5. If a search result does not explicitly look like a time-stamped social media post or news article from recent months, IGNORE IT.
+6. If there are NO genuine recent posts in the context, return an empty array []. Do not invent or hallucinate posts under any circumstances.
+7. For the 'link' field, you MUST extract the EXACT 'url' property provided in the search result JSON. The url MUST be from a social media domain (linkedin, twitter, youtube, facebook). Do not alter or hallucinate URLs.
+8. Output the feed as a structured JSON array.`;
 
         try {
           const structuredLlm = llm.withStructuredOutput(feedSchema);
