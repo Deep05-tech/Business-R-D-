@@ -180,6 +180,7 @@ async function loadCompetitorsUI() {
           <a href="${c.url}" target="_blank">${c.url}</a>
         </div>
         <div class="social-links">
+          ${c.socials.linkedin ? `<a href="${c.socials.linkedin}" class="social-icon" target="_blank" title="LinkedIn">💼</a>` : ''}
           ${c.socials.instagram ? `<a href="${c.socials.instagram}" class="social-icon" target="_blank" title="Instagram">📸</a>` : ''}
           ${c.socials.facebook ? `<a href="${c.socials.facebook}" class="social-icon" target="_blank" title="Facebook">📘</a>` : ''}
           ${c.socials.twitter ? `<a href="${c.socials.twitter}" class="social-icon" target="_blank" title="X (Twitter)">𝕏</a>` : ''}

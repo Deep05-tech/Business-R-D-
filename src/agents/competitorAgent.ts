@@ -118,37 +118,46 @@ INSTRUCTIONS:
     const finalCompetitors: CompetitorProfile[] = [];
 
     for (const comp of baseCompetitors) {
-      const socials: CompetitorProfile["socials"] = { instagram: null, facebook: null, twitter: null, youtube: null };
+      const socials: CompetitorProfile["socials"] = { linkedin: null, instagram: null, facebook: null, twitter: null, youtube: null };
       
       try {
         // Attempt to scrape their homepage
         logger.debug(`Scraping ${comp.url}...`);
-        const res = await axios.get(comp.url, { timeout: 8000, headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } });
+        const res = await axios.get(comp.url, { timeout: 8000, headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36' } });
         const $ = cheerio.load(res.data);
         
         $('a[href]').each((_, el) => {
-          const href = $(el).attr('href')?.toLowerCase() || "";
+          let href = $(el).attr('href') || "";
+          
+          // sometimes links are like javascript:void(0) or just fragments
+          if (!href.startsWith('http')) return;
+          
+          href = href.toLowerCase();
+          
+          if (href.includes('linkedin.com/company')) socials.linkedin = href;
           if (href.includes('instagram.com') && !href.includes('/explore/')) socials.instagram = href;
           if (href.includes('facebook.com') && !href.includes('sharer')) socials.facebook = href;
           if ((href.includes('twitter.com') || href.includes('x.com')) && !href.includes('intent')) socials.twitter = href;
-          if (href.includes('youtube.com')) socials.youtube = href;
+          if (href.includes('youtube.com') && !href.includes('/watch')) socials.youtube = href;
         });
       } catch (err) {
         logger.warn(`Could not scrape ${comp.url} directly.`);
       }
 
       // If missing critical socials, try a Tavily dork
-      if (!socials.instagram || !socials.youtube) {
+      if (!socials.instagram || !socials.youtube || !socials.linkedin) {
         try {
-          const dorkQuery = `site:instagram.com OR site:youtube.com OR site:facebook.com "${comp.name}"`;
+          const dorkQuery = `(site:linkedin.com/company OR site:instagram.com OR site:youtube.com OR site:facebook.com) "${comp.name}"`;
           const dorkResultRaw = await searchTool.invoke({ query: dorkQuery });
           const dorkParsed = typeof dorkResultRaw === "string" ? JSON.parse(dorkResultRaw) : dorkResultRaw;
           
           for (const item of dorkParsed) {
             const u = item.url.toLowerCase();
+            if (u.includes('linkedin.com/company') && !socials.linkedin) socials.linkedin = item.url;
             if (u.includes('instagram.com') && !socials.instagram) socials.instagram = item.url;
             if (u.includes('facebook.com') && !socials.facebook) socials.facebook = item.url;
             if (u.includes('youtube.com') && !socials.youtube) socials.youtube = item.url;
+            if ((u.includes('twitter.com') || u.includes('x.com')) && !socials.twitter) socials.twitter = item.url;
           }
         } catch (e) {}
       }

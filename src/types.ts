@@ -228,6 +228,7 @@ export interface CompetitorProfile {
   type: "local" | "global";
   location: string;
   socials: {
+    linkedin: string | null;
     instagram: string | null;
     facebook: string | null;
     twitter: string | null;
