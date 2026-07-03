@@ -35,17 +35,24 @@ export class CompetitorAgent {
     }, null, 2);
 
     // --- PHASE 1: Query Generation ---
-    const queryGenerationPrompt = `You are an elite B2B Market Research Analyst. Your task is to generate 4 broad, highly relevant search queries to find the truest competitors for the following business. Output ONLY the 4 queries, separated by a newline. Do not use quotes or numbering.
+    const queryGenerationPrompt = `You are an elite B2B Market Research Analyst. Your task is to generate 6 highly relevant search queries to find the truest competitors for the following business.
+The first 3 queries MUST focus on LOCAL competitors in the exact country/region of the business.
+The next 3 queries MUST focus on GLOBAL competitors worldwide.
+Output ONLY the 6 queries, separated by a newline. Do not use quotes or numbering.
+
 BUSINESS EXACT CORE PRODUCTS & CAPACITIES:
-${coreProductsDetailed}`;
+${coreProductsDetailed}
+
+BUSINESS IDENTITY:
+${JSON.stringify(memory.businessIdentity)}`;
 
     let generatedQueries: string[] = [];
     try {
       const queryResponse = await llm.invoke(queryGenerationPrompt);
       const queryText = typeof queryResponse.content === "string" ? queryResponse.content : "";
-      generatedQueries = queryText.split("\n").map(q => q.trim().replace(/^\d+\.\s*/, "")).filter(q => q.length > 5).slice(0, 4);
+      generatedQueries = queryText.split("\n").map(q => q.trim().replace(/^\d+\.\s*/, "")).filter(q => q.length > 5).slice(0, 6);
     } catch (e: any) {
-      generatedQueries = [`Top manufacturers like ${businessName}`, `${businessName} competitors`];
+      generatedQueries = [`Top manufacturers like ${businessName}`, `${businessName} competitors global`, `${businessName} competitors local`];
     }
 
     // --- PHASE 2: Tavily Search ---
@@ -74,11 +81,13 @@ ${coreProductsDetailed}`;
     const baseCompetitorSchema = z.object({
       competitors: z.array(z.object({
         name: z.string().describe("Official name of the competitor company"),
-        url: z.string().describe("Root domain website URL of the competitor (e.g. https://example.com)")
-      })).max(10)
+        url: z.string().describe("Root domain website URL of the competitor (e.g. https://example.com)"),
+        type: z.enum(["local", "global"]).describe("Whether this competitor is local/regional or a global player"),
+        location: z.string().describe("The city and country where this competitor is headquartered")
+      })).max(20)
     });
 
-    const synthesisPrompt = `You are an elite B2B Market Research Analyst. Identify up to 10 highly relevant competitors for the given business based on the web search results and your knowledge.
+    const synthesisPrompt = `You are an elite B2B Market Research Analyst. Identify exactly 10 LOCAL competitors and exactly 10 GLOBAL competitors for the given business based on the web search results and your knowledge.
 
 BUSINESS CONTEXT:
 ${memoryContext}
@@ -87,9 +96,12 @@ LIVE WEB SEARCH RESULTS:
 ${tavilyContext}
 
 INSTRUCTIONS:
-Identify UP TO 10 true competitors and their official root domain URLs. Ensure URLs are valid format.`;
+1. Identify up to 10 true LOCAL competitors (same country/region).
+2. Identify up to 10 true GLOBAL competitors (worldwide market leaders).
+3. Ensure all 20 competitors have their official root domain URLs and headquarters location.
+4. If you cannot find 10 for each category, return as many high-quality ones as possible.`;
 
-    let baseCompetitors: Array<{name: string, url: string}> = [];
+    let baseCompetitors: Array<{name: string, url: string, type: "local"|"global", location: string}> = [];
     try {
       logger.info(`Synthesizing base competitor list...`);
       const structuredLlm = llm.withStructuredOutput(baseCompetitorSchema);
@@ -143,6 +155,8 @@ Identify UP TO 10 true competitors and their official root domain URLs. Ensure U
       finalCompetitors.push({
         name: comp.name,
         url: comp.url,
+        type: comp.type,
+        location: comp.location,
         socials
       });
     }

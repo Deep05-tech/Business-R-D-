@@ -225,6 +225,8 @@ export interface MarketingSalesIntelligence {
 export interface CompetitorProfile {
   name: string;
   url: string;
+  type: "local" | "global";
+  location: string;
   socials: {
     instagram: string | null;
     facebook: string | null;

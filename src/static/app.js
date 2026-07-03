@@ -170,10 +170,13 @@ async function loadCompetitorsUI() {
     document.getElementById('btn-find-comp').style.display = 'none';
     document.getElementById('btn-regen-comp').style.display = 'inline-block';
     
-    list.innerHTML = data.competitors.map(c => `
+    const localComps = data.competitors.filter(c => c.type === 'local');
+    const globalComps = data.competitors.filter(c => c.type === 'global');
+    
+    const renderCard = (c) => `
       <div class="competitor-card">
         <div class="comp-info">
-          <h3>${c.name}</h3>
+          <h3>${c.name} <span style="font-size:10px; padding:2px 6px; border-radius:4px; background:var(--bg-card); border:1px solid var(--border); margin-left:8px;">📍 ${c.location}</span></h3>
           <a href="${c.url}" target="_blank">${c.url}</a>
         </div>
         <div class="social-links">
@@ -183,7 +186,19 @@ async function loadCompetitorsUI() {
           ${c.socials.youtube ? `<a href="${c.socials.youtube}" class="social-icon" target="_blank" title="YouTube">▶️</a>` : ''}
         </div>
       </div>
-    `).join('');
+    `;
+    
+    let html = '';
+    if (localComps.length > 0) {
+      html += `<div style="grid-column: 1 / -1; margin-top:10px; margin-bottom:5px;"><h3 style="color:var(--text-main); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px;">🌍 Local Competitors</h3></div>`;
+      html += localComps.map(renderCard).join('');
+    }
+    if (globalComps.length > 0) {
+      html += `<div style="grid-column: 1 / -1; margin-top:20px; margin-bottom:5px;"><h3 style="color:var(--text-main); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px;">🌐 Global Leaders</h3></div>`;
+      html += globalComps.map(renderCard).join('');
+    }
+    
+    list.innerHTML = html;
   } catch (e) {
     list.innerHTML = '<div class="empty-state">Failed to load competitors.</div>';
     document.getElementById('btn-find-comp').style.display = 'inline-block';
