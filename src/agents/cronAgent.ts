@@ -92,15 +92,14 @@ ${tavilyContext}
 
 INSTRUCTIONS:
 1. Review the search results and meticulously extract ONLY genuine social media posts, videos, or news updates made by the competitors.
-2. The current date is ${currentDate}. You MUST ONLY extract posts that were made within the last 30 DAYS.
+2. The current date is ${currentDate}. You must extract the most recent posts available.
 3. CRITICAL WARNING: Search engines often falsely label 1-year-old LinkedIn/Twitter posts as "2 days ago" because that is when the page was cached. You CANNOT trust the "2 days ago" prefix blindly.
-4. You MUST read the actual text snippet. If there is no contextual proof in the text that the event actually happened recently, or if you suspect it is an old post, YOU MUST REJECT IT.
-5. If a search result explicitly says "3 months ago", "7mo", "2025", or anything older than 30 days, YOU MUST IGNORE IT ENTIRELY! Do not extract it!
-6. For the 'date' field, use the contextual time found in the text. Do NOT invent vague terms like "Recent".
-7. DO NOT extract company bio snippets, "About Us" sections, or generic profile text.
-8. If there are NO genuinely verifiable recent posts, return an empty array []. Do not hallucinate posts.
-9. For the 'link' field, you MUST extract the EXACT 'url' property provided in the search result JSON. The url MUST be from a social media domain (linkedin, twitter, youtube, facebook). Do not alter or hallucinate URLs.
-10. Output the feed as a structured JSON array.`;
+4. If a search result explicitly says "2023", "2024", "2025", or is clearly an old post, YOU MUST IGNORE IT ENTIRELY!
+5. If a search result lacks a specific date or contextual proof of time, DO NOT REJECT IT. Extract it and set the 'date' field to "Recent Update".
+6. DO NOT extract company bio snippets, "About Us" sections, or generic profile text.
+7. If there are NO genuine recent posts, return an empty array []. Do not hallucinate posts.
+8. For the 'link' field, you MUST extract the EXACT 'url' property provided in the search result JSON. The url MUST be from a social media domain (linkedin, twitter, youtube, facebook). Do not alter or hallucinate URLs.
+9. Output the feed as a structured JSON array.`;
 
         try {
           const structuredLlm = llm.withStructuredOutput(feedSchema);
