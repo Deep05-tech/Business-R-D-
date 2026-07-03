@@ -97,9 +97,10 @@ ${tavilyContext}
 
 INSTRUCTIONS:
 1. Identify up to 10 true LOCAL competitors (same country/region).
-2. Identify up to 10 true GLOBAL competitors (worldwide market leaders).
-3. Ensure all 20 competitors have their official root domain URLs and headquarters location.
-4. If you cannot find 10 for each category, return as many high-quality ones as possible.`;
+2. Identify up to 10 true GLOBAL competitors (worldwide market leaders). 
+3. For GLOBAL competitors, you MUST include the absolute biggest industry giants (e.g., if the industry is forging/flanges, you MUST include Iraeta and similar massive entities). Leverage your vast pre-trained knowledge to fill in major global leaders even if they were omitted from the live search results.
+4. Ensure all 20 competitors have their official root domain URLs and headquarters location.
+5. If you cannot find 10 for each category, return as many high-quality ones as possible.`;
 
     let baseCompetitors: Array<{name: string, url: string, type: "local"|"global", location: string}> = [];
     try {
