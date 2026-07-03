@@ -73,9 +73,10 @@ ${tavilyContext}
 
 INSTRUCTIONS:
 1. Review the search results and meticulously extract ONLY genuine, recent social media posts, videos, or news updates made by the competitors.
-2. DO NOT invent or hallucinate posts. If there are no recent posts in the context, return an empty array.
-3. Ignore generic company profile pages, jobs, or product directories. Only extract temporal updates (posts).
-4. Output the feed as a structured JSON array.`;
+2. DO NOT extract company bio snippets, "About Us" sections, or generic profile text (e.g. "Join us for a virtual tour...", "Proud to be recognized as a leader..."). These are NOT posts! 
+3. If a search result does not explicitly look like a time-stamped social media post or news article, IGNORE IT.
+4. If there are NO genuine posts in the context, return an empty array []. Do not invent or hallucinate posts under any circumstances.
+5. Output the feed as a structured JSON array.`;
 
     try {
       const structuredLlm = llm.withStructuredOutput(feedSchema);

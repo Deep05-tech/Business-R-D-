@@ -307,7 +307,7 @@ async function loadFeedUI() {
         <div class="feed-content">
           <div class="feed-header">
             <span class="feed-author">${post.competitorName} on ${post.platform}</span>
-            <span class="feed-meta">${new Date(post.date).toLocaleDateString()}</span>
+            <span class="feed-meta">${post.date}</span>
           </div>
           <div class="feed-text">${post.content}</div>
           ${post.link ? `<a href="${post.link}" target="_blank" style="display:inline-block;margin-top:10px;font-size:12px;font-weight:600;color:var(--primary);text-decoration:none;">View Original Post ↗</a>` : ''}
