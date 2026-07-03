@@ -149,7 +149,8 @@ INSTRUCTIONS:
         try {
           const domain = new URL(comp.url).hostname.replace('www.', '');
           const dorkQuery = `(site:linkedin.com/company OR site:instagram.com OR site:youtube.com OR site:facebook.com OR site:twitter.com) ("${comp.name}" OR "${domain}")`;
-          const dorkResultRaw = await searchTool.invoke({ query: dorkQuery });
+          const deepDorkTool = new TavilySearch({ maxResults: 20 });
+          const dorkResultRaw = await deepDorkTool.invoke({ query: dorkQuery });
           const dorkParsed = typeof dorkResultRaw === "string" ? JSON.parse(dorkResultRaw) : dorkResultRaw;
           
           for (const item of dorkParsed) {
