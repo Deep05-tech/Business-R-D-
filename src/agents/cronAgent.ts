@@ -49,7 +49,7 @@ export class CronAgent {
     let allPosts: FeedPost[] = [];
 
     if (process.env.TAVILY_API_KEY) {
-      const searchTool = new TavilySearch({ maxResults: 3 });
+      const searchTool = new TavilySearch({ maxResults: 15 });
       
       const targetCompetitors = memory.competitors;
       const chunkSize = 5;
