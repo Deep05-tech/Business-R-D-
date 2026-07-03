@@ -87,7 +87,7 @@ ${JSON.stringify(memory.businessIdentity)}`;
       })).max(40)
     });
 
-    const synthesisPrompt = `You are an elite B2B Market Research Analyst. Identify a backup pool of up to 20 LOCAL competitors and up to 20 GLOBAL competitors for the given business based on the web search results and your knowledge.
+    const synthesisPrompt = `You are an elite B2B Market Research Analyst. Identify a backup pool of EXACTLY 20 LOCAL competitors and EXACTLY 20 GLOBAL competitors for the given business based on the web search results and your knowledge.
 
 BUSINESS CONTEXT:
 ${memoryContext}
@@ -96,11 +96,11 @@ LIVE WEB SEARCH RESULTS:
 ${tavilyContext}
 
 INSTRUCTIONS:
-1. Identify up to 20 true LOCAL competitors (same country/region).
-2. Identify up to 20 true GLOBAL competitors (worldwide market leaders). 
+1. Identify EXACTLY 20 true LOCAL competitors (same country/region).
+2. Identify EXACTLY 20 true GLOBAL competitors (worldwide market leaders). 
 3. For GLOBAL competitors, you MUST include the absolute biggest industry giants (e.g., if the industry is forging/flanges, you MUST include Iraeta and similar massive entities). Leverage your vast pre-trained knowledge to fill in major global leaders even if they were omitted from the live search results.
-4. Ensure all competitors have their official root domain URLs and headquarters location.
-5. Generate as many high-quality backups as possible up to the limits.`;
+4. Ensure all 40 competitors have their official root domain URLs and headquarters location.
+5. You MUST generate exactly 40 competitors total (20 local, 20 global). Do not be lazy. Use your pre-trained knowledge to fill the quota!`;
 
     let baseCompetitors: Array<{name: string, url: string, type: "local"|"global", location: string}> = [];
     try {
