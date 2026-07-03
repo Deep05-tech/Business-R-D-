@@ -60,7 +60,7 @@ export class CronAgent {
         
         for (const comp of chunk) {
           try {
-            const query = `(site:linkedin.com OR site:twitter.com OR site:x.com OR site:youtube.com OR site:facebook.com) "${comp.name}" latest posts OR news`;
+            const query = `"${comp.name}" (site:linkedin.com OR site:twitter.com OR site:x.com OR site:youtube.com OR site:facebook.com) news OR updates OR posts`;
             const resultRaw = await searchTool.invoke({ query });
             
             // Handle Langchain Tavily 432 quota exceeded responses masquerading as valid returns
