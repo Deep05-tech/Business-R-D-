@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
@@ -87,7 +88,10 @@
         <div class="card fade-in">
           <div class="flex-between">
             <h2>Competitor Intelligence</h2>
-            <button class="btn btn-secondary" onclick="window.findCompetitors()" id="btn-find-comp">Find Competitors</button>
+            <div>
+              <button class="btn btn-secondary" onclick="window.findCompetitors()" id="btn-find-comp">Find Competitors</button>
+              <button class="btn btn-secondary" onclick="window.findCompetitors(true)" id="btn-regen-comp" style="display:none; opacity:0.8; font-size:12px; padding: 4px 8px;">Regenerate</button>
+            </div>
           </div>
           <p class="subtitle">List of elite industry competitors and their social media profiles.</p>
           <div id="competitor-list" class="competitor-grid">

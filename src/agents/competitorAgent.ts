@@ -2,16 +2,18 @@ import { ChatOpenAI } from "@langchain/openai";
 import { TavilySearch } from "@langchain/tavily";
 import { createLogger } from "../utils/logger.js";
 import { z } from "zod";
+import axios from "axios";
+import * as cheerio from "cheerio";
 import type { StructuredMemory, CompetitorProfile } from "../types.js";
 
 const logger = createLogger("CompetitorAgent");
 
 export class CompetitorAgent {
   readonly name = "competitor-agent";
-  readonly version = "2.0.0";
+  readonly version = "3.0.0";
 
   async run(memory: StructuredMemory): Promise<CompetitorProfile[]> {
-    logger.info(`Running competitor research for ${memory.input.websiteUrl}...`);
+    logger.info(`Running true competitor research for ${memory.input.websiteUrl}...`);
 
     const llm = new ChatOpenAI({
       model: "gpt-4o",
@@ -33,9 +35,7 @@ export class CompetitorAgent {
     }, null, 2);
 
     // --- PHASE 1: Query Generation ---
-    logger.info(`Phase 1: Generating custom search queries for ${businessName}...`);
-    const queryGenerationPrompt = `You are an elite B2B Market Research Analyst. Your task is to generate 4 broad, highly relevant search queries to find the truest competitors for the following business. Do NOT use overly narrow long-tail keywords. Output ONLY the 4 queries, separated by a newline. Do not use quotes or numbering.
-    
+    const queryGenerationPrompt = `You are an elite B2B Market Research Analyst. Your task is to generate 4 broad, highly relevant search queries to find the truest competitors for the following business. Output ONLY the 4 queries, separated by a newline. Do not use quotes or numbering.
 BUSINESS EXACT CORE PRODUCTS & CAPACITIES:
 ${coreProductsDetailed}`;
 
@@ -45,53 +45,40 @@ ${coreProductsDetailed}`;
       const queryText = typeof queryResponse.content === "string" ? queryResponse.content : "";
       generatedQueries = queryText.split("\n").map(q => q.trim().replace(/^\d+\.\s*/, "")).filter(q => q.length > 5).slice(0, 4);
     } catch (e: any) {
-      logger.warn(`Failed to generate custom queries: ${e.message}`);
       generatedQueries = [`Top manufacturers like ${businessName}`, `${businessName} competitors`];
     }
 
     // --- PHASE 2: Tavily Search ---
     let tavilyContext = "";
-    try {
-      if (process.env.TAVILY_API_KEY) {
-        logger.info(`Phase 2: Executing deep web search for competitors...`);
-        const searchTool = new TavilySearch({ maxResults: 5 });
-        
-        for (const query of generatedQueries) {
-          try {
-            const resultRaw = await searchTool.invoke({ query });
-            const parsed = typeof resultRaw === "string" ? JSON.parse(resultRaw) : resultRaw;
-            
-            const aliveResults = [];
-            for (const item of parsed) {
-              if (item.url && !item.url.includes("linkedin.com/in/") && !item.url.includes("facebook.com")) {
-                aliveResults.push({ url: item.url, title: item.title, content: item.content });
-              }
+    const searchTool = new TavilySearch({ maxResults: 5 });
+    if (process.env.TAVILY_API_KEY) {
+      logger.info(`Executing web search for competitors...`);
+      for (const query of generatedQueries) {
+        try {
+          const resultRaw = await searchTool.invoke({ query });
+          const parsed = typeof resultRaw === "string" ? JSON.parse(resultRaw) : resultRaw;
+          const aliveResults = [];
+          for (const item of parsed) {
+            if (item.url && !item.url.includes("linkedin.com/in/") && !item.url.includes("facebook.com")) {
+              aliveResults.push({ url: item.url, title: item.title, content: item.content });
             }
-            tavilyContext += `\nSearch Query: ${query}\nResults: ${JSON.stringify(aliveResults)}\n`;
-          } catch (parseErr) {
-            tavilyContext += `\nSearch Query: ${query}\nResults: Parse error\n`;
           }
+          tavilyContext += `\nSearch Query: ${query}\nResults: ${JSON.stringify(aliveResults)}\n`;
+        } catch (parseErr) {
+          tavilyContext += `\nSearch Query: ${query}\nResults: Parse error\n`;
         }
       }
-    } catch (e: any) {
-      logger.warn(`Tavily search failed: ${e.message}`);
     }
 
-    // --- PHASE 3: Synthesis & Social URL Extraction ---
-    const competitorSchema = z.object({
+    // --- PHASE 3: Base Competitor Identification ---
+    const baseCompetitorSchema = z.object({
       competitors: z.array(z.object({
         name: z.string().describe("Official name of the competitor company"),
-        url: z.string().describe("Root domain website URL of the competitor"),
-        socials: z.object({
-          instagram: z.string().nullable().describe("Instagram URL if known or highly probable based on dorking format (https://instagram.com/[username]). Null if inapplicable."),
-          facebook: z.string().nullable().describe("Facebook URL. Null if inapplicable."),
-          twitter: z.string().nullable().describe("X/Twitter URL. Null if inapplicable."),
-          youtube: z.string().nullable().describe("YouTube Channel URL. Null if inapplicable.")
-        })
+        url: z.string().describe("Root domain website URL of the competitor (e.g. https://example.com)")
       })).max(10)
     });
 
-    const synthesisPrompt = `You are an elite B2B Market Research Analyst. Your task is to identify up to 10 highly relevant competitors for the given business and their probable social media handles based on your knowledge and the web search results.
+    const synthesisPrompt = `You are an elite B2B Market Research Analyst. Identify up to 10 highly relevant competitors for the given business based on the web search results and your knowledge.
 
 BUSINESS CONTEXT:
 ${memoryContext}
@@ -100,18 +87,66 @@ LIVE WEB SEARCH RESULTS:
 ${tavilyContext}
 
 INSTRUCTIONS:
-1. Identify UP TO 10 true competitors.
-2. For each competitor, infer or extract their most likely social media URLs (Instagram, Facebook, X, YouTube). Usually this is https://instagram.com/[companyname], etc. If you are very unsure, output null.
-3. Return the data as a JSON array matching the required schema.`;
+Identify UP TO 10 true competitors and their official root domain URLs. Ensure URLs are valid format.`;
 
+    let baseCompetitors: Array<{name: string, url: string}> = [];
     try {
-      logger.info(`Synthesizing structured competitor report...`);
-      const structuredLlm = llm.withStructuredOutput(competitorSchema);
+      logger.info(`Synthesizing base competitor list...`);
+      const structuredLlm = llm.withStructuredOutput(baseCompetitorSchema);
       const response = await structuredLlm.invoke(synthesisPrompt);
-      return response.competitors as CompetitorProfile[];
+      baseCompetitors = response.competitors;
     } catch (e: any) {
       logger.error(`Competitor synthesis failed: ${e.message}`);
       throw e;
     }
+
+    // --- PHASE 4: Direct Scraping & Dorking for Socials ---
+    logger.info(`Phase 4: Scraping competitor websites for actual social media profiles...`);
+    const finalCompetitors: CompetitorProfile[] = [];
+
+    for (const comp of baseCompetitors) {
+      const socials: CompetitorProfile["socials"] = { instagram: null, facebook: null, twitter: null, youtube: null };
+      
+      try {
+        // Attempt to scrape their homepage
+        logger.debug(`Scraping ${comp.url}...`);
+        const res = await axios.get(comp.url, { timeout: 8000, headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } });
+        const $ = cheerio.load(res.data);
+        
+        $('a[href]').each((_, el) => {
+          const href = $(el).attr('href')?.toLowerCase() || "";
+          if (href.includes('instagram.com') && !href.includes('/explore/')) socials.instagram = href;
+          if (href.includes('facebook.com') && !href.includes('sharer')) socials.facebook = href;
+          if ((href.includes('twitter.com') || href.includes('x.com')) && !href.includes('intent')) socials.twitter = href;
+          if (href.includes('youtube.com')) socials.youtube = href;
+        });
+      } catch (err) {
+        logger.warn(`Could not scrape ${comp.url} directly.`);
+      }
+
+      // If missing critical socials, try a Tavily dork
+      if (!socials.instagram || !socials.youtube) {
+        try {
+          const dorkQuery = `site:instagram.com OR site:youtube.com OR site:facebook.com "${comp.name}"`;
+          const dorkResultRaw = await searchTool.invoke({ query: dorkQuery });
+          const dorkParsed = typeof dorkResultRaw === "string" ? JSON.parse(dorkResultRaw) : dorkResultRaw;
+          
+          for (const item of dorkParsed) {
+            const u = item.url.toLowerCase();
+            if (u.includes('instagram.com') && !socials.instagram) socials.instagram = item.url;
+            if (u.includes('facebook.com') && !socials.facebook) socials.facebook = item.url;
+            if (u.includes('youtube.com') && !socials.youtube) socials.youtube = item.url;
+          }
+        } catch (e) {}
+      }
+
+      finalCompetitors.push({
+        name: comp.name,
+        url: comp.url,
+        socials
+      });
+    }
+
+    return finalCompetitors;
   }
 }

@@ -74,16 +74,45 @@ window.runIntelligence = async function() {
   
   const formData = new FormData(form);
   try {
-    const res = await fetch('/business-intelligence', {
+    const res = await fetch('/api/analyze-stream', {
       method: 'POST',
       body: formData
     });
-    if (!res.ok) throw new Error('Failed to run intelligence');
     
-    // Reload projects and select the new one
-    await loadProjects();
-    document.getElementById('global-project').value = url;
-    window.selectProject(url);
+    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      
+      let lines = buffer.split('\\n\\n');
+      buffer = lines.pop(); // Keep incomplete chunk
+      
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          try {
+            const data = JSON.parse(line.slice(6));
+            if (data.type === 'error') {
+              throw new Error(data.error || 'Analysis failed');
+            }
+            if (data.type === 'complete') {
+              // Reload projects and select the new one
+              await loadProjects();
+              document.getElementById('global-project').value = url;
+              window.selectProject(url);
+              return;
+            }
+          } catch(err) {
+            console.error("SSE parse error", err);
+          }
+        }
+      }
+    }
   } catch (e) {
     alert("Error: " + e.message);
   } finally {
@@ -92,10 +121,19 @@ window.runIntelligence = async function() {
 };
 
 // ---- Competitors ----
-window.findCompetitors = async function() {
+window.findCompetitors = async function(force = false) {
   if (!window.activeProjectUrl) return;
+  
+  if (force) {
+    if (!confirm("Are you sure you want to run a new deep crawl? This will overwrite your existing competitor list.")) return;
+  }
+  
   const list = document.getElementById('competitor-list');
-  list.innerHTML = '<div class="spinner" style="margin: 20px auto;"></div>';
+  list.innerHTML = '<div class="spinner" style="margin: 20px auto;"></div><div style="text-align:center">Crawling competitor footprint... this will take 1-2 minutes.</div>';
+  
+  // Hide buttons while loading
+  document.getElementById('btn-find-comp').style.display = 'none';
+  document.getElementById('btn-regen-comp').style.display = 'none';
   
   try {
     const res = await fetch('/api/competitors', {
@@ -110,6 +148,7 @@ window.findCompetitors = async function() {
     loadCompetitorsUI();
   } catch (e) {
     list.innerHTML = `<div class="empty-state" style="color:var(--required)">Error: ${e.message}</div>`;
+    document.getElementById('btn-find-comp').style.display = 'inline-block';
   }
 };
 
@@ -123,8 +162,13 @@ async function loadCompetitorsUI() {
     
     if (!data.competitors || data.competitors.length === 0) {
       list.innerHTML = '<div class="empty-state">No competitors mapped yet. Click "Find Competitors" above.</div>';
+      document.getElementById('btn-find-comp').style.display = 'inline-block';
+      document.getElementById('btn-regen-comp').style.display = 'none';
       return;
     }
+    
+    document.getElementById('btn-find-comp').style.display = 'none';
+    document.getElementById('btn-regen-comp').style.display = 'inline-block';
     
     list.innerHTML = data.competitors.map(c => `
       <div class="competitor-card">
@@ -142,6 +186,8 @@ async function loadCompetitorsUI() {
     `).join('');
   } catch (e) {
     list.innerHTML = '<div class="empty-state">Failed to load competitors.</div>';
+    document.getElementById('btn-find-comp').style.display = 'inline-block';
+    document.getElementById('btn-regen-comp').style.display = 'none';
   }
 }
 
@@ -176,7 +222,9 @@ window.generateSMM = async function() {
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     
-    textDiv.innerHTML = data.posts.join('<br><br><hr style="border-top:1px solid var(--border);margin:20px 0;"><br>');
+    // Use marked for markdown formatting if available
+    const joined = data.posts.join('\\n\\n---\\n\\n');
+    textDiv.innerHTML = window.marked ? window.marked.parse(joined) : joined;
   } catch (e) {
     textDiv.innerHTML = `<span style="color:red">Error: ${e.message}</span>`;
   }
@@ -202,7 +250,7 @@ window.generateSEO = async function() {
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     
-    textDiv.innerHTML = data.report.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    textDiv.innerHTML = window.marked ? window.marked.parse(data.report) : data.report.replace(/\n/g, '<br>');
   } catch (e) {
     textDiv.innerHTML = `<span style="color:red">Error: ${e.message}</span>`;
   }

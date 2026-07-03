@@ -43,8 +43,8 @@ export class CronAgent {
       const topCompetitors = memory.competitors.slice(0, 3);
       for (const comp of topCompetitors) {
         try {
-          // Google Dork for recent social posts / news
-          const query = `site:youtube.com OR site:linkedin.com OR site:twitter.com "${comp.name}"`;
+          // Google Dork tailored for actual posts and news
+          const query = `(site:linkedin.com/posts OR site:twitter.com OR site:youtube.com) "${comp.name}" ("days ago" OR "hours ago" OR "months ago")`;
           const resultRaw = await searchTool.invoke({ query });
           const parsed = typeof resultRaw === "string" ? JSON.parse(resultRaw) : resultRaw;
           
@@ -72,9 +72,10 @@ SEARCH CONTEXT:
 ${tavilyContext}
 
 INSTRUCTIONS:
-1. Review the search results and extract any recent social media posts, videos, or news updates made by the competitors.
-2. If the search results are empty or lack social posts, invent 2-3 highly realistic, industry-specific "mock" social media posts that these competitors would likely post (to demonstrate dashboard functionality for the user).
-3. Output the feed as a structured JSON array.`;
+1. Review the search results and meticulously extract ONLY genuine, recent social media posts, videos, or news updates made by the competitors.
+2. DO NOT invent or hallucinate posts. If there are no recent posts in the context, return an empty array.
+3. Ignore generic company profile pages, jobs, or product directories. Only extract temporal updates (posts).
+4. Output the feed as a structured JSON array.`;
 
     try {
       const structuredLlm = llm.withStructuredOutput(feedSchema);
