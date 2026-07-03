@@ -57,21 +57,27 @@ export class CronAgent {
       for (let i = 0; i < targetCompetitors.length; i += chunkSize) {
         const chunk = targetCompetitors.slice(i, i + chunkSize);
         let tavilyContext = "";
-        
         for (const comp of chunk) {
           try {
-            const query = `"${comp.name}" (site:linkedin.com OR site:twitter.com OR site:x.com OR site:youtube.com OR site:facebook.com) news OR updates OR posts`;
-            const resultRaw = await searchTool.invoke({ query });
+            // Split search to guarantee deep channel coverage without overshadowing
+            const liQuery = `"${comp.name}" site:linkedin.com/posts/`;
+            const ytQuery = `"${comp.name}" site:youtube.com/watch`;
             
-            // Handle Langchain Tavily 432 quota exceeded responses masquerading as valid returns
-            if (typeof resultRaw === 'string' && resultRaw.includes('HTTP error! status: 432')) {
-               throw new Error("Tavily API Quota Exceeded (HTTP 432)");
-            }
-            if (resultRaw && resultRaw.error) {
-               throw new Error(resultRaw.error);
-            }
-
-            const parsed = typeof resultRaw === "string" ? JSON.parse(resultRaw) : resultRaw;
+            const [liRaw, ytRaw] = await Promise.all([
+              searchTool.invoke({ query: liQuery }),
+              searchTool.invoke({ query: ytQuery })
+            ]);
+            
+            const checkQuota = (raw: any) => {
+              if (typeof raw === 'string' && raw.includes('HTTP error! status: 432')) throw new Error("Tavily API Quota Exceeded (HTTP 432)");
+              if (raw && raw.error) throw new Error(raw.error);
+              return typeof raw === "string" ? JSON.parse(raw) : raw;
+            };
+            
+            const parsed = {
+              linkedin: checkQuota(liRaw),
+              youtube: checkQuota(ytRaw)
+            };
             
             tavilyContext += `\nCompetitor: ${comp.name}\nRecent Social/Web Footprint: ${JSON.stringify(parsed)}\n`;
           } catch (e: any) {
