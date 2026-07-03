@@ -59,12 +59,14 @@ export class CronAgent {
         let tavilyContext = "";
         for (const comp of chunk) {
           try {
-            // Split search to guarantee deep channel coverage without overshadowing
+            // Split search to guarantee deep channel coverage across all major platforms equally
             const liQuery = `"${comp.name}" site:linkedin.com/posts/`;
+            const xFbQuery = `"${comp.name}" (site:twitter.com OR site:x.com OR site:facebook.com)`;
             const ytQuery = `"${comp.name}" site:youtube.com/watch`;
             
-            const [liRaw, ytRaw] = await Promise.all([
+            const [liRaw, xFbRaw, ytRaw] = await Promise.all([
               searchTool.invoke({ query: liQuery }),
+              searchTool.invoke({ query: xFbQuery }),
               searchTool.invoke({ query: ytQuery })
             ]);
             
@@ -76,6 +78,7 @@ export class CronAgent {
             
             const parsed = {
               linkedin: checkQuota(liRaw),
+              twitter_facebook: checkQuota(xFbRaw),
               youtube: checkQuota(ytRaw)
             };
             
@@ -98,14 +101,15 @@ ${tavilyContext}
 
 INSTRUCTIONS:
 1. Review the search results and meticulously extract ONLY genuine social media posts, videos, or news updates made by the competitors.
-2. The current date is ${currentDate}. You must extract the most recent posts available.
+2. The current date is ${currentDate}. You must extract the ABSOLUTE LATEST posts available across all platforms. Compare the results and prioritize the freshest ones (e.g., 18h, 1d, 1w).
 3. CRITICAL WARNING: Search engines often falsely label 1-year-old LinkedIn/Twitter posts as "2 days ago" because that is when the page was cached. You CANNOT trust the "2 days ago" prefix blindly.
-4. If a search result explicitly says "2023", "2024", "2025", or is clearly an old post, YOU MUST IGNORE IT ENTIRELY!
-5. If a search result lacks a specific date or contextual proof of time, DO NOT REJECT IT. Extract it and set the 'date' field to "Recent Update".
-6. DO NOT extract company bio snippets, "About Us" sections, or generic profile text.
-7. If there are NO genuine recent posts, return an empty array []. Do not hallucinate posts.
-8. For the 'link' field, you MUST extract the EXACT 'url' property provided in the search result JSON. The url MUST be from a social media domain (linkedin, twitter, youtube, facebook). Do not alter or hallucinate URLs.
-9. Output the feed as a structured JSON array.`;
+4. If a search result explicitly says "2023", "2024", "2025", or is clearly an old post (older than 3 months), YOU MUST IGNORE IT ENTIRELY!
+5. Focus EQUALLY on all provided platforms (LinkedIn, Twitter, Facebook, YouTube) if they have recent posts.
+6. If a search result lacks a specific date or contextual proof of time, DO NOT REJECT IT. Extract it and set the 'date' field to "Recent Update".
+7. DO NOT extract company bio snippets, "About Us" sections, or generic profile text.
+8. If there are NO genuine recent posts, return an empty array []. Do not hallucinate posts.
+9. For the 'link' field, you MUST extract the EXACT 'url' property provided in the search result JSON. Do not alter or hallucinate URLs.
+10. Output the feed as a structured JSON array.`;
 
         try {
           const structuredLlm = llm.withStructuredOutput(feedSchema);
