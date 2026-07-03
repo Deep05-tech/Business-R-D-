@@ -8,8 +8,8 @@ export class SmmAgent {
   readonly name = "smm-agent";
   readonly version = "1.0.0";
 
-  async run(memory: StructuredMemory, type: "video" | "image", totalPosts: number, language: string = "English"): Promise<string[]> {
-    logger.info(`Generating ${totalPosts} SMM ${type} posts in ${language} for ${memory.input.websiteUrl}...`);
+  async run(memory: StructuredMemory, type: "video" | "image", totalPosts: number, language: string = "English", strategy: string = "new"): Promise<string[]> {
+    logger.info(`Generating ${totalPosts} SMM ${type} posts in ${language} for ${memory.input.websiteUrl} (Strategy: ${strategy})...`);
 
     const llm = new ChatOpenAI({
       model: "gpt-4.1",
@@ -23,6 +23,18 @@ export class SmmAgent {
       brandPositioning: memory.brandPositioning,
       rdInsights: memory.rdInsights,
     }, null, 2);
+
+    let competitorContext = "";
+    if (strategy === "mirror" && memory.competitors && memory.competitors.length > 0) {
+      competitorContext = `
+CRITICAL STRATEGY INSTRUCTION: 
+The user has requested to MIRROR their competitors' strategies.
+Below are the top competitors identified for this business:
+${memory.competitors.map(c => `- ${c.name} (Socials: ${JSON.stringify(c.socials)})`).join('\n')}
+
+Your generated content MUST emulate the tone, structure, and pacing typically used by these specific competitors in this exact industry. If they rely heavily on technical showcases, do the same. Analyze what these market leaders likely do to succeed, and adopt that exact posture for your posts.
+`;
+    }
 
     let formatInstructions = "";
     if (type === "video") {
@@ -99,6 +111,8 @@ IMPORTANT RULES & B2B TONAL OVERRIDE:
 5. CINEMATIC OUTROS: Never use "clean white backgrounds". End on high-contrast, moody industrial shots with minimalist typography.
 6. You must generate EXACTLY ${totalPosts} posts.
 7. CRITICAL LANGUAGE RULE: You must write the entire output (including scripts, captions, and visual descriptions) exclusively in the **${language}** language.
+
+${competitorContext}
 
 Begin generating the posts now:`;
 

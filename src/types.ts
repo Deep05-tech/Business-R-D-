@@ -222,6 +222,17 @@ export interface MarketingSalesIntelligence {
   }>;
 }
 
+export interface CompetitorProfile {
+  name: string;
+  url: string;
+  socials: {
+    instagram: string | null;
+    facebook: string | null;
+    twitter: string | null;
+    youtube: string | null;
+  };
+}
+
 export interface StructuredMemory {
   generatedAt: string;
   input: BusinessInput;
@@ -249,6 +260,7 @@ export interface StructuredMemory {
       embedding: number[];
     }>;
   };
+  competitors?: CompetitorProfile[];
 }
 
 export interface BusinessIntelligenceProfile {

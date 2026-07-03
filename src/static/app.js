@@ -1,367 +1,256 @@
-// Business R&D Agent — Client UI Script
-// Served as /static/app.js — no template literal escaping issues here
+window.activeProjectUrl = null;
 
-// ---- Tab switching ----
-function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  document.getElementById('panel-' + name).classList.add('active');
-  if (name === 'index') loadStats();
-  if (name === 'query') loadSmmSites();
-  if (name === 'competitor') loadCompetitorSites();
-  if (name === 'analysis') loadAnalysisSites();
-}
-
-// ---- Analyse form ----
-const AGENTS = [
-  'Crawling website',
-  'Cleaning semantics',
-  'Web intelligence',
-  'Social intelligence',
-  'Business identity',
-  'Offerings extraction',
-  'Audience analysis',
-  'Brand intelligence',
-  'Digital maturity',
-  'R&D insights',
-  'Marketing Strategy',
-  'QC validation'
-];
-let agentTimer = null;
-
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('business-form');
-  if (!form) return;
-
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const btn      = document.getElementById('submit-button');
-    const statusEl = document.getElementById('status');
-    const pills    = document.getElementById('progress-pills');
-    const qcRow    = document.getElementById('qc-row');
-    const output   = document.getElementById('output');
-
-    if (!btn || !statusEl || !pills || !qcRow || !output) return;
-
-    btn.disabled = true;
-    document.getElementById('btn-icon').textContent = '';
-    qcRow.style.display = 'none';
-    pills.style.display = 'flex';
-    pills.innerHTML = '';
-
-    // Build progress pills
-    let step = 0;
-    const pillEls = AGENTS.map(function (name, i) {
-      const el = document.createElement('span');
-      el.className = 'pill';
-      el.textContent = name;
-      el.id = 'pill-' + i;
-      pills.appendChild(el);
-      return el;
-    });
-
-    const websiteUrl  = document.getElementById('website-url').value;
-    const socialUrls = [];
-
-    try {
-      const formData = new FormData(document.getElementById('business-form'));
-      
-      const res = await fetch('/api/analyze-stream', {
-        method: 'POST',
-        body: formData
-      });
-
-      if (!res.ok) {
-        throw new Error("HTTP error " + res.status);
-      }
-
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
-
-      const processData = (data) => {
-        if (data.type === 'progress') {
-          const stepIndex = AGENTS.indexOf(data.step);
-          if (stepIndex !== -1) {
-            for (let i = 0; i < stepIndex; i++) {
-              pillEls[i].classList.add('done');
-            }
-            statusEl.className = 'status-bar running';
-            statusEl.innerHTML = '<span class="spinner"></span> ' + AGENTS[stepIndex] + '...';
-          }
-        } else if (data.type === 'complete') {
-          output.textContent = JSON.stringify(data.profile, null, 2);
-          pillEls.forEach(function (p) { p.classList.add('done'); });
-          
-          statusEl.className = 'status-bar done';
-          const agentCount = (data.profile.structuredJsonMemoryObject &&
-            data.profile.structuredJsonMemoryObject.agentDiagnostics &&
-            data.profile.structuredJsonMemoryObject.agentDiagnostics.length) || 0;
-          statusEl.innerHTML = '\u2713 Analysis complete \u2014 ' + agentCount + ' agents ran successfully.';
-          
-          showQcBar(data.profile.qc);
-          btn.disabled = false;
-          document.getElementById('btn-icon').textContent = '\u26a1';
-        } else if (data.type === 'error') {
-          statusEl.className = 'status-bar error';
-          statusEl.innerHTML = '\u2717 ' + (data.error || 'Request failed');
-          if (data.qc) showQcBar(data.qc);
-          btn.disabled = false;
-          document.getElementById('btn-icon').textContent = '\u26a1';
-        }
-      };
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
-        
-        const lines = buffer.split('\n\n');
-        buffer = lines.pop() || "";
-        
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            try {
-              processData(JSON.parse(line.substring(6)));
-            } catch(e) {}
-          }
-        }
-      }
-
-    } catch (err) {
-      statusEl.className = 'status-bar error';
-      statusEl.innerHTML = '\u2717 Network error: ' + err.message;
-      btn.disabled = false;
-      document.getElementById('btn-icon').textContent = '\u26a1';
-    }
-  });
-
-  // Allow Enter key in query field
-  const queryText = document.getElementById('query-text');
-  if (queryText) {
-    queryText.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') runQuery();
-    });
-  }
+// On load
+document.addEventListener('DOMContentLoaded', () => {
+  loadProjects();
 });
 
-// ---- QC score bar ----
-function showQcBar(qc) {
-  if (!qc) return;
-  const row      = document.getElementById('qc-row');
-  const scoreEl  = document.getElementById('qc-score');
-  const fill     = document.getElementById('qc-fill');
-  const statusEl = document.getElementById('qc-status');
-
-  row.style.display = 'flex';
-  const pct = Math.round((qc.confidenceScore || 0) * 100);
-  scoreEl.textContent = pct + '%';
-
-  const cls = pct >= 85 ? 'pass' : pct >= 60 ? 'pass-warn' : 'fail';
-  scoreEl.className = 'qc-score ' + (pct >= 85 ? 'pass' : 'fail');
-  fill.style.width = pct + '%';
-  fill.className = 'progress-fill ' + cls;
-  statusEl.textContent = qc.passed ? '\u2713 Passed' : '\u2717 Failed';
-  statusEl.style.color = qc.passed ? 'var(--success)' : 'var(--error)';
-}
-
-// ---- Memory query ----
-async function runQuery() {
-  const site      = (document.getElementById('query-site').value || '').trim();
-  const q         = (document.getElementById('query-text').value || '').trim();
-  const answerDiv = document.getElementById('query-answer');
-  const answerText = document.getElementById('answer-text');
-
-  if (!site || !q) { alert('Please enter both a URL and a question.'); return; }
-
-  answerDiv.className = 'query-answer visible';
-  answerText.innerHTML = '<em style="color:var(--text-muted)">Searching memory...</em>';
-
-  try {
-    const params = new URLSearchParams({ site: site, q: q });
-    const res  = await fetch('/memory/query?' + params.toString());
-    const data = await res.json();
-    const confCls = data.confidence === 'high' ? 'conf-high'
-                  : data.confidence === 'medium' ? 'conf-medium' : 'conf-low';
-    answerText.innerHTML = (data.answer || 'No answer found.') +
-      '<span class="conf-badge ' + confCls + '">' + (data.confidence || 'none') + '</span>';
-  } catch (err) {
-    answerText.innerHTML = '<span style="color:var(--error)">Error: ' + err.message + '</span>';
-  }
-}
-
-// ---- SMM Generation ----
-async function loadSmmSites() {
-  try {
-    const res = await fetch('/api/sites');
-    const sites = await res.json();
-    const select = document.getElementById('smm-site');
-    
-    if (sites.length === 0) {
-      select.innerHTML = '<option value="">No businesses analysed yet</option>';
-      return;
-    }
-    
-    select.innerHTML = sites.map(s => 
-      '<option value="' + s.url + '">' + s.name + ' (' + s.url + ')</option>'
-    ).join('');
-  } catch (err) {
-    console.error("Failed to load SMM sites:", err);
-  }
-}
-
-async function generateSMM() {
-  const site      = (document.getElementById('smm-site').value || '').trim();
-  const type      = (document.getElementById('smm-type').value || 'video').trim();
-  const language  = (document.getElementById('smm-language').value || 'English').trim();
-  const total     = parseInt(document.getElementById('smm-total').value || '3', 10);
+// ---- Tab Switching ----
+window.switchTab = function(name, title) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
   
-  const smmAnswer = document.getElementById('smm-answer');
-  const smmText   = document.getElementById('smm-text');
+  document.getElementById('panel-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  document.getElementById('page-title').innerText = title;
 
-  if (!site) { alert('Please select a business memory first. If none exist, run the intelligence pipeline.'); return; }
+  if (name === 'competitors') loadCompetitorsUI();
+  if (name === 'social-feed') loadFeedUI();
+};
 
-  smmAnswer.style.display = 'block';
-  smmText.innerHTML = '<em style="color:var(--text-muted)">Generating ' + total + ' ' + type + ' concepts in ' + language + '... (this may take a minute)</em>';
-
-  try {
-    const res = await fetch('/api/generate-smm', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ websiteUrl: site, type: type, totalPosts: total, language: language })
-    });
-    
-    const data = await res.json();
-    if (data.error) throw new Error(data.error);
-    
-    if (data.posts && data.posts.length > 0) {
-      smmText.innerHTML = data.posts.join('<br><br>');
-    } else {
-      smmText.innerHTML = 'No content generated.';
-    }
-  } catch (err) {
-    smmText.innerHTML = '<span style="color:var(--error)">Error: ' + err.message + '</span>';
-  }
-}
-
-// ---- Competitor Intelligence ----
-async function loadCompetitorSites() {
+// ---- Projects ----
+async function loadProjects() {
   try {
     const res = await fetch('/api/sites');
     const sites = await res.json();
-    const select = document.getElementById('competitor-site');
+    const select = document.getElementById('global-project');
     
     if (sites.length === 0) {
-      select.innerHTML = '<option value="">No businesses analysed yet</option>';
+      select.innerHTML = '<option value="">No projects found</option>';
       return;
     }
     
-    select.innerHTML = sites.map(s => 
-      '<option value="' + s.url + '">' + s.name + ' (' + s.url + ')</option>'
-    ).join('');
+    select.innerHTML = '<option value="">-- Select a Project --</option>' + 
+      sites.map(s => `<option value="${s.url}">${s.name}</option>`).join('');
   } catch (err) {
-    console.error("Failed to load competitor sites:", err);
+    console.error("Failed to load projects:", err);
   }
 }
 
-async function findCompetitors() {
-  const site = (document.getElementById('competitor-site').value || '').trim();
-  const ansDiv = document.getElementById('competitor-answer');
-  const textDiv = document.getElementById('competitor-text');
+window.selectProject = function(url) {
+  window.activeProjectUrl = url;
+  if (!url) {
+    // Disable tabs
+    document.querySelectorAll('.sidebar-nav .nav-item:not(#nav-analyse)').forEach(el => {
+      el.classList.add('disabled');
+      el.onclick = (e) => { e.preventDefault(); return false; };
+    });
+    switchTab('analyse', 'New Analysis');
+    return;
+  }
 
-  if (!site) { alert('Please select a business memory first.'); return; }
+  // Enable tabs
+  document.querySelectorAll('.sidebar-nav .nav-item').forEach(el => {
+    el.classList.remove('disabled');
+  });
 
-  ansDiv.style.display = 'block';
-  textDiv.innerHTML = '<em style="color:var(--text-muted)">Executing live market research... (this may take up to 30 seconds)</em>';
+  // Re-bind onclick
+  document.getElementById('nav-competitors').onclick = () => { switchTab('competitors', 'Competitor Intelligence'); return false; };
+  document.getElementById('nav-smm').onclick = () => { switchTab('smm', 'SMM Generation'); return false; };
+  document.getElementById('nav-seo').onclick = () => { switchTab('seo', 'Website & SEO'); return false; };
+  document.getElementById('nav-social-feed').onclick = () => { switchTab('social-feed', 'Competitor Feed'); return false; };
 
+  // Go to competitors by default when a project is selected
+  switchTab('competitors', 'Competitor Intelligence');
+};
+
+// ---- Run Intelligence ----
+window.runIntelligence = async function() {
+  const form = document.getElementById('business-form');
+  const url = document.getElementById('website-url').value;
+  if (!url) return;
+
+  document.getElementById('loading-overlay').style.display = 'flex';
+  
+  const formData = new FormData(form);
+  try {
+    const res = await fetch('/business-intelligence', {
+      method: 'POST',
+      body: formData
+    });
+    if (!res.ok) throw new Error('Failed to run intelligence');
+    
+    // Reload projects and select the new one
+    await loadProjects();
+    document.getElementById('global-project').value = url;
+    window.selectProject(url);
+  } catch (e) {
+    alert("Error: " + e.message);
+  } finally {
+    document.getElementById('loading-overlay').style.display = 'none';
+  }
+};
+
+// ---- Competitors ----
+window.findCompetitors = async function() {
+  if (!window.activeProjectUrl) return;
+  const list = document.getElementById('competitor-list');
+  list.innerHTML = '<div class="spinner" style="margin: 20px auto;"></div>';
+  
   try {
     const res = await fetch('/api/competitors', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ websiteUrl: site })
+      body: JSON.stringify({ websiteUrl: window.activeProjectUrl })
     });
-    
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     
-    // Markdown formatting helper to render bold text
-    const formatMd = (text) => text.replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>');
-    textDiv.innerHTML = formatMd(data.report || 'No competitors found.');
-  } catch (err) {
-    textDiv.innerHTML = '<span style="color:var(--error)">Error: ' + err.message + '</span>';
+    // data.competitors should be an array of objects
+    loadCompetitorsUI();
+  } catch (e) {
+    list.innerHTML = `<div class="empty-state" style="color:var(--required)">Error: ${e.message}</div>`;
   }
-}
+};
 
-// ---- Index stats ----
-async function loadStats() {
+async function loadCompetitorsUI() {
+  if (!window.activeProjectUrl) return;
+  const list = document.getElementById('competitor-list');
+  
   try {
-    const res  = await fetch('/memory/stats');
+    const res = await fetch(`/api/competitors?url=${encodeURIComponent(window.activeProjectUrl)}`);
     const data = await res.json();
-    document.getElementById('stat-sites').textContent  = data.totalSites  || 0;
-    document.getElementById('stat-named').textContent  = data.sitesWithName || 0;
-
-    const bd = document.getElementById('industry-breakdown');
-    const industries = Object.entries(data.industries || {});
-    if (industries.length === 0) {
-      bd.innerHTML = '<p style="color:var(--text-muted);font-size:13px;">No sites analysed yet.</p>';
-      return;
-    }
-    bd.innerHTML =
-      '<p style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;">Industries</p>' +
-      industries.map(function (entry) {
-        return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;">' +
-          '<span style="color:var(--text)">' + entry[0] + '</span>' +
-          '<span style="color:var(--accent);font-weight:700;">' + entry[1] + '</span></div>';
-      }).join('');
-  } catch (_) {}
-}
-
-// ---- Gap Analysis ----
-async function loadAnalysisSites() {
-  try {
-    const res = await fetch('/api/sites');
-    const sites = await res.json();
-    const select = document.getElementById('analysis-site');
     
-    if (sites.length === 0) {
-      select.innerHTML = '<option value="">No businesses analysed yet</option>';
+    if (!data.competitors || data.competitors.length === 0) {
+      list.innerHTML = '<div class="empty-state">No competitors mapped yet. Click "Find Competitors" above.</div>';
       return;
     }
     
-    select.innerHTML = sites.map(s => 
-      '<option value="' + s.url + '">' + s.name + ' (' + s.url + ')</option>'
-    ).join('');
-  } catch (err) {
-    console.error("Failed to load analysis sites:", err);
+    list.innerHTML = data.competitors.map(c => `
+      <div class="competitor-card">
+        <div class="comp-info">
+          <h3>${c.name}</h3>
+          <a href="${c.url}" target="_blank">${c.url}</a>
+        </div>
+        <div class="social-links">
+          ${c.socials.instagram ? `<a href="${c.socials.instagram}" class="social-icon" target="_blank" title="Instagram">📸</a>` : ''}
+          ${c.socials.facebook ? `<a href="${c.socials.facebook}" class="social-icon" target="_blank" title="Facebook">📘</a>` : ''}
+          ${c.socials.twitter ? `<a href="${c.socials.twitter}" class="social-icon" target="_blank" title="X (Twitter)">𝕏</a>` : ''}
+          ${c.socials.youtube ? `<a href="${c.socials.youtube}" class="social-icon" target="_blank" title="YouTube">▶️</a>` : ''}
+        </div>
+      </div>
+    `).join('');
+  } catch (e) {
+    list.innerHTML = '<div class="empty-state">Failed to load competitors.</div>';
   }
 }
 
-async function runAnalysis() {
-  const site = (document.getElementById('analysis-site').value || '').trim();
-  const ansDiv = document.getElementById('analysis-answer');
-  const textDiv = document.getElementById('analysis-text');
-
-  if (!site) { alert('Please select a business memory first.'); return; }
-
+// ---- SMM ----
+window.generateSMM = async function() {
+  if (!window.activeProjectUrl) return;
+  
+  const strategy = document.querySelector('input[name="smmStrategy"]:checked').value;
+  const type = document.getElementById('smm-type').value;
+  const lang = document.getElementById('smm-language').value;
+  const total = document.getElementById('smm-total').value;
+  
+  const ansDiv = document.getElementById('smm-answer');
+  const textDiv = document.getElementById('smm-text');
+  
   ansDiv.style.display = 'block';
-  textDiv.innerHTML = '<em style="color:var(--text-muted)">Invading competitors and generating strategic roadmap... (this will take 1-3 minutes)</em>';
-
+  textDiv.innerHTML = '<div class="spinner"></div><p style="margin-top:10px;color:var(--text-muted)">Generating elite content...</p>';
+  
   try {
-    const res = await fetch('/api/gap-analysis', {
+    const res = await fetch('/api/generate-smm', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ websiteUrl: site })
+      body: JSON.stringify({
+        websiteUrl: window.activeProjectUrl,
+        type: type,
+        language: lang,
+        totalPosts: total,
+        strategy: strategy
+      })
     });
     
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     
-    const formatMd = (text) => text.replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>');
-    textDiv.innerHTML = formatMd(data.report || 'No analysis generated.');
-  } catch (err) {
-    textDiv.innerHTML = '<span style="color:var(--error)">Error: ' + err.message + '</span>';
+    textDiv.innerHTML = data.posts.join('<br><br><hr style="border-top:1px solid var(--border);margin:20px 0;"><br>');
+  } catch (e) {
+    textDiv.innerHTML = `<span style="color:red">Error: ${e.message}</span>`;
+  }
+};
+
+// ---- SEO ----
+window.generateSEO = async function() {
+  if (!window.activeProjectUrl) return;
+  
+  const ansDiv = document.getElementById('seo-answer');
+  const textDiv = document.getElementById('seo-text');
+  
+  ansDiv.style.display = 'block';
+  textDiv.innerHTML = '<div class="spinner"></div><p style="margin-top:10px;color:var(--text-muted)">Analyzing competitor SEO footprint...</p>';
+  
+  try {
+    const res = await fetch('/api/seo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ websiteUrl: window.activeProjectUrl })
+    });
+    
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    
+    textDiv.innerHTML = data.report.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  } catch (e) {
+    textDiv.innerHTML = `<span style="color:red">Error: ${e.message}</span>`;
+  }
+};
+
+// ---- CRON FEED ----
+window.triggerCron = async function() {
+  const list = document.getElementById('feed-list');
+  list.innerHTML = '<div class="spinner" style="margin: 20px auto;"></div><div style="text-align:center">Running deep social crawl across all competitors. This can take several minutes...</div>';
+  
+  try {
+    const res = await fetch('/api/cron/run', { method: 'POST' });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    
+    loadFeedUI();
+  } catch (e) {
+    list.innerHTML = `<div class="empty-state" style="color:red">Error: ${e.message}</div>`;
+  }
+};
+
+async function loadFeedUI() {
+  if (!window.activeProjectUrl) return;
+  const list = document.getElementById('feed-list');
+  
+  try {
+    const res = await fetch(`/api/social-feed?url=${encodeURIComponent(window.activeProjectUrl)}`);
+    const data = await res.json();
+    
+    if (!data.feed || data.feed.length === 0) {
+      list.innerHTML = '<div class="empty-state">No competitor posts found yet.</div>';
+      return;
+    }
+    
+    list.innerHTML = data.feed.map(post => `
+      <div class="feed-item">
+        <div class="feed-avatar">${post.platformIcon}</div>
+        <div class="feed-content">
+          <div class="feed-header">
+            <span class="feed-author">${post.competitorName} on ${post.platform}</span>
+            <span class="feed-meta">${new Date(post.date).toLocaleDateString()}</span>
+          </div>
+          <div class="feed-text">${post.content}</div>
+          ${post.link ? `<a href="${post.link}" target="_blank" style="display:inline-block;margin-top:10px;font-size:12px;font-weight:600;color:var(--primary);text-decoration:none;">View Original Post ↗</a>` : ''}
+        </div>
+      </div>
+    `).join('');
+  } catch (e) {
+    list.innerHTML = '<div class="empty-state">Failed to load social feed.</div>';
   }
 }
