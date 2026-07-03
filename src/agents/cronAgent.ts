@@ -52,7 +52,7 @@ export class CronAgent {
       const searchTool = new TavilySearch({ maxResults: 15 });
       
       const targetCompetitors = memory.competitors;
-      const chunkSize = 1; // Process 1 competitor at a time to prevent LLM extraction truncation/laziness
+      const chunkSize = 3; // Grouping by 3 to balance exhaustive extraction with OpenAI rate limit overhead
       
       for (let i = 0; i < targetCompetitors.length; i += chunkSize) {
         const chunk = targetCompetitors.slice(i, i + chunkSize);
@@ -141,10 +141,10 @@ ${tavilyContext}
 INSTRUCTIONS:
 1. Review the search results and meticulously extract ONLY genuine social media posts, videos, or news updates made by the competitors.
 2. EXHAUSTIVE EXTRACTION: You MUST extract EVERY SINGLE VALID POST you find in the context. Do not stop after 1 or 2 posts. If there are 10 valid posts across the platforms, you MUST output all 10!
-3. The current date is ${currentDate}. You MUST ONLY extract posts that are genuinely recent (from the last 30 days).
+3. The current date is ${currentDate}.
 4. We have mathematically calculated the 'exact_post_date' for LinkedIn posts and injected it into the JSON. YOU MUST USE THIS 'exact_post_date' as the ultimate source of truth!
-5. If a LinkedIn post's 'exact_post_date' is older than 30 days from today, YOU MUST IGNORE IT ENTIRELY! Do not extract it!
-6. For other platforms (YouTube, Twitter), if a search result explicitly says "2023", "2024", "2025", "10 years ago", or is clearly an old post (older than 30 days), YOU MUST IGNORE IT ENTIRELY!
+5. If a LinkedIn post's 'exact_post_date' is older than 60 days from today, YOU MUST IGNORE IT ENTIRELY! Do not extract it!
+6. For other platforms (YouTube, Twitter, Instagram), if a search result explicitly says "2023", "2024", "10 years ago", or is clearly an old post (older than 60 days), YOU MUST IGNORE IT ENTIRELY!
 7. If a post is verified as recent, set the 'date' field to its 'exact_post_date' (if available), otherwise use "Recent Update".
 8. DO NOT extract company bio snippets, "About Us" sections, or generic profile text.
 9. If there are NO genuine recent posts from the last 30 days, return an empty array []. Do not hallucinate posts.
@@ -155,6 +155,9 @@ INSTRUCTIONS:
           const structuredLlm = llm.withStructuredOutput(feedSchema);
           const response = await structuredLlm.invoke(prompt);
           allPosts = allPosts.concat(response.posts as FeedPost[]);
+          
+          // Anti-429 Delay: wait 10 seconds before processing the next chunk to strictly respect OpenAI's 30,000 TPM limit
+          await new Promise(resolve => setTimeout(resolve, 10000));
         } catch (e: any) {
           logger.error(`Cron agent chunk synthesis failed: ${e.message}`);
         }
