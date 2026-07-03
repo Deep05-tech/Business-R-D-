@@ -62,10 +62,22 @@ export class CronAgent {
           try {
             const query = `Latest news, updates, or social media posts from "${comp.name}" within the last 6 months`;
             const resultRaw = await searchTool.invoke({ query });
+            
+            // Handle Langchain Tavily 432 quota exceeded responses masquerading as valid returns
+            if (typeof resultRaw === 'string' && resultRaw.includes('HTTP error! status: 432')) {
+               throw new Error("Tavily API Quota Exceeded (HTTP 432)");
+            }
+            if (resultRaw && resultRaw.error) {
+               throw new Error(resultRaw.error);
+            }
+
             const parsed = typeof resultRaw === "string" ? JSON.parse(resultRaw) : resultRaw;
             
             tavilyContext += `\nCompetitor: ${comp.name}\nRecent Social/Web Footprint: ${JSON.stringify(parsed)}\n`;
           } catch (e: any) {
+            if (e.message.includes('432') || e.message.includes('Quota') || e.message.includes('limit')) {
+              throw new Error("Tavily Search API monthly limit reached. Please upgrade your Tavily plan or use a new API key.");
+            }
             logger.warn(`Failed to fetch social footprint for ${comp.name}: ${e.message}`);
           }
         }
