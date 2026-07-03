@@ -39,9 +39,9 @@ export class CronAgent {
     if (process.env.TAVILY_API_KEY) {
       const searchTool = new TavilySearch({ maxResults: 3 });
       
-      // Pick top 3 competitors to avoid burning too many API credits on one run
-      const topCompetitors = memory.competitors.slice(0, 3);
-      for (const comp of topCompetitors) {
+      // Iterate through all competitors for a complete feed update
+      const targetCompetitors = memory.competitors;
+      for (const comp of targetCompetitors) {
         try {
           // Google Dork tailored for actual posts and news
           const query = `(site:linkedin.com/posts OR site:twitter.com OR site:youtube.com) "${comp.name}" ("days ago" OR "hours ago" OR "months ago")`;
