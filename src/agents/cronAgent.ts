@@ -77,9 +77,31 @@ export class CronAgent {
               if (raw && raw.error) throw new Error(raw.error);
               return typeof raw === "string" ? JSON.parse(raw) : raw;
             };
+
+            const parsedLi = checkQuota(liRaw);
+            
+            // MATH HACK: Decode LinkedIn Snowflake IDs to extract the exact millisecond timestamp of the post.
+            // This completely bypasses Google's inaccurate "2 days ago" cache dates.
+            if (parsedLi && parsedLi.results) {
+              parsedLi.results = parsedLi.results.map((r: any) => {
+                const match = r.url.match(/activity-(\d+)-/);
+                if (match && match[1]) {
+                  try {
+                    const id = BigInt(match[1]);
+                    const binary = id.toString(2);
+                    const timestampBinary = binary.slice(0, 41);
+                    const timestamp = parseInt(timestampBinary, 2);
+                    r.exact_post_date = new Date(timestamp).toISOString().split('T')[0];
+                  } catch (e) {
+                    // Ignore math errors on weird URLs
+                  }
+                }
+                return r;
+              });
+            }
             
             const parsed = {
-              linkedin: checkQuota(liRaw),
+              linkedin: parsedLi,
               twitter_facebook: checkQuota(xFbRaw),
               instagram: checkQuota(instaRaw),
               youtube: checkQuota(ytRaw)
@@ -104,13 +126,13 @@ ${tavilyContext}
 
 INSTRUCTIONS:
 1. Review the search results and meticulously extract ONLY genuine social media posts, videos, or news updates made by the competitors.
-2. The current date is ${currentDate}. You must extract the ABSOLUTE LATEST posts available across all platforms. Compare the results and prioritize the freshest ones (e.g., 18h, 1d, 1w).
-3. CRITICAL WARNING: Search engines often falsely label 1-year-old LinkedIn/Twitter posts as "2 days ago" because that is when the page was cached. You CANNOT trust the "2 days ago" prefix blindly.
-4. If a search result explicitly says "2023", "2024", "2025", "10 years ago", or is clearly an old post (older than 3 months), YOU MUST IGNORE IT ENTIRELY! This especially applies to old YouTube videos!
-5. Focus EQUALLY on all provided platforms (LinkedIn, Twitter, Facebook, Instagram, YouTube) if they have recent posts.
-6. If a search result lacks a specific date or contextual proof of time, DO NOT REJECT IT. Extract it and set the 'date' field to "Recent Update".
+2. The current date is ${currentDate}. You MUST ONLY extract posts that are genuinely recent (from the last 30 days).
+3. We have mathematically calculated the 'exact_post_date' for LinkedIn posts and injected it into the JSON. YOU MUST USE THIS 'exact_post_date' as the ultimate source of truth!
+4. If a LinkedIn post's 'exact_post_date' is older than 30 days from today, YOU MUST IGNORE IT ENTIRELY! Do not extract it!
+5. For other platforms (YouTube, Twitter), if a search result explicitly says "2023", "2024", "2025", "10 years ago", or is clearly an old post (older than 30 days), YOU MUST IGNORE IT ENTIRELY!
+6. If a post is verified as recent, set the 'date' field to its 'exact_post_date' (if available), otherwise use "Recent Update".
 7. DO NOT extract company bio snippets, "About Us" sections, or generic profile text.
-8. If there are NO genuine recent posts, return an empty array []. Do not hallucinate posts.
+8. If there are NO genuine recent posts from the last 30 days, return an empty array []. Do not hallucinate posts.
 9. For the 'link' field, you MUST extract the EXACT 'url' property provided in the search result JSON. Do not alter or hallucinate URLs.
 10. Output the feed as a structured JSON array.`;
 
