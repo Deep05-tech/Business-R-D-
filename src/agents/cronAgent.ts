@@ -60,7 +60,7 @@ export class CronAgent {
         
         for (const comp of chunk) {
           try {
-            const query = `(site:linkedin.com/posts OR site:twitter.com OR site:youtube.com) "${comp.name}" ("days ago" OR "hours ago" OR "months ago")`;
+            const query = `Latest news, updates, or social media posts from "${comp.name}" within the last 6 months`;
             const resultRaw = await searchTool.invoke({ query });
             const parsed = typeof resultRaw === "string" ? JSON.parse(resultRaw) : resultRaw;
             
@@ -96,10 +96,8 @@ INSTRUCTIONS:
     }
 
     try {
-      // Save feed to memory
-      // We will append to existing feed to create a timeline, keeping max 50 items
-      const existingFeed = (memory as any).socialFeed || [];
-      const updatedFeed = [...allPosts, ...existingFeed].slice(0, 50);
+      // Save feed to memory (OVERWRITE to flush old hallucinations)
+      const updatedFeed = [...allPosts].slice(0, 50);
       
       (memory as any).socialFeed = updatedFeed;
       
