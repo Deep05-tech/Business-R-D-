@@ -63,12 +63,8 @@ document.addEventListener('DOMContentLoaded', function () {
       return el;
     });
 
-    // No more fake setInterval!
-    const socialUrlsRaw = document.getElementById('social-urls').value;
-    const socialUrls = socialUrlsRaw
-      .split(/[\n,]/)
-      .map(function (v) { return v.trim(); })
-      .filter(Boolean);
+    const websiteUrl  = document.getElementById('website-url').value;
+    const socialUrls = [];
 
     try {
       const formData = new FormData(document.getElementById('business-form'));

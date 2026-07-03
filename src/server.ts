@@ -412,10 +412,7 @@ app.get("/", (_request, response) => {
               Website URL <span style="font-weight:400;color:var(--text-danger)">*</span>
               <input id="website-url" name="websiteUrl" type="url" placeholder="https://example.com" required />
             </label>
-            <label>
-              Social URLs <span style="font-weight:400;color:var(--text-muted)">(optional — one per line)</span>
-              <textarea id="social-urls" name="socialUrls" placeholder="https://www.linkedin.com/company/example&#10;https://www.instagram.com/example"></textarea>
-            </label>
+
             <label>
               Brochure <span style="font-weight:400;color:var(--text-muted)">(optional PDF)</span>
               <input id="brochure-file" name="brochureFile" type="file" accept="application/pdf" />
