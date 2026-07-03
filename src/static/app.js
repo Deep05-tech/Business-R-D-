@@ -7,8 +7,8 @@ function switchTab(name) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   document.getElementById('panel-' + name).classList.add('active');
-  if (name === 'query') loadQuerySites();
-  if (name === 'smm') loadSmmSites();
+  if (name === 'index') loadStats();
+  if (name === 'query') loadSmmSites();
   if (name === 'competitor') loadCompetitorSites();
   if (name === 'analysis') loadAnalysisSites();
 }
