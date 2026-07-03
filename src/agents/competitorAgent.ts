@@ -145,9 +145,10 @@ INSTRUCTIONS:
       }
 
       // If missing critical socials, try a Tavily dork
-      if (!socials.instagram || !socials.youtube || !socials.linkedin) {
+      if (!socials.instagram || !socials.youtube || !socials.linkedin || !socials.facebook || !socials.twitter) {
         try {
-          const dorkQuery = `(site:linkedin.com/company OR site:instagram.com OR site:youtube.com OR site:facebook.com) "${comp.name}"`;
+          const domain = new URL(comp.url).hostname.replace('www.', '');
+          const dorkQuery = `(site:linkedin.com/company OR site:instagram.com OR site:youtube.com OR site:facebook.com OR site:twitter.com) ("${comp.name}" OR "${domain}")`;
           const dorkResultRaw = await searchTool.invoke({ query: dorkQuery });
           const dorkParsed = typeof dorkResultRaw === "string" ? JSON.parse(dorkResultRaw) : dorkResultRaw;
           
