@@ -112,16 +112,8 @@ INSTRUCTIONS:
     }
 
     try {
-      // Save feed to memory (Prepend new unique posts to existing feed)
-      const existingFeed = (memory as any).socialFeed || [];
-      
-      // Filter out posts that already exist in the feed (by link or exact content match)
-      const newPosts = allPosts.filter(p => 
-        !existingFeed.some((e: any) => (e.link && e.link === p.link) || e.content === p.content)
-      );
-
-      // If no new posts are found, this just returns the existing feed
-      const updatedFeed = [...newPosts, ...existingFeed].slice(0, 50);
+      // Save feed to memory (OVERWRITE to flush old/historical posts)
+      const updatedFeed = [...allPosts].slice(0, 50);
       
       (memory as any).socialFeed = updatedFeed;
       
