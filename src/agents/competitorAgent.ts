@@ -84,10 +84,10 @@ ${JSON.stringify(memory.businessIdentity)}`;
         url: z.string().describe("Root domain website URL of the competitor (e.g. https://example.com)"),
         type: z.enum(["local", "global"]).describe("Whether this competitor is local/regional or a global player"),
         location: z.string().describe("The city and country where this competitor is headquartered")
-      })).max(20)
+      })).max(40)
     });
 
-    const synthesisPrompt = `You are an elite B2B Market Research Analyst. Identify exactly 10 LOCAL competitors and exactly 10 GLOBAL competitors for the given business based on the web search results and your knowledge.
+    const synthesisPrompt = `You are an elite B2B Market Research Analyst. Identify a backup pool of up to 20 LOCAL competitors and up to 20 GLOBAL competitors for the given business based on the web search results and your knowledge.
 
 BUSINESS CONTEXT:
 ${memoryContext}
@@ -96,11 +96,11 @@ LIVE WEB SEARCH RESULTS:
 ${tavilyContext}
 
 INSTRUCTIONS:
-1. Identify up to 10 true LOCAL competitors (same country/region).
-2. Identify up to 10 true GLOBAL competitors (worldwide market leaders). 
+1. Identify up to 20 true LOCAL competitors (same country/region).
+2. Identify up to 20 true GLOBAL competitors (worldwide market leaders). 
 3. For GLOBAL competitors, you MUST include the absolute biggest industry giants (e.g., if the industry is forging/flanges, you MUST include Iraeta and similar massive entities). Leverage your vast pre-trained knowledge to fill in major global leaders even if they were omitted from the live search results.
-4. Ensure all 20 competitors have their official root domain URLs and headquarters location.
-5. If you cannot find 10 for each category, return as many high-quality ones as possible.`;
+4. Ensure all competitors have their official root domain URLs and headquarters location.
+5. Generate as many high-quality backups as possible up to the limits.`;
 
     let baseCompetitors: Array<{name: string, url: string, type: "local"|"global", location: string}> = [];
     try {
@@ -114,24 +114,23 @@ INSTRUCTIONS:
     }
 
     // --- PHASE 4: Direct Scraping & Dorking for Socials ---
-    logger.info(`Phase 4: Scraping competitor websites for actual social media profiles...`);
+    logger.info(`Phase 4: Filtering for verified social media presence...`);
     const finalCompetitors: CompetitorProfile[] = [];
+    
+    const localQueue = baseCompetitors.filter(c => c.type === "local");
+    const globalQueue = baseCompetitors.filter(c => c.type === "global");
 
-    for (const comp of baseCompetitors) {
+    const processCompetitor = async (comp: any): Promise<CompetitorProfile | null> => {
       const socials: CompetitorProfile["socials"] = { linkedin: null, instagram: null, facebook: null, twitter: null, youtube: null };
       
       try {
-        // Attempt to scrape their homepage
         logger.debug(`Scraping ${comp.url}...`);
         const res = await axios.get(comp.url, { timeout: 8000, headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36' } });
         const $ = cheerio.load(res.data);
         
         $('a[href]').each((_, el) => {
           let href = $(el).attr('href') || "";
-          
-          // sometimes links are like javascript:void(0) or just fragments
           if (!href.startsWith('http')) return;
-          
           href = href.toLowerCase();
           
           if (href.includes('linkedin.com/company')) socials.linkedin = href;
@@ -144,7 +143,6 @@ INSTRUCTIONS:
         logger.warn(`Could not scrape ${comp.url} directly.`);
       }
 
-      // If missing critical socials, try a Tavily dork
       if (!socials.instagram || !socials.youtube || !socials.linkedin || !socials.facebook || !socials.twitter) {
         try {
           const domain = new URL(comp.url).hostname.replace('www.', '');
@@ -164,13 +162,43 @@ INSTRUCTIONS:
         } catch (e) {}
       }
 
-      finalCompetitors.push({
-        name: comp.name,
-        url: comp.url,
-        type: comp.type,
-        location: comp.location,
-        socials
-      });
+      // STRICT FILTERING: Must have at least 1 social media link
+      if (socials.linkedin || socials.instagram || socials.facebook || socials.twitter || socials.youtube) {
+        return {
+          name: comp.name,
+          url: comp.url,
+          type: comp.type,
+          location: comp.location,
+          socials
+        };
+      }
+      return null;
+    };
+
+    let localCount = 0;
+    while(localQueue.length > 0 && localCount < 10) {
+      const comp = localQueue.shift();
+      if (!comp) continue;
+      const validated = await processCompetitor(comp);
+      if (validated) {
+        finalCompetitors.push(validated);
+        localCount++;
+      } else {
+        logger.info(`Discarding LOCAL ${comp.name} (no social media found)`);
+      }
+    }
+
+    let globalCount = 0;
+    while(globalQueue.length > 0 && globalCount < 10) {
+      const comp = globalQueue.shift();
+      if (!comp) continue;
+      const validated = await processCompetitor(comp);
+      if (validated) {
+        finalCompetitors.push(validated);
+        globalCount++;
+      } else {
+        logger.info(`Discarding GLOBAL ${comp.name} (no social media found)`);
+      }
     }
 
     return finalCompetitors;
