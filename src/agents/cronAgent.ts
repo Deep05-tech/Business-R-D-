@@ -60,7 +60,7 @@ export class CronAgent {
         
         for (const comp of chunk) {
           try {
-            const query = `Latest news, updates, or social media posts from "${comp.name}" within the last 6 months`;
+            const query = `(site:linkedin.com OR site:twitter.com OR site:x.com OR site:youtube.com OR site:facebook.com) "${comp.name}" latest posts OR news`;
             const resultRaw = await searchTool.invoke({ query });
             
             // Handle Langchain Tavily 432 quota exceeded responses masquerading as valid returns
@@ -84,6 +84,7 @@ export class CronAgent {
         
         if (!tavilyContext) continue;
 
+        const currentDate = new Date().toISOString().split('T')[0];
         const prompt = `You are an automated Social Media Tracking AI. You have just crawled the web for the latest social media footprint of the competitors for this business.
         
 SEARCH CONTEXT:
@@ -91,11 +92,12 @@ ${tavilyContext}
 
 INSTRUCTIONS:
 1. Review the search results and meticulously extract ONLY genuine, recent social media posts, videos, or news updates made by the competitors.
-2. DO NOT extract company bio snippets, "About Us" sections, or generic profile text (e.g. "Join us for a virtual tour...", "Proud to be recognized as a leader..."). These are NOT posts! 
-3. If a search result does not explicitly look like a time-stamped social media post or news article, IGNORE IT.
-4. If there are NO genuine posts in the context, return an empty array []. Do not invent or hallucinate posts under any circumstances.
-5. For the 'link' field, you MUST extract the EXACT 'url' property provided in the search result JSON. Do not alter, shorten, or hallucinate URLs.
-6. Output the feed as a structured JSON array.`;
+2. The current date is ${currentDate}. DO NOT extract any posts older than 6 months. If a search result explicitly mentions 2022, 2023, 2024, or 2025, IGNORE IT entirely!
+3. DO NOT extract company bio snippets, "About Us" sections, or generic profile text.
+4. If a search result does not explicitly look like a time-stamped social media post or news article from recent months, IGNORE IT.
+5. If there are NO genuine recent posts in the context, return an empty array []. Do not invent or hallucinate posts under any circumstances.
+6. For the 'link' field, you MUST extract the EXACT 'url' property provided in the search result JSON. The url MUST be from a social media domain (linkedin, twitter, youtube, facebook). Do not alter or hallucinate URLs.
+7. Output the feed as a structured JSON array.`;
 
         try {
           const structuredLlm = llm.withStructuredOutput(feedSchema);
