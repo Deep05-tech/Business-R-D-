@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
   <link rel="stylesheet" href="/static/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
+
 <body>
 
   <!-- SIDEBAR -->
@@ -28,21 +30,24 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a href="#" class="nav-item active" onclick="switchTab('analyse', 'New Analysis'); return false;" id="nav-analyse">
+      <a href="#" class="nav-item active" onclick="switchTab('analyse', 'New Analysis'); return false;"
+        id="nav-analyse">
         <span class="icon">🔍</span> New Analysis
       </a>
-      
+
       <div class="nav-section-title">Project Tools</div>
-      <a href="#" class="nav-item disabled" onclick="switchTab('competitors', 'Competitor Intelligence'); return false;" id="nav-competitors">
+      <a href="#" class="nav-item disabled" onclick="switchTab('competitors', 'Competitor Intelligence'); return false;"
+        id="nav-competitors">
         <span class="icon">🎯</span> Competitors
       </a>
       <a href="#" class="nav-item disabled" onclick="switchTab('smm', 'SMM Generation'); return false;" id="nav-smm">
-        <span class="icon">📱</span> SMM Generation
+        <span class="icon">📱</span> SMM Content Generation
       </a>
       <a href="#" class="nav-item disabled" onclick="switchTab('seo', 'Website & SEO'); return false;" id="nav-seo">
         <span class="icon">📈</span> SEO & Google
       </a>
-      <a href="#" class="nav-item disabled" onclick="switchTab('social-feed', 'Competitor Feed'); return false;" id="nav-social-feed">
+      <a href="#" class="nav-item disabled" onclick="switchTab('social-feed', 'Competitor Feed'); return false;"
+        id="nav-social-feed">
         <span class="icon">⚡</span> Competitor Feed
       </a>
     </nav>
@@ -52,16 +57,18 @@
   <main class="main-content">
     <header class="topbar flex-between">
       <h1 id="page-title">New Business Analysis</h1>
-      <button id="theme-toggle" class="btn btn-secondary" onclick="window.toggleTheme()" style="padding: 6px 12px; font-size: 18px;" title="Toggle Dark/Light Mode">🌙</button>
+      <button id="theme-toggle" class="btn btn-secondary" onclick="window.toggleTheme()"
+        style="padding: 6px 12px; font-size: 18px;" title="Toggle Dark/Light Mode">🌙</button>
     </header>
 
     <div class="content-area">
-      
+
       <!-- TAB: ANALYSE -->
       <div class="tab-panel active" id="panel-analyse">
         <div class="card fade-in">
           <h2>Analyze a New Business</h2>
-          <p class="subtitle">Enter a website URL to generate a comprehensive business profile and unlock the intelligence dashboard.</p>
+          <p class="subtitle">Enter a website URL to generate a comprehensive business profile and unlock the
+            intelligence dashboard.</p>
           <form id="business-form" onsubmit="event.preventDefault(); window.runIntelligence();">
             <div class="form-group">
               <label>Website URL <span class="required">*</span></label>
@@ -75,11 +82,12 @@
               Run Intelligence
             </button>
           </form>
-          
+
           <div id="loading-overlay" class="loading-overlay" style="display:none;">
             <div class="spinner"></div>
             <h3 style="margin-top:20px;">AI is analyzing the business...</h3>
-            <div id="agent-status" style="margin-top:10px; color:var(--text-muted); font-size:14px;">Initializing agents...</div>
+            <div id="agent-status" style="margin-top:10px; color:var(--text-muted); font-size:14px;">Initializing
+              agents...</div>
           </div>
         </div>
       </div>
@@ -90,8 +98,10 @@
           <div class="flex-between">
             <h2>Competitor Intelligence</h2>
             <div>
-              <button class="btn btn-secondary" onclick="window.findCompetitors()" id="btn-find-comp">Find Competitors</button>
-              <button class="btn btn-secondary" onclick="window.findCompetitors(true)" id="btn-regen-comp" style="display:none; opacity:0.8; font-size:12px; padding: 4px 8px;">Regenerate</button>
+              <button class="btn btn-secondary" onclick="window.findCompetitors()" id="btn-find-comp">Find
+                Competitors</button>
+              <button class="btn btn-secondary" onclick="window.findCompetitors(true)" id="btn-regen-comp"
+                style="display:none; opacity:0.8; font-size:12px; padding: 4px 8px;">Regenerate</button>
             </div>
           </div>
           <p class="subtitle">List of elite industry competitors and their social media profiles.</p>
@@ -106,7 +116,7 @@
         <div class="card fade-in">
           <h2>Social Media Marketing (SMM) Generation</h2>
           <p class="subtitle">Generate high-converting social media content for this project.</p>
-          
+
           <div class="form-group">
             <label>Strategy</label>
             <div class="radio-group">
@@ -143,7 +153,7 @@
           </div>
 
           <button id="smm-btn" class="btn btn-primary" onclick="window.generateSMM()">Generate SMM Content</button>
-          
+
           <div id="smm-answer" class="result-box" style="display:none;">
             <div class="result-label">Generated Content</div>
             <div id="smm-text" class="result-text"></div>
@@ -171,7 +181,8 @@
         <div class="card fade-in">
           <div class="flex-between">
             <h2>Competitor Social Media Tracker</h2>
-            <button class="btn btn-secondary" onclick="window.triggerCron()" id="btn-cron">Run Daily Tracker Now</button>
+            <button class="btn btn-secondary" onclick="window.triggerCron()" id="btn-cron">Run Daily Tracker
+              Now</button>
           </div>
           <p class="subtitle">A feed of recent social media posts and YouTube scripts from your competitors.</p>
           <div id="feed-list">
@@ -185,4 +196,5 @@
 
   <script src="/static/app.js"></script>
 </body>
+
 </html>
