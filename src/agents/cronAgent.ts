@@ -81,12 +81,20 @@ export class CronAgent {
               const parsedRaw = typeof raw === "string" ? JSON.parse(raw) : raw;
               
               if (parsedRaw && parsedRaw.results) {
-                // Filter out non-post junk (like generic bios) in TS to save tokens
                 if (isLinkedIn) {
                   parsedRaw.results = parsedRaw.results.filter((r: any) => r.url.includes('/posts/'));
                 }
-                // Cap results to prevent OpenAI 429 TPM limits (30,000 limit)
-                parsedRaw.results = parsedRaw.results.slice(0, 4);
+                
+                // INTELLIGENT PRE-FILTERING: Drop obviously old posts to aggressively save LLM tokens
+                parsedRaw.results = parsedRaw.results.filter((r: any) => {
+                  const text = ((r.content || "") + " " + (r.title || "")).toLowerCase();
+                  // Drop anything that mentions old years or "year(s) ago"
+                  if (text.match(/202[0-5]|years?\s+ago/)) return false;
+                  return true;
+                });
+                
+                // Cap at 8 high-quality recent results to stay strictly under the 30k TPM limit
+                parsedRaw.results = parsedRaw.results.slice(0, 8);
               }
               
               return parsedRaw;
