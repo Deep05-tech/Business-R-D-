@@ -2,8 +2,25 @@ window.activeProjectUrl = null;
 
 // On load
 document.addEventListener('DOMContentLoaded', () => {
+  // Check and apply theme on load
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-theme');
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = '☀️';
+  }
+
   loadProjects();
 });
+
+// Theme Toggle
+window.toggleTheme = () => {
+  document.body.classList.toggle('dark-theme');
+  const isDark = document.body.classList.contains('dark-theme');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  
+  const btn = document.getElementById('theme-toggle');
+  if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+};
 
 // ---- Tab Switching ----
 window.switchTab = function(name, title) {

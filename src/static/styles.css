@@ -23,6 +23,19 @@
   --sidebar-width: 280px;
 }
 
+body.dark-theme {
+  --bg: #0F172A; /* Slate 900 */
+  --surface: #1E293B; /* Slate 800 */
+  --surface-hover: #334155; /* Slate 700 */
+  --border: #475569; /* Slate 600 */
+  --text: #F8FAFC; /* Slate 50 */
+  --text-muted: #94A3B8; /* Slate 400 */
+  
+  --primary: #6366F1; /* Indigo 500 */
+  --primary-hover: #818CF8; /* Indigo 400 */
+  --primary-light: #312E81; /* Indigo 900 */
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

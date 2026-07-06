@@ -55,7 +55,7 @@ export class CronAgent {
       } as any); // using 'as any' just in case older langchain versions don't type it properly
       
       const targetCompetitors = memory.competitors;
-      const chunkSize = 3; // Grouping by 3 to balance exhaustive extraction with OpenAI rate limit overhead
+      const chunkSize = 2; // Grouping by 2 to balance exhaustive extraction with OpenAI rate limit overhead
       
       for (let i = 0; i < targetCompetitors.length; i += chunkSize) {
         const chunk = targetCompetitors.slice(i, i + chunkSize);
@@ -94,6 +94,11 @@ export class CronAgent {
                   // Drop anything that mentions old years or "year(s) ago"
                   if (text.match(/202[0-5]|years?\s+ago/)) return false;
                   return true;
+                }).map((r: any) => {
+                  // TOKEN COMPRESSION: Truncate large snippets and delete raw HTML to prevent 429 TPM limits
+                  if (r.content) r.content = r.content.substring(0, 600) + (r.content.length > 600 ? '...' : '');
+                  delete r.raw_content;
+                  return r;
                 });
                 
                 // Cap at 8 high-quality recent results to stay strictly under the 30k TPM limit
