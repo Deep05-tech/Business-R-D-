@@ -297,23 +297,45 @@ async function loadFeedUI() {
     const data = await res.json();
     
     if (!data.feed || data.feed.length === 0) {
-      list.innerHTML = '<div class="empty-state">No recent posts found in the last 30 days. These competitors may not be very active on social media.</div>';
+      list.innerHTML = '<div class="empty-state">No recent posts found. These competitors may not be very active on social media.</div>';
       return;
     }
     
-    list.innerHTML = data.feed.map(post => `
-      <div class="feed-item">
-        <div class="feed-avatar">${post.platformIcon}</div>
-        <div class="feed-content">
-          <div class="feed-header">
-            <span class="feed-author">${post.competitorName} on ${post.platform}</span>
-            <span class="feed-meta">${post.date}</span>
+    // Group posts by platform
+    const grouped = {};
+    for (const post of data.feed) {
+      if (!grouped[post.platform]) grouped[post.platform] = [];
+      grouped[post.platform].push(post);
+    }
+    
+    let html = '<div style="display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start;">';
+    for (const platform of Object.keys(grouped).sort()) {
+      const posts = grouped[platform];
+      html += `
+        <div class="platform-section" style="flex: 1; min-width: 350px; background: var(--surface-hover); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px;">
+          <h3 style="margin-bottom: 20px; font-size: 1.2rem; font-weight: 600; padding-bottom: 10px; border-bottom: 1px solid var(--border); color: var(--text); display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.5rem;">${posts[0].platformIcon}</span> ${platform}
+          </h3>
+          <div class="feed-timeline" style="margin-top: 0;">
+            ${posts.map(post => `
+              <div class="feed-item" style="background: var(--surface); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--border); margin-bottom: 16px;">
+                <div class="feed-content" style="padding: 0; background: transparent;">
+                  <div class="feed-header">
+                    <span class="feed-author">${post.competitorName}</span>
+                    <span class="feed-meta">${post.date}</span>
+                  </div>
+                  <div class="feed-text">${post.content}</div>
+                  ${post.link ? `<a href="${post.link}" target="_blank" style="display:inline-block;margin-top:10px;font-size:12px;font-weight:600;color:var(--primary);text-decoration:none;">View Original Post ↗</a>` : ''}
+                </div>
+              </div>
+            `).join('')}
           </div>
-          <div class="feed-text">${post.content}</div>
-          ${post.link ? `<a href="${post.link}" target="_blank" style="display:inline-block;margin-top:10px;font-size:12px;font-weight:600;color:var(--primary);text-decoration:none;">View Original Post ↗</a>` : ''}
         </div>
-      </div>
-    `).join('');
+      `;
+    }
+    html += '</div>';
+    
+    list.innerHTML = html;
   } catch (e) {
     list.innerHTML = '<div class="empty-state">Failed to load social feed.</div>';
   }
