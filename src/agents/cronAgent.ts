@@ -41,7 +41,7 @@ export class CronAgent {
         platformIcon: z.string().describe("Emoji icon for platform, e.g. 🟦, ▶️, 𝕏"),
         competitorName: z.string().describe("Name of the competitor who posted"),
         date: z.string().describe("The exact relative or absolute date from the source (e.g., '3 months ago', '2 days ago', 'Oct 12'). NEVER use vague terms like 'Recent'."),
-        content: z.string().describe("The caption, transcript, or summary of the post"),
+        content: z.string().describe("The caption, transcript, or summary of the post. If the 'exact_post_date' or relative date indicates the post is older than 7 days, you MUST append this exact phrase to the end of the content: '\n\n⚠️ Note: This is the most recent post crawled by search engines. Newer posts may exist on the platform but have not been indexed yet.'"),
         link: z.string().nullable().describe("Direct URL to the post. You MUST copy the exact 'url' field from the search result JSON. DO NOT GUESS OR MODIFY IT.")
       }))
     });
@@ -49,7 +49,10 @@ export class CronAgent {
     let allPosts: FeedPost[] = [];
 
     if (process.env.TAVILY_API_KEY) {
-      const searchTool = new TavilySearch({ maxResults: 15 });
+      const searchTool = new TavilySearch({ 
+        maxResults: 15,
+        searchDepth: "advanced"
+      } as any); // using 'as any' just in case older langchain versions don't type it properly
       
       const targetCompetitors = memory.competitors;
       const chunkSize = 3; // Grouping by 3 to balance exhaustive extraction with OpenAI rate limit overhead
