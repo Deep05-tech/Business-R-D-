@@ -312,11 +312,11 @@ async function loadFeedUI() {
     for (const platform of Object.keys(grouped).sort()) {
       const posts = grouped[platform];
       html += `
-        <div class="platform-section" style="flex: 1; min-width: 350px; background: var(--surface-hover); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px;">
-          <h3 style="margin-bottom: 20px; font-size: 1.2rem; font-weight: 600; padding-bottom: 10px; border-bottom: 1px solid var(--border); color: var(--text); display: flex; align-items: center; gap: 8px;">
+        <div class="platform-section" style="flex: 1; min-width: 350px; background: var(--surface-hover); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; height: 600px; display: flex; flex-direction: column;">
+          <h3 style="margin-bottom: 20px; font-size: 1.2rem; font-weight: 600; padding-bottom: 10px; border-bottom: 1px solid var(--border); color: var(--text); display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
             <span style="font-size: 1.5rem;">${posts[0].platformIcon}</span> ${platform}
           </h3>
-          <div class="feed-timeline" style="margin-top: 0;">
+          <div class="feed-timeline" style="margin-top: 0; overflow-y: auto; padding-right: 8px; flex: 1;">
             ${posts.map(post => `
               <div class="feed-item" style="background: var(--surface); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--border); margin-bottom: 16px;">
                 <div class="feed-content" style="padding: 0; background: transparent;">
