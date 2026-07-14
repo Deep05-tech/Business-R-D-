@@ -641,10 +641,19 @@ async function loadFeedUI() {
         }
       });
       
-      window.openLightbox = function(url, isVideo) {
+      window.openLightbox = function(url, isVideo, postLink, platform, mediaType) {
         const lb = document.getElementById('media-lightbox');
         const content = document.getElementById('media-lightbox-content');
-        if (isVideo) {
+        
+        if (platform === 'Instagram' && mediaType === 'Video' && postLink) {
+            let embedLink = postLink.split('?')[0];
+            if (!embedLink.endsWith('/')) embedLink += '/';
+            embedLink += 'embed';
+            content.innerHTML = `<iframe src="${embedLink}" width="400" height="500" frameborder="0" scrolling="no" allowtransparency="true" style="border-radius:12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); background: white;"></iframe>`;
+        } else if (platform === 'Facebook' && mediaType === 'Video' && postLink) {
+            let embedLink = "https://www.facebook.com/plugins/video.php?href=" + encodeURIComponent(postLink) + "&show_text=false&width=400";
+            content.innerHTML = `<iframe src="${embedLink}" width="400" height="500" style="border:none;overflow:hidden;border-radius:12px;box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); background: white;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
+        } else if (isVideo) {
           content.innerHTML = `<video src="${url}" controls autoplay style="max-width:100vw; max-height:85vh; border-radius:12px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);"></video>`;
         } else {
           content.innerHTML = `<img src="${url}" style="max-width:100vw; max-height:85vh; border-radius:12px; object-fit:contain; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);" />`;
@@ -675,7 +684,7 @@ async function loadFeedUI() {
                   <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${post.link.match(/v=([^&]+)/)[1]}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 ` : (post.mediaUrl && !post.mediaUrl.startsWith('data:') ? `
-                <div onclick="window.openLightbox('${post.mediaUrl.split(',')[0].trim()}', ${post.mediaUrl.includes('mp4') || post.mediaUrl.includes('webm')})" style="margin: 0 0 12px 0; width: 100%; height: 180px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: var(--background); flex-shrink: 0; position: relative; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='var(--shadow-md)'" onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
+                <div onclick="window.openLightbox('${post.mediaUrl.split(',')[0].trim()}', ${post.mediaUrl.includes('mp4') || post.mediaUrl.includes('webm')}, '${post.link}', '${post.platform}', '${post.mediaType}')" style="margin: 0 0 12px 0; width: 100%; height: 180px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: var(--background); flex-shrink: 0; position: relative; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='var(--shadow-md)'" onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
                   ${post.mediaUrl.includes('mp4') || post.mediaUrl.includes('webm') ? `
                   <video src="${post.mediaUrl.split(',')[0].trim()}" controls style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
                   ` : `
