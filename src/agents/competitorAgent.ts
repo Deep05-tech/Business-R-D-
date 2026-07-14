@@ -23,7 +23,7 @@ export class CompetitorAgent {
 
     const businessName = memory.businessIdentity?.officialName || memory.input.websiteUrl;
     
-    const coreProductsDetailed = memory.offerings?.products.slice(0, 2).map(p => {
+    const coreProductsDetailed = memory.offerings?.products.slice(0, 4).map(p => {
       const specs = Object.entries(p.technicalSpecs || {}).map(([k, v]) => `${k}: ${v}`).join("; ");
       return `- **${p.name}**: ${p.description}\\n  *Specs/Capacity:* ${specs || "Not explicitly specified"}`;
     }).join("\\n") || "Industrial products";
@@ -45,7 +45,7 @@ export class CompetitorAgent {
       const state = parts.length > 1 ? parts[1] : loc;
       const country = parts.length > 2 ? parts[parts.length - 1] : loc;
       scopeInstruction = `Generate exactly 10 queries. 7 queries MUST focus strictly on highly LOCAL competitors located in ${city}. 3 queries MUST focus on competitors located in the state of ${state}. DO NOT search for competitors outside of ${state}.
-CRITICAL: You should include terms like "manufacturers in ${city}" or "suppliers in ${city}" to pull local directory listings (e.g. IndiaMart, JustDial) because independent websites are rare for local businesses. Also include highly specific Google Dork queries like: site:indiamart.com "${city}" "${businessName} competitors"`;
+CRITICAL: You should include terms like "manufacturers of [exact product] in ${city}" or "suppliers of [exact product] in ${city}" to pull local directory listings (e.g. IndiaMart, JustDial) because independent websites are rare for local businesses. Also include highly specific Google Dork queries like: site:indiamart.com "${city}" "[exact product]"`;
     } else if (scope === "regional") {
       const loc = memory.businessIdentity?.location || "the business's country";
       const country = loc.split(",").pop()?.trim() || loc;
@@ -57,9 +57,11 @@ CRITICAL: You should include terms like "manufacturers in ${city}" or "suppliers
     }
 
     // --- PHASE 1: Query Generation ---
-    const queryGenerationPrompt = `You are an elite B2B Market Research Analyst. Your task is to generate 10 highly relevant search queries to find the truest competitors for the following business.
+    const queryGenerationPrompt = `You are an elite B2B Market Research Analyst. Your task is to generate 10 highly specific search queries to find TRUE DIRECT COMPETITORS for the following business.
 ${scopeInstruction}
-CRITICAL: To avoid pulling informational blogs or news sites, you MUST include transactional or commercial keywords in your queries, such as "product", "service", "manufacturer", "supplier", or "buy". Do NOT just search the product name blindly.
+
+CRITICAL RULE: DO NOT search for generic industry names (e.g., do not just search for "forging companies" or "heavy engineering"). You MUST construct your queries around the EXACT SPECIFIC PRODUCTS the business manufactures (e.g., "seamless rolled rings manufacturer", "open die forging of heavy shafts"). If you search for generic industries, you will fail.
+CRITICAL RULE 2: To avoid pulling informational blogs or news sites, you MUST include transactional or commercial keywords in your queries, such as "manufacturer", "supplier", "custom", or "fabricator".
 Output ONLY the 10 queries, separated by a newline. Do not use quotes or numbering.
 
 BUSINESS EXACT CORE PRODUCTS & CAPACITIES:
@@ -120,7 +122,7 @@ ${memory.businessIdentity?.vision ? `\nCORE VISION/MISSION:\n${memory.businessId
           url: z.string().describe("The exact URL to this product page")
         })).max(5).describe("List up to 5 specific URLs from the search snippets that point directly to their product or service pages. YOU MUST ONLY USE EXACT URLs THAT APPEAR IN THE SEARCH RESULTS. DO NOT guess or append '/products' to the domain. If a specific product page URL is not in the snippet, just use the homepage."),
         is_strictly_in_target_region: z.boolean().describe("Set to true ONLY if actual_headquarters is physically located inside the requested target geographic boundary. Set to false if they are headquartered elsewhere."),
-        is_strictly_same_industry: z.boolean().describe("Set to true ONLY if the company operates in the EXACT same industry as the target business (e.g., Heavy Engineering/Forging). Set to false if they share a name but are in a totally different industry (e.g., Jewellery, Clothing, Software).")
+        manufactures_exact_same_products: z.boolean().describe("Set to true ONLY if the company manufactures or sells the EXACT same specific products as the target business. Set to false if they share a broad industry (like 'forging') but do not manufacture the same exact products. Be extremely strict.")
       })).max(25)
     });
 
@@ -152,7 +154,7 @@ INSTRUCTIONS:
 3. EXTRACT TRUE LOCATIONS: For every competitor, output their REAL 'actual_headquarters' based STRICTLY on the snippets. If the snippet says they are in ${city}, write ${city}. If they are in another local town (like Mehsana), write that exact town. DO NOT hallucinate or default to major cities like 'Ahmedabad' just because you are uncertain. If the exact city is completely unknown, just write the State.
 4. TARGET REGION FLAG: If searching for 'local', the target region is EXCLUSIVELY ${city} or ${state}. If searching for 'regional', the target region is the ENTIRE country of ${country} (ANY city/state inside ${country} is valid). Set 'is_strictly_in_target_region' to true if their true headquarters falls inside this boundary.
 5. STRICTLY INDEPENDENT WEBSITES ONLY: The 'url' MUST be the competitor's actual, independent root domain website (e.g. https://www.companyname.com). You are STRICTLY FORBIDDEN from outputting directory links, marketplace links, or external aggregator websites (DO NOT use IndiaMart, JustDial, TradeIndia, Facebook, or LinkedIn links as the URL). If a company does not have an independent website in the search results, you MUST discard them and not include them in the final JSON.
-6. STRICT INDUSTRY MATCH & BLOG REJECTION: If the search snippet indicates the website is just a blog, news article, directory, or informational wiki mentioning the product, YOU MUST REJECT THEM. They must actively manufacture or sell the product. Set 'is_strictly_same_industry' to false if they don't explicitly sell it. Do not assume any company with a similar name is a competitor unless the industry perfectly matches.
+6. STRICT EXACT PRODUCT MATCH: The user specifically requested competitors based on EXACT PRODUCTS, not just broad industries. If the snippet indicates the website is a competitor in the same industry (e.g., forging), but they don't manufacture the exact products the target business makes (e.g., rolled rings), you MUST set 'manufactures_exact_same_products' to false. Do not assume any company with a similar name is a competitor unless the product perfectly matches.
 7. EVIDENCE URL EXTRACT: You MUST extract up to 5 specific URLs from the search results that point directly to their product or service pages into 'evidence_product_pages'. CRITICAL: YOU ARE FORBIDDEN FROM GUESSING URLs. You cannot just take the root domain and add '/products' to it. You must copy the EXACT URL string as it appears in the search snippet. If the search results do not explicitly show a link to a specific product page, you must ONLY use their homepage. If a snippet URL is a blog post, DO NOT include it. If the product title in the snippet is in a foreign language, YOU MUST TRANSLATE THE TITLE TO ENGLISH.
 8. Output EXACTLY valid JSON matching the provided schema.`;
 
@@ -165,7 +167,7 @@ INSTRUCTIONS:
       // Programmatically filter out any hallucinated/out-of-region competitors
       const rawCompetitors = response.competitors || [];
       const filtered = rawCompetitors.filter((c: any) => {
-        if (c.is_strictly_same_industry === false) return false; // Hard kill for cross-industry hallucinations (e.g. Jewellery vs Forging)
+        if (c.manufactures_exact_same_products === false) return false; // Hard kill for generic industry matches that lack exact products
         if (scope === "global" || scope === "all") return true; // Bypass geographic strictness for global and 'all' scopes
         if (scope === "regional") return c.is_strictly_in_target_region !== false; // Be lenient on regional so we don't accidentally drop valid national companies
         return c.is_strictly_in_target_region === true;
@@ -227,8 +229,8 @@ INSTRUCTIONS:
       valid_competitors: z.array(z.object({
         name: z.string(),
         url: z.string(),
-        is_strictly_same_industry: z.boolean().describe("Set to true ONLY if the company operates in the EXACT same industry as the target business (e.g., Heavy Engineering/Forging). Set to false if they share a name but are in a totally different industry (e.g., Jewellery, Clothing, Software, Logistics)."),
-        why_competitor_improved: z.string().describe("Review their original 'whyCompetitor' reason. If it's weak or vague, rewrite it into a powerful, sharp 1-2 sentence explanation of exactly why they compete with the target business."),
+        manufactures_exact_same_products: z.boolean().describe("Set to true ONLY if the company manufactures the EXACT same products as the target business. Set to false if they only share a broad industry (e.g. general forging) but do not produce the exact items."),
+        why_competitor_improved: z.string().describe("Review their original 'whyCompetitor' reason. If it's weak or vague, rewrite it into a powerful, sharp 1-2 sentence explanation of exactly why they compete with the target business, highlighting the EXACT PRODUCTS they both manufacture."),
         approved_evidence_urls: z.array(z.object({
           title: z.string(),
           url: z.string()
@@ -244,7 +246,7 @@ Here are the scraped competitors and their extracted product links:
 ${JSON.stringify(competitors, null, 2)}
 
 INSTRUCTIONS:
-1. is_strictly_same_industry: Review each competitor's name and URL. If you know they are NOT in the exact same industry (e.g., if the target is heavy forging, and the competitor is a jewelry brand or a software company), you MUST set this to false.
+1. manufactures_exact_same_products: Review each competitor's name and URL against the target business context. If you know they do NOT manufacture the exact same specific products (e.g., if the target makes 'rolled rings', and the competitor only makes 'die blocks' or is a software company), you MUST set this to false.
 2. approved_evidence_urls: You have been given a broad pool of raw links for each competitor. You MUST carefully analyze these links and SELECT UP TO 5 of the most specific product, service, solution, or catalog pages.
    - DO NOT include leadership profiles (e.g., "Chairman", "CEO", "CFO")
    - DO NOT include corporate stories, blogs, or news (e.g., "Story", "Our History", "Press")
@@ -260,7 +262,7 @@ INSTRUCTIONS:
       for (const comp of competitors) {
         const qcData = parsed.valid_competitors.find(c => c.url === comp.url || c.name === comp.name);
         if (qcData) {
-          if (qcData.is_strictly_same_industry) {
+          if (qcData.manufactures_exact_same_products) {
              let validUrls = qcData.approved_evidence_urls || [];
              
              // Reject if they only have 1 generic page
@@ -279,7 +281,7 @@ INSTRUCTIONS:
                  qcApproved.push(comp);
              }
           } else {
-             logger.warn(`QC Agent discarded ${comp.name} because it is not in the strict target industry.`);
+             logger.warn(`QC Agent discarded ${comp.name} because it does not manufacture the exact specific products.`);
           }
         } else {
            qcApproved.push(comp);
