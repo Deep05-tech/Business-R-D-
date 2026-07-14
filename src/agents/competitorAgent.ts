@@ -391,11 +391,6 @@ INSTRUCTIONS:
       return null;
     }
 
-    if (!socials.instagram && !socials.youtube && !socials.linkedin && !socials.facebook) {
-      logger.warn(`Website ${comp.url} has NO social media links in its DOM/footer. Strictly discarding competitor as requested.`);
-      return null;
-    }
-
     // Return the competitor even if social media scraping failed
     return {
       name: comp.name,
