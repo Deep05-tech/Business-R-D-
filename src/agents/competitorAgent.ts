@@ -156,7 +156,8 @@ INSTRUCTIONS:
 5. STRICTLY INDEPENDENT WEBSITES ONLY: The 'url' MUST be the competitor's actual, independent root domain website (e.g. https://www.companyname.com). You are STRICTLY FORBIDDEN from outputting directory links, marketplace links, or external aggregator websites (DO NOT use IndiaMart, JustDial, TradeIndia, Facebook, or LinkedIn links as the URL). If a company does not have an independent website in the search results, you MUST discard them and not include them in the final JSON.
 6. STRICT EXACT PRODUCT MATCH: The user requested competitors based on products. If the snippet indicates the website is a competitor in the same broad industry but they clearly don't manufacture the same category of products, you MUST set 'manufactures_exact_same_products' to false. However, if they manufacture the same highly-specific product category (e.g., both do 'automotive forgings'), you may set it to true.
 7. EVIDENCE URL EXTRACT: You MUST extract up to 5 specific URLs from the search results that point directly to their product or service pages into 'evidence_product_pages'. CRITICAL: YOU ARE FORBIDDEN FROM GUESSING URLs. You cannot just take the root domain and add '/products' to it. You must copy the EXACT URL string as it appears in the search snippet. If the search results do not explicitly show a link to a specific product page, you must ONLY use their homepage. If a snippet URL is a blog post, DO NOT include it. If the product title in the snippet is in a foreign language, YOU MUST TRANSLATE THE TITLE TO ENGLISH.
-8. Output EXACTLY valid JSON matching the provided schema.`;
+8. OUTPUT UNIQUE COMPETITORS ONLY: Do not output the same company more than once. If they appear multiple times in the search results, only include them once in your JSON.
+9. Output EXACTLY valid JSON matching the provided schema.`;
 
     let baseCompetitors: Array<{name: string, url: string, type: "local"|"global", location: string, whyCompetitor?: string, evidenceUrls?: Array<{title: string, url: string}>}> = [];
     try {
@@ -166,7 +167,20 @@ INSTRUCTIONS:
       
       // Programmatically filter out any hallucinated/out-of-region competitors
       const rawCompetitors = response.competitors || [];
-      const filtered = rawCompetitors.filter((c: any) => {
+      
+      // Deduplicate to ensure the same business is not processed multiple times
+      const uniqueCompetitorsMap = new Map<string, any>();
+      for (const c of rawCompetitors) {
+          const nameKey = c.name ? c.name.toLowerCase().trim() : "";
+          const urlKey = c.url ? c.url.toLowerCase().trim().replace(/^https?:\/\/(www\.)?/, '').replace(/\/.*$/, '') : "";
+          const key = urlKey || nameKey;
+          if (key && !uniqueCompetitorsMap.has(key)) {
+              uniqueCompetitorsMap.set(key, c);
+          }
+      }
+      const uniqueRawCompetitors = Array.from(uniqueCompetitorsMap.values());
+
+      const filtered = uniqueRawCompetitors.filter((c: any) => {
         if (c.manufactures_exact_same_products === false) return false; // Hard kill for generic industry matches that lack exact products
         if (scope === "global" || scope === "all") return true; // Bypass geographic strictness for global and 'all' scopes
         if (scope === "regional") return c.is_strictly_in_target_region !== false; // Be lenient on regional so we don't accidentally drop valid national companies
