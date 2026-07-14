@@ -379,8 +379,8 @@ INSTRUCTIONS:
         comp.evidenceUrls = [{ title: "Homepage", url: comp.url }];
       }
     } catch (err: any) {
-      logger.warn(`Website ${comp.url} could not be reached or returned an error: ${err.message}. Strictly discarding competitor.`);
-      return null;
+      logger.warn(`Website ${comp.url} could not be reached or returned an error: ${err.message}. Keeping competitor with fallback data.`);
+      comp.evidenceUrls = [{ title: "Homepage", url: comp.url }];
     }
 
     // Return the competitor even if social media scraping failed
@@ -389,8 +389,9 @@ INSTRUCTIONS:
       url: comp.url,
       type: comp.type,
       location: comp.location,
-      evidenceUrls: comp.evidenceUrls,
-      socials
+      socials,
+      whyCompetitor: comp.whyCompetitor,
+      evidenceUrls: comp.evidenceUrls || [{ title: "Homepage", url: comp.url }]
     };
   }
 }
