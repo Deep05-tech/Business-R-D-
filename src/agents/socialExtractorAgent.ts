@@ -147,31 +147,40 @@ export class SocialExtractorAgent {
             }
             
             // Media
-            let mediaType = "Image";
+            const isReel = window.location.href.includes('/reel/') || window.location.href.includes('/tv/');
+            let mediaType = isReel ? "Video" : "Image";
             let mediaUrls = "";
-            if (document.querySelector('video')) {
+            
+            if (document.querySelector('video') || isReel) {
                 mediaType = "Video";
                 const vid = document.querySelector('video');
-                mediaUrls = vid.getAttribute('src') || "";
-                if (mediaUrls.startsWith('blob:')) mediaUrls = "";
-                if (!mediaUrls) mediaUrls = vid.getAttribute('poster') || "";
+                if (vid) {
+                    mediaUrls = vid.getAttribute('src') || "";
+                    if (mediaUrls.startsWith('blob:')) mediaUrls = "";
+                    if (!mediaUrls) mediaUrls = vid.getAttribute('poster') || "";
+                }
                 
                 if (!mediaUrls || mediaUrls.startsWith('blob:')) {
-                    const img = document.querySelector('article img[style*="object-fit: cover"]');
+                    const img = document.querySelector('img[style*="object-fit: cover"]');
                     if (img) mediaUrls = img.getAttribute('src') || "";
                 }
             } else {
-                let imgs = Array.from(document.querySelectorAll('article img[style*="object-fit: cover"]'));
+                let imgs = Array.from(document.querySelectorAll('img[style*="object-fit: cover"]')).filter(img => {
+                    const src = img.getAttribute('src') || "";
+                    return src.includes('scontent') && !src.includes('p150x150');
+                });
+                
                 if (imgs.length === 0) {
-                    imgs = Array.from(document.querySelectorAll('article img')).filter(img => {
+                    imgs = Array.from(document.querySelectorAll('img')).filter(img => {
                         const alt = img.getAttribute('alt') || "";
                         const src = img.getAttribute('src') || "";
-                        return !alt.toLowerCase().includes('profile picture') && !src.startsWith('data:');
+                        return src.includes('scontent') && !src.includes('p150x150') && !alt.toLowerCase().includes('profile picture') && !src.startsWith('data:');
                     });
                 }
+                
                 if (imgs.length > 0) {
                     mediaType = imgs.length > 1 ? "Carousel" : "Image";
-                    mediaUrls = imgs.map(function(img) { return img.getAttribute('src'); }).filter(Boolean).join(', ');
+                    mediaUrls = imgs.map(img => img.getAttribute('src')).filter(Boolean).join(', ');
                 }
             }
             
@@ -413,14 +422,18 @@ export class SocialExtractorAgent {
             const likes = likeEl && likeEl.textContent ? likeEl.textContent.trim() : "0";
             
             // Extract Media
-            let mediaType = "Text";
+            const fbIsVideo = postUrl.includes('/videos/') || postUrl.includes('/reel/') || postUrl.includes('/watch');
+            let mediaType = fbIsVideo ? "Video" : "Text";
             let mediaUrls = "";
-            if (firstPost.querySelector('video')) {
+            
+            if (firstPost.querySelector('video') || fbIsVideo) {
                 mediaType = "Video";
                 const vid = firstPost.querySelector('video');
-                mediaUrls = vid.getAttribute('src') || "";
-                if (mediaUrls.startsWith('blob:')) mediaUrls = "";
-                if (!mediaUrls) mediaUrls = vid.getAttribute('poster') || "";
+                if (vid) {
+                    mediaUrls = vid.getAttribute('src') || "";
+                    if (mediaUrls.startsWith('blob:')) mediaUrls = "";
+                    if (!mediaUrls) mediaUrls = vid.getAttribute('poster') || "";
+                }
                 
                 if (!mediaUrls || mediaUrls.startsWith('blob:')) {
                     const imgs = Array.from(firstPost.querySelectorAll('img'));
