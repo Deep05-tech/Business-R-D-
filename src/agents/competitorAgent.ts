@@ -23,10 +23,25 @@ export class CompetitorAgent {
 
     const businessName = memory.businessIdentity?.officialName || memory.input.websiteUrl;
     
-    const coreProductsDetailed = memory.offerings?.products.slice(0, 4).map(p => {
-      const specs = Object.entries(p.technicalSpecs || {}).map(([k, v]) => `${k}: ${v}`).join("; ");
-      return `- **${p.name}**: ${p.description}\\n  *Specs/Capacity:* ${specs || "Not explicitly specified"}`;
-    }).join("\\n") || "Industrial products";
+    let coreProductsDetailed = "";
+    if (scope === "all") {
+      logger.info(`Scope is 'all'. Bypassing stored database memory and scraping target website (${memory.input.websiteUrl}) fresh...`);
+      try {
+        const res = await axios.get(memory.input.websiteUrl, { timeout: 10000, headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } });
+        const $ = cheerio.load(res.data);
+        const rawText = $('body').text().replace(/\s+/g, ' ').trim().substring(0, 8000);
+        coreProductsDetailed = `[LIVE FRESH WEBSITE SCRAPE DATA FOR TARGET BUSINESS]:\n${rawText}\n\n(INSTRUCTION: Analyze this fresh text to identify their core products, and then generate search queries for competitors based on those products.)`;
+      } catch (err: any) {
+        logger.warn(`Failed to scrape target website live (${err.message}). Falling back to database memory.`);
+      }
+    }
+    
+    if (!coreProductsDetailed || coreProductsDetailed.length < 50) {
+      coreProductsDetailed = memory.offerings?.products.slice(0, 4).map(p => {
+        const specs = Object.entries(p.technicalSpecs || {}).map(([k, v]) => `${k}: ${v}`).join("; ");
+        return `- **${p.name}**: ${p.description}\n  *Specs/Capacity:* ${specs || "Not explicitly specified"}`;
+      }).join("\n") || "Industrial products";
+    }
 
     let memoryContext = JSON.stringify({
       businessIdentity: memory.businessIdentity,
