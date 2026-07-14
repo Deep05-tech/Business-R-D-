@@ -122,7 +122,7 @@ ${memory.businessIdentity?.vision ? `\nCORE VISION/MISSION:\n${memory.businessId
           url: z.string().describe("The exact URL to this product page")
         })).max(5).describe("List up to 5 specific URLs from the search snippets that point directly to their product or service pages. YOU MUST ONLY USE EXACT URLs THAT APPEAR IN THE SEARCH RESULTS. DO NOT guess or append '/products' to the domain. If a specific product page URL is not in the snippet, just use the homepage."),
         is_strictly_in_target_region: z.boolean().describe("Set to true ONLY if actual_headquarters is physically located inside the requested target geographic boundary. Set to false if they are headquartered elsewhere."),
-        manufactures_exact_same_products: z.boolean().describe("Set to true ONLY if the company manufactures or sells the EXACT same specific products as the target business. Set to false if they share a broad industry (like 'forging') but do not manufacture the same exact products. Be extremely strict.")
+        manufactures_exact_same_products: z.boolean().describe("Set to true if the company manufactures the exact products OR explicitly operates in the exact same highly-specific product category (e.g. 'custom automotive forgings'). Set to false ONLY if they are in a completely different industry or product space.")
       })).max(25)
     });
 
@@ -154,7 +154,7 @@ INSTRUCTIONS:
 3. EXTRACT TRUE LOCATIONS: For every competitor, output their REAL 'actual_headquarters' based STRICTLY on the snippets. If the snippet says they are in ${city}, write ${city}. If they are in another local town (like Mehsana), write that exact town. DO NOT hallucinate or default to major cities like 'Ahmedabad' just because you are uncertain. If the exact city is completely unknown, just write the State.
 4. TARGET REGION FLAG: If searching for 'local', the target region is EXCLUSIVELY ${city} or ${state}. If searching for 'regional', the target region is the ENTIRE country of ${country} (ANY city/state inside ${country} is valid). Set 'is_strictly_in_target_region' to true if their true headquarters falls inside this boundary.
 5. STRICTLY INDEPENDENT WEBSITES ONLY: The 'url' MUST be the competitor's actual, independent root domain website (e.g. https://www.companyname.com). You are STRICTLY FORBIDDEN from outputting directory links, marketplace links, or external aggregator websites (DO NOT use IndiaMart, JustDial, TradeIndia, Facebook, or LinkedIn links as the URL). If a company does not have an independent website in the search results, you MUST discard them and not include them in the final JSON.
-6. STRICT EXACT PRODUCT MATCH: The user specifically requested competitors based on EXACT PRODUCTS, not just broad industries. If the snippet indicates the website is a competitor in the same industry (e.g., forging), but they don't manufacture the exact products the target business makes (e.g., rolled rings), you MUST set 'manufactures_exact_same_products' to false. Do not assume any company with a similar name is a competitor unless the product perfectly matches.
+6. STRICT EXACT PRODUCT MATCH: The user requested competitors based on products. If the snippet indicates the website is a competitor in the same broad industry but they clearly don't manufacture the same category of products, you MUST set 'manufactures_exact_same_products' to false. However, if they manufacture the same highly-specific product category (e.g., both do 'automotive forgings'), you may set it to true.
 7. EVIDENCE URL EXTRACT: You MUST extract up to 5 specific URLs from the search results that point directly to their product or service pages into 'evidence_product_pages'. CRITICAL: YOU ARE FORBIDDEN FROM GUESSING URLs. You cannot just take the root domain and add '/products' to it. You must copy the EXACT URL string as it appears in the search snippet. If the search results do not explicitly show a link to a specific product page, you must ONLY use their homepage. If a snippet URL is a blog post, DO NOT include it. If the product title in the snippet is in a foreign language, YOU MUST TRANSLATE THE TITLE TO ENGLISH.
 8. Output EXACTLY valid JSON matching the provided schema.`;
 
@@ -229,8 +229,8 @@ INSTRUCTIONS:
       valid_competitors: z.array(z.object({
         name: z.string(),
         url: z.string(),
-        manufactures_exact_same_products: z.boolean().describe("Set to true ONLY if the company manufactures the EXACT same products as the target business. Set to false if they only share a broad industry (e.g. general forging) but do not produce the exact items."),
-        why_competitor_improved: z.string().describe("Review their original 'whyCompetitor' reason. If it's weak or vague, rewrite it into a powerful, sharp 1-2 sentence explanation of exactly why they compete with the target business, highlighting the EXACT PRODUCTS they both manufacture."),
+        manufactures_exact_same_products: z.boolean().describe("Set to true if the company manufactures the same products OR is in the exact same specific product category (e.g., automotive forgings). Set to false if they are unrelated."),
+        why_competitor_improved: z.string().describe("Rewrite the rationale into a powerful 1-2 sentence explanation of exactly why they compete. CRITICAL: Do NOT hallucinate products! If the target business does not explicitly manufacture 'rolled rings', do NOT mention rolled rings in the rationale. Only mention products that BOTH companies actually manufacture based on the target business context."),
         approved_evidence_urls: z.array(z.object({
           title: z.string(),
           url: z.string()
@@ -246,7 +246,8 @@ Here are the scraped competitors and their extracted product links:
 ${JSON.stringify(competitors, null, 2)}
 
 INSTRUCTIONS:
-1. manufactures_exact_same_products: Review each competitor's name and URL against the target business context. If you know they do NOT manufacture the exact same specific products (e.g., if the target makes 'rolled rings', and the competitor only makes 'die blocks' or is a software company), you MUST set this to false.
+1. manufactures_exact_same_products: Review each competitor. If you know they do NOT manufacture the same specific products or product category, you MUST set this to false. Do not reject them if they just use slightly different terminology for the same product category.
+2. why_competitor_improved: YOU MUST NOT HALLUCINATE PRODUCTS. Read the target business context carefully. If the target business makes "Torque Rod Arms", but the competitor makes "Torque Rod Arms and Rolled Rings", your rationale MUST NOT say the target business makes rolled rings. Focus only on the intersection.
 2. approved_evidence_urls: You have been given a broad pool of raw links for each competitor. You MUST carefully analyze these links and SELECT UP TO 5 of the most specific product, service, solution, or catalog pages.
    - DO NOT include leadership profiles (e.g., "Chairman", "CEO", "CFO")
    - DO NOT include corporate stories, blogs, or news (e.g., "Story", "Our History", "Press")
