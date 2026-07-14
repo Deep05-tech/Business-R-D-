@@ -147,6 +147,47 @@ export class MemoryStore {
     }
   }
 
+  async deleteBySite(websiteUrl: string): Promise<boolean> {
+    let deleted = false;
+    
+    if (MemoryStore.mongoClient) {
+      try {
+        const collection = await this.getCollection();
+        if (collection) {
+          const res = await collection.deleteOne({ "input.websiteUrl": websiteUrl });
+          if (res.deletedCount > 0) deleted = true;
+        }
+      } catch (err) {
+        logger.error(`Failed to delete from MongoDB: ${err}`);
+      }
+    }
+
+    // Always attempt to delete locally too
+    try {
+      const { unlink } = await import("node:fs/promises");
+      const files = await readdir(this.directory);
+      for (const file of files) {
+        if (!file.endsWith(".json")) continue;
+        try {
+          const filePath = join(this.directory, file);
+          const raw = await readFile(filePath, "utf8");
+          const memory = JSON.parse(raw) as StructuredMemory;
+          if (memory.input?.websiteUrl === websiteUrl) {
+             await unlink(filePath);
+             deleted = true;
+             logger.success(`Deleted local memory file: ${file}`);
+          }
+        } catch (e) {
+          // ignore read/parse errors for other files
+        }
+      }
+    } catch {
+      // directory might not exist
+    }
+    
+    return deleted;
+  }
+
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   // Vector Query engine (Top-K Semantic Search — max 4000 tokens)

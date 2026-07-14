@@ -23,12 +23,9 @@ export class AiContentAgent {
       const prompt = `You are a professional B2B copywriter and technical translator.
 I will give you raw data about a business ${itemType}.
 Your task is to generate ONE thing:
-1. A 'laymanSummary': A summary explaining what this is, how it works, and its benefits in simple terms (2-3 paragraphs with bullet points).
+A 'laymanSummary': A summary explaining what this is, how it works, and its benefits in simple terms (2-3 paragraphs with bullet points).
 
-Respond with ONLY a pure JSON object in this exact format:
-{
-  "aiLaymanSummary": "..."
-}
+Respond with ONLY the raw summary text. DO NOT wrap it in a JSON object. Just provide the text directly.
 
 RAW DATA:
 ${JSON.stringify(itemData, null, 2)}
@@ -36,10 +33,8 @@ ${JSON.stringify(itemData, null, 2)}
       try {
         const response = await (llm as any).invoke(prompt);
         const text = typeof response.content === "string" ? response.content : String(response.content);
-        const cleanJson = text.replace(/^```json/i, "").replace(/```$/i, "").trim();
-        const parsed = JSON.parse(cleanJson);
         return {
-          aiLaymanSummary: parsed.aiLaymanSummary,
+          aiLaymanSummary: text.trim(),
         };
       } catch (err) {
         logger.error(`Failed to generate AI content for ${itemData.name}: ${err}`);

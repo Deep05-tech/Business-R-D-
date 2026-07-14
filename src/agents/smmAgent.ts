@@ -8,11 +8,11 @@ export class SmmAgent {
   readonly name = "smm-agent";
   readonly version = "1.0.0";
 
-  async run(memory: StructuredMemory, type: "video" | "image", totalPosts: number, language: string = "English", strategy: string = "new"): Promise<string[]> {
-    logger.info(`Generating ${totalPosts} SMM ${type} posts in ${language} for ${memory.input.websiteUrl} (Strategy: ${strategy})...`);
+  async run(memory: StructuredMemory, type: "video" | "image", totalPosts: number, language: string = "English", strategy: string = "new", theme: string = "brand", targetProduct?: string): Promise<string[]> {
+    logger.info(`Generating ${totalPosts} SMM ${type} posts in ${language} for ${memory.input.websiteUrl} (Strategy: ${strategy}, Theme: ${theme}, Product: ${targetProduct || 'None'})...`);
 
     const llm = new ChatOpenAI({
-      model: "gpt-4.1",
+      model: "gpt-4o",
       temperature: 0.7,
       maxTokens: 16000,
     });
@@ -33,6 +33,48 @@ Below are the top competitors identified for this business:
 ${memory.competitors.map(c => `- ${c.name} (Socials: ${JSON.stringify(c.socials)})`).join('\n')}
 
 Your generated content MUST emulate the tone, structure, and pacing typically used by these specific competitors in this exact industry. If they rely heavily on technical showcases, do the same. Analyze what these market leaders likely do to succeed, and adopt that exact posture for your posts.
+`;
+    }
+
+    const customInstructionsContext = memory.input.customInstructions ? `
+USER INSTRUCTIONS / REVIEWS: 
+${memory.input.customInstructions}
+
+Strictly follow the user instructions above. The user instructions take absolute priority over any other theme or strategy rules.
+` : "";
+
+    let themeInstruction = "";
+    switch (theme) {
+      case "brand":
+        themeInstruction = "THEME: BRAND. Focus heavily on the company's overarching vision, history, scale, and ethos. Build trust and authority.";
+        break;
+      case "product":
+        themeInstruction = "THEME: PRODUCT. Focus heavily on specific product features, direct benefits, competitive advantages, and the exact problems they solve.";
+        break;
+      case "technical":
+        themeInstruction = "THEME: TECHNICAL. Deep dive into engineering. Highlight hard specifications, metallurgy, manufacturing processes, tolerances, and advanced R&D capabilities.";
+        break;
+      case "educative":
+        themeInstruction = "THEME: INFORMATIVE/EDUCATIVE. Act as a thought leader. Explain 'how things work', share industry best practices, and educate the target audience on complex topics.";
+        break;
+      case "ugc":
+        themeInstruction = "THEME: USER GENERATED CONTENT (UGC). Use a raw, authentic, 'behind-the-scenes' tone. Focus on the factory floor, employee POVs, real-world testing, or 'day in the life' content.";
+        break;
+      default:
+        themeInstruction = "THEME: BRAND. Focus heavily on the company's overarching vision, history, scale, and ethos.";
+    }
+
+    let productFocusInstruction = "";
+    if (targetProduct) {
+      const foundProduct = memory.offerings.products.find(p => p.name === targetProduct || (typeof p === 'string' && p === targetProduct));
+      productFocusInstruction = `
+CRITICAL PRODUCT FOCUS:
+The user has explicitly requested that these posts focus on ONE SPECIFIC PRODUCT ONLY: "${targetProduct}".
+Do NOT write about general brand information or other products. Everything must revolve around this specific target product.
+${foundProduct && typeof foundProduct === 'object' ? `Product Details to reference:
+Description: ${foundProduct.description}
+Key Features: ${foundProduct.keyFeatures?.join(', ')}
+Technical Specs: ${JSON.stringify(foundProduct.technicalSpecs || {})}` : ''}
 `;
     }
 
@@ -109,10 +151,14 @@ IMPORTANT RULES & B2B TONAL OVERRIDE:
 3. HIGH-STAKES HOOKS: The first line must immediately lead with the stakes, cost of component failure, extreme environmental conditions (pressure/heat), or technical scale. Never start with "discover".
 4. AUTHORITATIVE VOICE: The narrator persona must be a grounded, expert metallurgical engineer or industry consultant. Strip out ALL exclamation marks. Speak with technical authority. Surface hard metrics, materials, and dimensions in the first half of the script.
 5. CINEMATIC OUTROS: Never use "clean white backgrounds". End on high-contrast, moody industrial shots with minimalist typography.
-6. You must generate EXACTLY ${totalPosts} posts.
-7. CRITICAL LANGUAGE RULE: You must write the entire output (including scripts, captions, and visual descriptions) exclusively in the **${language}** language.
+6. ALIGN WITH VISION & THEME: The content MUST implicitly reflect the core vision of the business AND strictly adhere to the following theme directive:
+   >> ${themeInstruction}
+7. You must generate EXACTLY ${totalPosts} posts.
+8. CRITICAL LANGUAGE RULE: You must write the entire output (including scripts, captions, and visual descriptions) exclusively in the **${language}** language.
 
+${customInstructionsContext}
 ${competitorContext}
+${productFocusInstruction}
 
 Begin generating the posts now:`;
 

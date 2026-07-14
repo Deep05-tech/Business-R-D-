@@ -1,6 +1,7 @@
 import { agentRules } from "../config/agentRules.js";
 import type { BusinessIntelligenceProfile, QcIssue, QcReport, SourceRef, StructuredMemory } from "../types.js";
 import { createLogger } from "../utils/logger.js";
+import { FreeSearchEngine } from "../utils/freeSearchEngine.js";
 
 const logger = createLogger("QC Agent");
 
@@ -299,7 +300,7 @@ export class QcAgent {
         issues.push({
           module: "identity",
           field: "businessIdentity.officialName",
-          severity: "error",
+          severity: "warning",
           message: "Secondary web search could not verify business existence.",
         });
       }
@@ -315,34 +316,13 @@ export class QcAgent {
   private async verifyEntity(officialName: string, industry: string): Promise<boolean> {
     logger.info(`Engaging Secondary Tools: Verifying Entity <${officialName}> in industry <${industry}> via Web Search...`);
     
-    const apiKey = process.env.TAVILY_API_KEY;
-    if (!apiKey) {
-      logger.warn("TAVILY_API_KEY not found. Using stubbed verification.");
-      const lowerName = officialName.toLowerCase();
-      return !["home", "products", "services", "welcome"].includes(lowerName);
-    }
-
     try {
-      const query = `Is "${officialName}" a real business in the "${industry}" industry?`;
-      const response = await fetch("https://api.tavily.com/search", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-          query,
-          search_depth: "basic",
-          include_answer: true,
-          max_results: 3
-        })
-      });
-
-      if (!response.ok) return true; // fail-open if api limits hit
-      const data = await response.json();
+      const query = `"${officialName}" ${industry}`;
+      const searchEngine = new FreeSearchEngine({ maxResults: 3 });
+      const rawRes = await searchEngine.invoke({ query });
+      const data = typeof rawRes === "string" ? JSON.parse(rawRes) : rawRes;
       
-      // If Tavily finds results and answers positively, verify it.
-      return data.results && data.results.length > 0;
+      return data && data.length > 0;
     } catch (e) {
       logger.error("Secondary Web Search Failed", e);
       return true; // fail-open so pipeline continues

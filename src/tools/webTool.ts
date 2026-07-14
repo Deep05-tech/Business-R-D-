@@ -104,8 +104,8 @@ export class WebTool {
       
       const content = await driver.getPageSource();
       return content;
-    } catch (err) {
-      logger.error(`Failed to load ${url} with Selenium`, err);
+    } catch (err: any) {
+      logger.warn(`Failed to load ${url} with Selenium: ${err.message}`);
       return "";
     } finally {
       if (driver) {

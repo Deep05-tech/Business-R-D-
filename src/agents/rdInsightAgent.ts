@@ -1,5 +1,5 @@
 import { ChatOpenAI } from "@langchain/openai";
-import { TavilySearch } from "@langchain/tavily";
+import { FreeSearchEngine } from "../utils/freeSearchEngine.js";
 import { agentRules } from "../config/agentRules.js";
 import { createLogger } from "../utils/logger.js";
 import type { AgentResult, BrandIntelligence, DigitalMaturity, OfferingsIntelligence, RdInsights, WebIntelligence } from "../types.js";
@@ -21,9 +21,16 @@ export class RdInsightAgent {
     
     let searchContext = "";
     try {
-      const tavily = new TavilySearch({ maxResults: 4 });
-      const trendSearch = await tavily.invoke({ query: `latest technological trends and innovations in the industry of ${offerings.products.map(p => p.name).join(", ")} 2026` });
-      const regSearch = await tavily.invoke({ query: `latest market gaps, opportunities and regulations for ${offerings.services.map(s => s.name).join(", ")} industry` });
+      const searchEngine = new FreeSearchEngine({ maxResults: 4 });
+      
+      const topProducts = offerings.products.slice(0, 5).map(p => p.name).join(", ");
+      const topServices = offerings.services.slice(0, 5).map(s => s.name).join(", ");
+      
+      const prodQuery = topProducts ? `latest technological trends and innovations in the industry of ${topProducts} 2026` : `latest technological trends and innovations in 2026`;
+      const servQuery = topServices ? `latest market gaps, opportunities and regulations for ${topServices} industry` : `latest market gaps and regulations`;
+
+      const trendSearch = await searchEngine.invoke({ query: prodQuery });
+      const regSearch = await searchEngine.invoke({ query: servQuery });
       
       searchContext = `
 LIVE MARKET RESEARCH DATA:
@@ -31,7 +38,7 @@ Trends & Innovations: ${trendSearch}
 Gaps & Regulations: ${regSearch}
 `;
     } catch (e: any) {
-      logger.warn(`Tavily R&D search failed: ${e.message}`);
+      logger.warn(`FreeSearchEngine R&D search failed: ${e.message}`);
     }
 
     const prompt = `You are a world-class Business R&D Analyst.
@@ -76,7 +83,7 @@ Ensure you provide at least 4 deep, highly researched insights for each category
         confidence: "high",
         data: parsed,
         sources: [{
-          url: "Tavily Search API",
+          url: "Free DDG Search",
           field: "rdInsights",
           evidence: "Live Web Search Synthesis",
           confidence: "high",

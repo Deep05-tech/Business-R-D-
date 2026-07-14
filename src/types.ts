@@ -21,6 +21,7 @@ export interface BusinessInput {
   websiteUrl: string;
   socialUrls: string[];
   brochureText?: string;
+  customInstructions?: string;
 }
 
 export interface PageSnapshot {
@@ -113,6 +114,9 @@ export interface BusinessIdentity {
   industry: string | null;
   subIndustry: string | null;
   businessModel: string | null;
+  location: string | null;
+  vision: string | null;
+  description?: string;
 }
 
 export interface SubProduct {
@@ -227,11 +231,12 @@ export interface CompetitorProfile {
   url: string;
   type: "local" | "global";
   location: string;
+  whyCompetitor?: string;
+  evidenceUrls?: Array<{title: string, url: string}>;
   socials: {
     linkedin: string | null;
     instagram: string | null;
     facebook: string | null;
-    twitter: string | null;
     youtube: string | null;
   };
 }

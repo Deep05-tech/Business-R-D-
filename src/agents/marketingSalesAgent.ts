@@ -1,5 +1,5 @@
 import { ChatOpenAI } from "@langchain/openai";
-import { TavilySearch } from "@langchain/tavily";
+import { FreeSearchEngine } from "../utils/freeSearchEngine.js";
 import { createLogger } from "../utils/logger.js";
 import type {
   AgentResult,
@@ -19,16 +19,17 @@ export class MarketingSalesAgent {
     identity: BusinessIdentity,
     offerings: OfferingsIntelligence,
     audience: AudienceIntelligence,
-    brochureText?: string
+    brochureText?: string,
+    customInstructions?: string
   ): Promise<AgentResult<MarketingSalesIntelligence>> {
     logger.info("Executing Marketing & Sales Strategic Intelligence...");
-    const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.7 });
+    const llm = new ChatOpenAI({ model: "gpt-4o", temperature: 0.7 });
 
     let searchContext = "";
     try {
-      const tavily = new TavilySearch({ maxResults: 5 });
-      const localSearch = await tavily.invoke({ query: `top competitors, companies and manufacturers similar to ${identity.officialName || identity.industry} in India` });
-      const globalSearch = await tavily.invoke({ query: `top global competitors, companies and manufacturers similar to ${identity.officialName || identity.industry} worldwide` });
+      const searchEngine = new FreeSearchEngine({ maxResults: 5 });
+      const localSearch = await searchEngine.invoke({ query: `top competitors, companies and manufacturers similar to ${identity.officialName || identity.industry} in India` });
+      const globalSearch = await searchEngine.invoke({ query: `top global competitors, companies and manufacturers similar to ${identity.officialName || identity.industry} worldwide` });
       
       searchContext = `
 LIVE SEARCH DATA (Use this to find real competitors):
@@ -36,7 +37,7 @@ Local India Search: ${localSearch}
 Global Search: ${globalSearch}
 `;
     } catch (e: any) {
-      logger.warn(`Tavily search failed: ${e.message}`);
+      logger.warn(`FreeSearchEngine failed: ${e.message}`);
     }
 
     const prompt = `You are a world-class Marketing Strategy & Sales AI.
@@ -54,7 +55,9 @@ ${offerings.services?.map(s => `- ${s.name}`).join("\n") || "None"}
 TARGET AUDIENCE / BUYER PERSONAS:
 ${audience.buyerPersonas?.map(p => `- ${p}`).join("\n") || "None"}
 
-${brochureText ? `BROCHURE TEXT:\n${brochureText.slice(0, 5000)}` : ""}
+${brochureText ? `BROCHURE TEXT:\n${brochureText}` : ""}
+
+${customInstructions ? `USER INSTRUCTIONS / REVIEWS: \n${customInstructions}\n\nStrictly follow the user instructions above.` : ""}
 
 ${searchContext}
 

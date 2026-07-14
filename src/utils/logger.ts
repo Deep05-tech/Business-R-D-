@@ -18,10 +18,23 @@ const colors = {
 };
 
 export class Logger {
+  public static globalLogBuffer: string[] = [];
+
   constructor(private context: string) {}
+
+  public static getLogs(): string {
+    return Logger.globalLogBuffer.join("\n");
+  }
+
+  public static clearLogs(): void {
+    Logger.globalLogBuffer = [];
+  }
 
   private formatMessage(level: string, color: string, message: string): string {
     const timestamp = new Date().toISOString().split("T")[1].split(".")[0];
+    const plainText = `[${timestamp}] [${level}] [${this.context}] ${message}`;
+    Logger.globalLogBuffer.push(plainText);
+    
     return `${colors.dim}[${timestamp}]${colors.reset} ${color}[${level}]${colors.reset} ${colors.cyan}[${this.context}]${colors.reset} ${message}`;
   }
 

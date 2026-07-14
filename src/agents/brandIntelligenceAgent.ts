@@ -1,52 +1,83 @@
-import { agentRules } from "../config/agentRules.js";
-import type { AgentResult, BrandIntelligence, OfferingsIntelligence, SemanticWebData, WebIntelligence } from "../types.js";
+import type { AgentResult, BrandIntelligence, SemanticWebData, WebIntelligence, OfferingsIntelligence } from "../types.js";
 import { unique } from "../utils/text.js";
+import { ChatOpenAI } from "@langchain/openai";
+import { z } from "zod";
+
+const BrandSchema = z.object({
+  tone: z.string().describe("The primary tone of the website, e.g. 'Professional and enterprise-oriented', 'Creative and expressive', 'Accessible and helpful', 'Value-driven', or 'Innovative'").nullable(),
+  positioning: z.string().describe("A 1-sentence summary of how the brand positions itself in the market").nullable(),
+  usps: z.array(z.string()).describe("List of 2-5 Unique Selling Propositions (USPs) claimed by the brand"),
+  messagingStyle: z.string().describe("The messaging style, e.g. 'Direct and benefits-focused', 'Story-driven', 'Technical and authoritative'").nullable(),
+});
 
 export class BrandIntelligenceAgent {
   readonly name = "brand-intelligence-agent";
-  readonly version = agentRules.version;
+  readonly version = "smart-llm-v1";
 
-  async run(web: WebIntelligence, semantic: SemanticWebData, offerings: OfferingsIntelligence): Promise<AgentResult<BrandIntelligence>> {
-    const messaging = [web.seo.metaDescription, web.homepage.businessSummary, semantic.combinedText, ...web.homepage.headlineMessaging].filter(Boolean).join(" ");
-    const tone = this.detectTone(messaging);
-    const positioning = web.homepage.valueProposition ?? web.homepage.businessSummary;
-    const usps = unique([
-      ...offerings.valuePropositions,
-      ...web.homepage.headlineMessaging.filter((heading) => new RegExp(agentRules.brand.uspPatterns.join("|"), "i").test(heading)),
-    ]).slice(0, 8);
-    const messagingStyle = this.detectMessagingStyle(messaging);
+  async run(web: WebIntelligence, semantic: SemanticWebData, offerings: OfferingsIntelligence, customInstructions?: string): Promise<AgentResult<BrandIntelligence>> {
+    const text = [
+      web.homepage.valueProposition,
+      web.seo.metaDescription,
+      web.homepage.businessSummary,
+      ...web.homepage.headlineMessaging,
+    ].filter(Boolean).join(" ");
+    
+    if (text.length < 50) {
+      return {
+        agent: this.name,
+        version: this.version,
+        confidence: "low",
+        data: { tone: null, positioning: null, usps: [], messagingStyle: null },
+        sources: [],
+        warnings: ["Insufficient text for brand intelligence extraction."],
+      };
+    }
 
-    return {
-      agent: this.name,
-      version: this.version,
-      confidence: positioning ? "medium" : "low",
-      data: { tone, positioning, usps, messagingStyle },
-      sources: positioning
-        ? [
-            {
-              url: web.crawledUrls[0] ?? "",
-              field: "brand.positioning",
-              evidence: positioning,
-              confidence: "medium",
-              inferred: false,
-            },
-          ]
-        : [],
-      warnings: positioning ? [] : ["Brand positioning was not explicit in the readable website content."],
-    };
-  }
+    const llm = new ChatOpenAI({ model: "gpt-4o", temperature: 0.0 }).withStructuredOutput(BrandSchema);
+    const prompt = `Analyze the following messaging pulled from a business website and extract brand intelligence.
+    
+    Identify the brand's tone, a single-sentence positioning statement, their core Unique Selling Propositions (USPs), and their general messaging style.
+    Keep USPs concise (under 8 words each).
+    
+    ${customInstructions ? `USER INSTRUCTIONS / REVIEWS: \n${customInstructions}\n\nStrictly follow the user instructions above.` : ""}
 
-  private detectTone(text: string): string | null {
-    if (!text) return null;
-    const tone = agentRules.brand.tones.find((rule) => new RegExp(rule.pattern, "i").test(text));
-    if (tone) return tone.label;
-    return "Informational";
-  }
+    Messaging Context:
+    ${text}
+    `;
 
-  private detectMessagingStyle(text: string): string | null {
-    if (!text) return null;
-    if (/\bwe\b|\bour\b/i.test(text)) return "Company-led narrative";
-    if (/\byou\b|\byour\b/i.test(text)) return "Customer-outcome focused";
-    return "Descriptive";
+    try {
+      const result = await llm.invoke(prompt);
+      
+      const usps = unique(result.usps || []);
+
+      return {
+        agent: this.name,
+        version: this.version,
+        confidence: "high",
+        data: {
+          tone: result.tone || null,
+          positioning: result.positioning || null,
+          usps,
+          messagingStyle: result.messagingStyle || null,
+        },
+        sources: usps.slice(0, 3).map((usp) => ({
+          url: web.crawledUrls[0] ?? "",
+          field: "brandPositioning.usps",
+          evidence: `LLM Extraction: ${usp}`,
+          confidence: "high",
+          inferred: true,
+        })),
+        warnings: [],
+      };
+    } catch (e: any) {
+      return {
+        agent: this.name,
+        version: this.version,
+        confidence: "low",
+        data: { tone: null, positioning: null, usps: [], messagingStyle: null },
+        sources: [],
+        warnings: [`LLM brand extraction failed: ${e.message}`],
+      };
+    }
   }
 }

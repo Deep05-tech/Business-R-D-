@@ -10,6 +10,7 @@ import { WebIntelligenceAgent } from "./webIntelligenceAgent.js";
 import { WebScraperAgent } from "./webScraperAgent.js";
 import { AiContentAgent } from "./aiContentAgent.js";
 import { MarketingSalesAgent } from "./marketingSalesAgent.js";
+import { DiagnosticAgent } from "./diagnosticAgent.js";
 import { WebTool } from "../tools/webTool.js";
 
 export interface AgentRegistry {
@@ -25,6 +26,7 @@ export interface AgentRegistry {
   digital: DigitalMaturityAgent;
   rd: RdInsightAgent;
   marketingSales: MarketingSalesAgent;
+  diagnostic: DiagnosticAgent;
 }
 
 export function createAgentRegistry(webTool = new WebTool()): AgentRegistry {
@@ -41,5 +43,6 @@ export function createAgentRegistry(webTool = new WebTool()): AgentRegistry {
     digital: new DigitalMaturityAgent(),
     rd: new RdInsightAgent(),
     marketingSales: new MarketingSalesAgent(),
+    diagnostic: new DiagnosticAgent(),
   };
 }

@@ -25,7 +25,8 @@ import { CompetitorAgent } from "./agents/competitorAgent.js";
 import { CompetitiveAnalysisAgent } from "./agents/competitiveAnalysisAgent.js";
 import { SeoAgent } from "./agents/seoAgent.js";
 import { CronAgent } from "./agents/cronAgent.js";
-import { createLogger } from "./utils/logger.js";
+import { Logger, createLogger } from "./utils/logger.js";
+import { DiagnosticAgent } from "./agents/diagnosticAgent.js";
 
 const logger = createLogger("Server");
 
@@ -34,6 +35,7 @@ const __dirname  = dirname(__filename);
 
 const app = express();
 const orchestrator = new OrchestratorAgent();
+const diagnosticAgent = new DiagnosticAgent();
 const smmAgent = new SmmAgent();
 const competitorAgent = new CompetitorAgent();
 const competitiveAnalysisAgent = new CompetitiveAnalysisAgent();
@@ -103,6 +105,7 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
 
   const url = request.body.websiteUrl as string;
   const socialUrls = (request.body.socialUrls as string || "").split(",").map(s => s.trim()).filter(Boolean);
+  const customInstructions = request.body.customInstructions as string | undefined;
   
   if (!url) {
     response.write(`data: ${JSON.stringify({ type: 'error', error: "Website URL is required" })}\n\n`);
@@ -180,11 +183,12 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
     }
 
     // Pass everything into the validator/orchestrator
-    const input = { websiteUrl: finalUrl, socialUrls, brochureText };
+    const input = { websiteUrl: finalUrl, socialUrls, brochureText, customInstructions };
     const profile = await orchestrator.run(input, (stepName) => {
       response.write(`data: ${JSON.stringify({ type: 'progress', step: stepName })}\n\n`);
     });
     response.write(`data: ${JSON.stringify({ type: 'complete', profile })}\n\n`);
+    logger.success(`✅ Pipeline execution completed successfully for ${finalUrl}`);
   } catch (error: any) {
     if (error instanceof ZodError) {
       response.write(`data: ${JSON.stringify({ type: 'error', error: "Invalid input." })}\n\n`);
@@ -195,6 +199,16 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
       response.write(`data: ${JSON.stringify({ type: 'error', error: "Business intelligence run failed." })}\n\n`);
     }
   } finally {
+    try {
+      const logs = Logger.getLogs();
+      if (logs) {
+        // Run diagnostics in background
+        diagnosticAgent.run(logs).catch(e => logger.error(`Diagnostic agent background failure: ${e}`));
+      }
+      Logger.clearLogs();
+    } catch (e) {
+      logger.error(`Failed to handle logs: ${e}`);
+    }
     response.end();
   }
 });
@@ -235,12 +249,94 @@ app.get("/memory/query", async (request, response) => {
 });
 
 // ---------------------------------------------------------------------------
+// Memory Update and Fetch endpoints
+// ---------------------------------------------------------------------------
+app.get("/api/memory", async (request, response) => {
+  try {
+    const url = request.query.url as string;
+    if (!url) return response.status(400).json({ error: "Missing url param" });
+
+    const memory = knowledgeIndex.get(url) || await memoryStore.loadBySite(url);
+    if (!memory) return response.status(404).json({ error: "Memory not found" });
+
+    response.json({ memory });
+  } catch (e: any) {
+    response.status(500).json({ error: e.message });
+  }
+});
+
+app.post("/api/memory/update", async (request, response) => {
+  try {
+    const { url, updates } = request.body;
+    if (!url || !updates) return response.status(400).json({ error: "Missing url or updates param" });
+
+    let memory = knowledgeIndex.get(url) || await memoryStore.loadBySite(url);
+    if (!memory) return response.status(404).json({ error: "Memory not found" });
+
+    // Deep merge updates into memory
+    if (updates.businessIdentity) {
+      memory.businessIdentity = { ...memory.businessIdentity, ...updates.businessIdentity };
+    }
+    if (updates.brandPositioning) {
+      memory.brandPositioning = { ...memory.brandPositioning, ...updates.brandPositioning };
+    }
+    if (updates.offerings) {
+      if (updates.offerings.products) {
+        const newProductNames = updates.offerings.products as string[];
+        const currentProducts = memory.offerings.products || [];
+        memory.offerings.products = newProductNames.map(name => {
+          const existing = currentProducts.find((p: any) => p.name.toLowerCase() === name.toLowerCase());
+          return existing || { name, category: "Unknown", description: "", keyFeatures: [], technicalSpecs: {}, useCases: [], exportMarkets: [] };
+        });
+      }
+      if (updates.offerings.services) {
+        const newServiceNames = updates.offerings.services as string[];
+        const currentServices = memory.offerings.services || [];
+        memory.offerings.services = newServiceNames.map(name => {
+          const existing = currentServices.find((s: any) => s.name.toLowerCase() === name.toLowerCase());
+          return existing || { name, description: "", applications: [], processes: [] };
+        });
+      }
+    }
+    if (updates.audience) {
+      memory.audience = { ...memory.audience, ...updates.audience };
+    }
+
+    await memoryStore.save(memory);
+    knowledgeIndex.add(memory); // Update the cache
+
+    response.json({ success: true, memory });
+  } catch (e: any) {
+    logger.error(`Memory Update error: ${e.message}`);
+    response.status(500).json({ error: e.message });
+  }
+});
+
+app.delete("/api/memory", async (request, response) => {
+  try {
+    const url = request.query.url as string;
+    if (!url) return response.status(400).json({ error: "Missing url param" });
+
+    const deleted = await memoryStore.deleteBySite(url);
+    if (deleted) {
+      knowledgeIndex.remove(url);
+      response.json({ success: true });
+    } else {
+      response.status(404).json({ error: "Memory not found to delete" });
+    }
+  } catch (e: any) {
+    logger.error(`Memory Delete error: ${e.message}`);
+    response.status(500).json({ error: e.message });
+  }
+});
+
+// ---------------------------------------------------------------------------
 // SMM Generation endpoint
 // ---------------------------------------------------------------------------
 
 app.post("/api/generate-smm", async (request, response) => {
   try {
-    const { websiteUrl, type, totalPosts, language, strategy } = request.body;
+    const { websiteUrl, type, totalPosts, language, strategy, theme, targetProduct } = request.body;
     if (!websiteUrl || !type || !totalPosts) {
       response.status(400).json({ error: "Missing required parameters." });
       return;
@@ -256,7 +352,8 @@ app.post("/api/generate-smm", async (request, response) => {
       return;
     }
 
-    const posts = await smmAgent.run(memory, type as "video" | "image", Number(totalPosts), language || "English", strategy || "new");
+    const posts = await smmAgent.run(memory, type as "video" | "image", Number(totalPosts), language || "English", strategy || "new", theme || "brand", targetProduct);
+    logger.success(`✅ Successfully generated ${posts.length} SMM posts for ${websiteUrl}`);
     response.json({ posts });
   } catch (error: any) {
     logger.error(`SMM Generation error: ${error.message}`);
@@ -284,7 +381,7 @@ app.get("/api/competitors", async (request, response) => {
 
 app.post("/api/competitors", async (request, response) => {
   try {
-    const { websiteUrl } = request.body;
+    const { websiteUrl, scope } = request.body;
     if (!websiteUrl) {
       response.status(400).json({ error: "Missing required parameter: websiteUrl" });
       return;
@@ -300,15 +397,89 @@ app.post("/api/competitors", async (request, response) => {
       return;
     }
 
-    const competitors = await competitorAgent.run(memory);
+    const competitors = await competitorAgent.run(memory, scope || "regional");
     
     // Save to memory so we don't have to fetch again
     memory.competitors = competitors;
     await memoryStore.save(memory);
     
+    logger.success(`✅ Successfully extracted ${competitors.length} competitors for ${websiteUrl}`);
     response.json({ competitors });
   } catch (error: any) {
     logger.error(`Competitor Intelligence error: ${error.message}`);
+    response.status(500).json({ error: error.message });
+  }
+});
+
+app.delete("/api/competitors/single", async (request, response) => {
+  try {
+    const { websiteUrl, compUrl } = request.body;
+    if (!websiteUrl || !compUrl) {
+      response.status(400).json({ error: "Missing required parameters" });
+      return;
+    }
+
+    let memory = knowledgeIndex.get(websiteUrl);
+    if (!memory) {
+      memory = await memoryStore.loadBySite(websiteUrl) ?? undefined;
+    }
+
+    if (!memory) {
+      response.status(404).json({ error: "No memory found for this URL." });
+      return;
+    }
+
+    if (memory.competitors) {
+      memory.competitors = memory.competitors.filter((c) => c.url !== compUrl);
+      await memoryStore.save(memory);
+    }
+
+    response.json({ success: true });
+  } catch (error: any) {
+    logger.error(`Delete competitor error: ${error.message}`);
+    response.status(500).json({ error: error.message });
+  }
+});
+
+app.post("/api/competitors/add", async (request, response) => {
+  try {
+    const { websiteUrl, compName, compUrl } = request.body;
+    if (!websiteUrl || !compName || !compUrl) {
+      response.status(400).json({ error: "Missing required parameters" });
+      return;
+    }
+
+    let memory = knowledgeIndex.get(websiteUrl);
+    if (!memory) {
+      memory = await memoryStore.loadBySite(websiteUrl) ?? undefined;
+    }
+
+    if (!memory) {
+      response.status(404).json({ error: "No memory found for this URL." });
+      return;
+    }
+
+    const compAgent = new CompetitorAgent();
+    // Use forceKeep to ensure it gets added even if socials aren't found initially
+    const newComp = await compAgent.scrapeCompetitorSocials({
+      name: compName,
+      url: compUrl,
+      type: "local",
+      location: memory.businessIdentity?.location || "Unknown",
+      forceKeep: true
+    });
+
+    if (newComp) {
+      if (!memory.competitors) memory.competitors = [];
+      memory.competitors.push(newComp);
+      await memoryStore.save(memory);
+      knowledgeIndex.add(memory);
+    }
+
+    logger.success(`✅ Successfully scraped and added manual competitor: ${compName}`);
+    response.json({ success: true });
+  } catch (error: any) {
+    logger.error(`Add competitor error: ${error.message}`);
     response.status(500).json({ error: error.message });
   }
 });
@@ -327,6 +498,7 @@ app.post("/api/seo", async (request, response) => {
     let memory = knowledgeIndex.get(websiteUrl) || await memoryStore.loadBySite(websiteUrl) || undefined;
     if (!memory) return response.status(404).json({ error: "Memory not found" });
     const report = await seoAgent.run(memory);
+    logger.success(`✅ Successfully generated SEO strategy for ${websiteUrl}`);
     response.json({ report });
   } catch (e: any) {
     response.status(500).json({ error: e.message });
@@ -339,9 +511,18 @@ app.post("/api/seo", async (request, response) => {
 
 app.post("/api/cron/run", async (request, response) => {
   try {
-    const sites = await memoryStore.loadAll();
-    for (const site of sites) {
+    const url = request.query.url as string;
+    
+    if (url) {
+      const site = await memoryStore.loadBySite(url);
+      if (!site) return response.status(404).json({ error: "Memory not found for this site." });
       await cronAgent.run(site, memoryStore);
+    } else {
+      // Fallback for legacy calls (runs for all)
+      const sites = await memoryStore.loadAll();
+      for (const site of sites) {
+        await cronAgent.run(site, memoryStore);
+      }
     }
     response.json({ status: "ok" });
   } catch (e: any) {

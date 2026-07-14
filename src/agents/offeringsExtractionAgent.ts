@@ -1,5 +1,5 @@
 import { ChatOpenAI } from "@langchain/openai";
-import { TavilySearch } from "@langchain/tavily";
+import { FreeSearchEngine } from "../utils/freeSearchEngine.js";
 import type { AgentResult, OfferingsIntelligence, ProcessIntelligence, SemanticWebData, WebIntelligence } from "../types.js";
 import { createLogger } from "../utils/logger.js";
 import { unique } from "../utils/text.js";
@@ -31,12 +31,12 @@ export class OfferingsExtractionAgent {
     if (masterCatalog.length > 0) {
       try {
         logger.info(`Running Live Web Research on components: ${masterCatalog.slice(0, 3).join(", ")}...`);
-        const tavily = new TavilySearch({ maxResults: 3 });
-        engineeringContext = await tavily.invoke({
+        const searchEngine = new FreeSearchEngine({ maxResults: 3 });
+        engineeringContext = await searchEngine.invoke({
           query: `Detailed industrial engineering applications and specific use cases for ${masterCatalog.slice(0, 3).join(", ")}. How are these specific components physically used in massive assemblies like Wind Turbines, Gearboxes, and Heavy Engineering?`
         });
       } catch (e) {
-        logger.warn(`Failed to fetch live engineering context from Tavily: ${e}`);
+        logger.warn(`Failed to fetch live engineering context from FreeSearchEngine: ${e}`);
       }
     }
 

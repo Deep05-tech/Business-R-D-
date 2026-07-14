@@ -13,7 +13,7 @@ export class CompetitiveAnalysisAgent {
     
     // We use gpt-4o-mini for heavy map-reduce to avoid hitting the 30k TPM limit of gpt-4o
     const mapLlm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.1 });
-    const reduceLlm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.3 }); // using mini for reduce as well to be safe
+    const reduceLlm = new ChatOpenAI({ model: "gpt-4o", temperature: 0.3 });
 
     const businessCoreProducts = businessMemory.offerings?.products?.join(", ") || "Unknown Products";
     const businessContext = `BUSINESS NAME: ${businessMemory.businessIdentity?.officialName || "Unknown"}\nCORE PRODUCTS: ${businessCoreProducts}`;
@@ -27,7 +27,7 @@ export class CompetitiveAnalysisAgent {
       try {
         const pages = await this.webTool.crawlWebsite(url, 4); // Homepage + 3 other pages
         const fullText = pages.map(p => `Page Title: ${p.title}\nContent:\n${p.contentText}`).join("\n\n");
-        const truncatedText = fullText.substring(0, 15000); // ~4000 tokens
+        const truncatedText = fullText;
 
         const mapPrompt = `You are a Competitive Intelligence Analyst. Analyze the following competitor's website content.
 

@@ -12,7 +12,7 @@ export class SemanticCleaningAgent {
     const cleanedPages = pages.map((page) => this.cleanPage(page, persistentNoise));
     const data: SemanticWebData = {
       pages: cleanedPages,
-      combinedText: compactText(cleanedPages.map((page) => page.cleanText).join(" ")).slice(0, 60_000),
+      combinedText: compactText(cleanedPages.map((page) => page.cleanText).join(" ")),
       businessHeadings: unique(cleanedPages.flatMap((page) => page.cleanHeadings)).slice(0, 40),
       metadata: {
         titles: unique(pages.flatMap((page) => [page.logoText ?? "", page.title ?? ""])),
@@ -68,7 +68,7 @@ export class SemanticCleaningAgent {
     return {
       url: page.url,
       title: page.title,
-      cleanText: compactText(cleanLines.join(" ")).slice(0, 30_000),
+      cleanText: compactText(cleanLines.join(" ")),
       cleanHeadings: page.headings.filter((heading) => this.isBusinessHeading(heading, noiseSet)),
       removedNoise: unique(removedNoise).slice(0, 40),
     };

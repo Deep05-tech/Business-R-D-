@@ -90,6 +90,18 @@ export class OrchestratorAgent {
         }
       }
     }
+
+    // --- Generate Executive Summary for Memory & PDF ---
+    let summaryText = "";
+    try {
+      logger.info("Generating executive summary via Gemini...");
+      summaryText = await this.generateExecutiveSummary(finalProfile);
+      finalProfile.structuredJsonMemoryObject.businessIdentity.description = summaryText;
+      finalProfile.businessIdentitySummary.description = summaryText;
+    } catch (sumErr) {
+      logger.error(`Summary generation failed: ${sumErr instanceof Error ? sumErr.message : sumErr}`);
+    }
+
     const memoryPath = await this.memoryStore.save(finalProfile.structuredJsonMemoryObject);
     knowledgeIndex.add(finalProfile.structuredJsonMemoryObject); // Update RAM cache!
     knowledgeIndex.add(finalProfile.structuredJsonMemoryObject);
@@ -103,8 +115,6 @@ export class OrchestratorAgent {
     // --- PDF Report Generation ---
     let pdfPath = "";
     try {
-      logger.info("Generating executive summary via Gemini...");
-      const summaryText = await this.generateExecutiveSummary(finalProfile);
       logger.info("Rendering PDF report...");
       pdfPath = await this.renderPdf(finalProfile, summaryText);
       logger.success(`PDF report saved: ${pdfPath}`);
@@ -191,6 +201,28 @@ export class OrchestratorAgent {
     const contextSemantic = await this.agents.semanticCleaning.run(contextPages);
     
     onProgress?.("Social intelligence");
+    
+    // Auto-discover socials from the website footer/links if the user didn't provide any
+    if (!input.socialUrls || input.socialUrls.length === 0) {
+      const discoveredSocials = new Set<string>();
+      const socialDomains = ['linkedin.com/company', 'instagram.com', 'facebook.com', 'youtube.com', 'twitter.com', 'x.com'];
+      
+      for (const page of webScrape.data) {
+        if (!page.links) continue;
+        for (const link of page.links) {
+          const href = (link.href || "").toLowerCase();
+          if (socialDomains.some(d => href.includes(d)) && !href.includes('/sharer') && !href.includes('/explore/')) {
+            discoveredSocials.add(link.href);
+          }
+        }
+      }
+      
+      input.socialUrls = Array.from(discoveredSocials).slice(0, 5); // Limit to top 5
+      if (input.socialUrls.length > 0) {
+        logger.info(`Auto-discovered social media URLs from website: ${input.socialUrls.join(', ')}`);
+      }
+    }
+    
     const socialContext = await this.agents.socialIntelligence.run(input.socialUrls);
     
     // Pass brochureText into BusinessIdentity so it can understand the business even better
@@ -262,36 +294,34 @@ export class OrchestratorAgent {
     
     onProgress?.("Audience analysis");
     const mapResults = await Promise.all(webScrape.data.map(async (page: any, index: number) => {
-      const pageSlice = [page];
       const semSlice = { ...semantic.data, pages: [semantic.data.pages[index]] };
-      
-      const dig = dag.requiredAgents.includes("digitalMaturity") ? await this.agents.digital.run(web.data, social.data) : null;
 
       const [aud, brnd] = await Promise.all([
-        dag.requiredAgents.includes("audienceIntelligence") ? this.agents.audience.run(web.data, semSlice, identity.data) : null,
-        dag.requiredAgents.includes("brandIntelligence") ? this.agents.brand.run(web.data, semSlice, offerings.data.offerings) : null,
+        dag.requiredAgents.includes("audienceIntelligence") ? this.agents.audience.run(web.data, semSlice, identity.data, input.customInstructions) : null,
+        dag.requiredAgents.includes("brandIntelligence") ? this.agents.brand.run(web.data, semSlice, offerings.data.offerings, input.customInstructions) : null,
       ]);
 
-      const rdRes = dag.requiredAgents.includes("rdInsight") && brnd && dig
-        ? await this.agents.rd.run(web.data, offerings.data.offerings, brnd.data, dig.data)
-        : null;
-
-      return { digital: dig, audience: aud, brand: brnd, rd: rdRes };
+      return { audience: aud, brand: brnd };
     }));
 
     // 6. Reduce Step (Deterministic & LLM Fallback)
     logger.info(`Reducing extractions...`);
     
     // We already have identity from Phase 1.
-    onProgress?.("Digital maturity");
-    const digital = this.reduceAgentResults(mapResults.map(r => r.digital), "digitalMaturity") as AgentResult<DigitalMaturity>;
     const audience = this.reduceAgentResults(mapResults.map(r => r.audience), "audienceIntelligence") as AgentResult<AudienceIntelligence>;
     
     onProgress?.("Brand intelligence");
     const brand = this.reduceAgentResults(mapResults.map(r => r.brand), "brandIntelligence") as AgentResult<BrandIntelligence>;
     
+    onProgress?.("Digital maturity");
+    const digital = dag.requiredAgents.includes("digitalMaturity") 
+      ? await this.agents.digital.run(web.data, social.data) 
+      : { agent: "digital", sources: [], warnings: [], data: {} as unknown as DigitalMaturity } as AgentResult<DigitalMaturity>;
+
     onProgress?.("R&D insights");
-    const rd = this.reduceAgentResults(mapResults.map(r => r.rd), "rdInsight") as AgentResult<RdInsights>;
+    const rd = dag.requiredAgents.includes("rdInsight") && brand.data && digital.data
+      ? await this.agents.rd.run(web.data, offerings.data.offerings, brand.data, digital.data)
+      : { agent: "rd", sources: [], warnings: [], data: { opportunities: [], gaps: [], improvements: [] } } as AgentResult<RdInsights>;
 
     const finalState = { webScrape, semantic, web, social, identity, offerings, audience, brand, digital, rd, marketingSales: null as any };
     
@@ -300,7 +330,8 @@ export class OrchestratorAgent {
       identity.data, 
       offerings.data.offerings, 
       audience.data,
-      input.brochureText
+      input.brochureText,
+      input.customInstructions
     );
     finalState.marketingSales = marketingSales;
 

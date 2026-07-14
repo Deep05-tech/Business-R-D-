@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="/static/styles.css?v=2">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
@@ -24,9 +24,14 @@
     <!-- GLOBAL PROJECT SELECTOR -->
     <div class="project-selector">
       <label>Active Project</label>
-      <select id="global-project" onchange="window.selectProject(this.value)">
-        <option value="">Loading projects...</option>
-      </select>
+      <div style="display: flex; gap: 8px;">
+        <select id="global-project" onchange="window.selectProject(this.value)" style="flex: 1;">
+          <option value="">Loading projects...</option>
+        </select>
+        <button id="btn-global-delete" class="btn btn-secondary" style="display: none; background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444; padding: 0 10px;" onclick="window.deleteProjectDetails()" title="Delete this project">
+          🗑️
+        </button>
+      </div>
     </div>
 
     <nav class="sidebar-nav">
@@ -36,6 +41,10 @@
       </a>
 
       <div class="nav-section-title">Project Tools</div>
+      <a href="#" class="nav-item disabled" onclick="switchTab('details', 'Project Details & Review'); return false;"
+        id="nav-details">
+        <span class="icon">📝</span> Project Details & Review
+      </a>
       <a href="#" class="nav-item disabled" onclick="switchTab('competitors', 'Competitor Intelligence'); return false;"
         id="nav-competitors">
         <span class="icon">🎯</span> Competitors
@@ -92,19 +101,95 @@
         </div>
       </div>
 
+      <!-- TAB: DETAILS & REVIEW -->
+      <div class="tab-panel" id="panel-details">
+        <div class="card fade-in">
+          <div class="flex-between">
+            <h2>Business Details & Core Memory</h2>
+            <button class="btn btn-primary" onclick="window.saveProjectDetails()" id="btn-save-details">Save & Update Memory</button>
+          </div>
+          <p class="subtitle">Review and correct the AI's extracted intelligence below. Saving will permanently update the memory for all future agents.</p>
+          
+          <form id="details-form" onsubmit="event.preventDefault(); window.saveProjectDetails();" style="margin-top: 20px;">
+            <div class="form-group">
+              <label>Official Business Name</label>
+              <input id="edit-name" type="text" />
+            </div>
+            
+            <div class="flex-row">
+              <div class="form-group flex-1">
+                <label>Industry</label>
+                <input id="edit-industry" type="text" />
+              </div>
+              <div class="input-group">
+                <label>Sub-Industry / Niche</label>
+                <input type="text" class="input" id="edit-subindustry" placeholder="e.g. Agricultural Inputs">
+              </div>
+              <div class="input-group">
+                <label>Headquarters Location</label>
+                <input type="text" class="input" id="edit-location" placeholder="e.g. Rajkot, Gujarat, India">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Business Vision / Mission</label>
+              <textarea id="edit-vision" rows="2" placeholder="e.g. To revolutionize the agricultural supply chain..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Company Description</label>
+              <textarea id="edit-description" rows="3" placeholder="No description extracted. You can type one here..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Core Products <span class="muted">(Comma separated)</span></label>
+              <textarea id="edit-products" rows="2" placeholder="No products extracted. You can type them here..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Core Services <span class="muted">(Comma separated)</span></label>
+              <textarea id="edit-services" rows="2" placeholder="No services extracted. You can type them here..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Target Audience (Buyer Personas) <span class="muted">(Comma separated)</span></label>
+              <textarea id="edit-audience" rows="2" placeholder="The AI did not identify a target audience. You can manually type one here..."></textarea>
+            </div>
+          </form>
+          
+          <div id="details-toast" style="display:none; margin-top: 15px; padding: 10px; background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid #22c55e; border-radius: 6px;">
+            ✅ Memory successfully updated!
+          </div>
+        </div>
+      </div>
+
       <!-- TAB: COMPETITORS -->
       <div class="tab-panel" id="panel-competitors">
         <div class="card fade-in">
           <div class="flex-between">
             <h2>Competitor Intelligence</h2>
-            <div>
-              <button class="btn btn-secondary" onclick="window.findCompetitors()" id="btn-find-comp">Find
-                Competitors</button>
-              <button class="btn btn-secondary" onclick="window.findCompetitors(true)" id="btn-regen-comp"
-                style="display:none; opacity:0.8; font-size:12px; padding: 4px 8px;">Regenerate</button>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <select id="comp-scope" style="padding: 6px 12px; border-radius: 4px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); color: var(--text-color);">
+                <option value="all">All</option>
+                <option value="local">Local</option>
+                <option value="regional">Regional (National)</option>
+                <option value="global">Global</option>
+              </select>
+              <button class="btn btn-secondary" onclick="window.findCompetitors()" id="btn-find-comp">Find Competitors</button>
+              <button class="btn btn-secondary" onclick="window.findCompetitors(true)" id="btn-regen-comp" style="display:none;">Re-crawl Deeply</button>
             </div>
           </div>
           <p class="subtitle">List of elite industry competitors and their social media profiles.</p>
+
+          <div style="margin-bottom: 20px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+            <h4 style="margin-top: 0; margin-bottom: 10px; font-size: 0.9em; color: var(--text-muted);">Manual Add</h4>
+            <div class="flex-row" style="gap: 10px; align-items: center;">
+              <input type="text" id="add-comp-name" placeholder="Competitor Name (e.g. Apple)" class="input" style="flex:1;">
+              <input type="text" id="add-comp-url" placeholder="Website URL (e.g. https://apple.com)" class="input" style="flex:2;">
+              <button class="btn btn-primary" onclick="window.addManualCompetitor()" id="btn-add-comp">Add</button>
+            </div>
+          </div>
+
           <div id="competitor-list" class="competitor-grid">
             <div class="empty-state">Click "Find Competitors" to begin market research.</div>
           </div>
@@ -131,10 +216,26 @@
 
           <div class="flex-row">
             <div class="form-group flex-1">
-              <label>Content Type</label>
+              <label>Content Theme</label>
+              <select id="smm-theme">
+                <option value="brand">Brand (Vision & Scale)</option>
+                <option value="product">Product (Features & Benefits)</option>
+                <option value="technical">Technical (Deep Engineering Dive)</option>
+                <option value="educative">Informative/Educative (How-to & Insights)</option>
+                <option value="ugc">UGC (Behind the Scenes & Authentic)</option>
+              </select>
+            </div>
+            <div class="form-group flex-1" id="smm-product-container" style="display: none;">
+              <label>Target Product</label>
+              <select id="smm-product">
+                <option value="">Select a product...</option>
+              </select>
+            </div>
+            <div class="form-group flex-1">
+              <label>Format</label>
               <select id="smm-type">
-                <option value="image">Image Post (LinkedIn / IG / FB)</option>
-                <option value="video">Video (Reel / TikTok Script)</option>
+                <option value="image">Image Post</option>
+                <option value="video">Video Script</option>
               </select>
             </div>
             <div class="form-group flex-1">
@@ -192,9 +293,14 @@
       </div>
 
     </div>
+    
+    <!-- GLOBAL TOAST -->
+    <div id="global-toast" style="display:none; position:fixed; bottom:20px; right:20px; z-index:9999; padding:15px 20px; background:#22c55e; color:white; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); font-weight:500; opacity:0; transition: opacity 0.3s ease;">
+      Success message here
+    </div>
   </main>
 
-  <script src="/static/app.js"></script>
+  <script src="/static/app.js?v=8"></script>
 </body>
 
 </html>
