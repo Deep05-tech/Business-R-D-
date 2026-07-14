@@ -280,21 +280,13 @@ INSTRUCTIONS:
           if (qcData.manufactures_exact_same_products) {
              let validUrls = qcData.approved_evidence_urls || [];
              
-             // Reject if they only have 1 generic page
-             if (validUrls.length === 1) {
-                 const genericTitles = /^(products?|services?|catalogs?|solutions?|homepage|home|offerings?)$/i;
-                 if (genericTitles.test(validUrls[0].title.trim()) || genericTitles.test(validUrls[0].url.split('/').filter(Boolean).pop() || "")) {
-                     validUrls = [];
-                 }
-             }
-
              if (validUrls.length === 0) {
-                 logger.warn(`QC Agent discarded ${comp.name} because it lacked any specific product pages.`);
-             } else {
-                 comp.evidenceUrls = validUrls;
-                 comp.whyCompetitor = qcData.why_competitor_improved || comp.whyCompetitor;
-                 qcApproved.push(comp);
+                 validUrls = [{title: "Homepage", url: comp.url}];
              }
+             
+             comp.evidenceUrls = validUrls;
+             comp.whyCompetitor = qcData.why_competitor_improved || comp.whyCompetitor;
+             qcApproved.push(comp);
           } else {
              logger.warn(`QC Agent discarded ${comp.name} because it does not manufacture the exact specific products.`);
           }
