@@ -215,7 +215,7 @@ INSTRUCTIONS:
     };
 
     let validCount = 0;
-    while(processQueue.length > 0 && validCount < 10) {
+    while(processQueue.length > 0 && validCount < 20) {
       const comp = processQueue.shift();
       if (!comp) continue;
       const validated = await processCompetitor(comp);
@@ -223,7 +223,7 @@ INSTRUCTIONS:
         finalCompetitors.push(validated);
         validCount++;
       } else {
-        logger.info(`Discarding ${comp.name} (no social media found)`);
+        logger.info(`Discarding ${comp.name} (failed to process)`);
       }
     }
 
@@ -303,8 +303,8 @@ INSTRUCTIONS:
         }
       }
       
-      logger.info(`QC Agent approved ${qcApproved.length} competitors out of ${competitors.length}.`);
-      return qcApproved;
+      logger.info(`QC Agent approved ${qcApproved.length} competitors out of ${competitors.length}. Returning top 10.`);
+      return qcApproved.slice(0, 10);
     } catch (e: any) {
       logger.error(`QC Validation failed: ${e.message}`);
       return competitors;
