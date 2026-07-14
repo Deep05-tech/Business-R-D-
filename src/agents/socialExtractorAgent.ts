@@ -152,8 +152,11 @@ export class SocialExtractorAgent {
             if (document.querySelector('video')) {
                 mediaType = "Video";
                 const vid = document.querySelector('video');
-                mediaUrls = vid.getAttribute('src') || vid.getAttribute('poster') || "";
-                if (!mediaUrls) {
+                mediaUrls = vid.getAttribute('src') || "";
+                if (mediaUrls.startsWith('blob:')) mediaUrls = "";
+                if (!mediaUrls) mediaUrls = vid.getAttribute('poster') || "";
+                
+                if (!mediaUrls || mediaUrls.startsWith('blob:')) {
                     const img = document.querySelector('article img[style*="object-fit: cover"]');
                     if (img) mediaUrls = img.getAttribute('src') || "";
                 }
@@ -415,10 +418,21 @@ export class SocialExtractorAgent {
             if (firstPost.querySelector('video')) {
                 mediaType = "Video";
                 const vid = firstPost.querySelector('video');
-                mediaUrls = vid.getAttribute('src') || vid.getAttribute('poster') || "";
-                if (!mediaUrls) {
-                    const img = firstPost.querySelector('img[referrerpolicy="origin-when-cross-origin"]');
-                    if (img) mediaUrls = img.getAttribute('src') || "";
+                mediaUrls = vid.getAttribute('src') || "";
+                if (mediaUrls.startsWith('blob:')) mediaUrls = "";
+                if (!mediaUrls) mediaUrls = vid.getAttribute('poster') || "";
+                
+                if (!mediaUrls || mediaUrls.startsWith('blob:')) {
+                    const imgs = Array.from(firstPost.querySelectorAll('img'));
+                    const validImgs = imgs.filter(img => {
+                        const src = img.getAttribute('data-src') || img.getAttribute('src') || "";
+                        const isIcon = src.includes('emoji') || src.includes('rsrc.php');
+                        const isProfile = src.includes('p100x100') || src.includes('p75x75') || src.includes('p50x50') || src.includes('p36x36') || src.includes('/cp0/e15/q65/');
+                        return !isIcon && !isProfile && !src.startsWith('data:') && !src.startsWith('blob:') && src.length > 20;
+                    });
+                    if (validImgs.length > 0) {
+                        mediaUrls = validImgs[0].getAttribute('data-src') || validImgs[0].getAttribute('src') || "";
+                    }
                 }
             } else if (firstPost.querySelector('img')) {
                 const imgs = Array.from(firstPost.querySelectorAll('img'));
