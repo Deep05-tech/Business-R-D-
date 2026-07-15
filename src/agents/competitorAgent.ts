@@ -259,7 +259,7 @@ INSTRUCTIONS:
         name: z.string(),
         url: z.string(),
         manufactures_exact_same_products: z.boolean().describe("Set to true if the company manufactures the same products OR is in the exact same specific product category (e.g., automotive forgings). Set to false if they are unrelated."),
-        why_competitor_improved: z.string().describe("Rewrite the rationale into a powerful 1-2 sentence explanation of exactly why they compete. CRITICAL: Do NOT hallucinate products! If the target business does not explicitly manufacture 'rolled rings', do NOT mention rolled rings in the rationale. Only mention products that BOTH companies actually manufacture based on the target business context."),
+        why_competitor_improved: z.string().describe("Rewrite the rationale into a powerful 1-2 sentence explanation. CRITICAL: You MUST explicitly state the EXACT product or service that makes them a competitor (e.g., 'Direct competitor for manufacturing Torque Rod Arms.'). Do NOT hallucinate products! Only mention products that BOTH companies actually manufacture."),
         approved_evidence_urls: z.array(z.object({
           title: z.string(),
           url: z.string()
@@ -276,7 +276,7 @@ ${JSON.stringify(competitors, null, 2)}
 
 INSTRUCTIONS:
 1. manufactures_exact_same_products: Review each competitor. If you know they do NOT manufacture the same specific products or product category, you MUST set this to false. Do not reject them if they just use slightly different terminology for the same product category.
-2. why_competitor_improved: YOU MUST NOT HALLUCINATE PRODUCTS. Read the target business context carefully. If the target business makes "Torque Rod Arms", but the competitor makes "Torque Rod Arms and Rolled Rings", your rationale MUST NOT say the target business makes rolled rings. Focus only on the intersection.
+2. why_competitor_improved: YOU MUST EXPLICITLY NAME THE SHARED PRODUCT OR SERVICE. Read the target business context carefully. If the target business makes "Torque Rod Arms", your rationale MUST clearly state that they compete in "Torque Rod Arms". Format it clearly, for example: 'Direct competitor for [Product/Service Name]. [Brief explanation].' Focus only on the exact intersection of their product lines.
 2. approved_evidence_urls: You have been given a broad pool of raw links for each competitor. You MUST carefully analyze these links and SELECT UP TO 5 of the most specific product, service, solution, or catalog pages.
    - DO NOT include leadership profiles (e.g., "Chairman", "CEO", "CFO")
    - DO NOT include corporate stories, blogs, or news (e.g., "Story", "Our History", "Press")
