@@ -244,12 +244,12 @@ INSTRUCTIONS:
 
     // --- PHASE 5: Strict LLM QC Validation ---
     logger.info(`Phase 5: Running strict LLM QC on extracted competitors and links...`);
-    const qcCompetitors = await this.qcCompetitorLinks(finalCompetitors, memory.industryClassification?.industry || "target industry");
+    const qcCompetitors = await this.qcCompetitorLinks(finalCompetitors, memory.industryClassification?.industry || "target industry", coreProductsDetailed);
 
     return qcCompetitors;
   }
 
-  private async qcCompetitorLinks(competitors: CompetitorProfile[], targetIndustry: string): Promise<CompetitorProfile[]> {
+  private async qcCompetitorLinks(competitors: CompetitorProfile[], targetIndustry: string, targetProducts: string): Promise<CompetitorProfile[]> {
     if (competitors.length === 0) return competitors;
 
     const llm = new ChatOpenAI({ modelName: "gpt-4o", temperature: 0 });
@@ -271,21 +271,23 @@ INSTRUCTIONS:
     const prompt = `You are a strict Data Quality Control (QC) Auditor.
 Your job is to review a list of scraped competitors and their extracted links to ensure 100% accuracy for a Business Intelligence dashboard.
 The target business operates in this exact industry: ${targetIndustry}
+The target business EXACT CORE PRODUCTS are:
+${targetProducts}
 
 Here are the scraped competitors and their extracted product links:
 ${JSON.stringify(competitors, null, 2)}
 
 INSTRUCTIONS:
-1. manufactures_exact_same_products: Review each competitor. If you know they do NOT manufacture the same specific products or product category, you MUST set this to false. Do not reject them if they just use slightly different terminology for the same product category.
-2. why_competitor_improved: YOU MUST EXPLICITLY NAME THE SHARED PRODUCT OR SERVICE. Read the target business context carefully. If the target business makes "Torque Rod Arms", your rationale MUST clearly state that they compete in "Torque Rod Arms". Format it clearly, for example: 'Direct competitor for [Product/Service Name]. [Brief explanation].' Focus only on the exact intersection of their product lines.
-2. approved_evidence_urls: You have been given a broad pool of raw links for each competitor. You MUST carefully analyze these links and SELECT UP TO 5 of the most specific product, service, solution, or catalog pages.
+1. manufactures_exact_same_products: Review each competitor. If you know they do NOT manufacture any of the exact specific products from the target business's core products list, you MUST set this to false. Do not accept generic industry matches.
+2. why_competitor_improved: YOU MUST EXPLICITLY NAME THE EXACT SHARED PRODUCTS in your first sentence. Read the target business context carefully. Format it like: 'Direct competitor for [Exact Shared Product 1, Exact Shared Product 2]. [Brief explanation]'. Do NOT use generic terms like 'forged components' or 'automotive parts' if the specific product names match. If the target business makes "Torque Rod Arms", your rationale MUST clearly state that they compete in "Torque Rod Arms".
+3. approved_evidence_urls: You have been given a broad pool of raw links for each competitor. You MUST carefully analyze these links and SELECT UP TO 5 of the most specific product, service, solution, or catalog pages.
    - DO NOT include leadership profiles (e.g., "Chairman", "CEO", "CFO")
    - DO NOT include corporate stories, blogs, or news (e.g., "Story", "Our History", "Press")
    - DO NOT include About Us, Careers, or Investor Relations pages
    If ALL of a competitor's links are invalid or if no specific products exist, just return an empty array for their approved_evidence_urls.
-3. LANGUAGE TRANSLATION: If any of the selected product page titles are in a foreign language, you MUST translate the title into English before outputting it.
-4. RELEVANCE SCORE: Carefully assign a score from 1-100. A score of 95-100 means they are an exact replica of the target business. A lower score means they only overlap slightly. We will use this to rank the most dangerous competitors at the top.
-5. Return the exact same competitors, but with the 'is_strictly_same_industry' flag properly evaluated, and the 'evidenceUrls' array containing only the top 5 valid product links you intelligently selected.`;
+4. LANGUAGE TRANSLATION: If any of the selected product page titles are in a foreign language, you MUST translate the title into English before outputting it.
+5. RELEVANCE SCORE: Score them 1-100 strictly based on HOW MANY EXACT SPECIFIC PRODUCTS they share with the target business's core products list. If they manufacture the exact same specific items (e.g. Torque Rod Arms), give them 90-100. If they just generally do 'forging' but don't explicitly list specific matching parts, give them a lower score (10-50).
+6. Return the exact same competitors, but with the 'is_strictly_same_industry' flag properly evaluated, and the 'evidenceUrls' array containing only the top 5 valid product links you intelligently selected.`;
 
     try {
       const parsed = await llm.withStructuredOutput(qcSchema).invoke(prompt);
