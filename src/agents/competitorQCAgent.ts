@@ -1,6 +1,7 @@
 import { ChatOpenAI } from "@langchain/openai";
 import { createLogger } from "../utils/logger.js";
 import { z } from "zod";
+import axios from "axios";
 import type { CompetitorProfile } from "../types.js";
 
 const logger = createLogger("CompetitorQCAgent");
@@ -56,6 +57,20 @@ INSTRUCTIONS:
           if (qcData.manufactures_exact_same_products) {
              let validUrls = qcData.approved_evidence_urls || [];
              
+             // --- VERIFY URLs DO NOT 404 ---
+             const verifiedUrls: Array<{title: string, url: string}> = [];
+             for (const u of validUrls) {
+                try {
+                  const check = await axios.get(u.url, { timeout: 4000, headers: { 'User-Agent': 'Mozilla/5.0' } });
+                  if (check.status >= 200 && check.status < 400) {
+                     verifiedUrls.push(u);
+                  }
+                } catch (err: any) {
+                  logger.debug(`QC Agent dropped broken evidence URL (404/Error): ${u.url}`);
+                }
+             }
+             validUrls = verifiedUrls;
+
              if (validUrls.length === 0) {
                  validUrls = [{title: "Homepage", url: comp.url}];
              }
