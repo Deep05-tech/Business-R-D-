@@ -375,33 +375,36 @@ async function loadCompetitorsUI() {
       if (href !== '#' && !href.startsWith('http')) href = 'https://' + href;
       return `
       <div class="competitor-card">
-        <div class="comp-info">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h3><a href="${href}" target="_blank" style="color:var(--text);">${c.name}</a> <span style="font-size:10px; padding:2px 6px; border-radius:4px; background:var(--surface); border:1px solid var(--border); margin-left:8px;">📍 ${c.location}</span></h3>
-            <button onclick="window.deleteSingleCompetitor('${c.url}')" title="Remove competitor" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:16px;">🗑️</button>
-          </div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <h3 style="margin: 0;"><a href="${href}" target="_blank" style="color:var(--text);">${c.name}</a> <span style="font-size:10px; padding:2px 6px; border-radius:4px; background:var(--surface); border:1px solid var(--border); margin-left:8px; display:inline-block; vertical-align:middle;">📍 ${c.location}</span></h3>
+          <button onclick="window.deleteSingleCompetitor('${c.url}')" title="Remove competitor" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:16px; padding:0; line-height: 1;">🗑️</button>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
           ${(c.evidenceUrls && c.evidenceUrls.length > 0) ? `
-          <div style="margin-top: 6px; font-size: 12px; display: flex; align-items: center; gap: 8px;">
-            <span style="color: var(--text-muted);">🔗 Products:</span>
-            <select onchange="if(this.value) window.open(this.value, '_blank')" style="flex: 1; padding: 2px 4px; font-size: 11px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface); color: var(--text);">
+          <div style="font-size: 12px; display: flex; align-items: center; gap: 8px; flex: 1;">
+            <span style="color: var(--text-muted); white-space: nowrap;">🔗 Products:</span>
+            <select onchange="if(this.value) window.open(this.value, '_blank')" style="width: 100%; max-width: 400px; padding: 4px 6px; font-size: 11px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface); color: var(--text);">
               <option value="">-- Select Product Page --</option>
               ${c.evidenceUrls.map(u => `<option value="${u.url.startsWith('http') ? u.url : 'https://' + u.url}">${u.title}</option>`).join('')}
             </select>
           </div>
-          ` : ''}
-          ${c.whyCompetitor ? `
-          <div style="margin-top: 8px; font-size: 11.5px; color: var(--text-muted); background: var(--surface-hover); padding: 8px; border-radius: 6px; border: 1px solid var(--border); line-height: 1.4;">
-            <strong style="color: var(--text);">Why a competitor:</strong> ${c.whyCompetitor}
+          ` : '<div style="flex: 1;"></div>'}
+
+          <div class="social-links" style="display: flex; gap: 8px; margin: 0;">
+            ${c.socials?.linkedin ? `<a href="${c.socials.linkedin}" class="social-icon" target="_blank" title="LinkedIn">💼</a>` : ''}
+            ${c.socials?.instagram ? `<a href="${c.socials.instagram}" class="social-icon" target="_blank" title="Instagram">📸</a>` : ''}
+            ${c.socials?.facebook ? `<a href="${c.socials.facebook}" class="social-icon" target="_blank" title="Facebook">📘</a>` : ''}
+            ${c.socials?.twitter ? `<a href="${c.socials.twitter}" class="social-icon" target="_blank" title="X (Twitter)">𝕏</a>` : ''}
+            ${c.socials?.youtube ? `<a href="${c.socials.youtube}" class="social-icon" target="_blank" title="YouTube">▶️</a>` : ''}
           </div>
-          ` : ''}
         </div>
-        <div class="social-links">
-          ${c.socials.linkedin ? `<a href="${c.socials.linkedin}" class="social-icon" target="_blank" title="LinkedIn">💼</a>` : ''}
-          ${c.socials.instagram ? `<a href="${c.socials.instagram}" class="social-icon" target="_blank" title="Instagram">📸</a>` : ''}
-          ${c.socials.facebook ? `<a href="${c.socials.facebook}" class="social-icon" target="_blank" title="Facebook">📘</a>` : ''}
-          ${c.socials.twitter ? `<a href="${c.socials.twitter}" class="social-icon" target="_blank" title="X (Twitter)">𝕏</a>` : ''}
-          ${c.socials.youtube ? `<a href="${c.socials.youtube}" class="social-icon" target="_blank" title="YouTube">▶️</a>` : ''}
+
+        ${c.whyCompetitor ? `
+        <div style="font-size: 11.5px; color: var(--text-muted); background: var(--surface-hover); padding: 10px 12px; border-radius: 6px; border: 1px solid var(--border); line-height: 1.5; width: 100%; box-sizing: border-box; margin: 0;">
+          <strong style="color: var(--text);">Why a competitor:</strong> ${c.whyCompetitor}
         </div>
+        ` : ''}
       </div>
     `;
     };
