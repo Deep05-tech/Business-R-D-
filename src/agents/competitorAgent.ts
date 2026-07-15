@@ -259,6 +259,7 @@ INSTRUCTIONS:
         name: z.string(),
         url: z.string(),
         manufactures_exact_same_products: z.boolean().describe("Set to true if the company manufactures the same products OR is in the exact same specific product category (e.g., automotive forgings). Set to false if they are unrelated."),
+        relevance_score: z.number().min(1).max(100).describe("Score from 1 to 100 on how closely this competitor's products match the target business. 100 means an absolutely perfect direct competitor with the exact same core product catalog."),
         why_competitor_improved: z.string().describe("Rewrite the rationale into a powerful 1-2 sentence explanation. CRITICAL: You MUST explicitly state the EXACT product or service that makes them a competitor (e.g., 'Direct competitor for manufacturing Torque Rod Arms.'). Do NOT hallucinate products! Only mention products that BOTH companies actually manufacture."),
         approved_evidence_urls: z.array(z.object({
           title: z.string(),
@@ -283,7 +284,8 @@ INSTRUCTIONS:
    - DO NOT include About Us, Careers, or Investor Relations pages
    If ALL of a competitor's links are invalid or if no specific products exist, just return an empty array for their approved_evidence_urls.
 3. LANGUAGE TRANSLATION: If any of the selected product page titles are in a foreign language, you MUST translate the title into English before outputting it.
-4. Return the exact same competitors, but with the 'is_strictly_same_industry' flag properly evaluated, and the 'evidenceUrls' array containing only the top 5 valid product links you intelligently selected.`;
+4. RELEVANCE SCORE: Carefully assign a score from 1-100. A score of 95-100 means they are an exact replica of the target business. A lower score means they only overlap slightly. We will use this to rank the most dangerous competitors at the top.
+5. Return the exact same competitors, but with the 'is_strictly_same_industry' flag properly evaluated, and the 'evidenceUrls' array containing only the top 5 valid product links you intelligently selected.`;
 
     try {
       const parsed = await llm.withStructuredOutput(qcSchema).invoke(prompt);
@@ -301,6 +303,7 @@ INSTRUCTIONS:
              
              comp.evidenceUrls = validUrls;
              comp.whyCompetitor = qcData.why_competitor_improved || comp.whyCompetitor;
+             (comp as any)._relevanceScore = qcData.relevance_score;
              qcApproved.push(comp);
           } else {
              logger.warn(`QC Agent discarded ${comp.name} because it does not manufacture the exact specific products.`);
@@ -310,7 +313,8 @@ INSTRUCTIONS:
         }
       }
       
-      logger.info(`QC Agent approved ${qcApproved.length} competitors out of ${competitors.length}. Returning top 10.`);
+      logger.info(`QC Agent approved ${qcApproved.length} competitors out of ${competitors.length}. Sorting by relevance score and returning top 10.`);
+      qcApproved.sort((a, b) => ((b as any)._relevanceScore || 0) - ((a as any)._relevanceScore || 0));
       return qcApproved.slice(0, 10);
     } catch (e: any) {
       logger.error(`QC Validation failed: ${e.message}`);
