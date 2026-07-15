@@ -15,9 +15,9 @@ export class CompetitorQCAgent {
       valid_competitors: z.array(z.object({
         name: z.string(),
         url: z.string(),
-        manufactures_exact_same_products: z.boolean().describe("Set to true if the company manufactures the same products OR is in the exact same specific product category (e.g., automotive forgings). Set to false if they are unrelated."),
+        manufactures_exact_same_products: z.boolean().describe("Set to true if they manufacture exact specific products OR highly related products in the exact same niche. False only if completely unrelated."),
         relevance_score: z.number().min(1).max(100).describe("Score from 1 to 100 on how closely this competitor's products match the target business. 100 means an absolutely perfect direct competitor with the exact same core product catalog."),
-        why_competitor_improved: z.string().describe("Rewrite the rationale into a powerful 1-2 sentence explanation. CRITICAL: You MUST explicitly state the EXACT product or service that makes them a competitor (e.g., 'Direct competitor for manufacturing Torque Rod Arms.'). Do NOT hallucinate products! Only mention products that BOTH companies actually manufacture."),
+        why_competitor_improved: z.string().describe("Rewrite the rationale into a powerful 1-2 sentence explanation. CRITICAL: You MUST explicitly state the EXACT product or highly related service that makes them a competitor (e.g., 'Direct competitor for manufacturing Torque Rod Arms.'). Do NOT hallucinate products!"),
         approved_evidence_urls: z.array(z.object({
           title: z.string(),
           url: z.string()
@@ -35,8 +35,8 @@ Here are the scraped competitors and their extracted product links:
 ${JSON.stringify(competitors, null, 2)}
 
 INSTRUCTIONS:
-1. manufactures_exact_same_products: Review each competitor. If you cannot confirm they manufacture AT LEAST ONE EXACT SPECIFIC PRODUCT (e.g. 'Torque Rod Arms', 'Steering Knuckle') from the target business's core products list, you MUST set this to false and they will be deleted. Generic industry overlaps like "automotive parts" or "forged components" are UNACCEPTABLE.
-2. why_competitor_improved: YOU MUST EXPLICITLY NAME THE EXACT SHARED PRODUCTS in your first sentence. Format it exactly like: 'Direct competitor for [Exact Shared Product 1, Exact Shared Product 2]. [Brief explanation]'. Do NOT use generic terms like 'forged components' or 'automotive parts'. If they do not share an exact specific product, they should have been marked false in step 1.
+1. manufactures_exact_same_products: Review each competitor. If they manufacture AT LEAST ONE EXACT SPECIFIC PRODUCT (e.g. 'Torque Rod Arms') or a HIGHLY RELATED PRODUCT in the exact same niche, set this to true. If they are in a completely unrelated or overly generic industry, set it to false and they will be deleted.
+2. why_competitor_improved: YOU MUST EXPLICITLY NAME THE SHARED PRODUCTS in your first sentence. Format it exactly like: 'Direct competitor for [Exact or Highly Related Shared Product]. [Brief explanation]'. Do NOT use generic terms like 'forged components' if they have specific matches.
 3. approved_evidence_urls: You have been given a broad pool of raw links for each competitor. You MUST carefully analyze these links and SELECT UP TO 5 of the most specific product, service, solution, or catalog pages.
    - DO NOT include leadership profiles (e.g., "Chairman", "CEO", "CFO")
    - DO NOT include corporate stories, blogs, or news (e.g., "Story", "Our History", "Press")
