@@ -394,11 +394,16 @@ INSTRUCTIONS:
         comp.evidenceUrls = [{ title: "Homepage", url: comp.url }];
       }
     } catch (err: any) {
-      logger.warn(`Website ${comp.url} could not be reached or returned an error: ${err.message}. Keeping competitor with fallback data.`);
-      comp.evidenceUrls = [{ title: "Homepage", url: comp.url }];
+      logger.warn(`Website ${comp.url} could not be reached or returned an error: ${err.message}. Strictly discarding competitor as requested.`);
+      return null;
     }
 
-    // Return the competitor even if social media scraping failed
+    if (!socials.instagram && !socials.youtube && !socials.linkedin && !socials.facebook) {
+      logger.warn(`Website ${comp.url} has NO social media links in its DOM/footer. Strictly discarding competitor as requested.`);
+      return null;
+    }
+
+    // Return the successfully scraped competitor
     return {
       name: comp.name,
       url: comp.url,
