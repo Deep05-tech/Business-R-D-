@@ -259,7 +259,7 @@ export class SocialExtractorAgent {
         const cleanProfileHandle = profileUrl.split('instagram.com/')[1]?.split('/')[0]?.split('?')[0]?.toLowerCase();
 
         await this.driver.get(profileUrl);
-        await this.driver.sleep(3000); // Wait for SPA to load
+        await this.driver.sleep(1200); // Wait for SPA to load
         
         let postUrls: string[] = [profileUrl]; // Default to profileUrl if it's direct
         

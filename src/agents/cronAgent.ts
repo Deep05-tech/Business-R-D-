@@ -124,165 +124,152 @@ export class CronAgent {
     const freeEngine = new FreeSearchEngine({ maxResults: 4 });
     const newsEngine = new NewsSearchEngine({ maxResults: 5 });
 
-    for (const comp of targetCompetitors) {
-      let combinedRawData = "";
-
+    // Process all target competitors in parallel for maximum speed
+    const competitorResults = await Promise.all(targetCompetitors.map(async (comp) => {
       const searchName = comp.name.split(',')[0].split('-')[0].trim();
 
-      // 1. YouTube (Direct scraping + Search Fallback)
-      const ytUrl = (comp as any).socials?.youtube;
-      let ytData = "";
-      if (isValidProfileUrl(ytUrl, 'YouTube')) {
-        try {
-          logger.info(`Triggering SocialExtractorAgent for ${comp.name} (YouTube: ${ytUrl})...`);
-          ytData = await socialExtractor.extract("YouTube", ytUrl, comp.name);
-        } catch (e: any) {
-          logger.warn(`YouTube extraction error for ${comp.name}: ${e.message}`);
-        }
-      }
-      if (!ytData || ytData.includes("Extraction Failed")) {
-        try {
-          logger.info(`Running YouTube search fallback for ${searchName}...`);
-          let results = await newsEngine.search(`${searchName} youtube video OR channel`);
-          if (!results || results.length === 0) {
-            const rawFree = await freeEngine.invoke({ query: `${searchName} youtube video` });
-            try { results = JSON.parse(rawFree); } catch {}
-          }
-          if (Array.isArray(results) && results.length > 0) {
-            ytData = `Platform: YouTube\nProfile URL: ${ytUrl || "https://www.youtube.com"}\nExtracted Posts:\n`;
-            for (const r of results) {
-              ytData += `- Caption: ${r.title} - ${r.content}\n  Post URL: ${r.url}\n  Date: ${r.published_date || "Recent"}\n`;
+      // Parallelize extractions across all 5 platforms for this competitor
+      const [ytRes, igRes, fbRes, liRes, newsRes] = await Promise.all([
+        // 1. YouTube
+        (async () => {
+          const ytUrl = (comp as any).socials?.youtube;
+          let data = "";
+          if (isValidProfileUrl(ytUrl, 'YouTube')) {
+            try {
+              data = await socialExtractor.extract("YouTube", ytUrl, comp.name);
+            } catch (e: any) {
+              logger.warn(`YouTube extraction error for ${comp.name}: ${e.message}`);
             }
           }
-        } catch (e: any) {
-          logger.warn(`YouTube search fallback error: ${e.message}`);
-        }
-      }
-      if (ytData && !ytData.includes("Extraction Failed")) {
-        combinedRawData += `\n--- YOUTUBE DATA ---\n${ytData}\n`;
-      }
-
-      // 2. Instagram (Direct scraping + Search Fallback)
-      const igUrl = (comp as any).socials?.instagram;
-      let igData = "";
-      if (isValidProfileUrl(igUrl, 'Instagram')) {
-        try {
-          logger.info(`Triggering SocialExtractorAgent for ${comp.name} (Instagram: ${igUrl})...`);
-          igData = await socialExtractor.extract("Instagram", igUrl);
-        } catch (e: any) {
-          logger.warn(`Instagram direct extraction error for ${comp.name}: ${e.message}`);
-        }
-      }
-      if (!igData || igData.includes("Extraction Failed")) {
-        try {
-          logger.info(`Running Instagram search fallback for ${searchName}...`);
-          let results = await newsEngine.search(`${searchName} instagram post OR photo OR reel`);
-          if (!results || results.length === 0) {
-            const rawFree = await freeEngine.invoke({ query: `${searchName} instagram` });
-            try { results = JSON.parse(rawFree); } catch {}
+          if (!data || data.includes("Extraction Failed")) {
+            try {
+              let results = await newsEngine.search(`${searchName} youtube video OR channel`);
+              if (!results || results.length === 0) {
+                const rawFree = await freeEngine.invoke({ query: `${searchName} youtube video` });
+                try { results = JSON.parse(rawFree); } catch {}
+              }
+              if (Array.isArray(results) && results.length > 0) {
+                data = `Platform: YouTube\nProfile URL: ${ytUrl || "https://www.youtube.com"}\nExtracted Posts:\n`;
+                for (const r of results) {
+                  data += `- Caption: ${r.title} - ${r.content}\n  Post URL: ${r.url}\n  Date: ${r.published_date || "Recent"}\n`;
+                }
+              }
+            } catch {}
           }
-          if (Array.isArray(results) && results.length > 0) {
-            igData = `Platform: Instagram\nProfile URL: ${igUrl || "https://www.instagram.com"}\nExtracted Posts:\n`;
-            for (const r of results) {
-              igData += `- Caption: ${r.title} - ${r.content}\n  Post URL: ${r.url}\n  Date: ${r.published_date || "Recent"}\n`;
+          return (data && !data.includes("Extraction Failed")) ? `\n--- YOUTUBE DATA ---\n${data}\n` : "";
+        })(),
+
+        // 2. Instagram
+        (async () => {
+          const igUrl = (comp as any).socials?.instagram;
+          let data = "";
+          if (isValidProfileUrl(igUrl, 'Instagram')) {
+            try {
+              data = await socialExtractor.extract("Instagram", igUrl);
+            } catch (e: any) {
+              logger.warn(`Instagram direct extraction error for ${comp.name}: ${e.message}`);
             }
           }
-        } catch (e: any) {
-          logger.warn(`Instagram search fallback error: ${e.message}`);
-        }
-      }
-      if (igData && !igData.includes("Extraction Failed")) {
-        combinedRawData += `\n--- INSTAGRAM DATA ---\n${igData}\n`;
-      }
-
-      // 3. Facebook (Direct scraping + Search Fallback)
-      const fbUrl = (comp as any).socials?.facebook;
-      let fbData = "";
-      if (isValidProfileUrl(fbUrl, 'Facebook')) {
-        try {
-          logger.info(`Triggering SocialExtractorAgent for ${comp.name} (Facebook: ${fbUrl})...`);
-          fbData = await socialExtractor.extract("Facebook", fbUrl);
-        } catch (e: any) {
-          logger.warn(`Facebook direct extraction error for ${comp.name}: ${e.message}`);
-        }
-      }
-      if (!fbData || fbData.includes("Extraction Failed")) {
-        try {
-          logger.info(`Running Facebook search fallback for ${searchName}...`);
-          let results = await newsEngine.search(`site:facebook.com "${searchName}" (posts OR pfbid OR photos OR videos OR story OR permalink)`);
-          if (!results || results.length === 0) {
-            const rawFree = await freeEngine.invoke({ query: `site:facebook.com "${searchName}" posts` });
-            try { results = JSON.parse(rawFree); } catch {}
+          if (!data || data.includes("Extraction Failed")) {
+            try {
+              let results = await newsEngine.search(`${searchName} instagram post OR photo OR reel`);
+              if (!results || results.length === 0) {
+                const rawFree = await freeEngine.invoke({ query: `${searchName} instagram` });
+                try { results = JSON.parse(rawFree); } catch {}
+              }
+              if (Array.isArray(results) && results.length > 0) {
+                data = `Platform: Instagram\nProfile URL: ${igUrl || "https://www.instagram.com"}\nExtracted Posts:\n`;
+                for (const r of results) {
+                  data += `- Caption: ${r.title} - ${r.content}\n  Post URL: ${r.url}\n  Date: ${r.published_date || "Recent"}\n`;
+                }
+              }
+            } catch {}
           }
-          if (Array.isArray(results) && results.length > 0) {
-            fbData = `Platform: Facebook\nProfile URL: ${fbUrl || "https://www.facebook.com"}\nExtracted Posts:\n`;
-            for (const r of results) {
-              let pUrl = r.url || "";
-              fbData += `- Caption: ${r.title} - ${r.content}\n  Post URL: ${pUrl}\n  Date: ${r.published_date || "Recent"}\n`;
+          return (data && !data.includes("Extraction Failed")) ? `\n--- INSTAGRAM DATA ---\n${data}\n` : "";
+        })(),
+
+        // 3. Facebook
+        (async () => {
+          const fbUrl = (comp as any).socials?.facebook;
+          let data = "";
+          if (isValidProfileUrl(fbUrl, 'Facebook')) {
+            try {
+              data = await socialExtractor.extract("Facebook", fbUrl);
+            } catch (e: any) {
+              logger.warn(`Facebook direct extraction error for ${comp.name}: ${e.message}`);
             }
           }
-        } catch (e: any) {
-          logger.warn(`Facebook search fallback error: ${e.message}`);
-        }
-      }
-      if (fbData && !fbData.includes("Extraction Failed")) {
-        combinedRawData += `\n--- FACEBOOK DATA ---\n${fbData}\n`;
-      }
-
-      // 4. LinkedIn (Direct scraping + Search Fallback)
-      const liUrl = (comp as any).socials?.linkedin;
-      let liData = "";
-      if (isValidProfileUrl(liUrl, 'LinkedIn')) {
-        try {
-          logger.info(`Triggering SocialExtractorAgent for ${comp.name} (LinkedIn: ${liUrl})...`);
-          liData = await socialExtractor.extract("LinkedIn", liUrl);
-        } catch (e: any) {
-          logger.warn(`LinkedIn direct extraction error for ${comp.name}: ${e.message}`);
-        }
-      }
-      if (!liData || liData.includes("Extraction Failed")) {
-        try {
-          logger.info(`Running LinkedIn search fallback for ${searchName}...`);
-          let results = await newsEngine.search(`${searchName} linkedin post OR update OR announcement`);
-          if (!results || results.length === 0) {
-            const rawFree = await freeEngine.invoke({ query: `${searchName} linkedin` });
-            try { results = JSON.parse(rawFree); } catch {}
+          if (!data || data.includes("Extraction Failed")) {
+            try {
+              let results = await newsEngine.search(`site:facebook.com "${searchName}" (posts OR pfbid OR photos OR videos OR story OR permalink)`);
+              if (!results || results.length === 0) {
+                const rawFree = await freeEngine.invoke({ query: `site:facebook.com "${searchName}" posts` });
+                try { results = JSON.parse(rawFree); } catch {}
+              }
+              if (Array.isArray(results) && results.length > 0) {
+                data = `Platform: Facebook\nProfile URL: ${fbUrl || "https://www.facebook.com"}\nExtracted Posts:\n`;
+                for (const r of results) {
+                  data += `- Caption: ${r.title} - ${r.content}\n  Post URL: ${r.url || ""}\n  Date: ${r.published_date || "Recent"}\n`;
+                }
+              }
+            } catch {}
           }
-          if (Array.isArray(results) && results.length > 0) {
-            liData = `Platform: LinkedIn\nProfile URL: ${liUrl || "https://www.linkedin.com"}\nExtracted Posts:\n`;
-            for (const r of results) {
-              liData += `- Caption: ${r.title} - ${r.content}\n  Post URL: ${r.url}\n  Date: ${r.published_date || "Recent"}\n`;
+          return (data && !data.includes("Extraction Failed")) ? `\n--- FACEBOOK DATA ---\n${data}\n` : "";
+        })(),
+
+        // 4. LinkedIn
+        (async () => {
+          const liUrl = (comp as any).socials?.linkedin;
+          let data = "";
+          if (isValidProfileUrl(liUrl, 'LinkedIn')) {
+            try {
+              data = await socialExtractor.extract("LinkedIn", liUrl);
+            } catch (e: any) {
+              logger.warn(`LinkedIn direct extraction error for ${comp.name}: ${e.message}`);
             }
           }
-        } catch (e: any) {
-          logger.warn(`LinkedIn search fallback error: ${e.message}`);
-        }
-      }
-      if (liData && !liData.includes("Extraction Failed")) {
-        combinedRawData += `\n--- LINKEDIN DATA ---\n${liData}\n`;
-      }
-
-      // 5. News & Press Updates Fallback
-      try {
-        logger.info(`Fetching News & Press updates for ${searchName}...`);
-        let newsHits = await newsEngine.search(`${searchName} press release OR news OR announcement`);
-        if (!newsHits || newsHits.length === 0) {
-          const rawFree = await freeEngine.invoke({ query: `${searchName} news press release announcement` });
-          try { newsHits = JSON.parse(rawFree); } catch {}
-        }
-        if (Array.isArray(newsHits) && newsHits.length > 0) {
-          combinedRawData += `\n--- NEWS & PRESS UPDATES ---\n`;
-          for (const hit of newsHits) {
-            combinedRawData += `Title: ${hit.title}\nURL: ${hit.url}\nDate: ${hit.published_date || "Recent"}\nSnippet: ${hit.content}\n\n`;
+          if (!data || data.includes("Extraction Failed")) {
+            try {
+              let results = await newsEngine.search(`${searchName} linkedin post OR update OR announcement`);
+              if (!results || results.length === 0) {
+                const rawFree = await freeEngine.invoke({ query: `${searchName} linkedin` });
+                try { results = JSON.parse(rawFree); } catch {}
+              }
+              if (Array.isArray(results) && results.length > 0) {
+                data = `Platform: LinkedIn\nProfile URL: ${liUrl || "https://www.linkedin.com"}\nExtracted Posts:\n`;
+                for (const r of results) {
+                  data += `- Caption: ${r.title} - ${r.content}\n  Post URL: ${r.url}\n  Date: ${r.published_date || "Recent"}\n`;
+                }
+              }
+            } catch {}
           }
-        }
-      } catch (newsErr: any) {
-        logger.warn(`News search error for ${comp.name}: ${newsErr.message}`);
-      }
+          return (data && !data.includes("Extraction Failed")) ? `\n--- LINKEDIN DATA ---\n${data}\n` : "";
+        })(),
 
-      if (!combinedRawData.trim()) {
+        // 5. News & Press Updates
+        (async () => {
+          try {
+            let newsHits = await newsEngine.search(`${searchName} press release OR news OR announcement`);
+            if (!newsHits || newsHits.length === 0) {
+              const rawFree = await freeEngine.invoke({ query: `${searchName} news press release announcement` });
+              try { newsHits = JSON.parse(rawFree); } catch {}
+            }
+            if (Array.isArray(newsHits) && newsHits.length > 0) {
+              let data = `\n--- NEWS & PRESS UPDATES ---\n`;
+              for (const hit of newsHits) {
+                data += `Title: ${hit.title}\nURL: ${hit.url}\nDate: ${hit.published_date || "Recent"}\nSnippet: ${hit.content}\n\n`;
+              }
+              return data;
+            }
+          } catch {}
+          return "";
+        })()
+      ]);
+
+      const combinedRawData = (ytRes + igRes + fbRes + liRes + newsRes).trim();
+      if (!combinedRawData) {
         logger.info(`No social extraction or news data obtained for ${comp.name}.`);
-        continue;
+        return [];
       }
 
       try {
@@ -314,18 +301,19 @@ INSTRUCTIONS:
             return link.length > 5 && !isFakeUrl;
           }).map(p => ({
             ...p,
-            competitorName: comp.name // Hard lock competitor name to guarantee 100% accurate attribution
+            competitorName: comp.name
           }));
 
           logger.info(`Extracted ${validPosts.length} verified social posts for ${comp.name}.`);
-          allPosts = allPosts.concat(validPosts);
+          return validPosts;
         }
-
-        await new Promise(resolve => setTimeout(resolve, 1000));
       } catch (e: any) {
         logger.warn(`Social synthesis error for ${comp.name}: ${e.message}`);
       }
-    }
+      return [];
+    }));
+
+    allPosts = competitorResults.flat();
 
     try {
       // Group posts by platform to guarantee diverse platform representation across platforms
