@@ -17,19 +17,21 @@
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="brand">
-      <div class="logo">⚡</div>
-      <h2>Business R&D</h2>
+      <div class="logo">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <h2>Business <span style="color: var(--primary);">R&D</span></h2>
     </div>
 
     <!-- GLOBAL PROJECT SELECTOR -->
     <div class="project-selector">
       <label>Active Project</label>
       <div style="display: flex; gap: 8px;">
-        <select id="global-project" onchange="window.selectProject(this.value)" style="flex: 1;">
+        <select id="global-project" onchange="window.selectProject(this.value, true)" style="flex: 1;">
           <option value="">Loading projects...</option>
         </select>
-        <button id="btn-global-delete" class="btn btn-secondary" style="display: none; background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444; padding: 0 10px;" onclick="window.deleteProjectDetails()" title="Delete this project">
-          🗑️
+        <button id="btn-global-delete" class="btn btn-secondary" style="display: none; background-color: rgba(239, 68, 68, 0.05); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 0 12px; transition: all 0.2s;" onclick="window.deleteProjectDetails()" title="Delete this project" onmouseover="this.style.backgroundColor='rgba(239, 68, 68, 0.15)'" onmouseout="this.style.backgroundColor='rgba(239, 68, 68, 0.05)'">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
         </button>
       </div>
     </div>
@@ -66,51 +68,66 @@
   <main class="main-content">
     <header class="topbar flex-between">
       <h1 id="page-title">New Business Analysis</h1>
-      <button id="theme-toggle" class="btn btn-secondary" onclick="window.toggleTheme()"
-        style="padding: 6px 12px; font-size: 18px;" title="Toggle Dark/Light Mode">🌙</button>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div id="live-indicator" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #22c55e; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2); padding: 4px 12px; border-radius: 20px;">
+          <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e;"></span>
+          <span id="live-status-text">Live Sync Active</span>
+        </div>
+        <button id="theme-toggle" class="btn btn-secondary" onclick="window.toggleTheme()"
+          style="padding: 6px 12px; font-size: 18px;" title="Toggle Dark/Light Mode">🌙</button>
+      </div>
     </header>
 
     <div class="content-area">
 
       <!-- TAB: ANALYSE -->
       <div class="tab-panel active" id="panel-analyse">
-        <div class="card fade-in">
-          <h2>Analyze a New Business</h2>
-          <p class="subtitle">Enter a website URL to generate a comprehensive business profile and unlock the
-            intelligence dashboard.</p>
-          <form id="business-form" onsubmit="event.preventDefault(); window.runIntelligence();">
-            <div class="form-group">
-              <label>Website URL <span class="required">*</span></label>
-              <input id="website-url" name="websiteUrl" type="url" placeholder="https://example.com" required />
+        <div class="card fade-in" style="max-width: 650px; margin: 60px auto; padding: 48px 40px; box-shadow: var(--shadow-lg); border-radius: 20px; text-align: center;">
+          
+          <div style="width: 56px; height: 56px; background: linear-gradient(135deg, var(--primary), #818CF8); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 24px auto; box-shadow: 0 8px 16px rgba(99, 102, 241, 0.25);">
+            🔍
+          </div>
+
+          <h2 style="font-size: 1.75rem; margin-bottom: 12px; letter-spacing: -0.02em;">Analyze a New Business</h2>
+          <p class="subtitle" style="margin-bottom: 40px; font-size: 15px; max-width: 480px; margin-left: auto; margin-right: auto;">Enter a website URL to generate a comprehensive business profile and unlock the strategic intelligence dashboard.</p>
+          
+          <form id="business-form" onsubmit="event.preventDefault(); window.runIntelligence();" style="text-align: left;">
+            <div class="form-group" style="margin-bottom: 24px;">
+              <label style="font-size: 12px; letter-spacing: 0.05em; margin-bottom: 8px;">Website URL <span class="required" style="color: #ef4444;">*</span></label>
+              <input id="website-url" name="websiteUrl" type="url" placeholder="https://example.com" required style="font-size: 15px; padding: 16px; border-radius: 12px; background: var(--surface-hover);" />
             </div>
-            <div class="form-group">
-              <label>Brochure <span class="muted">(optional PDF)</span></label>
-              <input id="brochure-file" name="brochureFile" type="file" accept="application/pdf" />
+            
+            <div class="form-group" style="margin-bottom: 32px;">
+              <label style="font-size: 12px; letter-spacing: 0.05em; margin-bottom: 8px;">Brochure <span class="muted" style="font-weight: 400; text-transform: none;">(optional PDF)</span></label>
+              <input id="brochure-file" name="brochureFile" type="file" accept="application/pdf" style="padding: 10px 16px; border-radius: 12px; background: var(--surface-hover);" />
             </div>
-            <button id="submit-button" class="btn btn-primary" type="submit">
+            
+            <button id="submit-button" class="btn btn-primary" type="submit" style="width: 100%; padding: 18px; font-size: 16px; font-weight: 600; border-radius: 12px; box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3); transition: all 0.3s ease; display: flex; justify-content: center; gap: 12px;">
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
               Run Intelligence
             </button>
           </form>
 
-          <div id="loading-overlay" class="loading-overlay" style="display:none;">
-            <div class="spinner"></div>
-            <h3 style="margin-top:20px;">AI is analyzing the business...</h3>
-            <div id="agent-status" style="margin-top:10px; color:var(--text-muted); font-size:14px;">Initializing
-              agents...</div>
+          <div id="loading-overlay" class="loading-overlay" style="display:none; position: absolute; inset: 0; background: rgba(var(--surface-rgb, 30, 41, 59), 0.9); backdrop-filter: blur(8px); border-radius: 20px; align-items: center; justify-content: center; flex-direction: column;">
+            <div class="spinner" style="width: 48px; height: 48px; border-width: 4px; border-top-color: var(--primary);"></div>
+            <h3 style="margin-top: 24px; font-size: 1.25rem;">AI is analyzing the business...</h3>
+            <div id="agent-status" style="margin-top: 12px; color: var(--primary); font-size: 14px; font-weight: 600; background: rgba(99, 102, 241, 0.1); padding: 6px 16px; border-radius: 20px;">Initializing agents...</div>
           </div>
         </div>
       </div>
 
       <!-- TAB: DETAILS & REVIEW -->
       <div class="tab-panel" id="panel-details">
-        <div class="card fade-in">
-          <div class="flex-between">
-            <h2>Business Details & Core Memory</h2>
-            <button class="btn btn-primary" onclick="window.saveProjectDetails()" id="btn-save-details">Save & Update Memory</button>
+        <div class="card fade-in" style="max-width: 1000px; margin: 0 auto; box-shadow: var(--shadow-lg);">
+          <div class="flex-between" style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px;">
+            <div>
+              <h2 style="margin-bottom: 4px;">Business Details & Core Memory</h2>
+              <p class="subtitle" style="margin: 0; font-size: 13px;">Review and correct the AI's extracted intelligence below. Saving will permanently update the memory for all future agents.</p>
+            </div>
+            <button class="btn btn-primary" onclick="window.saveProjectDetails()" id="btn-save-details" style="box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); font-weight: 600;">Save & Update Memory</button>
           </div>
-          <p class="subtitle">Review and correct the AI's extracted intelligence below. Saving will permanently update the memory for all future agents.</p>
           
-          <form id="details-form" onsubmit="event.preventDefault(); window.saveProjectDetails();" style="margin-top: 20px;">
+          <form id="details-form" onsubmit="event.preventDefault(); window.saveProjectDetails();">
             <div class="form-group">
               <label>Official Business Name</label>
               <input id="edit-name" type="text" />
@@ -121,13 +138,13 @@
                 <label>Industry</label>
                 <input id="edit-industry" type="text" />
               </div>
-              <div class="input-group">
+              <div class="form-group flex-1">
                 <label>Sub-Industry / Niche</label>
-                <input type="text" class="input" id="edit-subindustry" placeholder="e.g. Agricultural Inputs">
+                <input type="text" id="edit-subindustry" placeholder="e.g. Agricultural Inputs">
               </div>
-              <div class="input-group">
+              <div class="form-group flex-1">
                 <label>Headquarters Location</label>
-                <input type="text" class="input" id="edit-location" placeholder="e.g. Rajkot, Gujarat, India">
+                <input type="text" id="edit-location" placeholder="e.g. Rajkot, Gujarat, India">
               </div>
             </div>
 
@@ -165,28 +182,37 @@
 
       <!-- TAB: COMPETITORS -->
       <div class="tab-panel" id="panel-competitors">
-        <div class="card fade-in">
-          <div class="flex-between">
-            <h2>Competitor Intelligence</h2>
-            <div style="display: flex; gap: 10px; align-items: center;">
-              <select id="comp-scope" style="padding: 6px 12px; border-radius: 4px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); color: var(--text-color);">
-                <option value="all">All</option>
-                <option value="local">Local</option>
-                <option value="regional">Regional (National)</option>
-                <option value="global">Global</option>
-              </select>
-              <button class="btn btn-secondary" onclick="window.findCompetitors()" id="btn-find-comp">Find Competitors</button>
-              <button class="btn btn-secondary" onclick="window.findCompetitors(true)" id="btn-regen-comp" style="display:none;">Re-crawl Deeply</button>
+        <div class="card fade-in" style="max-width: 1100px; margin: 0 auto; box-shadow: var(--shadow-lg);">
+          <div class="flex-between" style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px;">
+            <div>
+              <h2 style="margin-bottom: 4px;">Competitor Intelligence</h2>
+              <p class="subtitle" style="margin: 0; font-size: 13px;">List of elite industry competitors and their social media profiles.</p>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <div style="width: 160px;">
+                <select id="comp-scope">
+                  <option value="all">All Scopes</option>
+                  <option value="local">Local</option>
+                  <option value="regional">Regional</option>
+                  <option value="global">Global</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="window.findCompetitors()" id="btn-find-comp" style="box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); font-weight: 600;">Find Competitors</button>
+              <button class="btn btn-secondary" onclick="window.findCompetitors(true)" id="btn-regen-comp" style="display:none; box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05); font-weight: 600;">Re-crawl Deeply</button>
+              <button class="btn btn-secondary" onclick="window.backfillCompetitorSocials()" id="btn-backfill-socials" style="display:none; box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05); font-weight: 600;">Fix Missing Socials</button>
             </div>
           </div>
-          <p class="subtitle">List of elite industry competitors and their social media profiles.</p>
 
-          <div style="margin-bottom: 20px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
-            <h4 style="margin-top: 0; margin-bottom: 10px; font-size: 0.9em; color: var(--text-muted);">Manual Add</h4>
-            <div class="flex-row" style="gap: 10px; align-items: center;">
-              <input type="text" id="add-comp-name" placeholder="Competitor Name (e.g. Apple)" class="input" style="flex:1;">
-              <input type="text" id="add-comp-url" placeholder="Website URL (e.g. https://apple.com)" class="input" style="flex:2;">
-              <button class="btn btn-primary" onclick="window.addManualCompetitor()" id="btn-add-comp">Add</button>
+          <div style="margin-bottom: 32px; padding: 24px; background: var(--surface-hover); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+            <h4 style="margin-top: 0; margin-bottom: 16px; font-size: 0.9em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Manual Add</h4>
+            <div style="display: flex; gap: 16px; align-items: center;">
+              <div class="form-group flex-1" style="margin-bottom: 0;">
+                <input type="text" id="add-comp-name" placeholder="Competitor Name (e.g. Apple)">
+              </div>
+              <div class="form-group" style="flex: 2; margin-bottom: 0;">
+                <input type="text" id="add-comp-url" placeholder="Website URL (e.g. https://apple.com)">
+              </div>
+              <button class="btn btn-secondary" onclick="window.addManualCompetitor()" id="btn-add-comp" style="padding: 14px 24px;">Add</button>
             </div>
           </div>
 
@@ -211,26 +237,13 @@
               <label class="radio-label">
                 <input type="radio" name="smmStrategy" value="mirror"> Mirror competitors' current strategy
               </label>
+              <label class="radio-label">
+                <input type="radio" name="smmStrategy" value="industry"> Mirror industry trends
+              </label>
             </div>
           </div>
 
           <div class="flex-row">
-            <div class="form-group flex-1">
-              <label>Content Theme</label>
-              <select id="smm-theme">
-                <option value="brand">Brand (Vision & Scale)</option>
-                <option value="product">Product (Features & Benefits)</option>
-                <option value="technical">Technical (Deep Engineering Dive)</option>
-                <option value="educative">Informative/Educative (How-to & Insights)</option>
-                <option value="ugc">UGC (Behind the Scenes & Authentic)</option>
-              </select>
-            </div>
-            <div class="form-group flex-1" id="smm-product-container" style="display: none;">
-              <label>Target Product</label>
-              <select id="smm-product">
-                <option value="">Select a product...</option>
-              </select>
-            </div>
             <div class="form-group flex-1">
               <label>Format</label>
               <select id="smm-type">
@@ -248,7 +261,70 @@
             </div>
           </div>
 
+          <!-- Strategy: New Ideas -->
+          <div id="smm-new-options-container" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px;">
+            <div class="form-group">
+              <label>Content Theme</label>
+              <select id="smm-theme">
+                <option value="brand">Brand (Vision & Scale)</option>
+                <option value="product">Product (Features & Benefits)</option>
+                <option value="technical">Technical (Deep Engineering Dive)</option>
+                <option value="educative">Informative/Educative (How-to & Insights)</option>
+                <option value="ugc">UGC (Behind the Scenes & Authentic)</option>
+              </select>
+            </div>
+            <div class="form-group smm-suboption-container" id="smm-suboption-container" style="display: none;">
+              <label id="smm-suboption-label">Target Options</label>
+              <select id="smm-suboption">
+                <option value="">Select...</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Strategy: Mirror Competitor -->
+          <div class="flex-row" id="smm-mirror-container" style="display: none; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05);">
+            <div class="form-group flex-1">
+              <label>Target Competitor</label>
+              <select id="smm-mirror-competitor">
+                <option value="">Select a competitor...</option>
+              </select>
+            </div>
+            <div class="form-group flex-2">
+              <label>Specific Post to Mirror</label>
+              <select id="smm-mirror-post">
+                <option value="">Select a post...</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Strategy: Mirror Industry Trends -->
+          <div class="flex-row" id="smm-industry-options-container" style="display: none; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05);">
+            <div class="form-group flex-1">
+              <label>Trend Focus Area</label>
+              <select id="smm-industry-focus">
+                <option value="all">Comprehensive (All Trends)</option>
+                <option value="visuals">Visual Style & Aesthetics</option>
+                <option value="messaging">Core Messaging & Hooks</option>
+                <option value="format">Content Formats (e.g. Video vs Carousel)</option>
+              </select>
+            </div>
+          </div>
           <div class="form-group">
+            <label>Custom Goal / Context (Optional)</label>
+            <textarea id="smm-custom-goal" rows="2" placeholder="Enter specific instructions or goals for this post..."></textarea>
+          </div>
+
+          <!-- Trending Topics -->
+          <div class="form-group" id="smm-trending-container">
+            <div class="flex-between" style="align-items:center; margin-bottom:8px;">
+              <label style="margin:0;">Trending Topics (Right Now)</label>
+              <button type="button" class="btn btn-secondary" onclick="window.fetchTrendingTopics()" id="smm-trending-btn" style="padding:6px 14px; font-size:12px;">Load Trending Topics</button>
+            </div>
+            <p class="subtitle" style="margin-top:0;">See what's trending in this industry right now, then pick a topic to generate content around it.</p>
+            <div id="smm-trending-topics" style="display:none;"></div>
+          </div>
+
+          <div class="form-group" id="smm-total-container">
             <label>Total Posts</label>
             <input id="smm-total" type="number" min="1" max="10" value="3" />
           </div>

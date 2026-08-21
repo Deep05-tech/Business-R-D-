@@ -29,6 +29,8 @@
     "p-limit": "^7.3.0",
     "pdf-parse": "^2.4.5",
     "pdfmake": "^0.3.11",
+    "playwright": "^1.61.1",
+    "playwright-core": "^1.61.1",
     "selenium-webdriver": "^4.45.0",
     "zod": "^3.23.8"
   },

@@ -8,13 +8,14 @@ export class SmmAgent {
   readonly name = "smm-agent";
   readonly version = "1.0.0";
 
-  async run(memory: StructuredMemory, type: "video" | "image", totalPosts: number, language: string = "English", strategy: string = "new", theme: string = "brand", targetProduct?: string): Promise<string[]> {
-    logger.info(`Generating ${totalPosts} SMM ${type} posts in ${language} for ${memory.input.websiteUrl} (Strategy: ${strategy}, Theme: ${theme}, Product: ${targetProduct || 'None'})...`);
+  async run(memory: StructuredMemory, type: "video" | "image", totalPosts: number, language: string = "English", strategy: string = "new", theme: string = "brand", subTheme?: string, mirrorCompetitor?: string, mirrorPost?: any, industryFocus?: string, customGoal?: string, trendingTopic?: any): Promise<string[]> {
+    logger.info(`Generating ${totalPosts} SMM ${type} posts in ${language} for ${memory.input.websiteUrl} (Strategy: ${strategy}, Theme: ${theme}, SubTheme: ${subTheme || 'None'}, Industry Focus: ${industryFocus || 'all'}, Trending Topic: ${trendingTopic?.title || 'None'})...`);
 
     const llm = new ChatOpenAI({
       model: "gpt-4o",
-      temperature: 0.7,
-      maxTokens: 16000,
+      temperature: 0.85,
+      maxTokens: 8192,
+      apiKey: process.env.OPENAI_API_KEY || process.env.OPENAI_KEY,
     });
 
     const memoryContext = JSON.stringify({
@@ -25,7 +26,19 @@ export class SmmAgent {
     }, null, 2);
 
     let competitorContext = "";
-    if (strategy === "mirror" && memory.competitors && memory.competitors.length > 0) {
+    if (strategy === "mirror" && mirrorPost) {
+      competitorContext = `
+CRITICAL STRATEGY INSTRUCTION: 
+The user has requested to MIRROR a specific competitor's post perfectly.
+Competitor: ${mirrorCompetitor}
+Original Post Platform: ${mirrorPost.platform}
+Original Post Date: ${mirrorPost.date}
+Original Post Content: 
+"${mirrorPost.content}"
+
+Your generated content MUST emulate the exact tone, structure, topic, and pacing used in this specific post. Do not copy the text word-for-word, but write a post for the current business that achieves the exact same strategic goal and style as the mirrored post.
+`;
+    } else if (strategy === "mirror" && memory.competitors && memory.competitors.length > 0) {
       competitorContext = `
 CRITICAL STRATEGY INSTRUCTION: 
 The user has requested to MIRROR their competitors' strategies.
@@ -33,6 +46,20 @@ Below are the top competitors identified for this business:
 ${memory.competitors.map(c => `- ${c.name} (Socials: ${JSON.stringify(c.socials)})`).join('\n')}
 
 Your generated content MUST emulate the tone, structure, and pacing typically used by these specific competitors in this exact industry. If they rely heavily on technical showcases, do the same. Analyze what these market leaders likely do to succeed, and adopt that exact posture for your posts.
+`;
+    } else if (strategy === "industry" && memory.socialFeed && memory.socialFeed.length > 0) {
+      let focusText = "the macro trends, tone, and subjects that the industry leaders are currently posting about, and adopt that exact posture";
+      if (industryFocus === "visuals") focusText = "the exact visual aesthetics, imagery choices, and formatting styles used by the industry leaders, and structure your visual descriptions to perfectly match them";
+      if (industryFocus === "messaging") focusText = "the specific core messaging, primary hooks, and value propositions that industry leaders are emphasizing right now, and adopt that exact messaging posture";
+      if (industryFocus === "format") focusText = "the content formats (e.g. fast-paced videos vs detailed text carousels) dominating the feed right now, and adapt your script/post structure to match the leading format";
+
+      competitorContext = `
+CRITICAL STRATEGY INSTRUCTION:
+The user has requested to MIRROR INDUSTRY TRENDS based on their competitors' recent social media footprint.
+Below is the recent social feed from top competitors in this specific industry:
+${JSON.stringify(memory.socialFeed.slice(0, 15))}
+
+Analyze ${focusText} for your posts.
 `;
     }
 
@@ -65,16 +92,49 @@ Strictly follow the user instructions above. The user instructions take absolute
     }
 
     let productFocusInstruction = "";
-    if (targetProduct) {
-      const foundProduct = memory.offerings.products.find(p => p.name === targetProduct || (typeof p === 'string' && p === targetProduct));
-      productFocusInstruction = `
+    if (subTheme) {
+      if (theme === "product") {
+        const foundProduct = memory.offerings.products.find(p => p.name === subTheme || (typeof p === 'string' && p === subTheme));
+        productFocusInstruction = `
 CRITICAL PRODUCT FOCUS:
-The user has explicitly requested that these posts focus on ONE SPECIFIC PRODUCT ONLY: "${targetProduct}".
+The user has explicitly requested that these posts focus on ONE SPECIFIC PRODUCT ONLY: "${subTheme}".
 Do NOT write about general brand information or other products. Everything must revolve around this specific target product.
 ${foundProduct && typeof foundProduct === 'object' ? `Product Details to reference:
 Description: ${foundProduct.description}
 Key Features: ${foundProduct.keyFeatures?.join(', ')}
 Technical Specs: ${JSON.stringify(foundProduct.technicalSpecs || {})}` : ''}
+`;
+      } else {
+        productFocusInstruction = `
+CRITICAL SUB-THEME FOCUS:
+The user has explicitly requested that these posts focus specifically on: "${subTheme}".
+Everything must revolve around this specific target subject. Do not deviate from this focus.
+`;
+      }
+    }
+
+    let trendingContext = "";
+    if (trendingTopic && trendingTopic.title) {
+      trendingContext = `
+CRITICAL TRENDING TOPIC DIRECTIVE:
+The user has selected the following topic that is TRENDING RIGHT NOW in this industry:
+Trending Topic: "${trendingTopic.title}"
+What it is: ${trendingTopic.description || "N/A"}
+Why it matters to the business: ${trendingTopic.relevance || "N/A"}
+This trend directly relates to the business's offering: ${trendingTopic.relatedProduct || "the business's products/services"}
+Recommended content angle: ${trendingTopic.angle || "Connect this trend to the business's offerings"}
+Source References: ${(trendingTopic.sources || []).join(", ")}
+
+Your generated posts MUST be built around THIS trending topic as the primary subject and hook, and they MUST showcase the specific offering "${trendingTopic.relatedProduct || ""}" as the solution. Weave that product/service and the business's processes into the trend naturally — the trend is the hook, the business's "${trendingTopic.relatedProduct || "product"}" is the solution. Never produce generic content that ignores this topic. Every post must feel current, relevant, and timely because it rides this live trend.
+`;
+    }
+
+    let customGoalInstruction = "";
+    if (customGoal && customGoal.trim().length > 0) {
+      customGoalInstruction = `
+CRITICAL USER DIRECTIVE / GOAL:
+The user has provided the following specific goal or context for these posts: "${customGoal}"
+You MUST heavily bias the entire post narrative, structure, and focus to achieve this goal. Do not ignore this instruction!
 `;
     }
 
@@ -122,21 +182,28 @@ Format each script explicitly as follows:
 ---
 `;
     } else {
+      totalPosts = 5; // Always 5 variations for image
       formatInstructions = `
-You must generate exactly ${totalPosts} highly engaging image post concepts for social media (LinkedIn/Instagram).
-Each post should focus on a DIFFERENT product, use-case, or value proposition found in the provided business memory.
+You must generate exactly ${totalPosts} highly engaging, deeply researched image post concepts for social media (LinkedIn/Instagram).
+CRITICAL: Every single post MUST be radically unique. Do not use the same hook, the same format, or the same angle twice.
 
-Format each post explicitly as follows:
----
-### Post [Number]: [Catchy Title]
-**Visual Idea:** [Describe exactly what the image/graphic should look like, including any text overlays]
-**Caption:** [Write a high-converting, professional caption]
-**Hashtags:** [5-7 relevant hashtags]
----
+You MUST output your response as a valid JSON array containing exactly ${totalPosts} objects. Do not include any other text outside the JSON array.
+Format each object in the array with the EXACT following keys:
+[
+  {
+    "visualIdea": "[Describe a visually disruptive graphic, chart, or raw image idea. Avoid generic stock photo descriptions.]",
+    "content": "[Write a precise, high-converting caption that starts *in media res*. NO 'Are you tired of...' or 'Welcome to...'.]",
+    "heading": "[A punchy, scroll-stopping heading]",
+    "subText": "[Supporting sub-text or secondary hook]",
+    "body": "[The main detailed body of the post. Integrate specific data points, R&D insights, or company history from the memory.]",
+    "elements": "[List specific graphical elements, icons, or data visualization pieces to include in the design]",
+    "hashtags": "[5-7 highly specific B2B hashtags space separated]"
+  }
+]
 `;
     }
 
-    const prompt = `You are an elite Social Media Marketing (SMM) Manager for a B2B industrial/manufacturing business.
+    const prompt = `You are an elite Senior Content Writer with over 20 years of experience in B2B industrial/manufacturing copywriting.
 Your goal is to generate extremely high-quality, technically accurate social media content based STRICTLY on the business's data.
 
 BUSINESS MEMORY:
@@ -146,28 +213,50 @@ INSTRUCTIONS:
 ${formatInstructions}
 
 IMPORTANT RULES & B2B TONAL OVERRIDE:
-1. ONLY generate content based on the products and capabilities explicitly listed in the BUSINESS MEMORY. Do not hallucinate or invent new products.
-2. BAN THE CORPORATE CLICHÉS: Never use generic marketing phrases (e.g., "Where precision meets performance", "Crafted to perfection", "Unleash the power"). If a sentence sounds like a generic brochure tagline, delete it.
-3. HIGH-STAKES HOOKS: The first line must immediately lead with the stakes, cost of component failure, extreme environmental conditions (pressure/heat), or technical scale. Never start with "discover".
-4. AUTHORITATIVE VOICE: The narrator persona must be a grounded, expert metallurgical engineer or industry consultant. Strip out ALL exclamation marks. Speak with technical authority. Surface hard metrics, materials, and dimensions in the first half of the script.
-5. CINEMATIC OUTROS: Never use "clean white backgrounds". End on high-contrast, moody industrial shots with minimalist typography.
-6. ALIGN WITH VISION & THEME: The content MUST implicitly reflect the core vision of the business AND strictly adhere to the following theme directive:
+1. NO FEATURE DROPPING (ANSWER "SO WHAT?"): Never just list features like "IIoT integration" or "data analytics". Tie everything to hard business consequences: lower scrap rates, faster delivery times, zero defect recalls, strict compliance. Example: Do not say "Analytics optimize performance". DO say "Live telemetry detects thermal drift in the spindle, auto-adjusting tool offsets so you get zero rejected parts in a 50,000-unit run."
+2. METRIC-DRIVEN ENGINEERING STANDARDS: Never state a standard or process without stating the operational metric it protects. Don't just say "DIN-5" -> say "reduced transmission NVH and tooth friction". Don't just say "Grain Flow" -> say "elimination of structural micro-cracks under load". Don't just say "IATF 16949" -> say "flawless PPAP sign-offs and zero line-stoppage risk".
+3. BAN BUZZWORD SOUP & FLUFFY MARKETING: Industrial B2B buyers are immune to corporate slogans. Never use phrases like "Precision in Every Byte", "Crafting the Future", "redefine reliability", "unparalleled", or "where data meets craftsmanship". Replace high-level adjectives (visionary, intelligent, revolutionary) with hard engineering nouns and specs (micron tolerances, spindle vibration, heat dissipation, batch consistency, PPM defect rates).
+4. NO ABSTRACT VISUAL CUES (SHOP-FLOOR PROOF ONLY): For visual ideas, do not use abstract sci-fi tropes like "Connectivity lines", "data hubs", or "Glowing networks". Ground visuals in harsh industrial reality: show actual machine cross-sections, real telemetry graphs (load curves, heat maps), tolerance boundary overlays, or live operator dashboards.
+5. NO REPETITIVE MESSAGING: Across your posts, the core sentence structure and angle must change dramatically. Instead of 5 posts repeating the same abstract value prop, split the core topic into distinct, high-impact business angles. Examples of distinct angles: 1) Defect Prevention (e.g. thermal tracking eliminates scrap), 2) Predictive Maintenance (e.g. tool-wear telemetry prevents downtime), 3) Traceability & Audits, 4) Cost/Efficiency Comparisons (legacy vs new), 5) Tolerance Control (handling ambient plant shifts).
+6. HEADLINES & HOOKS: Must be extremely catchy, punchy, and incredibly easy to read. Avoid dense jargon in the hook to maximize broad engagement before diving into technical depth in the body.
+7. IN-MEDIA-RES HOOKS: Start immediately in the middle of the action or insight. No standard greetings or rhetorical questions like "Are you looking for...?".
+8. AUTHORITATIVE YET ACCESSIBLE VOICE: The narrator persona must be a grounded expert, BUT the language must be easily understandable by a normal human with zero engineering knowledge. Strip out ALL exclamation marks. While you must surface specific hard metrics, you MUST explain their ultimate value in plain, non-technical language. Do not write dense walls of jargon; make the business impact instantly clear to anyone.
+9. DEEP MEMORY INTEGRATION: You must heavily utilize the \`rdInsights\`, \`businessIdentity\`, and \`brandPositioning\` arrays. Weave the company's specific vision, history, and R&D gaps/opportunities into the narrative.
+10. ALIGN WITH VISION & THEME: The content MUST implicitly reflect the core vision of the business AND strictly adhere to the following theme directive:
    >> ${themeInstruction}
-7. You must generate EXACTLY ${totalPosts} posts.
-8. CRITICAL LANGUAGE RULE: You must write the entire output (including scripts, captions, and visual descriptions) exclusively in the **${language}** language.
+11. You must generate EXACTLY ${totalPosts} posts.
+12. CRITICAL LANGUAGE RULE: You must write the entire output (including scripts, captions, and visual descriptions) exclusively in the **${language}** language.
 
+${customGoalInstruction}
 ${customInstructionsContext}
 ${competitorContext}
 ${productFocusInstruction}
+${trendingContext}
 
 Begin generating the posts now:`;
 
     try {
       const response = await llm.invoke(prompt);
       const content = typeof response.content === "string" ? response.content : "";
-      
-      // Split by '---' to return an array of posts, filtering out empty ones
-      const posts = content.split("---").map(p => p.trim()).filter(p => p.length > 20);
+      let posts: string[] = [];
+      if (type === "image") {
+        try {
+          const start = content.indexOf('[');
+          const end = content.lastIndexOf(']');
+          if (start !== -1 && end !== -1) {
+             const parsed = JSON.parse(content.substring(start, end + 1));
+             posts = parsed.map((p: any) => JSON.stringify(p));
+          } else {
+             logger.error("Failed to find JSON array in response.");
+             posts = [];
+          }
+        } catch(e) {
+          logger.error("Failed to parse JSON response.");
+          posts = [];
+        }
+      } else {
+        posts = content.split("---").map((p: string) => p.trim()).filter((p: string) => p.length > 20);
+      }
       return posts.slice(0, totalPosts);
     } catch (e: any) {
       logger.error(`SMM generation failed: ${e.message}`);

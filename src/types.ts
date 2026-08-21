@@ -226,10 +226,25 @@ export interface MarketingSalesIntelligence {
   }>;
 }
 
+export interface TrendingTopic {
+  title: string;
+  description: string;
+  relevance: string;
+  angle: string;
+  sources: string[];
+  relatedProduct?: string;
+}
+
+export interface TrendingTopicsResult {
+  generatedAt: string;
+  queryContext: string;
+  topics: TrendingTopic[];
+}
+
 export interface CompetitorProfile {
   name: string;
   url: string;
-  type: "local" | "global";
+  type: "local" | "regional" | "global";
   location: string;
   whyCompetitor?: string;
   evidenceUrls?: Array<{title: string, url: string}>;
@@ -238,7 +253,11 @@ export interface CompetitorProfile {
     instagram: string | null;
     facebook: string | null;
     youtube: string | null;
+    twitter: string | null;
   };
+  products?: string[];
+  commonProducts?: string[];
+  isDeadAccount?: boolean;
 }
 
 export interface StructuredMemory {
@@ -269,6 +288,8 @@ export interface StructuredMemory {
     }>;
   };
   competitors?: CompetitorProfile[];
+  rejectedCompetitors?: string[];
+  socialFeed?: any[];
 }
 
 export interface BusinessIntelligenceProfile {

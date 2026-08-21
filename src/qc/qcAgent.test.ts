@@ -146,30 +146,38 @@ const baseProfile: Omit<BusinessIntelligenceProfile, "qc"> = {
 };
 
 describe("QcAgent", () => {
-  it("passes a complete consistent profile", () => {
-    const report = new QcAgent().validate(baseProfile, 1);
+  it("passes a complete consistent profile", async () => {
+    const report = await new QcAgent().validate(baseProfile, 1);
     expect(report.passed).toBe(true);
   });
 
-  it("returns a numeric confidenceScore between 0 and 1", () => {
-    const report = new QcAgent().validate(baseProfile, 1);
+  it("returns a numeric confidenceScore between 0 and 1", async () => {
+    const report = await new QcAgent().validate(baseProfile, 1);
     expect(typeof report.confidenceScore).toBe("number");
     expect(report.confidenceScore).toBeGreaterThanOrEqual(0);
     expect(report.confidenceScore).toBeLessThanOrEqual(1);
   });
 
-  it("fails when industry fields disagree", () => {
+  it("fails when industry fields disagree", async () => {
     const profile = structuredClone(baseProfile);
     profile.structuredJsonMemoryObject.industryClassification.industry = "Healthcare";
-    const report = new QcAgent().validate(profile, 1);
+    const report = await new QcAgent().validate(profile, 1);
     expect(report.passed).toBe(false);
     expect(new QcAgent().retryModules(report)).toContain("identity");
   });
 
-  it("fails when a product is a noisy label", () => {
+  it("fails when a product is a noisy label", async () => {
     const profile = structuredClone(baseProfile);
-    profile.structuredJsonMemoryObject.offerings.products.push("products");
-    const report = new QcAgent().validate(profile, 1);
+    profile.structuredJsonMemoryObject.offerings.products.push({
+      name: "products",
+      category: "test",
+      description: "test",
+      keyFeatures: [],
+      technicalSpecs: {},
+      useCases: [],
+      exportMarkets: []
+    });
+    const report = await new QcAgent().validate(profile, 1);
     const noiseIssue = report.issues.find((i) => i.message.includes("UI/navigation noise"));
     expect(noiseIssue).toBeTruthy();
   });

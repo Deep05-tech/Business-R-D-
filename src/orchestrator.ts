@@ -10,6 +10,7 @@ import { MemoryStore } from "./memory/memoryStore.js";
 import { QcAgent } from "./qc/qcAgent.js";
 import { PdfReportGenerator } from "./utils/pdfGenerator.js";
 import { createLogger } from "./utils/logger.js";
+import { agentRules } from "./config/agentRules.js";
 
 const logger = createLogger("Orchestrator");
 
@@ -55,12 +56,12 @@ export class OrchestratorAgent {
   constructor(
     private readonly memoryStore = new MemoryStore(),
     private readonly agents: AgentRegistry = createAgentRegistry(),
-  ) {}
+  ) { }
 
-  async run(input: BusinessInput, onProgress?: (msg: string) => void): Promise<BusinessIntelligenceProfile & { memoryPath: string; pdfPath: string }> {
+  async run(input: BusinessInput, onProgress?: (msg: string, partial?: any) => void): Promise<BusinessIntelligenceProfile & { memoryPath: string; pdfPath: string }> {
     let state = await this.runAll(input, onProgress);
     let profile = this.composeProfile(input, state);
-    
+
     onProgress?.("QC validation");
     let qc = await this.qcAgent.validate(profile, 1);
 
@@ -69,7 +70,7 @@ export class OrchestratorAgent {
     for (let attempt = 2; !qc.passed && attempt <= MAX_CASCADING_RETRIES + 1; attempt += 1) {
       logger.warn(`QC Failed. Triggering root-cause retry attempt ${attempt - 1}/${MAX_CASCADING_RETRIES}...`);
       const retryModules = this.qcAgent.retryModules(qc);
-      
+
       if (retryModules.length === 0) {
         logger.info("No specific modules identified for retry. Breaking loop.");
         break;
@@ -104,7 +105,6 @@ export class OrchestratorAgent {
 
     const memoryPath = await this.memoryStore.save(finalProfile.structuredJsonMemoryObject);
     knowledgeIndex.add(finalProfile.structuredJsonMemoryObject); // Update RAM cache!
-    knowledgeIndex.add(finalProfile.structuredJsonMemoryObject);
 
     // Generate Vectors
     const vectorStore = new VectorStore();
@@ -137,13 +137,13 @@ export class OrchestratorAgent {
     current[fullPath[fullPath.length - 1]] = "Inconclusive";
   }
 
-  private async runAll(input: BusinessInput, onProgress?: (msg: string) => void): Promise<AgentState> {
+  private async runAll(input: BusinessInput, onProgress?: (msg: string, partial?: any) => void): Promise<AgentState> {
     // ---------------------------------------------------------------------------
     // PHASE 1 & 2: Sitemap-First Full Discovery & Prioritized Crawl
     // ---------------------------------------------------------------------------
     logger.info("PHASE 1: Initiating focused priority crawl (Max 15 pages)...");
     onProgress?.("Crawling website");
-    
+
     let webScrape: any;
     if (input.websiteUrl === "https://pdf-only.local") {
       logger.info("PDF-Only Mode activated. Bypassing website crawl.");
@@ -173,7 +173,7 @@ export class OrchestratorAgent {
         }]
       };
     } else {
-      webScrape = await this.agents.webScraper.run(input.websiteUrl, 150);
+      webScrape = await this.agents.webScraper.run(input.websiteUrl, 25);
     }
 
     // Enforce hierarchy for all downstream map-reduce agents
@@ -192,21 +192,18 @@ export class OrchestratorAgent {
     // ---------------------------------------------------------------------------
     // PHASE 3: Business Context Memory (Homepage & About only)
     // ---------------------------------------------------------------------------
-    logger.info("PHASE 2: Extracting Business Context (Homepage & About only)...");
-    // Strictly isolate Home and About pages for context establishment
+    // ---------------------------------------------------------------------------
+    // PHASE 2: Parallel Context Cleaning & Social Intelligence
+    // ---------------------------------------------------------------------------
+    logger.info("PHASE 2: Extracting Business Context & Social Intelligence in Parallel...");
     let contextPages = webScrape.data.filter((p: any) => p.pageType === "homepage" || p.pageType === "about");
-    if (contextPages.length === 0) contextPages = [webScrape.data[0]]; // Fallback if inference failed
+    if (contextPages.length === 0) contextPages = [webScrape.data[0]];
 
-    onProgress?.("Cleaning semantics");
-    const contextSemantic = await this.agents.semanticCleaning.run(contextPages);
-    
-    onProgress?.("Social intelligence");
-    
-    // Auto-discover socials from the website footer/links if the user didn't provide any
+    // Auto-discover socials from the website footer/links if not provided
     if (!input.socialUrls || input.socialUrls.length === 0) {
       const discoveredSocials = new Set<string>();
       const socialDomains = ['linkedin.com/company', 'instagram.com', 'facebook.com', 'youtube.com', 'twitter.com', 'x.com'];
-      
+
       for (const page of webScrape.data) {
         if (!page.links) continue;
         for (const link of page.links) {
@@ -216,17 +213,37 @@ export class OrchestratorAgent {
           }
         }
       }
-      
-      input.socialUrls = Array.from(discoveredSocials).slice(0, 5); // Limit to top 5
+
+      input.socialUrls = Array.from(discoveredSocials).slice(0, 5);
       if (input.socialUrls.length > 0) {
         logger.info(`Auto-discovered social media URLs from website: ${input.socialUrls.join(', ')}`);
       }
     }
-    
-    const socialContext = await this.agents.socialIntelligence.run(input.socialUrls);
-    
-    // Pass brochureText into BusinessIdentity so it can understand the business even better
-    onProgress?.("Business identity");
+
+    onProgress?.("Cleaning semantics & Social intelligence");
+    // RUN CONTEXT CLEANING, FULL SEMANTIC CLEANING, AND SOCIAL INTELLIGENCE IN PARALLEL!
+    const [contextSemantic, semantic, socialContext] = await Promise.all([
+      this.agents.semanticCleaning.run(contextPages),
+      this.agents.semanticCleaning.run(webScrape.data),
+      this.agents.socialIntelligence.run(input.socialUrls)
+    ]);
+
+    // Inject brochure text into semantic context if present
+    if (input.brochureText) {
+      semantic.data.pages.push({
+        url: "BROCHURE",
+        title: "Uploaded Brochure",
+        cleanText: input.brochureText.slice(0, 15000),
+        cleanHeadings: [],
+        removedNoise: []
+      });
+      semantic.data.combinedText += "\n\n=== BROCHURE ===\n\n" + input.brochureText.slice(0, 15000);
+    }
+
+    // ---------------------------------------------------------------------------
+    // PHASE 3: Parallel Business Identity & Web Intelligence
+    // ---------------------------------------------------------------------------
+    onProgress?.("Business Identity & Web Intelligence");
     let identityText = contextPages;
     if (input.brochureText) {
       identityText = [...contextPages, {
@@ -238,7 +255,7 @@ export class OrchestratorAgent {
         metaKeywords: null,
         headings: [],
         links: [],
-        contentText: input.brochureText.slice(0, 5000), // Avoid massive token usage
+        contentText: input.brochureText.slice(0, 5000),
         navigationText: [],
         footerText: [],
         text: input.brochureText.slice(0, 5000),
@@ -249,113 +266,143 @@ export class OrchestratorAgent {
         jsonLdBlocks: []
       }];
     }
-    const identity = await this.agents.businessIdentity.run(identityText, contextSemantic.data, socialContext.data);
+
+    const [identity, web] = await Promise.all([
+      this.agents.businessIdentity.run(identityText, contextSemantic.data, socialContext.data),
+      this.agents.webIntelligence.run(webScrape.data, semantic.data)
+    ]);
+
     logger.info(`Business Context Established: ${identity.data.officialName || "Unknown"} in ${identity.data.industry || "Unknown"}`);
-    
-    // 2. Reconnaissance (Dynamic DAG generation based on Homepage)
+    onProgress?.("Business Identity Established", { businessIdentity: identity.data });
+
+    // Reconnaissance (Dynamic DAG generation)
     const reconAgent = new ReconAgent();
     const homepage = webScrape.data.find((p: any) => p.pageType === "homepage") || webScrape.data[0];
     const dag = reconAgent.generateDag(homepage);
     logger.info(`Recon DAG Strategy: ${dag.reasoning}`);
     logger.info(`Required Agents: ${dag.requiredAgents.join(", ")}`);
 
-    // 3. Level 2: Data Cleaning (Persistent Heuristics)
-    const semantic = await this.agents.semanticCleaning.run(webScrape.data);
+    const social = socialContext;
 
-    // CRITICAL FIX: Inject the brochure text into the semantic context so the offerings agent can actually read it!
-    if (input.brochureText) {
-      semantic.data.pages.push({
-        url: "BROCHURE",
-        title: "Uploaded Brochure",
-        cleanText: input.brochureText.slice(0, 15000), // Allow a large chunk of the brochure
-        cleanHeadings: [],
-        removedNoise: []
-      });
-      semantic.data.combinedText += "\n\n=== BROCHURE ===\n\n" + input.brochureText.slice(0, 15000);
-    }
-
-    // 4. Base Layers (Parallel)
-    onProgress?.("Web intelligence");
-    const [web, social] = await Promise.all([
-      this.agents.webIntelligence.run(webScrape.data, semantic.data),
-      this.agents.socialIntelligence.run(input.socialUrls), // We can reuse socialContext but running again is fine
+    // ---------------------------------------------------------------------------
+    // PHASE 4: Parallel Intelligence Execution (Offerings & Digital Maturity)
+    // ---------------------------------------------------------------------------
+    onProgress?.("Offerings extraction & Digital maturity");
+    const [offerings, digital] = await Promise.all([
+      (async () => {
+        let off = await this.agents.offerings.run(web.data, semantic.data);
+        if (off.data) {
+          off.data = await this.agents.aiContent.run(off.data);
+        }
+        return off;
+      })(),
+      dag.requiredAgents.includes("digitalMaturity")
+        ? this.agents.digital.run(web.data, social.data)
+        : Promise.resolve({ agent: "digital", sources: [], warnings: [], data: {} as unknown as DigitalMaturity } as AgentResult<DigitalMaturity>)
     ]);
 
-    // 5. Level 3 Intelligence Map-Reduce Execution (Map Step)
-    logger.info(`PHASE 4-7: Map-Reduce Intelligence Execution...`);
-    
-    // We run offerings mapping directly through the updated OfferingsExtractionAgent, 
-    // which handles chunking and reduction natively to avoid double-looping.
-    onProgress?.("Offerings extraction");
-    let offerings = await this.agents.offerings.run(web.data, semantic.data);
-    if (offerings.data) {
-      offerings.data = await this.agents.aiContent.run(offerings.data);
-    }
-    
-    onProgress?.("Audience analysis");
-    const mapResults = await Promise.all(webScrape.data.map(async (page: any, index: number) => {
-      const semSlice = { ...semantic.data, pages: [semantic.data.pages[index]] };
+    onProgress?.("Offerings Extracted", { offerings: offerings.data });
+    onProgress?.("Digital Maturity Calculated", { digitalMaturity: digital.data });
 
-      const [aud, brnd] = await Promise.all([
-        dag.requiredAgents.includes("audienceIntelligence") ? this.agents.audience.run(web.data, semSlice, identity.data, input.customInstructions) : null,
-        dag.requiredAgents.includes("brandIntelligence") ? this.agents.brand.run(web.data, semSlice, offerings.data.offerings, input.customInstructions) : null,
-      ]);
+    // ---------------------------------------------------------------------------
+    // PHASE 5: Parallel Audience & Brand Analysis
+    // ---------------------------------------------------------------------------
+    onProgress?.("Audience and Brand analysis");
+    const [audience, brand] = await Promise.all([
+      dag.requiredAgents.includes("audienceIntelligence")
+        ? this.agents.audience.run(web.data, semantic.data, identity.data, input.customInstructions)
+        : Promise.resolve({ agent: "audienceIntelligence", version: "1", confidence: "low" as const, data: { buyerPersonas: [], geographies: [], targetIndustries: [] }, sources: [], warnings: [] } as AgentResult<AudienceIntelligence>),
+      dag.requiredAgents.includes("brandIntelligence")
+        ? this.agents.brand.run(web.data, semantic.data, offerings.data.offerings, input.customInstructions)
+        : Promise.resolve({ agent: "brandIntelligence", version: "1", confidence: "low" as const, data: { tone: null, positioning: null, usps: [], messagingStyle: null }, sources: [], warnings: [] } as AgentResult<BrandIntelligence>),
+    ]);
 
-      return { audience: aud, brand: brnd };
-    }));
+    onProgress?.("Audience Analyzed", { audience: audience.data });
+    onProgress?.("Brand Intelligence Extracted", { brandPositioning: brand.data });
 
-    // 6. Reduce Step (Deterministic & LLM Fallback)
-    logger.info(`Reducing extractions...`);
-    
-    // We already have identity from Phase 1.
-    const audience = this.reduceAgentResults(mapResults.map(r => r.audience), "audienceIntelligence") as AgentResult<AudienceIntelligence>;
-    
-    onProgress?.("Brand intelligence");
-    const brand = this.reduceAgentResults(mapResults.map(r => r.brand), "brandIntelligence") as AgentResult<BrandIntelligence>;
-    
-    onProgress?.("Digital maturity");
-    const digital = dag.requiredAgents.includes("digitalMaturity") 
-      ? await this.agents.digital.run(web.data, social.data) 
-      : { agent: "digital", sources: [], warnings: [], data: {} as unknown as DigitalMaturity } as AgentResult<DigitalMaturity>;
+    // ---------------------------------------------------------------------------
+    // PHASE 6: Parallel R&D Insights & Marketing Strategy
+    // ---------------------------------------------------------------------------
+    onProgress?.("R&D Insights & Marketing Strategy");
+    const [rd, marketingSales] = await Promise.all([
+      dag.requiredAgents.includes("rdInsight") && brand.data && digital.data
+        ? this.agents.rd.run(web.data, offerings.data.offerings, brand.data, digital.data)
+        : Promise.resolve({ agent: "rd", sources: [], warnings: [], data: { opportunities: [], gaps: [], improvements: [] } } as AgentResult<RdInsights>),
+      this.agents.marketingSales.run(
+        identity.data,
+        offerings.data.offerings,
+        audience.data,
+        input.brochureText,
+        input.customInstructions
+      )
+    ]);
 
-    onProgress?.("R&D insights");
-    const rd = dag.requiredAgents.includes("rdInsight") && brand.data && digital.data
-      ? await this.agents.rd.run(web.data, offerings.data.offerings, brand.data, digital.data)
-      : { agent: "rd", sources: [], warnings: [], data: { opportunities: [], gaps: [], improvements: [] } } as AgentResult<RdInsights>;
+    onProgress?.("R&D Insights Synthesized", { rdInsights: rd.data });
 
-    const finalState = { webScrape, semantic, web, social, identity, offerings, audience, brand, digital, rd, marketingSales: null as any };
-    
-    onProgress?.("Marketing Strategy");
-    const marketingSales = await this.agents.marketingSales.run(
-      identity.data, 
-      offerings.data.offerings, 
-      audience.data,
-      input.brochureText,
-      input.customInstructions
-    );
-    finalState.marketingSales = marketingSales;
+    const finalState = { webScrape, semantic, web, social, identity, offerings, audience, brand, digital, rd, marketingSales };
 
     logger.success(`Pipeline complete. Generating final intelligence state...`);
     console.log("\n================ FULL EXTRACTED PIPELINE DATA ================\n");
     console.dir(finalState, { depth: null, colors: true });
     console.log("\n==============================================================\n");
-    
+
     return finalState;
   }
 
   // Generic Reducer for AgentResults
-  private reduceAgentResults(results: any[], agentName: string) {
-    const valid = results.filter(Boolean);
+  private async reduceAgentResults(results: any[], agentName: string) {
+    const valid = results.filter((r) => r && r.data && Object.keys(r.data).length > 0);
     if (valid.length === 0) return this.emptyResult(agentName);
-    
-    // Naive merge: pick the first high confidence, or aggregate arrays.
-    // Real implementation calls this.reduceWithLLM(valid)
-    return valid[0]; 
+    if (valid.length === 1) return valid[0];
+    return await this.reduceWithLLM(valid, agentName);
   }
 
-  private async reduceWithLLM(items: any[]) {
-     const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0 });
-     // ... merge logic
+  private async reduceWithLLM(items: any[], agentName: string) {
+    try {
+      const llm = new ChatOpenAI({ model: agentRules.models.fast, temperature: 0 });
+      const prompt = `You are a data aggregation AI. You are merging multiple page extraction results from the agent '${agentName}'.
+Extract and combine all unique information into a single consolidated JSON object matching the input structure.
+
+Page extraction items:
+${JSON.stringify(items.map(i => i.data), null, 2)}
+
+Return ONLY valid JSON matching the structure of the input items without markdown codeblocks.`;
+
+      const res = await llm.invoke(prompt);
+      const content = typeof res.content === "string" ? res.content : "";
+      const cleanJson = content.replace(/^```json/i, "").replace(/```$/i, "").trim();
+      const parsedData = JSON.parse(cleanJson);
+
+      return {
+        agent: agentName,
+        version: agentRules.version,
+        confidence: "high",
+        data: parsedData,
+        sources: items.flatMap(i => i.sources || []),
+        warnings: items.flatMap(i => i.warnings || [])
+      };
+    } catch (err: any) {
+      logger.warn(`Failed LLM reduction for ${agentName}: ${err.message}. Falling back to deterministic merge.`);
+      const mergedData: Record<string, any> = {};
+      for (const item of items) {
+        if (!item.data) continue;
+        for (const [key, val] of Object.entries(item.data)) {
+          if (Array.isArray(val)) {
+            mergedData[key] = Array.from(new Set([...(mergedData[key] || []), ...val]));
+          } else if (!mergedData[key] && val) {
+            mergedData[key] = val;
+          }
+        }
+      }
+      return {
+        agent: agentName,
+        version: agentRules.version,
+        confidence: "medium",
+        data: mergedData,
+        sources: items.flatMap(i => i.sources || []),
+        warnings: items.flatMap(i => i.warnings || [])
+      };
+    }
   }
 
   private emptyResult(name: string) {

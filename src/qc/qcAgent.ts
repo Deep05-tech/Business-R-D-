@@ -218,6 +218,7 @@ export class QcAgent {
     ];
 
     for (const [module, field, value] of values) {
+      if (!value || typeof value !== "string") continue;
       const normalized = value.trim().toLowerCase();
       if (
         agentRules.cleaning.noisyLabels.some(

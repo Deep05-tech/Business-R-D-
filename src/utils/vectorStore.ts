@@ -41,11 +41,13 @@ export class VectorStore {
       }
     };
 
+    const embedTasks: Promise<void>[] = [];
+
     // Embed Products
     if (profile.offeringsBreakdown.products) {
       for (const p of profile.offeringsBreakdown.products) {
         const text = `PRODUCT: ${p.name}\nDESC: ${p.description}\nFEATURES: ${p.keyFeatures?.join(", ")}\nSPECS: ${JSON.stringify(p.technicalSpecs)}\nUSE CASES: ${p.useCases?.join(", ")}`;
-        await generate(text, `Product: ${p.name}`);
+        embedTasks.push(generate(text, `Product: ${p.name}`));
       }
     }
 
@@ -53,7 +55,7 @@ export class VectorStore {
     if (profile.offeringsBreakdown.services) {
       for (const s of profile.offeringsBreakdown.services) {
         const text = `SERVICE: ${s.name}\nDESC: ${s.description}\nAPPLICATIONS: ${s.applications?.join(", ")}`;
-        await generate(text, `Service: ${s.name}`);
+        embedTasks.push(generate(text, `Service: ${s.name}`));
       }
     }
 
@@ -61,9 +63,11 @@ export class VectorStore {
     if (profile.processesBreakdown?.processes) {
       for (const p of profile.processesBreakdown.processes) {
         const text = `PROCESS: ${p.name}\nDESC: ${p.description}\nCAPACITY: ${p.capacity}\nMACHINERY: ${p.machineryUsed?.join(", ")}`;
-        await generate(text, `Process: ${p.name}`);
+        embedTasks.push(generate(text, `Process: ${p.name}`));
       }
     }
+
+    await Promise.all(embedTasks);
 
     // Save to disk
     try {

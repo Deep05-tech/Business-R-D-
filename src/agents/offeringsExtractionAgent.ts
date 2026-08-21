@@ -19,7 +19,7 @@ export class OfferingsExtractionAgent {
     logger.info(`Starting Map-Reduce across ${semantic.pages.length} pages...`);
 
     const llm = new ChatOpenAI({
-      model: "gpt-4o",
+      model: "gpt-4o-mini",
       temperature: 0.0,
       maxTokens: 8192
     });
@@ -40,16 +40,13 @@ export class OfferingsExtractionAgent {
       }
     }
 
-    // We'll chunk pages to avoid exceeding prompt limits, but 2.5-flash has 1M context.
-    // However, to follow the Map-Reduce requirement, we map over pages in chunks.
-    // OpenAI gpt-4o-mini has high rate limits (2M+ TPM), so we can process the entire site concurrently.
     const pagesToProcess = semantic.pages;
     const chunkSize = 25; 
     const mappedResults: OfferingsAndProcesses[] = [];
     
-    // Process in parallel chunks (lowered concurrency for gpt-4o rate limits)
+    // Process in parallel chunks with high concurrency
     const pLimit = (await import("p-limit")).default;
-    const limit = pLimit(3);
+    const limit = pLimit(8);
     const promises: Promise<void>[] = [];
 
     const totalChunks = Math.ceil(pagesToProcess.length / chunkSize);
@@ -135,12 +132,31 @@ ${textChunk}
       processes: { processes: [] }
     };
 
+    const NON_PRODUCT_KEYWORDS = new Set([
+      "industries", "industries served", "engineering", "national", "international", "global",
+      "manufacturing", "technology", "solutions", "services", "overview", "company", "home",
+      "about", "about us", "contact", "contact us", "careers", "news", "media", "blog",
+      "privacy policy", "terms", "sustainability", "quality", "certifications", "facilities",
+      "infrastructure", "catalogue", "catalog", "range", "products", "our products",
+      "product range", "all products", "general", "n/a", "none", "rating", "phone"
+    ]);
+
+    const isTrueProduct = (name: string): boolean => {
+      if (!name || typeof name !== "string") return false;
+      const trimmed = name.trim();
+      const lower = trimmed.toLowerCase();
+      if (NON_PRODUCT_KEYWORDS.has(lower)) return false;
+      if (trimmed.length < 3 || trimmed.length > 80) return false;
+      return true;
+    };
+
     const normalizeKey = (name: string) => {
       return name.toLowerCase().trim()
+        .replace(/[^\w\s]/g, "")
         .replace(/machines?$/i, "")
         .replace(/equipments?$/i, "")
         .replace(/systems?$/i, "")
-        .replace(/s$/i, "") // basic plural removal
+        .replace(/s$/i, "")
         .trim();
     };
 
@@ -151,6 +167,7 @@ ${textChunk}
 
     for (const res of mappedResults) {
       for (const p of res.offerings?.products || []) {
+        if (!p.name || !isTrueProduct(p.name)) continue;
         const key = normalizeKey(p.name);
         if (!seenProducts.has(key)) {
           seenProducts.set(key, p);

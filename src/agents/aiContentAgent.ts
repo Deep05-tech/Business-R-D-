@@ -42,22 +42,21 @@ ${JSON.stringify(itemData, null, 2)}
       }
     };
 
-    const processInBatches = async (items: any[], type: string, batchSize = 5) => {
-      for (let i = 0; i < items.length; i += batchSize) {
-        const batch = items.slice(i, i + batchSize);
-        await Promise.all(
-          batch.map(async (item) => {
-            logger.info(`Generating content for ${type}: ${item.name}`);
-            const aiContent = await generateContent(type, item);
-            item.aiLaymanSummary = aiContent.aiLaymanSummary;
-          })
-        );
-      }
+    const processAllInParallel = async (items: any[], type: string) => {
+      await Promise.all(
+        items.map(async (item) => {
+          logger.info(`Generating content for ${type}: ${item.name}`);
+          const aiContent = await generateContent(type, item);
+          item.aiLaymanSummary = aiContent.aiLaymanSummary;
+        })
+      );
     };
 
-    await processInBatches(result.offerings.products, "Product");
-    await processInBatches(result.offerings.services, "Service");
-    await processInBatches(result.processes.processes, "Process");
+    await Promise.all([
+      processAllInParallel(result.offerings?.products || [], "Product"),
+      processAllInParallel(result.offerings?.services || [], "Service"),
+      processAllInParallel(result.processes?.processes || [], "Process"),
+    ]);
 
     return result;
   }

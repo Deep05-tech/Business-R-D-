@@ -169,4 +169,8 @@ export const agentRules = {
       "rdInsights",
     ],
   },
+  models: {
+    default: process.env.DEFAULT_LLM_MODEL || "gpt-4o",
+    fast: process.env.FAST_LLM_MODEL || "gpt-4o-mini",
+  },
 } as const;

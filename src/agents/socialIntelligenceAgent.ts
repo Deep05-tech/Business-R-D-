@@ -13,25 +13,42 @@ export class SocialIntelligenceAgent {
   constructor(private readonly webTool: WebTool) {}
 
   async run(socialUrls: string[]): Promise<AgentResult<SocialIntelligence>> {
-    const profiles = [];
-    const sources: SourceRef[] = [];
+    const results = await Promise.all(
+      socialUrls.map(async (url) => {
+        try {
+          const page = await this.webTool.fetchPage(url);
+          const bio = firstSentence(page.metaDescription ?? page.text, 260);
+          const accessStatus = page.status >= 200 && page.status < 400 && page.text ? "fetched" : page.status === 0 ? "failed" : "blocked";
+          const profile = {
+            url,
+            bio,
+            identitySignals: unique([page.title ?? "", ...page.headings.slice(0, 5)]).filter(Boolean),
+            contentThemes: keywordHits(page.text, themeKeywords),
+            visualSignals: keywordHits(page.text, visualKeywords),
+            engagementSignals: unique(page.text.match(/\b\d+(?:,\d+)?\s*(?:followers|likes|comments|posts|subscribers)\b/gi) ?? []).slice(0, 8),
+            accessStatus: accessStatus as "fetched" | "blocked" | "failed",
+          };
+          const source: SourceRef | null = bio ? { url, field: "social.bio", evidence: bio, confidence: "medium", inferred: false } : null;
+          return { profile, source };
+        } catch {
+          return {
+            profile: {
+              url,
+              bio: "",
+              identitySignals: [],
+              contentThemes: [],
+              visualSignals: [],
+              engagementSignals: [],
+              accessStatus: "failed" as const,
+            },
+            source: null,
+          };
+        }
+      })
+    );
 
-    for (const url of socialUrls) {
-      const page = await this.webTool.fetchPage(url);
-      const bio = firstSentence(page.metaDescription ?? page.text, 260);
-      const accessStatus = page.status >= 200 && page.status < 400 && page.text ? "fetched" : page.status === 0 ? "failed" : "blocked";
-      const profile = {
-        url,
-        bio,
-        identitySignals: unique([page.title ?? "", ...page.headings.slice(0, 5)]).filter(Boolean),
-        contentThemes: keywordHits(page.text, themeKeywords),
-        visualSignals: keywordHits(page.text, visualKeywords),
-        engagementSignals: unique(page.text.match(/\b\d+(?:,\d+)?\s*(?:followers|likes|comments|posts|subscribers)\b/gi) ?? []).slice(0, 8),
-        accessStatus: accessStatus as "fetched" | "blocked" | "failed",
-      };
-      profiles.push(profile);
-      if (bio) sources.push({ url, field: "social.bio", evidence: bio, confidence: "medium", inferred: false });
-    }
+    const profiles = results.map((r) => r.profile);
+    const sources: SourceRef[] = results.map((r) => r.source).filter((s): s is SourceRef => s !== null);
 
     return {
       agent: this.name,

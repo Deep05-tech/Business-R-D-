@@ -49,7 +49,7 @@ export class KnowledgeIndex {
 
     for (const [url, memory] of this.index.entries()) {
       const haystack = this.buildHaystack(memory, fields);
-      const matchCount = keywords.filter((kw) => haystack.includes(kw.toLowerCase())).length;
+      const matchCount = keywords.filter((kw) => kw && typeof kw === 'string' && haystack.includes(kw.toLowerCase())).length;
       if (matchCount > 0) {
         results.push({ url, name: memory.businessIdentity.officialName, matchCount });
       }
@@ -80,6 +80,7 @@ export class KnowledgeIndex {
   // ---------------------------------------------------------------------------
 
   private normalizeUrl(url: string): string {
+    if (!url || typeof url !== 'string') return "";
     try {
       const parsed = new URL(url);
       return `${parsed.hostname}${parsed.pathname.replace(/\/$/, "")}`;
