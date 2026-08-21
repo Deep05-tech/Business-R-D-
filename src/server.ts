@@ -32,12 +32,63 @@ import { BrandIntelligenceAgent } from "./agents/brandIntelligenceAgent.js";
 import { DiagnosticAgent } from "./agents/diagnosticAgent.js";
 import { TrendingTopicsAgent } from "./agents/trendingTopicsAgent.js";
 
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import basicAuth from "express-basic-auth";
+
 const logger = createLogger("Server");
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = dirname(__filename);
 
 const app = express();
+app.disable("x-powered-by");
+
+// ---------------------------------------------------------------------------
+// Security Middleware & Headers
+// ---------------------------------------------------------------------------
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // Disabled so embedded YouTube/Instagram/media assets work seamlessly
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+  })
+);
+
+// Password Protection (Active if AUTH_PASSWORD or ADMIN_PASSWORD is set in .env)
+const adminPassword = process.env.AUTH_PASSWORD || process.env.ADMIN_PASSWORD;
+if (adminPassword) {
+  logger.info("Security: Basic Authentication activated via AUTH_PASSWORD environment variable.");
+  app.use(
+    basicAuth({
+      users: { admin: adminPassword },
+      challenge: true,
+      realm: "Business Intelligence System"
+    })
+  );
+}
+
+// Rate Limiting (Protects against DoS / brute force / API quota drain)
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 200,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests from this IP. Please try again later." }
+});
+
+const heavyPipelineLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 20, // Limit heavy AI analysis requests
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Rate limit reached for intelligence execution. Please wait a few minutes." }
+});
+
+app.use("/api/", generalLimiter);
+app.use("/business-intelligence", heavyPipelineLimiter);
+app.use("/generate-post", heavyPipelineLimiter);
+
 const orchestrator = new OrchestratorAgent();
 const diagnosticAgent = new DiagnosticAgent();
 const smmAgent = new SmmAgent();
@@ -49,9 +100,9 @@ const trendingTopicsAgent = new TrendingTopicsAgent();
 const memoryStore = new MemoryStore();
 const port = Number(process.env.PORT ?? 3000);
 
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
 
-app.use(express.json({ limit: "32kb" }));
+app.use(express.json({ limit: "1mb" }));
 // Serve plain JS assets from src/static/ at /static/
 const staticPath = __dirname.endsWith("dist") 
   ? join(__dirname, "..", "src", "static")
@@ -85,9 +136,24 @@ app.get('/api/instagram-embed', (req, res) => {
     `);
 });
 
+const isForbiddenSsrfUrl = (urlStr: string): boolean => {
+    try {
+        const parsed = new URL(urlStr);
+        if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return true;
+        const host = parsed.hostname.toLowerCase();
+        if (host === "localhost" || host === "127.0.0.1" || host === "0.0.0.0" || host === "::1") return true;
+        if (host.startsWith("169.254.") || host.startsWith("10.") || host.startsWith("192.168.")) return true;
+        if (host.startsWith("172.16.") || host.startsWith("172.17.") || host.startsWith("172.18.") || host.startsWith("172.19.") || host.startsWith("172.2")) return true;
+        return false;
+    } catch (e) {
+        return true;
+    }
+};
+
 const handleProxyMedia = async (req: express.Request, res: express.Response) => {
     const rawUrl = req.query.url as string;
     if (!rawUrl) return res.status(400).send('Missing url parameter');
+    if (isForbiddenSsrfUrl(rawUrl)) return res.status(403).send('Forbidden media URL target');
 
     try {
         let targetUrl = rawUrl;
