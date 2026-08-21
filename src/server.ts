@@ -34,7 +34,6 @@ import { TrendingTopicsAgent } from "./agents/trendingTopicsAgent.js";
 
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
-import basicAuth from "express-basic-auth";
 
 const logger = createLogger("Server");
 
@@ -44,50 +43,31 @@ const __dirname  = dirname(__filename);
 const app = express();
 app.disable("x-powered-by");
 
-// ---------------------------------------------------------------------------
-// Security Middleware & Headers
-// ---------------------------------------------------------------------------
-app.use(
-  helmet({
-    contentSecurityPolicy: false, // Disabled so embedded YouTube/Instagram/media assets work seamlessly
-    crossOriginEmbedderPolicy: false,
-    crossOriginResourcePolicy: { policy: "cross-origin" }
-  })
-);
+// Apply security headers
+app.use(helmet({
+  contentSecurityPolicy: false,
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 
-// Password Protection (Active if AUTH_PASSWORD or ADMIN_PASSWORD is set in .env)
-const adminPassword = process.env.AUTH_PASSWORD || process.env.ADMIN_PASSWORD;
-if (adminPassword) {
-  logger.info("Security: Basic Authentication activated via AUTH_PASSWORD environment variable.");
-  app.use(
-    basicAuth({
-      users: { admin: adminPassword },
-      challenge: true,
-      realm: "Business Intelligence System"
-    })
-  );
-}
-
-// Rate Limiting (Protects against DoS / brute force / API quota drain)
+// Rate limiting to protect against DoS attacks & bot spamming
 const generalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 200,
+  windowMs: 15 * 60 * 1000,
+  max: 300,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: "Too many requests from this IP. Please try again later." }
+  message: { error: "Too many requests from this IP, please try again later." }
 });
 
-const heavyPipelineLimiter = rateLimit({
-  windowMs: 10 * 60 * 1000, // 10 minutes
-  max: 20, // Limit heavy AI analysis requests
+const intelligenceLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000,
+  max: 15,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: "Rate limit reached for intelligence execution. Please wait a few minutes." }
+  message: { error: "Analysis run limit reached for this IP. Please wait a few minutes." }
 });
 
-app.use("/api/", generalLimiter);
-app.use("/business-intelligence", heavyPipelineLimiter);
-app.use("/generate-post", heavyPipelineLimiter);
+app.use(generalLimiter);
+app.use("/business-intelligence", intelligenceLimiter);
 
 const orchestrator = new OrchestratorAgent();
 const diagnosticAgent = new DiagnosticAgent();
@@ -100,9 +80,10 @@ const trendingTopicsAgent = new TrendingTopicsAgent();
 const memoryStore = new MemoryStore();
 const port = Number(process.env.PORT ?? 3000);
 
-const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
+const upload = multer({ storage: multer.memoryStorage() });
 
-app.use(express.json({ limit: "1mb" }));
+app.use(express.json({ limit: "2mb" }));
+app.use(express.urlencoded({ limit: "2mb", extended: true }));
 // Serve plain JS assets from src/static/ at /static/
 const staticPath = __dirname.endsWith("dist") 
   ? join(__dirname, "..", "src", "static")
@@ -136,24 +117,26 @@ app.get('/api/instagram-embed', (req, res) => {
     `);
 });
 
-const isForbiddenSsrfUrl = (urlStr: string): boolean => {
-    try {
-        const parsed = new URL(urlStr);
-        if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return true;
-        const host = parsed.hostname.toLowerCase();
-        if (host === "localhost" || host === "127.0.0.1" || host === "0.0.0.0" || host === "::1") return true;
-        if (host.startsWith("169.254.") || host.startsWith("10.") || host.startsWith("192.168.")) return true;
-        if (host.startsWith("172.16.") || host.startsWith("172.17.") || host.startsWith("172.18.") || host.startsWith("172.19.") || host.startsWith("172.2")) return true;
-        return false;
-    } catch (e) {
-        return true;
-    }
-};
-
 const handleProxyMedia = async (req: express.Request, res: express.Response) => {
     const rawUrl = req.query.url as string;
     if (!rawUrl) return res.status(400).send('Missing url parameter');
-    if (isForbiddenSsrfUrl(rawUrl)) return res.status(403).send('Forbidden media URL target');
+
+    // SSRF Security Check: Allow only valid HTTP/HTTPS URLs and block internal/private IP targets
+    try {
+        const parsedUrl = new URL(rawUrl);
+        if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+            return res.status(400).send('Invalid protocol');
+        }
+        const hostname = parsedUrl.hostname.toLowerCase();
+        if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1' || hostname === '0.0.0.0' ||
+            hostname.startsWith('10.') || hostname.startsWith('192.168.') || hostname.startsWith('169.254.') ||
+            /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(hostname)) {
+            logger.warn(`[SSRF Block] Blocked attempt to proxy internal address: ${rawUrl}`);
+            return res.status(403).send('Access to internal network addresses is forbidden');
+        }
+    } catch (e) {
+        return res.status(400).send('Invalid URL format');
+    }
 
     try {
         let targetUrl = rawUrl;
