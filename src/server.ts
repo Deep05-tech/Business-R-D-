@@ -117,6 +117,58 @@ app.get('/api/instagram-embed', (req, res) => {
     `);
 });
 
+const sendPlatformSvgPlaceholder = (res: express.Response, rawUrl: string) => {
+    let platform = "Social Post";
+    let icon = "🌐";
+
+    const lower = (rawUrl || "").toLowerCase();
+    if (lower.includes("instagram")) {
+        platform = "Instagram Post";
+        icon = "📸";
+    } else if (lower.includes("facebook")) {
+        platform = "Facebook Post";
+        icon = "📘";
+    } else if (lower.includes("linkedin")) {
+        platform = "LinkedIn Post";
+        icon = "💼";
+    } else if (lower.includes("youtube") || lower.includes("youtu.be")) {
+        platform = "YouTube Video";
+        icon = "▶️";
+    } else if (lower.includes("twitter") || lower.includes("x.com")) {
+        platform = "Twitter Post";
+        icon = "𝕏";
+    } else if (lower.includes("news") || lower.includes("press")) {
+        platform = "News Article";
+        icon = "📰";
+    }
+
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="360" viewBox="0 0 600 360">
+      <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+          ${lower.includes("instagram") 
+            ? '<stop offset="0%" stop-color="#833ab4"/><stop offset="50%" stop-color="#fd1d1d"/><stop offset="100%" stop-color="#fcb045"/>'
+            : lower.includes("facebook")
+            ? '<stop offset="0%" stop-color="#1877f2"/><stop offset="100%" stop-color="#0d47a1"/>'
+            : lower.includes("linkedin")
+            ? '<stop offset="0%" stop-color="#0a66c2"/><stop offset="100%" stop-color="#004182"/>'
+            : lower.includes("youtube")
+            ? '<stop offset="0%" stop-color="#cc0000"/><stop offset="100%" stop-color="#280000"/>'
+            : '<stop offset="0%" stop-color="#1e293b"/><stop offset="100%" stop-color="#0f172a"/>'}
+        </linearGradient>
+      </defs>
+      <rect width="600" height="360" fill="url(#bg)"/>
+      <circle cx="300" cy="140" r="48" fill="rgba(255,255,255,0.18)"/>
+      <text x="300" y="155" font-family="system-ui, -apple-system, sans-serif" font-size="42" text-anchor="middle" fill="#ffffff">${icon}</text>
+      <text x="300" y="235" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#ffffff">${platform}</text>
+      <text x="300" y="265" font-family="system-ui, -apple-system, sans-serif" font-size="14" text-anchor="middle" fill="rgba(255,255,255,0.85)">Click box to preview full post</text>
+    </svg>`;
+
+    res.setHeader('Content-Type', 'image/svg+xml');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    return res.status(200).send(svg);
+};
+
 const handleProxyMedia = async (req: express.Request, res: express.Response) => {
     const rawUrl = req.query.url as string;
     if (!rawUrl) return res.status(400).send('Missing url parameter');
@@ -207,8 +259,8 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
         res.status(response.status);
         response.data.pipe(res);
     } catch (error: any) {
-        logger.warn(`[Proxy-Media] Failed for ${rawUrl}: ${error.message}`);
-        res.status(404).send('Media proxy failed');
+        logger.warn(`[Proxy-Media] Direct stream failed for ${rawUrl}, serving branded SVG placeholder: ${error.message}`);
+        return sendPlatformSvgPlaceholder(res, rawUrl);
     }
 };
 
@@ -859,54 +911,10 @@ app.get("/api/social-feed", async (request, response) => {
     const feed = ((memory as any).socialFeed || []) as any[];
     const competitors = ((memory as any).competitors || []) as any[];
 
-    // Build list of valid competitor names registered in memory (must have >= 1 social account)
-    const validCompetitorNames = new Set<string>();
-    competitors.forEach((c: any) => {
-      const hasSocials = c.socials && Object.values(c.socials).some((v: any) => v !== null && v !== "");
-      if (c.name && hasSocials) validCompetitorNames.add(String(c.name || "").toLowerCase().trim());
-    });
-
-    const isHandleMatchingCompetitor = (url: string, competitorName: string): boolean => {
-      if (!url || typeof url !== 'string') return false;
-      const lowerUrl = url.toLowerCase();
-      if (lowerUrl.includes('/thv/') || lowerUrl.includes('/thv?') || lowerUrl.endsWith('/thv')) return false;
-
-      const badHandles = ['thv', 'siddhiprep', 'prep', 'coaching', 'unacademy', 'byjus', 'examprep'];
-      if (badHandles.some(bh => lowerUrl.includes(bh))) return false;
-
-      try {
-        const parsed = new URL(url.startsWith('http') ? url : `https://${url}`);
-        const pathSegments = parsed.pathname.split('/').filter(Boolean);
-        if (pathSegments.length === 0) return true;
-
-        const genericPaths = new Set(['feed', 'update', 'watch', 'p', 'reel', 'reels', 'channel', 'company', 'in', 'posts', 'videos', 'embed', 'sharer', 'share']);
-        let handleCandidate = pathSegments[0].toLowerCase().replace(/[^\w]/g, "");
-
-        if (genericPaths.has(handleCandidate) && pathSegments.length > 1) {
-          handleCandidate = pathSegments[1].toLowerCase().replace(/[^\w]/g, "");
-        }
-
-        if (badHandles.includes(handleCandidate)) return false;
-      } catch {}
-      return true;
-    };
-
-    // Filter feed to verified posts from verified competitors across all platforms
+    // Return clean competitor posts from memory
     const filteredFeed = feed.filter((post: any) => {
-      const compName = String(post.competitorName || "").toLowerCase().trim();
-      const isRegisteredComp = Array.from(validCompetitorNames).some(name => compName.includes(name) || name.includes(compName));
-      if (!isRegisteredComp) return false;
-
       const link = String(post.link || "");
       if (link.includes("xyz123") || link.includes("abc456") || link.includes("example.com")) return false;
-      if (!isHandleMatchingCompetitor(link, post.competitorName || "")) return false;
-
-      const titleLow = String(post.content || "").toLowerCase();
-      const nonIndustryKeywords = ['ssc', 'cgl', 'rrb', 'steno', 'exam', 'preparation strategy', 'tier-1', 'tier-2', 'upsc', 'neet', 'jee', 'coaching', 'syllabus'];
-      if (nonIndustryKeywords.some(k => titleLow.includes(k))) {
-        return false;
-      }
-
       return true;
     });
     response.json({ feed: filteredFeed });

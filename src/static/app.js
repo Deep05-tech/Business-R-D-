@@ -1738,10 +1738,7 @@ async function loadFeedUI() {
                 
                 cardThumbHtml = `
                   <div style="margin: 0 0 12px 0; width: 100%; height: 180px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: var(--background); flex-shrink: 0; position: relative;">
-                    ${isMediaVid 
-                      ? `<video src="${proxiedThumb}" referrerpolicy="no-referrer" onerror="window.gridVideoFailed(this, '${platform}', '${platformIcon}', '${encodeURIComponent(meta.bg)}')" style="width: 100%; height: 100%; object-fit: cover; display: block;" muted playsinline preload="metadata" onloadeddata="this.currentTime=0"></video>` 
-                      : `<img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="window.gridVideoFailed(this, '${platform}', '${platformIcon}', '${encodeURIComponent(meta.bg)}');" />`
-                    }
+                    <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="window.gridVideoFailed(this, '${platform}', '${platformIcon}', '${encodeURIComponent(meta.bg)}');" />
                     ${isMediaVid ? '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:24px;pointer-events:none;border:2px solid rgba(255,255,255,0.8);">▶</div>' : ''}
                   </div>`;
               } else {
