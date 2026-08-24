@@ -1711,11 +1711,13 @@ async function loadFeedUI() {
             </div>`;
         };
         
-        window.gridVideoFailed = function(el, platform, icon) {
+        window.gridVideoFailed = function(el, platform, icon, encodedBg) {
           if (!el) return;
+          el.style.display = 'none';
           const container = el.parentElement;
           if (container) {
-            container.style.background = 'linear-gradient(135deg, #1e293b, #0f172a)';
+            let bg = encodedBg ? decodeURIComponent(encodedBg) : 'linear-gradient(135deg, #1e293b, #0f172a)';
+            container.style.background = bg;
             container.style.display = 'flex';
             container.style.flexDirection = 'column';
             container.style.alignItems = 'center';
@@ -1723,66 +1725,56 @@ async function loadFeedUI() {
             container.style.color = 'white';
             container.style.padding = '12px';
             container.innerHTML = `
-              <div style="font-size:32px; margin-bottom: 6px;">${icon || '🌐'}</div>
-              <span style="font-size:12px; font-weight:700; color: rgba(255,255,255,0.9); text-align: center;">View on ${platform || 'Platform'} ↗</span>
+              <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 6px;">${icon || '🌐'}</div>
+              <span style="font-size:12px; font-weight:700; color: #ffffff;">${platform || 'Platform'}</span>
+              <span style="font-size:11px; color: rgba(255,255,255,0.8); margin-top: 2px;">Preview Post ↗</span>
             `;
           }
         };
         
-        window.getYouTubeId = function(link) {
-          if (!link || typeof link !== 'string') return null;
-          var match = link.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/)|vi\/)([\w-]{11})/i);
-          return match ? match[1] : null;
+        window.getYouTubeId = function(str) {
+          if (!str || typeof str !== 'string') return null;
+          var match = str.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/)|vi\/)([\w-]{11})/i);
+          if (match) return match[1];
+          var vMatch = str.match(/v=([\w-]{11})/i);
+          return vMatch ? vMatch[1] : null;
         };
 
-        let mediaHtml = '';
-        const ytId = window.getYouTubeId(url) || window.getYouTubeId(postLink);
+        let rawText = encodedContent ? decodeURIComponent(encodedContent) : '';
+        let authorName = encodedAuthor ? decodeURIComponent(encodedAuthor) : (platform || 'Competitor');
+        
+        const ytId = window.getYouTubeId(url) || window.getYouTubeId(postLink) || window.getYouTubeId(rawText);
         
         const isDirectVideo = (url && (url.match(/\.(mp4|webm|ogg)(\?|$)/i) || url.includes('.mp4'))) ||
                               (postLink && (postLink.includes('/reel/') || postLink.includes('/watch') || postLink.includes('/videos/')));
         const isVideoMedia = isDirectVideo || (isVideo && (url.includes('.mp4') || mediaType === 'Video'));
 
-        if (platform === 'YouTube' || ytId) {
-          if (ytId) {
-            mediaHtml = `
-              <div style="width: 850px; max-width: 90vw; height: 480px; max-height: 80vh; background: #000; border-radius: 12px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
-                <iframe src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0" 
-                  style="width: 100%; height: 100%; border: 0;" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowfullscreen></iframe>
-              </div>`;
-          } else {
-            mediaHtml = `
-              <div style="background: var(--surface); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; overflow: hidden; max-width: 400px; padding: 32px 24px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
-                <div style="font-size: 48px; margin-bottom: 12px;">▶️</div>
-                <p style="margin: 0 0 16px 0; color: var(--text); font-weight: 600;">Watch video on YouTube</p>
-                <a href="${postLink || url}" target="_blank" style="background: #ff0000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">Play Video ↗</a>
-              </div>`;
-          }
-        } else if (isVideoMedia) {
-          let videoSrc = url || postLink;
-          if (videoSrc.startsWith('http://') || videoSrc.startsWith('https://')) {
-              videoSrc = `/api/proxy-media?url=${encodeURIComponent(videoSrc)}`;
-          }
-          mediaHtml = `<video src="${videoSrc}" controls autoplay onerror="window.instaVideoFallback('${postLink}')" style="max-height:100%; max-width:100%; border-radius:12px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); object-fit: contain; background: #000;"></video>`;
-        } else if (url || postLink) {
-          let mediaTarget = url || postLink;
-          let imgSrc = mediaTarget;
-          if (imgSrc.startsWith('http://') || imgSrc.startsWith('https://')) {
-              imgSrc = `/api/proxy-media?url=${encodeURIComponent(imgSrc)}`;
-          }
-          mediaHtml = `<img src="${imgSrc}" referrerpolicy="no-referrer" style="max-height:100%; max-width:100%; border-radius:12px; object-fit:contain; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);" onerror="window.instaVideoFallback('${postLink}')" />`;
-        } else {
-          const platformIcons = { Facebook: '📘', Instagram: '📸', LinkedIn: '💼', YouTube: '▶️', News: '📰' };
-          const icon = platformIcons[platform] || '🌐';
-          const authorName = encodedAuthor ? decodeURIComponent(encodedAuthor) : platform;
+        let mediaHtml = '';
+
+        if (ytId) {
           mediaHtml = `
-            <div style="background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; overflow: hidden; max-width: 440px; width: 100%; padding: 40px 28px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; justify-content: center;">
-              <div style="width: 72px; height: 72px; border-radius: 50%; background: ${platformColor || '#6366f1'}22; border: 1px solid ${platformColor || '#6366f1'}44; display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 20px;">
+            <div style="width: 850px; max-width: 90vw; height: 480px; max-height: 80vh; background: #000; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1);">
+              <iframe src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0" 
+                style="width: 100%; height: 100%; border: 0;" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+            </div>`;
+        } else if (isVideoMedia && url && url.match(/\.(mp4|webm|ogg)$/i)) {
+          let videoSrc = url.startsWith('http') ? `/api/proxy-media?url=${encodeURIComponent(url)}` : url;
+          mediaHtml = `<video src="${videoSrc}" controls autoplay style="max-height:80vh; max-width:100%; border-radius:16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); object-fit: contain; background: #000; border: 1px solid rgba(255,255,255,0.1);"></video>`;
+        } else if (url && (url.match(/\.(jpg|jpeg|png|webp|gif|svg)$/i) || url.includes('cdninstagram') || url.includes('fbcdn') || url.includes('licdn') || url.includes('ytimg') || url.includes('scontent'))) {
+          let imgSrc = url.startsWith('http') ? `/api/proxy-media?url=${encodeURIComponent(url)}` : url;
+          mediaHtml = `<img src="${imgSrc}" referrerpolicy="no-referrer" style="max-height:80vh; max-width:100%; border-radius:16px; object-fit:contain; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); border: 1px solid rgba(255,255,255,0.1);" onerror="this.onerror=null; this.parentElement.innerHTML=\`<div style='background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 48px 36px; text-align: center; color: var(--text); max-width: 440px;'><div style='font-size:48px; margin-bottom:16px;'>${platformMeta[platform]?.icon || '🌐'}</div><h4 style='margin:0 0 12px 0;'>${authorName}</h4><p style='font-size:14px; color:var(--text-muted); margin-bottom:24px;'>Official ${platform} Post</p><a href='${postLink}' target='_blank' style='background:${platformColor || '#6366f1'}; color:white; padding:12px 24px; border-radius:10px; text-decoration:none; font-weight:700;'>View Original Post ↗</a></div>\`" />`;
+        } else {
+          const platformIcons = { Facebook: '📘', Instagram: '📸', LinkedIn: '💼', YouTube: '▶️', Twitter: '𝕏', 'News & Press': '📰' };
+          const icon = platformIcons[platform] || '🌐';
+          mediaHtml = `
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; max-width: 440px; width: 100%; padding: 44px 28px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <div style="width: 76px; height: 76px; border-radius: 50%; background: ${platformColor || '#6366f1'}22; border: 1px solid ${platformColor || '#6366f1'}44; display: flex; align-items: center; justify-content: center; font-size: 38px; margin-bottom: 20px; box-shadow: 0 8px 24px ${platformColor || '#6366f1'}33;">
                 ${icon}
               </div>
-              <h4 style="font-size: 1.2rem; font-weight: 700; color: var(--text); margin: 0 0 8px 0;">${authorName}</h4>
-              <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0 0 24px 0; line-height: 1.5;">Official ${platform} Post</p>
+              <h4 style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin: 0 0 6px 0;">${authorName}</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0 0 24px 0; line-height: 1.5;">Official ${platform} Activity & Post</p>
               ${postLink ? `<a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: ${platformColor || '#6366f1'}; color: white; padding: 12px 28px; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px ${platformColor || '#6366f1'}66;">
                 <span>View Original Post</span> ↗
               </a>` : ''}
@@ -1791,20 +1783,18 @@ async function loadFeedUI() {
 
         let captionHtml = '';
         if (encodedContent) {
-           let rawText = decodeURIComponent(encodedContent);
-           let author = encodedAuthor ? decodeURIComponent(encodedAuthor) : '';
            let displayDate = dateStr && dateStr !== 'undefined' && dateStr !== 'null' ? dateStr : 'Recent';
            captionHtml = `
-           <div style="width: 400px; min-width: 320px; background: var(--surface); border-radius: 12px; margin-left: 24px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); height: 100%; max-height: 85vh;">
-              <div style="padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: flex-start;">
+           <div style="width: 400px; min-width: 320px; background: var(--surface); border-radius: 16px; border: 1px solid var(--border); margin-left: 24px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); height: 100%; max-height: 85vh;">
+              <div style="padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start;">
                  <div>
-                    <div style="font-weight: 700; color: var(--text); font-size: 1.1rem;">${author}</div>
+                    <div style="font-weight: 700; color: var(--text); font-size: 1.1rem;">${authorName}</div>
                     <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">${displayDate}</div>
                  </div>
-                 <span style="font-size: 0.65rem; font-weight: 800; padding: 4px 8px; border-radius: 20px; background: ${platformColor || '#6366f1'}; color: #ffffff; text-transform: uppercase;">${platform || 'POST'}</span>
+                 <span style="font-size: 0.65rem; font-weight: 800; padding: 4px 10px; border-radius: 20px; background: ${platformColor || '#6366f1'}; color: #ffffff; text-transform: uppercase;">${platform || 'POST'}</span>
               </div>
               <div class="feed-text" style="padding: 20px; overflow-y: auto; color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; white-space: pre-wrap; flex: 1;">${rawText}</div>
-              ${postLink ? `<div style="padding: 20px; border-top: 1px solid rgba(255,255,255,0.05);"><a href="${postLink}" target="_blank" style="display: block; padding: 12px; background: rgba(99,102,241,0.1); border-radius: 8px; text-align: center; font-size: 13px; font-weight: 600; color: ${platformColor || '#6366f1'}; text-decoration: none; transition: background 0.2s;">View Original Post ↗</a></div>` : ''}
+              ${postLink ? `<div style="padding: 20px; border-top: 1px solid var(--border);"><a href="${postLink}" target="_blank" style="display: block; padding: 12px; background: rgba(99,102,241,0.1); border-radius: 10px; text-align: center; font-size: 13px; font-weight: 600; color: ${platformColor || '#6366f1'}; text-decoration: none;">View Original Post ↗</a></div>` : ''}
            </div>
            `;
         }
@@ -1843,16 +1833,35 @@ async function loadFeedUI() {
           
           <div class="competitor-feed-grid">
             ${compPosts.map(post => {
+              let pLink = (post.link || '').toLowerCase();
+              let pMedia = (post.mediaUrl || '').toLowerCase();
+              let rawContent = (post.content || '');
+
+              let ytVidId = window.getYouTubeId(post.link || '') || window.getYouTubeId(post.mediaUrl || '') || window.getYouTubeId(rawContent);
+
               let pName = String(post.platform || 'Social Feed').trim();
               let platform = pName.charAt(0).toUpperCase() + pName.slice(1);
-              if (platform.toLowerCase().includes('instagram')) platform = 'Instagram';
-              else if (platform.toLowerCase().includes('linkedin')) platform = 'LinkedIn';
-              else if (platform.toLowerCase().includes('youtube')) platform = 'YouTube';
-              else if (platform.toLowerCase().includes('facebook')) platform = 'Facebook';
-              else if (platform.toLowerCase().includes('twitter') || platform.toLowerCase().includes('x')) platform = 'Twitter';
-              else platform = 'News & Press';
 
-              const meta = platformMeta[platform] || { icon: '🌐', color: '#6366f1', bg: 'linear-gradient(135deg, #1e293b, #0f172a)' };
+              // Auto-correct platform label based on actual link signatures
+              if (ytVidId || pLink.includes('youtube.com') || pLink.includes('youtu.be')) {
+                platform = 'YouTube';
+              } else if (pLink.includes('instagram.com') || pMedia.includes('instagram')) {
+                platform = 'Instagram';
+              } else if (pLink.includes('facebook.com') || pMedia.includes('facebook') || pMedia.includes('fbcdn')) {
+                platform = 'Facebook';
+              } else if (pLink.includes('linkedin.com') || pMedia.includes('licdn')) {
+                platform = 'LinkedIn';
+              } else if (pLink.includes('twitter.com') || pLink.includes('x.com')) {
+                platform = 'Twitter';
+              } else if (!ytVidId && platform === 'YouTube') {
+                platform = 'News & Press';
+              }
+
+              if (platform !== 'YouTube' && platform !== 'Instagram' && platform !== 'Facebook' && platform !== 'LinkedIn' && platform !== 'Twitter') {
+                platform = 'News & Press';
+              }
+
+              const meta = platformMeta[platform] || { icon: '📰', color: '#10b981', bg: 'linear-gradient(135deg, #059669, #044e36)' };
               const platformColor = meta.color;
               const platformIcon = meta.icon;
 
@@ -1877,36 +1886,37 @@ async function loadFeedUI() {
               let safeAuthor = encodeURIComponent(post.competitorName || compName).replace(/'/g, "%27");
 
               let cardThumbHtml = '';
-              const ytVidId = window.getYouTubeId(post.link || '') || window.getYouTubeId(post.mediaUrl || '');
+
+              const isDirectImg = post.mediaUrl && (
+                post.mediaUrl.match(/\.(jpg|jpeg|png|webp|gif|svg)(\?|$)/i) ||
+                post.mediaUrl.includes('cdninstagram') ||
+                post.mediaUrl.includes('fbcdn') ||
+                post.mediaUrl.includes('licdn') ||
+                post.mediaUrl.includes('ytimg') ||
+                post.mediaUrl.includes('googleusercontent') ||
+                post.mediaUrl.includes('scontent')
+              );
 
               if (ytVidId) {
                 const ytThumb = `https://img.youtube.com/vi/${ytVidId}/hqdefault.jpg`;
                 cardThumbHtml = `
                   <div style="margin: 0 0 12px 0; width: 100%; height: 170px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: #000; flex-shrink: 0; position: relative;">
-                    <img src="${ytThumb}" referrerpolicy="no-referrer" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${ytVidId}/0.jpg'; window.gridVideoFailed(this, 'YouTube', '▶️');" />
-                    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:rgba(255,0,0,0.85);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:22px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.4);">▶</div>
+                    <img src="${ytThumb}" referrerpolicy="no-referrer" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="window.gridVideoFailed(this, '${platform}', '${platformIcon}', '${encodeURIComponent(meta.bg)}');" />
+                    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:22px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.5);">▶</div>
                   </div>`;
-              } else if ((post.mediaUrl && !post.mediaUrl.startsWith('data:')) || (post.link && !post.link.startsWith('data:'))) {
-                let mediaTarget = post.mediaUrl || post.link || '';
-                let urls = mediaTarget.split(',');
-                let gridThumb = urls[0].trim();
-                let isMediaVid = post.mediaType === 'Video' || gridThumb.match(/\.(mp4|webm|ogg)$/i) || gridThumb.includes('mp4') || gridThumb.includes('/reel/') || gridThumb.includes('/watch');
-                
-                let proxiedThumb = gridThumb;
-                if (gridThumb.startsWith('http://') || gridThumb.startsWith('https://')) {
-                    proxiedThumb = '/api/proxy-media?url=' + encodeURIComponent(gridThumb);
-                }
-                
+              } else if (isDirectImg) {
+                let proxiedThumb = post.mediaUrl.startsWith('http') ? `/api/proxy-media?url=${encodeURIComponent(post.mediaUrl)}` : post.mediaUrl;
                 cardThumbHtml = `
                   <div style="margin: 0 0 12px 0; width: 100%; height: 170px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: var(--surface-hover); flex-shrink: 0; position: relative;">
-                    <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="window.gridVideoFailed(this, '${platform}', '${platformIcon}');" />
-                    ${isMediaVid ? '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;border:2px solid rgba(255,255,255,0.8);">▶</div>' : ''}
+                    <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="window.gridVideoFailed(this, '${platform}', '${platformIcon}', '${encodeURIComponent(meta.bg)}');" />
                   </div>`;
               } else {
+                // Sleek, clean platform graphic banner - zero broken images
                 cardThumbHtml = `
-                  <div style="margin: 0 0 12px 0; width: 100%; height: 170px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: ${meta.bg}; flex-shrink: 0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white;">
-                    <span style="font-size:32px;">${platformIcon}</span>
-                    <span style="font-size:12px; font-weight:700; margin-top:6px;">View on ${platform} ↗</span>
+                  <div style="margin: 0 0 12px 0; width: 100%; height: 170px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: ${meta.bg}; flex-shrink: 0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white; position:relative;">
+                    <div style="width:50px; height:50px; border-radius:50%; background:rgba(255,255,255,0.18); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:8px;">${platformIcon}</div>
+                    <span style="font-size:13px; font-weight:700; color:#ffffff;">${platform} Post</span>
+                    <span style="font-size:11px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Click to preview post ↗</span>
                   </div>`;
               }
 
