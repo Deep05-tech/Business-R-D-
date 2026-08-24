@@ -91,6 +91,60 @@ const staticPath = __dirname.endsWith("dist")
 app.use("/static", express.static(staticPath));
 
 // ---------------------------------------------------------------------------
+// Authentication & SaaS Admin Projects APIs
+// ---------------------------------------------------------------------------
+
+const ADMIN_USER = process.env.ADMIN_USERNAME || "admin";
+const ADMIN_PASS = process.env.ADMIN_PASSWORD || "admin123";
+const AUTH_TOKEN = "antigravity-saas-admin-session-token-v1";
+
+app.post("/api/auth/login", (req, res) => {
+  const { username, password } = req.body;
+  if (username === ADMIN_USER && password === ADMIN_PASS) {
+    return res.json({
+      success: true,
+      token: AUTH_TOKEN,
+      user: { username: ADMIN_USER, role: "Administrator" }
+    });
+  } else {
+    return res.status(401).json({
+      success: false,
+      error: "Invalid username or password. Please use admin / admin123"
+    });
+  }
+});
+
+app.get("/api/auth/status", (req, res) => {
+  const token = req.headers.authorization || req.query.token as string;
+  if (token && token.includes(AUTH_TOKEN)) {
+    return res.json({ authenticated: true, user: { username: ADMIN_USER, role: "Administrator" } });
+  }
+  return res.json({ authenticated: false });
+});
+
+app.get("/api/projects", async (_req, res) => {
+  try {
+    const onDisk = await memoryStore.loadAll();
+    const projects = onDisk.map(m => ({
+      id: Buffer.from(m.input.websiteUrl).toString('base64').replace(/=/g, ''),
+      url: m.input.websiteUrl,
+      name: m.businessIdentity?.officialName || m.input.websiteUrl.replace(/^https?:\/\//, '').replace(/\/$/, ''),
+      industry: m.businessIdentity?.industry || "Business Intelligence",
+      competitorCount: m.competitors?.length || 0,
+      postCount: m.socialFeed?.length || 0,
+      lastAnalyzed: "Active Intelligence"
+    }));
+
+    res.json({
+      userProjects: projects,
+      allProjects: projects
+    });
+  } catch (e: any) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// ---------------------------------------------------------------------------
 // UI
 // ---------------------------------------------------------------------------
 
@@ -755,7 +809,7 @@ app.delete("/api/competitors/single", async (request, response) => {
 
 app.post("/api/competitors/add", async (request, response) => {
   try {
-    const { websiteUrl, compName, compUrl } = request.body;
+    const { websiteUrl, compName, compUrl, youtube, instagram, facebook, linkedin, twitter } = request.body;
     if (!websiteUrl || !compName || !compUrl) {
       response.status(400).json({ error: "Missing required parameters" });
       return;
@@ -782,14 +836,23 @@ app.post("/api/competitors/add", async (request, response) => {
     });
 
     if (newComp) {
+      if (!newComp.socials) {
+        newComp.socials = { linkedin: null, instagram: null, facebook: null, youtube: null, twitter: null };
+      }
+      if (youtube) newComp.socials.youtube = youtube;
+      if (instagram) newComp.socials.instagram = instagram;
+      if (facebook) newComp.socials.facebook = facebook;
+      if (linkedin) newComp.socials.linkedin = linkedin;
+      if (twitter) newComp.socials.twitter = twitter;
+
       if (!memory.competitors) memory.competitors = [];
       memory.competitors.push(newComp);
       await memoryStore.save(memory);
       knowledgeIndex.add(memory);
     }
 
-    logger.success(`✅ Successfully scraped and added manual competitor: ${compName}`);
-    response.json({ success: true });
+    logger.success(`✅ Successfully scraped and added manual competitor with custom socials: ${compName}`);
+    response.json({ success: true, competitor: newComp });
   } catch (error: any) {
     logger.error(`Add competitor error: ${error.message}`);
     response.status(500).json({ error: error.message });

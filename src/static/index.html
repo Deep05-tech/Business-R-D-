@@ -14,6 +14,40 @@
 
 <body>
 
+  <!-- AUTHENTICATION LOGIN OVERLAY -->
+  <div id="login-overlay" style="display: flex; position: fixed; inset: 0; z-index: 10000; background: radial-gradient(circle at top right, #1e1b4b, #0f172a, #020617); align-items: center; justify-content: center; padding: 20px;">
+    <div style="width: 100%; max-width: 420px; background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); text-align: center;">
+      <div style="width: 64px; height: 64px; background: linear-gradient(135deg, var(--primary), #818CF8); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 20px auto; box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);">
+        ⚡
+      </div>
+      <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 8px; color: #ffffff;">Admin Portal</h2>
+      <p style="color: #94a3b8; font-size: 14px; margin-bottom: 32px;">Sign in to access your business intelligence dashboard</p>
+
+      <form id="login-form" onsubmit="event.preventDefault(); window.handleAdminLogin();" style="text-align: left;">
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #cbd5e1; margin-bottom: 8px;">Username</label>
+          <input id="login-username" type="text" value="admin" required placeholder="Enter username" style="width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(15, 23, 42, 0.6); color: #ffffff; font-size: 15px;" />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 28px;">
+          <label style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #cbd5e1; margin-bottom: 8px;">Password</label>
+          <input id="login-password" type="password" value="admin123" required placeholder="Enter password" style="width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(15, 23, 42, 0.6); color: #ffffff; font-size: 15px;" />
+        </div>
+
+        <div id="login-error" style="display: none; margin-bottom: 20px; padding: 12px; border-radius: 10px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; font-size: 13px; text-align: center;">
+          Invalid credentials
+        </div>
+
+        <button id="login-submit-btn" type="submit" class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 15px; font-weight: 600; border-radius: 12px; box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35); transition: all 0.3s ease;">
+          Sign In to Workspace
+        </button>
+      </form>
+      <div style="margin-top: 24px; font-size: 12px; color: #64748b;">
+        Protected System • Antigravity Enterprise AI
+      </div>
+    </div>
+  </div>
+
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="brand">
@@ -25,30 +59,31 @@
 
     <!-- GLOBAL PROJECT SELECTOR -->
     <div class="project-selector">
-      <label>Active Project</label>
+      <label>Active Project Workspace</label>
       <div style="display: flex; gap: 8px;">
         <select id="global-project" onchange="window.selectProject(this.value, true)" style="flex: 1;">
           <option value="">Loading projects...</option>
         </select>
-        <button id="btn-global-delete" class="btn btn-secondary" style="display: none; background-color: rgba(239, 68, 68, 0.05); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 0 12px; transition: all 0.2s;" onclick="window.deleteProjectDetails()" title="Delete this project" onmouseover="this.style.backgroundColor='rgba(239, 68, 68, 0.15)'" onmouseout="this.style.backgroundColor='rgba(239, 68, 68, 0.05)'">
+        <button id="btn-global-delete" class="btn btn-secondary" style="display: none; background-color: rgba(239, 68, 68, 0.05); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 0 12px; transition: all 0.2s;" onclick="window.deleteProjectDetails()" title="Delete this project">
           <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
         </button>
       </div>
     </div>
 
     <nav class="sidebar-nav">
-      <a href="#" class="nav-item active" onclick="switchTab('analyse', 'New Analysis'); return false;"
-        id="nav-analyse">
-        <span class="icon">🔍</span> New Analysis
+      <a href="#" class="nav-item active" onclick="switchTab('projects', 'Projects Directory'); return false;" id="nav-projects">
+        <span class="icon">📁</span> Projects Overview
       </a>
 
-      <div class="nav-section-title">Project Tools</div>
-      <a href="#" class="nav-item disabled" onclick="switchTab('details', 'Project Details & Review'); return false;"
-        id="nav-details">
+      <a href="#" class="nav-item" onclick="switchTab('analyse', 'New Analysis'); return false;" id="nav-analyse">
+        <span class="icon">🔍</span> New Analysis Run
+      </a>
+
+      <div class="nav-section-title">Project Intelligence</div>
+      <a href="#" class="nav-item disabled" onclick="switchTab('details', 'Project Details & Review'); return false;" id="nav-details">
         <span class="icon">📝</span> Project Details & Review
       </a>
-      <a href="#" class="nav-item disabled" onclick="switchTab('competitors', 'Competitor Intelligence'); return false;"
-        id="nav-competitors">
+      <a href="#" class="nav-item disabled" onclick="switchTab('competitors', 'Competitor Intelligence'); return false;" id="nav-competitors">
         <span class="icon">🎯</span> Competitors
       </a>
       <a href="#" class="nav-item disabled" onclick="switchTab('smm', 'SMM Generation'); return false;" id="nav-smm">
@@ -57,11 +92,26 @@
       <a href="#" class="nav-item disabled" onclick="switchTab('seo', 'Website & SEO'); return false;" id="nav-seo">
         <span class="icon">📈</span> SEO & Google
       </a>
-      <a href="#" class="nav-item disabled" onclick="switchTab('social-feed', 'Competitor Feed'); return false;"
-        id="nav-social-feed">
+      <a href="#" class="nav-item disabled" onclick="switchTab('social-feed', 'Competitor Feed'); return false;" id="nav-social-feed">
         <span class="icon">⚡</span> Competitor Feed
       </a>
     </nav>
+
+    <!-- USER FOOTER -->
+    <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #818CF8); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 13px;">
+          AD
+        </div>
+        <div>
+          <div style="font-size: 13px; font-weight: 600; color: var(--text-color);" id="admin-user-name">Admin</div>
+          <div style="font-size: 11px; color: var(--text-muted);">Administrator</div>
+        </div>
+      </div>
+      <button class="btn btn-secondary" onclick="window.handleLogout()" style="padding: 6px 10px; font-size: 12px;" title="Sign Out">
+        🚪
+      </button>
+    </div>
   </aside>
 
   <!-- MAIN CONTENT -->
@@ -80,8 +130,47 @@
 
     <div class="content-area">
 
+      <!-- TAB: PROJECTS DIRECTORY -->
+      <div class="tab-panel active" id="panel-projects">
+        <div style="max-width: 1200px; margin: 0 auto;">
+          <div class="flex-between" style="margin-bottom: 28px; align-items: center;">
+            <div>
+              <h2 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 4px;">Projects Workspace</h2>
+              <p class="subtitle" style="margin: 0; font-size: 14px;">Select an active project or start a new business intelligence analysis.</p>
+            </div>
+            <button class="btn btn-primary" onclick="switchTab('analyse', 'New Business Analysis')" style="padding: 12px 20px; font-weight: 600; border-radius: 12px; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);">
+              + Start New Analysis
+            </button>
+          </div>
+
+          <!-- YOUR PROJECTS SECTION -->
+          <div style="margin-bottom: 40px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+              <span style="font-size: 18px;">⭐</span>
+              <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0; letter-spacing: -0.01em;">Your Projects</h3>
+              <span class="badge" style="background: rgba(99, 102, 241, 0.15); color: var(--primary); font-weight: 600; font-size: 12px; padding: 2px 10px; border-radius: 12px;" id="your-projects-count">0</span>
+            </div>
+            <div id="your-projects-grid" class="projects-grid">
+              <div class="empty-state">Loading your active projects...</div>
+            </div>
+          </div>
+
+          <!-- ALL OTHER PROJECTS SECTION -->
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+              <span style="font-size: 18px;">🌐</span>
+              <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0; letter-spacing: -0.01em;">All Projects & Historical Analyses</h3>
+              <span class="badge" style="background: rgba(255, 255, 255, 0.08); color: var(--text-muted); font-weight: 600; font-size: 12px; padding: 2px 10px; border-radius: 12px;" id="all-projects-count">0</span>
+            </div>
+            <div id="all-projects-grid" class="projects-grid">
+              <div class="empty-state">No other projects found.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- TAB: ANALYSE -->
-      <div class="tab-panel active" id="panel-analyse">
+      <div class="tab-panel" id="panel-analyse">
         <div class="card fade-in" style="max-width: 650px; margin: 60px auto; padding: 48px 40px; box-shadow: var(--shadow-lg); border-radius: 20px; text-align: center;">
           
           <div style="width: 56px; height: 56px; background: linear-gradient(135deg, var(--primary), #818CF8); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 24px auto; box-shadow: 0 8px 16px rgba(99, 102, 241, 0.25);">
@@ -203,16 +292,49 @@
             </div>
           </div>
 
-          <div style="margin-bottom: 32px; padding: 24px; background: var(--surface-hover); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-            <h4 style="margin-top: 0; margin-bottom: 16px; font-size: 0.9em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Manual Add</h4>
-            <div style="display: flex; gap: 16px; align-items: center;">
-              <div class="form-group flex-1" style="margin-bottom: 0;">
-                <input type="text" id="add-comp-name" placeholder="Competitor Name (e.g. Apple)">
+          <div style="margin-bottom: 32px; padding: 24px; background: var(--surface-hover); border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h4 style="margin: 0; font-size: 0.95em; color: var(--text-color); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">➕ Manually Add Competitor & Social Accounts</h4>
+            </div>
+
+            <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
+              <div class="form-group flex-1" style="margin-bottom: 0; min-width: 240px;">
+                <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 4px;">Competitor Name *</label>
+                <input type="text" id="add-comp-name" placeholder="e.g. Acme Corp">
               </div>
-              <div class="form-group" style="flex: 2; margin-bottom: 0;">
-                <input type="text" id="add-comp-url" placeholder="Website URL (e.g. https://apple.com)">
+              <div class="form-group flex-1" style="margin-bottom: 0; min-width: 280px;">
+                <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 4px;">Website URL *</label>
+                <input type="url" id="add-comp-url" placeholder="https://acme.com">
               </div>
-              <button class="btn btn-secondary" onclick="window.addManualCompetitor()" id="btn-add-comp" style="padding: 14px 24px;">Add</button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 20px;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 11px; font-weight: 600; color: #ff0000; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">▶️ YouTube URL</label>
+                <input type="url" id="add-comp-yt" placeholder="https://youtube.com/@channel">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 11px; font-weight: 600; color: #e1306c; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">📸 Instagram URL</label>
+                <input type="url" id="add-comp-ig" placeholder="https://instagram.com/handle">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 11px; font-weight: 600; color: #1877f2; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">📘 Facebook URL</label>
+                <input type="url" id="add-comp-fb" placeholder="https://facebook.com/page">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 11px; font-weight: 600; color: #0a66c2; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">💼 LinkedIn URL</label>
+                <input type="url" id="add-comp-li" placeholder="https://linkedin.com/company/handle">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 11px; font-weight: 600; color: #1da1f2; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">𝕏 Twitter URL</label>
+                <input type="url" id="add-comp-tw" placeholder="https://x.com/handle">
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end;">
+              <button class="btn btn-primary" onclick="window.addManualCompetitor()" id="btn-add-comp" style="padding: 12px 28px; font-weight: 600; border-radius: 10px;">
+                Save Competitor Profile
+              </button>
             </div>
           </div>
 

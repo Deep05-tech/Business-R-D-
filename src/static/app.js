@@ -27,10 +27,154 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (btn) btn.textContent = '☀️';
   }
 
-  await loadProjects();
+  const authenticated = await window.checkAuthStatus();
+  if (authenticated) {
+    await loadProjects();
+    await renderProjectsDirectoryUI();
+  }
   window.restoreActiveTab();
   setTimeout(initializeCustomSelects, 100);
 });
+
+window.handleAdminLogin = async function() {
+  const usernameInput = document.getElementById('login-username');
+  const passwordInput = document.getElementById('login-password');
+  const errorDiv = document.getElementById('login-error');
+  const btn = document.getElementById('login-submit-btn');
+
+  if (!usernameInput || !passwordInput) return;
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value.trim();
+
+  btn.disabled = true;
+  btn.innerText = 'Verifying...';
+  if (errorDiv) errorDiv.style.display = 'none';
+
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      localStorage.setItem('adminToken', data.token);
+      const overlay = document.getElementById('login-overlay');
+      if (overlay) overlay.style.display = 'none';
+      window.showSuccess('Welcome, Administrator!');
+      await window.loadProjects();
+      window.renderProjectsDirectoryUI();
+    } else {
+      if (errorDiv) {
+        errorDiv.textContent = data.error || 'Invalid credentials';
+        errorDiv.style.display = 'block';
+      }
+    }
+  } catch (e) {
+    if (errorDiv) {
+      errorDiv.textContent = 'Server connection error';
+      errorDiv.style.display = 'block';
+    }
+  } finally {
+    btn.disabled = false;
+    btn.innerText = 'Sign In to Workspace';
+  }
+};
+
+window.checkAuthStatus = async function() {
+  const token = localStorage.getItem('adminToken');
+  const overlay = document.getElementById('login-overlay');
+  if (!token) {
+    if (overlay) overlay.style.display = 'flex';
+    return false;
+  }
+  try {
+    const res = await fetch(`/api/auth/status?token=${encodeURIComponent(token)}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await res.json();
+    if (data.authenticated) {
+      if (overlay) overlay.style.display = 'none';
+      return true;
+    } else {
+      localStorage.removeItem('adminToken');
+      if (overlay) overlay.style.display = 'flex';
+      return false;
+    }
+  } catch (e) {
+    if (overlay) overlay.style.display = 'flex';
+    return false;
+  }
+};
+
+window.handleLogout = function() {
+  localStorage.removeItem('adminToken');
+  const overlay = document.getElementById('login-overlay');
+  if (overlay) overlay.style.display = 'flex';
+  window.showSuccess('Logged out successfully');
+};
+
+window.renderProjectsDirectoryUI = async function() {
+  const yourGrid = document.getElementById('your-projects-grid');
+  const allGrid = document.getElementById('all-projects-grid');
+  const yourCount = document.getElementById('your-projects-count');
+  const allCount = document.getElementById('all-projects-count');
+  
+  if (!yourGrid || !allGrid) return;
+  
+  try {
+    const res = await fetch('/api/projects');
+    const data = await res.json();
+    const projects = data.allProjects || [];
+    
+    if (projects.length === 0) {
+      yourGrid.innerHTML = '<div class="empty-state">No active projects found. Click "Start New Analysis" above to analyze a website.</div>';
+      allGrid.innerHTML = '<div class="empty-state">No historical projects found.</div>';
+      if (yourCount) yourCount.textContent = '0';
+      if (allCount) allCount.textContent = '0';
+      return;
+    }
+    
+    if (yourCount) yourCount.textContent = projects.length;
+    if (allCount) allCount.textContent = projects.length;
+    
+    let html = '';
+    projects.forEach(p => {
+      const isCurrentActive = p.url === window.activeProjectUrl;
+      html += `
+        <div class="project-card ${isCurrentActive ? 'active' : ''}" style="${isCurrentActive ? 'border-color: var(--primary); background: rgba(99, 102, 241, 0.05);' : ''}">
+          <div class="project-card-header">
+            <div class="project-card-icon">⚡</div>
+            <div style="flex: 1; min-width: 0;">
+              <div class="project-card-title">${p.name}</div>
+              <a href="${p.url}" target="_blank" class="project-card-url">${p.url}</a>
+            </div>
+            ${isCurrentActive ? '<span class="badge" style="background: rgba(34, 197, 94, 0.2); color: #22c55e; font-size: 11px; padding: 2px 8px; border-radius: 10px;">Active</span>' : ''}
+          </div>
+          <div class="project-card-stats">
+            <div class="project-stat-item">
+              <span class="project-stat-value">${p.competitorCount}</span>
+              <span class="project-stat-label">Competitors</span>
+            </div>
+            <div class="project-stat-item" style="margin-left: 20px;">
+              <span class="project-stat-value">${p.postCount}</span>
+              <span class="project-stat-label">Social Posts</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 12px;">
+            <button class="btn btn-primary" style="flex: 1; padding: 10px; font-size: 13px;" onclick="window.selectProject('${p.url}', true); window.switchTab('details', 'Project Details & Review');">
+              Open Intelligence Workspace
+            </button>
+          </div>
+        </div>
+      `;
+    });
+    yourGrid.innerHTML = html;
+    allGrid.innerHTML = html;
+  } catch(e) {
+    console.error("Failed to render projects directory UI", e);
+  }
+};
 
 function initializeCustomSelects() {
   const SEARCH_THRESHOLD = 8;
@@ -917,26 +1061,42 @@ async function loadCompetitorsUI(isLivePartial = false) {
 
 // ---- SMM ----
 window.addManualCompetitor = async function() {
-  if (!window.activeProjectUrl) return;
+  if (!window.activeProjectUrl) {
+    alert('Please select an active project workspace first.');
+    return;
+  }
   
   const nameInput = document.getElementById('add-comp-name');
   const urlInput = document.getElementById('add-comp-url');
+  const ytInput = document.getElementById('add-comp-yt');
+  const igInput = document.getElementById('add-comp-ig');
+  const fbInput = document.getElementById('add-comp-fb');
+  const liInput = document.getElementById('add-comp-li');
+  const twInput = document.getElementById('add-comp-tw');
   
-  const name = nameInput.value.trim();
-  let url = urlInput.value.trim();
+  const name = nameInput ? nameInput.value.trim() : '';
+  let url = urlInput ? urlInput.value.trim() : '';
   
   if (!name || !url) {
-    alert('Please provide both a Name and URL.');
+    alert('Please provide both a Competitor Name and Website URL.');
     return;
   }
   
   if (!url.startsWith('http')) {
     url = 'https://' + url;
   }
+
+  const youtube = ytInput ? ytInput.value.trim() : '';
+  const instagram = igInput ? igInput.value.trim() : '';
+  const facebook = fbInput ? fbInput.value.trim() : '';
+  const linkedin = liInput ? liInput.value.trim() : '';
+  const twitter = twInput ? twInput.value.trim() : '';
   
   const btn = document.getElementById('btn-add-comp');
-  btn.disabled = true;
-  btn.innerText = 'Scraping...';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerText = 'Saving Competitor...';
+  }
   
   try {
     const res = await fetch('/api/competitors/add', {
@@ -945,15 +1105,26 @@ window.addManualCompetitor = async function() {
       body: JSON.stringify({
         websiteUrl: window.activeProjectUrl,
         compName: name,
-        compUrl: url
+        compUrl: url,
+        youtube,
+        instagram,
+        facebook,
+        linkedin,
+        twitter
       })
     });
     
     if (res.ok) {
-      nameInput.value = '';
-      urlInput.value = '';
-      window.showSuccess('Competitor added and socials scraped!');
-      loadCompetitorsUI();
+      if (nameInput) nameInput.value = '';
+      if (urlInput) urlInput.value = '';
+      if (ytInput) ytInput.value = '';
+      if (igInput) igInput.value = '';
+      if (fbInput) fbInput.value = '';
+      if (liInput) liInput.value = '';
+      if (twInput) twInput.value = '';
+
+      window.showSuccess('Competitor profile & social links saved successfully!');
+      await loadCompetitorsUI();
     } else {
       const err = await res.json();
       alert(err.error || 'Failed to add competitor');
@@ -961,8 +1132,10 @@ window.addManualCompetitor = async function() {
   } catch (error) {
     alert('Failed to add competitor');
   } finally {
-    btn.disabled = false;
-    btn.innerText = 'Add';
+    if (btn) {
+      btn.disabled = false;
+      btn.innerText = 'Save Competitor Profile';
+    }
   }
 };
 
@@ -1468,34 +1641,19 @@ async function loadFeedUI() {
     const feed = data.feed || [];
     
     if (feed.length === 0) {
-      list.innerHTML = '<div class="empty-state">No recent competitor posts found yet. Click "Sync Feed Live" above to trigger a social crawl.</div>';
+      list.innerHTML = '<div class="empty-state">No recent competitor posts found yet. Click "Run Daily Tracker Now" above to trigger a social crawl.</div>';
       return;
     }
     
-    // Group posts by platform
-    const grouped = {};
+    // Group posts COMPETITOR-WISE as requested
+    const groupedByComp = {};
     feed.forEach(post => {
-      let pName = String(post.platform || 'Social Feed').trim();
-      let key = pName.charAt(0).toUpperCase() + pName.slice(1);
-      if (key.toLowerCase().includes('instagram')) key = 'Instagram';
-      else if (key.toLowerCase().includes('linkedin')) key = 'LinkedIn';
-      else if (key.toLowerCase().includes('youtube')) key = 'YouTube';
-      else if (key.toLowerCase().includes('facebook')) key = 'Facebook';
-      else if (key.toLowerCase().includes('twitter') || key.toLowerCase().includes('x')) key = 'Twitter';
-      else key = 'News & Press';
-      
-      if (!grouped[key]) grouped[key] = [];
-      grouped[key].push(post);
+      let compName = String(post.competitorName || 'Competitor').trim();
+      if (!groupedByComp[compName]) groupedByComp[compName] = [];
+      groupedByComp[compName].push(post);
     });
 
-    const platformOrder = ['YouTube', 'LinkedIn', 'Facebook', 'Instagram', 'Twitter', 'News & Press'];
-    const sortedPlatforms = Object.keys(grouped).sort((a, b) => {
-      let idxA = platformOrder.indexOf(a);
-      let idxB = platformOrder.indexOf(b);
-      if (idxA === -1) idxA = 99;
-      if (idxB === -1) idxB = 99;
-      return idxA - idxB;
-    });
+    const sortedCompetitors = Object.keys(groupedByComp).sort();
 
     const platformMeta = {
       'Instagram': { icon: '📸', color: '#e1306c', bg: 'linear-gradient(135deg, #405de6, #833ab4, #e1306c)' },
@@ -1508,31 +1666,17 @@ async function loadFeedUI() {
 
     let html = `
       <style>
-        .responsive-feed-container {
-           display: flex; flex-direction: row; align-items: flex-start; gap: 32px; width: 100%; min-width: 0;
+        .competitor-feed-section {
+           background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px; margin-bottom: 32px;
         }
-        .responsive-feed-label {
-           flex: 0 0 140px; padding-top: 8px;
+        .competitor-feed-header {
+           display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; margin-bottom: 20px; border-bottom: 1px solid var(--border);
         }
-        .responsive-feed-cards {
-           flex: 1; display: flex; flex-direction: row; gap: 20px; overflow-x: auto; min-width: 0; max-width: 100%; padding-bottom: 24px; scroll-behavior: smooth;
-        }
-        .responsive-feed-cards::-webkit-scrollbar { height: 8px; }
-        .responsive-feed-cards::-webkit-scrollbar-track { background: transparent; }
-        .responsive-feed-cards::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-        .responsive-feed-cards::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-        .feed-text::-webkit-scrollbar { width: 6px; }
-        .feed-text::-webkit-scrollbar-track { background: transparent; }
-        .feed-text::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
-        .feed-text::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-        
-        @media (max-width: 1400px) {
-           .responsive-feed-container { flex-direction: column !important; gap: 16px !important; }
-           .responsive-feed-label { flex: 0 0 auto !important; width: 100% !important; padding-top: 0 !important; }
-           .responsive-feed-cards { width: 100% !important; }
+        .competitor-feed-grid {
+           display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;
         }
       </style>
-      <div style="display: flex; flex-direction: column; gap: 40px; padding-bottom: 24px; width: 100%; min-width: 0; max-width: 100%; overflow: hidden;">
+      <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
     `;
     
     if (!document.getElementById('media-lightbox')) {
@@ -1567,7 +1711,7 @@ async function loadFeedUI() {
             </div>`;
         };
         
-        window.gridVideoFailed = function(el, platform, icon, encodedBg) {
+        window.gridVideoFailed = function(el, platform, icon) {
           if (!el) return;
           const container = el.parentElement;
           if (container) {
@@ -1678,23 +1822,40 @@ async function loadFeedUI() {
       };
     }
 
-    for (const platform of sortedPlatforms) {
-      const posts = grouped[platform];
-      const meta = platformMeta[platform] || { icon: '🌐', color: '#6366f1', bg: 'linear-gradient(135deg, #1e293b, #0f172a)' };
-      const platformColor = meta.color;
-      const platformIcon = meta.icon;
+    // Render competitor-by-competitor
+    for (const compName of sortedCompetitors) {
+      const compPosts = groupedByComp[compName];
+      const initial = compName.charAt(0).toUpperCase();
 
       html += `
-        <div class="responsive-feed-container">
-          
-          <div class="responsive-feed-label">
-            <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin: 0; display:flex; align-items:center; gap:8px;">
-               <span>${platformIcon}</span> ${platform}
-            </h3>
+        <div class="competitor-feed-section">
+          <div class="competitor-feed-header">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #4f46e5, #818cf8); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);">
+                ${initial}
+              </div>
+              <div>
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0; color: var(--text);">${compName}</h3>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Social Feed • ${compPosts.length} Posts</div>
+              </div>
+            </div>
           </div>
           
-          <div class="responsive-feed-cards">
-            ${posts.map(post => {
+          <div class="competitor-feed-grid">
+            ${compPosts.map(post => {
+              let pName = String(post.platform || 'Social Feed').trim();
+              let platform = pName.charAt(0).toUpperCase() + pName.slice(1);
+              if (platform.toLowerCase().includes('instagram')) platform = 'Instagram';
+              else if (platform.toLowerCase().includes('linkedin')) platform = 'LinkedIn';
+              else if (platform.toLowerCase().includes('youtube')) platform = 'YouTube';
+              else if (platform.toLowerCase().includes('facebook')) platform = 'Facebook';
+              else if (platform.toLowerCase().includes('twitter') || platform.toLowerCase().includes('x')) platform = 'Twitter';
+              else platform = 'News & Press';
+
+              const meta = platformMeta[platform] || { icon: '🌐', color: '#6366f1', bg: 'linear-gradient(135deg, #1e293b, #0f172a)' };
+              const platformColor = meta.color;
+              const platformIcon = meta.icon;
+
               let dateStr = post.date;
               if (!dateStr || dateStr === 'undefined' || dateStr === 'null') {
                 dateStr = 'Recent';
@@ -1713,7 +1874,7 @@ async function loadFeedUI() {
               if (!dateStr || dateStr === 'undefined' || dateStr === 'null') dateStr = 'Recent';
 
               let safeContent = encodeURIComponent(post.content || '').replace(/'/g, "%27");
-              let safeAuthor = encodeURIComponent(post.competitorName || '').replace(/'/g, "%27");
+              let safeAuthor = encodeURIComponent(post.competitorName || compName).replace(/'/g, "%27");
 
               let cardThumbHtml = '';
               const ytVidId = window.getYouTubeId(post.link || '') || window.getYouTubeId(post.mediaUrl || '');
@@ -1721,9 +1882,9 @@ async function loadFeedUI() {
               if (ytVidId) {
                 const ytThumb = `https://img.youtube.com/vi/${ytVidId}/hqdefault.jpg`;
                 cardThumbHtml = `
-                  <div style="margin: 0 0 12px 0; width: 100%; height: 180px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #000; flex-shrink: 0; position: relative;">
+                  <div style="margin: 0 0 12px 0; width: 100%; height: 170px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: #000; flex-shrink: 0; position: relative;">
                     <img src="${ytThumb}" referrerpolicy="no-referrer" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${ytVidId}/0.jpg'; window.gridVideoFailed(this, 'YouTube', '▶️');" />
-                    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;background:rgba(255,0,0,0.85);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:24px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.4);">▶</div>
+                    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:rgba(255,0,0,0.85);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:22px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.4);">▶</div>
                   </div>`;
               } else if ((post.mediaUrl && !post.mediaUrl.startsWith('data:')) || (post.link && !post.link.startsWith('data:'))) {
                 let mediaTarget = post.mediaUrl || post.link || '';
@@ -1737,38 +1898,35 @@ async function loadFeedUI() {
                 }
                 
                 cardThumbHtml = `
-                  <div style="margin: 0 0 12px 0; width: 100%; height: 180px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: var(--background); flex-shrink: 0; position: relative;">
-                    <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="window.gridVideoFailed(this, '${platform}', '${platformIcon}', '${encodeURIComponent(meta.bg)}');" />
-                    ${isMediaVid ? '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:24px;pointer-events:none;border:2px solid rgba(255,255,255,0.8);">▶</div>' : ''}
+                  <div style="margin: 0 0 12px 0; width: 100%; height: 170px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: var(--surface-hover); flex-shrink: 0; position: relative;">
+                    <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="window.gridVideoFailed(this, '${platform}', '${platformIcon}');" />
+                    ${isMediaVid ? '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;border:2px solid rgba(255,255,255,0.8);">▶</div>' : ''}
                   </div>`;
               } else {
                 cardThumbHtml = `
-                  <div style="margin: 0 0 12px 0; width: 100%; height: 180px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: ${meta.bg}; flex-shrink: 0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white;">
-                    <span style="font-size:36px;">${platformIcon}</span>
+                  <div style="margin: 0 0 12px 0; width: 100%; height: 170px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: ${meta.bg}; flex-shrink: 0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white;">
+                    <span style="font-size:32px;">${platformIcon}</span>
                     <span style="font-size:12px; font-weight:700; margin-top:6px;">View on ${platform} ↗</span>
                   </div>`;
               }
 
               let displayContent = (post.content || '').trim();
               if (!displayContent || displayContent === 'No caption' || displayContent === 'No caption.') {
-                displayContent = `Official ${platform} post from ${post.competitorName}. Click box to preview full post.`;
+                displayContent = `Official ${platform} post from ${compName}. Click box to preview full post.`;
               }
 
               let mediaToOpen = post.mediaUrl || post.link || '';
               let isMediaVidFlag = post.mediaType === 'Video' || (post.mediaUrl && (post.mediaUrl.includes('mp4') || post.mediaUrl.includes('webm')));
 
               return `
-              <div class="feed-item" onclick="window.openLightbox('${mediaToOpen}', ${isMediaVidFlag ? true : false}, '${post.link || ''}', '${platform}', '${post.mediaType || ''}', '${safeContent}', '${safeAuthor}', '${dateStr}', '${platformColor}')" style="background: var(--surface); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); width: 340px; flex-shrink: 0; display: flex; flex-direction: column; height: 580px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)'">
-                <div class="feed-header" style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
-                  <div>
-                    <span class="feed-author" style="font-weight: 700; color: var(--text); display: block; font-size: 1.05rem; line-height: 1.2;">${post.competitorName || 'Competitor'}</span>
-                    <span class="feed-meta" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; display: block;">${dateStr}</span>
-                  </div>
-                  <span style="font-size: 0.65rem; font-weight: 800; padding: 4px 8px; border-radius: 20px; background: ${platformColor}; color: #ffffff; text-transform: uppercase; letter-spacing: 0.05em; flex-shrink: 0;">${platform}</span>
+              <div class="feed-item" onclick="window.openLightbox('${mediaToOpen}', ${isMediaVidFlag ? true : false}, '${post.link || ''}', '${platform}', '${post.mediaType || ''}', '${safeContent}', '${safeAuthor}', '${dateStr}', '${platformColor}')" style="background: var(--surface-hover); padding: 18px; border-radius: 14px; border: 1px solid var(--border); display: flex; flex-direction: column; height: 480px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)'">
+                <div class="feed-header" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                  <span style="font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 20px; background: ${platformColor}; color: #ffffff; text-transform: uppercase; letter-spacing: 0.05em;">${platformIcon} ${platform}</span>
+                  <span class="feed-meta" style="font-size: 0.8rem; color: var(--text-muted);">${dateStr}</span>
                 </div>
                 ${cardThumbHtml}
-                <div class="feed-text" style="white-space: pre-wrap; font-size: 0.95rem; line-height: 1.5; color: var(--text-muted); overflow-y: auto; flex: 1; margin-bottom: 16px;">${displayContent}</div>
-                ${post.link ? `<a href="${post.link}" onclick="event.stopPropagation(); window.open(this.href, '_blank'); window.focus(); return false;" style="display: block; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; text-align: center; font-size: 13px; font-weight: 600; color: ${platformColor}; text-decoration: none; flex-shrink: 0; margin-top: auto; transition: background 0.2s;">View Original Post ↗</a>` : ''}
+                <div class="feed-text" style="white-space: pre-wrap; font-size: 0.9rem; line-height: 1.45; color: var(--text-muted); overflow-y: auto; flex: 1; margin-bottom: 12px;">${displayContent}</div>
+                ${post.link ? `<a href="${post.link}" onclick="event.stopPropagation(); window.open(this.href, '_blank'); window.focus(); return false;" style="display: block; padding: 8px; background: rgba(255,255,255,0.05); border-radius: 8px; text-align: center; font-size: 12px; font-weight: 600; color: ${platformColor}; text-decoration: none; flex-shrink: 0; margin-top: auto;">View Original Post ↗</a>` : ''}
               </div>
             `;
             }).join('')}
