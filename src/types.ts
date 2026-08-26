@@ -96,6 +96,38 @@ export interface WebIntelligence {
   crawledUrls: string[];
 }
 
+export interface SocialPostEngagement {
+  likes: string;
+  comments: string;
+}
+
+export interface SocialPost {
+  id: string;
+  company: string;
+  platform: "LinkedIn" | "Instagram" | "Facebook" | "YouTube" | string;
+  post_url: string;
+  caption: string;
+  media_type: "Image" | "Video" | "Carousel" | "Text" | string;
+  thumbnail: string;
+  media_url: string;
+  date: string;
+  engagement: SocialPostEngagement;
+  // Aliases and backward compatibility fields
+  profile_url?: string;
+  thumbnail_url?: string;
+  published_date?: string;
+  link?: string;
+  content?: string;
+  timestamp?: string;
+  mediaUrl?: string;
+  mediaUrls?: string;
+  mediaType?: string;
+  likes?: string;
+  comments?: string;
+  postUrl?: string;
+  competitorName?: string;
+}
+
 export interface SocialIntelligence {
   profiles: Array<{
     url: string;
@@ -105,6 +137,7 @@ export interface SocialIntelligence {
     visualSignals: string[];
     engagementSignals: string[];
     accessStatus: "fetched" | "blocked" | "failed";
+    posts: SocialPost[];
   }>;
 }
 
@@ -253,7 +286,6 @@ export interface CompetitorProfile {
     instagram: string | null;
     facebook: string | null;
     youtube: string | null;
-    twitter: string | null;
   };
   products?: string[];
   commonProducts?: string[];

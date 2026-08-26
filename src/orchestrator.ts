@@ -202,7 +202,7 @@ export class OrchestratorAgent {
     // Auto-discover socials from the website footer/links if not provided
     if (!input.socialUrls || input.socialUrls.length === 0) {
       const discoveredSocials = new Set<string>();
-      const socialDomains = ['linkedin.com/company', 'instagram.com', 'facebook.com', 'youtube.com', 'twitter.com', 'x.com'];
+      const socialDomains = ['linkedin.com/company', 'instagram.com', 'facebook.com', 'youtube.com'];
 
       for (const page of webScrape.data) {
         if (!page.links) continue;
@@ -498,6 +498,71 @@ Return ONLY valid JSON matching the structure of the input items without markdow
       rdInsights: state.rd.data,
       marketingSales: state.marketingSales.data,
       sourceMap,
+      socialFeed: [
+        ...(state.social?.data?.profiles || []).flatMap(p => p.posts || []),
+        ...((state as any).competitors || []).flatMap((c: any) => c.posts || [])
+      ]
+        .filter(post => {
+          const l = String((post as any).post_url || (post as any).postUrl || (post as any).link || "").toLowerCase();
+          const plat = String((post as any).platform || "").toLowerCase();
+          // Filter out news results, search engine results, and non-social URLs
+          if (l.includes('news') || l.includes('tavily') || l.includes('indiamart') || l.includes('google.com/search')) return false;
+          return (
+            l.includes('instagram.com') || l.includes('facebook.com') || l.includes('linkedin.com') || l.includes('youtube.com') || l.includes('youtu.be') ||
+            plat.includes('instagram') || plat.includes('facebook') || plat.includes('linkedin') || plat.includes('youtube')
+          );
+        })
+        .map((post, idx) => {
+          const l = String((post as any).post_url || (post as any).postUrl || (post as any).link || "").toLowerCase();
+          const plat = String((post as any).platform || "").toLowerCase();
+          
+          let detectedPlatform = "LinkedIn";
+          if (l.includes('youtube.com') || l.includes('youtu.be') || plat.includes('youtube')) {
+            detectedPlatform = "YouTube";
+          } else if (l.includes('instagram.com') || plat.includes('instagram')) {
+            detectedPlatform = "Instagram";
+          } else if (l.includes('facebook.com') || plat.includes('facebook')) {
+            detectedPlatform = "Facebook";
+          } else if (l.includes('linkedin.com') || plat.includes('linkedin')) {
+            detectedPlatform = "LinkedIn";
+          }
+
+          const captionStr = post.caption || (post as any).content || "Social Post";
+          const postUrlStr = (post as any).post_url || (post as any).postUrl || (post as any).link || "";
+          const thumbStr = (post as any).thumbnail || (post as any).thumbnail_url || (post as any).mediaUrls || (post as any).mediaUrl || "";
+          const mediaUrlStr = (post as any).media_url || thumbStr;
+          const pubDateStr = (post as any).date || (post as any).published_date || (post as any).timestamp || "Recent";
+          const compNameStr = (post as any).company || (post as any).competitorName || state.identity?.data?.officialName || "Target Business";
+
+          return {
+            id: (post as any).id || `post_${Date.now()}_${idx}`,
+            company: compNameStr,
+            platform: detectedPlatform,
+            profile_url: (post as any).profile_url || (post as any).profileUrl || "",
+            post_url: postUrlStr,
+            caption: captionStr,
+            media_type: post.media_type || (post as any).mediaType || "Image",
+            thumbnail: thumbStr,
+            thumbnail_url: thumbStr,
+            media_url: mediaUrlStr,
+            date: pubDateStr,
+            published_date: pubDateStr,
+            engagement: (post as any).engagement || {
+              likes: (post as any).likes || "0",
+              comments: (post as any).comments || "0"
+            },
+            // Legacy compatibility aliases
+            content: captionStr,
+            link: postUrlStr,
+            postUrl: postUrlStr,
+            mediaUrl: mediaUrlStr,
+            mediaUrls: mediaUrlStr,
+            timestamp: pubDateStr,
+            competitorName: compNameStr,
+            mediaType: post.media_type || (post as any).mediaType || "Image",
+            _detectedPlatform: detectedPlatform
+          };
+        })
     };
 
     return {

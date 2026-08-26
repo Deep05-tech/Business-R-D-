@@ -188,9 +188,6 @@ const sendPlatformSvgPlaceholder = (res: express.Response, rawUrl: string) => {
     } else if (lower.includes("youtube") || lower.includes("youtu.be")) {
         platform = "YouTube Video";
         icon = "▶️";
-    } else if (lower.includes("twitter") || lower.includes("x.com")) {
-        platform = "Twitter Post";
-        icon = "𝕏";
     } else if (lower.includes("news") || lower.includes("press")) {
         platform = "News Article";
         icon = "📰";
@@ -224,8 +221,19 @@ const sendPlatformSvgPlaceholder = (res: express.Response, rawUrl: string) => {
 };
 
 const handleProxyMedia = async (req: express.Request, res: express.Response) => {
-    const rawUrl = req.query.url as string;
+    let rawUrl = (req.query.url as string || '').trim();
     if (!rawUrl) return res.status(400).send('Missing url parameter');
+
+    // Handle comma-separated URLs or array-stringified URLs
+    if (rawUrl.includes(',')) {
+        const parts = rawUrl.split(',').map(s => s.trim()).filter(Boolean);
+        for (const p of parts) {
+            if (p.startsWith('http://') || p.startsWith('https://')) {
+                rawUrl = p;
+                break;
+            }
+        }
+    }
 
     // SSRF Security Check: Allow only valid HTTP/HTTPS URLs and block internal/private IP targets
     try {
@@ -246,34 +254,71 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
 
     try {
         let targetUrl = rawUrl;
+        const lowerRaw = rawUrl.toLowerCase();
 
-        // If rawUrl is a post page URL, attempt to resolve og:image / og:video / twitter:image
-        const isPostPage = (rawUrl.includes('instagram.com/p/') || rawUrl.includes('instagram.com/reel/') ||
-                            rawUrl.includes('facebook.com') || rawUrl.includes('linkedin.com/posts/') ||
-                            rawUrl.includes('linkedin.com/feed/update/')) &&
-                           !rawUrl.includes('.jpg') && !rawUrl.includes('.jpeg') && !rawUrl.includes('.png') &&
-                           !rawUrl.includes('.webp') && !rawUrl.includes('.mp4') && !rawUrl.includes('scontent') &&
-                           !rawUrl.includes('fbcdn') && !rawUrl.includes('licdn') && !rawUrl.includes('cdninstagram');
+        // 1. If targetUrl is a YouTube URL/ID, automatically resolve to YouTube image thumbnail
+        const ytMatch = targetUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+        if (ytMatch && ytMatch[1]) {
+            targetUrl = `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
+        }
 
-        if (isPostPage) {
+        const isDirectMedia = lowerRaw.includes('.jpg') || lowerRaw.includes('.jpeg') || lowerRaw.includes('.png') ||
+                              lowerRaw.includes('.webp') || lowerRaw.includes('.gif') || lowerRaw.includes('.mp4') ||
+                              lowerRaw.includes('scontent') || lowerRaw.includes('fbcdn') || lowerRaw.includes('licdn') ||
+                              lowerRaw.includes('cdninstagram') || lowerRaw.includes('img.youtube.com') || lowerRaw.includes('ytimg');
+
+        const isIndividualPostPage = lowerRaw.includes('instagram.com/p/') || lowerRaw.includes('instagram.com/reel/') ||
+                                     lowerRaw.includes('facebook.com/posts/') || lowerRaw.includes('story.php') ||
+                                     lowerRaw.includes('permalink.php') || lowerRaw.includes('linkedin.com/posts/') ||
+                                     lowerRaw.includes('linkedin.com/feed/update/');
+
+        // 2. If it's a base profile / company page URL (not a direct media asset or individual post permalink), serve branded SVG directly
+        if (!isDirectMedia && !isIndividualPostPage && (lowerRaw.includes('facebook.com') || lowerRaw.includes('linkedin.com') || lowerRaw.includes('instagram.com') || lowerRaw.includes('youtube.com'))) {
+            return sendPlatformSvgPlaceholder(res, rawUrl);
+        }
+
+        // 3. If rawUrl is an individual post permalink, attempt to resolve uncropped high-res media asset
+        if (isIndividualPostPage && !isDirectMedia) {
             try {
-                const pageRes = await axios.get(rawUrl, {
-                    timeout: 5000,
-                    headers: {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                // For Instagram posts/reels, resolve 100% uncropped high-resolution image via media/?size=l endpoint
+                const igMatch = rawUrl.match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/i);
+                if (igMatch && igMatch[1]) {
+                    const sizeUrl = `https://www.instagram.com/p/${igMatch[1]}/media/?size=l`;
+                    const mediaRes = await axios.get(sizeUrl, {
+                        timeout: 6000,
+                        maxRedirects: 5,
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                            'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8'
+                        }
+                    });
+                    const finalUrl = mediaRes.request?.res?.responseUrl || mediaRes.config?.url;
+                    if (finalUrl && finalUrl.startsWith('http')) {
+                        targetUrl = finalUrl;
                     }
-                });
-                const html = pageRes.data || '';
-                const ogMatch = html.match(/<meta\s+property=["']og:image["']\s+content=["']([^"']+)["']/i) ||
-                                html.match(/<meta\s+content=["']([^"']+)["']\s+property=["']og:image["']/i) ||
-                                html.match(/<meta\s+name=["']twitter:image["']\s+content=["']([^"']+)["']/i) ||
-                                html.match(/<meta\s+property=["']og:video["']\s+content=["']([^"']+)["']/i);
-                if (ogMatch && ogMatch[1]) {
-                    targetUrl = ogMatch[1].replace(/&amp;/g, '&');
+                } else {
+                    const pageRes = await axios.get(rawUrl, {
+                        timeout: 5000,
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                            'Accept-Language': 'en-US,en;q=0.9',
+                            'Upgrade-Insecure-Requests': '1'
+                        }
+                    });
+                    const html = pageRes.data || '';
+                    const ogMatch = html.match(/<meta\s+property=["']og:image["']\s+content=["']([^"']+)["']/i) ||
+                                    html.match(/<meta\s+content=["']([^"']+)["']\s+property=["']og:image["']/i) ||
+                                    html.match(/<meta\s+name=["']twitter:image["']\s+content=["']([^"']+)["']/i) ||
+                                    html.match(/<meta\s+property=["']og:video["']\s+content=["']([^"']+)["']/i);
+                    if (ogMatch && ogMatch[1]) {
+                        targetUrl = ogMatch[1].replace(/&amp;/g, '&');
+                    } else {
+                        return sendPlatformSvgPlaceholder(res, rawUrl);
+                    }
                 }
             } catch (pageErr: any) {
-                logger.debug(`Could not extract og:image from ${rawUrl}: ${pageErr.message}`);
+                return sendPlatformSvgPlaceholder(res, rawUrl);
             }
         }
 
@@ -305,7 +350,8 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
         res.setHeader('Cache-Control', 'public, max-age=86400');
 
         for (const [key, value] of Object.entries(response.headers)) {
-            if (key.toLowerCase() !== 'transfer-encoding' && key.toLowerCase() !== 'access-control-allow-origin') {
+            const lowerKey = key.toLowerCase();
+            if (lowerKey !== 'transfer-encoding' && lowerKey !== 'access-control-allow-origin' && lowerKey !== 'content-encoding' && lowerKey !== 'content-length') {
                 res.set(key, value as string);
             }
         }
@@ -809,7 +855,7 @@ app.delete("/api/competitors/single", async (request, response) => {
 
 app.post("/api/competitors/add", async (request, response) => {
   try {
-    const { websiteUrl, compName, compUrl, youtube, instagram, facebook, linkedin, twitter } = request.body;
+    const { websiteUrl, compName, compUrl, youtube, instagram, facebook, linkedin } = request.body;
     if (!websiteUrl || !compName || !compUrl) {
       response.status(400).json({ error: "Missing required parameters" });
       return;
@@ -837,13 +883,12 @@ app.post("/api/competitors/add", async (request, response) => {
 
     if (newComp) {
       if (!newComp.socials) {
-        newComp.socials = { linkedin: null, instagram: null, facebook: null, youtube: null, twitter: null };
+        newComp.socials = { linkedin: null, instagram: null, facebook: null, youtube: null };
       }
       if (youtube) newComp.socials.youtube = youtube;
       if (instagram) newComp.socials.instagram = instagram;
       if (facebook) newComp.socials.facebook = facebook;
       if (linkedin) newComp.socials.linkedin = linkedin;
-      if (twitter) newComp.socials.twitter = twitter;
 
       if (!memory.competitors) memory.competitors = [];
       memory.competitors.push(newComp);

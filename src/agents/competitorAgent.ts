@@ -14,7 +14,7 @@ import { agentRules } from "../config/agentRules.js";
 
 const logger = createLogger("CompetitorAgent");
 
-type SocialLinks = { linkedin: string | null; instagram: string | null; facebook: string | null; youtube: string | null; twitter: string | null };
+type SocialLinks = { linkedin: string | null; instagram: string | null; facebook: string | null; youtube: string | null };
 
 // Brand handles that website-builder platforms put in footers (e.g. "Made with Wix").
 // These are footer credits pointing at the PLATFORM's social account, NOT the competitor's.
@@ -519,7 +519,7 @@ Answer with the JSON schema.`;
         if (!html || html.trim().length === 0) return null;
         const $ = cheerio.load(html);
         
-        const socials: SocialLinks = { linkedin: null, instagram: null, facebook: null, youtube: null, twitter: null };
+        const socials: SocialLinks = { linkedin: null, instagram: null, facebook: null, youtube: null };
         let productUrl: string | null = null;
         let foundInBlogOnly = false;
         let isDealer = false;
@@ -660,7 +660,7 @@ Answer with the JSON schema.`;
     let domain = comp.url || "";
     try { domain = new URL(comp.url).hostname.replace(/^www\./, ''); } catch {}
 
-    let socials: SocialLinks = { linkedin: null, instagram: null, facebook: null, youtube: null, twitter: null };
+    let socials: SocialLinks = { linkedin: null, instagram: null, facebook: null, youtube: null };
 
     try {
       const scrape = await this.scrapeWebsite(comp.url, "product", [comp.name], "", "", comp.name);
@@ -685,7 +685,7 @@ Answer with the JSON schema.`;
   }
 
   private async findSocialLinksFallback(domain: string, name: string, websiteUrl?: string, industryKeywords: string[] = []): Promise<SocialLinks> {
-    const socials: SocialLinks = { linkedin: null, instagram: null, facebook: null, youtube: null, twitter: null };
+    const socials: SocialLinks = { linkedin: null, instagram: null, facebook: null, youtube: null };
 
     const fallbackPromise = (async () => {
       // Layer 1: scan top 2 sub-pages in parallel
@@ -776,6 +776,19 @@ Answer with the JSON schema.`;
   }
 
   private extractSocialsFromHtml($: cheerio.CheerioAPI, socials: SocialLinks): void {
+    // 1. Target header, nav, and footer containers first
+    $('header a, nav a, footer a, [class*="header"] a, [class*="footer"] a, [id*="header"] a, [id*="footer"] a').each((_, el) => {
+      const href = $(el).attr('href');
+      if (!href) return;
+      const lowerHref = href.toLowerCase();
+
+      if (lowerHref.includes('linkedin.com') && !this.isStaticSocial(href) && !this.isPlatformProviderUrl(href) && !socials.linkedin) { socials.linkedin = href; }
+      if (lowerHref.includes('instagram.com') && !this.isStaticSocial(href) && !this.isPlatformProviderUrl(href) && !socials.instagram) { socials.instagram = href; }
+      if (lowerHref.includes('facebook.com') && !this.isStaticSocial(href) && !this.isPlatformProviderUrl(href) && !socials.facebook) { socials.facebook = href; }
+      if (lowerHref.includes('youtube.com') && !this.isStaticSocial(href) && !this.isPlatformProviderUrl(href) && !socials.youtube) { socials.youtube = href; }
+    });
+
+    // 2. Fallback to all page anchors if header/footer scanning missed any
     $('a').each((_, el) => {
       const href = $(el).attr('href');
       if (!href) return;
@@ -785,10 +798,9 @@ Answer with the JSON schema.`;
       if (lowerHref.includes('instagram.com') && !this.isStaticSocial(href) && !this.isPlatformProviderUrl(href) && !socials.instagram) { socials.instagram = href; }
       if (lowerHref.includes('facebook.com') && !this.isStaticSocial(href) && !this.isPlatformProviderUrl(href) && !socials.facebook) { socials.facebook = href; }
       if (lowerHref.includes('youtube.com') && !this.isStaticSocial(href) && !this.isPlatformProviderUrl(href) && !socials.youtube) { socials.youtube = href; }
-      if ((lowerHref.includes('twitter.com') || lowerHref.includes('x.com')) && !this.isStaticSocial(href) && !this.isPlatformProviderUrl(href) && !socials.twitter) { socials.twitter = href; }
     });
 
-    // Structured data: JSON-LD "sameAs" arrays often carry official social profile URLs.
+    // 3. Structured data: JSON-LD "sameAs" arrays
     $('script[type="application/ld+json"]').each((_, el) => {
       try {
         const raw = $(el).html() || "";
@@ -1103,10 +1115,6 @@ Answer with the JSON schema.`;
       }
       if (host === "youtube.com" || host.endsWith(".youtube.com")) {
         return path.startsWith("/@") || path.startsWith("/channel/") || path.startsWith("/user/") || path.startsWith("/c/") ? "youtube" : null;
-      }
-      if (host === "twitter.com" || host === "x.com" || host.endsWith(".twitter.com") || host.endsWith(".x.com")) {
-        if (path.includes("/intent") || path.includes("/share") || path.length === 0) return null;
-        return "twitter";
       }
       return null;
     } catch {
