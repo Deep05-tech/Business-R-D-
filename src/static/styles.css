@@ -671,6 +671,13 @@ body.dark-theme textarea::-webkit-scrollbar-thumb, body.dark-theme .custom-selec
   border-radius: 16px !important;
   transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.25s ease, box-shadow 0.25s ease !important;
 }
+.feed-card-item img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+}
 .feed-card-item:hover {
   transform: translateY(-4px) !important;
   border-color: var(--primary) !important;

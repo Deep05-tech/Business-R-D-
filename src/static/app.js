@@ -2239,43 +2239,43 @@ async function loadFeedUI() {
       if (ytVidId) {
         const ytThumb = `https://img.youtube.com/vi/${ytVidId}/hqdefault.jpg`;
         cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 160px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 4px;">
-            <img src="${ytThumb}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 4px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
+          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
+            <img src="${ytThumb}" referrerpolicy="no-referrer" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
           </div>`;
       } else if (isIgReelCard && firstMediaUrl) {
         let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
         cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 6px;">
-            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 4px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
+          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
+            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
             <div style="position:absolute; top:10px; right:10px; background:rgba(225,48,108,0.95); color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none;">📹 REEL</div>
             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(225,48,108,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
           </div>`;
       } else if (isLiVidCard && firstMediaUrl) {
         let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
         cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 6px;">
-            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 4px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
+          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
+            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
             <div style="position:absolute; top:10px; right:10px; background:rgba(10,102,194,0.95); color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none;">📹 VIDEO</div>
             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(10,102,194,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
           </div>`;
       } else if (isFacebookVideoCard && firstMediaUrl) {
         let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
         cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 6px;">
-            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 4px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
+          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
+            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
             <div style="position:absolute; top:10px; right:10px; background:rgba(24,119,242,.95); color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:.05em; box-shadow:0 2px 6px rgba(0,0,0,.5); pointer-events:none;">📹 VIDEO</div>
             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(24,119,242,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.6);">▶</div>
           </div>`;
       } else if (firstMediaUrl) {
         let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
         cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 6px;">
-            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 4px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
+          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
+            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
           </div>`;
       } else {
         cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 160px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: ${meta.bg}; flex-shrink: 0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white; position:relative;">
+          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: ${meta.bg}; flex-shrink: 0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white; position:relative;">
             <div style="width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.18); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:6px;">${meta.icon}</div>
             <span style="font-size:12px; font-weight:700; color:#ffffff;">${platform}</span>
             <span style="font-size:11px; font-weight:500; color:rgba(255,255,255,0.8); margin-top:2px;">Preview Post ↗</span>
