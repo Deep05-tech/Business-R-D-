@@ -28,9 +28,11 @@ import { CompetitiveAnalysisAgent } from "./agents/competitiveAnalysisAgent.js";
 import { SeoAgent } from "./agents/seoAgent.js";
 import { CronAgent } from "./agents/cronAgent.js";
 import { Logger, createLogger } from "./utils/logger.js";
+import { fetchMetaPagePluginPosts } from "./utils/facebookParser.js";
 import { BrandIntelligenceAgent } from "./agents/brandIntelligenceAgent.js";
 import { DiagnosticAgent } from "./agents/diagnosticAgent.js";
 import { TrendingTopicsAgent } from "./agents/trendingTopicsAgent.js";
+import { AuthStore, type AuthUser } from "./auth/authStore.js";
 
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
@@ -52,7 +54,7 @@ app.use(helmet({
 // Rate limiting to protect against DoS attacks & bot spamming
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 300,
+  max: 2000,
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: "Too many requests from this IP, please try again later." }
@@ -78,7 +80,31 @@ const seoAgent = new SeoAgent();
 const cronAgent = new CronAgent();
 const trendingTopicsAgent = new TrendingTopicsAgent();
 const memoryStore = new MemoryStore();
+const authStore = new AuthStore();
 const port = Number(process.env.PORT ?? 3000);
+
+// A second click (or a reconnecting browser) must not start another set of
+// Chrome sessions for the same project while its tracker is already running.
+const activeTrackerRuns = new Map<string, Promise<void>>();
+const runTrackerOnce = async (site: any): Promise<void> => {
+  const key = String(site.input?.websiteUrl || '').trim().toLowerCase();
+  const current = activeTrackerRuns.get(key);
+  if (current) {
+    logger.info(`Daily tracker already running for ${site.input.websiteUrl}; joining the active run.`);
+    return current;
+  }
+
+  const run = (async () => {
+    await cronAgent.run(site, memoryStore);
+    knowledgeIndex.add(site);
+  })();
+  activeTrackerRuns.set(key, run);
+  try {
+    await run;
+  } finally {
+    if (activeTrackerRuns.get(key) === run) activeTrackerRuns.delete(key);
+  }
+};
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -94,46 +120,100 @@ app.use("/static", express.static(staticPath));
 // Authentication & SaaS Admin Projects APIs
 // ---------------------------------------------------------------------------
 
-const ADMIN_USER = process.env.ADMIN_USERNAME || "admin";
-const ADMIN_PASS = process.env.ADMIN_PASSWORD || "admin123";
-const AUTH_TOKEN = "antigravity-saas-admin-session-token-v1";
+const getToken = (request: express.Request): string | undefined => {
+  const bearer = request.headers.authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
+  return bearer || (typeof request.query.token === "string" ? request.query.token : undefined);
+};
+const authenticateRequest = async (request: express.Request): Promise<AuthUser | null> => authStore.getSession(getToken(request));
 
-app.post("/api/auth/login", (req, res) => {
-  const { username, password } = req.body;
-  if (username === ADMIN_USER && password === ADMIN_PASS) {
-    return res.json({
-      success: true,
-      token: AUTH_TOKEN,
-      user: { username: ADMIN_USER, role: "Administrator" }
-    });
-  } else {
-    return res.status(401).json({
-      success: false,
-      error: "Invalid username or password. Please use admin / admin123"
-    });
-  }
+app.post("/api/auth/login", async (req, res) => {
+  const { username, password } = req.body || {};
+  const session = await authStore.authenticate(String(username || ""), String(password || ""));
+  if (!session) return res.status(401).json({ success: false, error: "Invalid username or password." });
+  return res.json({ success: true, ...session });
 });
 
-app.get("/api/auth/status", (req, res) => {
-  const token = req.headers.authorization || req.query.token as string;
-  if (token && token.includes(AUTH_TOKEN)) {
-    return res.json({ authenticated: true, user: { username: ADMIN_USER, role: "Administrator" } });
-  }
-  return res.json({ authenticated: false });
+app.get("/api/auth/status", async (req, res) => {
+  const user = await authenticateRequest(req);
+  return res.json(user ? { authenticated: true, user } : { authenticated: false });
 });
 
-app.get("/api/projects", async (_req, res) => {
+app.post("/api/auth/logout", (req, res) => {
+  authStore.revoke(getToken(req));
+  return res.json({ success: true });
+});
+
+const requireAuth: express.RequestHandler = async (req, res, next) => {
+  const user = await authenticateRequest(req);
+  if (!user) return res.status(401).json({ error: "Authentication required." });
+  (req as express.Request & { currentUser?: AuthUser }).currentUser = user;
+  next();
+};
+const requireAdmin: express.RequestHandler = (req, res, next) => {
+  const user = (req as express.Request & { currentUser?: AuthUser }).currentUser;
+  if (!user || user.role !== "admin") return res.status(403).json({ error: "Administrator access required." });
+  next();
+};
+
+app.get("/api/admin/users", requireAuth, requireAdmin, async (_req, res) => res.json({ users: await authStore.listUsers() }));
+app.post("/api/admin/users", requireAuth, requireAdmin, async (req, res) => {
+  try {
+    const role = req.body?.role === "admin" ? "admin" : "user";
+    const user = await authStore.createUser(String(req.body?.username || ""), String(req.body?.password || ""), role);
+    return res.status(201).json({ success: true, user });
+  } catch (error: any) { return res.status(400).json({ error: error.message }); }
+});
+app.delete("/api/admin/users/:username", requireAuth, requireAdmin, async (req, res) => {
+  try {
+    const deleted = await authStore.deleteUser(req.params.username);
+    return deleted ? res.json({ success: true }) : res.status(404).json({ error: "User not found." });
+  } catch (error: any) { return res.status(400).json({ error: error.message }); }
+});
+app.put("/api/admin/users/:username/projects", requireAuth, requireAdmin, async (req, res) => {
+  try {
+    const projectUrl = String(req.body?.projectUrl || "").trim();
+    if (!projectUrl || !(await memoryStore.loadBySite(projectUrl))) return res.status(404).json({ error: "Project not found." });
+    await authStore.assignProject(req.params.username, projectUrl);
+    return res.json({ success: true });
+  } catch (error: any) { return res.status(400).json({ error: error.message }); }
+});
+app.delete("/api/admin/users/:username/projects", requireAuth, requireAdmin, async (req, res) => {
+  try {
+    const projectUrl = String(req.query.projectUrl || "").trim();
+    if (!projectUrl) return res.status(400).json({ error: "Project URL is required." });
+    await authStore.unassignProject(req.params.username, projectUrl);
+    return res.json({ success: true });
+  } catch (error: any) { return res.status(400).json({ error: error.message }); }
+});
+
+// All application data and actions require an authenticated session. Auth
+// endpoints above and static assets stay public so users can reach the login page.
+app.use("/api", (req, res, next) => {
+  // Browser media elements cannot attach Authorization headers. These routes
+  // expose only the already-validated remote asset proxy, not workspace data.
+  if (req.path === "/proxy-media" || req.path === "/proxy-video" || req.path === "/linkedin-embed-player" || req.path === "/instagram-embed") return next();
+  return requireAuth(req, res, next);
+});
+app.use("/memory", requireAuth);
+app.use("/business-intelligence", requireAuth);
+
+app.get("/api/projects", async (req, res) => {
   try {
     const onDisk = await memoryStore.loadAll();
-    const projects = onDisk.map(m => ({
+    const user = (req as express.Request & { currentUser?: AuthUser }).currentUser;
+    const assignedUrls = new Set(user ? await authStore.assignedProjects(user.username) : []);
+    const projects = await Promise.all(onDisk.map(async m => ({
       id: Buffer.from(m.input.websiteUrl).toString('base64').replace(/=/g, ''),
       url: m.input.websiteUrl,
       name: m.businessIdentity?.officialName || m.input.websiteUrl.replace(/^https?:\/\//, '').replace(/\/$/, ''),
       industry: m.businessIdentity?.industry || "Business Intelligence",
       competitorCount: m.competitors?.length || 0,
       postCount: m.socialFeed?.length || 0,
-      lastAnalyzed: "Active Intelligence"
-    }));
+      lastAnalyzed: "Active Intelligence",
+      assigned: assignedUrls.has(m.input.websiteUrl),
+      ...(user?.role === "admin" ? { assignedTo: await authStore.usersAssignedToProject(m.input.websiteUrl) } : {})
+    })));
+    projects.sort((a, b) => Number(b.assigned) - Number(a.assigned) || a.name.localeCompare(b.name));
 
     res.json({
       userProjects: projects,
@@ -171,53 +251,41 @@ app.get('/api/instagram-embed', (req, res) => {
     `);
 });
 
-const sendPlatformSvgPlaceholder = (res: express.Response, rawUrl: string) => {
-    let platform = "Social Post";
-    let icon = "🌐";
-
+const sendPlatformSvgPlaceholder = async (res: express.Response, rawUrl: string) => {
     const lower = (rawUrl || "").toLowerCase();
-    if (lower.includes("instagram")) {
-        platform = "Instagram Post";
-        icon = "📸";
-    } else if (lower.includes("facebook")) {
-        platform = "Facebook Post";
-        icon = "📘";
-    } else if (lower.includes("linkedin")) {
-        platform = "LinkedIn Post";
-        icon = "💼";
-    } else if (lower.includes("youtube") || lower.includes("youtu.be")) {
-        platform = "YouTube Video";
-        icon = "▶️";
-    } else if (lower.includes("news") || lower.includes("press")) {
-        platform = "News Article";
-        icon = "📰";
+    let fallbackImg = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop';
+    if (lower.includes('linkedin')) {
+        fallbackImg = 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop';
+    } else if (lower.includes('instagram')) {
+        fallbackImg = 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&auto=format&fit=crop';
+    } else if (lower.includes('youtube')) {
+        fallbackImg = 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=800&auto=format&fit=crop';
     }
 
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="360" viewBox="0 0 600 360">
-      <defs>
-        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-          ${lower.includes("instagram") 
-            ? '<stop offset="0%" stop-color="#833ab4"/><stop offset="50%" stop-color="#fd1d1d"/><stop offset="100%" stop-color="#fcb045"/>'
-            : lower.includes("facebook")
-            ? '<stop offset="0%" stop-color="#1877f2"/><stop offset="100%" stop-color="#0d47a1"/>'
-            : lower.includes("linkedin")
-            ? '<stop offset="0%" stop-color="#0a66c2"/><stop offset="100%" stop-color="#004182"/>'
-            : lower.includes("youtube")
-            ? '<stop offset="0%" stop-color="#cc0000"/><stop offset="100%" stop-color="#280000"/>'
-            : '<stop offset="0%" stop-color="#1e293b"/><stop offset="100%" stop-color="#0f172a"/>'}
-        </linearGradient>
-      </defs>
-      <rect width="600" height="360" fill="url(#bg)"/>
-      <circle cx="300" cy="140" r="48" fill="rgba(255,255,255,0.18)"/>
-      <text x="300" y="155" font-family="system-ui, -apple-system, sans-serif" font-size="42" text-anchor="middle" fill="#ffffff">${icon}</text>
-      <text x="300" y="235" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#ffffff">${platform}</text>
-      <text x="300" y="265" font-family="system-ui, -apple-system, sans-serif" font-size="14" text-anchor="middle" fill="rgba(255,255,255,0.85)">Click box to preview full post</text>
-    </svg>`;
+    try {
+        const imgRes = await axios.get(fallbackImg, { responseType: 'stream', timeout: 5000 });
+        res.setHeader('Content-Type', 'image/jpeg');
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Cache-Control', 'no-cache, max-age=0');
+        return imgRes.data.pipe(res);
+    } catch(e) {
+        let platform = "Social Post";
+        let icon = "🌐";
+        if (lower.includes("instagram")) { platform = "Instagram Post"; icon = "📸"; }
+        else if (lower.includes("facebook")) { platform = "Facebook Post"; icon = "📘"; }
+        else if (lower.includes("linkedin")) { platform = "LinkedIn Post"; icon = "💼"; }
+        else if (lower.includes("youtube")) { platform = "YouTube Video"; icon = "▶️"; }
 
-    res.setHeader('Content-Type', 'image/svg+xml');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Cache-Control', 'public, max-age=86400');
-    return res.status(200).send(svg);
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="360" viewBox="0 0 600 360">
+          <rect width="600" height="360" fill="#0d1527"/>
+          <circle cx="300" cy="180" r="40" fill="rgba(59, 130, 246, 0.2)"/>
+          <text x="300" y="190" font-family="sans-serif" font-size="32" text-anchor="middle" fill="#ffffff">${icon}</text>
+        </svg>`;
+        res.setHeader('Content-Type', 'image/svg+xml');
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Cache-Control', 'no-store, max-age=0');
+        return res.status(200).send(svg);
+    }
 };
 
 const handleProxyMedia = async (req: express.Request, res: express.Response) => {
@@ -254,82 +322,78 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
 
     try {
         let targetUrl = rawUrl;
-        const lowerRaw = rawUrl.toLowerCase();
+        if (targetUrl.includes('instagram.com') && /\/media\/?\?size=/i.test(targetUrl)) {
+            targetUrl = targetUrl.replace(/\/media\/?\?size=[^&]+$/i, '/');
+        }
+        const lowerRaw = targetUrl.toLowerCase();
 
         // 1. If targetUrl is a YouTube URL/ID, automatically resolve to YouTube image thumbnail
-        const ytMatch = targetUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+        const ytMatch = targetUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|shorts\/)([^"&?\/\s]{11})/i);
         if (ytMatch && ytMatch[1]) {
             targetUrl = `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
         }
 
-        const isDirectMedia = lowerRaw.includes('.jpg') || lowerRaw.includes('.jpeg') || lowerRaw.includes('.png') ||
-                              lowerRaw.includes('.webp') || lowerRaw.includes('.gif') || lowerRaw.includes('.mp4') ||
-                              lowerRaw.includes('scontent') || lowerRaw.includes('fbcdn') || lowerRaw.includes('licdn') ||
-                              lowerRaw.includes('cdninstagram') || lowerRaw.includes('img.youtube.com') || lowerRaw.includes('ytimg');
+        const isDirectMedia = targetUrl.toLowerCase().includes('.jpg') || targetUrl.toLowerCase().includes('.jpeg') ||
+                              targetUrl.toLowerCase().includes('.png') || targetUrl.toLowerCase().includes('.webp') ||
+                              targetUrl.toLowerCase().includes('.gif') || targetUrl.toLowerCase().includes('.mp4') ||
+                              targetUrl.toLowerCase().includes('scontent') || targetUrl.toLowerCase().includes('fbcdn') ||
+                              targetUrl.toLowerCase().includes('fbsbx') || targetUrl.toLowerCase().includes('licdn') ||
+                              targetUrl.toLowerCase().includes('cdninstagram') || targetUrl.toLowerCase().includes('img.youtube.com') ||
+                              targetUrl.toLowerCase().includes('ytimg') || targetUrl.toLowerCase().includes('unsplash.com');
 
         const isIndividualPostPage = lowerRaw.includes('instagram.com/p/') || lowerRaw.includes('instagram.com/reel/') ||
-                                     lowerRaw.includes('facebook.com/posts/') || lowerRaw.includes('story.php') ||
-                                     lowerRaw.includes('permalink.php') || lowerRaw.includes('linkedin.com/posts/') ||
-                                     lowerRaw.includes('linkedin.com/feed/update/');
+                                     lowerRaw.includes('/posts/') || lowerRaw.includes('/photos/') || lowerRaw.includes('/videos/') ||
+                                     lowerRaw.includes('story.php') || lowerRaw.includes('permalink.php') ||
+                                     lowerRaw.includes('facebook.com/watch') || lowerRaw.includes('facebook.com/reel') ||
+                                     lowerRaw.includes('linkedin.com/posts/') || lowerRaw.includes('linkedin.com/feed/update/') ||
+                                     lowerRaw.includes('youtube.com/watch') || lowerRaw.includes('youtu.be/') ||
+                                     lowerRaw.includes('youtube.com/shorts');
 
-        // 2. If it's a base profile / company page URL (not a direct media asset or individual post permalink), serve branded SVG directly
-        if (!isDirectMedia && !isIndividualPostPage && (lowerRaw.includes('facebook.com') || lowerRaw.includes('linkedin.com') || lowerRaw.includes('instagram.com') || lowerRaw.includes('youtube.com'))) {
-            return sendPlatformSvgPlaceholder(res, rawUrl);
-        }
-
-        // 3. If rawUrl is an individual post permalink, attempt to resolve uncropped high-res media asset
-        if (isIndividualPostPage && !isDirectMedia) {
+        // 2. If targetUrl is not a direct media asset, attempt to resolve uncropped high-res OG image from target URL
+        if (!isDirectMedia && !targetUrl.includes('mp4')) {
             try {
-                // For Instagram posts/reels, resolve 100% uncropped high-resolution image via media/?size=l endpoint
-                const igMatch = rawUrl.match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/i);
-                if (igMatch && igMatch[1]) {
-                    const sizeUrl = `https://www.instagram.com/p/${igMatch[1]}/media/?size=l`;
-                    const mediaRes = await axios.get(sizeUrl, {
-                        timeout: 6000,
-                        maxRedirects: 5,
-                        headers: {
-                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                            'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8'
-                        }
-                    });
-                    const finalUrl = mediaRes.request?.res?.responseUrl || mediaRes.config?.url;
-                    if (finalUrl && finalUrl.startsWith('http')) {
-                        targetUrl = finalUrl;
+                const pageRes = await axios.get(targetUrl, {
+                    timeout: 7000,
+                    headers: {
+                        'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                        'Accept-Language': 'en-US,en;q=0.9',
+                        'Upgrade-Insecure-Requests': '1'
                     }
+                });
+                const html = pageRes.data || '';
+                const ogMatch = html.match(/<meta\s+property=["']og:image["']\s+content=["']([^"']+)["']/i) ||
+                                html.match(/<meta\s+content=["']([^"']+)["']\s+property=["']og:image["']/i) ||
+                                html.match(/<meta\s+name=["']twitter:image["']\s+content=["']([^"']+)["']/i) ||
+                                html.match(/<meta\s+property=["']og:video["']\s+content=["']([^"']+)["']/i);
+                if (ogMatch && ogMatch[1]) {
+                    targetUrl = ogMatch[1].replace(/&amp;/g, '&');
+                    logger.info(`[Proxy-Media] Resolved OG image: ${targetUrl}`);
                 } else {
-                    const pageRes = await axios.get(rawUrl, {
-                        timeout: 5000,
-                        headers: {
-                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-                            'Accept-Language': 'en-US,en;q=0.9',
-                            'Upgrade-Insecure-Requests': '1'
-                        }
-                    });
-                    const html = pageRes.data || '';
-                    const ogMatch = html.match(/<meta\s+property=["']og:image["']\s+content=["']([^"']+)["']/i) ||
-                                    html.match(/<meta\s+content=["']([^"']+)["']\s+property=["']og:image["']/i) ||
-                                    html.match(/<meta\s+name=["']twitter:image["']\s+content=["']([^"']+)["']/i) ||
-                                    html.match(/<meta\s+property=["']og:video["']\s+content=["']([^"']+)["']/i);
-                    if (ogMatch && ogMatch[1]) {
-                        targetUrl = ogMatch[1].replace(/&amp;/g, '&');
-                    } else {
-                        return sendPlatformSvgPlaceholder(res, rawUrl);
-                    }
+                    return sendPlatformSvgPlaceholder(res, rawUrl);
                 }
             } catch (pageErr: any) {
+                logger.warn(`[Proxy-Media] OG resolution page fetch failed for ${rawUrl}: ${pageErr.message}`);
                 return sendPlatformSvgPlaceholder(res, rawUrl);
             }
         }
 
         let referer = 'https://www.google.com/';
-        if (targetUrl.includes('instagram') || targetUrl.includes('cdninstagram')) referer = 'https://www.instagram.com/';
-        else if (targetUrl.includes('facebook') || targetUrl.includes('fbcdn')) referer = 'https://www.facebook.com/';
-        else if (targetUrl.includes('linkedin') || targetUrl.includes('licdn')) referer = 'https://www.linkedin.com/';
+        let ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
 
+        if (targetUrl.includes('instagram') || targetUrl.includes('cdninstagram')) {
+            referer = 'https://www.instagram.com/';
+        } else if (targetUrl.includes('facebook') || targetUrl.includes('fbcdn') || targetUrl.includes('fbsbx')) {
+            referer = 'https://www.facebook.com/';
+            ua = 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)';
+        } else if (targetUrl.includes('linkedin') || targetUrl.includes('licdn')) {
+            referer = 'https://www.linkedin.com/';
+        }
+
+        const isVideoReq = targetUrl.match(/\.(mp4|webm|ogg)(\?|$)/i) || targetUrl.includes('/playlist/vid/') || targetUrl.includes('video.licdn.com');
         const headers: Record<string, string> = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+            'User-Agent': ua,
+            'Accept': isVideoReq ? 'video/webm,video/mp4,video/*;q=0.9,*/*;q=0.8' : 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
             'Referer': referer
         };
 
@@ -346,12 +410,18 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
             validateStatus: (status) => status >= 200 && status < 400
         });
 
+        const contentType = String(response.headers['content-type'] || '').toLowerCase();
+        if (contentType.includes('text/html') && !isVideoReq) {
+            logger.warn(`[Proxy-Media] Target URL ${targetUrl} returned HTML content-type instead of image, serving placeholder.`);
+            return sendPlatformSvgPlaceholder(res, rawUrl);
+        }
+
         res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Cache-Control', 'public, max-age=86400');
+        res.setHeader('Cache-Control', 'no-cache, max-age=0, must-revalidate');
 
         for (const [key, value] of Object.entries(response.headers)) {
             const lowerKey = key.toLowerCase();
-            if (lowerKey !== 'transfer-encoding' && lowerKey !== 'access-control-allow-origin' && lowerKey !== 'content-encoding' && lowerKey !== 'content-length') {
+            if (lowerKey !== 'transfer-encoding' && lowerKey !== 'access-control-allow-origin' && lowerKey !== 'content-encoding' && lowerKey !== 'cache-control') {
                 res.set(key, value as string);
             }
         }
@@ -366,6 +436,51 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
 
 app.get('/api/proxy-media', handleProxyMedia);
 app.get('/api/proxy-video', handleProxyMedia);
+
+app.get('/api/linkedin-embed-player', async (req, res) => {
+    const actId = req.query.id as string;
+    if (!actId) return res.status(400).send('Activity ID required');
+
+    try {
+        const embedUrl = `https://www.linkedin.com/embed/feed/update/urn:li:activity:${actId}`;
+        const embedRes = await axios.get(embedUrl, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+            },
+            timeout: 7000
+        });
+
+        let html = embedRes.data || '';
+
+        const customStyle = `
+        <style>
+          body, html { margin: 0 !important; padding: 0 !important; width: 100vw !important; height: 100vh !important; background: #000 !important; overflow: hidden !important; }
+          article { border: none !important; padding: 0 !important; background: #000 !important; width: 100vw !important; height: 100vh !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+          .base-main-feed-card__entity-lockup, [data-test-id*="entity-lockup"], p, header, footer, .embed-footer, .feed-shared-text, .main-feed-activity-embed-card__commentary, .social-details-social-counts { display: none !important; visibility: hidden !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }
+          .share-native-video, .video-js, video { width: 100vw !important; height: 100vh !important; max-height: 100vh !important; object-fit: contain !important; margin: 0 !important; border-radius: 8px !important; display: block !important; }
+        </style>
+        `;
+
+        html = html.replace('</head>', `${customStyle}</head>`);
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        return res.send(html);
+    } catch (e: any) {
+        logger.warn(`[LinkedIn-Player] Failed to load embed HTML for ${actId}: ${e.message}`);
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        return res.send(`
+<!DOCTYPE html>
+<html>
+<head><style>body { background: #031224; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }</style></head>
+<body>
+  <div style="font-size: 48px; margin-bottom: 16px;">💼</div>
+  <h3 style="margin: 0 0 16px 0;">Official LinkedIn Update</h3>
+  <a href="https://www.linkedin.com/feed/update/urn:li:activity:${actId}" target="_blank" style="background: #0a66c2; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold;">View on LinkedIn ↗</a>
+</body>
+</html>
+        `);
+    }
+});
 
 app.get('/', (_request, response) => {
   response.sendFile(join(staticPath, 'index.html'));
@@ -646,13 +761,14 @@ app.post("/api/memory/update", async (request, response) => {
   }
 });
 
-app.delete("/api/memory", async (request, response) => {
+app.delete("/api/memory", requireAdmin, async (request, response) => {
   try {
     const url = request.query.url as string;
     if (!url) return response.status(400).json({ error: "Missing url param" });
 
     const deleted = await memoryStore.deleteBySite(url);
     if (deleted) {
+      await authStore.removeProjectFromAssignments(url);
       knowledgeIndex.remove(url);
       response.json({ success: true });
     } else {
@@ -990,14 +1106,12 @@ app.post("/api/cron/run", async (request, response) => {
     if (url) {
       const site = await memoryStore.loadBySite(url);
       if (!site) return response.status(404).json({ error: "Memory not found for this site." });
-      await cronAgent.run(site, memoryStore);
-      // Update the in-memory cache so the UI sees the new feed!
-      knowledgeIndex.add(site);
+      await runTrackerOnce(site);
     } else {
       // Fallback for legacy calls (runs for all)
       const sites = await memoryStore.loadAll();
       for (const site of sites) {
-        await cronAgent.run(site, memoryStore);
+        await runTrackerOnce(site);
       }
     }
     response.json({ status: "ok" });
@@ -1009,22 +1123,105 @@ app.post("/api/cron/run", async (request, response) => {
 app.get("/api/social-feed", async (request, response) => {
   try {
     const url = request.query.url as string;
-    // ALWAYS load from disk for social feed to get the absolute latest if possible
-    const memory = await memoryStore.loadBySite(url) || knowledgeIndex.get(url) || undefined;
+    let memory = await memoryStore.loadBySite(url);
+    if (!memory && url) {
+      const allMemories = await memoryStore.loadAll();
+      memory = allMemories.find(m => {
+        const u = (m.input?.websiteUrl || "").toLowerCase();
+        return u.includes(url.toLowerCase()) || url.toLowerCase().includes(u.replace(/^https?:\/\//, "").replace(/\/+$/, ""));
+      }) || allMemories[0] || null;
+    }
     if (!memory) return response.status(404).json({ error: "Memory not found" });
     
-    // Also update the cache while we're at it
+    // Update knowledge index
     knowledgeIndex.add(memory);
     
     const feed = ((memory as any).socialFeed || []) as any[];
-    const competitors = ((memory as any).competitors || []) as any[];
 
-    // Return clean competitor posts from memory
-    const filteredFeed = feed.filter((post: any) => {
-      const link = String(post.link || "");
-      if (link.includes("xyz123") || link.includes("abc456") || link.includes("example.com")) return false;
-      return true;
+    // Return clean, strictly deduplicated competitor posts from memory
+    const seenUrls = new Set<string>();
+    const filteredFeed: any[] = [];
+
+    for (const post of feed) {
+      const rawLink = String(post.post_url || post.link || post.postUrl || "").trim();
+      const platformStr = String(post.platform || "").toLowerCase();
+
+      // Skip generic placeholder links
+      if (rawLink.includes("instagram.com/instagram") || rawLink.includes("facebook.com/facebook")) {
+        continue;
+      }
+
+      if (!rawLink || rawLink.includes("xyz123") || rawLink.includes("abc456") || rawLink.includes("example.com")) {
+        continue;
+      }
+
+      // Reject generic YouTube watch links without video ID
+      if ((rawLink.includes("youtube.com") || rawLink.includes("youtu.be")) && !rawLink.match(/(?:v=|\/vi\/|shorts\/)([\w-]{11})/)) {
+        continue;
+      }
+
+      let normUrl = rawLink.split('?')[0].split('#')[0].replace(/\/+$/, '');
+      if (rawLink.includes('youtube.com') || rawLink.includes('youtu.be')) {
+        const ytId = rawLink.match(/(?:v=|\/vi\/|shorts\/)([\w-]{11})/);
+        if (ytId && ytId[1]) normUrl = `https://www.youtube.com/watch?v=${ytId[1]}`;
+      }
+
+      const companyKey = String(post.company || post.competitorName || "").trim().toLowerCase();
+      const dedupKey = `${platformStr}_${companyKey}_${normUrl}`;
+
+      if (!seenUrls.has(dedupKey)) {
+        seenUrls.add(dedupKey);
+        post.post_url = rawLink;
+        post.link = rawLink;
+        filteredFeed.push(post);
+      }
+    }
+
+    // Dynamic Meta Page Plugin Stream for Competitor Facebook Feeds
+    const COMPETITOR_FACEBOOK_PAGES: Record<string, string> = {
+      "isk bearings industries": "https://www.facebook.com/iskbearingsindustries/",
+      "delta bearing co": "https://www.facebook.com/deltabearings/",
+      "rhd bearings": "https://www.facebook.com/rhdbearings/",
+      "usa bearings & belts": "https://www.facebook.com/people/USA-Bearings-Belts/61554974161629/",
+      "scheerer bearing corp. | corporate office": "https://www.facebook.com/ScheererBearing/",
+      "scheerer bearing corp.": "https://www.facebook.com/ScheererBearing/",
+      "koyo bearings usa, llc.": "https://www.facebook.com/JTEKTNAMERICA/",
+      "koyo bearings usa": "https://www.facebook.com/JTEKTNAMERICA/",
+      "marc bearings pvt. ltd.": "https://www.facebook.com/profile.php?id=100008079918650",
+      "findling wälzlager gmbh": "https://www.facebook.com/findlingwaelzlager/",
+      "findling walzlager gmbh": "https://www.facebook.com/findlingwaelzlager/"
+    };
+
+    const compObjects = Array.isArray(memory.competitors) ? memory.competitors : [];
+    const fbPromises = compObjects.map(async (cObj: any, idx: number) => {
+      const competitor = cObj as CompetitorProfile & { company?: string; facebook?: string };
+      const compName = typeof cObj === "string" ? cObj : (competitor.name || competitor.company || `Competitor ${idx + 1}`);
+      const compKey = compName.toLowerCase().trim();
+      let officialFbUrl = COMPETITOR_FACEBOOK_PAGES[compKey] || (typeof cObj === "object" ? (competitor.socials?.facebook || competitor.facebook) : null);
+      if (!officialFbUrl || !officialFbUrl.includes("facebook.com")) {
+        const slug = compName.toLowerCase().replace(/[^a-z0-9]+/g, "");
+        officialFbUrl = `https://www.facebook.com/${slug}/`;
+      }
+      try {
+        return await fetchMetaPagePluginPosts(officialFbUrl, compName);
+      } catch {
+        return [];
+      }
     });
+
+    const allFbResults = await Promise.all(fbPromises);
+    console.log("[SERVER SOCIAL FEED] FB RESULTS COUNT:", allFbResults.flat().length);
+    for (const pluginPosts of allFbResults) {
+      for (const p of pluginPosts) {
+        const normLink = String(p.link || "").toLowerCase().split("?")[0].split("#")[0].replace(/\/+$/, "");
+        const dKey = `facebook_${p.company.toLowerCase().trim()}_${normLink}`;
+        if (!seenUrls.has(dKey)) {
+          seenUrls.add(dKey);
+          filteredFeed.push(p);
+        }
+      }
+    }
+
     response.json({ feed: filteredFeed });
   } catch (e: any) {
     response.status(500).json({ error: e.message });
@@ -1044,12 +1241,15 @@ app.get("/memory/stats", async (_request, response) => {
   response.json(knowledgeIndex.stats());
 });
 
-app.get("/api/sites", async (_request, response) => {
+app.get("/api/sites", async (request, response) => {
   const onDisk = await memoryStore.loadAll();
+  const user = (request as express.Request & { currentUser?: AuthUser }).currentUser;
+  const assignedUrls = new Set(user ? await authStore.assignedProjects(user.username) : []);
   const sites = onDisk.map(m => ({
     url: m.input.websiteUrl,
-    name: m.businessIdentity?.officialName || m.input.websiteUrl
-  }));
+    name: m.businessIdentity?.officialName || m.input.websiteUrl,
+    assigned: assignedUrls.has(m.input.websiteUrl)
+  })).sort((a, b) => Number(b.assigned) - Number(a.assigned) || a.name.localeCompare(b.name));
   response.json(sites);
 });
 

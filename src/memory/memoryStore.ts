@@ -98,7 +98,9 @@ export class MemoryStore {
           const raw = await readFile(filePath, "utf8");
           const memory = JSON.parse(raw) as StructuredMemory;
           
-          if (memory.input?.websiteUrl === websiteUrl) {
+          const normInputUrl = (memory.input?.websiteUrl || "").toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+          const normTargetUrl = websiteUrl.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+          if (normInputUrl === normTargetUrl || memory.input?.websiteUrl === websiteUrl || (normInputUrl && normTargetUrl && (normInputUrl.includes(normTargetUrl) || normTargetUrl.includes(normInputUrl)))) {
              const stat = await import("node:fs/promises").then(fs => fs.stat(filePath));
              if (stat.mtimeMs > latestMtime) {
                latestMtime = stat.mtimeMs;

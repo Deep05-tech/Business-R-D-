@@ -1,4 +1,55 @@
 window.activeProjectUrl = null;
+window.currentUser = null;
+
+// Keep existing dashboard calls unchanged while attaching the session to every
+// protected same-origin request.
+const nativeFetch = window.fetch.bind(window);
+window.fetch = function(resource, options = {}) {
+  const url = typeof resource === 'string' ? resource : resource?.url || '';
+  const isProtectedPath = /^\/(?:api(?!\/auth(?:\/|$))|memory|business-intelligence)/.test(url);
+  const token = localStorage.getItem('dashboardToken');
+  if (!isProtectedPath || !token) return nativeFetch(resource, options);
+  const headers = new Headers(options.headers || (typeof resource !== 'string' ? resource.headers : undefined));
+  headers.set('Authorization', `Bearer ${token}`);
+  return nativeFetch(resource, { ...options, headers });
+};
+
+window.applyCurrentUser = function(user) {
+  window.currentUser = user || null;
+  const isAdmin = user?.role === 'admin';
+  const name = document.getElementById('admin-user-name');
+  const role = document.getElementById('admin-user-role');
+  const returnToAdmin = document.getElementById('return-admin-center');
+  const deleteProject = document.getElementById('btn-global-delete');
+  if (name) name.textContent = user?.username || 'Guest';
+  if (role) role.textContent = isAdmin ? 'Administrator' : 'SMM';
+  if (returnToAdmin) returnToAdmin.style.display = isAdmin ? 'inline-flex' : 'none';
+  if (deleteProject && !isAdmin) deleteProject.style.display = 'none';
+};
+
+window.showRoleHome = async function() {
+  const isAdmin = window.currentUser?.role === 'admin';
+  const adminCenter = document.getElementById('admin-control-center');
+  const dashboard = document.getElementById('dashboard-shell');
+  if (adminCenter) adminCenter.style.display = isAdmin ? 'block' : 'none';
+  if (dashboard) dashboard.style.display = isAdmin ? 'none' : '';
+  if (isAdmin) {
+    await Promise.all([window.loadDashboardUsers(), window.loadAdminProjects()]);
+  } else {
+    window.restoreActiveTab();
+  }
+};
+
+window.openDashboardWorkspace = function() {
+  if (window.currentUser?.role !== 'admin') return;
+  const adminCenter = document.getElementById('admin-control-center');
+  const dashboard = document.getElementById('dashboard-shell');
+  if (adminCenter) adminCenter.style.display = 'none';
+  if (dashboard) dashboard.style.display = '';
+  window.switchTab('projects', 'Projects Directory');
+};
+
+window.returnToAdminCenter = function() { window.showRoleHome(); };
 
 window.getYouTubeId = function(link) {
   if (!link || typeof link !== 'string') return null;
@@ -21,18 +72,15 @@ window.showSuccess = function(message) {
 // On load
 document.addEventListener('DOMContentLoaded', async () => {
   // Check and apply theme on load
-  if (localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark-theme');
-    const btn = document.getElementById('theme-toggle');
-    if (btn) btn.textContent = '☀️';
-  }
+  if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-theme');
+  window.updateThemeControls();
 
   const authenticated = await window.checkAuthStatus();
   if (authenticated) {
     await loadProjects();
-    await renderProjectsDirectoryUI();
+    if (window.currentUser?.role !== 'admin') await renderProjectsDirectoryUI();
   }
-  window.restoreActiveTab();
+  if (authenticated) await window.showRoleHome();
   setTimeout(initializeCustomSelects, 100);
 });
 
@@ -58,12 +106,19 @@ window.handleAdminLogin = async function() {
     });
     const data = await res.json();
     if (res.ok && data.success) {
-      localStorage.setItem('adminToken', data.token);
+      localStorage.setItem('dashboardToken', data.token);
+      localStorage.removeItem('adminToken');
+      window.applyCurrentUser(data.user);
       const overlay = document.getElementById('login-overlay');
       if (overlay) overlay.style.display = 'none';
-      window.showSuccess('Welcome, Administrator!');
-      await window.loadProjects();
-      window.renderProjectsDirectoryUI();
+      if (typeof window.showSuccess === 'function') window.showSuccess(`Welcome, ${data.user.username}!`);
+      try {
+        if (typeof window.loadProjects === 'function') await window.loadProjects();
+        if (data.user.role !== 'admin' && typeof window.renderProjectsDirectoryUI === 'function') await window.renderProjectsDirectoryUI();
+        await window.showRoleHome();
+      } catch (postLoginErr) {
+        console.warn('[LOGIN] Post-login UI load warning:', postLoginErr);
+      }
     } else {
       if (errorDiv) {
         errorDiv.textContent = data.error || 'Invalid credentials';
@@ -82,7 +137,7 @@ window.handleAdminLogin = async function() {
 };
 
 window.checkAuthStatus = async function() {
-  const token = localStorage.getItem('adminToken');
+  const token = localStorage.getItem('dashboardToken') || localStorage.getItem('adminToken');
   const overlay = document.getElementById('login-overlay');
   if (!token) {
     if (overlay) overlay.style.display = 'flex';
@@ -94,10 +149,14 @@ window.checkAuthStatus = async function() {
     });
     const data = await res.json();
     if (data.authenticated) {
+      if (token && !localStorage.getItem('dashboardToken')) localStorage.setItem('dashboardToken', token);
+      window.applyCurrentUser(data.user);
       if (overlay) overlay.style.display = 'none';
       return true;
     } else {
+      localStorage.removeItem('dashboardToken');
       localStorage.removeItem('adminToken');
+      window.applyCurrentUser(null);
       if (overlay) overlay.style.display = 'flex';
       return false;
     }
@@ -107,11 +166,155 @@ window.checkAuthStatus = async function() {
   }
 };
 
-window.handleLogout = function() {
+window.handleLogout = async function() {
+  const token = localStorage.getItem('dashboardToken');
+  if (token) await nativeFetch('/api/auth/logout', { method: 'POST', headers: { Authorization: `Bearer ${token}` } }).catch(() => {});
+  localStorage.removeItem('dashboardToken');
   localStorage.removeItem('adminToken');
+  window.applyCurrentUser(null);
   const overlay = document.getElementById('login-overlay');
   if (overlay) overlay.style.display = 'flex';
   window.showSuccess('Logged out successfully');
+};
+
+window.escapeHtml = function(value) {
+  const node = document.createElement('div');
+  node.textContent = String(value ?? '');
+  return node.innerHTML;
+};
+
+window.loadDashboardUsers = async function() {
+  if (window.currentUser?.role !== 'admin') return;
+  const list = document.getElementById('admin-user-list');
+  const count = document.getElementById('admin-user-count');
+  if (!list) return;
+  list.innerHTML = '<div class="empty-state">Loading workspace users…</div>';
+  try {
+    const response = await fetch('/api/admin/users');
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Unable to load users.');
+    const users = data.users || [];
+    if (count) count.textContent = users.length;
+    const overviewCount = document.getElementById('admin-overview-user-count');
+    if (overviewCount) overviewCount.textContent = users.length;
+    list.innerHTML = users.map(user => `
+      <article class="admin-user-row">
+        <div class="admin-user-avatar">${window.escapeHtml(user.username).slice(0, 1).toUpperCase()}</div>
+        <div class="admin-user-identity">
+          <strong>${window.escapeHtml(user.username)}</strong>
+          <span>${user.role === 'admin' ? 'Administrator' : 'Dashboard user'} · Added ${new Date(user.createdAt).toLocaleDateString()}</span>
+        </div>
+        <span class="admin-role-badge ${user.role}">${user.role === 'admin' ? 'Admin' : 'User'}</span>
+        ${user.username.toLowerCase() === window.currentUser.username.toLowerCase() ? '<span class="admin-current-user">Current</span>' : `<button class="admin-delete-user" type="button" onclick="window.deleteDashboardUser('${encodeURIComponent(user.username)}')" aria-label="Remove ${window.escapeHtml(user.username)}">Remove</button>`}
+      </article>`).join('') || '<div class="empty-state">No user accounts found.</div>';
+  } catch (error) {
+    list.innerHTML = `<div class="empty-state">${window.escapeHtml(error.message || 'Unable to load users.')}</div>`;
+  }
+};
+
+window.createDashboardUser = async function() {
+  const username = document.getElementById('new-user-username')?.value.trim();
+  const password = document.getElementById('new-user-password')?.value || '';
+  const role = document.getElementById('new-user-role')?.value || 'user';
+  const message = document.getElementById('admin-user-error');
+  if (message) message.textContent = '';
+  try {
+    const response = await fetch('/api/admin/users', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password, role })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Unable to add user.');
+    document.getElementById('admin-user-form')?.reset();
+    window.showSuccess(`User ${data.user.username} added.`);
+    await window.loadDashboardUsers();
+  } catch (error) {
+    if (message) message.textContent = error.message || 'Unable to add user.';
+  }
+};
+
+window.deleteDashboardUser = async function(encodedUsername) {
+  const username = decodeURIComponent(encodedUsername);
+  if (!window.confirm(`Remove ${username}'s dashboard access?`)) return;
+  try {
+    const response = await fetch(`/api/admin/users/${encodeURIComponent(username)}`, { method: 'DELETE' });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Unable to remove user.');
+    window.showSuccess(`User ${username} removed.`);
+    await window.loadDashboardUsers();
+  } catch (error) { window.showSuccess(error.message || 'Unable to remove user.'); }
+};
+
+window.loadAdminProjects = async function() {
+  if (window.currentUser?.role !== 'admin') return;
+  const list = document.getElementById('admin-project-list');
+  const count = document.getElementById('admin-overview-project-count');
+  if (!list) return;
+  list.innerHTML = '<div class="empty-state">Loading projects…</div>';
+  try {
+    const [projectResponse, userResponse] = await Promise.all([fetch('/api/projects'), fetch('/api/admin/users')]);
+    const data = await projectResponse.json();
+    const userData = await userResponse.json();
+    if (!projectResponse.ok) throw new Error(data.error || 'Unable to load projects.');
+    if (!userResponse.ok) throw new Error(userData.error || 'Unable to load users.');
+    const projects = data.allProjects || [];
+    const assignableUsers = (userData.users || []).filter(user => user.role === 'user');
+    if (count) count.textContent = projects.length;
+    list.innerHTML = projects.length ? projects.map(project => `
+      <article class="admin-project-row">
+        <div class="admin-project-icon">⚡</div>
+        <div class="admin-project-details"><strong>${window.escapeHtml(project.name)}</strong><span>${window.escapeHtml(project.industry || 'Business intelligence')} · ${project.competitorCount || 0} competitors · ${project.postCount || 0} posts</span>${project.assignedTo?.length ? `<div class="project-assignees">${project.assignedTo.map(username => `<span class="project-assignee">${window.escapeHtml(username)} <button type="button" onclick="window.unassignProject('${encodeURIComponent(username)}','${encodeURIComponent(project.url)}')" aria-label="Unassign ${window.escapeHtml(username)}">×</button></span>`).join('')}</div>` : '<span class="project-unassigned">Not assigned to a user</span>'}</div>
+        <div class="admin-project-actions"><div class="project-assignment-control"><select id="project-assignee-${project.id}" aria-label="Assign ${window.escapeHtml(project.name)}">${assignableUsers.length ? `<option value="">Assign to user…</option>${assignableUsers.map(user => `<option value="${window.escapeHtml(user.username)}">${window.escapeHtml(user.username)}</option>`).join('')}` : '<option value="">Create a dashboard user first</option>'}</select><button class="btn btn-secondary" type="button" ${assignableUsers.length ? '' : 'disabled'} onclick="window.assignProject('${encodeURIComponent(project.url)}','project-assignee-${project.id}')">Assign</button></div><button class="btn btn-secondary" type="button" onclick="window.openAdminProject('${encodeURIComponent(project.url)}')">Open</button><button class="admin-delete-user" type="button" onclick="window.deleteAdminProject('${encodeURIComponent(project.url)}')">Remove</button></div>
+      </article>`).join('') : '<div class="empty-state">No saved projects found.</div>';
+  } catch (error) {
+    list.innerHTML = `<div class="empty-state">${window.escapeHtml(error.message || 'Unable to load projects.')}</div>`;
+  }
+};
+
+window.assignProject = async function(encodedUrl, selectId) {
+  const username = document.getElementById(selectId)?.value;
+  if (!username) return window.showSuccess('Select a dashboard user first.');
+  try {
+    const response = await fetch(`/api/admin/users/${encodeURIComponent(username)}/projects`, {
+      method: 'PUT', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ projectUrl: decodeURIComponent(encodedUrl) })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Unable to assign project.');
+    window.showSuccess(`Project assigned to ${username}.`);
+    await window.loadAdminProjects();
+  } catch (error) { window.showSuccess(error.message || 'Unable to assign project.'); }
+};
+
+window.unassignProject = async function(encodedUsername, encodedUrl) {
+  const username = decodeURIComponent(encodedUsername);
+  try {
+    const response = await fetch(`/api/admin/users/${encodeURIComponent(username)}/projects?projectUrl=${encodeURIComponent(decodeURIComponent(encodedUrl))}`, { method: 'DELETE' });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Unable to unassign project.');
+    window.showSuccess(`Project unassigned from ${username}.`);
+    await window.loadAdminProjects();
+  } catch (error) { window.showSuccess(error.message || 'Unable to unassign project.'); }
+};
+
+window.openAdminProject = async function(encodedUrl) {
+  const url = decodeURIComponent(encodedUrl);
+  await window.selectProject(url, true);
+  window.openDashboardWorkspace();
+  window.switchTab('details', 'Project Details & Review');
+};
+
+window.deleteAdminProject = async function(encodedUrl) {
+  const url = decodeURIComponent(encodedUrl);
+  if (!window.confirm('Permanently remove this project and its saved intelligence?')) return;
+  try {
+    const response = await fetch(`/api/memory?url=${encodeURIComponent(url)}`, { method: 'DELETE' });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || 'Unable to remove project.');
+    if (window.activeProjectUrl === url) window.activeProjectUrl = null;
+    window.showSuccess('Project removed.');
+    await Promise.all([window.loadAdminProjects(), window.renderProjectsDirectoryUI()]);
+  } catch (error) { window.showSuccess(error.message || 'Unable to remove project.'); }
 };
 
 window.renderProjectsDirectoryUI = async function() {
@@ -126,6 +329,8 @@ window.renderProjectsDirectoryUI = async function() {
     const res = await fetch('/api/projects');
     const data = await res.json();
     const projects = data.allProjects || [];
+    const assignedProjects = projects.filter(project => project.assigned);
+    const otherProjects = projects.filter(project => !project.assigned);
     
     if (projects.length === 0) {
       yourGrid.innerHTML = '<div class="empty-state">No active projects found. Click "Start New Analysis" above to analyze a website.</div>';
@@ -135,21 +340,22 @@ window.renderProjectsDirectoryUI = async function() {
       return;
     }
     
-    if (yourCount) yourCount.textContent = projects.length;
-    if (allCount) allCount.textContent = projects.length;
+    if (yourCount) yourCount.textContent = assignedProjects.length;
+    if (allCount) allCount.textContent = otherProjects.length;
     
-    let html = '';
-    projects.forEach(p => {
+    const renderProjectCards = (items, emptyMessage) => {
+      if (!items.length) return `<div class="empty-state">${emptyMessage}</div>`;
+      return items.map(p => {
       const isCurrentActive = p.url === window.activeProjectUrl;
-      html += `
+      return `
         <div class="project-card ${isCurrentActive ? 'active' : ''}" style="${isCurrentActive ? 'border-color: var(--primary); background: rgba(99, 102, 241, 0.05);' : ''}">
           <div class="project-card-header">
             <div class="project-card-icon">⚡</div>
             <div style="flex: 1; min-width: 0;">
-              <div class="project-card-title">${p.name}</div>
-              <a href="${p.url}" target="_blank" class="project-card-url">${p.url}</a>
+              <div class="project-card-title">${window.escapeHtml(p.name)}</div>
+              <a href="${window.escapeHtml(p.url)}" target="_blank" rel="noopener" class="project-card-url">${window.escapeHtml(p.url)}</a>
             </div>
-            ${isCurrentActive ? '<span class="badge" style="background: rgba(34, 197, 94, 0.2); color: #22c55e; font-size: 11px; padding: 2px 8px; border-radius: 10px;">Active</span>' : ''}
+            ${isCurrentActive ? '<span class="badge" style="background: rgba(34, 197, 94, 0.2); color: #22c55e; font-size: 11px; padding: 2px 8px; border-radius: 10px;">Active</span>' : (p.assigned ? '<span class="badge project-assigned-badge">Assigned</span>' : '')}
           </div>
           <div class="project-card-stats">
             <div class="project-stat-item">
@@ -162,15 +368,16 @@ window.renderProjectsDirectoryUI = async function() {
             </div>
           </div>
           <div style="display: flex; gap: 8px; margin-top: 12px;">
-            <button class="btn btn-primary" style="flex: 1; padding: 10px; font-size: 13px;" onclick="window.selectProject('${p.url}', true); window.switchTab('details', 'Project Details & Review');">
+            <button class="btn btn-primary" style="flex: 1; padding: 10px; font-size: 13px;" onclick="window.selectProject(decodeURIComponent('${encodeURIComponent(p.url)}'), true); window.switchTab('details', 'Project Details & Review');">
               Open Intelligence Workspace
             </button>
           </div>
         </div>
       `;
-    });
-    yourGrid.innerHTML = html;
-    allGrid.innerHTML = html;
+      }).join('');
+    };
+    yourGrid.innerHTML = renderProjectCards(assignedProjects, 'No projects have been assigned to you yet.');
+    allGrid.innerHTML = renderProjectCards(otherProjects, 'No other projects found.');
   } catch(e) {
     console.error("Failed to render projects directory UI", e);
   }
@@ -314,14 +521,36 @@ function initializeCustomSelects() {
 }
 
 // Theme Toggle
+window.updateThemeControls = () => {
+  const isDark = document.body.classList.contains('dark-theme');
+  document.querySelectorAll('#theme-toggle, #admin-theme-toggle').forEach(btn => {
+    btn.textContent = isDark ? '☀️' : '🌙';
+    btn.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+  });
+};
+
 window.toggleTheme = () => {
   document.body.classList.toggle('dark-theme');
-  const isDark = document.body.classList.contains('dark-theme');
-  localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  
-  const btn = document.getElementById('theme-toggle');
-  if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+  window.updateThemeControls();
 };
+
+window.closeNavigation = () => {
+  document.body.classList.remove('nav-open');
+  const toggle = document.getElementById('nav-toggle');
+  if (toggle) toggle.setAttribute('aria-expanded', 'false');
+};
+
+window.toggleNavigation = () => {
+  const opening = !document.body.classList.contains('nav-open');
+  document.body.classList.toggle('nav-open', opening);
+  const toggle = document.getElementById('nav-toggle');
+  if (toggle) toggle.setAttribute('aria-expanded', String(opening));
+};
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 860) window.closeNavigation();
+});
 
 const TAB_TITLES = {
   'analyse': 'New Analysis',
@@ -347,6 +576,10 @@ window.restoreActiveTab = function() {
 
 // ---- Tab Switching ----
 window.switchTab = function(name, title) {
+  window.closeNavigation();
+  // New workspace sections should always open at their heading. This prevents
+  // a long form or feed from leaving the next section halfway down the page.
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   const navEl = document.getElementById('nav-' + name);
   if (navEl && navEl.classList.contains('disabled')) return;
 
@@ -481,7 +714,7 @@ window.selectProject = function(url, autoSwitchTab = false) {
     return;
   }
 
-  if (deleteBtn) deleteBtn.style.display = 'block';
+  if (deleteBtn) deleteBtn.style.display = window.currentUser?.role === 'admin' ? 'block' : 'none';
 
   // Enable tabs
   document.querySelectorAll('.sidebar-nav .nav-item').forEach(el => {
@@ -660,6 +893,7 @@ window.saveProjectDetails = async function() {
 };
 
 window.deleteProjectDetails = async function() {
+  if (window.currentUser?.role !== 'admin') return;
   if (!window.activeProjectUrl) return;
   if (!confirm("Are you sure you want to permanently delete this business analysis? This cannot be undone.")) return;
 
@@ -993,14 +1227,14 @@ async function loadCompetitorsUI(isLivePartial = false) {
           </div>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 8px; background: rgba(0,0,0,0.15); padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border);">
+        <section class="competitor-product-summary" aria-label="Common products">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-            <span style="color: #818cf8; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
+            <span class="competitor-product-label">
               📦 Common Products (${commonProds.length})
             </span>
             ${(c.evidenceUrls && c.evidenceUrls.length > 0) ? `
               <div style="font-size: 12px; display: flex; align-items: center; gap: 6px;">
-                <select class="replaced" onchange="if(this.value) window.open(this.value, '_blank')" style="padding: 4px 8px; font-size: 11px; border-radius: 6px; border: 1px solid var(--border); background: var(--background); color: var(--text); outline: none; cursor: pointer;">
+                <select class="replaced competitor-product-select" onchange="if(this.value) window.open(this.value, '_blank')">
                   <option value="">Product Pages...</option>
                   ${c.evidenceUrls.filter(u => u.url).map(u => `<option value="${u.url.startsWith('http') ? u.url : 'https://' + u.url}">${u.title}</option>`).join('')}
                 </select>
@@ -1008,13 +1242,13 @@ async function loadCompetitorsUI(isLivePartial = false) {
             ` : ''}
           </div>
 
-          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+          <div class="competitor-product-chips">
             ${commonProds.length > 0 
-              ? commonProds.map(p => `<span style="background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(99, 102, 241, 0.3); color: #a5b4fc; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">🏷️ ${p}</span>`).join('') 
-              : `<span style="color: var(--text-muted); font-size: 12px; font-style: italic;">No specific product matches recorded</span>`
+              ? commonProds.map(p => `<span class="competitor-product-chip">🏷️ ${p}</span>`).join('') 
+              : `<span class="competitor-product-empty">No specific product matches recorded</span>`
             }
           </div>
-        </div>
+        </section>
 
         ${c.whyCompetitor ? `
         <div style="font-size: 13px; color: var(--text-muted); background: var(--background); padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border); line-height: 1.6; margin: 0;">
@@ -1648,29 +1882,45 @@ async function loadFeedUI() {
     const fbPosts = [];
     const liPosts = [];
 
+    const seenKeys = new Set();
+
     feed.forEach(rawPost => {
       let post = {
         ...rawPost,
-        link: rawPost.link || rawPost.postUrl || '',
+        link: rawPost.link || rawPost.post_url || rawPost.postUrl || '',
         content: rawPost.content || rawPost.caption || '',
-        mediaUrl: rawPost.mediaUrl || rawPost.mediaUrls || '',
+        mediaUrl: rawPost.mediaUrl || rawPost.mediaUrls || rawPost.thumbnail || rawPost.thumbnail_url || '',
         date: rawPost.date || rawPost.timestamp || 'Recent'
       };
-      let pLink = (post.link || '').toLowerCase();
+      let pLink = (post.link || '').trim();
+      let normLink = pLink.split('#')[0].replace(/\/+$/, '');
+      if (!pLink.includes('facebook.com') && !pLink.includes('fb.watch')) {
+        normLink = pLink.split('?')[0].split('#')[0].replace(/\/+$/, '');
+      }
+      if (pLink.includes('youtube.com') || pLink.includes('youtu.be')) {
+        let ytId = window.getYouTubeId(pLink) || window.getYouTubeId(post.content);
+        if (ytId) normLink = `https://www.youtube.com/watch?v=${ytId}`;
+      }
+
+      let compKey = String(post.company || post.competitorName || 'Competitor').trim().toLowerCase();
+      let pName = String(post.platform || 'Social Feed').trim().toLowerCase();
+      let dedupKey = `${pName}_${compKey}_${normLink.toLowerCase()}`;
+      if (seenKeys.has(dedupKey)) return;
+      seenKeys.add(dedupKey);
+
+      let pLinkLower = pLink.toLowerCase();
       let pMedia = (post.mediaUrl || '').toLowerCase();
       let rawContent = (post.content || '');
       let ytVidId = window.getYouTubeId(post.link || '') || window.getYouTubeId(post.mediaUrl || '') || window.getYouTubeId(rawContent);
 
-      let pName = String(post.platform || 'Social Feed').trim().toLowerCase();
-
-      if (ytVidId || pName.includes('youtube') || pLink.includes('youtube.com') || pLink.includes('youtu.be')) {
-        ytPosts.push({ ...post, _detectedPlatform: 'YouTube', _ytId: ytVidId });
-      } else if (pName.includes('instagram') || pLink.includes('instagram.com') || pMedia.includes('cdninstagram') || pMedia.includes('instagram')) {
+      if (pLinkLower.includes('instagram.com') || (pName.includes('instagram') && !pLinkLower.includes('facebook.com'))) {
         igPosts.push({ ...post, _detectedPlatform: 'Instagram' });
-      } else if (pName.includes('facebook') || pLink.includes('facebook.com') || pMedia.includes('fbcdn')) {
+      } else if (pLinkLower.includes('facebook.com') || (pName.includes('facebook') && !pLinkLower.includes('instagram.com'))) {
         fbPosts.push({ ...post, _detectedPlatform: 'Facebook' });
-      } else if (pName.includes('linkedin') || pLink.includes('linkedin.com') || pMedia.includes('licdn')) {
+      } else if (pLinkLower.includes('linkedin.com') || pName.includes('linkedin')) {
         liPosts.push({ ...post, _detectedPlatform: 'LinkedIn' });
+      } else if (ytVidId || pLinkLower.includes('youtube.com') || pLinkLower.includes('youtu.be') || pName.includes('youtube')) {
+        ytPosts.push({ ...post, _detectedPlatform: 'YouTube', _ytId: ytVidId });
       }
     });
 
@@ -1694,8 +1944,8 @@ async function loadFeedUI() {
     
     if (!document.getElementById('media-lightbox')) {
       document.body.insertAdjacentHTML('beforeend', `
-        <div id="media-lightbox" onclick="if(event.target === this) this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(10, 15, 29, 0.95); z-index:999999; justify-content:center; align-items:center; backdrop-filter: blur(8px);">
-          <div style="position:absolute; top:20px; right:30px; color:white; font-size:36px; cursor:pointer; font-weight: 300; line-height: 1; z-index: 1000000;" onclick="document.getElementById('media-lightbox').style.display='none'">&times;</div>
+        <div id="media-lightbox" onclick="if(event.target === this) this.style.display='none'" class="media-lightbox" style="display:none;">
+          <button class="media-lightbox-close" type="button" aria-label="Close post preview" onclick="document.getElementById('media-lightbox').style.display='none'">&times;</button>
           <div id="media-lightbox-content" style="width: 100%; height: 100%; display:flex; justify-content:center; align-items:center; padding: 40px;"></div>
         </div>
       `);
@@ -1709,39 +1959,25 @@ async function loadFeedUI() {
 
       window.gridVideoFailed = function(el, platform, icon, encodedBg) {
         if (!el) return;
-        el.style.display = 'none';
-        const container = el.parentElement;
-        if (container) {
-          let bg = encodedBg ? decodeURIComponent(encodedBg) : 'linear-gradient(135deg, #1e293b, #0f172a)';
-          container.style.background = bg;
-          container.style.display = 'flex';
-          container.style.flexDirection = 'column';
-          container.style.alignItems = 'center';
-          container.style.justifyContent = 'center';
-          container.style.color = 'white';
-          container.style.padding = '12px';
-          container.innerHTML = `
-            <div style="width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 6px;">${icon || '🌐'}</div>
-            <span style="font-size:12px; font-weight:700; color: #ffffff;">${platform || 'Platform'}</span>
-            <span style="font-size:11px; color: rgba(255,255,255,0.8); margin-top: 2px;">Preview Post ↗</span>
-          `;
-        }
+        el.onerror = null;
+        let fallbackUrl = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop';
+        if (platform === 'LinkedIn') fallbackUrl = 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop';
+        else if (platform === 'Instagram') fallbackUrl = 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&auto=format&fit=crop';
+        else if (platform === 'YouTube') fallbackUrl = 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=800&auto=format&fit=crop';
+        el.src = window.getSocialMediaProxyUrl(fallbackUrl);
+        el.style.display = 'block';
       };
 
       window.getYouTubeId = function(str) {
         if (!str || typeof str !== 'string') return null;
         var match = str.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/)|vi\/)([\w-]{11})/i);
-        if (match) return match[1];
-        var vMatch = str.match(/v=([\w-]{11})/i);
-        return vMatch ? vMatch[1] : null;
+        return match ? match[1] : null;
       };
 
-      window.getYouTubeId = function(str) {
-        if (!str || typeof str !== 'string') return null;
-        var match = str.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/)|vi\/)([\w-]{11})/i);
-        if (match) return match[1];
-        var vMatch = str.match(/v=([\w-]{11})/i);
-        return vMatch ? vMatch[1] : null;
+      // Bump this when changing proxy behaviour so an old cached fallback SVG
+      // cannot hide a now-available signed social CDN image.
+      window.getSocialMediaProxyUrl = function(url) {
+        return `/api/proxy-media?url=${encodeURIComponent(url)}&mediaCache=2`;
       };
 
       window.extractSingleMediaUrl = function(post) {
@@ -1754,11 +1990,34 @@ async function loadFeedUI() {
         if (Array.isArray(post.mediaUrls)) candidates.push(...post.mediaUrls);
         if (typeof post.mediaUrl === 'string') candidates.push(...post.mediaUrl.split(','));
         if (typeof post.mediaUrls === 'string') candidates.push(...post.mediaUrls.split(','));
+        if (post.post_url) candidates.push(post.post_url);
+        if (post.link) candidates.push(post.link);
+
         for (let c of candidates) {
           if (!c || typeof c !== 'string') continue;
           let trimmed = c.trim();
           if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
-            return trimmed;
+            let lower = trimmed.toLowerCase();
+            let cstpMatch = lower.match(/cstp=mx(\d+)x(\d+)/);
+            if (cstpMatch && cstpMatch[1] && cstpMatch[2]) {
+              let w = parseInt(cstpMatch[1], 10);
+              let h = parseInt(cstpMatch[2], 10);
+              if (w > 0 && h > 0 && (w / h > 2.1)) {
+                continue;
+              }
+            }
+            if (lower.includes('p100x100') || lower.includes('p200x200') || lower.includes('p50x50') ||
+                lower.includes('p36x36') || lower.includes('p75x75') || lower.includes('p160x160') ||
+                lower.includes('p320x320') || lower.includes('s100x100') || lower.includes('s200x200') ||
+                lower.includes('s50x50') || lower.includes('s36x36') || lower.includes('s75x75') ||
+                lower.includes('profile_pic') || lower.includes('profile_photo') || lower.includes('avatar') ||
+                lower.includes('cover_photo') || lower.includes('profile_cover') || lower.includes('banner') ||
+                lower.includes('header') || lower.includes('rsrc.php') || lower.includes('emoji')) {
+              continue;
+            }
+            if (lower.includes('cdninstagram') || lower.includes('fbcdn') || lower.includes('fbsbx') || lower.includes('licdn') || lower.includes('ytimg') || lower.match(/\.(jpeg|jpg|png|gif|webp|svg|mp4)(\?|$)/i) || lower.includes('facebook.com') || lower.includes('linkedin.com') || lower.includes('instagram.com') || lower.includes('youtube.com') || lower.includes('youtu.be')) {
+              return lower.includes('instagram.com') ? trimmed.replace(/\/media\/?(\?.*)?$/i, '/') : trimmed;
+            }
           }
         }
         return null;
@@ -1778,11 +2037,27 @@ async function loadFeedUI() {
                          ((postLink && postLink.includes('/reel/')) || (url && url.includes('/reel/')) || mediaType === 'Video' || isVideo);
         const igReelSc = isIgReel ? ((postLink || url || '').match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/)?.[1]) : null;
 
-        const isDirectVideo = (url && (url.match(/\.(mp4|webm|ogg)(\?|$)/i) || url.includes('.mp4'))) ||
+        const liActId = (postLink || url || '').match(/activity-(\d+)/)?.[1] ||
+                        (postLink || url || '').match(/urn:li:(?:activity|ugcPost|share):(\d+)/)?.[1] ||
+                        ((postLink || url || '').includes('linkedin.com') ? (postLink || url || '').match(/(\d{18,19})/)?.[1] : null);
+
+        const isLiVid = (platform === 'LinkedIn' || (postLink && postLink.includes('linkedin.com'))) &&
+                        (mediaType === 'Video' || isVideo === true || (url && (url.includes('/playlist/vid/') || url.includes('video.licdn.com') || url.includes('.mp4'))));
+
+        const isDirectVideo = (url && (url.match(/\.(mp4|webm|ogg)(\?|$)/i) || url.includes('.mp4') || url.includes('/playlist/vid/'))) ||
                               (postLink && (postLink.includes('/reel/') || postLink.includes('/watch') || postLink.includes('/videos/')));
-        const isVideoMedia = isDirectVideo || (isVideo && (url.includes('.mp4') || mediaType === 'Video'));
+        const isVideoMedia = isDirectVideo || isLiVid || (isVideo && (url.includes('.mp4') || url.includes('/playlist/vid/') || mediaType === 'Video'));
+        const isFacebookVideo = (platform === 'Facebook' || (postLink && postLink.includes('facebook.com'))) &&
+                                (mediaType === 'Video' || isVideo || /\/(?:videos|reel|watch)\b/i.test(postLink || ''));
 
         let leftMediaHtml = '';
+
+        const isMediaUrl = function(u) {
+          if (!u || typeof u !== 'string' || !u.startsWith('http')) return false;
+          const lower = u.toLowerCase();
+          if (lower.includes('/posts/') || lower.includes('/profile.php') || lower.includes('/feed/update/') || lower.includes('/p/') || lower.includes('/reel/') || lower.includes('/media/?size=')) return false;
+          return lower.includes('fbcdn') || lower.includes('fbsbx') || lower.includes('cdninstagram') || lower.includes('licdn') || lower.includes('ytimg') || !!lower.match(/\.(jpeg|jpg|png|gif|webp|svg)(\?|$)/i) || lower.includes('unsplash');
+        };
 
         if (ytId) {
           leftMediaHtml = `
@@ -1793,33 +2068,96 @@ async function loadFeedUI() {
                 referrerpolicy="no-referrer-when-downgrade"
                 allowfullscreen></iframe>
             </div>`;
-        } else if (igReelSc) {
+        } else if (isIgReel || (platform === 'Instagram' && (isVideo || mediaType === 'Video'))) {
+          const igTarget = (postLink && (postLink.includes('/p/') || postLink.includes('/reel/'))) ? postLink : ((url && (url.includes('/p/') || url.includes('/reel/'))) ? url : postLink || url);
+          if (igTarget) {
+            leftMediaHtml = `
+              <div style="width: 100%; height: 100%; background: #080d1a; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+                <iframe src="/api/instagram-embed?url=${encodeURIComponent(igTarget)}" 
+                  style="width: 100%; height: 100%; border: 0; background: #080d1a;" 
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
+                  allowfullscreen scrolling="no"></iframe>
+                <a href="${igTarget}" target="_blank" rel="noopener noreferrer" style="position:absolute; right:14px; bottom:14px; z-index:2; padding:8px 12px; border-radius:6px; background:rgba(8,13,26,.86); color:#fff; font-size:12px; font-weight:700; text-decoration:none; border:1px solid rgba(255,255,255,.22);">Open on Instagram ↗</a>
+              </div>`;
+          }
+        } else if (isFacebookVideo && postLink) {
+          const fbEmbedUrl = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(postLink)}&show_text=false&width=720`;
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: #080d1a; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+              <iframe src="${fbEmbedUrl}" style="width:100%; height:100%; border:0; background:#080d1a;" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen scrolling="no"></iframe>
+              <a href="${postLink}" target="_blank" rel="noopener noreferrer" style="position:absolute; right:14px; bottom:14px; z-index:2; padding:8px 12px; border-radius:6px; background:rgba(8,13,26,.86); color:#fff; font-size:12px; font-weight:700; text-decoration:none; border:1px solid rgba(255,255,255,.22);">Open on Facebook ↗</a>
+            </div>`;
+        } else if (isLiVid && liActId) {
           leftMediaHtml = `
             <div style="width: 100%; height: 100%; background: #000; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; border-radius: 8px;">
-              <iframe src="https://www.instagram.com/reel/${igReelSc}/embed/" 
+              <iframe src="/api/linkedin-embed-player?id=${liActId}" 
                 style="width: 100%; height: 100%; border: 0; background: #000;" 
                 allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
                 allowfullscreen 
                 scrolling="no"></iframe>
             </div>`;
-        } else if (isVideoMedia && url && url.match(/\.(mp4|webm|ogg)$/i)) {
-          let videoSrc = url.startsWith('http') ? `/api/proxy-media?url=${encodeURIComponent(url)}` : url;
-          leftMediaHtml = `<video src="${videoSrc}" controls autoplay style="max-height:100%; max-width:100%; object-fit: contain; background: #000;"></video>`;
-        } else if (url && url.startsWith('http') && !url.match(/\.(mp4|webm|ogg)(\?|$)/i)) {
-          let imgSrc = `/api/proxy-media?url=${encodeURIComponent(url)}`;
-          leftMediaHtml = `<img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);" onerror="this.onerror=null; this.parentElement.innerHTML=\`<div style='text-align:center; padding:40px; color:var(--text);'><div style='font-size:54px; margin-bottom:16px;'>${platformMeta[platform]?.icon || '🌐'}</div><h3 style='margin:0 0 8px 0;'>${authorName}</h3><p style='color:var(--text-muted); margin-bottom:20px;'>Official ${platform} Content</p><a href='${postLink}' target='_blank' style='background:${platformColor || '#3b82f6'}; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold;'>View Original Post ↗</a></div>\`;" />`;
+        } else if (isVideoMedia && (url || postLink)) {
+          let mediaTarget = (isLiVid && postLink && (postLink.includes('activity-') || postLink.includes('linkedin.com'))) ? postLink : url;
+          let videoSrc = window.getSocialMediaProxyUrl(mediaTarget);
+          leftMediaHtml = `<video src="${videoSrc}" controls autoplay preload="auto" playsinline style="width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;"></video>`;
+        } else if (isMediaUrl(url)) {
+          let imgSrc = window.getSocialMediaProxyUrl(url);
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px;">
+              <div style="position: absolute; top: 16px; left: 16px; background: rgba(59, 130, 246, 0.9); color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+                ${platformMeta[platform]?.icon || '📷'} ${platform || 'Media'}
+              </div>
+              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);" onerror="this.onerror=null; this.parentElement.innerHTML=\`<div style='text-align:center; padding:40px; color:#ffffff;'><div style='font-size:64px; margin-bottom:16px;'>${platformMeta[platform]?.icon || '🌐'}</div><h3 style='margin:0 0 8px 0;'>${authorName}</h3><p style='color:#94a3b8; margin-bottom:24px;'>Official ${platform} Content</p><a href='${postLink || url}' target='_blank' style='background:${platformColor || '#3b82f6'}; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold;'>View Original Post ↗</a></div>\`;" />
+            </div>`;
+        } else if (platform === 'Instagram' || (postLink && postLink.includes('instagram.com')) || (url && url.includes('instagram.com'))) {
+          const igTarget = (postLink && (postLink.includes('/p/') || postLink.includes('/reel/'))) ? postLink : ((url && (url.includes('/p/') || url.includes('/reel/'))) ? url : postLink || url);
+          if (igTarget) {
+            leftMediaHtml = `
+              <div style="width: 100%; height: 100%; background: #080d1a; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+                <iframe src="/api/instagram-embed?url=${encodeURIComponent(igTarget)}" 
+                  style="width: 100%; height: 100%; border: 0; background: #080d1a;" 
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
+                  allowfullscreen scrolling="no"></iframe>
+                <a href="${igTarget}" target="_blank" rel="noopener noreferrer" style="position:absolute; right:14px; bottom:14px; z-index:2; padding:8px 12px; border-radius:6px; background:rgba(8,13,26,.86); color:#fff; font-size:12px; font-weight:700; text-decoration:none; border:1px solid rgba(255,255,255,.22);">Open on Instagram ↗</a>
+              </div>`;
+          } else {
+            leftMediaHtml = `
+              <div style="width: 100%; height: 100%; background: #1f0516; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px;">
+                <div style="width: 88px; height: 88px; border-radius: 50%; background: rgba(225, 48, 108, 0.15); border: 2px solid rgba(225, 48, 108, 0.4); display: flex; align-items: center; justify-content: center; font-size: 44px; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(225, 48, 108, 0.2);">
+                  📸
+                </div>
+                <h3 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin: 0 0 8px 0;">${authorName}</h3>
+                <p style="font-size: 0.95rem; color: #94a3b8; margin: 0 0 24px 0;">Official Instagram Social Activity</p>
+                ${(postLink || url) ? `<a href="${postLink || url}" target="_blank" rel="noopener noreferrer" style="background: #e1306c; color: white; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px;">
+                  <span>View Original Post on Instagram</span> ↗
+                </a>` : ''}
+              </div>`;
+          }
+        } else if (platform === 'Facebook' || (postLink && postLink.includes('facebook.com'))) {
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: #0b0f19; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px;">
+              <div style="width: 88px; height: 88px; border-radius: 50%; background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.4); display: flex; align-items: center; justify-content: center; font-size: 44px; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);">
+                📘
+              </div>
+              <h3 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin: 0 0 8px 0;">${authorName}</h3>
+              <p style="font-size: 0.95rem; color: #94a3b8; margin: 0 0 24px 0;">Official Facebook Social Update</p>
+              ${(postLink || url) ? `<a href="${postLink || url}" target="_blank" rel="noopener noreferrer" style="background: #1877f2; color: white; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px;">
+                <span>View Original Post on Facebook</span> ↗
+              </a>` : ''}
+            </div>`;
         } else {
           const platformIcons = { Facebook: '📘', Instagram: '📸', LinkedIn: '💼', YouTube: '▶️' };
           const icon = platformIcons[platform] || '🌐';
+          const targetUrl = postLink || url || '';
           leftMediaHtml = `
-            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px;">
-              <div style="width: 80px; height: 80px; border-radius: 50%; background: ${platformColor || '#3b82f6'}22; border: 1px solid ${platformColor || '#3b82f6'}44; display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 20px;">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; width: 100%; height: 100%; background: #0b0f19;">
+              <div style="width: 88px; height: 88px; border-radius: 50%; background: ${platformColor || '#3b82f6'}22; border: 1px solid ${platformColor || '#3b82f6'}44; display: flex; align-items: center; justify-content: center; font-size: 44px; margin-bottom: 24px; box-shadow: 0 8px 24px ${platformColor || '#3b82f6'}33;">
                 ${icon}
               </div>
-              <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin: 0 0 8px 0;">${authorName}</h3>
-              <p style="font-size: 0.95rem; color: var(--text-muted); margin: 0 0 24px 0;">Official ${platform} Social Activity</p>
-              ${postLink ? `<a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: ${platformColor || '#3b82f6'}; color: white; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px;">
-                <span>View Original Post</span> ↗
+              <h3 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin: 0 0 8px 0;">${authorName}</h3>
+              <p style="font-size: 0.95rem; color: #94a3b8; margin: 0 0 24px 0;">Official ${platform} Social Activity</p>
+              ${targetUrl ? `<a href="${targetUrl}" target="_blank" rel="noopener noreferrer" style="background: ${platformColor || '#3b82f6'}; color: white; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px;">
+                <span>View Original Post on ${platform}</span> ↗
               </a>` : ''}
             </div>`;
         }
@@ -1829,23 +2167,23 @@ async function loadFeedUI() {
         let statsBar = (likesHtml || commentsHtml) ? `<div style="display:flex; gap:16px; font-size:0.85rem; color:#94a3b8; margin-top:6px; font-weight:600;">${likesHtml}${commentsHtml}</div>` : '';
 
         content.innerHTML = `
-          <div style="display: flex; flex-direction: row; width: 1100px; max-width: 92vw; height: 82vh; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7);">
+          <div class="post-preview-dialog">
             <!-- LEFT COLUMN: ACTUAL POST MEDIA (IMAGE / VIDEO) -->
-            <div style="flex: 1; background: #080d1a; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; padding: 20px;">
+            <div class="post-preview-media">
               ${leftMediaHtml}
             </div>
             <!-- RIGHT COLUMN: POST CAPTION & DETAILS -->
-            <div style="width: 420px; min-width: 340px; background: #172033; border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden;">
-              <div style="padding: 24px 20px 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start;">
+            <div class="post-preview-details">
+              <div class="post-preview-header">
                 <div>
-                  <div style="font-weight: 700; color: #ffffff; font-size: 1.15rem; line-height: 1.3;">${authorName}</div>
+                  <div class="post-preview-author">${authorName}</div>
                   <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">${displayDate}</div>
                   ${statsBar}
                 </div>
                 <span style="font-size: 0.65rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; background: ${platformColor || '#3b82f6'}; color: #ffffff; text-transform: uppercase; letter-spacing: 0.05em;">${platform || 'POST'}</span>
               </div>
-              <div class="feed-text" style="padding: 20px; overflow-y: auto; color: #cbd5e1; font-size: 0.95rem; line-height: 1.55; white-space: pre-wrap; flex: 1;">${rawText || 'No caption available for this post.'}</div>
-              ${postLink ? `<div style="padding: 20px; border-top: 1px solid var(--border); background: #111827;">
+              <div class="feed-text post-preview-caption">${rawText || 'No caption available for this post.'}</div>
+              ${postLink ? `<div class="post-preview-footer">
                 <a href="${postLink}" target="_blank" onclick="event.stopPropagation(); window.open(this.href, '_blank'); return false;" style="display: block; width: 100%; padding: 12px; background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 8px; text-align: center; font-size: 13px; font-weight: 700; color: #60a5fa; text-decoration: none;">View Original Post ↗</a>
               </div>` : ''}
             </div>
@@ -1886,13 +2224,17 @@ async function loadFeedUI() {
       let firstMediaUrl = window.extractSingleMediaUrl(post);
 
       const pLink = post.post_url || post.link || '';
-      const igScMatch = pLink.match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/) || (firstMediaUrl ? firstMediaUrl.match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/) : null);
-      if (igScMatch && igScMatch[1]) {
-        firstMediaUrl = `https://www.instagram.com/p/${igScMatch[1]}/media/?size=l`;
+      if (!firstMediaUrl && pLink) {
+        firstMediaUrl = pLink;
       }
 
       const isIgReelCard = (platform === 'Instagram' || post._detectedPlatform === 'Instagram') &&
                            (pLink.includes('/reel/') || post.media_type === 'Video' || post.mediaType === 'Video');
+
+      const isLiVidCard = (platform === 'LinkedIn' || post._detectedPlatform === 'LinkedIn') &&
+                          (post.media_type === 'Video' || post.mediaType === 'Video' || (firstMediaUrl && (firstMediaUrl.includes('/playlist/vid/') || firstMediaUrl.includes('video.licdn.com') || firstMediaUrl.includes('thumbnail-with-play-button'))));
+      const isFacebookVideoCard = (platform === 'Facebook' || post._detectedPlatform === 'Facebook') &&
+                                  (post.media_type === 'Video' || post.mediaType === 'Video' || /\/(?:videos|reel|watch)\b/i.test(pLink));
 
       if (ytVidId) {
         const ytThumb = `https://img.youtube.com/vi/${ytVidId}/hqdefault.jpg`;
@@ -1902,15 +2244,31 @@ async function loadFeedUI() {
             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
           </div>`;
       } else if (isIgReelCard && firstMediaUrl) {
-        let proxiedThumb = `/api/proxy-media?url=${encodeURIComponent(firstMediaUrl)}`;
+        let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
         cardThumbHtml = `
           <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 6px;">
             <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 4px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
             <div style="position:absolute; top:10px; right:10px; background:rgba(225,48,108,0.95); color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none;">📹 REEL</div>
             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(225,48,108,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
           </div>`;
+      } else if (isLiVidCard && firstMediaUrl) {
+        let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
+        cardThumbHtml = `
+          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 6px;">
+            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 4px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
+            <div style="position:absolute; top:10px; right:10px; background:rgba(10,102,194,0.95); color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none;">📹 VIDEO</div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(10,102,194,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
+          </div>`;
+      } else if (isFacebookVideoCard && firstMediaUrl) {
+        let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
+        cardThumbHtml = `
+          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 6px;">
+            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 4px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
+            <div style="position:absolute; top:10px; right:10px; background:rgba(24,119,242,.95); color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:.05em; box-shadow:0 2px 6px rgba(0,0,0,.5); pointer-events:none;">📹 VIDEO</div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(24,119,242,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.6);">▶</div>
+          </div>`;
       } else if (firstMediaUrl) {
-        let proxiedThumb = `/api/proxy-media?url=${encodeURIComponent(firstMediaUrl)}`;
+        let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
         cardThumbHtml = `
           <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; padding: 6px;">
             <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 4px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
@@ -1926,11 +2284,11 @@ async function loadFeedUI() {
 
       let displayContent = (post.caption || post.content || '').trim();
       if (!displayContent || displayContent === 'No caption' || displayContent === 'No caption.') {
-        displayContent = `${compName} - ${post.post_url || post.link || platform}`;
+        displayContent = platform === 'Facebook' ? 'No public caption is available for this Facebook post.' : `${compName} - ${post.post_url || post.link || platform}`;
       }
 
-      let mediaToOpen = (igScMatch && pLink) ? pLink : (firstMediaUrl || pLink);
-      let isMediaVidFlag = isIgReelCard || post.media_type === 'Video' || post.mediaType === 'Video' || (firstMediaUrl && (firstMediaUrl.includes('mp4') || firstMediaUrl.includes('webm')));
+      let isMediaVidFlag = isIgReelCard || isLiVidCard || isFacebookVideoCard || post.media_type === 'Video' || post.mediaType === 'Video' || (firstMediaUrl && (firstMediaUrl.includes('mp4') || firstMediaUrl.includes('webm')));
+      let mediaToOpen = firstMediaUrl || pLink;
       let likesVal = post.engagement?.likes || post.likes || '';
       let commentsVal = post.engagement?.comments || post.comments || '';
 
@@ -1945,7 +2303,7 @@ async function loadFeedUI() {
           </div>
           ${cardThumbHtml}
           <div style="white-space: pre-wrap; font-size: 0.82rem; line-height: 1.4; color: #94a3b8; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; margin-bottom: 10px; flex: 1;">${displayContent}</div>
-          ${post.link ? `<a href="${post.link}" target="_blank" onclick="event.stopPropagation(); window.open(this.href, '_blank'); window.focus(); return false;" style="display: block; text-align: left; font-size: 11px; font-weight: 600; color: #3b82f6; text-decoration: none; margin-top: auto; padding-top: 6px;">View Original Post ↗</a>` : ''}
+          <span style="display: block; text-align: left; font-size: 11px; font-weight: 600; color: #3b82f6; margin-top: auto; padding-top: 6px;">Preview Post In Dashboard ↗</span>
         </div>
       `;
     };

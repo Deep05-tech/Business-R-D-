@@ -20,5 +20,7 @@ PROJECT_CONTEXT.md
 diagnostic_report.md
 scratch/
 versions/
+backup/
+data/auth/
 
 

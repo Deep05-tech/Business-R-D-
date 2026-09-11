@@ -5,15 +5,31 @@ import os from 'os';
 import { fileURLToPath } from 'url';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
+import { rm } from 'node:fs/promises';
+import pLimit from 'p-limit';
 import { BingRssSearchEngine } from '../utils/bingRssSearchEngine.js';
 import { FreeSearchEngine } from '../utils/freeSearchEngine.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Chromium is the largest resource consumer in the tracker.  Keeping this
+// process-wide (rather than per agent instance) prevents concurrent callers
+// from competing over ChromeDriver or exhausting RAM/swap.
+const configuredBrowserConcurrency = Number(process.env.SOCIAL_BROWSER_CONCURRENCY || 1);
+const browserSessionLimit = pLimit(Number.isFinite(configuredBrowserConcurrency)
+    ? Math.max(1, Math.min(configuredBrowserConcurrency, 2))
+    : 1);
+
+export interface ExtractPostsOptions {
+    /** Use the low-cost HTTP/search route first; browser scraping remains a fallback. */
+    preferHttp?: boolean;
+}
+
 export class SocialExtractorAgent {
     private driver: WebDriver | null = null;
     private profilePath: string;
+    private browserProfilePaths: string[] = [];
 
     constructor() {
         this.profilePath = path.resolve(__dirname, '../../chrome_profile');
@@ -22,6 +38,7 @@ export class SocialExtractorAgent {
     private async initBrowser(platform: string) {
         const options = new chrome.Options();
         const tmpUserDataDir = path.join(os.tmpdir(), `chrome_user_data_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`);
+        this.browserProfilePaths = [tmpUserDataDir];
         if (process.env.PROXY_URL) {
             options.addArguments(`--proxy-server=${process.env.PROXY_URL}`);
         }
@@ -40,6 +57,7 @@ export class SocialExtractorAgent {
                 .forBrowser('chrome')
                 .setChromeOptions(options)
                 .build();
+            await this.driver.manage().setTimeouts({ implicit: 0, pageLoad: 15000, script: 15000 });
         } catch (err: any) {
             console.log(`[SocialExtractorAgent] Chrome initialization fallback: ${err.message}`);
             const fallbackOptions = new chrome.Options();
@@ -48,17 +66,26 @@ export class SocialExtractorAgent {
             fallbackOptions.addArguments('--disable-dev-shm-usage');
             fallbackOptions.addArguments(`--user-data-dir=${tmpUserDataDir}_fb`);
             fallbackOptions.addArguments('--remote-allow-origins=*');
+            this.browserProfilePaths.push(`${tmpUserDataDir}_fb`);
             this.driver = await new Builder()
                 .forBrowser('chrome')
                 .setChromeOptions(fallbackOptions)
                 .build();
+            await this.driver.manage().setTimeouts({ implicit: 0, pageLoad: 15000, script: 15000 });
         }
     }
 
     private async closeBrowser() {
-        if (this.driver) {
-            await this.driver.quit();
-            this.driver = null;
+        const driver = this.driver;
+        const profilePaths = this.browserProfilePaths;
+        this.driver = null;
+        this.browserProfilePaths = [];
+        try {
+            if (driver) await driver.quit();
+        } finally {
+            // Chrome creates substantial cache files in each temporary profile.
+            // Remove them after every session so a long tracker cannot fill disk.
+            await Promise.all(profilePaths.map(profilePath => rm(profilePath, { recursive: true, force: true }).catch(() => {})));
         }
     }
 
@@ -153,23 +180,66 @@ export class SocialExtractorAgent {
         const postUrl = String(post.post_url || post.postUrl || "").trim();
         if (!postUrl || !postUrl.startsWith("http")) return null;
 
+        let cleanPostUrl = postUrl;
         const lowerUrl = postUrl.toLowerCase();
+
         if (platform === "Instagram") {
             if (!lowerUrl.includes("instagram.com/")) return null;
             const isPostOrReel = lowerUrl.includes("/p/") || lowerUrl.includes("/reel/");
             if (!isPostOrReel) return null;
-            if (lowerUrl.includes("/reel/")) {
-                post.media_type = "Video";
-                post.mediaType = "Video";
+            const igSc = lowerUrl.match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/);
+            if (igSc && igSc[1]) {
+                const isReel = lowerUrl.includes("/reel/");
+                cleanPostUrl = `https://www.instagram.com/${isReel ? 'reel' : 'p'}/${igSc[1]}/`;
+                if (isReel) {
+                    post.media_type = "Video";
+                    post.mediaType = "Video";
+                }
             }
         }
-        if (platform === "LinkedIn" && !lowerUrl.includes("linkedin.com/")) return null;
-        if (platform === "Facebook" && !lowerUrl.includes("facebook.com/")) return null;
-        if (platform === "YouTube" && (!lowerUrl.includes("youtube.com/") && !lowerUrl.includes("youtu.be/"))) return null;
+        if (platform === "Facebook") {
+            if (!lowerUrl.includes("facebook.com/")) return null;
+            // Reject profile page links or directory list links
+            if (lowerUrl.match(/facebook\.com\/[a-z0-9._-]+\/?$/i)) return null;
+            if (lowerUrl.includes("facebook.com/profile.php?") && !lowerUrl.includes("story_fbid=") && !lowerUrl.includes("fbid=")) return null;
+            if (lowerUrl.endsWith("/videos/") || lowerUrl.endsWith("/videos") || lowerUrl.endsWith("/posts/") || lowerUrl.endsWith("/posts") || lowerUrl.endsWith("/photos/") || lowerUrl.endsWith("/photos")) return null;
+
+            const isFbSinglePost = lowerUrl.includes("/watch") || 
+                                  lowerUrl.includes("/reel/") || 
+                                  lowerUrl.includes("/share/p/") || 
+                                  lowerUrl.includes("/share/v/") || 
+                                  lowerUrl.includes("permalink.php") || 
+                                  lowerUrl.includes("story.php") || 
+                                  lowerUrl.includes("story_fbid=") || 
+                                  lowerUrl.includes("fbid=") || 
+                                  lowerUrl.includes("pfbid") || 
+                                  Boolean(lowerUrl.match(/\/posts\/[a-z0-9_-]+/i)) ||
+                                  Boolean(lowerUrl.match(/\/photos\/[a-z0-9_-]+/i)) ||
+                                  Boolean(lowerUrl.match(/\/photo\/?\?/i));
+            if (!isFbSinglePost) return null;
+            cleanPostUrl = postUrl.split('&__cft__')[0].split('&__tn__')[0].split('#')[0].replace(/\/+$/, '');
+        }
+        if (platform === "LinkedIn") {
+            if (!lowerUrl.includes("linkedin.com/")) return null;
+            const isLiPost = lowerUrl.includes("/posts/") || lowerUrl.includes("/feed/update/") || lowerUrl.includes("activity-");
+            if (!isLiPost) return null;
+            cleanPostUrl = postUrl.split('?')[0].split('#')[0].replace(/\/+$/, '');
+        }
+        if (platform === "YouTube") {
+            if (!lowerUrl.includes("youtube.com/") && !lowerUrl.includes("youtu.be/")) return null;
+            const ytMatch = lowerUrl.match(/(?:v=|\/vi\/|shorts\/)([\w-]{11})/);
+            if (!ytMatch || !ytMatch[1]) return null; // Reject generic youtube.com/watch without video ID
+            cleanPostUrl = `https://www.youtube.com/watch?v=${ytMatch[1]}`;
+            post._ytId = ytMatch[1];
+        }
 
         if (lowerUrl.includes("news") || lowerUrl.includes("tavily") || lowerUrl.includes("indiamart") || lowerUrl.includes("google.com/search")) {
             return null;
         }
+
+        post.post_url = cleanPostUrl;
+        post.postUrl = cleanPostUrl;
+        post.link = cleanPostUrl;
 
         const caption = String(post.caption || post.content || "").trim();
         const lowerCap = caption.toLowerCase();
@@ -305,17 +375,77 @@ export class SocialExtractorAgent {
         platform: "Instagram" | "LinkedIn" | "Facebook" | "YouTube",
         profileUrl: string,
         compName?: string,
-        maxPosts: number = 20
+        maxPosts: number = 20,
+        options: ExtractPostsOptions = {}
     ): Promise<any[]> {
-        // Fast HTTP / JSON-LD / API Extraction
+        // Daily tracking runs this route first. It avoids starting Chrome when
+        // a platform's public HTML or search result already has usable posts.
+        if (options.preferHttp) {
+            try {
+                const httpPosts = await this.extractPostsHttp(platform, profileUrl, compName, maxPosts);
+                if (httpPosts.length > 0) {
+                    console.log(`[SocialExtractorAgent] Fast HTTP/API extraction succeeded for ${platform} (${profileUrl}): ${httpPosts.length} posts.`);
+                    return httpPosts;
+                }
+            } catch (e: any) {
+                console.log(`[SocialExtractorAgent] Fast HTTP extraction attempt failed for ${platform}: ${e.message}`);
+            }
+        }
+
+        // 1. Primary Strategy: Open the profile page directly in the browser and scrape latest posts
+        if (profileUrl && profileUrl.startsWith("http")) {
+            let attempts = 0;
+            const maxAttempts = 2;
+            while (attempts < maxAttempts) {
+                try {
+                    attempts++;
+                    console.log(`[SocialExtractorAgent] Opening ${platform} profile page directly in browser: ${profileUrl}`);
+                    const rawData = await browserSessionLimit(async () => {
+                        await this.initBrowser(platform);
+                        try {
+                            if (platform === "Instagram") return await this.extractInstagram(profileUrl);
+                            if (platform === "LinkedIn") return await this.extractLinkedIn(profileUrl);
+                            if (platform === "Facebook") return await this.extractFacebook(profileUrl);
+                            return await this.extractYouTube(profileUrl);
+                        } finally {
+                            await this.closeBrowser();
+                        }
+                    });
+
+                    if (Array.isArray(rawData) && rawData.length > 0) {
+                        const seenUrls = new Set<string>();
+                        const validPosts: any[] = [];
+
+                        for (const item of rawData) {
+                            const validated = this.validateSocialPost({ ...item, competitorName: compName }, platform, profileUrl);
+                            if (validated && !seenUrls.has(validated.post_url)) {
+                                seenUrls.add(validated.post_url);
+                                validPosts.push(validated);
+                                if (validPosts.length >= maxPosts) break;
+                            }
+                        }
+
+                        if (validPosts.length > 0) {
+                            console.log(`[SocialExtractorAgent] Successfully scraped ${validPosts.length} latest posts directly from ${platform} profile page.`);
+                            return validPosts;
+                        }
+                    }
+                } catch (error: any) {
+                    console.log(`[SocialExtractorAgent] Browser profile scraping attempt ${attempts} failed for ${profileUrl}: ${error.message}`);
+                    await this.closeBrowser().catch(() => {});
+                }
+            }
+        }
+
+        // 2. Secondary Fallback: Fast HTTP / API / Search Extraction
         try {
             const httpPosts = await this.extractPostsHttp(platform, profileUrl, compName, maxPosts);
             if (httpPosts && httpPosts.length > 0) {
-                console.log(`[SocialExtractorAgent] Fast HTTP/JSON-LD extraction succeeded for ${platform} (${profileUrl}): ${httpPosts.length} posts.`);
+                console.log(`[SocialExtractorAgent] Fast HTTP/API extraction succeeded for ${platform} (${profileUrl}): ${httpPosts.length} posts.`);
                 return httpPosts;
             }
         } catch (e: any) {
-            console.log(`[SocialExtractorAgent] Fast HTTP extraction attempt failed: ${e.message}`);
+            console.log(`[SocialExtractorAgent] Fast HTTP extraction attempt failed for ${platform}: ${e.message}`);
         }
 
         if (platform === "YouTube") {
@@ -334,58 +464,7 @@ export class SocialExtractorAgent {
             }
         }
 
-        let attempts = 0;
-        const maxAttempts = 2; // Retry once on failure
-
-        let lastErrorMsg = "Unknown extraction error";
-
-        while (attempts < maxAttempts) {
-            try {
-                attempts++;
-                await this.initBrowser(platform);
-
-                let rawData: any = null;
-                if (platform === "Instagram") {
-                    rawData = await this.extractInstagram(profileUrl);
-                } else if (platform === "LinkedIn") {
-                    rawData = await this.extractLinkedIn(profileUrl);
-                } else if (platform === "Facebook") {
-                    rawData = await this.extractFacebook(profileUrl);
-                } else if (platform === "YouTube") {
-                    rawData = await this.extractYouTube(profileUrl);
-                }
-
-                await this.closeBrowser();
-
-                if (Array.isArray(rawData) && rawData.length > 0) {
-                    const seenUrls = new Set<string>();
-                    const validPosts: any[] = [];
-
-                    for (const item of rawData) {
-                        const validated = this.validateSocialPost({ ...item, competitorName: compName }, platform, profileUrl);
-                        if (validated && !seenUrls.has(validated.post_url)) {
-                            seenUrls.add(validated.post_url);
-                            validPosts.push(validated);
-                            if (validPosts.length >= maxPosts) break;
-                        }
-                    }
-
-                    if (validPosts.length > 0) {
-                        return validPosts;
-                    }
-                }
-            } catch (error: any) {
-                lastErrorMsg = error.message;
-                console.log(`[SocialExtractorAgent] extractPosts attempt ${attempts} failed for ${platform} (${profileUrl}): ${error.message}`);
-                await this.closeBrowser();
-                if (attempts < maxAttempts) {
-                    await new Promise(r => setTimeout(r, 1500));
-                }
-            }
-        }
-
-        console.log(`[SocialExtractorAgent] Selenium extraction failed for ${platform} (${profileUrl}) after ${maxAttempts} attempts: ${lastErrorMsg}. Trying HTTP/JSON-LD fallback...`);
-        return this.extractPostsHttp(platform, profileUrl, compName, maxPosts);
+        return [];
     }
 
     public async extractPostsHttp(
@@ -529,7 +608,7 @@ export class SocialExtractorAgent {
                 if (platform === "Instagram") {
                     query = `"${cleanCompName}" site:instagram.com/p/ OR site:instagram.com/reel/ OR site:instagram.com`;
                 } else if (platform === "Facebook") {
-                    query = `"${cleanCompName}" site:facebook.com/posts/ OR site:facebook.com/photos/ OR site:facebook.com/videos/ OR site:facebook.com/permalink.php OR site:facebook.com`;
+                    query = `"${cleanCompName}" site:facebook.com`;
                 } else if (platform === "LinkedIn") {
                     query = `"${cleanCompName}" site:linkedin.com/posts/ OR site:linkedin.com/feed/update/ OR site:linkedin.com/company/`;
                 } else if (platform === "YouTube") {
@@ -609,40 +688,6 @@ export class SocialExtractorAgent {
                 seenUrls.add(urlKey);
                 uniquePosts.push(p);
             }
-        }
-
-        // Fill remaining quota up to maxPosts with synthesized updates for this competitor & platform if needed
-        const targetCount = Math.min(maxPosts, 3);
-        const compTargetName = cleanCompName || "Competitor";
-        const fallbackBaseUrl = profileUrl && profileUrl.startsWith("http") ? profileUrl : `https://www.${platform.toLowerCase()}.com/`;
-
-        const fallbackCaptions = [
-            `${compTargetName} official ${platform} update: Highlighting latest engineering innovations and product offerings.`,
-            `${compTargetName} ${platform} post: Expanding industrial solutions and global market delivery.`,
-            `${compTargetName} recent news on ${platform}: Showcasing quality standards and customer support.`
-        ];
-
-        let fillIdx = 0;
-        while (uniquePosts.length < targetCount && fillIdx < fallbackCaptions.length) {
-            const postUrl = fallbackBaseUrl;
-            const captionText = fallbackCaptions[fillIdx];
-            uniquePosts.push({
-                id: `${platform.toLowerCase()}_syn_${Date.now()}_${fillIdx}_${Math.random().toString(36).substr(2, 4)}`,
-                company: compTargetName,
-                platform: platform as any,
-                post_url: postUrl,
-                caption: captionText,
-                media_type: platform === "YouTube" ? "Video" : "Image",
-                thumbnail: platform === "YouTube" && postUrl.includes("v=") ? `https://img.youtube.com/vi/${postUrl.split("v=")[1].split("&")[0]}/hqdefault.jpg` : "",
-                media_url: postUrl,
-                date: new Date().toISOString().split('T')[0],
-                engagement: { likes: "0", comments: "0" },
-                profile_url: fallbackBaseUrl,
-                link: postUrl,
-                content: captionText,
-                competitorName: compTargetName
-            });
-            fillIdx++;
         }
 
         const slice = uniquePosts.slice(0, maxPosts);
@@ -1110,15 +1155,16 @@ export class SocialExtractorAgent {
                     
                     var mediaType = "Text";
                     var mediaUrls = "";
-                    if (post.querySelector('video')) {
+                    var hasVideoContainer = post.querySelector('video, .update-components-linkedin-video__poster, [data-test-id*="video"], .feed-shared-linkedin-video');
+                    if (hasVideoContainer) {
                         mediaType = "Video";
                         var vid = post.querySelector('video');
                         var src = vid ? (vid.getAttribute('src') || "") : "";
                         if (src.indexOf('blob:') === 0) src = "";
                         mediaUrls = src || (vid ? (vid.getAttribute('poster') || "") : "");
                         if (!mediaUrls || mediaUrls.indexOf('blob:') === 0) {
-                             var img = post.querySelector('img.update-components-image__image, img.update-components-linkedin-video__poster, img');
-                             if (img) mediaUrls = img.getAttribute('data-delayed-url') || img.getAttribute('src') || "";
+                             var vImg = post.querySelector('img.update-components-linkedin-video__poster, img.update-components-image__image, img');
+                             if (vImg) mediaUrls = vImg.getAttribute('data-delayed-url') || vImg.getAttribute('src') || "";
                         }
                     } else if (post.querySelector('img')) {
                         var imgs = Array.prototype.slice.call(post.querySelectorAll('img.update-components-image__image, ul[data-test-id="feed-images-content"] img, [data-test-id="feed-images-content__list-item"] img, img.ivm-view-attr__img--centered, img'));
@@ -1130,7 +1176,10 @@ export class SocialExtractorAgent {
                             }
                         }
                         if (validImgs.length > 0) {
-                            mediaType = validImgs.length > 1 ? "Carousel" : "Image";
+                            var isVidMedia = validImgs.some(function(url) {
+                                return url.indexOf('/playlist/vid/') !== -1 || url.indexOf('thumbnail-with-play-button') !== -1;
+                            });
+                            mediaType = isVidMedia ? "Video" : (validImgs.length > 1 ? "Carousel" : "Image");
                             mediaUrls = validImgs.join(', ');
                         }
                     }
@@ -1229,7 +1278,17 @@ export class SocialExtractorAgent {
                 var text = (document.body && document.body.innerText) ? document.body.innerText.toLowerCase() : "";
                 if (text.indexOf("content isn't available") !== -1) return { isPrivate: true };
                 
-                var posts = document.querySelectorAll('div[role="article"], div.x1yzt10c, div.x1n2onr6');
+                var timelineUnits = Array.prototype.slice.call(document.querySelectorAll('div[data-pagelet*="TimelineFeedUnit"], div[data-pagelet*="ProfileTimeline"]'));
+                var posts = [];
+                if (timelineUnits.length > 0) {
+                    for (var t = 0; t < timelineUnits.length; t++) {
+                        var arts = Array.prototype.slice.call(timelineUnits[t].querySelectorAll('div[role="article"]'));
+                        for (var a = 0; a < arts.length; a++) posts.push(arts[a]);
+                    }
+                }
+                if (posts.length === 0) {
+                    posts = Array.prototype.slice.call(document.querySelectorAll('div[role="article"]'));
+                }
                 if (!posts || posts.length === 0) return null;
                 
                 var results = [];
@@ -1239,6 +1298,13 @@ export class SocialExtractorAgent {
                     if (results.length >= 20) break;
                     
                     var post = posts[i];
+                    
+                    // Exclude any post container located inside header, cover photo, actions, tabs, or intro card
+                    var ancestorPagelet = post.closest('[data-pagelet]');
+                    var ancestorName = ancestorPagelet ? (ancestorPagelet.getAttribute('data-pagelet') || "").toLowerCase() : "";
+                    if (ancestorName.indexOf('header') !== -1 || ancestorName.indexOf('intro') !== -1 || ancestorName.indexOf('cover') !== -1 || ancestorName.indexOf('actions') !== -1 || ancestorName.indexOf('tabs') !== -1 || ancestorName.indexOf('tilesfeed') !== -1) {
+                        continue;
+                    }
                     var postUrl = "";
                     var timestamp = "Recent";
                     var pageUrl = window.location.href.split('?')[0].replace(/\\/$/, '');
@@ -1315,32 +1381,95 @@ export class SocialExtractorAgent {
                             if (!mediaUrls) mediaUrls = vid.getAttribute('poster') || "";
                         }
                         
+                        var isProfileOrBanner = function(imgEl, urlStr) {
+                            if (!urlStr || typeof urlStr !== 'string') return true;
+                            var lower = urlStr.toLowerCase();
+                            var alt = (imgEl.getAttribute('alt') || '').toLowerCase();
+                            
+                            // Wide banner aspect ratio check (cstp=mxWxH)
+                            var cstpMatch = lower.match(/cstp=mx(\d+)x(\d+)/);
+                            if (cstpMatch && cstpMatch[1] && cstpMatch[2]) {
+                                var w = parseInt(cstpMatch[1], 10);
+                                var h = parseInt(cstpMatch[2], 10);
+                                if (w > 0 && h > 0 && (w / h > 2.1)) {
+                                    return true;
+                                }
+                            }
+
+                            if (lower.indexOf('p100x100') !== -1 || lower.indexOf('p200x200') !== -1 || lower.indexOf('p50x50') !== -1 || 
+                                lower.indexOf('p36x36') !== -1 || lower.indexOf('p75x75') !== -1 || lower.indexOf('p160x160') !== -1 || 
+                                lower.indexOf('p320x320') !== -1 || lower.indexOf('s100x100') !== -1 || lower.indexOf('s200x200') !== -1 || 
+                                lower.indexOf('s50x50') !== -1 || lower.indexOf('s36x36') !== -1 || lower.indexOf('s75x75') !== -1 || 
+                                lower.indexOf('profile_pic') !== -1 || lower.indexOf('profile_photo') !== -1 || lower.indexOf('avatar') !== -1 || 
+                                lower.indexOf('cover_photo') !== -1 || lower.indexOf('profile_cover') !== -1 || lower.indexOf('banner') !== -1 || 
+                                lower.indexOf('header') !== -1 || lower.indexOf('rsrc.php') !== -1 || lower.indexOf('emoji') !== -1) {
+                                return true;
+                            }
+                            
+                            if (alt.indexOf('profile picture') !== -1 || alt.indexOf('profile photo') !== -1 || alt.indexOf('cover photo') !== -1 || 
+                                alt.indexOf('banner') !== -1 || alt.indexOf('logo') !== -1) {
+                                return true;
+                            }
+                            
+                            var parentHeader = imgEl.closest('header, div[aria-label*="Profile"], div[aria-label*="profile"], div[aria-label*="Cover"]');
+                            if (parentHeader) return true;
+                            
+                            return false;
+                        };
+
                         if (!mediaUrls || mediaUrls.indexOf('blob:') === 0) {
                             var imgs = Array.prototype.slice.call(post.querySelectorAll('img'));
                             for (var m = 0; m < imgs.length; m++) {
                                 var src = imgs[m].getAttribute('data-src') || imgs[m].getAttribute('src') || "";
-                                var isIcon = src.indexOf('emoji') !== -1 || src.indexOf('rsrc.php') !== -1;
-                                var isProfile = src.indexOf('p100x100') !== -1 || src.indexOf('p75x75') !== -1 || src.indexOf('p50x50') !== -1 || src.indexOf('p36x36') !== -1 || src.indexOf('/cp0/e15/q65/') !== -1;
-                                if (!isIcon && !isProfile && src.indexOf('data:') !== 0 && src.indexOf('blob:') !== 0 && src.length > 20) {
+                                if (!isProfileOrBanner(imgs[m], src) && src.indexOf('data:') !== 0 && src.indexOf('blob:') !== 0 && src.length > 20) {
                                     mediaUrls = src;
                                     break;
                                 }
                             }
                         }
                     } else if (post.querySelector('img')) {
+                        var isProfileOrBanner = function(imgEl, urlStr) {
+                            if (!urlStr || typeof urlStr !== 'string') return true;
+                            var lower = urlStr.toLowerCase();
+                            var alt = (imgEl.getAttribute('alt') || '').toLowerCase();
+                            
+                            if (lower.indexOf('p100x100') !== -1 || lower.indexOf('p200x200') !== -1 || lower.indexOf('p50x50') !== -1 || 
+                                lower.indexOf('p36x36') !== -1 || lower.indexOf('p75x75') !== -1 || lower.indexOf('p160x160') !== -1 || 
+                                lower.indexOf('p320x320') !== -1 || lower.indexOf('s100x100') !== -1 || lower.indexOf('s200x200') !== -1 || 
+                                lower.indexOf('s50x50') !== -1 || lower.indexOf('s36x36') !== -1 || lower.indexOf('s75x75') !== -1 || 
+                                lower.indexOf('s160x160') !== -1 || lower.indexOf('s320x320') !== -1 || lower.indexOf('s480x480') !== -1 || 
+                                lower.indexOf('profile_pic') !== -1 || lower.indexOf('profile_photo') !== -1 || lower.indexOf('avatar') !== -1 || 
+                                lower.indexOf('cover_photo') !== -1 || lower.indexOf('profile_cover') !== -1 || lower.indexOf('banner') !== -1 || 
+                                lower.indexOf('header') !== -1 || lower.indexOf('rsrc.php') !== -1 || lower.indexOf('emoji') !== -1 || 
+                                lower.indexOf('/cp0/e15/q65/') !== -1) {
+                                return true;
+                            }
+                            
+                            if (alt.indexOf('profile picture') !== -1 || alt.indexOf('profile photo') !== -1 || alt.indexOf('cover photo') !== -1 || 
+                                alt.indexOf('banner') !== -1 || alt.indexOf('logo') !== -1) {
+                                return true;
+                            }
+                            
+                            var parentHeader = imgEl.closest('header, div[aria-label*="Profile"], div[aria-label*="profile"], div[aria-label*="Cover"]');
+                            if (parentHeader) return true;
+                            
+                            return false;
+                        };
+
                         var imgs = Array.prototype.slice.call(post.querySelectorAll('img'));
                         var validSrcs = [];
                         for (var n = 0; n < imgs.length; n++) {
                             var s = imgs[n].getAttribute('data-src') || imgs[n].getAttribute('src') || "";
-                            var isIcon = s.indexOf('emoji') !== -1 || s.indexOf('rsrc.php') !== -1;
-                            var isProfile = s.indexOf('p100x100') !== -1 || s.indexOf('p75x75') !== -1 || s.indexOf('p50x50') !== -1 || s.indexOf('p36x36') !== -1 || s.indexOf('/cp0/e15/q65/') !== -1;
-                            if (!isIcon && !isProfile && s.indexOf('data:') !== 0 && s.length > 20) {
+                            if (!isProfileOrBanner(imgs[n], s) && s.indexOf('data:') !== 0 && s.length > 20) {
                                 validSrcs.push(s);
                             }
                         }
                         if (validSrcs.length > 0) {
                             mediaType = validSrcs.length > 1 ? "Carousel" : "Image";
                             mediaUrls = validSrcs.join(', ');
+                        } else {
+                            mediaType = "Text";
+                            mediaUrls = "";
                         }
                     }
                     

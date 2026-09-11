@@ -168,7 +168,7 @@ Answer with the JSON schema.`;
     }
   }
 
-  async run(memory: StructuredMemory, scope: "local" | "regional" | "global" | "all" = "regional", onProgress?: (comp: CompetitorProfile, statusMsg: string) => void): Promise<CompetitorProfile[]> {
+  async run(memory: StructuredMemory, scope: "local" | "regional" | "global" | "all" = "regional", onProgress?: (comp: CompetitorProfile, statusMsg: string) => void, maxResults?: number): Promise<CompetitorProfile[]> {
     logger.info(`Running Google Places competitor discovery for ${memory.input.websiteUrl} with scope: ${scope}...`);
 
     let industry = memory.industryClassification?.industry || "Manufacturing Companies";
@@ -288,7 +288,9 @@ Answer with the JSON schema.`;
 
     // Fetch competitors using multiple queries until we reach quotas
     for (const target of targets) {
+        if (maxResults && finalCompetitors.length >= maxResults) break;
         let foundForTarget = 0;
+        const targetQuota = maxResults ? Math.min(target.quota, Math.max(0, maxResults - finalCompetitors.length)) : target.quota;
         
         // Phase 1.1: Overfetch candidates across all offerings
         const candidateMap = new Map<string, { place: any, matchedOfferings: Set<string>, isSeed?: boolean }>();
@@ -406,11 +408,11 @@ Answer with the JSON schema.`;
         // Phase 1.3 & 2 & 3: Verify in parallel batches of 5
         const BATCH_SIZE = 5;
         for (let batchIdx = 0; batchIdx < candidatePool.length; batchIdx += BATCH_SIZE) {
-            if (foundForTarget >= target.quota) break;
+            if (foundForTarget >= targetQuota) break;
 
             const batch = candidatePool.slice(batchIdx, batchIdx + BATCH_SIZE);
             await Promise.all(batch.map(async (candidate) => {
-                if (foundForTarget >= target.quota) return;
+                if (foundForTarget >= targetQuota) return;
 
                 const { place, matchedOfferings } = candidate;
                 let domain = "";
@@ -445,7 +447,7 @@ Answer with the JSON schema.`;
                 const activity = await this.evaluateSocialActivity(socials);
                 if (!candidate.isSeed && activity.verdict === "inactive") return;
 
-                if (foundForTarget >= target.quota) return;
+                if (foundForTarget >= targetQuota) return;
                 foundForTarget++;
                 uniqueDomains.add(domain);
 
@@ -472,7 +474,7 @@ Answer with the JSON schema.`;
 
                 finalCompetitors.push(newComp);
                 onProgress?.(newComp, `Discovered ${target.type} competitor: ${newComp.name}`);
-                logger.info(`✅ Added ${domain} as ${target.type} (Deep Overlap: ${deepMatchedOfferings.size}, Socials: ${Object.values(socials).filter(v => v).length}). Target Progress: ${foundForTarget}/${target.quota}`);
+                logger.info(`✅ Added ${domain} as ${target.type} (Deep Overlap: ${deepMatchedOfferings.size}, Socials: ${Object.values(socials).filter(v => v).length}). Target Progress: ${foundForTarget}/${targetQuota}`);
             }));
         }
     }

@@ -8,11 +8,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/styles.css?v=2">
+  <link rel="stylesheet" href="/static/styles.css?v=12">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
 <body>
+  <!-- FACEBOOK SDK FOR NATIVE EMBEDS -->
+  <div id="fb-root"></div>
+  <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0"></script>
 
   <!-- AUTHENTICATION LOGIN OVERLAY -->
   <div id="login-overlay" style="display: flex; position: fixed; inset: 0; z-index: 10000; background: radial-gradient(circle at top right, #1e1b4b, #0f172a, #020617); align-items: center; justify-content: center; padding: 20px;">
@@ -20,8 +23,8 @@
       <div style="width: 64px; height: 64px; background: linear-gradient(135deg, var(--primary), #818CF8); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 20px auto; box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);">
         ⚡
       </div>
-      <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 8px; color: #ffffff;">Admin Portal</h2>
-      <p style="color: #94a3b8; font-size: 14px; margin-bottom: 32px;">Sign in to access your business intelligence dashboard</p>
+      <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 8px; color: #ffffff;">Welcome back</h2>
+      <p style="color: #94a3b8; font-size: 14px; margin-bottom: 32px;">Sign in to access your business intelligence workspace</p>
 
       <form id="login-form" onsubmit="event.preventDefault(); window.handleAdminLogin();" style="text-align: left;">
         <div class="form-group" style="margin-bottom: 20px;">
@@ -39,17 +42,38 @@
         </div>
 
         <button id="login-submit-btn" type="submit" class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 15px; font-weight: 600; border-radius: 12px; box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35); transition: all 0.3s ease;">
-          Sign In to Workspace
+          Sign In
         </button>
       </form>
       <div style="margin-top: 24px; font-size: 12px; color: #64748b;">
-        Protected System • Antigravity Enterprise AI
+        Secure workspace access
       </div>
     </div>
   </div>
 
+  <!-- ADMIN CONTROL CENTER: shown after an administrator signs in -->
+  <section id="admin-control-center" class="admin-control-center" style="display:none;">
+    <header class="admin-control-header">
+      <div class="admin-control-brand"><span class="admin-control-logo">🛡️</span><div><strong>Business R&amp;D</strong><span>Administration Center</span></div></div>
+      <div class="admin-control-actions"><button id="admin-theme-toggle" class="btn btn-secondary" onclick="window.toggleTheme()" aria-label="Switch to dark theme">🌙</button><button class="btn btn-secondary" onclick="window.handleLogout()">Sign out</button></div>
+    </header>
+    <main class="admin-control-content">
+      <section class="admin-control-hero"><div><span class="admin-eyebrow">ADMINISTRATOR WORKSPACE</span><h1>Manage your intelligence workspace.</h1><p>Create access, oversee saved projects, or open the analyst dashboard.</p></div><button class="btn btn-primary" onclick="window.openDashboardWorkspace()">Open dashboard workspace →</button></section>
+      <div class="admin-overview-grid"><article class="admin-overview-card"><span>👥</span><div><strong id="admin-overview-user-count">0</strong><small>Workspace users</small></div></article><article class="admin-overview-card"><span>📁</span><div><strong id="admin-overview-project-count">0</strong><small>Saved projects</small></div></article></div>
+      <div class="admin-control-grid">
+        <section class="admin-control-panel"><div class="admin-panel-heading"><div><h2>User access</h2><p>Add or remove dashboard accounts.</p></div></div><div class="admin-user-layout">
+          <form id="admin-user-form" class="admin-user-form" onsubmit="event.preventDefault(); window.createDashboardUser();"><h3>Add a user</h3><div class="form-group"><label>Username</label><input id="new-user-username" type="text" autocomplete="username" required placeholder="e.g. alex.smith"></div><div class="form-group"><label>Temporary password</label><input id="new-user-password" type="password" autocomplete="new-password" required minlength="8" placeholder="At least 8 characters"></div><div class="form-group"><label>Role</label><select id="new-user-role"><option value="user">User — dashboard access</option><option value="admin">Administrator — manage workspace</option></select></div><button class="btn btn-primary" type="submit">Add user</button><p id="admin-user-error" class="admin-form-message" aria-live="polite"></p></form>
+          <section class="admin-user-list-wrap"><div class="admin-user-list-heading"><h3>Workspace users</h3><span id="admin-user-count" class="badge">0</span></div><div id="admin-user-list" class="admin-user-list"><div class="empty-state">Loading users…</div></div></section>
+        </div></section>
+        <section class="admin-control-panel"><div class="admin-panel-heading"><div><h2>Project management</h2><p>Open or remove saved intelligence projects.</p></div><button class="btn btn-secondary" onclick="window.loadAdminProjects()">Refresh</button></div><div id="admin-project-list" class="admin-project-list"><div class="empty-state">Loading projects…</div></div></section>
+      </div>
+    </main>
+  </section>
+
+  <div id="dashboard-shell">
   <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <div id="sidebar-backdrop" class="sidebar-backdrop" onclick="window.closeNavigation && window.closeNavigation()"></div>
+  <aside class="sidebar" id="app-sidebar">
     <div class="brand">
       <div class="logo">
         <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -105,20 +129,26 @@
         </div>
         <div>
           <div style="font-size: 13px; font-weight: 600; color: var(--text-color);" id="admin-user-name">Admin</div>
-          <div style="font-size: 11px; color: var(--text-muted);">Administrator</div>
+          <div style="font-size: 11px; color: var(--text-muted);" id="admin-user-role">User</div>
         </div>
       </div>
       <button class="btn btn-secondary" onclick="window.handleLogout()" style="padding: 6px 10px; font-size: 12px;" title="Sign Out">
         🚪
       </button>
     </div>
+    <button id="return-admin-center" class="btn btn-secondary" onclick="window.returnToAdminCenter()" style="display:none; margin: 12px 16px 16px; font-size:12px;">🛡️ Administration center</button>
   </aside>
 
   <!-- MAIN CONTENT -->
   <main class="main-content">
     <header class="topbar flex-between">
-      <h1 id="page-title">New Business Analysis</h1>
-      <div style="display: flex; align-items: center; gap: 16px;">
+      <div class="topbar-title-group">
+        <button id="nav-toggle" class="nav-toggle" type="button" onclick="window.toggleNavigation()" aria-label="Open navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <h1 id="page-title">New Business Analysis</h1>
+      </div>
+      <div class="topbar-actions">
         <div id="live-indicator" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #22c55e; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2); padding: 4px 12px; border-radius: 20px;">
           <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e;"></span>
           <span id="live-status-text">Live Sync Active</span>
@@ -147,11 +177,11 @@
           <div style="margin-bottom: 40px;">
             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
               <span style="font-size: 18px;">⭐</span>
-              <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0; letter-spacing: -0.01em;">Your Projects</h3>
+              <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0; letter-spacing: -0.01em;">Assigned to You</h3>
               <span class="badge" style="background: rgba(99, 102, 241, 0.15); color: var(--primary); font-weight: 600; font-size: 12px; padding: 2px 10px; border-radius: 12px;" id="your-projects-count">0</span>
             </div>
             <div id="your-projects-grid" class="projects-grid">
-              <div class="empty-state">Loading your active projects...</div>
+              <div class="empty-state">Loading assigned projects...</div>
             </div>
           </div>
 
@@ -159,7 +189,7 @@
           <div>
             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
               <span style="font-size: 18px;">🌐</span>
-              <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0; letter-spacing: -0.01em;">All Projects & Historical Analyses</h3>
+              <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0; letter-spacing: -0.01em;">Other Projects & Historical Analyses</h3>
               <span class="badge" style="background: rgba(255, 255, 255, 0.08); color: var(--text-muted); font-weight: 600; font-size: 12px; padding: 2px 10px; border-radius: 12px;" id="all-projects-count">0</span>
             </div>
             <div id="all-projects-grid" class="projects-grid">
@@ -497,8 +527,9 @@
       Success message here
     </div>
   </main>
+  </div>
 
-  <script src="/static/app.js?v=9"></script>
+  <script src="/static/app.js?v=17"></script>
 </body>
 
 </html>
