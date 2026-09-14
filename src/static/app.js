@@ -2293,16 +2293,16 @@ async function loadFeedUI() {
       let commentsVal = post.engagement?.comments || post.comments || '';
 
       return `
-        <div class="feed-card-item" onclick="window.openLightbox('${mediaToOpen}', ${isMediaVidFlag ? true : false}, '${pLink}', '${platform}', '${post.media_type || post.mediaType || ''}', '${safeContent}', '${safeAuthor}', '${dateStr}', '${meta.color}', '${likesVal}', '${commentsVal}')" style="min-width: 270px; max-width: 280px; flex-shrink: 0; background: #172033; padding: 14px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; height: 380px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)'">
+        <div class="feed-card-item" onclick="window.openLightbox('${mediaToOpen}', ${isMediaVidFlag ? true : false}, '${pLink}', '${platform}', '${post.media_type || post.mediaType || ''}', '${safeContent}', '${safeAuthor}', '${dateStr}', '${meta.color}', '${likesVal}', '${commentsVal}')" style="min-width: 270px; max-width: 280px; flex-shrink: 0; padding: 14px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; height: 380px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)'">
           <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 6px;">
-            <span style="font-size: 0.8rem; font-weight: 700; color: #ffffff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px;">${compName}</span>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px;">${compName}</span>
             <div style="display: flex; align-items: center; gap: 6px;">
-              <span style="font-size: 0.72rem; color: #94a3b8;">${dateStr}</span>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">${dateStr}</span>
               <span style="font-size: 0.62rem; font-weight: 800; padding: 2px 6px; border-radius: 3px; background: ${meta.badgeBg}; color: #ffffff; text-transform: uppercase;">${platform}</span>
             </div>
           </div>
           ${cardThumbHtml}
-          <div style="white-space: pre-wrap; font-size: 0.82rem; line-height: 1.4; color: #94a3b8; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; margin-bottom: 10px; flex: 1;">${displayContent}</div>
+          <div style="white-space: pre-wrap; font-size: 0.82rem; line-height: 1.4; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; margin-bottom: 10px; flex: 1;">${displayContent}</div>
           <span style="display: block; text-align: left; font-size: 11px; font-weight: 600; color: #3b82f6; margin-top: auto; padding-top: 6px;">Preview Post In Dashboard ↗</span>
         </div>
       `;
@@ -2315,7 +2315,7 @@ async function loadFeedUI() {
           <div class="social-section-header">
             <div class="social-section-icon" style="background: rgba(255, 0, 0, 0.15); color: #ff0000;">▶️</div>
             <span>YouTube</span>
-            <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-left: 6px;">(${ytPosts.length} posts)</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-left: 6px;">(${ytPosts.length} posts)</span>
           </div>
           <div class="social-horizontal-row">
             ${ytPosts.map(renderCard).join('')}
@@ -2330,7 +2330,7 @@ async function loadFeedUI() {
           <div class="social-section-header">
             <div class="social-section-icon" style="background: rgba(225, 48, 108, 0.15); color: #e1306c;">📸</div>
             <span>Instagram</span>
-            <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-left: 6px;">(${igPosts.length} posts)</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-left: 6px;">(${igPosts.length} posts)</span>
           </div>
           <div class="social-horizontal-row">
             ${igPosts.map(renderCard).join('')}
@@ -2345,7 +2345,7 @@ async function loadFeedUI() {
           <div class="social-section-header">
             <div class="social-section-icon" style="background: rgba(24, 119, 242, 0.15); color: #1877f2;">📘</div>
             <span>Facebook</span>
-            <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-left: 6px;">(${fbPosts.length} posts)</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-left: 6px;">(${fbPosts.length} posts)</span>
           </div>
           <div class="social-horizontal-row">
             ${fbPosts.map(renderCard).join('')}
@@ -2360,7 +2360,7 @@ async function loadFeedUI() {
           <div class="social-section-header">
             <div class="social-section-icon" style="background: rgba(10, 102, 194, 0.15); color: #0a66c2;">💼</div>
             <span>LinkedIn</span>
-            <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-left: 6px;">(${liPosts.length} posts)</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-left: 6px;">(${liPosts.length} posts)</span>
           </div>
           <div class="social-horizontal-row">
             ${liPosts.map(renderCard).join('')}
