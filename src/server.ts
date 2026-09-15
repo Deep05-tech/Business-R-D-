@@ -10,12 +10,12 @@ import { QcFailureError } from "./errors.js";
 const require = createRequire(import.meta.url);
 const { PDFParse } = require("pdf-parse");
 import { promises as fs } from "node:fs";
-import { exec } from "node:child_process";
+import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { ChatOpenAI } from "@langchain/openai";
 import { HumanMessage } from "@langchain/core/messages";
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 import { parseBusinessInput } from "./input.js";
 import { knowledgeIndex } from "./memory/knowledgeIndex.js";
 import { MemoryStore } from "./memory/memoryStore.js";
@@ -47,7 +47,17 @@ app.disable("x-powered-by");
 
 // Apply security headers
 app.use(helmet({
-  contentSecurityPolicy: false,
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdn.jsdelivr.net", "https://connect.facebook.net"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "blob:", "https:", "http:"],
+      frameSrc: ["'self'", "https://www.youtube.com", "https://youtube.com", "https://www.facebook.com", "https://www.linkedin.com", "https://www.instagram.com"],
+      connectSrc: ["'self'", "https:"]
+    }
+  },
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 
@@ -66,6 +76,15 @@ const intelligenceLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: "Analysis run limit reached for this IP. Please wait a few minutes." }
+});
+
+// Brute-force protection for login endpoint (max 5 failed attempts per 15 min)
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: "Too many login attempts from this IP. Locked for 15 minutes for security." }
 });
 
 app.use(generalLimiter);
@@ -106,7 +125,10 @@ const runTrackerOnce = async (site: any): Promise<void> => {
   }
 };
 
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 } // 10MB file upload limit
+});
 
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ limit: "2mb", extended: true }));
@@ -126,7 +148,7 @@ const getToken = (request: express.Request): string | undefined => {
 };
 const authenticateRequest = async (request: express.Request): Promise<AuthUser | null> => authStore.getSession(getToken(request));
 
-app.post("/api/auth/login", async (req, res) => {
+app.post("/api/auth/login", loginLimiter, async (req, res) => {
   const { username, password } = req.body || {};
   const session = await authStore.authenticate(String(username || ""), String(password || ""));
   if (!session) return res.status(401).json({ success: false, error: "Invalid username or password." });
@@ -542,6 +564,16 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
   try {
     let brochureText: string | undefined = undefined;
     if (request.file) {
+      // Magic-byte check for PDF (%PDF- header signature)
+      const buf = request.file.buffer;
+      const isPdfMagic = buf.length >= 4 && buf[0] === 0x25 && buf[1] === 0x50 && buf[2] === 0x44 && buf[3] === 0x46;
+      if (!isPdfMagic) {
+        logger.warn(`[Security Alert] Rejected uploaded file: invalid PDF magic header.`);
+        response.write(`data: ${JSON.stringify({ type: 'error', error: "Security Alert: Uploaded file is not a valid PDF document." })}\n\n`);
+        response.end();
+        return;
+      }
+
       const instance = new PDFParse({ data: request.file.buffer });
       const pdfData = await instance.getText();
       brochureText = pdfData.text;
@@ -559,7 +591,7 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
         await fs.writeFile(tmpPdf, request.file.buffer);
         
         try {
-          await execAsync(`pdftoppm -jpeg ${tmpPdf} ${tmpImgPrefix}`);
+          await execFileAsync("pdftoppm", ["-jpeg", tmpPdf, tmpImgPrefix]);
           
           const files = await fs.readdir('/tmp');
           const pageImages = files

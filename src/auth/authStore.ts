@@ -58,6 +58,9 @@ export class AuthStore {
     if (![...this.users.values()].some(user => user.role === "admin")) {
       const username = process.env.ADMIN_USERNAME || "admin";
       const password = process.env.ADMIN_PASSWORD || "admin123";
+      if (process.env.NODE_ENV === "production" && password === "admin123") {
+        console.error("CRITICAL SECURITY WARNING: Default administrator password (admin123) is active in PRODUCTION mode. Set ADMIN_PASSWORD in .env immediately.");
+      }
       const admin: StoredUser = {
         username,
         role: "admin",
