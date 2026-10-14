@@ -1,46 +1,35 @@
-# Use an official Node.js runtime as a parent image
-FROM node:20-slim
+FROM node:20-bookworm-slim
 
-# Install dependencies required for Chromium and ChromeDriver
-RUN apt-get update && apt-get install -y \
-    wget \
-    gnupg \
-    ca-certificates \
-    procps \
-    libxss1 \
-    libnss3 \
-    libasound2 \
-    fonts-liberation \
-    libappindicator3-1 \
-    xdg-utils \
+# Install Chromium, Chromedriver, and Poppler (for pdftoppm OCR)
+RUN apt-get update && apt-get install -y --no-install-recommends \
     chromium \
     chromium-driver \
-    --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
+    poppler-utils \
+    fonts-liberation \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && ln -s /usr/bin/chromium /usr/bin/google-chrome \
+    && ln -s /usr/bin/chromium-driver /usr/bin/chromedriver
 
-# Set working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy dependency definitions
 COPY package*.json ./
 
-# Install app dependencies (ignoring devDependencies in production, though we need them for build)
-RUN npm ci --legacy-peer-deps
+# Install npm dependencies
+RUN npm ci
 
-# Copy the rest of the application
+# Copy application source code
 COPY . .
 
-# Build the TypeScript code
+# Compile TypeScript
 RUN npm run build
 
-# Expose the port the app runs on
+# Default environment variables
+ENV NODE_ENV=production \
+    PORT=3000
+
 EXPOSE 3000
 
-# Set environment variables
-ENV PORT=3000
-ENV NODE_ENV=production
-# Tell Selenium where to find Chromium if necessary
-ENV CHROME_BIN=/usr/bin/chromium
-
-# Run the application
-CMD ["npm", "start"]
+# Start production server
+CMD ["node", "dist/server.js"]
