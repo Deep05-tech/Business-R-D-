@@ -8,8 +8,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fonts-liberation \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/* \
-    && ln -s /usr/bin/chromium /usr/bin/google-chrome \
-    && ln -s /usr/bin/chromium-driver /usr/bin/chromedriver
+    && ln -sf /usr/bin/chromium /usr/bin/google-chrome \
+    && ln -sf /usr/bin/chromium /usr/bin/chromium-browser \
+    && ln -sf /usr/bin/chromedriver /usr/bin/chromium-driver
 
 WORKDIR /app
 
