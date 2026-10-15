@@ -43,6 +43,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname  = dirname(__filename);
 
 const app = express();
+app.set("trust proxy", 1);
 app.disable("x-powered-by");
 
 // Apply security headers
@@ -78,13 +79,14 @@ const intelligenceLimiter = rateLimit({
   message: { error: "Analysis run limit reached for this IP. Please wait a few minutes." }
 });
 
-// Brute-force protection for login endpoint (max 5 failed attempts per 15 min)
+// Brute-force protection for login endpoint (50 attempts per 15 min per IP, skipping successful logins)
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  max: 50,
+  skipSuccessfulRequests: true,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { success: false, error: "Too many login attempts from this IP. Locked for 15 minutes for security." }
+  message: { success: false, error: "Too many failed login attempts from this IP. Locked for 15 minutes for security." }
 });
 
 app.use(generalLimiter);

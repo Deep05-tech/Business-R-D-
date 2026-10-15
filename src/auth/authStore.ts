@@ -55,13 +55,17 @@ export class AuthStore {
       // First run: bootstrap the existing configurable administrator account.
     }
 
-    if (![...this.users.values()].some(user => user.role === "admin")) {
-      const username = process.env.ADMIN_USERNAME || "admin";
-      const password = process.env.ADMIN_PASSWORD || "admin123";
+    const envAdminUser = (process.env.ADMIN_USERNAME || "admin").trim();
+    const envAdminPass = process.env.ADMIN_PASSWORD;
+
+    let admin = [...this.users.values()].find(user => user.role === "admin");
+    if (!admin) {
+      const username = envAdminUser;
+      const password = envAdminPass || "admin123";
       if (process.env.NODE_ENV === "production" && password === "admin123") {
         console.error("CRITICAL SECURITY WARNING: Default administrator password (admin123) is active in PRODUCTION mode. Set ADMIN_PASSWORD in .env immediately.");
       }
-      const admin: StoredUser = {
+      admin = {
         username,
         role: "admin",
         createdAt: new Date().toISOString(),
@@ -70,6 +74,20 @@ export class AuthStore {
       };
       this.users.set(this.normalizeUsername(username), admin);
       await this.persist();
+    } else if (envAdminPass) {
+      // If an administrator password was explicitly passed via environment variable (e.g. Render config),
+      // synchronize admin credentials with the configured environment!
+      const currentPasswordValid = await this.verifyPassword(envAdminPass, admin.passwordHash);
+      const usernameChanged = admin.username.toLowerCase() !== envAdminUser.toLowerCase();
+      if (!currentPasswordValid || usernameChanged) {
+        if (usernameChanged) {
+          this.users.delete(this.normalizeUsername(admin.username));
+          admin.username = envAdminUser;
+        }
+        admin.passwordHash = await this.hashPassword(envAdminPass);
+        this.users.set(this.normalizeUsername(admin.username), admin);
+        await this.persist();
+      }
     }
   }
 

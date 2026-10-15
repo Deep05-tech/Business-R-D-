@@ -75,6 +75,38 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-theme');
   window.updateThemeControls();
 
+  const loginBtn = document.getElementById('login-submit-btn');
+  if (loginBtn) {
+    loginBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.handleAdminLogin(e);
+    });
+  }
+
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.handleAdminLogin(e);
+      return false;
+    });
+  }
+
+  const userInput = document.getElementById('login-username');
+  const passInput = document.getElementById('login-password');
+  [userInput, passInput].forEach(input => {
+    if (input) {
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          window.handleAdminLogin(e);
+        }
+      });
+    }
+  });
+
   const authenticated = await window.checkAuthStatus();
   if (authenticated) {
     await loadProjects();
@@ -84,7 +116,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   setTimeout(initializeCustomSelects, 100);
 });
 
-window.handleAdminLogin = async function() {
+window.handleAdminLogin = async function(event) {
+  if (event) {
+    if (typeof event.preventDefault === 'function') event.preventDefault();
+    if (typeof event.stopPropagation === 'function') event.stopPropagation();
+  }
+
   const usernameInput = document.getElementById('login-username');
   const passwordInput = document.getElementById('login-password');
   const errorDiv = document.getElementById('login-error');
@@ -94,8 +131,18 @@ window.handleAdminLogin = async function() {
   const username = usernameInput.value.trim();
   const password = passwordInput.value.trim();
 
-  btn.disabled = true;
-  btn.innerText = 'Verifying...';
+  if (!username || !password) {
+    if (errorDiv) {
+      errorDiv.textContent = 'Please enter both username and password.';
+      errorDiv.style.display = 'block';
+    }
+    return;
+  }
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerText = 'Verifying...';
+  }
   if (errorDiv) errorDiv.style.display = 'none';
 
   try {
@@ -104,7 +151,13 @@ window.handleAdminLogin = async function() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
     });
-    const data = await res.json();
+    let data;
+    try {
+      data = await res.json();
+    } catch (_jsonErr) {
+      data = { success: false, error: 'Unexpected response from server (' + res.status + ')' };
+    }
+
     if (res.ok && data.success) {
       localStorage.setItem('dashboardToken', data.token);
       localStorage.removeItem('adminToken');
@@ -121,18 +174,20 @@ window.handleAdminLogin = async function() {
       }
     } else {
       if (errorDiv) {
-        errorDiv.textContent = data.error || 'Invalid credentials';
+        errorDiv.textContent = data.error || (res.status === 429 ? 'Too many login attempts. Please wait a few minutes.' : 'Invalid credentials');
         errorDiv.style.display = 'block';
       }
     }
   } catch (e) {
     if (errorDiv) {
-      errorDiv.textContent = 'Server connection error';
+      errorDiv.textContent = 'Server connection error. Please try again.';
       errorDiv.style.display = 'block';
     }
   } finally {
-    btn.disabled = false;
-    btn.innerText = 'Sign In to Workspace';
+    if (btn) {
+      btn.disabled = false;
+      btn.innerText = 'Sign In';
+    }
   }
 };
 
