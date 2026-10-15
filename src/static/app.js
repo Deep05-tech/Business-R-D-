@@ -1011,7 +1011,14 @@ window.runIntelligence = async function() {
       body: formData
     });
     
-    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+    if (!res.ok) {
+      let errText = `HTTP error ${res.status}`;
+      try {
+        const errJson = await res.json();
+        if (errJson && errJson.error) errText = errJson.error;
+      } catch (_) {}
+      throw new Error(errText);
+    }
 
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
@@ -1151,7 +1158,14 @@ window.findCompetitors = async function(force = false) {
       body: JSON.stringify({ websiteUrl: window.activeProjectUrl, scope })
     });
 
-    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+    if (!res.ok) {
+      let errText = `HTTP error ${res.status}`;
+      try {
+        const errJson = await res.json();
+        if (errJson && errJson.error) errText = errJson.error;
+      } catch (_) {}
+      throw new Error(errText);
+    }
 
     const reader = res.body.getReader();
     const decoder = new TextDecoder();

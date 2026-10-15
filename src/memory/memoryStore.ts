@@ -1,6 +1,5 @@
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, unlink, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { MongoClient } from "mongodb";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import type { StructuredMemory } from "../types.js";
 import { createLogger } from "../utils/logger.js";
@@ -15,46 +14,17 @@ export interface QueryResult {
 }
 
 export class MemoryStore {
-  private static mongoClient: MongoClient | null = null;
-
-  constructor(private readonly directory = "data/memory") {
-    if (process.env.MONGODB_URI && !MemoryStore.mongoClient) {
-      MemoryStore.mongoClient = new MongoClient(process.env.MONGODB_URI);
-    }
-  }
-
-  private async getCollection() {
-    if (!MemoryStore.mongoClient) return null;
-    await MemoryStore.mongoClient.connect();
-    return MemoryStore.mongoClient.db().collection<StructuredMemory>("businesses");
-  }
+  constructor(private readonly directory = "data/memory") {}
 
   // ---------------------------------------------------------------------------
-  // Persistence
+  // Persistence (Local Filesystem)
   // ---------------------------------------------------------------------------
 
   async save(memory: StructuredMemory): Promise<string> {
     // Generate Vector Knowledge Base
     memory.vectorKnowledgeBase = await this.generateVectorKnowledgeBase(memory);
 
-    if (MemoryStore.mongoClient) {
-      try {
-        const collection = await this.getCollection();
-        if (collection) {
-          await collection.updateOne(
-            { "input.websiteUrl": memory.input.websiteUrl },
-            { $set: memory },
-            { upsert: true }
-          );
-          logger.success(`Saved memory for ${memory.input.websiteUrl} to MongoDB.`);
-          return `mongodb://${memory.input.websiteUrl}`;
-        }
-      } catch (err) {
-        logger.error(`Failed to save to MongoDB: ${err}`);
-      }
-    }
-
-    // Fallback to local
+    // Save locally
     await mkdir(this.directory, { recursive: true });
 
     const officialName = memory.businessIdentity.officialName ?? new URL(memory.input.websiteUrl).hostname;
@@ -64,26 +34,13 @@ export class MemoryStore {
     const filePath = join(this.directory, `${fileName}.json`);
     
     await writeFile(filePath, `${JSON.stringify(memory, null, 2)}\n`, "utf8");
+    logger.success(`Saved local memory for ${memory.input.websiteUrl} to ${filePath}`);
     return filePath;
   }
 
-  // ---------------------------------------------------------------------------
-  // Lookup by site URL
-  // ---------------------------------------------------------------------------
+
 
   async loadBySite(websiteUrl: string): Promise<StructuredMemory | null> {
-    if (MemoryStore.mongoClient) {
-      try {
-        const collection = await this.getCollection();
-        if (collection) {
-          const doc = await collection.findOne({ "input.websiteUrl": websiteUrl });
-          if (doc) return doc as unknown as StructuredMemory;
-        }
-      } catch (err) {
-        logger.error(`Failed to load from MongoDB: ${err}`);
-      }
-    }
-
     try {
       const files = await readdir(this.directory);
       
@@ -119,18 +76,6 @@ export class MemoryStore {
   }
 
   async loadAll(): Promise<StructuredMemory[]> {
-    if (MemoryStore.mongoClient) {
-      try {
-        const collection = await this.getCollection();
-        if (collection) {
-          const docs = await collection.find({}).toArray();
-          return docs as unknown as StructuredMemory[];
-        }
-      } catch (err) {
-        logger.error(`Failed to load all from MongoDB: ${err}`);
-      }
-    }
-
     try {
       const files = await readdir(this.directory);
       const results: StructuredMemory[] = [];
@@ -151,22 +96,7 @@ export class MemoryStore {
 
   async deleteBySite(websiteUrl: string): Promise<boolean> {
     let deleted = false;
-    
-    if (MemoryStore.mongoClient) {
-      try {
-        const collection = await this.getCollection();
-        if (collection) {
-          const res = await collection.deleteOne({ "input.websiteUrl": websiteUrl });
-          if (res.deletedCount > 0) deleted = true;
-        }
-      } catch (err) {
-        logger.error(`Failed to delete from MongoDB: ${err}`);
-      }
-    }
-
-    // Always attempt to delete locally too
     try {
-      const { unlink } = await import("node:fs/promises");
       const files = await readdir(this.directory);
       for (const file of files) {
         if (!file.endsWith(".json")) continue;
@@ -186,7 +116,6 @@ export class MemoryStore {
     } catch {
       // directory might not exist
     }
-    
     return deleted;
   }
 

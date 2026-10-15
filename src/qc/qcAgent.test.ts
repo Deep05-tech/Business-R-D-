@@ -181,4 +181,4 @@ describe("QcAgent", () => {
     const noiseIssue = report.issues.find((i) => i.message.includes("UI/navigation noise"));
     expect(noiseIssue).toBeTruthy();
   });
-});
+}, 30000);

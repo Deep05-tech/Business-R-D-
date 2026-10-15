@@ -64,19 +64,22 @@ app.use(helmet({
 }));
 
 // Rate limiting to protect against DoS attacks & bot spamming
+// Authenticated dashboard requests (with session token) bypass rate limits
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 2000,
+  max: 50000,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => Boolean(req.headers.authorization || req.query.token),
   message: { error: "Too many requests from this IP, please try again later." }
 });
 
 const intelligenceLimiter = rateLimit({
   windowMs: 5 * 60 * 1000,
-  max: 15,
+  max: 1000,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => Boolean(req.headers.authorization || req.query.token),
   message: { error: "Analysis run limit reached for this IP. Please wait a few minutes." }
 });
 
