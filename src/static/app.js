@@ -107,6 +107,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+  // Attach direct event listeners for theme toggles and logout buttons
+  document.querySelectorAll('#theme-toggle, #admin-theme-toggle').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.toggleTheme();
+    });
+  });
+
+  document.querySelectorAll('#admin-logout-btn, #sidebar-logout-btn, button[onclick*="handleLogout"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.handleLogout();
+    });
+  });
+
   const authenticated = await window.checkAuthStatus();
   if (authenticated) {
     await loadProjects();
@@ -227,9 +242,15 @@ window.handleLogout = async function() {
   localStorage.removeItem('dashboardToken');
   localStorage.removeItem('adminToken');
   window.applyCurrentUser(null);
+  const adminCenter = document.getElementById('admin-control-center');
+  if (adminCenter) adminCenter.style.display = 'none';
+  const dashboard = document.getElementById('dashboard-shell');
+  if (dashboard) dashboard.style.display = 'none';
   const overlay = document.getElementById('login-overlay');
   if (overlay) overlay.style.display = 'flex';
-  window.showSuccess('Logged out successfully');
+  const pwdInput = document.getElementById('login-password');
+  if (pwdInput) pwdInput.value = '';
+  if (typeof window.showSuccess === 'function') window.showSuccess('Logged out successfully');
 };
 
 window.escapeHtml = function(value) {
@@ -693,7 +714,9 @@ window.addOrUpdateProjectInSidebar = function(url, name) {
 window.loadProjects = async function(isSilent = false) {
   try {
     const res = await fetch('/api/sites');
+    if (!res.ok) return;
     const sites = await res.json();
+    if (!Array.isArray(sites)) return;
     const select = document.getElementById('global-project');
     if (!select) return;
 

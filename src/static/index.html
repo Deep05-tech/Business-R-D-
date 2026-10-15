@@ -55,7 +55,7 @@
   <section id="admin-control-center" class="admin-control-center" style="display:none;">
     <header class="admin-control-header">
       <div class="admin-control-brand"><span class="admin-control-logo" style="width: 30px; height: 30px; background: linear-gradient(135deg, var(--primary), #4338CA); border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: white;"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-5 5"/><path d="M14 9h5v5"/></svg></span><div><strong>Business R&amp;D</strong><span>Administration Center</span></div></div>
-      <div class="admin-control-actions"><button id="admin-theme-toggle" class="btn btn-secondary" onclick="window.toggleTheme()" aria-label="Switch to dark theme">🌙</button><button class="btn btn-secondary" onclick="window.handleLogout()">Sign out</button></div>
+      <div class="admin-control-actions"><button id="admin-theme-toggle" class="btn btn-secondary" type="button" aria-label="Switch to dark theme">🌙</button><button id="admin-logout-btn" class="btn btn-secondary" type="button">Sign out</button></div>
     </header>
     <main class="admin-control-content">
       <section class="admin-control-hero"><div><span class="admin-eyebrow">ADMINISTRATOR WORKSPACE</span><h1>Manage your intelligence workspace.</h1><p>Create access, oversee saved projects, or open the analyst dashboard.</p></div><button class="btn btn-primary" onclick="window.openDashboardWorkspace()">Open dashboard workspace →</button></section>
@@ -132,7 +132,7 @@
           <div style="font-size: 11px; color: var(--text-muted);" id="admin-user-role">User</div>
         </div>
       </div>
-      <button class="btn btn-secondary" onclick="window.handleLogout()" style="padding: 6px 10px; font-size: 12px;" title="Sign Out">
+      <button id="sidebar-logout-btn" class="btn btn-secondary" type="button" style="padding: 6px 10px; font-size: 12px;" title="Sign Out">
         🚪
       </button>
     </div>
@@ -153,7 +153,7 @@
           <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e;"></span>
           <span id="live-status-text">Live Sync Active</span>
         </div>
-        <button id="theme-toggle" class="btn btn-secondary" onclick="window.toggleTheme()"
+        <button id="theme-toggle" class="btn btn-secondary" type="button"
           style="padding: 6px 12px; font-size: 18px;" title="Toggle Dark/Light Mode">🌙</button>
       </div>
     </header>
@@ -529,7 +529,7 @@
   </main>
   </div>
 
-  <script src="/static/app.js?v=18"></script>
+  <script src="/static/app.js?v=19"></script>
 </body>
 
 </html>
