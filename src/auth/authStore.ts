@@ -2,6 +2,7 @@ import { createHmac, randomBytes, scrypt as scryptCallback, timingSafeEqual } fr
 import { promisify } from "node:util";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { getMongoDb } from "../utils/mongoClient.js";
 
 const scrypt = promisify(scryptCallback);
 
@@ -15,7 +16,7 @@ export class AuthStore {
   private sessions = new Map<string, Session>();
   private loaded = false;
 
-  constructor(private readonly filePath = join("data", "auth", "users.json")) {}
+  constructor(private readonly filePath = process.env.DATA_DIR ? join(process.env.DATA_DIR, "auth", "users.json") : join("data", "auth", "users.json")) {}
 
   private normalizeUsername(username: string): string {
     return username.trim().toLowerCase();
@@ -42,13 +43,36 @@ export class AuthStore {
   async initialize(): Promise<void> {
     if (this.loaded) return;
     this.loaded = true;
+
+    // 1. Try loading users from MongoDB first
+    let dbInstance: any = null;
+    try {
+      dbInstance = await getMongoDb();
+      if (dbInstance) {
+        const dbUsers = await dbInstance.collection("users").find({}).toArray();
+        for (const u of dbUsers) {
+          const { _id, ...cleanUser } = u as any;
+          if (cleanUser.username && cleanUser.passwordHash) {
+            cleanUser.assignedProjectUrls = Array.isArray(cleanUser.assignedProjectUrls) ? cleanUser.assignedProjectUrls : [];
+            this.users.set(this.normalizeUsername(cleanUser.username), cleanUser);
+          }
+        }
+      }
+    } catch (err: any) {
+      console.warn("MongoDB user initialization failed:", err.message);
+    }
+
+    // 2. Load from local filesystem
     try {
       const raw = await readFile(this.filePath, "utf8");
       const users = JSON.parse(raw) as StoredUser[];
       for (const user of users) {
         if (user.username && user.passwordHash && (user.role === "admin" || user.role === "user")) {
           user.assignedProjectUrls = Array.isArray(user.assignedProjectUrls) ? user.assignedProjectUrls : [];
-          this.users.set(this.normalizeUsername(user.username), user);
+          const key = this.normalizeUsername(user.username);
+          if (!this.users.has(key)) {
+            this.users.set(key, user);
+          }
         }
       }
     } catch {
@@ -145,11 +169,39 @@ export class AuthStore {
         console.error("Failed to parse SEED_USERS / AUTH_USERS env variable:", err);
       }
     }
+
+    // Sync any newly initialized users back to MongoDB
+    if (dbInstance && this.users.size > 0) {
+      try {
+        for (const user of this.users.values()) {
+          await dbInstance.collection("users").updateOne(
+            { username: user.username },
+            { $set: user },
+            { upsert: true }
+          );
+        }
+      } catch {}
+    }
   }
 
   private async persist(): Promise<void> {
     await mkdir(dirname(this.filePath), { recursive: true });
     await writeFile(this.filePath, `${JSON.stringify([...this.users.values()], null, 2)}\n`, "utf8");
+
+    try {
+      const db = await getMongoDb();
+      if (db) {
+        for (const user of this.users.values()) {
+          await db.collection("users").updateOne(
+            { username: user.username },
+            { $set: user },
+            { upsert: true }
+          );
+        }
+      }
+    } catch (err: any) {
+      console.warn("MongoDB user sync failed:", err.message);
+    }
   }
 
   private getSessionSecret(): string {
@@ -263,6 +315,12 @@ export class AuthStore {
     }
     this.users.delete(key);
     for (const [token, session] of this.sessions) if (this.normalizeUsername(session.username) === key) this.sessions.delete(token);
+    try {
+      const db = await getMongoDb();
+      if (db) {
+        await db.collection("users").deleteOne({ username: user.username });
+      }
+    } catch {}
     await this.persist();
     return true;
   }

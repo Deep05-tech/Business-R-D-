@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import type { StructuredMemory } from "../types.js";
 import { createLogger } from "../utils/logger.js";
+import { getMongoDb } from "../utils/mongoClient.js";
 
 const logger = createLogger("Memory Store");
 
@@ -14,20 +15,35 @@ export interface QueryResult {
 }
 
 export class MemoryStore {
-  constructor(private readonly directory = "data/memory") {}
+  constructor(private readonly directory = process.env.DATA_DIR ? join(process.env.DATA_DIR, "memory") : "data/memory") {}
 
   // ---------------------------------------------------------------------------
-  // Persistence (Local Filesystem)
+  // Persistence (MongoDB + Local Filesystem Dual-Layer)
   // ---------------------------------------------------------------------------
 
   async save(memory: StructuredMemory): Promise<string> {
     // Generate Vector Knowledge Base
     memory.vectorKnowledgeBase = await this.generateVectorKnowledgeBase(memory);
 
-    // Save locally
+    // 1. Cloud Persistence: Save to MongoDB if configured
+    try {
+      const db = await getMongoDb();
+      if (db) {
+        await db.collection("memories").updateOne(
+          { "input.websiteUrl": memory.input.websiteUrl },
+          { $set: memory },
+          { upsert: true }
+        );
+        logger.success(`Saved memory for ${memory.input.websiteUrl} to MongoDB cloud storage.`);
+      }
+    } catch (err: any) {
+      logger.warn(`Failed to save memory to MongoDB: ${err.message}`);
+    }
+
+    // 2. Local Persistence: Save to disk
     await mkdir(this.directory, { recursive: true });
 
-    const officialName = memory.businessIdentity.officialName ?? new URL(memory.input.websiteUrl).hostname;
+    const officialName = memory.businessIdentity?.officialName ?? new URL(memory.input.websiteUrl).hostname;
     const cleanName = officialName.replace(/[<>:"/\\|?*\x00-\x1F\s]/g, "_").trim() || "unknown-business";
     const domainName = new URL(memory.input.websiteUrl).hostname.replace(/^www\./, "").replace(/\./g, "_");
     const fileName = `${cleanName}_${domainName}`;
@@ -38,9 +54,28 @@ export class MemoryStore {
     return filePath;
   }
 
-
-
   async loadBySite(websiteUrl: string): Promise<StructuredMemory | null> {
+    // 1. Try MongoDB first
+    try {
+      const db = await getMongoDb();
+      if (db) {
+        const normTarget = websiteUrl.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+        const doc = await db.collection("memories").findOne({
+          $or: [
+            { "input.websiteUrl": websiteUrl },
+            { "input.websiteUrl": { $regex: normTarget, $options: "i" } }
+          ]
+        });
+        if (doc) {
+          const { _id, ...cleanDoc } = doc as any;
+          return cleanDoc as StructuredMemory;
+        }
+      }
+    } catch (err: any) {
+      logger.warn(`Failed to load memory from MongoDB: ${err.message}`);
+    }
+
+    // 2. Fallback to Local Filesystem
     try {
       const files = await readdir(this.directory);
       
@@ -64,7 +99,7 @@ export class MemoryStore {
                latestMemory = memory;
              }
           }
-        } catch (e) {
+        } catch {
           // ignore parsing errors for individual files
         }
       }
@@ -76,26 +111,75 @@ export class MemoryStore {
   }
 
   async loadAll(): Promise<StructuredMemory[]> {
+    const resultsMap = new Map<string, StructuredMemory>();
+
+    // 1. Load from MongoDB if available
+    let dbInstance: any = null;
+    try {
+      dbInstance = await getMongoDb();
+      if (dbInstance) {
+        const docs = await dbInstance.collection("memories").find({}).toArray();
+        for (const doc of docs) {
+          const { _id, ...cleanDoc } = doc as any;
+          if (cleanDoc.input?.websiteUrl) {
+            const normKey = cleanDoc.input.websiteUrl.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+            resultsMap.set(normKey, cleanDoc as StructuredMemory);
+          }
+        }
+        logger.info(`Loaded ${resultsMap.size} projects from MongoDB cloud storage.`);
+      }
+    } catch (err: any) {
+      logger.warn(`Failed to load all memories from MongoDB: ${err.message}`);
+    }
+
+    // 2. Load from local filesystem and merge
     try {
       const files = await readdir(this.directory);
-      const results: StructuredMemory[] = [];
       for (const file of files) {
         if (!file.endsWith(".json")) continue;
         try {
           const raw = await readFile(join(this.directory, file), "utf8");
-          results.push(JSON.parse(raw) as StructuredMemory);
+          const memory = JSON.parse(raw) as StructuredMemory;
+          if (memory.input?.websiteUrl) {
+            const normKey = memory.input.websiteUrl.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+            if (!resultsMap.has(normKey)) {
+              resultsMap.set(normKey, memory);
+              // Backfill from disk to MongoDB so cloud database stays in sync with baked files
+              if (dbInstance) {
+                dbInstance.collection("memories").updateOne(
+                  { "input.websiteUrl": memory.input.websiteUrl },
+                  { $set: memory },
+                  { upsert: true }
+                ).catch(() => {});
+              }
+            }
+          }
         } catch {
           // skip malformed files
         }
       }
-      return results;
     } catch {
-      return [];
+      // directory may not exist
     }
+
+    return Array.from(resultsMap.values());
   }
 
   async deleteBySite(websiteUrl: string): Promise<boolean> {
     let deleted = false;
+
+    // 1. Delete from MongoDB
+    try {
+      const db = await getMongoDb();
+      if (db) {
+        const res = await db.collection("memories").deleteOne({ "input.websiteUrl": websiteUrl });
+        if (res.deletedCount > 0) deleted = true;
+      }
+    } catch (err: any) {
+      logger.warn(`Failed to delete memory from MongoDB: ${err.message}`);
+    }
+
+    // 2. Delete from local filesystem
     try {
       const files = await readdir(this.directory);
       for (const file of files) {
@@ -109,7 +193,7 @@ export class MemoryStore {
              deleted = true;
              logger.success(`Deleted local memory file: ${file}`);
           }
-        } catch (e) {
+        } catch {
           // ignore read/parse errors for other files
         }
       }

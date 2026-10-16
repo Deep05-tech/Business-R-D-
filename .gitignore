@@ -1,7 +1,5 @@
 node_modules/
 dist/
-data/memory/
-data/reports/
 .env
 chrome_profile/
 *.log

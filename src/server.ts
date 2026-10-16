@@ -1329,9 +1329,22 @@ app.get("/api/sites", async (request, response) => {
 // Start
 // ---------------------------------------------------------------------------
 
-const server = app.listen(port, () => {
+const server = app.listen(port, async () => {
   logger.success(`Business R&D Agent System v2.0`);
   logger.info(`Listening on http://localhost:${port}`);
+
+  // Warm up and bootstrap auth store and project memories into knowledge index
+  try {
+    await authStore.initialize();
+    const loadedMemories = await memoryStore.loadAll();
+    for (const m of loadedMemories) {
+      knowledgeIndex.add(m);
+    }
+    logger.info(`Bootstrapped ${loadedMemories.length} projects into KnowledgeIndex.`);
+  } catch (err: any) {
+    logger.warn(`Storage bootstrap warning: ${err.message}`);
+  }
+
   logger.info(`Endpoints:`);
   logger.info(`  POST /business-intelligence`);
   logger.info(`  POST /api/generate-smm`);

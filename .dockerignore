@@ -1,8 +1,5 @@
 node_modules
 dist
-data/memory
-data/reports
-data/auth
 .env
 chrome_profile
 *.log
