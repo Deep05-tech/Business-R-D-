@@ -88,25 +88,31 @@ Extract and generate the following JSON payload conforming exactly to this struc
   "linkedinOutreach": [
     {
       "persona": "CEO",
-      "messages": ["Message 1", "Message 2", ... (total exactly 50 messages spread across personas)]
+      "messages": ["Message 1", "Message 2"]
     }
   ]
 }
 
 CRITICAL RULES:
-1. Provide exactly 50 LinkedIn messages in total (spread across the personas). 
+1. Provide 8-12 high-impact, persuasive LinkedIn messages in total (spread across the personas). 
    - Structure: EVERY message MUST follow a strict [Problem] -> [Solution] framework. 
    - Example: "I noticed [Problem]. We solved this by [Solution]."
-   - Ensure they are long enough to be highly attractive and thought-provoking. When a customer reads it, they should pause and think about it, making them much more likely to respond positively. Avoid generic corporate speak or one-liners.
-2. Competitors: You MUST provide exactly 10 competitors in total. Exactly 5 local competitors from India, and exactly 5 global competitors from the rest of the world. 
-   - Use the LIVE SEARCH DATA provided above to find real, active, working websites and actual competitors. DO NOT hallucinate broken websites.
-3. Output MUST be pure JSON with no markdown wrapping like \`\`\`json.
+   - Ensure they are highly attractive, professional, and thought-provoking. Avoid generic one-liners.
+2. Competitors: Provide 6 real competitors in total (3 top competitors in India, and 3 global competitors).
+   - Use the LIVE SEARCH DATA provided above to find real, active, working websites.
+3. Output MUST be pure JSON with no markdown wrapping.
 `;
 
     try {
       const result = await llm.invoke(prompt);
       const content = typeof result.content === "string" ? result.content : "";
-      const cleanJson = content.replace(/^```json/i, "").replace(/```$/i, "").trim();
+      let cleanJson = content.replace(/^```json/i, "").replace(/```$/i, "").trim();
+      const firstBrace = cleanJson.indexOf("{");
+      const lastBrace = cleanJson.lastIndexOf("}");
+      if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+        cleanJson = cleanJson.slice(firstBrace, lastBrace + 1);
+      }
+      cleanJson = cleanJson.replace(/,\s*([}\]])/g, "$1");
       const parsed: MarketingSalesIntelligence = JSON.parse(cleanJson);
 
       return {
@@ -130,7 +136,7 @@ CRITICAL RULES:
         version: this.version,
         confidence: "low",
         data: {
-          contentStrategy: { platforms: [], themes: [], postTypes: [] },
+          contentStrategy: { platforms: ["LinkedIn", "Instagram"], themes: ["Growth", "Case Studies", "Industry Insights"], postTypes: ["Image", "Carousel", "Video"] },
           creativeConcepts: [],
           competitors: [],
           linkedinOutreach: []

@@ -74,7 +74,13 @@ Ensure you provide at least 4 deep, highly researched insights for each category
     try {
       const result = await llm.invoke(prompt);
       const content = typeof result.content === "string" ? result.content : "";
-      const cleanJson = content.replace(/^```json/i, "").replace(/```$/i, "").trim();
+      let cleanJson = content.replace(/^```json/i, "").replace(/```$/i, "").trim();
+      const firstBrace = cleanJson.indexOf("{");
+      const lastBrace = cleanJson.lastIndexOf("}");
+      if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+        cleanJson = cleanJson.slice(firstBrace, lastBrace + 1);
+      }
+      cleanJson = cleanJson.replace(/,\s*([}\]])/g, "$1");
       const parsed: RdInsights = JSON.parse(cleanJson);
 
       return {

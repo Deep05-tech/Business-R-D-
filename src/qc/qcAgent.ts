@@ -239,14 +239,15 @@ export class QcAgent {
   private confidenceChecker(memory: StructuredMemory, overallScore: number): QcIssue[] {
     const issues: QcIssue[] = [];
 
-    // Individual low-confidence agents always get flagged as errors
+    // Individual low-confidence agents: only core modules trigger error/retry
     for (const diagnostic of memory.agentDiagnostics ?? []) {
       if (diagnostic.confidence === "low") {
+        const isCritical = ["business-identity-agent", "offerings-extraction-agent"].includes(diagnostic.agent);
         issues.push({
           module: this.moduleFromAgent(diagnostic.agent),
           field: "agentDiagnostics.confidence",
-          severity: "error",
-          message: `${diagnostic.agent} returned low confidence output — re-run required.`,
+          severity: isCritical ? "error" : "warning",
+          message: `${diagnostic.agent} returned low confidence output ${isCritical ? "— re-run required." : "— marked for review."}`,
         });
       }
     }

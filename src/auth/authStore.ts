@@ -1,4 +1,4 @@
-import { randomBytes, scrypt as scryptCallback, timingSafeEqual } from "node:crypto";
+import { createHmac, randomBytes, scrypt as scryptCallback, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
@@ -152,24 +152,84 @@ export class AuthStore {
     await writeFile(this.filePath, `${JSON.stringify([...this.users.values()], null, 2)}\n`, "utf8");
   }
 
+  private getSessionSecret(): string {
+    return (process.env.SESSION_SECRET || "business-rd-fixed-session-key-v2-2026").trim();
+  }
+
+  private createSignedToken(user: { username: string; role: UserRole; passwordHash: string }, expiresAt: number): string {
+    const payload = Buffer.from(JSON.stringify({
+      username: user.username,
+      role: user.role,
+      passwordHash: user.passwordHash,
+      expiresAt
+    })).toString("base64url");
+    const signature = createHmac("sha256", this.getSessionSecret()).update(payload).digest("base64url");
+    return `${payload}.${signature}`;
+  }
+
+  private verifySignedToken(token: string): { username: string; role?: UserRole; passwordHash?: string; expiresAt: number } | null {
+    try {
+      const parts = token.split(".");
+      if (parts.length !== 2) return null;
+      const [payload, signature] = parts;
+      const expectedSig = createHmac("sha256", this.getSessionSecret()).update(payload).digest("base64url");
+      if (signature !== expectedSig) return null;
+      const data = JSON.parse(Buffer.from(payload, "base64url").toString("utf8"));
+      if (typeof data.expiresAt !== "number" || data.expiresAt <= Date.now()) return null;
+      return data;
+    } catch {
+      return null;
+    }
+  }
+
   async authenticate(username: string, password: string): Promise<{ token: string; user: AuthUser } | null> {
     await this.initialize();
     const user = this.users.get(this.normalizeUsername(username));
     if (!user || !(await this.verifyPassword(password, user.passwordHash))) return null;
-    const token = randomBytes(32).toString("base64url");
-    this.sessions.set(token, { username: user.username, expiresAt: Date.now() + 1000 * 60 * 60 * 12 });
+    const expiresAt = Date.now() + 1000 * 60 * 60 * 24 * 7; // 7 days persistent session
+    const token = this.createSignedToken({ username: user.username, role: user.role, passwordHash: user.passwordHash }, expiresAt);
+    this.sessions.set(token, { username: user.username, expiresAt });
     return { token, user: this.publicUser(user) };
   }
 
   async getSession(token: string | undefined): Promise<AuthUser | null> {
     await this.initialize();
     if (!token) return null;
-    const session = this.sessions.get(token);
+
+    let session = this.sessions.get(token);
+    let tokenData: { username: string; role?: UserRole; passwordHash?: string; expiresAt: number } | null = null;
+    if (!session) {
+      // Memory cache miss (e.g. server redeployed or restarted). Verify signed cryptographic token!
+      tokenData = this.verifySignedToken(token);
+      if (tokenData) {
+        session = { username: tokenData.username, expiresAt: tokenData.expiresAt };
+        this.sessions.set(token, session);
+      }
+    }
+
     if (!session || session.expiresAt <= Date.now()) {
       if (session) this.sessions.delete(token);
       return null;
     }
-    const user = this.users.get(this.normalizeUsername(session.username));
+
+    let user = this.users.get(this.normalizeUsername(session.username));
+    if (!user) {
+      if (!tokenData) {
+        tokenData = this.verifySignedToken(token);
+      }
+      if (tokenData?.passwordHash) {
+        user = {
+          username: tokenData.username,
+          role: tokenData.role || "user",
+          passwordHash: tokenData.passwordHash,
+          createdAt: new Date().toISOString(),
+          assignedProjectUrls: []
+        };
+        this.users.set(this.normalizeUsername(user.username), user);
+        await this.persist();
+      }
+    }
+
     return user ? this.publicUser(user) : null;
   }
 

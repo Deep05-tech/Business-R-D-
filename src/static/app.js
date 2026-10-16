@@ -269,7 +269,35 @@ window.loadDashboardUsers = async function() {
     const response = await fetch('/api/admin/users');
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'Unable to load users.');
-    const users = data.users || [];
+    let users = data.users || [];
+
+    // Auto-restore custom users on platforms with ephemeral container filesystems (e.g. Render)
+    try {
+      const cached = JSON.parse(localStorage.getItem('managed_users_cache') || '[]');
+      if (Array.isArray(cached) && cached.length > 0) {
+        const existingSet = new Set(users.map(u => (u.username || '').toLowerCase()));
+        let needsRefresh = false;
+        for (const cu of cached) {
+          if (cu?.username && cu?.password && !existingSet.has(cu.username.toLowerCase())) {
+            const addRes = await fetch('/api/admin/users', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username: cu.username, password: cu.password, role: cu.role || 'user' })
+            });
+            if (addRes.ok) {
+              needsRefresh = true;
+              existingSet.add(cu.username.toLowerCase());
+            }
+          }
+        }
+        if (needsRefresh) {
+          const refreshed = await fetch('/api/admin/users');
+          const refData = await refreshed.json();
+          if (refData.users) users = refData.users;
+        }
+      }
+    } catch (_) {}
+
     if (count) count.textContent = users.length;
     const overviewCount = document.getElementById('admin-overview-user-count');
     if (overviewCount) overviewCount.textContent = users.length;
@@ -301,6 +329,12 @@ window.createDashboardUser = async function() {
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'Unable to add user.');
+    try {
+      const stored = JSON.parse(localStorage.getItem('managed_users_cache') || '[]');
+      const filtered = Array.isArray(stored) ? stored.filter(u => (u.username || '').toLowerCase() !== username.toLowerCase()) : [];
+      filtered.push({ username, password, role });
+      localStorage.setItem('managed_users_cache', JSON.stringify(filtered));
+    } catch (_) {}
     document.getElementById('admin-user-form')?.reset();
     window.showSuccess(`User ${data.user.username} added.`);
     await window.loadDashboardUsers();
@@ -316,6 +350,11 @@ window.deleteDashboardUser = async function(encodedUsername) {
     const response = await fetch(`/api/admin/users/${encodeURIComponent(username)}`, { method: 'DELETE' });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'Unable to remove user.');
+    try {
+      const stored = JSON.parse(localStorage.getItem('managed_users_cache') || '[]');
+      const filtered = Array.isArray(stored) ? stored.filter(u => (u.username || '').toLowerCase() !== username.toLowerCase()) : [];
+      localStorage.setItem('managed_users_cache', JSON.stringify(filtered));
+    } catch (_) {}
     window.showSuccess(`User ${username} removed.`);
     await window.loadDashboardUsers();
   } catch (error) { window.showSuccess(error.message || 'Unable to remove user.'); }
