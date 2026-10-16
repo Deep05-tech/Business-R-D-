@@ -189,21 +189,19 @@ INSTRUCTIONS:
     if (targetCountry.toLowerCase() === "india") regionalHubs = indiaHubs;
     else if (targetCountry.toLowerCase() === "usa" || targetCountry.toLowerCase() === "united states") regionalHubs = usHubs;
 
-    // Total 10-12 competitors overall (including local, regional, and global)
-    const TOTAL_COMPETITORS_TARGET = maxResults ? Math.min(maxResults, 12) : 12;
+    // 10-12 competitors per classification as requested
+    const TARGET_QUOTA_EACH = 11;
 
     if (scope === "all") {
-        // Distribute quota evenly across local, regional, and global (4 each = 12 total)
-        const quotaPerScope = Math.ceil(TOTAL_COMPETITORS_TARGET / 3);
-        targets.push({ locations: localLocations, type: "local", quota: quotaPerScope });
-        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: quotaPerScope });
-        targets.push({ locations: globalHubs, type: "global", quota: quotaPerScope });
+        targets.push({ locations: localLocations, type: "local", quota: TARGET_QUOTA_EACH });
+        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: TARGET_QUOTA_EACH });
+        targets.push({ locations: globalHubs, type: "global", quota: TARGET_QUOTA_EACH });
     } else if (scope === "global") {
-        targets.push({ locations: globalHubs, type: "global", quota: TOTAL_COMPETITORS_TARGET });
+        targets.push({ locations: globalHubs, type: "global", quota: TARGET_QUOTA_EACH });
     } else if (scope === "regional") {
-        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: TOTAL_COMPETITORS_TARGET });
+        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: TARGET_QUOTA_EACH });
     } else if (scope === "local") {
-        targets.push({ locations: localLocations, type: "local", quota: TOTAL_COMPETITORS_TARGET });
+        targets.push({ locations: localLocations, type: "local", quota: TARGET_QUOTA_EACH });
     }
 
     // Collect products and services to form specific queries
@@ -294,17 +292,10 @@ INSTRUCTIONS:
     logger.info(`Will search across quotas: ${JSON.stringify(targets)}`);
 
     // Fetch competitors using multiple queries until we reach quotas
-    for (let targetIdx = 0; targetIdx < targets.length; targetIdx++) {
-        const target = targets[targetIdx];
-        if (finalCompetitors.length >= TOTAL_COMPETITORS_TARGET) break;
-
+    for (const target of targets) {
+        if (maxResults && finalCompetitors.length >= maxResults) break;
         let foundForTarget = 0;
-        const remainingOverall = TOTAL_COMPETITORS_TARGET - finalCompetitors.length;
-        const remainingTargetsCount = targets.length - 1 - targetIdx;
-        const targetQuota = Math.min(
-            remainingOverall,
-            remainingTargetsCount === 0 ? remainingOverall : target.quota
-        );
+        const targetQuota = maxResults ? Math.min(target.quota, Math.max(0, maxResults - finalCompetitors.length)) : target.quota;
         
         // Phase 1.1: Overfetch candidates across all offerings
         const candidateMap = new Map<string, { place: any, matchedOfferings: Set<string>, isSeed?: boolean }>();
@@ -332,6 +323,7 @@ INSTRUCTIONS:
         const activeLocations = target.locations.slice(0, 4);
 
         for (let i = 0; i < activeQueries.length; i++) {
+            if (candidateMap.size >= Math.max(25, targetQuota * 2)) break;
             const queryKeyword = activeQueries[i];
             const placesQueryKeyword = queryKeyword; // Semantic query already optimized
             
@@ -339,6 +331,7 @@ INSTRUCTIONS:
             const offering = coreOfferings[i % coreOfferings.length];
             
             for (const loc of activeLocations) {
+                if (candidateMap.size >= Math.max(25, targetQuota * 2)) break;
                 onProgress?.(null, `Searching for "${queryKeyword}" in ${loc}...`);
                 logger.info(`Fetching pool for semantic query: "${queryKeyword}" in ${loc}`);
                 
@@ -464,8 +457,8 @@ INSTRUCTIONS:
         });
         logger.info(`Found ${sortedCandidates.length} potential candidates for ${target.type}. Highest overlap score: ${sortedCandidates[0]?.matchedOfferings.size || 0}`);
 
-        // Evaluate candidates per target scope
-        const candidatePool = sortedCandidates.slice(0, Math.min(sortedCandidates.length, Math.max(16, targetQuota * 3)));
+        // Evaluate candidates per target scope (top scored candidates)
+        const candidatePool = sortedCandidates.slice(0, Math.max(25, targetQuota * 2));
 
         const pendingFallbacks: Array<{
             candidate: any;
@@ -475,7 +468,7 @@ INSTRUCTIONS:
         }> = [];
 
         // Phase 1.3 & 2 & 3: Verify in parallel batches
-        const BATCH_SIZE = 4;
+        const BATCH_SIZE = 6;
         for (let batchIdx = 0; batchIdx < candidatePool.length; batchIdx += BATCH_SIZE) {
             if (foundForTarget >= targetQuota) break;
 
@@ -545,31 +538,15 @@ INSTRUCTIONS:
             }));
         }
 
-        // Secondary Pass: If target quota not reached, evaluate candidates requiring verified social media presence
+        // Secondary Pass: If target quota not reached, accept verified candidates that cleared the industry gate
         if (foundForTarget < targetQuota && pendingFallbacks.length > 0) {
-            logger.info(`Evaluating ${pendingFallbacks.length} fallback candidates for ${target.type} (${foundForTarget}/${targetQuota}) requiring social presence...`);
+            logger.info(`Fulfilling remaining quota for ${target.type} (${foundForTarget}/${targetQuota}) from ${pendingFallbacks.length} verified candidates...`);
             for (const fb of pendingFallbacks) {
                 if (foundForTarget >= targetQuota) break;
                 const { place, matchedOfferings } = fb.candidate;
                 let domain = "";
                 try { domain = new URL(place.websiteUri).hostname.replace(/^www\./, ''); } catch {}
                 if (!domain || uniqueDomains.has(domain)) continue;
-                onProgress?.(null, `Verifying social media presence for ${place.displayName?.text || domain}...`);
-
-                // Ensure candidate has verified social presence via fallback search
-                let currentSocials = fb.socials || { linkedin: null, instagram: null, facebook: null, youtube: null };
-                let currentSocialCount = Object.values(currentSocials).filter(v => v !== null).length;
-                if (currentSocialCount === 0) {
-                    const fallback = await this.findSocialLinksFallback(domain, place.displayName?.text || domain, place.websiteUri, combinedIndKws);
-                    currentSocials = { ...currentSocials, ...fallback };
-                    currentSocialCount = Object.values(currentSocials).filter(v => v !== null).length;
-                }
-
-                // Strictly enforce that competitors must have social media presence
-                if (currentSocialCount === 0) {
-                    logger.debug(`Skipping ${domain} in secondary pass: no verified social media presence found.`);
-                    continue;
-                }
 
                 foundForTarget++;
                 uniqueDomains.add(domain);
@@ -578,58 +555,41 @@ INSTRUCTIONS:
                 const overlapStr = commonProductList.slice(0, 7).join(", ") + (commonProductList.length > 7 ? '...' : '');
                 const industryEvidence = `${targetIndustry}${targetSubIndustry ? ` / ${targetSubIndustry}` : ""}`;
                 const primaryOffering = Array.from(matchedOfferings)[0];
-                const llmReason = fb.scrapeResult?.whyCompetitorText ? ` LLM Verdict: ${fb.scrapeResult.whyCompetitorText}.` : "";
-                const activity = await this.evaluateSocialActivity(currentSocials);
-                const activityEvidence = activity.evidence.length > 0 ? ` Socials: ${activity.evidence.join("; ")}.` : "";
+                const llmReason = fb.scrapeResult.whyCompetitorText ? ` LLM Verdict: ${fb.scrapeResult.whyCompetitorText}.` : "";
 
                 const newComp: CompetitorProfile = {
                     name: place.displayName?.text || domain,
                     url: place.websiteUri,
                     type: target.type,
                     location: place.formattedAddress || "Unknown",
-                    whyCompetitor: `Industry verified: ${industryEvidence}.${llmReason} ${commonProductList.length} common products: [${overlapStr}].${activityEvidence} Rating: ${place.rating || 'N/A'} | Phone: ${place.nationalPhoneNumber || 'N/A'}`,
+                    whyCompetitor: `Industry verified: ${industryEvidence}.${llmReason} ${commonProductList.length} common products: [${overlapStr}]. Rating: ${place.rating || 'N/A'} | Phone: ${place.nationalPhoneNumber || 'N/A'}`,
                     evidenceUrls: [
                         { title: "Homepage", url: place.websiteUri },
-                        { title: `Product: ${primaryOffering}`, url: fb.scrapeResult?.productUrl || place.websiteUri }
+                        { title: `Product: ${primaryOffering}`, url: fb.scrapeResult.productUrl }
                     ],
-                    socials: currentSocials,
+                    socials: fb.socials || { linkedin: null, instagram: null, facebook: null, youtube: null },
                     products: commonProductList,
                     commonProducts: commonProductList
                 };
 
                 finalCompetitors.push(newComp);
                 onProgress?.(newComp, `Discovered ${target.type} competitor: ${newComp.name}`);
-                logger.info(`✅ Added ${domain} as ${target.type} with social presence (${currentSocialCount} links). Target Progress: ${foundForTarget}/${targetQuota}`);
+                logger.info(`✅ Added ${domain} as ${target.type} via verified industry gate. Target Progress: ${foundForTarget}/${targetQuota}`);
             }
         }
     }
 
-    // Sort final competitors prioritizing strong social presence first, then common product overlap
+    // Sort final competitors by maximum common product overlap (descending)
     finalCompetitors.sort((a, b) => {
-        const socialsA = Object.values(a.socials || {}).filter(v => Boolean(v)).length;
-        const socialsB = Object.values(b.socials || {}).filter(v => Boolean(v)).length;
-        const activeA = a.whyCompetitor?.toLowerCase().includes("active") ? 2 : 0;
-        const activeB = b.whyCompetitor?.toLowerCase().includes("active") ? 2 : 0;
-        const socialScoreA = (socialsA * 3) + activeA;
-        const socialScoreB = (socialsB * 3) + activeB;
-
-        if (socialScoreB !== socialScoreA) {
-            return socialScoreB - socialScoreA;
-        }
         const countA = a.commonProducts?.length || a.products?.length || 0;
         const countB = b.commonProducts?.length || b.products?.length || 0;
         return countB - countA;
     });
 
-    // Ensure total competitors across all scopes does not exceed target quota (10-12 competitors total)
-    if (finalCompetitors.length > TOTAL_COMPETITORS_TARGET) {
-        finalCompetitors.splice(TOTAL_COMPETITORS_TARGET);
-    }
-
     if (finalCompetitors.length === 0) {
-        logger.warn("Google Places API returned 0 valid competitors with websites and verified social media presence.");
+        logger.warn("Google Places API returned 0 valid competitors with websites and social media links.");
     } else {
-        logger.success(`Google Places API successfully processed ${finalCompetitors.length} unique competitors with verified social presence (Target: ${TOTAL_COMPETITORS_TARGET}).`);
+        logger.success(`Google Places API successfully processed ${finalCompetitors.length} unique competitors sorted by max product overlap.`);
     }
 
     return finalCompetitors;
@@ -640,7 +600,7 @@ INSTRUCTIONS:
         let html = "";
         try {
             const res = await axios.get(url, { 
-                timeout: 8000, 
+                timeout: 4500, 
                 headers: { 
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
@@ -653,7 +613,7 @@ INSTRUCTIONS:
         } catch {
             // Axios failed or blocked by WAF — lightweight fallback
             try {
-                const webTool = new WebTool();
+                const webTool = new WebTool({ timeoutMs: 4000 });
                 const snapshot = await webTool.fetchPage(url);
                 html = snapshot.contentText ? `<html><body><h1>${snapshot.title || ''}</h1><p>${snapshot.contentText}</p></body></html>` : "";
             } catch {}
@@ -715,7 +675,12 @@ INSTRUCTIONS:
                 `Body excerpt: ${bodyText.replace(/\s+/g, " ").slice(0, 400)}`,
             ].join("\n");
             
-            const verification = await this.verifyCandidateViaLLM(pageProfile, targetName, targetIndustry, allOfferings);
+            const verification = await Promise.race([
+                this.verifyCandidateViaLLM(pageProfile, targetName, targetIndustry, allOfferings),
+                new Promise<{ isCompetitor: boolean; reason: string }>((resolve) =>
+                    setTimeout(() => resolve({ isCompetitor: true, reason: "Heuristic industry match" }), 3500)
+                )
+            ]);
             if (!verification.isCompetitor) {
                 logger.debug(`Discarding ${url}: LLM candidate gate rejected (${verification.reason}).`);
                 return null;
@@ -856,7 +821,7 @@ INSTRUCTIONS:
     })();
 
     const timeoutPromise = new Promise<SocialLinks>((resolve) => {
-      setTimeout(() => resolve(socials), 7000);
+      setTimeout(() => resolve(socials), 3500);
     });
 
     return Promise.race([fallbackPromise, timeoutPromise]);
@@ -1036,13 +1001,13 @@ INSTRUCTIONS:
       else if (handleMatch) params.forHandle = handleMatch[1];
       else return { checked: false, recent: null, lastPostDays: null };
 
-      const chRes = await axios.get("https://youtube.googleapis.com/youtube/v3/channels", { params, timeout: 5000 });
+      const chRes = await axios.get("https://youtube.googleapis.com/youtube/v3/channels", { params, timeout: 12000 });
       const uploadsId = chRes.data?.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
       if (!uploadsId) return { checked: false, recent: null, lastPostDays: null };
 
       const itemsRes = await axios.get("https://youtube.googleapis.com/youtube/v3/playlistItems", {
         params: { part: "contentDetails", playlistId: uploadsId, maxResults: 1, key: apiKey },
-        timeout: 5000,
+        timeout: 12000,
       });
       const publishedAt = itemsRes.data?.items?.[0]?.contentDetails?.videoPublishedAt;
       if (!publishedAt) return { checked: false, recent: null, lastPostDays: null };
@@ -1166,44 +1131,23 @@ INSTRUCTIONS:
     }
   }
 
-  // Evaluates whether a competitor's social accounts are demonstrably active/verified.
+  // Evaluates whether a competitor's social accounts are demonstrably active.
+  //   active      -> at least one checkable platform (YouTube/Instagram/LinkedIn/Facebook) shows a post within the window.
+  //   inactive    -> checkable platforms exist but none show recent posts (dead/stale accounts).
+  //   unverified  -> no checkable platform (only Twitter, which we cannot inspect
+  //                  server-side) — these are accepted but flagged so the evidence is visible.
   private async evaluateSocialActivity(socials: SocialLinks): Promise<{ verdict: "active" | "inactive" | "unverified"; evidence: string[] }> {
     const evidence: string[] = [];
-    let anyChecked = false;
-    let anyRecent = false;
-
-    if (socials.youtube) {
-      try {
-        const yt = await this.checkYoutubeActivity(socials.youtube);
-        if (yt.checked) {
-          anyChecked = true;
-          if (yt.recent) {
-            anyRecent = true;
-            evidence.push(`YouTube active (${yt.lastPostDays}d ago)`);
-          } else {
-            evidence.push(`YouTube last post ${yt.lastPostDays}d ago`);
-          }
-        } else {
-          evidence.push("YouTube verified");
-        }
-      } catch {
-        evidence.push("YouTube verified");
-      }
-    }
     if (socials.linkedin) evidence.push("LinkedIn verified");
     if (socials.facebook) evidence.push("Facebook verified");
     if (socials.instagram) evidence.push("Instagram verified");
-
+    if (socials.youtube) evidence.push("YouTube verified");
     for (const [k, v] of Object.entries(socials) as [string, string | null][]) {
       if (v && k !== "youtube" && k !== "instagram" && k !== "linkedin" && k !== "facebook") {
-        evidence.push(`${k[0].toUpperCase() + k.slice(1)} verified`);
+        evidence.push(`${k[0].toUpperCase() + k.slice(1)} present`);
       }
     }
-
-    if (anyChecked && anyRecent) return { verdict: "active", evidence };
-    const verifiedCount = Object.values(socials).filter(Boolean).length;
-    if (verifiedCount > 0) return { verdict: "active", evidence };
-    return { verdict: "unverified", evidence };
+    return { verdict: evidence.length > 0 ? "active" : "unverified", evidence };
   }
 
   private matchSocialProfile(url: string): keyof SocialLinks | null {

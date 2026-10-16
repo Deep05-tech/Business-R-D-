@@ -1013,14 +1013,15 @@ app.post("/api/competitors-stream", async (request, response) => {
   }
 
   try {
-    const liveCompetitors: any[] = [];
     const competitors = await competitorAgent.run(memory, scope || "regional", (comp, statusMsg) => {
       if (!response.writableEnded) {
         if (comp) {
-          liveCompetitors.push(comp);
-          memory.competitors = [...liveCompetitors];
-          knowledgeIndex.add(memory);
-          logger.info(`[CompetitorStream] Discovered: ${comp.name} (${comp.type || 'competitor'}) - Total: ${liveCompetitors.length}`);
+          if (!memory.competitors) memory.competitors = [];
+          if (!memory.competitors.some((c: any) => c.url === comp.url)) {
+            memory.competitors.push(comp);
+            memoryStore.save(memory).catch(() => {});
+            knowledgeIndex.add(memory);
+          }
           response.write(`data: ${JSON.stringify({ type: 'competitor', competitor: comp, status: statusMsg })}\n\n`);
         } else {
           response.write(`data: ${JSON.stringify({ type: 'progress', status: statusMsg })}\n\n`);

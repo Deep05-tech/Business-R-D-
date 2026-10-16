@@ -1328,34 +1328,7 @@ window.findCompetitors = async function(force = false) {
   document.getElementById('btn-regen-comp').style.display = 'none';
   
   const scope = document.getElementById('comp-scope').value;
-  const liveStreamCompetitors = [];
-
-  const renderLiveCards = () => {
-    const liveCardsContainer = document.getElementById('live-comp-cards');
-    if (!liveCardsContainer) return;
-    const localComps = liveStreamCompetitors.filter(c => c.type === 'local');
-    const regionalComps = liveStreamCompetitors.filter(c => c.type === 'regional');
-    const globalComps = liveStreamCompetitors.filter(c => c.type === 'global');
-    const otherComps = liveStreamCompetitors.filter(c => !['local', 'regional', 'global'].includes(c.type));
-    let html = '';
-    if (localComps.length > 0) {
-      html += `<div style="grid-column: 1 / -1; margin-top:10px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px;">🌍 Local Competitors (${localComps.length})</h3></div>`;
-      html += localComps.map(window.renderCompetitorCard).join('');
-    }
-    if (regionalComps.length > 0) {
-      html += `<div style="grid-column: 1 / -1; margin-top:20px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px;">🏭 Regional & National Competitors (${regionalComps.length})</h3></div>`;
-      html += regionalComps.map(window.renderCompetitorCard).join('');
-    }
-    if (globalComps.length > 0) {
-      html += `<div style="grid-column: 1 / -1; margin-top:20px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px;">🌐 Global Leaders (${globalComps.length})</h3></div>`;
-      html += globalComps.map(window.renderCompetitorCard).join('');
-    }
-    if (otherComps.length > 0) {
-      html += `<div style="grid-column: 1 / -1; margin-top:20px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px;">🏢 Discovered Competitors (${otherComps.length})</h3></div>`;
-      html += otherComps.map(window.renderCompetitorCard).join('');
-    }
-    liveCardsContainer.innerHTML = html;
-  };
+  const liveCompetitors = [];
 
   try {
     const res = await fetch('/api/competitors-stream', {
@@ -1397,15 +1370,22 @@ window.findCompetitors = async function(force = false) {
               if (statusEl && data.status) statusEl.innerText = data.status;
             }
             if (data.type === 'competitor' && data.competitor) {
-              const comp = data.competitor;
-              if (!liveStreamCompetitors.some(existing => existing.url === comp.url)) {
-                liveStreamCompetitors.push(comp);
-              }
+              liveCompetitors.push(data.competitor);
               const statusEl = document.getElementById('comp-agent-status');
               if (statusEl) {
-                statusEl.innerText = data.status || `Found ${comp.type || ''} competitor: ${comp.name} (${liveStreamCompetitors.length} discovered)`;
+                const localCount = liveCompetitors.filter(c => c.type === 'local').length;
+                const regCount = liveCompetitors.filter(c => c.type === 'regional').length;
+                const globCount = liveCompetitors.filter(c => c.type === 'global').length;
+                statusEl.innerText = `Discovered ${liveCompetitors.length} competitors (${localCount} local, ${regCount} regional, ${globCount} global) — Latest: ${data.competitor.name}`;
               }
-              renderLiveCards();
+              const liveCardsContainer = document.getElementById('live-comp-cards');
+              if (liveCardsContainer) {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = window.renderCompetitorCard(data.competitor);
+                if (tempDiv.firstElementChild) {
+                  liveCardsContainer.prepend(tempDiv.firstElementChild);
+                }
+              }
             }
             if (data.type === 'complete') {
               window.showSuccess("Competitors successfully extracted!");
