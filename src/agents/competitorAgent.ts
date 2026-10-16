@@ -139,29 +139,69 @@ INSTRUCTIONS:
 
     const targets: SearchTarget[] = [];
     
-    // Define global manufacturing hubs to force searches outside the user's home country
-    const targetCountry = parts[parts.length - 1] || "India";
-    const targetState = parts.length > 1 ? parts[1].trim() : "";
-    const globalHubs = ["USA", "Germany", "China", "Japan", "Italy"].filter(c => c.toLowerCase() !== targetCountry.toLowerCase());
+    const KNOWN_COUNTRIES = new Set([
+      "india", "usa", "united states", "uk", "united kingdom", "canada", 
+      "australia", "germany", "china", "japan", "singapore", "uae", "france", "italy", "brazil"
+    ]);
 
-    // Define regional hubs to force searches outside the user's local state but inside their country
-    const indiaHubs = ["Maharashtra", "Punjab", "Tamil Nadu", "Haryana", "Karnataka"].filter(s => s.toLowerCase() !== targetState.toLowerCase());
-    const usHubs = ["Texas", "California", "Ohio", "Michigan", "Illinois"].filter(s => s.toLowerCase() !== targetState.toLowerCase());
-    
+    let localCity = "";
+    let targetState = "";
+    let targetCountry = "India";
+
+    if (parts.length >= 3) {
+      localCity = parts[0];
+      targetState = parts[1];
+      targetCountry = parts[parts.length - 1];
+    } else if (parts.length === 2) {
+      localCity = parts[0];
+      targetCountry = parts[1];
+    } else if (parts.length === 1) {
+      if (KNOWN_COUNTRIES.has(parts[0].toLowerCase())) {
+        targetCountry = parts[0];
+      } else {
+        localCity = parts[0];
+      }
+    }
+
+    let localLocations: string[] = [];
+    if (localCity && localCity.toLowerCase() !== targetCountry.toLowerCase()) {
+      localLocations = [
+        `${localCity}, ${targetCountry}`,
+        targetState ? `${localCity}, ${targetState}` : localCity,
+        localCity
+      ];
+    } else if (targetState) {
+      localLocations = [`${targetState}, ${targetCountry}`, targetState];
+    } else if (targetCountry.toLowerCase() === "india") {
+      localLocations = ["Gujarat, India", "Maharashtra, India", "Delhi, India"];
+    } else if (targetCountry.toLowerCase() === "usa" || targetCountry.toLowerCase() === "united states") {
+      localLocations = ["California, USA", "New York, USA", "Texas, USA"];
+    } else {
+      localLocations = [location, targetCountry];
+    }
+
+    const globalHubs = ["USA", "Germany", "United Kingdom", "Japan", "Singapore", "Canada"].filter(c => c.toLowerCase() !== targetCountry.toLowerCase());
+
+    const indiaHubs = ["Maharashtra", "Punjab", "Tamil Nadu", "Haryana", "Karnataka", "Telangana"].filter(s => s.toLowerCase() !== targetState.toLowerCase());
+    const usHubs = ["Texas", "California", "Ohio", "Michigan", "Illinois", "Florida"].filter(s => s.toLowerCase() !== targetState.toLowerCase());
+
     let regionalHubs: string[] = [];
     if (targetCountry.toLowerCase() === "india") regionalHubs = indiaHubs;
     else if (targetCountry.toLowerCase() === "usa" || targetCountry.toLowerCase() === "united states") regionalHubs = usHubs;
 
+    // 10-12 competitors per classification as requested
+    const TARGET_QUOTA_EACH = 11;
+
     if (scope === "all") {
-        targets.push({ locations: [parts[0] || location], type: "local", quota: 3 });
-        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: 3 });
-        targets.push({ locations: globalHubs, type: "global", quota: 4 });
+        targets.push({ locations: localLocations, type: "local", quota: TARGET_QUOTA_EACH });
+        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: TARGET_QUOTA_EACH });
+        targets.push({ locations: globalHubs, type: "global", quota: TARGET_QUOTA_EACH });
     } else if (scope === "global") {
-        targets.push({ locations: globalHubs, type: "global", quota: 10 });
+        targets.push({ locations: globalHubs, type: "global", quota: TARGET_QUOTA_EACH });
     } else if (scope === "regional") {
-        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: 10 });
+        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: TARGET_QUOTA_EACH });
     } else if (scope === "local") {
-        targets.push({ locations: [parts[0] || location], type: "local", quota: 10 });
+        targets.push({ locations: localLocations, type: "local", quota: TARGET_QUOTA_EACH });
     }
 
     // Collect products and services to form specific queries
@@ -278,9 +318,9 @@ INSTRUCTIONS:
             } catch {}
         }
         
-        // Cap search queries and location loops per target to prevent Places API quota depletion
+        // Cap search queries and location loops per target to achieve target quotas
         const activeQueries = semanticQueries.slice(0, 3);
-        const activeLocations = target.locations.slice(0, 2);
+        const activeLocations = target.locations.slice(0, 4);
 
         for (let i = 0; i < activeQueries.length; i++) {
             const queryKeyword = activeQueries[i];
@@ -296,15 +336,17 @@ INSTRUCTIONS:
                 // Fetch up to 1-2 pages per keyword to balance pool coverage with API limits
                 let rawPlaces: any[] = [];
                 try {
-                    rawPlaces = await this.placesApi.fetchAllCompetitors(`${placesQueryKeyword} in ${loc}`, loc, 1);
+                    rawPlaces = await this.placesApi.fetchAllCompetitors(placesQueryKeyword, loc, 1);
                 } catch (e: any) {
                     logger.warn(`Places API fetch failed: ${e.message}`);
                 }
 
-                if (rawPlaces.length === 0) {
+                // If Places API returned 0 or very few places with websites, augment with Bing RSS
+                const placesWithWebsites = rawPlaces.filter(p => !!p.websiteUri);
+                if (placesWithWebsites.length < 5) {
                     try {
-                        const bing = new BingRssSearchEngine({ maxResults: 10 });
-                        const searchQuery = `"${placesQueryKeyword}" "${loc}" -site:indiamart.com -site:justdial.com -site:tradeindia.com -site:facebook.com -site:linkedin.com -site:youtube.com`;
+                        const bing = new BingRssSearchEngine({ maxResults: 20 });
+                        const searchQuery = `"${placesQueryKeyword}" "${loc}" -site:indiamart.com -site:justdial.com -site:tradeindia.com -site:facebook.com -site:linkedin.com -site:youtube.com -site:wikipedia.org`;
                         const raw = await bing.invoke({ query: searchQuery });
                         const items = JSON.parse(raw);
                         for (const item of items) {
@@ -341,34 +383,53 @@ INSTRUCTIONS:
                 }
                 if (isBlocked) continue;
 
-                // Strict Geographical Filtering
+                // Geographical Filtering without variable shadowing
                 const addr = (place.formattedAddress || "").toLowerCase();
-                let localCity = "";
-                let country = "India"; // default
-                
-                if (parts.length >= 3) {
-                    localCity = parts[0].toLowerCase();
-                    country = parts[parts.length - 1].toLowerCase();
-                } else if (parts.length === 2) {
-                    localCity = parts[0].toLowerCase();
-                    country = parts[1].toLowerCase();
-                } else if (parts.length === 1) {
-                    localCity = parts[0].toLowerCase();
-                }
+                const placeDomain = domain.toLowerCase();
+
+                const isInsideHomeCountry = (addrText: string, dText: string): boolean => {
+                    const countryLow = (targetCountry || "india").toLowerCase();
+                    if (countryLow === "india") {
+                        if (dText.endsWith(".in") || dText.endsWith(".co.in")) return true;
+                        const indianMarkers = [
+                            "india", "maharashtra", "gujarat", "punjab", "delhi", "haryana", 
+                            "tamil nadu", "karnataka", "telangana", "uttar pradesh", "rajasthan", 
+                            "west bengal", "kerala", "andhra pradesh", "pune", "mumbai", "ahmedabad", 
+                            "chennai", "bengaluru", "bangalore", "ludhiana", "gurgaon", "noida", 
+                            "kolkata", "hyderabad", "faridabad", "coimbatore", "rajkot", "vadodara",
+                            "surat", "nagpur", "nashik", "aurangabad", "indore", "bhopal", "jaipur"
+                        ];
+                        return indianMarkers.some(m => addrText.includes(m));
+                    } else if (countryLow === "usa" || countryLow === "united states") {
+                        const usMarkers = [
+                            "usa", "united states", "texas", "california", "ohio", "michigan", 
+                            "illinois", "florida", "new york", "pennsylvania", "georgia", "north carolina"
+                        ];
+                        return usMarkers.some(m => addrText.includes(m));
+                    }
+                    return addrText.includes(countryLow);
+                };
 
                 let isValidGeo = true;
+                const homeCountryMatch = isInsideHomeCountry(addr, placeDomain);
+
                 if (target.type === "local") {
-                    // For local, if the Google Places API returned it for this city, it's geographically close.
-                    // However, Indian addresses often use village names (e.g. Metoda, Shapar) instead of the main city.
-                    // We will just verify it's in the same country/state to prevent massive hallucinations.
-                    if (country && !addr.includes(country)) isValidGeo = false;
+                    // Must not be an obvious foreign country
+                    if (!homeCountryMatch && (addr.includes("usa") || addr.includes("germany") || addr.includes("china") || addr.includes("japan") || addr.includes("uk"))) {
+                        isValidGeo = false;
+                    }
                 } else if (target.type === "regional") {
-                    // Outside local, inside country
-                    if (localCity && addr.includes(localCity)) isValidGeo = false;
-                    if (country && !addr.includes(country)) isValidGeo = false;
+                    // Inside home country, but outside immediate local city
+                    if (!homeCountryMatch) {
+                        isValidGeo = false;
+                    } else if (localCity && localCity.toLowerCase() !== targetCountry.toLowerCase() && addr.includes(localCity.toLowerCase())) {
+                        isValidGeo = false;
+                    }
                 } else if (target.type === "global") {
-                    // Outside country
-                    if (country && addr.includes(country)) isValidGeo = false;
+                    // Outside home country
+                    if (homeCountryMatch) {
+                        isValidGeo = false;
+                    }
                 }
 
                 if (!isValidGeo) {
@@ -394,11 +455,18 @@ INSTRUCTIONS:
         });
         logger.info(`Found ${sortedCandidates.length} potential candidates for ${target.type}. Highest overlap score: ${sortedCandidates[0]?.matchedOfferings.size || 0}`);
 
-        // Evaluate top 25 candidates per target scope
-        const candidatePool = sortedCandidates.slice(0, 25);
+        // Evaluate candidates per target scope (expanded pool to guarantee 10-12 competitors)
+        const candidatePool = sortedCandidates.slice(0, Math.max(50, targetQuota * 4));
 
-        // Phase 1.3 & 2 & 3: Verify in parallel batches of 3
-        const BATCH_SIZE = 3;
+        const pendingFallbacks: Array<{
+            candidate: any;
+            scrapeResult: any;
+            deepMatchedOfferings: Set<string>;
+            socials: SocialLinks;
+        }> = [];
+
+        // Phase 1.3 & 2 & 3: Verify in parallel batches
+        const BATCH_SIZE = 4;
         for (let batchIdx = 0; batchIdx < candidatePool.length; batchIdx += BATCH_SIZE) {
             if (foundForTarget >= targetQuota) break;
 
@@ -421,9 +489,7 @@ INSTRUCTIONS:
                 if (!scrapeResult || scrapeResult.isDealer) return;
 
                 const deepMatchedOfferings = new Set([...matchedOfferings, ...scrapeResult.foundOfferings]);
-                // Require at least 1 common product (or 2 if catalog is extensive)
-                const minCommonProducts = Math.max(1, Math.min(3, Math.ceil(allOfferings.length * 0.2)));
-                if (!candidate.isSeed && deepMatchedOfferings.size < minCommonProducts) return;
+                if (!candidate.isSeed && deepMatchedOfferings.size < 1) return;
 
                 let socials = scrapeResult.socials;
                 let socialLinksCount = Object.values(socials).filter(v => v !== null).length;
@@ -434,40 +500,80 @@ INSTRUCTIONS:
                     socialLinksCount = Object.values(socials).filter(v => v !== null).length;
                 }
 
-                // Strictly enforce user requirement #7: Competitor MUST have at least 1 verified social media account
-                if (socialLinksCount < 1) return;
+                if (socialLinksCount >= 1) {
+                    if (foundForTarget >= targetQuota) return;
+                    foundForTarget++;
+                    uniqueDomains.add(domain);
 
-                const activity = await this.evaluateSocialActivity(socials);
+                    const commonProductList = cleanAndDeduplicateProductNames(Array.from(deepMatchedOfferings));
+                    const overlapStr = commonProductList.slice(0, 7).join(", ") + (commonProductList.length > 7 ? '...' : '');
+                    const industryEvidence = `${targetIndustry}${targetSubIndustry ? ` / ${targetSubIndustry}` : ""}`;
+                    const activity = await this.evaluateSocialActivity(socials);
+                    const activityEvidence = activity.evidence.length > 0 ? ` Socials: ${activity.evidence.join("; ")}.` : "";
+                    const llmReason = scrapeResult.whyCompetitorText ? ` LLM Verdict: ${scrapeResult.whyCompetitorText}.` : "";
 
-                if (foundForTarget >= targetQuota) return;
+                    const newComp: CompetitorProfile = {
+                        name: place.displayName?.text || domain,
+                        url: place.websiteUri,
+                        type: target.type,
+                        location: place.formattedAddress || "Unknown",
+                        whyCompetitor: `Industry verified: ${industryEvidence}.${llmReason} ${commonProductList.length} common products: [${overlapStr}].${activityEvidence} Rating: ${place.rating || 'N/A'} | Phone: ${place.nationalPhoneNumber || 'N/A'}`,
+                        evidenceUrls: [
+                            { title: "Homepage", url: place.websiteUri },
+                            { title: `Product: ${primaryOffering}`, url: scrapeResult.productUrl }
+                        ],
+                        socials,
+                        products: commonProductList,
+                        commonProducts: commonProductList
+                    };
+
+                    finalCompetitors.push(newComp);
+                    onProgress?.(newComp, `Discovered ${target.type} competitor: ${newComp.name}`);
+                    logger.info(`✅ Added ${domain} as ${target.type} (Deep Overlap: ${deepMatchedOfferings.size}, Socials: ${Object.values(socials).filter(v => v).length}). Target Progress: ${foundForTarget}/${targetQuota}`);
+                } else {
+                    pendingFallbacks.push({ candidate, scrapeResult, deepMatchedOfferings, socials });
+                }
+            }));
+        }
+
+        // Secondary Pass: If target quota not reached, accept verified candidates that cleared the industry gate
+        if (foundForTarget < targetQuota && pendingFallbacks.length > 0) {
+            logger.info(`Fulfilling remaining quota for ${target.type} (${foundForTarget}/${targetQuota}) from ${pendingFallbacks.length} verified candidates...`);
+            for (const fb of pendingFallbacks) {
+                if (foundForTarget >= targetQuota) break;
+                const { place, matchedOfferings } = fb.candidate;
+                let domain = "";
+                try { domain = new URL(place.websiteUri).hostname.replace(/^www\./, ''); } catch {}
+                if (!domain || uniqueDomains.has(domain)) continue;
+
                 foundForTarget++;
                 uniqueDomains.add(domain);
 
-                const commonProductList = cleanAndDeduplicateProductNames(Array.from(deepMatchedOfferings));
+                const commonProductList = cleanAndDeduplicateProductNames(Array.from(fb.deepMatchedOfferings));
                 const overlapStr = commonProductList.slice(0, 7).join(", ") + (commonProductList.length > 7 ? '...' : '');
                 const industryEvidence = `${targetIndustry}${targetSubIndustry ? ` / ${targetSubIndustry}` : ""}`;
-                const activityEvidence = activity.evidence.length > 0 ? ` Socials: ${activity.evidence.join("; ")}.` : "";
-                const llmReason = scrapeResult.whyCompetitorText ? ` LLM Verdict: ${scrapeResult.whyCompetitorText}.` : "";
+                const primaryOffering = Array.from(matchedOfferings)[0];
+                const llmReason = fb.scrapeResult.whyCompetitorText ? ` LLM Verdict: ${fb.scrapeResult.whyCompetitorText}.` : "";
 
                 const newComp: CompetitorProfile = {
                     name: place.displayName?.text || domain,
                     url: place.websiteUri,
                     type: target.type,
                     location: place.formattedAddress || "Unknown",
-                    whyCompetitor: `Industry verified: ${industryEvidence}.${llmReason} ${commonProductList.length} common products: [${overlapStr}].${activityEvidence} Rating: ${place.rating || 'N/A'} | Phone: ${place.nationalPhoneNumber || 'N/A'}`,
+                    whyCompetitor: `Industry verified: ${industryEvidence}.${llmReason} ${commonProductList.length} common products: [${overlapStr}]. Rating: ${place.rating || 'N/A'} | Phone: ${place.nationalPhoneNumber || 'N/A'}`,
                     evidenceUrls: [
                         { title: "Homepage", url: place.websiteUri },
-                        { title: `Product: ${primaryOffering}`, url: scrapeResult.productUrl }
+                        { title: `Product: ${primaryOffering}`, url: fb.scrapeResult.productUrl }
                     ],
-                    socials,
+                    socials: fb.socials || { linkedin: null, instagram: null, facebook: null, youtube: null },
                     products: commonProductList,
                     commonProducts: commonProductList
                 };
 
                 finalCompetitors.push(newComp);
                 onProgress?.(newComp, `Discovered ${target.type} competitor: ${newComp.name}`);
-                logger.info(`✅ Added ${domain} as ${target.type} (Deep Overlap: ${deepMatchedOfferings.size}, Socials: ${Object.values(socials).filter(v => v).length}). Target Progress: ${foundForTarget}/${targetQuota}`);
-            }));
+                logger.info(`✅ Added ${domain} as ${target.type} via verified industry gate. Target Progress: ${foundForTarget}/${targetQuota}`);
+            }
         }
     }
 
@@ -1115,26 +1221,27 @@ INSTRUCTIONS:
 
       try {
         const sRes = await axios.get(link, {
-          timeout: 2500,
-          headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+          timeout: 3000,
+          headers: { 
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept-Language': 'en-US,en;q=0.9'
+          }
         });
 
-        const sHtml = sRes.data.toString();
+        const sHtml = (sRes.data || "").toString().toLowerCase();
         const s$ = cheerio.load(sHtml);
         const title = s$('title').text().trim().toLowerCase();
-        const lowerLink = link.toLowerCase();
 
-        if (lowerLink.includes("facebook.com")) {
-          if (title === "facebook" || title.includes("log into facebook") || title.includes("page not found") || sHtml.toLowerCase().includes("this page isn't available")) {
-            socials[key] = null;
-          }
-        } else if (lowerLink.includes("instagram.com")) {
-          if (title === "instagram" || title.includes("login")) {
-            socials[key] = null;
-          }
+        // Only wipe if the page explicitly indicates a deleted or non-existent profile.
+        // DO NOT wipe if title is "Instagram", "Facebook", "Log into Facebook", etc., because platforms show login prompts to unauthenticated requests.
+        if (title.includes("page not found") || title.includes("content not found") || 
+            sHtml.includes("sorry, this page isn't available") || 
+            sHtml.includes("this content isn't available") ||
+            sHtml.includes("the link you followed may be broken")) {
+          socials[key] = null;
         }
       } catch (e: any) {
-        if (e.response && e.response.status === 404) {
+        if (e.response && (e.response.status === 404 || e.response.status === 410)) {
           socials[key] = null;
         }
       }

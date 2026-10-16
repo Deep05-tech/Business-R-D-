@@ -939,6 +939,7 @@ app.post("/api/competitors-stream", async (request, response) => {
   response.setHeader("Cache-Control", "no-cache, no-transform");
   response.setHeader("Connection", "keep-alive");
   response.setHeader("X-Accel-Buffering", "no");
+  request.socket.setTimeout(0);
   response.flushHeaders();
 
   // Send immediate connected event so browser and reverse proxy know the stream is active
