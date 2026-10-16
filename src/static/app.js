@@ -1158,6 +1158,7 @@ window.runIntelligence = async function() {
           }
         }
       }
+    }
   } catch (e) {
     console.error("Intelligence analysis error:", e);
     
