@@ -671,11 +671,14 @@ Write in third person, professional tone. Do NOT use markdown. Do NOT use bullet
       return text.trim();
     } catch (err) {
       logger.warn(`Executive summary generation failed, using fallback.`);
-      const offeringsSummary = [productsText !== "None identified" ? productsText : "", servicesText !== "None identified" ? servicesText : ""].filter(Boolean).join(", ") || "various products and services";
-      return `${mem.businessIdentity?.officialName || "The company"} operates in the ${mem.businessIdentity?.industry || "commercial"} industry. ` +
-        `Their core offerings include: ${offeringsSummary}. ` +
-        `The company targets ${personasText !== "N/A" ? personasText : "diverse market segments"} ` +
-        `across ${geosText !== "N/A" ? geosText : "multiple geographies"}.`;
+      if (mem.businessIdentity?.description && mem.businessIdentity.description.length > 40) {
+        return mem.businessIdentity.description;
+      }
+      const offeringsSummary = [productsText !== "None identified" ? productsText : "", servicesText !== "None identified" ? servicesText : ""].filter(Boolean).join(", ") || "custom solutions and specialized services";
+      return `${mem.businessIdentity?.officialName || "The company"} is a premier provider in the ${mem.businessIdentity?.industry || "commercial"} sector${mem.businessIdentity?.subIndustry ? ` (${mem.businessIdentity.subIndustry})` : ""}. ` +
+        `Their core offerings encompass: ${offeringsSummary}. ` +
+        `The organization primarily serves ${personasText !== "N/A" ? personasText : "key commercial and enterprise clients"} ` +
+        `across ${geosText !== "N/A" ? geosText : "regional and international markets"}.`;
     }
   }
 

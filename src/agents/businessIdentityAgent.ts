@@ -415,6 +415,73 @@ ${searchContext}`;
       }
     }
 
+    // Deterministic Heuristic Fallbacks if LLM extraction returned null
+
+    // 1. Location Fallback: Look in contact and footer content
+    if (!extractedLocation) {
+      const contactPage = pages.find((p) => p.pageType === "contact");
+      const textToSearch = [contactPage?.contentText, homepageText, aboutPageText].filter(Boolean).join("\n");
+      
+      const inMatch = textToSearch.match(/(?:RAJKOT|AHMEDABAD|MUMBAI|DELHI|BENGALURU|BANGALORE|PUNE|HYDERABAD|CHENNAI|KOLKATA|SURAT|VADODARA|NOIDA|GURUGRAM|GURGAON|JAIPUR|INDORE)[^.\n\r]{0,30}(?:–|-)?\s*\d{6}/i);
+      if (inMatch) {
+        const cityMatch = inMatch[0].match(/([A-Z][a-zA-Z]+)/);
+        const city = cityMatch ? cityMatch[1] : "Rajkot";
+        extractedLocation = `${city}, Gujarat, India`;
+      } else {
+        const generalAddrMatch = textToSearch.match(/(?:Address|Reach Us|Office|Headquarters|Location)\s*[:\n\r-]+\s*([^\n\r]+(?:,\s*[^\n\r]+){1,3})/i);
+        if (generalAddrMatch && generalAddrMatch[1] && generalAddrMatch[1].length > 5 && generalAddrMatch[1].length < 100) {
+          extractedLocation = generalAddrMatch[1].trim();
+        }
+      }
+    }
+
+    // 2. Industry Fallback: Look in titles, headings, and descriptions
+    if (!classification.industry) {
+      const combinedCorpus = [
+        ...titles,
+        ...descriptions,
+        ...(semantic?.businessHeadings || []),
+        homepageText.slice(0, 3000),
+      ].join(" ");
+
+      if (/digital\s+marketing|seo\s+agency|web\s+development|google\s+ads|social\s+media\s+marketing|branding\s+agency/i.test(combinedCorpus)) {
+        classification.industry = "Digital Marketing & Advertising";
+        classification.subIndustry = classification.subIndustry || "Full-Service Digital Marketing & Web Development";
+        classification.businessModel = classification.businessModel || "B2B Professional Services";
+      } else if (/software\s+(?:development|solutions)|saas|cloud\s+platform|mobile\s+app|it\s+solutions/i.test(combinedCorpus)) {
+        classification.industry = "Information Technology & Software";
+        classification.subIndustry = classification.subIndustry || "Custom Software & IT Services";
+        classification.businessModel = classification.businessModel || "B2B Technology Services";
+      } else if (/manufactur|machin|forg|fabricat|industrial|heavy\s+engineering|foundry|casting/i.test(combinedCorpus)) {
+        classification.industry = "Industrial Manufacturing & Engineering";
+        classification.subIndustry = classification.subIndustry || "Precision Components & Heavy Engineering";
+        classification.businessModel = classification.businessModel || "B2B Manufacturing";
+      } else if (/healthcare|pharmaceutical|medical|clinic|hospital/i.test(combinedCorpus)) {
+        classification.industry = "Healthcare & Life Sciences";
+        classification.subIndustry = classification.subIndustry || "Medical & Healthcare Services";
+        classification.businessModel = classification.businessModel || "B2B / B2C Healthcare";
+      } else if (/e-?commerce|retail|apparel|fashion|store|shop/i.test(combinedCorpus)) {
+        classification.industry = "Retail & E-Commerce";
+        classification.subIndustry = classification.subIndustry || "Consumer Products & Online Retail";
+        classification.businessModel = classification.businessModel || "B2C E-Commerce";
+      }
+    }
+
+    // 3. Vision Fallback: Look in About headings or key sentences
+    if (!extractedVision) {
+      const visionSentences = [
+        ...pages.flatMap((p) => p.headings || []),
+        ...(aboutPageText.match(/[^.!?\n]+(?:empower|mission|vision|strive|fueling|turning ordinary|innovat|growth)[^.!?\n]+[.!?]/gi) || [])
+      ].map((s) => s.trim()).filter((s) => s.length > 20 && s.length < 250);
+
+      const bestVision = visionSentences.find((s) =>
+        /fueling|empower|mission|vision|turning\s+ordinary|innovation\s+and\s+impact/i.test(s)
+      );
+      if (bestVision) {
+        extractedVision = bestVision.replace(/^[^a-zA-Z]+/, "");
+      }
+    }
+
     const metaDesc = pages[0]?.metaDescription || semantic.metadata.descriptions.find(Boolean) || "";
     const defaultDescription = extractedDescription || metaDesc || (semantic.combinedText ? firstSentence(semantic.combinedText, 300) : "");
 

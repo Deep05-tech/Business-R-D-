@@ -20,7 +20,7 @@ export class OfferingsExtractionAgent {
     logger.info(`Starting Map-Reduce across ${semantic.pages.length} pages...`);
 
     const llm = createChatModel({
-      model: "gpt-4o-mini",
+      model: "gpt-4o",
       temperature: 0.0,
       maxTokens: 2048
     });
@@ -250,6 +250,37 @@ ${textChunk}
             if (p.capacity && p.capacity !== "N/A") existing.capacity = p.capacity;
             if (p.workflow) existing.workflow = [...new Set([...(existing.workflow || []), ...p.workflow])];
             if (p.machineryUsed) existing.machineryUsed = [...new Set([...(existing.machineryUsed || []), ...p.machineryUsed])];
+          }
+        }
+      }
+    }
+
+    // Fallback: If fewer than 5 services extracted, supplement from businessHeadings and taxonomy
+    if (finalData.offerings.services.length < 5 && finalData.offerings.products.length === 0) {
+      const candidates = unique([
+        ...(taxonomy.services || []),
+        ...(taxonomy.products || []),
+        ...(semantic?.businessHeadings || [])
+      ]);
+
+      const SERVICE_INDICATORS = /service|marketing|seo|development|management|design|advertising|production|branding|consulting|strategy|analytics|optimization|software|engineering|hosting|repair|maintenance|installation|solutions/i;
+      const NON_SERVICE_WORDS = /^(home|about|contact|blog|careers|our blog|quick links|follow us|reach us|say hello|skip to content|get ready|award winning|warning|got questions|let.*talk|what we do|who we are)$/i;
+
+      for (const item of candidates) {
+        const trimmed = item.trim();
+        if (trimmed.length < 3 || trimmed.length > 60) continue;
+        if (NON_SERVICE_WORDS.test(trimmed)) continue;
+
+        if (SERVICE_INDICATORS.test(trimmed) || taxonomy.services.includes(trimmed)) {
+          const key = normalizeKey(trimmed);
+          if (!seenServices.has(key)) {
+            seenServices.set(key, true);
+            finalData.offerings.services.push({
+              name: trimmed,
+              description: `${trimmed} solutions and professional services offered by the company.`,
+              applications: [],
+              processes: []
+            });
           }
         }
       }
