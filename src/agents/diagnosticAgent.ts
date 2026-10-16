@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "../utils/llm.js";
 import { createLogger } from "../utils/logger.js";
 import fs from "fs";
 import path from "path";
@@ -17,7 +17,7 @@ export class DiagnosticAgent {
       return "No logs provided.";
     }
 
-    const llm = new ChatOpenAI({
+    const llm = createChatModel({
       model: "gpt-4o-mini",
       temperature: 0.1,
     });

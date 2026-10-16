@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "../utils/llm.js";
 import { createLogger } from "../utils/logger.js";
 import type { StructuredMemory, PageSnapshot } from "../types.js";
 import { WebTool } from "../tools/webTool.js";
@@ -12,7 +12,7 @@ export class SeoAgent {
   async run(memory: StructuredMemory): Promise<string> {
     logger.info(`Running Deep SEO & Google Presence analysis for ${memory.input.websiteUrl}...`);
 
-    const llm = new ChatOpenAI({
+    const llm = createChatModel({
       model: "gpt-4o",
       temperature: 0.2,
       maxTokens: 8000,

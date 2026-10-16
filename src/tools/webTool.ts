@@ -17,9 +17,9 @@ export interface WebToolOptions {
 const enum UrlPriority {
   Homepage = 0,
   AboutAndContact = 1,
-  ProductCategory = 2,
-  ProductDetail = 3,
-  Service = 4,
+  Service = 2,
+  ProductCategory = 3,
+  ProductDetail = 4,
   Process = 5,
   Sitemap = 6,
   Other = 7,
@@ -64,12 +64,13 @@ export class WebTool {
       clearTimeout(timeout);
     }
 
-    // SPA Heuristic check
+    // SPA Heuristic check (skip social platforms which have dedicated extractors or login walls)
+    const isSocialUrl = /facebook\.com|instagram\.com|linkedin\.com|twitter\.com|x\.com|youtube\.com/i.test(url);
     const temp$ = cheerio.load(html);
     const bodyTextLength = compactText(temp$("body").text()).length;
     const hasScripts = temp$("script[src]").length > 0;
 
-    if ((bodyTextLength < 500 && hasScripts) || html.trim() === "") {
+    if (!isSocialUrl && ((bodyTextLength < 500 && hasScripts) || html.trim() === "")) {
       logger.info(`SPA detected at ${url}. Falling back to Headless Browser...`);
       html = await this.fetchWithSelenium(url);
       status = status || 200;
@@ -291,15 +292,28 @@ export class WebTool {
     const metaDescription = this.meta($, "description");
     const metaKeywords = this.meta($, "keywords");
     const headings = unique($("h1,h2,h3").map((_, el) => $(el).text()).get()).slice(0, 30);
-    const navigationText = unique($("nav,header,[role='navigation']").map((_, el) => $(el).text()).get()).slice(0, 40);
-    const footerText = unique($("footer").map((_, el) => $(el).text()).get()).slice(0, 20);
-    const contentText = compactText(
-      $("main,article,section")
-        .map((_, el) => $(el).text())
+    const navigationText = unique($("nav,header,[role='navigation'],[role='banner'],.nav,.header,.menu").map((_, el) => $(el).text()).get()).slice(0, 40);
+    const footerText = unique($("footer,[role='contentinfo'],.footer").map((_, el) => $(el).text()).get()).slice(0, 20);
+
+    // Extract content text by cloning and removing boilerplate (header, nav, footer, sidebar)
+    const content$ = cheerio.load($.html());
+    content$("nav,header,footer,[role='navigation'],[role='banner'],[role='contentinfo'],.site-header,.site-footer,.main-header,.main-footer,.sidebar,.widget-area,#comments").remove();
+
+    let contentText = compactText(
+      content$("main,article,section,[id*='content' i],[class*='content' i]")
+        .map((_, el) => content$(el).text())
         .get()
-        .join(" ") || $("body").text(),
-    ).slice(0, 40_000);
-    const text = compactText($("body").text()).slice(0, 40_000);
+        .join(" ") || content$("body").text(),
+    );
+
+    const fullBodyText = compactText($("body").text());
+    // If the semantic selector produced too little text (< 300 chars or < 25% of body text), fall back to the cleaned body text
+    if (contentText.length < 300 || contentText.length < fullBodyText.length * 0.25) {
+      contentText = compactText(content$("body").text()) || fullBodyText;
+    }
+
+    contentText = contentText.slice(0, 40_000);
+    const text = fullBodyText.slice(0, 40_000);
     const links = unique(
       $("a[href]")
         .map((_, el) => {
@@ -410,23 +424,22 @@ export class WebTool {
     if (path === "/" || path === "" || path === "/index" || path === "/home") return "homepage";
     if (/\/about|\/company|\/who-we-are|\/our-story/.test(path)) return "about";
     if (/\/contact|\/reach-us|\/get-in-touch/.test(path)) return "contact";
+    if (/\/blog|\/news|\/insights|\/press|\/articles|\/category\/|\/tag\/|\/author\//.test(path)) return "blog";
     
-    if (/\/category|\/categories|\/all-products|\/collections/.test(path) || (/\/product|\/products|\/catalogue|\/catalog/.test(path) && depth <= 1)) {
+    if (/\/product-category|\/all-products|\/collections/.test(path) || (/\/product|\/products|\/catalogue|\/catalog/.test(path) && depth <= 1)) {
       return "product_category";
     }
     if (/\/product|\/products|\/catalogue|\/catalog|\/equipment|\/item/.test(path) || depth >= 2) {
       return "product_detail";
     }
-    if (/\/service|\/services|\/solutions|\/offering/.test(path)) return "service";
-    if (/\/contact|\/reach-us|\/get-in-touch/.test(path)) return "contact";
-    if (/\/blog|\/news|\/insights|\/press|\/articles/.test(path)) return "blog";
+    if (/\/service|\/services|\/solutions|\/offering|\/what-we-do|\/capabilities/.test(path)) return "service";
     if (/\/pricing|\/plans|\/packages/.test(path)) return "pricing";
     if (/\/career|\/jobs|\/hiring/.test(path)) return "careers";
 
     // Fallback: infer from heading / title text
     if (/about|company|who we are/i.test(h1 + titleLower)) return "about";
     if (/product|machine|equipment|device/i.test(h1 + titleLower)) return "product_detail";
-    if (/service|solution|consulting/i.test(h1 + titleLower)) return "service";
+    if (/service|solution|consulting|marketing|agency/i.test(h1 + titleLower)) return "service";
     if (/contact|reach|location/i.test(h1 + titleLower)) return "contact";
 
     return "other";
@@ -447,25 +460,34 @@ export class WebTool {
     // Homepage
     if (path === "/" || path === "" || path === "/home") return UrlPriority.Homepage;
     
+    // Deprioritize blog, news, author, tag, and pagination noise immediately
+    if (
+      /\/blog|\/news|\/press|\/insights|\/articles|\/tag\/|\/author\/|\/page\/\d+/i.test(path) ||
+      /\/category\/(blogs?|posts?|news|articles?|development|branding)/i.test(path) ||
+      /\/category\/.*\/page\//i.test(path)
+    ) {
+      return UrlPriority.Other;
+    }
+
     // About and Contact (Context pages)
     if (/\/about|\/company|\/who-we-are|\/history|\/contact|\/reach-us/.test(path)) return UrlPriority.AboutAndContact;
     
+    // Services (High priority for agencies & service providers)
+    if (/\/service|\/services|\/what-we-do|\/solutions?|\/offerings?|\/capabilities/i.test(path)) {
+      return UrlPriority.Service;
+    }
+
     // Process / Workflow
     if (/\/process|\/workflow|\/manufacturing|\/facility|\/technology/.test(path)) return UrlPriority.Process;
     
     // Products (Categorized by depth to enforce Hierarchy)
-    // Depth 1: usually categories (e.g., /valves)
-    // Depth > 1: usually subproducts/details (e.g., /valves/ball-valve)
-    if (/\/category|\/categories|\/all-products|\/collections/.test(path) || (/\/product|\/catalogue|\/catalog/.test(path) && depth <= 1)) {
-        return UrlPriority.ProductCategory;
+    if (/\/product-category|\/all-products|\/collections/i.test(path) || (/\/product|\/catalogue|\/catalog/i.test(path) && depth <= 1)) {
+      return UrlPriority.ProductCategory;
     }
     
-    if (/\/product-variant|\/model|\/parts/.test(path) || (/\/product|\/catalogue|\/catalog|\/equipment|\/item/.test(path) && depth > 1) || depth >= 2) {
-        return UrlPriority.ProductDetail;
+    if (/\/product-variant|\/model|\/parts/i.test(path) || (/\/product|\/catalogue|\/catalog|\/equipment|\/item/i.test(path) && depth > 1) || depth >= 2) {
+      return UrlPriority.ProductDetail;
     }
-    
-    // Services
-    if (/\/service|\/solution|\/offering/.test(path)) return UrlPriority.Service;
     
     return UrlPriority.Other;
   }
@@ -480,10 +502,26 @@ export class WebTool {
   private normalizeInternalLink(href: string, root: URL): string | null {
     try {
       const url = new URL(href, root);
-      if (url.hostname !== root.hostname) return null;
+      // Strip www. prefix for hostname comparison
+      const rootHost = root.hostname.replace(/^www\./, "");
+      const linkHost = url.hostname.replace(/^www\./, "");
+      if (linkHost !== rootHost) return null;
+
+      // Force protocol and hostname to match root
+      url.protocol = root.protocol;
+      url.hostname = root.hostname;
       url.hash = "";
+      url.search = ""; // strip tracking / pagination query params
       if (!["http:", "https:"].includes(url.protocol)) return null;
-      if (/\.(pdf|jpg|jpeg|png|gif|webp|zip|mp4|mp3|svg|css|js|woff|woff2)$/i.test(url.pathname)) return null;
+      if (/\.(pdf|jpg|jpeg|png|gif|webp|zip|mp4|mp3|svg|css|js|woff|woff2|ico)$/i.test(url.pathname)) return null;
+
+      // Normalize trailing slash: remove trailing slash if not root
+      let pathname = url.pathname;
+      if (pathname.length > 1 && pathname.endsWith("/")) {
+        pathname = pathname.slice(0, -1);
+      }
+      url.pathname = pathname;
+
       return url.toString();
     } catch {
       return null;

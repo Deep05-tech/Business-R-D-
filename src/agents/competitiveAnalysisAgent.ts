@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "../utils/llm.js";
 import { WebTool } from "../tools/webTool.js";
 import { createLogger } from "../utils/logger.js";
 import type { StructuredMemory } from "../types.js";
@@ -11,12 +11,16 @@ export class CompetitiveAnalysisAgent {
   async run(businessMemory: StructuredMemory, competitorUrls: string[]): Promise<string> {
     logger.info(`Starting competitive analysis for ${competitorUrls.length} competitors...`);
     
-    // We use gpt-4o-mini for heavy map-reduce to avoid hitting the 30k TPM limit of gpt-4o
-    const mapLlm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.1 });
-    const reduceLlm = new ChatOpenAI({ model: "gpt-4o", temperature: 0.3 });
+    // We use fast model for heavy map-reduce to avoid hitting TPM limits
+    const mapLlm = createChatModel({ model: "gpt-4o-mini", temperature: 0.1 });
+    const reduceLlm = createChatModel({ model: "gpt-4o", temperature: 0.3 });
 
-    const businessCoreProducts = businessMemory.offerings?.products?.join(", ") || "Unknown Products";
-    const businessContext = `BUSINESS NAME: ${businessMemory.businessIdentity?.officialName || "Unknown"}\nCORE PRODUCTS: ${businessCoreProducts}`;
+    const formatOfferings = (items: any) => {
+      if (!Array.isArray(items)) return "";
+      return items.map((i: any) => (typeof i === "string" ? i : i?.name)).filter(Boolean).join(", ");
+    };
+    const businessCoreProducts = formatOfferings(businessMemory.offerings?.products) || formatOfferings(businessMemory.offerings?.services) || "Unknown Offerings";
+    const businessContext = `BUSINESS NAME: ${businessMemory.businessIdentity?.officialName || "Unknown"}\nCORE OFFERINGS: ${businessCoreProducts}`;
 
     const competitorSummaries: string[] = [];
 

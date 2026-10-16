@@ -5,6 +5,7 @@ import { FreeSearchEngine } from "../utils/freeSearchEngine.js";
 import { BraveSearchEngine } from "../utils/braveSearchEngine.js";
 import { BingRssSearchEngine } from "../utils/bingRssSearchEngine.js";
 import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "../utils/llm.js";
 import { z } from "zod";
 import axios from "axios";
 import * as cheerio from "cheerio";
@@ -108,7 +109,7 @@ export class CompetitorAgent {
 
   private async verifyCompetitorViaLLM(pageProfile: string, targetName: string, targetOfferings: string[]): Promise<{ isCompetitor: boolean; reason: string }> {
     try {
-      const llm = new ChatOpenAI({ model: agentRules.models.fast, temperature: 0 });
+      const llm = createChatModel({ model: agentRules.models.fast, temperature: 0 });
       const structuredLlm = llm.withStructuredOutput(this.llmCompetitorSchema);
       const prompt = `You are evaluating whether a candidate business is a direct competitor to a target company.
       
@@ -141,7 +142,7 @@ Answer with the JSON schema.`;
   // scraped page actually belongs to a real business operating in the target industry.
   private async verifyIndustryViaLLM(pageProfile: string, targetIndustry: string, targetSubIndustry: string): Promise<boolean> {
     try {
-      const llm = new ChatOpenAI({ model: agentRules.models.fast, temperature: 0 });
+      const llm = createChatModel({ model: agentRules.models.fast, temperature: 0 });
       const structuredLlm = llm.withStructuredOutput(this.llmIndustrySchema);
       const prompt = `You are classifying whether a website belongs to a real business in a target industry, before that business may be accepted as a competitor.
 
@@ -261,18 +262,18 @@ Answer with the JSON schema.`;
     // --- SEMANTIC QUERY EXPANSION ---
     let semanticQueries: string[] = [];
     try {
-        const llm = new ChatOpenAI({ model: agentRules.models.fast, temperature: 0.7 });
+        const llm = createChatModel({ model: agentRules.models.fast, temperature: 0.7 });
         const querySchema = z.object({
-            queries: z.array(z.string()).describe("An array of 5 highly varied, optimized search queries to discover B2B manufacturing competitors.")
+            queries: z.array(z.string()).describe("An array of 5 highly varied, optimized search queries to discover B2B competitors.")
         });
         const structuredLlm = llm.withStructuredOutput(querySchema);
         
         const seedContext = seedUrls.length > 0 ? `\n\nCRITICAL CONTEXT: The user explicitly considers these companies as massive competitors: ${seedUrls.join(", ")}. Analyze what these companies do and generate queries designed to find exactly these types of companies!` : "";
         
-        const prompt = `You are an expert SEO researcher. Generate 5 highly optimized search queries to discover massive B2B manufacturing competitors for a company with the following profile:
+        const prompt = `You are an expert SEO researcher. Generate 5 highly optimized search queries to discover direct B2B competitors for a company with the following profile:
         Industry: ${industry}
         Niche: ${nicheContext}
-        Products: ${coreOfferings.join(", ")}${seedContext}
+        Products/Services: ${coreOfferings.join(", ")}${seedContext}
         
         The queries must be varied, utilizing synonyms and industry terms (e.g. 'auto parts forging factory', 'gear transmission manufacturers', 'closed die forging companies', 'hydraulic cylinder components factory'). DO NOT include location names in the queries, as those will be appended programmatically. Keep them strictly to the business/product types.`;
         

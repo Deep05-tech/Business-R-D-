@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "../utils/llm.js";
 import { FreeSearchEngine } from "../utils/freeSearchEngine.js";
 import { createLogger } from "../utils/logger.js";
 import type {
@@ -23,7 +23,7 @@ export class MarketingSalesAgent {
     customInstructions?: string
   ): Promise<AgentResult<MarketingSalesIntelligence>> {
     logger.info("Executing Marketing & Sales Strategic Intelligence...");
-    const llm = new ChatOpenAI({ model: "gpt-4o", temperature: 0.7 });
+    const llm = createChatModel({ model: "gpt-4o", temperature: 0.7 });
 
     let searchContext = "";
     try {

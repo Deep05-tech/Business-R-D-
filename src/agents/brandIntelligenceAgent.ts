@@ -1,6 +1,7 @@
 import type { AgentResult, BrandIntelligence, SemanticWebData, WebIntelligence, OfferingsIntelligence } from "../types.js";
 import { unique } from "../utils/text.js";
 import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "../utils/llm.js";
 import { z } from "zod";
 
 const BrandSchema = z.object({
@@ -33,7 +34,7 @@ export class BrandIntelligenceAgent {
       };
     }
 
-    const llm = new ChatOpenAI({ model: "gpt-4o", temperature: 0.0 }).withStructuredOutput(BrandSchema);
+    const llm = createChatModel({ model: "gpt-4o", temperature: 0.0 }).withStructuredOutput(BrandSchema);
     const prompt = `Analyze the following messaging pulled from a business website and extract brand intelligence.
     
     Identify the brand's tone, a single-sentence positioning statement, their core Unique Selling Propositions (USPs), and their general messaging style.

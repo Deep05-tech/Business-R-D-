@@ -2,6 +2,7 @@ import "dotenv/config";
 import { join } from "path";
 import { mkdir } from "fs/promises";
 import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "./utils/llm.js";
 import { createAgentRegistry, type AgentRegistry } from "./agents/agentRegistry.js";
 import { ReconAgent } from "./agents/reconAgent.js";
 import { QcFailureError } from "./errors.js";
@@ -126,15 +127,20 @@ export class OrchestratorAgent {
   }
 
   private markInconclusive(profile: any, fieldPath: string) {
-    // Navigate and set "Inconclusive" based on dot notation path
-    // qc issues generally reference fields like 'businessIdentity.officialName' which maps to 'structuredJsonMemoryObject.businessIdentity.officialName'
+    // Skip structural fields that should never be overwritten with a string
+    if (fieldPath === "offerings" || fieldPath === "processes" || fieldPath.startsWith("agentDiagnostics")) {
+      return;
+    }
     const fullPath = `structuredJsonMemoryObject.${fieldPath}`.split(".");
     let current = profile;
     for (let i = 0; i < fullPath.length - 1; i++) {
       if (!current[fullPath[i]]) current[fullPath[i]] = {};
       current = current[fullPath[i]];
     }
-    current[fullPath[fullPath.length - 1]] = "Inconclusive";
+    const lastKey = fullPath[fullPath.length - 1];
+    if (current[lastKey] === undefined || current[lastKey] === null || typeof current[lastKey] === "string") {
+      current[lastKey] = "Inconclusive";
+    }
   }
 
   private async runAll(input: BusinessInput, onProgress?: (msg: string, partial?: any) => void): Promise<AgentState> {
@@ -359,7 +365,7 @@ export class OrchestratorAgent {
 
   private async reduceWithLLM(items: any[], agentName: string) {
     try {
-      const llm = new ChatOpenAI({ model: agentRules.models.fast, temperature: 0 });
+      const llm = createChatModel({ model: agentRules.models.fast, temperature: 0 });
       const prompt = `You are a data aggregation AI. You are merging multiple page extraction results from the agent '${agentName}'.
 Extract and combine all unique information into a single consolidated JSON object matching the input structure.
 
@@ -600,7 +606,22 @@ Return ONLY valid JSON matching the structure of the input items without markdow
 
   private async generateExecutiveSummary(profile: Omit<BusinessIntelligenceProfile, "qc"> & { qc?: any }): Promise<string> {
     const mem = profile.structuredJsonMemoryObject;
-    const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.3, maxTokens: 1024 });
+    const llm = createChatModel({ model: "gpt-4o-mini", temperature: 0.3, maxTokens: 1024 });
+
+    const formatOfferingsList = (items: any) => {
+      if (!Array.isArray(items)) return "";
+      return items
+        .map((item) => (typeof item === "string" ? item : item?.name))
+        .filter(Boolean)
+        .join(", ");
+    };
+
+    const productsText = formatOfferingsList(mem.offerings?.products) || "None identified";
+    const servicesText = formatOfferingsList(mem.offerings?.services) || "None identified";
+    const valPropsText = Array.isArray(mem.offerings?.valuePropositions) ? mem.offerings.valuePropositions.join(", ") : "None identified";
+    const uspsText = Array.isArray(mem.brandPositioning?.usps) ? mem.brandPositioning.usps.join(", ") : "N/A";
+    const personasText = Array.isArray(mem.audience?.buyerPersonas) ? mem.audience.buyerPersonas.join(", ") : "N/A";
+    const geosText = Array.isArray(mem.audience?.geographies) ? mem.audience.geographies.join(", ") : "N/A";
 
     const prompt = `You are a business analyst. Given the following structured data about a company, write a concise 2-3 paragraph executive summary describing:
 1. What the business does (core products/services)
@@ -608,17 +629,17 @@ Return ONLY valid JSON matching the structure of the input items without markdow
 3. Their market positioning and key differentiators
 
 Company Data:
-- Name: ${mem.businessIdentity.officialName}
-- Industry: ${mem.businessIdentity.industry}
-- Sub-Industry: ${mem.businessIdentity.subIndustry ?? "N/A"}
-- Business Model: ${mem.businessIdentity.businessModel ?? "N/A"}
-- Products: ${mem.offerings.products.join(", ") || "None identified"}
-- Services: ${mem.offerings.services.join(", ") || "None identified"}
-- Value Propositions: ${mem.offerings.valuePropositions.join(", ") || "None identified"}
-- Brand Positioning: ${mem.brandPositioning.positioning || "N/A"}
-- USPs: ${mem.brandPositioning.usps.join(", ") || "N/A"}
-- Target Audience: ${mem.audience.buyerPersonas.join(", ") || "N/A"}
-- Geographies: ${mem.audience.geographies.join(", ") || "N/A"}
+- Name: ${mem.businessIdentity?.officialName || "Unknown"}
+- Industry: ${mem.businessIdentity?.industry || "Unknown"}
+- Sub-Industry: ${mem.businessIdentity?.subIndustry ?? "N/A"}
+- Business Model: ${mem.businessIdentity?.businessModel ?? "N/A"}
+- Products: ${productsText}
+- Services: ${servicesText}
+- Value Propositions: ${valPropsText}
+- Brand Positioning: ${mem.brandPositioning?.positioning || "N/A"}
+- USPs: ${uspsText}
+- Target Audience: ${personasText}
+- Geographies: ${geosText}
 
 Write in third person, professional tone. Do NOT use markdown. Do NOT use bullet points. Write flowing paragraphs only.`;
 
@@ -627,11 +648,12 @@ Write in third person, professional tone. Do NOT use markdown. Do NOT use bullet
       const text = typeof response.content === "string" ? response.content : String(response.content);
       return text.trim();
     } catch (err) {
-      logger.warn(`Gemini summary generation failed, using fallback.`);
-      return `${mem.businessIdentity.officialName} operates in the ${mem.businessIdentity.industry} industry. ` +
-        `Their core offerings include: ${mem.offerings.products.slice(0, 5).join(", ") || "various products and services"}. ` +
-        `The company targets ${mem.audience.buyerPersonas.join(", ") || "diverse market segments"} ` +
-        `across ${mem.audience.geographies.join(", ") || "multiple geographies"}.`;
+      logger.warn(`Executive summary generation failed, using fallback.`);
+      const offeringsSummary = [productsText !== "None identified" ? productsText : "", servicesText !== "None identified" ? servicesText : ""].filter(Boolean).join(", ") || "various products and services";
+      return `${mem.businessIdentity?.officialName || "The company"} operates in the ${mem.businessIdentity?.industry || "commercial"} industry. ` +
+        `Their core offerings include: ${offeringsSummary}. ` +
+        `The company targets ${personasText !== "N/A" ? personasText : "diverse market segments"} ` +
+        `across ${geosText !== "N/A" ? geosText : "multiple geographies"}.`;
     }
   }
 

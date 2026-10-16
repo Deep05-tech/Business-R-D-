@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "../utils/llm.js";
 import { createLogger } from "../utils/logger.js";
 import type { QueryResult } from "../memory/memoryStore.js";
 
@@ -16,7 +16,7 @@ export class QueryMemoryAgent {
     }
 
     try {
-      const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.2 });
+      const llm = createChatModel({ model: "gpt-4o-mini", temperature: 0.2 });
       
       const prompt = `You are an intelligent business analyst assistant querying an internal database.
 Answer the user's question accurately using ONLY the provided semantic facts extracted from the business's website.

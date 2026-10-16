@@ -82,6 +82,10 @@ export class FreeSearchEngine {
         res.on('end', () => resolve(data));
       });
 
+      req.setTimeout(8000, () => {
+        req.destroy(new Error('FreeSearchEngine request timed out after 8s'));
+      });
+
       req.on('error', e => reject(e));
       req.write(body);
       req.end();

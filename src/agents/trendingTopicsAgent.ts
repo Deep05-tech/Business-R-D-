@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "../utils/llm.js";
 import axios from "axios";
 import { z } from "zod";
 import { FreeSearchEngine } from "../utils/freeSearchEngine.js";
@@ -33,7 +33,7 @@ export class TrendingTopicsAgent {
     }
 
     const generatedAt = new Date().toISOString();
-    const llm = new ChatOpenAI({ model: "gpt-4o", temperature: 0.4 });
+    const llm = createChatModel({ model: "gpt-4o", temperature: 0.4 });
 
     const industry = memory.industryClassification?.industry || memory.businessIdentity?.industry || "business";
     const products = (memory.offerings?.products || []).map(p => p.name).filter(Boolean);

@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "../utils/llm.js";
 import { createLogger } from "../utils/logger.js";
 import type { OfferingsAndProcesses } from "./offeringsExtractionAgent.js";
 
@@ -11,7 +11,7 @@ export class AiContentAgent {
   async run(data: OfferingsAndProcesses): Promise<OfferingsAndProcesses> {
     logger.info("Generating AI content (Layman & Social) for all offerings and processes...");
 
-    const llm = new ChatOpenAI({
+    const llm = createChatModel({
       model: "gpt-4o-mini",
       temperature: 0.7, // Higher temp for creative writing
     });

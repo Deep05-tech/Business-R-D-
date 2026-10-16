@@ -2,6 +2,7 @@ import { agentRules } from "../config/agentRules.js";
 import type { AgentResult, AudienceIntelligence, BusinessIdentity, SemanticWebData, WebIntelligence } from "../types.js";
 import { unique } from "../utils/text.js";
 import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "../utils/llm.js";
 import { z } from "zod";
 
 const AudienceSchema = z.object({
@@ -15,9 +16,14 @@ export class AudienceIntelligenceAgent {
   readonly version = "smart-llm-v1";
 
   async run(web: WebIntelligence, semantic: SemanticWebData, identity: BusinessIdentity, customInstructions?: string): Promise<AgentResult<AudienceIntelligence>> {
-    const text = [web.seo.metaDescription, web.homepage.businessSummary, semantic.combinedText, ...web.homepage.headlineMessaging].filter(Boolean).join(" ");
+    const text = [
+      web?.seo?.metaDescription,
+      web?.homepage?.businessSummary,
+      semantic?.combinedText,
+      ...(web?.homepage?.headlineMessaging || [])
+    ].filter(Boolean).join(" ");
     
-    const llm = new ChatOpenAI({ model: "gpt-4o", temperature: 0.0 }).withStructuredOutput(AudienceSchema);
+    const llm = createChatModel({ model: "gpt-4o", temperature: 0.0 }).withStructuredOutput(AudienceSchema);
     const prompt = `Analyze the following website text and determine the exact target audience for this business.
     
     Business Name: ${identity.officialName || "Unknown"}
@@ -30,14 +36,14 @@ export class AudienceIntelligenceAgent {
     ${customInstructions ? `USER INSTRUCTIONS / REVIEWS: \n${customInstructions}\n\nStrictly follow the user instructions above.` : ""}
     
     Text context:
-    ${text}
+    ${text.slice(0, 15000)}
     `;
 
     try {
       const result = await llm.invoke(prompt);
       const buyerPersonas = unique(result.buyerPersonas || []);
       const targetIndustries = unique([...(result.targetIndustries || []), identity.industry || ""]).filter(Boolean);
-      const geographies = unique([...(result.geographies || []), ...web.contact.locations]).filter(Boolean);
+      const geographies = unique([...(result.geographies || []), ...(web?.contact?.locations || [])]).filter(Boolean);
 
       return {
         agent: this.name,
@@ -45,7 +51,7 @@ export class AudienceIntelligenceAgent {
         confidence: buyerPersonas.length > 0 ? "high" : "medium",
         data: { buyerPersonas, geographies, targetIndustries },
         sources: buyerPersonas.slice(0, 3).map((evidence) => ({
-          url: web.crawledUrls[0] ?? "",
+          url: web?.crawledUrls?.[0] ?? "",
           field: "audience.buyerPersonas",
           evidence: `LLM Deduction: ${evidence}`,
           confidence: "high",
@@ -58,7 +64,7 @@ export class AudienceIntelligenceAgent {
         agent: this.name,
         version: this.version,
         confidence: "low",
-        data: { buyerPersonas: [], geographies: unique(web.contact.locations), targetIndustries: [identity.industry || ""].filter(Boolean) },
+        data: { buyerPersonas: [], geographies: unique(web?.contact?.locations || []), targetIndustries: [identity.industry || ""].filter(Boolean) },
         sources: [],
         warnings: [`LLM extraction failed: ${e.message}`],
       };

@@ -1,7 +1,8 @@
 import { agentRules } from "../config/agentRules.js";
 import type { AgentResult, BusinessIdentity, PageSnapshot, SemanticWebData, SocialIntelligence, SourceRef } from "../types.js";
-import { compactText, unique } from "../utils/text.js";
+import { compactText, unique, firstSentence } from "../utils/text.js";
 import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "../utils/llm.js";
 import { TavilySearch } from "@langchain/tavily";
 import { z } from "zod";
 import { FreeSearchEngine } from "../utils/freeSearchEngine.js";
@@ -247,7 +248,7 @@ class IndustryClassificationAgent {
   readonly name = "industry-classification-agent";
 
   async run(text: string): Promise<Pick<BusinessIdentity, "industry" | "subIndustry" | "businessModel"> & { sourceEvidence: string | null }> {
-    const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.0 }).withStructuredOutput(IndustrySchema);
+    const llm = createChatModel({ model: "gpt-4o-mini", temperature: 0.0 }).withStructuredOutput(IndustrySchema);
     const prompt = `Analyze the following business text and classify its industry.
     
     Determine the macro industry, specific sub-industry/niche, and the primary business model.
@@ -281,76 +282,96 @@ export class BusinessIdentityAgent {
   private readonly industryClassifier = new IndustryClassificationAgent();
 
   async run(pages: PageSnapshot[], semantic: SemanticWebData, social: SocialIntelligence): Promise<AgentResult<BusinessIdentity>> {
-    const combinedText = [
-      ...semantic.metadata.titles,
-      ...semantic.metadata.descriptions,
-      semantic.combinedText,
-      ...social.profiles.flatMap((p) => [p.bio, ...p.identitySignals]),
+    const titles = (semantic?.metadata?.titles || []).filter(Boolean);
+    const descriptions = (semantic?.metadata?.descriptions || []).filter(Boolean);
+    const homepageText = pages.find((p) => p.pageType === "homepage")?.contentText || pages[0]?.contentText || "";
+    const aboutPageText = pages.find((p) => p.pageType === "about")?.contentText || "";
+    const contactPageText = pages.find((p) => p.pageType === "contact")?.contentText || "";
+    const domainUrl = pages[0]?.url || "Unknown";
+
+    const contextSnippet = [
+      `DOMAIN URL: ${domainUrl}`,
+      titles.length > 0 ? `PAGE TITLES: ${titles.slice(0, 5).join(" | ")}` : "",
+      descriptions.length > 0 ? `META DESCRIPTIONS: ${descriptions.slice(0, 5).join(" | ")}` : "",
+      `HOMEPAGE CONTENT:\n${homepageText.slice(0, 5000)}`,
+      aboutPageText ? `ABOUT PAGE CONTENT:\n${aboutPageText.slice(0, 5000)}` : "",
+      contactPageText ? `CONTACT & FOOTER CONTENT:\n${contactPageText.slice(0, 3000)}` : "",
     ]
       .filter(Boolean)
-      .join(" ");
+      .join("\n\n");
 
     let resolvedName = this.nameResolver.run(pages, semantic, social);
 
-    const textWithoutBrochure = combinedText.split("=== BROCHURE ===")[0];
-    const domainUrl = pages[0]?.url || "Unknown";
-    
-    const llm = new ChatOpenAI({ model: "gpt-4o", temperature: 0.0 });
-    const prompt = `Extract the official business or company name from the following text. You should extract the fully qualified corporate name if available (including suffixes like Ltd, Pvt Ltd, Inc).
-CRITICAL RULE: If multiple company names are mentioned (e.g. sister companies, group names), you MUST strictly prioritize the name that most closely matches the website's domain URL (${domainUrl}). Ignore other companies.
-Output ONLY the company name, nothing else. If you cannot find a clear business name, output "UNKNOWN".
+    const UnifiedIdentitySchema = z.object({
+      officialName: z.string().describe("The official legal or corporate business name (e.g. Vispan Solutions Pvt. Ltd.) prioritizing the website domain name"),
+      industry: z.string().describe("The primary macro industry, e.g. Marketing, Technology, Manufacturing, Healthcare").nullable(),
+      subIndustry: z.string().describe("The specific sub-industry or niche, e.g. Digital Marketing, SEO & Web Development").nullable(),
+      businessModel: z.string().describe("The primary business model, e.g. B2B services, B2B manufacturing, B2B SaaS").nullable(),
+      location: z.string().describe("The physical headquarters location (City, State, Country), or null").nullable(),
+      vision: z.string().describe("The overarching Vision, Mission, or core philosophical goal in 1-2 concise sentences, or null").nullable(),
+      description: z.string().describe("A professional 2-3 sentence overview of what the company does and who it serves").nullable(),
+      sourceEvidence: z.string().describe("A short quote or sentence from the text proving this classification").nullable(),
+    });
 
-TEXT:
-${textWithoutBrochure}`;
+    let extractedLocation: string | null = null;
+    let extractedVision: string | null = null;
+    let extractedDescription: string | null = null;
+    let classification: {
+      industry: string | null;
+      subIndustry: string | null;
+      businessModel: string | null;
+      sourceEvidence: string | null;
+    } = { industry: null, subIndustry: null, businessModel: null, sourceEvidence: null };
 
     try {
-      const response = await llm.invoke(prompt);
-      const extractedName = response.content.toString().trim();
-      
-      if (extractedName && extractedName !== "UNKNOWN" && extractedName.length > 2) {
+      const llm = createChatModel({ model: "gpt-4o-mini", temperature: 0.0 }).withStructuredOutput(UnifiedIdentitySchema);
+      const prompt = `Analyze this business website information and extract its complete corporate identity.
+Prioritize the business name matching the domain (${domainUrl}).
+
+DATA:
+${contextSnippet}`;
+
+      const res = await llm.invoke(prompt);
+      if (res.officialName && res.officialName !== "UNKNOWN" && res.officialName.length > 2) {
         resolvedName = {
-          value: extractedName,
+          value: res.officialName,
           source: {
             url: pages[0]?.url ?? "",
             field: "businessIdentity.officialName",
-            evidence: `LLM Extraction prioritizing Domain (${domainUrl}): ${extractedName}`,
+            evidence: `Unified LLM Extraction prioritizing Domain (${domainUrl}): ${res.officialName}`,
             confidence: "high",
             inferred: true,
-          }
+          },
         };
       }
-    } catch (err) {
-      // Keep heuristic fallback if LLM crashes
-    }
-
-    // --- Extract Business Location ---
-    let extractedLocation: string | null = null;
-    try {
-      const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.0 });
-      const prompt = `Extract the physical headquarters location (City, State/Province, Country) of the business from the following text. Look for contact details, footers, or 'About Us' information. If you find multiple locations, use the primary headquarters.
-Output ONLY the location in the format "City, State, Country".
-If you cannot determine the location, output "UNKNOWN".
-
-TEXT:
-TEXT:
-${combinedText}`;
-      const response = await llm.invoke(prompt);
-      const loc = response.content.toString().trim();
-      if (loc && loc !== "UNKNOWN" && loc.length > 2) {
-        extractedLocation = loc;
+      classification = {
+        industry: res.industry || null,
+        subIndustry: res.subIndustry || null,
+        businessModel: res.businessModel || null,
+        sourceEvidence: res.sourceEvidence || null,
+      };
+      if (res.location && res.location !== "UNKNOWN" && res.location.length > 2) {
+        extractedLocation = res.location;
       }
-    } catch (e) {
-      // Silent catch
+      if (res.vision && res.vision !== "UNKNOWN" && res.vision.length > 5) {
+        extractedVision = res.vision;
+      }
+      if (res.description && res.description.length > 10) {
+        extractedDescription = res.description;
+      }
+    } catch (err) {
+      logger.warn(`Unified identity extraction error: ${err}. Falling back to standard classifier.`);
+      classification = await this.industryClassifier.run(contextSnippet);
     }
 
-    // Fallback: Web search for location if not found in text
+    // Fallback: Web search for location if still missing
     if (!extractedLocation && resolvedName.value && resolvedName.value !== "UNKNOWN") {
       try {
         const searchTool = new FreeSearchEngine({ maxResults: 3 });
         const resultRaw = await searchTool.invoke({ query: `${resolvedName.value} headquarters location city country address` });
         const searchContext = typeof resultRaw === "string" ? resultRaw : JSON.stringify(resultRaw);
         
-        const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.0 });
+        const llm = createChatModel({ model: "gpt-4o-mini", temperature: 0.0 });
         const prompt = `Based on these search results, what is the headquarters location (City, State/Province, Country) for the company "${resolvedName.value}"?
 Output ONLY the location in the format "City, State, Country".
 If you cannot determine the location, output "UNKNOWN".
@@ -367,34 +388,14 @@ ${searchContext}`;
       }
     }
 
-    // --- Extract Business Vision ---
-    let extractedVision: string | null = null;
-    try {
-      const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.1 });
-      const prompt = `Extract the overarching Vision, Mission, or core philosophical goal of the business from the following text. Look for 'About Us', 'Our Mission', or 'Our Vision' sections.
-Summarize it into a concise, powerful 1-2 sentence statement.
-If you cannot determine any clear vision or mission, output "UNKNOWN".
-
-TEXT:
-TEXT:
-${combinedText}`;
-      const response = await llm.invoke(prompt);
-      const vis = response.content.toString().trim();
-      if (vis && vis !== "UNKNOWN" && vis.length > 5) {
-        extractedVision = vis;
-      }
-    } catch (e) {
-      // Silent catch
-    }
-
-    // Fallback: Web search for Vision if not found in text
+    // Fallback: Web search for Vision if still missing
     if (!extractedVision && resolvedName.value && resolvedName.value !== "UNKNOWN") {
       try {
         const searchTool = new FreeSearchEngine({ maxResults: 3 });
         const resultRaw = await searchTool.invoke({ query: `${resolvedName.value} company vision mission statement core values` });
         const searchContext = typeof resultRaw === "string" ? resultRaw : JSON.stringify(resultRaw);
         
-        const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.1 });
+        const llm = createChatModel({ model: "gpt-4o-mini", temperature: 0.1 });
         const prompt = `Based on these search results, what is the overarching Vision, Mission, or core philosophical goal for the company "${resolvedName.value}"?
 Summarize it into a concise, powerful 1-2 sentence statement.
 If you cannot determine any clear vision or mission, output "UNKNOWN".
@@ -411,7 +412,8 @@ ${searchContext}`;
       }
     }
 
-    const classification = await this.industryClassifier.run(combinedText);
+    const metaDesc = pages[0]?.metaDescription || semantic.metadata.descriptions.find(Boolean) || "";
+    const defaultDescription = extractedDescription || metaDesc || (semantic.combinedText ? firstSentence(semantic.combinedText, 300) : "");
 
     const data: BusinessIdentity = {
       officialName: resolvedName.value,
@@ -424,6 +426,7 @@ ${searchContext}`;
       businessModel: classification.businessModel,
       location: extractedLocation,
       vision: extractedVision,
+      description: defaultDescription || undefined,
     };
 
     const sources: SourceRef[] = [];

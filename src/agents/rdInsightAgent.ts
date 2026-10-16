@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "../utils/llm.js";
 import { FreeSearchEngine } from "../utils/freeSearchEngine.js";
 import { agentRules } from "../config/agentRules.js";
 import { createLogger } from "../utils/logger.js";
@@ -17,7 +17,7 @@ export class RdInsightAgent {
     maturity: DigitalMaturity,
   ): Promise<AgentResult<RdInsights>> {
     logger.info("Executing Live R&D Intelligence Search...");
-    const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.5 });
+    const llm = createChatModel({ model: "gpt-4o-mini", temperature: 0.5 });
     
     let searchContext = "";
     try {

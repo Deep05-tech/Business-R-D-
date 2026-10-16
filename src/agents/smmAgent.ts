@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { createChatModel } from "../utils/llm.js";
 import { createLogger } from "../utils/logger.js";
 import type { StructuredMemory } from "../types.js";
 
@@ -11,11 +11,10 @@ export class SmmAgent {
   async run(memory: StructuredMemory, type: "video" | "image", totalPosts: number, language: string = "English", strategy: string = "new", theme: string = "brand", subTheme?: string, mirrorCompetitor?: string, mirrorPost?: any, industryFocus?: string, customGoal?: string, trendingTopic?: any): Promise<string[]> {
     logger.info(`Generating ${totalPosts} SMM ${type} posts in ${language} for ${memory.input.websiteUrl} (Strategy: ${strategy}, Theme: ${theme}, SubTheme: ${subTheme || 'None'}, Industry Focus: ${industryFocus || 'all'}, Trending Topic: ${trendingTopic?.title || 'None'})...`);
 
-    const llm = new ChatOpenAI({
+    const llm = createChatModel({
       model: "gpt-4o",
       temperature: 0.85,
       maxTokens: 8192,
-      apiKey: process.env.OPENAI_API_KEY || process.env.OPENAI_KEY,
     });
 
     const memoryContext = JSON.stringify({
