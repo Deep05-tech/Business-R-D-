@@ -179,7 +179,12 @@ export class OrchestratorAgent {
         }]
       };
     } else {
-      webScrape = await this.agents.webScraper.run(input.websiteUrl, 25);
+      const crawlLimit = Number(process.env.CRAWL_MAX_PAGES) || 12;
+      webScrape = await this.agents.webScraper.run(input.websiteUrl, crawlLimit);
+    }
+
+    if (typeof global.gc === "function") {
+      global.gc();
     }
 
     // Enforce hierarchy for all downstream map-reduce agents
@@ -196,12 +201,9 @@ export class OrchestratorAgent {
     webScrape.data.sort((a: any, b: any) => (hierarchyWeights[a.pageType] || 10) - (hierarchyWeights[b.pageType] || 10));
 
     // ---------------------------------------------------------------------------
-    // PHASE 3: Business Context Memory (Homepage & About only)
+    // PHASE 2: Context Cleaning & Social Intelligence
     // ---------------------------------------------------------------------------
-    // ---------------------------------------------------------------------------
-    // PHASE 2: Parallel Context Cleaning & Social Intelligence
-    // ---------------------------------------------------------------------------
-    logger.info("PHASE 2: Extracting Business Context & Social Intelligence in Parallel...");
+    logger.info("PHASE 2: Extracting Business Context & Social Intelligence...");
     let contextPages = webScrape.data.filter((p: any) => p.pageType === "homepage" || p.pageType === "about");
     if (contextPages.length === 0) contextPages = [webScrape.data[0]];
 
@@ -227,12 +229,28 @@ export class OrchestratorAgent {
     }
 
     onProgress?.("Cleaning semantics & Social intelligence");
-    // RUN CONTEXT CLEANING, FULL SEMANTIC CLEANING, AND SOCIAL INTELLIGENCE IN PARALLEL!
-    const [contextSemantic, semantic, socialContext] = await Promise.all([
-      this.agents.semanticCleaning.run(contextPages),
+    // Run full semantic cleaning and social intelligence
+    const [semantic, socialContext] = await Promise.all([
       this.agents.semanticCleaning.run(webScrape.data),
       this.agents.socialIntelligence.run(input.socialUrls)
     ]);
+
+    // Derive contextSemantic directly from the already-cleaned pages (homepage and about)
+    // to avoid duplicating memory and CPU
+    const contextPageUrls = new Set(contextPages.map((p: any) => p.url));
+    const cleanedContextPages = semantic.data.pages.filter(p => contextPageUrls.has(p.url));
+    const contextSemantic = {
+      ...semantic,
+      data: {
+        ...semantic.data,
+        pages: cleanedContextPages.length > 0 ? cleanedContextPages : semantic.data.pages.slice(0, 2),
+        combinedText: cleanedContextPages.map(p => p.cleanText).join(" ") || semantic.data.combinedText.slice(0, 10000)
+      }
+    };
+
+    if (typeof global.gc === "function") {
+      global.gc();
+    }
 
     // Inject brochure text into semantic context if present
     if (input.brochureText) {
@@ -309,6 +327,10 @@ export class OrchestratorAgent {
 
     onProgress?.("Offerings Extracted", { offerings: offerings.data });
     onProgress?.("Digital Maturity Calculated", { digitalMaturity: digital.data });
+
+    if (typeof global.gc === "function") {
+      global.gc();
+    }
 
     // ---------------------------------------------------------------------------
     // PHASE 5: Parallel Audience & Brand Analysis
@@ -443,7 +465,7 @@ Return ONLY valid JSON matching the structure of the input items without markdow
           }] as any
         };
       } else {
-        next.webScrape = await this.agents.webScraper.run(input.websiteUrl, 150);
+        next.webScrape = await this.agents.webScraper.run(input.websiteUrl, 20);
       }
     }
     if (modules.includes("semantic") || modules.includes("webScrape") || modules.includes("web")) {

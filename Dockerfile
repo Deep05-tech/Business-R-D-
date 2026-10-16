@@ -28,9 +28,10 @@ RUN npm run build
 
 # Default environment variables
 ENV NODE_ENV=production \
-    PORT=3000
+    PORT=3000 \
+    CRAWL_MAX_PAGES=12
 
 EXPOSE 3000
 
-# Start production server
-CMD ["node", "dist/server.js"]
+# Start production server with capped V8 heap (safe for 512MB RAM containers)
+CMD ["node", "--expose-gc", "--max-old-space-size=350", "dist/server.js"]

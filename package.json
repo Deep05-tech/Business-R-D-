@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsx src/server.ts",
-    "start": "node dist/server.js",
+    "start": "node --expose-gc --max-old-space-size=350 dist/server.js",
     "test": "vitest run"
   },
   "dependencies": {

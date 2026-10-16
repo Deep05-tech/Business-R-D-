@@ -378,9 +378,10 @@ export class SocialExtractorAgent {
         maxPosts: number = 20,
         options: ExtractPostsOptions = {}
     ): Promise<any[]> {
-        // Daily tracking runs this route first. It avoids starting Chrome when
-        // a platform's public HTML or search result already has usable posts.
-        if (options.preferHttp) {
+        const isBrowserEnabled = process.env.ENABLE_BROWSER_SCRAPING === "true";
+
+        // Fast HTTP/Search route runs if requested or when headless browser is disabled
+        if (options.preferHttp || !isBrowserEnabled) {
             try {
                 const httpPosts = await this.extractPostsHttp(platform, profileUrl, compName, maxPosts);
                 if (httpPosts.length > 0) {
@@ -392,8 +393,9 @@ export class SocialExtractorAgent {
             }
         }
 
-        // 1. Primary Strategy: Open the profile page directly in the browser and scrape latest posts
-        if (profileUrl && profileUrl.startsWith("http")) {
+        // 1. Browser Strategy: Open the profile page directly in the browser and scrape latest posts
+        // Guarded: only run if headless browser is explicitly enabled in environment (avoids 400MB RAM spike on 512MB hosts)
+        if (isBrowserEnabled && profileUrl && profileUrl.startsWith("http")) {
             let attempts = 0;
             const maxAttempts = 2;
             while (attempts < maxAttempts) {

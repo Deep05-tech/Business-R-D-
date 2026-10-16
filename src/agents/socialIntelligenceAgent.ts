@@ -34,7 +34,7 @@ export class SocialIntelligenceAgent {
           const platform = this.detectPlatform(url);
           if (platform) {
             try {
-              posts = await this.socialExtractor.extractPosts(platform, url, undefined, 3);
+              posts = await this.socialExtractor.extractPosts(platform, url, undefined, 3, { preferHttp: true });
             } catch (err: any) {
               console.log(`[SocialIntelligenceAgent] Scraper for ${platform} (${url}) failed: ${err.message}`);
             }
@@ -60,7 +60,7 @@ export class SocialIntelligenceAgent {
           const platform = this.detectPlatform(url);
           if (platform) {
             try {
-              posts = await this.socialExtractor.extractPosts(platform, url, undefined, 3);
+              posts = await this.socialExtractor.extractPosts(platform, url, undefined, 3, { preferHttp: true });
             } catch {}
           }
 

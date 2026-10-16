@@ -39,7 +39,7 @@ export class WebTool {
   constructor(options: WebToolOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? 15_000;
     this.maxBytes = options.maxBytes ?? 2_000_000;
-    this.maxPages = options.maxPages ?? 1000;
+    this.maxPages = options.maxPages ?? 15;
   }
 
   async fetchPage(url: string): Promise<PageSnapshot> {
@@ -71,9 +71,13 @@ export class WebTool {
     const hasScripts = temp$("script[src]").length > 0;
 
     if (!isSocialUrl && ((bodyTextLength < 500 && hasScripts) || html.trim() === "")) {
-      logger.info(`SPA detected at ${url}. Falling back to Headless Browser...`);
-      html = await this.fetchWithSelenium(url);
-      status = status || 200;
+      if (process.env.ENABLE_BROWSER_SCRAPING === "true") {
+        logger.info(`SPA detected at ${url}. Falling back to Headless Browser...`);
+        html = await this.fetchWithSelenium(url);
+        status = status || 200;
+      } else {
+        logger.info(`SPA detected at ${url}, but headless browser is disabled for memory safety.`);
+      }
     }
 
     if (!html) return this.emptySnapshot(url, status);
@@ -119,7 +123,8 @@ export class WebTool {
     const root = new URL(rootUrl);
     const visited = new Set<string>();
     const snapshots: PageSnapshot[] = [];
-    const max = limit ?? this.maxPages;
+    const envLimit = Number(process.env.CRAWL_MAX_PAGES);
+    const max = Number.isFinite(envLimit) && envLimit > 0 ? envLimit : (limit ?? this.maxPages);
 
     // --- Seed queue with sitemap URLs (high priority) ---
     const queue: QueueEntry[] = [];
@@ -327,7 +332,8 @@ export class WebTool {
         const [href = "", label = ""] = entry.split("|||");
         return { href, text: label };
       })
-      .filter((link) => link.href);
+      .filter((link) => link.href)
+      .slice(0, 80);
 
     return {
       url,
@@ -513,7 +519,7 @@ export class WebTool {
       url.hash = "";
       url.search = ""; // strip tracking / pagination query params
       if (!["http:", "https:"].includes(url.protocol)) return null;
-      if (/\.(pdf|jpg|jpeg|png|gif|webp|zip|mp4|mp3|svg|css|js|woff|woff2|ico)$/i.test(url.pathname)) return null;
+      if (/\.(pdf|jpg|jpeg|png|gif|webp|webm|mp4|avi|mov|mkv|mp3|wav|ogg|zip|tar|gz|svg|css|js|woff|woff2|ico|doc|docx|xls|xlsx|ppt|pptx)$/i.test(url.pathname)) return null;
 
       // Normalize trailing slash: remove trailing slash if not root
       let pathname = url.pathname;
