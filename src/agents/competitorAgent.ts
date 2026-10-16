@@ -95,81 +95,36 @@ export class CompetitorAgent {
   private placesApi = new PlacesApi();
   private igVerifier = new SocialExtractorAgent();
 
-  private llmIndustrySchema = z.object({
-    inIndustry: z.boolean().describe("true ONLY if this is the official website of a real operating business whose primary industry matches the target industry"),
-    industry: z.string().describe("the actual primary industry this business operates in, or 'not a business' if the page is a marketplace, blog, article, directory, encyclopedia, or similar"),
-    reason: z.string().describe("one short sentence justifying the decision"),
-  });
-
-  private llmCompetitorSchema = z.object({
-    isCompetitor: z.boolean().describe("true ONLY if this business directly competes with a company offering the target products/services"),
-    commonOfferings: z.array(z.string()).describe("list of specific matching products/services they both offer"),
+  private llmCandidateSchema = z.object({
+    inIndustry: z.boolean().describe("true ONLY if this is the official website of a real operating business in or directly adjacent to the target industry"),
+    isCompetitor: z.boolean().describe("true if this business provides similar or competing products/services"),
     reason: z.string().describe("one short sentence explaining why they are or are not direct competitors"),
   });
 
-  private async verifyCompetitorViaLLM(pageProfile: string, targetName: string, targetOfferings: string[]): Promise<{ isCompetitor: boolean; reason: string }> {
+  private async verifyCandidateViaLLM(pageProfile: string, targetName: string, targetIndustry: string, targetOfferings: string[]): Promise<{ isCompetitor: boolean; reason: string }> {
     try {
       const llm = createChatModel({ model: agentRules.models.fast, temperature: 0 });
-      const structuredLlm = llm.withStructuredOutput(this.llmCompetitorSchema);
-      const prompt = `You are evaluating whether a candidate business is a direct competitor to a target company.
-      
-Target Business Name: ${targetName}
-Target Business Offerings:
-${targetOfferings.map(o => `- ${o}`).join("\n")}
+      const structuredLlm = llm.withStructuredOutput(this.llmCandidateSchema);
+      const prompt = `You are evaluating whether a candidate business is a direct competitor to ${targetName} in the ${targetIndustry} industry.
+Target Offerings: ${targetOfferings.slice(0, 5).join(", ")}
 
 Candidate Website Profile:
 ${pageProfile}
 
 INSTRUCTIONS:
-1. A direct competitor MUST manufacture/provide similar products or services and target the same business/customer segments.
-2. If the candidate is a distributor, dealer, retailer, directory, or marketplace rather than a direct supplier/manufacturer of similar offerings, they are NOT a competitor.
-3. If they operate in a completely different vertical (e.g. they make gym equipment named "Forge" but the target makes metal forgings), they are NOT a competitor.
-4. If they operate in the same industry and share AT LEAST ONE matching product, product line, or manufacturing capability with the target, ACCEPT THEM as a competitor (isCompetitor = true). They do NOT need to match all target offerings.
-
-Answer with the JSON schema.`;
+1. Reject consumer directories, marketplaces (Alibaba, IndiaMart), review sites, encyclopedias, and completely unrelated verticals.
+2. Accept real operating businesses in the same industry that manufacture, supply, or provide similar offerings.`;
 
       const res = await structuredLlm.invoke(prompt);
-      logger.debug(`LLM competitor gate: isCompetitor=${res.isCompetitor} reason="${res.reason}"`);
-      return { isCompetitor: res.isCompetitor, reason: res.reason };
+      logger.debug(`LLM candidate gate: inIndustry=${res.inIndustry} isCompetitor=${res.isCompetitor} reason="${res.reason}"`);
+      return { isCompetitor: res.inIndustry && res.isCompetitor, reason: res.reason };
     } catch (e: any) {
-      logger.warn(`LLM competitor gate failed, defaulting to accept. Error: ${e.message}`);
+      logger.warn(`LLM candidate gate failed, defaulting to accept. Error: ${e.message}`);
       return { isCompetitor: true, reason: "Fallback (error during LLM check)" };
     }
   }
 
-  // Decisive industry gate. Keyword matching alone is not enough (articles, guides, marketplaces and
-  // businesses in other verticals also mention the target words), so an LLM classifies whether the
-  // scraped page actually belongs to a real business operating in the target industry.
-  private async verifyIndustryViaLLM(pageProfile: string, targetIndustry: string, targetSubIndustry: string): Promise<boolean> {
-    try {
-      const llm = createChatModel({ model: agentRules.models.fast, temperature: 0 });
-      const structuredLlm = llm.withStructuredOutput(this.llmIndustrySchema);
-      const prompt = `You are classifying whether a website belongs to a real business in a target industry, before that business may be accepted as a competitor.
-
-Target industry: ${targetIndustry}
-Target sub-industry: ${targetSubIndustry}
-
-A competitor MUST be a real operating business whose PRIMARY industry is this target industry. REJECT anything that is NOT such a business, even if the page mentions the industry keywords:
-- Marketplaces / B2B directories (made-in-china, alibaba, globalsources, indiaMART, etc.)
-- Search / listing / product-page / category pages, blog posts, articles, guides, tutorials, news
-- Encyclopedias, wikis, review sites, social media profiles
-- Businesses in ANY other industry (software, finance, fitness, real estate, etc.)
-- Businesses that merely WRITE about or aggregate this industry without manufacturing its products
-
-Scraped website profile:
-${pageProfile}
-
-Answer with the JSON schema.`;
-      const res = await structuredLlm.invoke(prompt);
-      logger.debug(`LLM industry gate: inIndustry=${res.inIndustry} industry="${res.industry}" reason="${res.reason}"`);
-      return res.inIndustry === true;
-    } catch (e: any) {
-      logger.warn(`LLM industry gate failed, defaulting to accept. Error: ${e.message}`);
-      return true;
-    }
-  }
-
-  async run(memory: StructuredMemory, scope: "local" | "regional" | "global" | "all" = "regional", onProgress?: (comp: CompetitorProfile, statusMsg: string) => void, maxResults?: number): Promise<CompetitorProfile[]> {
+  async run(memory: StructuredMemory, scope: "local" | "regional" | "global" | "all" = "regional", onProgress?: (comp: CompetitorProfile | null, statusMsg: string) => void, maxResults?: number): Promise<CompetitorProfile[]> {
     logger.info(`Running Google Places competitor discovery for ${memory.input.websiteUrl} with scope: ${scope}...`);
 
     let industry = memory.industryClassification?.industry || "Manufacturing Companies";
@@ -256,8 +211,17 @@ Answer with the JSON schema.`;
     // Content/non-business domains are never competitors (encyclopedias, wikis, directories, review sites).
     const blockedDomains = ["indiamart.com", "tradeindia.com", "justdial.com", "facebook.com", "linkedin.com", "instagram.com", "twitter.com", "youtube.com", "wikipedia.org", "wikimedia.org", "imdb.com", "yelp.com", "glassdoor.com", "crunchbase.com"];
 
-    const seedUrls: string[] = (memory as any).seedCompetitorUrls || [];
+    const seedUrls: string[] = (memory as any).seedCompetitorUrls ? [...(memory as any).seedCompetitorUrls] : [];
+    if (memory.marketingSales?.competitors && Array.isArray(memory.marketingSales.competitors)) {
+        for (const comp of memory.marketingSales.competitors) {
+            const cUrl = (comp as any)?.url;
+            if (cUrl && !seedUrls.includes(cUrl)) {
+                seedUrls.push(cUrl);
+            }
+        }
+    }
     logger.info(`Generating semantic search queries for industry: ${industry}, Offerings: [${coreOfferings.join(", ")}]`);
+    onProgress?.(null, `Generating semantic queries for ${industry}...`);
 
     // --- SEMANTIC QUERY EXPANSION ---
     let semanticQueries: string[] = [];
@@ -326,10 +290,37 @@ Answer with the JSON schema.`;
             const offering = coreOfferings[i % coreOfferings.length];
             
             for (const loc of activeLocations) {
+                onProgress?.(null, `Searching for "${queryKeyword}" in ${loc}...`);
                 logger.info(`Fetching pool for semantic query: "${queryKeyword}" in ${loc}`);
                 
                 // Fetch up to 1-2 pages per keyword to balance pool coverage with API limits
-                const rawPlaces = await this.placesApi.fetchAllCompetitors(`${placesQueryKeyword} in ${loc}`, loc, 1);
+                let rawPlaces: any[] = [];
+                try {
+                    rawPlaces = await this.placesApi.fetchAllCompetitors(`${placesQueryKeyword} in ${loc}`, loc, 1);
+                } catch (e: any) {
+                    logger.warn(`Places API fetch failed: ${e.message}`);
+                }
+
+                if (rawPlaces.length === 0) {
+                    try {
+                        const bing = new BingRssSearchEngine({ maxResults: 10 });
+                        const searchQuery = `"${placesQueryKeyword}" "${loc}" -site:indiamart.com -site:justdial.com -site:tradeindia.com -site:facebook.com -site:linkedin.com -site:youtube.com`;
+                        const raw = await bing.invoke({ query: searchQuery });
+                        const items = JSON.parse(raw);
+                        for (const item of items) {
+                            if (item.url && item.url.startsWith("http")) {
+                                rawPlaces.push({
+                                    id: item.url,
+                                    displayName: { text: item.title?.split("-")[0]?.split("|")[0]?.trim() || item.title },
+                                    websiteUri: item.url,
+                                    formattedAddress: loc,
+                                    rating: undefined,
+                                    nationalPhoneNumber: undefined
+                                });
+                            }
+                        }
+                    } catch {}
+                }
             
             for (const place of rawPlaces) {
                 if (!place.websiteUri) continue;
@@ -406,8 +397,8 @@ Answer with the JSON schema.`;
         // Evaluate top 25 candidates per target scope
         const candidatePool = sortedCandidates.slice(0, 25);
 
-        // Phase 1.3 & 2 & 3: Verify in parallel batches of 5
-        const BATCH_SIZE = 5;
+        // Phase 1.3 & 2 & 3: Verify in parallel batches of 3
+        const BATCH_SIZE = 3;
         for (let batchIdx = 0; batchIdx < candidatePool.length; batchIdx += BATCH_SIZE) {
             if (foundForTarget >= targetQuota) break;
 
@@ -421,6 +412,7 @@ Answer with the JSON schema.`;
 
                 if (!domain || uniqueDomains.has(domain)) return;
 
+                onProgress?.(null, `Analyzing candidate: ${place.displayName?.text || domain}...`);
                 const primaryOffering = Array.from(matchedOfferings)[0];
                 logger.debug(`Phase 2/3: Verifying social media & deep product scanning for ${place.websiteUri}...`);
                 const targetName = memory.businessIdentity?.officialName || "";
@@ -446,7 +438,6 @@ Answer with the JSON schema.`;
                 if (socialLinksCount < 1) return;
 
                 const activity = await this.evaluateSocialActivity(socials);
-                if (!candidate.isSeed && activity.verdict === "inactive") return;
 
                 if (foundForTarget >= targetQuota) return;
                 foundForTarget++;
@@ -570,27 +561,18 @@ Answer with the JSON schema.`;
             // DECISIVE INDUSTRY GATE: LLM classifies whether this is a real business in the same industry.
             const pageProfile = [
                 `URL: ${url}`,
-                `Title: ${$('title').text().trim().slice(0, 200)}`,
-                `Meta description: ${($('meta[name="description"]').attr('content') || "").trim().slice(0, 300)}`,
-                `Headings: ${$('h1, h2, h3').text().trim().replace(/\s+/g, " ").slice(0, 400)}`,
-                `Business signals detected: ${this.countBusinessSignals($, bodyText)} of 4 (phone, email, company/about statements, product/capability sections)`,
-                `Body excerpt: ${bodyText.replace(/\s+/g, " ").slice(0, 1500)}`,
+                `Title: ${$('title').text().trim().slice(0, 150)}`,
+                `Meta description: ${($('meta[name="description"]').attr('content') || "").trim().slice(0, 200)}`,
+                `Headings: ${$('h1, h2').text().trim().replace(/\s+/g, " ").slice(0, 200)}`,
+                `Body excerpt: ${bodyText.replace(/\s+/g, " ").slice(0, 400)}`,
             ].join("\n");
-            const [industryPass, competitorVerification] = await Promise.all([
-                this.verifyIndustryViaLLM(pageProfile, targetIndustry, targetSubIndustry),
-                this.verifyCompetitorViaLLM(pageProfile, targetName, allOfferings)
-            ]);
-
-            if (!industryPass) {
-                logger.debug(`Discarding ${url}: LLM industry gate rejected candidate (not a real business in the target industry).`);
+            
+            const verification = await this.verifyCandidateViaLLM(pageProfile, targetName, targetIndustry, allOfferings);
+            if (!verification.isCompetitor) {
+                logger.debug(`Discarding ${url}: LLM candidate gate rejected (${verification.reason}).`);
                 return null;
             }
-
-            if (!competitorVerification.isCompetitor) {
-                logger.debug(`Discarding ${url}: LLM competitor gate rejected candidate (${competitorVerification.reason}).`);
-                return null;
-            }
-            whyCompetitorText = competitorVerification.reason;
+            whyCompetitorText = verification.reason;
         }
 
         // Deep scan for ALL offerings (Strict matching: must match >= 50% of keywords in the offering name)

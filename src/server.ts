@@ -936,11 +936,28 @@ app.post("/api/competitors", async (request, response) => {
 // SSE Streaming endpoint for Competitor Discovery
 app.post("/api/competitors-stream", async (request, response) => {
   response.setHeader("Content-Type", "text/event-stream");
-  response.setHeader("Cache-Control", "no-cache");
+  response.setHeader("Cache-Control", "no-cache, no-transform");
   response.setHeader("Connection", "keep-alive");
+  response.setHeader("X-Accel-Buffering", "no");
+  response.flushHeaders();
+
+  // Send immediate connected event so browser and reverse proxy know the stream is active
+  response.write(`data: ${JSON.stringify({ type: 'progress', status: "Connected. Scanning competitor footprint..." })}\n\n`);
+
+  // Periodic heartbeat every 8 seconds prevents reverse proxy (Render/Cloudflare) 502 timeouts
+  const heartbeat = setInterval(() => {
+    if (!response.writableEnded) {
+      response.write(`: keepalive\n\n`);
+    }
+  }, 8000);
+
+  request.on("close", () => {
+    clearInterval(heartbeat);
+  });
 
   const { websiteUrl, scope } = request.body;
   if (!websiteUrl) {
+    clearInterval(heartbeat);
     response.write(`data: ${JSON.stringify({ type: 'error', error: "Website URL is required" })}\n\n`);
     response.end();
     return;
@@ -952,6 +969,7 @@ app.post("/api/competitors-stream", async (request, response) => {
   }
 
   if (!memory) {
+    clearInterval(heartbeat);
     response.write(`data: ${JSON.stringify({ type: 'error', error: "No memory found for this URL." })}\n\n`);
     response.end();
     return;
@@ -959,19 +977,34 @@ app.post("/api/competitors-stream", async (request, response) => {
 
   try {
     const competitors = await competitorAgent.run(memory, scope || "regional", (comp, statusMsg) => {
-      response.write(`data: ${JSON.stringify({ type: 'competitor', competitor: comp, status: statusMsg })}\n\n`);
+      if (!response.writableEnded) {
+        if (comp) {
+          response.write(`data: ${JSON.stringify({ type: 'competitor', competitor: comp, status: statusMsg })}\n\n`);
+        } else {
+          response.write(`data: ${JSON.stringify({ type: 'progress', status: statusMsg })}\n\n`);
+        }
+      }
     });
 
     memory.competitors = competitors;
     await memoryStore.save(memory);
     knowledgeIndex.add(memory);
 
-    response.write(`data: ${JSON.stringify({ type: 'complete', competitors })}\n\n`);
-    response.end();
+    if (!response.writableEnded) {
+      response.write(`data: ${JSON.stringify({ type: 'complete', competitors })}\n\n`);
+      response.end();
+    }
   } catch (err: any) {
     logger.error(`Competitor Stream error: ${err.message}`);
-    response.write(`data: ${JSON.stringify({ type: 'error', error: err.message })}\n\n`);
-    response.end();
+    if (!response.writableEnded) {
+      response.write(`data: ${JSON.stringify({ type: 'error', error: err.message })}\n\n`);
+      response.end();
+    }
+  } finally {
+    clearInterval(heartbeat);
+    if (!response.writableEnded) {
+      response.end();
+    }
   }
 });
 

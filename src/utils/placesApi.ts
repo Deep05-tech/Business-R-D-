@@ -51,15 +51,17 @@ export class PlacesApi {
 
     try {
       logger.debug(`Fetching Google Places for query: "${query}" (PageToken: ${!!pageToken})`);
-      const response = await axios.post<PlacesSearchResponse>(url, payload, { headers, timeout: 15000 });
+      const response = await axios.post<PlacesSearchResponse>(url, payload, { headers, timeout: 6000 });
       return response.data;
     } catch (error: any) {
-      if (retries > 0) {
+      const status = error?.response?.status;
+      const isAuthError = status === 400 || status === 401 || status === 403;
+      if (retries > 0 && !isAuthError) {
         logger.warn(`Google Places API failed (${error.message}). Retrying... (${retries} left)`);
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 1000));
         return this.searchPlaces(query, pageToken, retries - 1);
       }
-      logger.error(`Google Places API completely failed: ${error?.response?.data?.error?.message || error.message}`);
+      logger.error(`Google Places API failed: ${error?.response?.data?.error?.message || error.message}`);
       throw error;
     }
   }

@@ -36,6 +36,9 @@ export class SocialExtractorAgent {
     }
 
     private async initBrowser(platform: string) {
+        if (process.env.ENABLE_BROWSER_SCRAPING !== "true") {
+            throw new Error("Browser scraping is disabled to prevent OOM on memory-constrained containers.");
+        }
         const options = new chrome.Options();
         const tmpUserDataDir = path.join(os.tmpdir(), `chrome_user_data_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`);
         this.browserProfilePaths = [tmpUserDataDir];
@@ -791,6 +794,9 @@ export class SocialExtractorAgent {
     // vertical, e.g. a gym named "Forge Performance"). Self-contained: inits + closes the browser.
     public async fetchInstagramBio(handle: string): Promise<string> {
         const cleanHandle = handle.replace(/^@/, "").replace(/\/+$/, "");
+        if (process.env.ENABLE_BROWSER_SCRAPING !== "true") {
+            return "";
+        }
         try {
             await this.initBrowser("Instagram");
             await this.driver!.get(`https://www.instagram.com/${cleanHandle}/`);
@@ -824,6 +830,9 @@ export class SocialExtractorAgent {
     // callers treat it as "unknown".
     public async fetchInstagramLastActivity(handle: string): Promise<{ checked: boolean; lastPostDays: number | null }> {
         const cleanHandle = handle.replace(/^@/, "").replace(/\/+$/, "");
+        if (process.env.ENABLE_BROWSER_SCRAPING !== "true") {
+            return { checked: false, lastPostDays: null };
+        }
         try {
             await this.initBrowser("Instagram");
             await this.driver!.get(`https://www.instagram.com/${cleanHandle}/`);
