@@ -180,7 +180,9 @@ export class OrchestratorAgent {
       };
     } else {
       const crawlLimit = Number(process.env.CRAWL_MAX_PAGES) || 12;
-      webScrape = await this.agents.webScraper.run(input.websiteUrl, crawlLimit);
+      webScrape = await this.agents.webScraper.run(input.websiteUrl, crawlLimit, (msg) => {
+        onProgress?.(msg);
+      });
     }
 
     if (typeof global.gc === "function") {
@@ -465,7 +467,9 @@ Return ONLY valid JSON matching the structure of the input items without markdow
           }] as any
         };
       } else {
-        next.webScrape = await this.agents.webScraper.run(input.websiteUrl, 20);
+        next.webScrape = await this.agents.webScraper.run(input.websiteUrl, 20, (msg) => {
+          onProgress?.(msg);
+        });
       }
     }
     if (modules.includes("semantic") || modules.includes("webScrape") || modules.includes("web")) {

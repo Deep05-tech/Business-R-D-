@@ -553,14 +553,36 @@ app.post("/business-intelligence", async (request, response) => {
 // ---------------------------------------------------------------------------
 app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, response) => {
   response.setHeader("Content-Type", "text/event-stream");
-  response.setHeader("Cache-Control", "no-cache");
+  response.setHeader("Cache-Control", "no-cache, no-transform");
   response.setHeader("Connection", "keep-alive");
+  response.setHeader("X-Accel-Buffering", "no");
+  request.socket.setTimeout(0);
+  if (typeof (response as any).flushHeaders === "function") {
+    (response as any).flushHeaders();
+  }
+
+  // Send immediate connected event so browser and reverse proxy know the stream is active
+  response.write(`data: ${JSON.stringify({ type: 'progress', step: "Initializing analysis..." })}\n\n`);
+
+  // Periodic heartbeat every 8 seconds prevents reverse proxy (Render/Cloudflare) timeouts
+  const heartbeat = setInterval(() => {
+    if (!response.writableEnded) {
+      try {
+        response.write(`: keepalive\n\n`);
+      } catch (_) {}
+    }
+  }, 8000);
+
+  request.on("close", () => {
+    clearInterval(heartbeat);
+  });
 
   const url = request.body.websiteUrl as string;
   const socialUrls = (request.body.socialUrls as string || "").split(",").map(s => s.trim()).filter(Boolean);
   const customInstructions = request.body.customInstructions as string | undefined;
   
   if (!url) {
+    clearInterval(heartbeat);
     response.write(`data: ${JSON.stringify({ type: 'error', error: "Website URL is required" })}\n\n`);
     response.end();
     return;
@@ -574,6 +596,7 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
       const buf = request.file.buffer;
       const isPdfMagic = buf.length >= 4 && buf[0] === 0x25 && buf[1] === 0x50 && buf[2] === 0x44 && buf[3] === 0x46;
       if (!isPdfMagic) {
+        clearInterval(heartbeat);
         logger.warn(`[Security Alert] Rejected uploaded file: invalid PDF magic header.`);
         response.write(`data: ${JSON.stringify({ type: 'error', error: "Security Alert: Uploaded file is not a valid PDF document." })}\n\n`);
         response.end();
@@ -653,21 +676,29 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
       logger.info(`Starting research with ${process.env.SYSTEM_VERSION || "v12-stable"} Orchestrator...`);
       
       try {
-        const profile = await orchestrator.run(input, (stepName) => {
-          response.write(`data: ${JSON.stringify({ type: 'progress', step: stepName })}\n\n`);
+        const profile = await orchestrator.run(input, (stepName, partial) => {
+          if (!response.writableEnded) {
+            response.write(`data: ${JSON.stringify({ type: 'progress', step: stepName, partial })}\n\n`);
+          }
         });
         
-        response.write(`data: ${JSON.stringify({ type: 'complete', profile })}\n\n`);
+        if (!response.writableEnded) {
+          response.write(`data: ${JSON.stringify({ type: 'complete', profile })}\n\n`);
+        }
         logger.success(`✅ Pipeline execution completed successfully for ${finalUrl}`);
       } catch (err: any) {
         // Automatic Failure Protection Circuit Breaker
         if (process.env.SYSTEM_VERSION === "v13") {
           logger.error(`v13 Orchestrator crashed (${err.message}). Triggering AUTOMATIC FAILOVER to v12-stable...`);
           const fallbackOrchestrator = new OrchestratorAgent(memoryStore);
-          const fallbackProfile = await fallbackOrchestrator.run(input, (stepName) => {
-            response.write(`data: ${JSON.stringify({ type: 'progress', step: `[FAILOVER] ${stepName}` })}\n\n`);
+          const fallbackProfile = await fallbackOrchestrator.run(input, (stepName, partial) => {
+            if (!response.writableEnded) {
+              response.write(`data: ${JSON.stringify({ type: 'progress', step: `[FAILOVER] ${stepName}`, partial })}\n\n`);
+            }
           });
-          response.write(`data: ${JSON.stringify({ type: 'complete', profile: fallbackProfile })}\n\n`);
+          if (!response.writableEnded) {
+            response.write(`data: ${JSON.stringify({ type: 'complete', profile: fallbackProfile })}\n\n`);
+          }
           logger.success(`✅ Pipeline fallback execution completed successfully for ${finalUrl}`);
         } else {
           throw err;
@@ -677,15 +708,18 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
       throw e;
     }
   } catch (error: any) {
-    if (error instanceof ZodError) {
-      response.write(`data: ${JSON.stringify({ type: 'error', error: "Invalid input." })}\n\n`);
-    } else if (error instanceof QcFailureError) {
-      response.write(`data: ${JSON.stringify({ type: 'error', error: error.message, qc: error.qc })}\n\n`);
-    } else {
-      logger.error("Business intelligence stream failed:", error);
-      response.write(`data: ${JSON.stringify({ type: 'error', error: "Business intelligence run failed." })}\n\n`);
+    if (!response.writableEnded) {
+      if (error instanceof ZodError) {
+        response.write(`data: ${JSON.stringify({ type: 'error', error: "Invalid input." })}\n\n`);
+      } else if (error instanceof QcFailureError) {
+        response.write(`data: ${JSON.stringify({ type: 'error', error: error.message, qc: error.qc })}\n\n`);
+      } else {
+        logger.error("Business intelligence stream failed:", error);
+        response.write(`data: ${JSON.stringify({ type: 'error', error: error.message || "Business intelligence run failed." })}\n\n`);
+      }
     }
   } finally {
+    clearInterval(heartbeat);
     try {
       const logs = Logger.getLogs();
       if (logs) {
@@ -696,7 +730,9 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
     } catch (e) {
       logger.error(`Failed to handle logs: ${e}`);
     }
-    response.end();
+    if (!response.writableEnded) {
+      response.end();
+    }
   }
 });
 

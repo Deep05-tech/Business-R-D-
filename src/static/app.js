@@ -61,12 +61,35 @@ window.showSuccess = function(message) {
   const toast = document.getElementById('global-toast');
   if (!toast) return;
   toast.textContent = message;
+  toast.style.background = '';
+  toast.style.color = '';
   toast.style.display = 'block';
   setTimeout(() => toast.style.opacity = '1', 10);
   setTimeout(() => {
     toast.style.opacity = '0';
     setTimeout(() => toast.style.display = 'none', 300);
   }, 3000);
+};
+
+window.showError = function(message) {
+  const toast = document.getElementById('global-toast');
+  if (!toast) {
+    alert(message);
+    return;
+  }
+  toast.textContent = message;
+  toast.style.background = '#ef4444';
+  toast.style.color = '#ffffff';
+  toast.style.display = 'block';
+  setTimeout(() => toast.style.opacity = '1', 10);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => {
+      toast.style.display = 'none';
+      toast.style.background = '';
+      toast.style.color = '';
+    }, 300);
+  }, 5000);
 };
 
 // On load
@@ -1135,9 +1158,38 @@ window.runIntelligence = async function() {
           }
         }
       }
-    }
   } catch (e) {
-    alert("Error: " + e.message);
+    console.error("Intelligence analysis error:", e);
+    
+    // Check if background analysis finished or saved even if the SSE stream disconnected
+    const isNetworkErr = e.message && (
+      e.message.toLowerCase().includes('network') ||
+      e.message.toLowerCase().includes('failed to fetch') ||
+      e.name === 'TypeError'
+    );
+
+    if (isNetworkErr) {
+      try {
+        await loadProjects();
+        const projectSelect = document.getElementById('global-project');
+        let domain = url;
+        try { domain = new URL(url).hostname; } catch (_) {}
+        const match = Array.from(projectSelect.options).find(o => o.value === url || o.value.includes(domain));
+        if (match) {
+          projectSelect.value = match.value;
+          window.selectProject(match.value, false);
+          switchTab('details', 'Project Details & Review');
+          window.showSuccess("Analysis was saved successfully!");
+          return;
+        }
+      } catch (_) {}
+    }
+
+    if (typeof window.showError === 'function') {
+      window.showError("Analysis error: " + (e.message || "Connection interrupted. Please try again."));
+    } else {
+      alert("Analysis error: " + (e.message || "Connection interrupted. Please try again."));
+    }
   } finally {
     document.getElementById('loading-overlay').style.display = 'none';
   }

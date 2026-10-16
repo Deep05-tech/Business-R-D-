@@ -8,8 +8,8 @@ export class WebScraperAgent {
 
   constructor(private readonly webTool: WebTool) {}
 
-  async run(websiteUrl: string, limit?: number): Promise<AgentResult<PageSnapshot[]>> {
-    const pages = await this.webTool.crawlWebsite(websiteUrl, limit);
+  async run(websiteUrl: string, limit?: number, onProgress?: (msg: string) => void): Promise<AgentResult<PageSnapshot[]>> {
+    const pages = await this.webTool.crawlWebsite(websiteUrl, limit, onProgress);
 
     return {
       agent: this.name,

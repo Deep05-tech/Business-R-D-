@@ -119,7 +119,7 @@ export class WebTool {
     }
   }
 
-  async crawlWebsite(rootUrl: string, limit?: number): Promise<PageSnapshot[]> {
+  async crawlWebsite(rootUrl: string, limit?: number, onProgress?: (msg: string) => void): Promise<PageSnapshot[]> {
     const root = new URL(rootUrl);
     const visited = new Set<string>();
     const snapshots: PageSnapshot[] = [];
@@ -161,6 +161,7 @@ export class WebTool {
             await new Promise((r) => setTimeout(r, 500 + Math.random() * 1000));
             
             logger.info(`[Crawler] Fetching (Priority ${entry.priority}, Depth ${entry.depth}): ${entry.url}`);
+            onProgress?.(`Crawling page ${snapshots.length + 1}/${max}: ${entry.url}`);
             
             const snapshot = await this.fetchPage(entry.url);
             snapshots.push(snapshot);
