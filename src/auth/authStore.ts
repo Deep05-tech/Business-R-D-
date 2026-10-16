@@ -89,6 +89,62 @@ export class AuthStore {
         await this.persist();
       }
     }
+
+    // Support SEED_USERS / AUTH_USERS env var (format: "user1:pass1:role1,user2:pass2:role2" or JSON)
+    // Allows persistent users on platforms with ephemeral containers (Render, Railway, Fly, Heroku)
+    const seedUsersEnv = process.env.SEED_USERS || process.env.AUTH_USERS;
+    if (seedUsersEnv) {
+      try {
+        let changed = false;
+        if (seedUsersEnv.trim().startsWith("[")) {
+          const list = JSON.parse(seedUsersEnv);
+          for (const u of list) {
+            const key = this.normalizeUsername(u.username);
+            const existing = this.users.get(key);
+            if (!existing) {
+              this.users.set(key, {
+                username: u.username.trim(),
+                role: u.role === "admin" ? "admin" : "user",
+                createdAt: new Date().toISOString(),
+                passwordHash: await this.hashPassword(u.password),
+                assignedProjectUrls: u.assignedProjectUrls || []
+              });
+              changed = true;
+            } else if (u.password && !(await this.verifyPassword(u.password, existing.passwordHash))) {
+              existing.passwordHash = await this.hashPassword(u.password);
+              changed = true;
+            }
+          }
+        } else {
+          const entries = seedUsersEnv.split(",").map(e => e.trim()).filter(Boolean);
+          for (const entry of entries) {
+            const [uName, uPass, uRole] = entry.split(":").map(s => s.trim());
+            if (uName && uPass) {
+              const key = this.normalizeUsername(uName);
+              const existing = this.users.get(key);
+              if (!existing) {
+                this.users.set(key, {
+                  username: uName,
+                  role: uRole === "admin" ? "admin" : "user",
+                  createdAt: new Date().toISOString(),
+                  passwordHash: await this.hashPassword(uPass),
+                  assignedProjectUrls: []
+                });
+                changed = true;
+              } else if (!(await this.verifyPassword(uPass, existing.passwordHash))) {
+                existing.passwordHash = await this.hashPassword(uPass);
+                changed = true;
+              }
+            }
+          }
+        }
+        if (changed) {
+          await this.persist();
+        }
+      } catch (err) {
+        console.error("Failed to parse SEED_USERS / AUTH_USERS env variable:", err);
+      }
+    }
   }
 
   private async persist(): Promise<void> {
