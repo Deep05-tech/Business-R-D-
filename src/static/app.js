@@ -1218,6 +1218,92 @@ window.deleteSingleCompetitor = async function(compUrl) {
   }
 };
 
+window.extractCommonProducts = function(c) {
+  let rawList = [];
+  if (Array.isArray(c.commonProducts) && c.commonProducts.length > 0) rawList = c.commonProducts;
+  else if (Array.isArray(c.products) && c.products.length > 0) rawList = c.products;
+  else if (c.whyCompetitor) {
+    const match = c.whyCompetitor.match(/\b\d+\s+common products:\s*\[([^\]]+)\]/i);
+    if (match && match[1]) {
+      rawList = match[1].split(',').map(s => s.trim().replace(/\.\.\.$/, '')).filter(Boolean);
+    }
+  }
+  const invalid = new Set(["industries", "industries served", "engineering", "national", "international", "global", "manufacturing", "technology", "solutions", "services", "overview", "company", "home", "about", "contact", "careers", "news", "media", "blog", "general", "n/a", "none", "rating", "phone"]);
+  const seen = new Set();
+  const clean = [];
+  for (const item of rawList) {
+    if (!item || typeof item !== 'string') continue;
+    const trimmed = item.trim();
+    const lower = trimmed.toLowerCase();
+    if (invalid.has(lower) || trimmed.length < 3) continue;
+    const norm = lower.replace(/[^\w\s]/g, '').replace(/s$/i, '').trim();
+    if (!seen.has(norm)) {
+      seen.add(norm);
+      clean.push(trimmed);
+    }
+  }
+  return clean;
+};
+
+window.renderCompetitorCard = function(c) {
+  let href = c.url || '#';
+  if (href !== '#' && !href.startsWith('http')) href = 'https://' + href;
+  const commonProds = window.extractCommonProducts(c);
+
+  return `
+  <div class="competitor-card" style="${c.isDeadAccount ? 'opacity: 0.7; filter: grayscale(0.5);' : ''} padding: 24px; background: var(--surface); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: transform 0.2s ease, box-shadow 0.2s ease; margin-bottom: 16px; display: flex; flex-direction: column; gap: 16px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)'">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+      <h3 style="margin: 0; font-size: 1.25rem;">
+        <a href="${href}" target="_blank" style="color:var(--text); text-decoration: none; font-weight: 700;">${c.name}</a> 
+        <span style="font-size:0.75rem; padding:4px 8px; border-radius:20px; background:var(--background); border:1px solid var(--border); margin-left:12px; display:inline-block; vertical-align:middle; color: var(--text-muted);">📍 ${c.location}</span>
+        ${c.isDeadAccount ? `<span style="font-size:0.7rem; padding:4px 8px; border-radius:20px; background:rgba(239, 68, 68, 0.1); border:1px solid rgba(239, 68, 68, 0.3); color:#ef4444; margin-left:8px; display:inline-block; vertical-align:middle; font-weight: bold; letter-spacing: 0.05em;">DEAD ACCOUNT</span>` : ''}
+      </h3>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="social-links" style="display: flex; gap: 8px; margin: 0;">
+          ${c.socials?.linkedin ? `<a href="${c.socials.linkedin}" target="_blank" title="LinkedIn" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:rgba(10, 102, 194, 0.1); color:#0a66c2; text-decoration:none; font-size:14px; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">💼</a>` : ''}
+          ${c.socials?.instagram ? `<a href="${c.socials.instagram}" target="_blank" title="Instagram" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:rgba(225, 48, 108, 0.1); color:#e1306c; text-decoration:none; font-size:14px; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">📸</a>` : ''}
+          ${c.socials?.facebook ? `<a href="${c.socials.facebook}" target="_blank" title="Facebook" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:rgba(24, 119, 242, 0.1); color:#1877f2; text-decoration:none; font-size:14px; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">📘</a>` : ''}
+          ${c.socials?.youtube ? `<a href="${c.socials.youtube}" target="_blank" title="YouTube" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:rgba(255, 0, 0, 0.1); color:#ff0000; text-decoration:none; font-size:14px; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">▶️</a>` : ''}
+        </div>
+        <button onclick="window.deleteSingleCompetitor('${c.url}')" title="Remove competitor" style="background:rgba(239, 68, 68, 0.05); border:1px solid rgba(239,68,68,0.2); color:#ef4444; cursor:pointer; padding:6px; border-radius:8px; display:flex; align-items:center; justify-content:center; transition: all 0.2s;" onmouseover="this.style.background='rgba(239,68,68,0.15)'" onmouseout="this.style.background='rgba(239,68,68,0.05)'">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <section class="competitor-product-summary" aria-label="Common products">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <span class="competitor-product-label">
+          📦 Common Products (${commonProds.length})
+        </span>
+        ${(c.evidenceUrls && c.evidenceUrls.length > 0) ? `
+          <div style="font-size: 12px; display: flex; align-items: center; gap: 6px;">
+            <select class="replaced competitor-product-select" onchange="if(this.value) window.open(this.value, '_blank')">
+              <option value="">Product Pages...</option>
+              ${c.evidenceUrls.filter(u => u.url).map(u => `<option value="${u.url.startsWith('http') ? u.url : 'https://' + u.url}">${u.title}</option>`).join('')}
+            </select>
+          </div>
+        ` : ''}
+      </div>
+
+      <div class="competitor-product-chips">
+        ${commonProds.length > 0 
+          ? commonProds.map(p => `<span class="competitor-product-chip">🏷️ ${p}</span>`).join('') 
+          : `<span class="competitor-product-empty">No specific product matches recorded</span>`
+        }
+      </div>
+    </section>
+
+    ${c.whyCompetitor ? `
+    <div style="font-size: 13px; color: var(--text-muted); background: var(--background); padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border); line-height: 1.6; margin: 0;">
+      <strong style="color: var(--primary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Strategic Intelligence</strong> 
+      ${c.whyCompetitor}
+    </div>
+    ` : ''}
+  </div>
+`;
+};
+
 window.findCompetitors = async function(force = false) {
   if (!window.activeProjectUrl) return;
   
@@ -1242,6 +1328,34 @@ window.findCompetitors = async function(force = false) {
   document.getElementById('btn-regen-comp').style.display = 'none';
   
   const scope = document.getElementById('comp-scope').value;
+  const liveStreamCompetitors = [];
+
+  const renderLiveCards = () => {
+    const liveCardsContainer = document.getElementById('live-comp-cards');
+    if (!liveCardsContainer) return;
+    const localComps = liveStreamCompetitors.filter(c => c.type === 'local');
+    const regionalComps = liveStreamCompetitors.filter(c => c.type === 'regional');
+    const globalComps = liveStreamCompetitors.filter(c => c.type === 'global');
+    const otherComps = liveStreamCompetitors.filter(c => !['local', 'regional', 'global'].includes(c.type));
+    let html = '';
+    if (localComps.length > 0) {
+      html += `<div style="grid-column: 1 / -1; margin-top:10px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px;">🌍 Local Competitors (${localComps.length})</h3></div>`;
+      html += localComps.map(window.renderCompetitorCard).join('');
+    }
+    if (regionalComps.length > 0) {
+      html += `<div style="grid-column: 1 / -1; margin-top:20px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px;">🏭 Regional & National Competitors (${regionalComps.length})</h3></div>`;
+      html += regionalComps.map(window.renderCompetitorCard).join('');
+    }
+    if (globalComps.length > 0) {
+      html += `<div style="grid-column: 1 / -1; margin-top:20px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px;">🌐 Global Leaders (${globalComps.length})</h3></div>`;
+      html += globalComps.map(window.renderCompetitorCard).join('');
+    }
+    if (otherComps.length > 0) {
+      html += `<div style="grid-column: 1 / -1; margin-top:20px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px;">🏢 Discovered Competitors (${otherComps.length})</h3></div>`;
+      html += otherComps.map(window.renderCompetitorCard).join('');
+    }
+    liveCardsContainer.innerHTML = html;
+  };
 
   try {
     const res = await fetch('/api/competitors-stream', {
@@ -1283,9 +1397,15 @@ window.findCompetitors = async function(force = false) {
               if (statusEl && data.status) statusEl.innerText = data.status;
             }
             if (data.type === 'competitor' && data.competitor) {
+              const comp = data.competitor;
+              if (!liveStreamCompetitors.some(existing => existing.url === comp.url)) {
+                liveStreamCompetitors.push(comp);
+              }
               const statusEl = document.getElementById('comp-agent-status');
-              if (statusEl) statusEl.innerText = data.status || `Found competitor: ${data.competitor.name}`;
-              await loadCompetitorsUI(true);
+              if (statusEl) {
+                statusEl.innerText = data.status || `Found ${comp.type || ''} competitor: ${comp.name} (${liveStreamCompetitors.length} discovered)`;
+              }
+              renderLiveCards();
             }
             if (data.type === 'complete') {
               window.showSuccess("Competitors successfully extracted!");
@@ -1358,91 +1478,7 @@ async function loadCompetitorsUI(isLivePartial = false) {
     const regionalComps = data.competitors.filter(c => c.type === 'regional');
     const globalComps = data.competitors.filter(c => c.type === 'global');
     
-    const extractCommonProducts = (c) => {
-      let rawList = [];
-      if (Array.isArray(c.commonProducts) && c.commonProducts.length > 0) rawList = c.commonProducts;
-      else if (Array.isArray(c.products) && c.products.length > 0) rawList = c.products;
-      else if (c.whyCompetitor) {
-        const match = c.whyCompetitor.match(/\b\d+\s+common products:\s*\[([^\]]+)\]/i);
-        if (match && match[1]) {
-          rawList = match[1].split(',').map(s => s.trim().replace(/\.\.\.$/, '')).filter(Boolean);
-        }
-      }
-      const invalid = new Set(["industries", "industries served", "engineering", "national", "international", "global", "manufacturing", "technology", "solutions", "services", "overview", "company", "home", "about", "contact", "careers", "news", "media", "blog", "general", "n/a", "none", "rating", "phone"]);
-      const seen = new Set();
-      const clean = [];
-      for (const item of rawList) {
-        if (!item || typeof item !== 'string') continue;
-        const trimmed = item.trim();
-        const lower = trimmed.toLowerCase();
-        if (invalid.has(lower) || trimmed.length < 3) continue;
-        const norm = lower.replace(/[^\w\s]/g, '').replace(/s$/i, '').trim();
-        if (!seen.has(norm)) {
-          seen.add(norm);
-          clean.push(trimmed);
-        }
-      }
-      return clean;
-    };
-
-    const renderCard = (c) => {
-      let href = c.url || '#';
-      if (href !== '#' && !href.startsWith('http')) href = 'https://' + href;
-      const commonProds = extractCommonProducts(c);
-
-      return `
-      <div class="competitor-card" style="${c.isDeadAccount ? 'opacity: 0.7; filter: grayscale(0.5);' : ''} padding: 24px; background: var(--surface); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: transform 0.2s ease, box-shadow 0.2s ease; margin-bottom: 16px; display: flex; flex-direction: column; gap: 16px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)'">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-          <h3 style="margin: 0; font-size: 1.25rem;">
-            <a href="${href}" target="_blank" style="color:var(--text); text-decoration: none; font-weight: 700;">${c.name}</a> 
-            <span style="font-size:0.75rem; padding:4px 8px; border-radius:20px; background:var(--background); border:1px solid var(--border); margin-left:12px; display:inline-block; vertical-align:middle; color: var(--text-muted);">📍 ${c.location}</span>
-            ${c.isDeadAccount ? `<span style="font-size:0.7rem; padding:4px 8px; border-radius:20px; background:rgba(239, 68, 68, 0.1); border:1px solid rgba(239, 68, 68, 0.3); color:#ef4444; margin-left:8px; display:inline-block; vertical-align:middle; font-weight: bold; letter-spacing: 0.05em;">DEAD ACCOUNT</span>` : ''}
-          </h3>
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div class="social-links" style="display: flex; gap: 8px; margin: 0;">
-              ${c.socials?.linkedin ? `<a href="${c.socials.linkedin}" target="_blank" title="LinkedIn" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:rgba(10, 102, 194, 0.1); color:#0a66c2; text-decoration:none; font-size:14px; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">💼</a>` : ''}
-              ${c.socials?.instagram ? `<a href="${c.socials.instagram}" target="_blank" title="Instagram" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:rgba(225, 48, 108, 0.1); color:#e1306c; text-decoration:none; font-size:14px; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">📸</a>` : ''}
-              ${c.socials?.facebook ? `<a href="${c.socials.facebook}" target="_blank" title="Facebook" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:rgba(24, 119, 242, 0.1); color:#1877f2; text-decoration:none; font-size:14px; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">📘</a>` : ''}
-              ${c.socials?.youtube ? `<a href="${c.socials.youtube}" target="_blank" title="YouTube" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:rgba(255, 0, 0, 0.1); color:#ff0000; text-decoration:none; font-size:14px; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">▶️</a>` : ''}
-            </div>
-            <button onclick="window.deleteSingleCompetitor('${c.url}')" title="Remove competitor" style="background:rgba(239, 68, 68, 0.05); border:1px solid rgba(239,68,68,0.2); color:#ef4444; cursor:pointer; padding:6px; border-radius:8px; display:flex; align-items:center; justify-content:center; transition: all 0.2s;" onmouseover="this.style.background='rgba(239,68,68,0.15)'" onmouseout="this.style.background='rgba(239,68,68,0.05)'">
-              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
-            </button>
-          </div>
-        </div>
-
-        <section class="competitor-product-summary" aria-label="Common products">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-            <span class="competitor-product-label">
-              📦 Common Products (${commonProds.length})
-            </span>
-            ${(c.evidenceUrls && c.evidenceUrls.length > 0) ? `
-              <div style="font-size: 12px; display: flex; align-items: center; gap: 6px;">
-                <select class="replaced competitor-product-select" onchange="if(this.value) window.open(this.value, '_blank')">
-                  <option value="">Product Pages...</option>
-                  ${c.evidenceUrls.filter(u => u.url).map(u => `<option value="${u.url.startsWith('http') ? u.url : 'https://' + u.url}">${u.title}</option>`).join('')}
-                </select>
-              </div>
-            ` : ''}
-          </div>
-
-          <div class="competitor-product-chips">
-            ${commonProds.length > 0 
-              ? commonProds.map(p => `<span class="competitor-product-chip">🏷️ ${p}</span>`).join('') 
-              : `<span class="competitor-product-empty">No specific product matches recorded</span>`
-            }
-          </div>
-        </section>
-
-        ${c.whyCompetitor ? `
-        <div style="font-size: 13px; color: var(--text-muted); background: var(--background); padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border); line-height: 1.6; margin: 0;">
-          <strong style="color: var(--primary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Strategic Intelligence</strong> 
-          ${c.whyCompetitor}
-        </div>
-        ` : ''}
-      </div>
-    `;
-    };
+    const renderCard = (c) => window.renderCompetitorCard(c);
     
     let html = '';
     if (localComps.length > 0) {
