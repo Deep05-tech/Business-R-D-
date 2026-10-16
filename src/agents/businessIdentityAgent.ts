@@ -3,9 +3,12 @@ import type { AgentResult, BusinessIdentity, PageSnapshot, SemanticWebData, Soci
 import { compactText, unique, firstSentence } from "../utils/text.js";
 import { ChatOpenAI } from "@langchain/openai";
 import { createChatModel } from "../utils/llm.js";
+import { createLogger } from "../utils/logger.js";
 import { TavilySearch } from "@langchain/tavily";
 import { z } from "zod";
 import { FreeSearchEngine } from "../utils/freeSearchEngine.js";
+
+const logger = createLogger("BusinessIdentityAgent");
 
 /** Names that are never valid business names (nav labels / generic page names) */
 const NAME_BLACKLIST = /^(home|products?|services?|solutions?|features?|welcome|menu|about|contact|login|sign\s*in|get\s*started|learn\s*more|read\s*more|skip\s*to\s*content)$/i;
