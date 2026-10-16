@@ -189,19 +189,21 @@ INSTRUCTIONS:
     if (targetCountry.toLowerCase() === "india") regionalHubs = indiaHubs;
     else if (targetCountry.toLowerCase() === "usa" || targetCountry.toLowerCase() === "united states") regionalHubs = usHubs;
 
-    // 10-12 competitors per classification as requested
-    const TARGET_QUOTA_EACH = 11;
+    // Total 10-12 competitors overall (including local, regional, and global)
+    const TOTAL_COMPETITORS_TARGET = maxResults ? Math.min(maxResults, 12) : 12;
 
     if (scope === "all") {
-        targets.push({ locations: localLocations, type: "local", quota: TARGET_QUOTA_EACH });
-        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: TARGET_QUOTA_EACH });
-        targets.push({ locations: globalHubs, type: "global", quota: TARGET_QUOTA_EACH });
+        // Distribute quota evenly across local, regional, and global (4 each = 12 total)
+        const quotaPerScope = Math.ceil(TOTAL_COMPETITORS_TARGET / 3);
+        targets.push({ locations: localLocations, type: "local", quota: quotaPerScope });
+        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: quotaPerScope });
+        targets.push({ locations: globalHubs, type: "global", quota: quotaPerScope });
     } else if (scope === "global") {
-        targets.push({ locations: globalHubs, type: "global", quota: TARGET_QUOTA_EACH });
+        targets.push({ locations: globalHubs, type: "global", quota: TOTAL_COMPETITORS_TARGET });
     } else if (scope === "regional") {
-        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: TARGET_QUOTA_EACH });
+        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: TOTAL_COMPETITORS_TARGET });
     } else if (scope === "local") {
-        targets.push({ locations: localLocations, type: "local", quota: TARGET_QUOTA_EACH });
+        targets.push({ locations: localLocations, type: "local", quota: TOTAL_COMPETITORS_TARGET });
     }
 
     // Collect products and services to form specific queries
@@ -292,10 +294,18 @@ INSTRUCTIONS:
     logger.info(`Will search across quotas: ${JSON.stringify(targets)}`);
 
     // Fetch competitors using multiple queries until we reach quotas
-    for (const target of targets) {
-        if (maxResults && finalCompetitors.length >= maxResults) break;
+    for (let targetIdx = 0; targetIdx < targets.length; targetIdx++) {
+        const target = targets[targetIdx];
+        if (finalCompetitors.length >= TOTAL_COMPETITORS_TARGET) break;
+
         let foundForTarget = 0;
-        const targetQuota = maxResults ? Math.min(target.quota, Math.max(0, maxResults - finalCompetitors.length)) : target.quota;
+        const remainingOverall = TOTAL_COMPETITORS_TARGET - finalCompetitors.length;
+        const remainingTargetsCount = targets.length - 1 - targetIdx;
+        const minReservedForRest = remainingTargetsCount * 2;
+        const targetQuota = Math.min(
+            remainingOverall,
+            Math.max(target.quota, remainingOverall - minReservedForRest)
+        );
         
         // Phase 1.1: Overfetch candidates across all offerings
         const candidateMap = new Map<string, { place: any, matchedOfferings: Set<string>, isSeed?: boolean }>();
@@ -536,15 +546,30 @@ INSTRUCTIONS:
             }));
         }
 
-        // Secondary Pass: If target quota not reached, accept verified candidates that cleared the industry gate
+        // Secondary Pass: If target quota not reached, evaluate candidates requiring verified social media presence
         if (foundForTarget < targetQuota && pendingFallbacks.length > 0) {
-            logger.info(`Fulfilling remaining quota for ${target.type} (${foundForTarget}/${targetQuota}) from ${pendingFallbacks.length} verified candidates...`);
+            logger.info(`Evaluating ${pendingFallbacks.length} fallback candidates for ${target.type} (${foundForTarget}/${targetQuota}) requiring social presence...`);
             for (const fb of pendingFallbacks) {
                 if (foundForTarget >= targetQuota) break;
                 const { place, matchedOfferings } = fb.candidate;
                 let domain = "";
                 try { domain = new URL(place.websiteUri).hostname.replace(/^www\./, ''); } catch {}
                 if (!domain || uniqueDomains.has(domain)) continue;
+
+                // Ensure candidate has verified social presence via fallback search
+                let currentSocials = fb.socials || { linkedin: null, instagram: null, facebook: null, youtube: null };
+                let currentSocialCount = Object.values(currentSocials).filter(v => v !== null).length;
+                if (currentSocialCount === 0) {
+                    const fallback = await this.findSocialLinksFallback(domain, place.displayName?.text || domain, place.websiteUri, combinedIndKws);
+                    currentSocials = { ...currentSocials, ...fallback };
+                    currentSocialCount = Object.values(currentSocials).filter(v => v !== null).length;
+                }
+
+                // Strictly enforce that competitors must have social media presence
+                if (currentSocialCount === 0) {
+                    logger.debug(`Skipping ${domain} in secondary pass: no verified social media presence found.`);
+                    continue;
+                }
 
                 foundForTarget++;
                 uniqueDomains.add(domain);
@@ -553,41 +578,58 @@ INSTRUCTIONS:
                 const overlapStr = commonProductList.slice(0, 7).join(", ") + (commonProductList.length > 7 ? '...' : '');
                 const industryEvidence = `${targetIndustry}${targetSubIndustry ? ` / ${targetSubIndustry}` : ""}`;
                 const primaryOffering = Array.from(matchedOfferings)[0];
-                const llmReason = fb.scrapeResult.whyCompetitorText ? ` LLM Verdict: ${fb.scrapeResult.whyCompetitorText}.` : "";
+                const llmReason = fb.scrapeResult?.whyCompetitorText ? ` LLM Verdict: ${fb.scrapeResult.whyCompetitorText}.` : "";
+                const activity = await this.evaluateSocialActivity(currentSocials);
+                const activityEvidence = activity.evidence.length > 0 ? ` Socials: ${activity.evidence.join("; ")}.` : "";
 
                 const newComp: CompetitorProfile = {
                     name: place.displayName?.text || domain,
                     url: place.websiteUri,
                     type: target.type,
                     location: place.formattedAddress || "Unknown",
-                    whyCompetitor: `Industry verified: ${industryEvidence}.${llmReason} ${commonProductList.length} common products: [${overlapStr}]. Rating: ${place.rating || 'N/A'} | Phone: ${place.nationalPhoneNumber || 'N/A'}`,
+                    whyCompetitor: `Industry verified: ${industryEvidence}.${llmReason} ${commonProductList.length} common products: [${overlapStr}].${activityEvidence} Rating: ${place.rating || 'N/A'} | Phone: ${place.nationalPhoneNumber || 'N/A'}`,
                     evidenceUrls: [
                         { title: "Homepage", url: place.websiteUri },
-                        { title: `Product: ${primaryOffering}`, url: fb.scrapeResult.productUrl }
+                        { title: `Product: ${primaryOffering}`, url: fb.scrapeResult?.productUrl || place.websiteUri }
                     ],
-                    socials: fb.socials || { linkedin: null, instagram: null, facebook: null, youtube: null },
+                    socials: currentSocials,
                     products: commonProductList,
                     commonProducts: commonProductList
                 };
 
                 finalCompetitors.push(newComp);
                 onProgress?.(newComp, `Discovered ${target.type} competitor: ${newComp.name}`);
-                logger.info(`✅ Added ${domain} as ${target.type} via verified industry gate. Target Progress: ${foundForTarget}/${targetQuota}`);
+                logger.info(`✅ Added ${domain} as ${target.type} with social presence (${currentSocialCount} links). Target Progress: ${foundForTarget}/${targetQuota}`);
             }
         }
     }
 
-    // Sort final competitors by maximum common product overlap (descending)
+    // Sort final competitors prioritizing strong social presence first, then common product overlap
     finalCompetitors.sort((a, b) => {
+        const socialsA = Object.values(a.socials || {}).filter(v => Boolean(v)).length;
+        const socialsB = Object.values(b.socials || {}).filter(v => Boolean(v)).length;
+        const activeA = a.whyCompetitor?.toLowerCase().includes("active") ? 2 : 0;
+        const activeB = b.whyCompetitor?.toLowerCase().includes("active") ? 2 : 0;
+        const socialScoreA = (socialsA * 3) + activeA;
+        const socialScoreB = (socialsB * 3) + activeB;
+
+        if (socialScoreB !== socialScoreA) {
+            return socialScoreB - socialScoreA;
+        }
         const countA = a.commonProducts?.length || a.products?.length || 0;
         const countB = b.commonProducts?.length || b.products?.length || 0;
         return countB - countA;
     });
 
+    // Ensure total competitors across all scopes does not exceed target quota (10-12 competitors total)
+    if (finalCompetitors.length > TOTAL_COMPETITORS_TARGET) {
+        finalCompetitors.splice(TOTAL_COMPETITORS_TARGET);
+    }
+
     if (finalCompetitors.length === 0) {
-        logger.warn("Google Places API returned 0 valid competitors with websites and social media links.");
+        logger.warn("Google Places API returned 0 valid competitors with websites and verified social media presence.");
     } else {
-        logger.success(`Google Places API successfully processed ${finalCompetitors.length} unique competitors sorted by max product overlap.`);
+        logger.success(`Google Places API successfully processed ${finalCompetitors.length} unique competitors with verified social presence (Target: ${TOTAL_COMPETITORS_TARGET}).`);
     }
 
     return finalCompetitors;
