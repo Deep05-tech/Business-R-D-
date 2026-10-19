@@ -2300,8 +2300,8 @@ async function loadFeedUI() {
       );
 
       const isIgReel = platform === 'Instagram' && (postLink.includes('/reel/') || post.media_type === 'Video' || post.mediaType === 'Video');
-      const isIgPost = platform === 'Instagram' && !isIgReel && Boolean(igShortcode);
-      const isFbVid = platform === 'Facebook' && (postLink.includes('/videos/') || postLink.includes('/reel/') || post.media_type === 'Video' || post.mediaType === 'Video');
+      const isFbVid = (platform === 'Facebook' || post._detectedPlatform === 'Facebook') &&
+                      (Boolean(post.video_url) || Boolean(post.fb_video_id) || post.media_type === 'Video' || post.mediaType === 'Video' || /\/(?:videos|reel|watch)\b/i.test(postLink));
       const isLiVid = (platform === 'LinkedIn' || post._detectedPlatform === 'LinkedIn') &&
                       (Boolean(post.video_url) || post.media_type === 'Video' || post.mediaType === 'Video' || postLink.includes('/video/') || (firstMediaUrl && (firstMediaUrl.includes('/playlist/vid/') || firstMediaUrl.includes('video.licdn.com') || firstMediaUrl.includes('thumbnail-with-play-button'))));
 
@@ -2423,50 +2423,37 @@ async function loadFeedUI() {
             </div>`;
         }
       } else if (isFbVid) {
-        // Facebook video player: dynamic fresh MP4 resolver or fallback
+        // Facebook video player: Official responsive embed player (100% playable directly in dashboard)
         let fbVidId = post.fb_video_id || post.video_id || '';
         if (!fbVidId && postLink) {
           const m = postLink.match(/(?:\/videos\/(?:[^\/]+\/)?|\/reel\/|\/watch\/?\?v=)(\d+)/) || postLink.match(/(\d{10,20})/);
           if (m) fbVidId = m[1];
         }
 
-        if (activeMode === 'embed' && fbVidId) {
+        const canonicalFbUrl = fbVidId ? `https://www.facebook.com/watch/?v=${fbVidId}` : postLink;
+        const fbEmbedSrc = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(canonicalFbUrl)}&show_text=false&width=500`;
+
+        if (activeMode === 'video' && post.video_url) {
+          let videoSrc = window.getSocialMediaProxyUrl(post.video_url);
           leftMediaHtml = `
             <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
-              <iframe src="/api/facebook-embed-player?id=${fbVidId}&url=${encodeURIComponent(postLink)}" 
-                style="width: 100%; height: 100%; border: 0; background: #000; border-radius: 8px;" 
-                frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
+              <video src="${videoSrc}" controls preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;" onerror="window.openFeedItemModal(${globalIndex}, 'embed');"></video>
+              <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
+                <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;">Facebook Player ↗</button>
+              </div>
+            </div>`;
+        } else {
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
+              <iframe src="${fbEmbedSrc}" 
+                style="width: 100%; height: 100%; min-height: 420px; border: 0; background: #000; border-radius: 8px;" 
+                frameborder="0" scrolling="no"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
                 allowfullscreen></iframe>
               ${post.video_url ? `
                 <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
                   <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'video')" style="background: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;">Direct MP4 Player ▶</button>
                 </div>` : ''}
-            </div>`;
-        } else if (post.video_url) {
-          let videoSrc = window.getSocialMediaProxyUrl(post.video_url);
-          leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
-              <video src="${videoSrc}" controls autoplay preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;" onerror="this.parentElement.innerHTML='<iframe src=\"/api/facebook-embed-player?id=${fbVidId || ''}&url=' + encodeURIComponent('${postLink}') + '\" style=\"width:100%;height:100%;border:0;background:#000;\" allowfullscreen></iframe>';"></video>
-              ${fbVidId ? `
-                <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
-                  <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;">Facebook Player ↗</button>
-                </div>` : ''}
-            </div>`;
-        } else if (fbVidId) {
-          leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
-              <iframe src="/api/facebook-embed-player?id=${fbVidId}&url=${encodeURIComponent(postLink)}" 
-                style="width: 100%; height: 100%; border: 0; background: #000; border-radius: 8px;" 
-                frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
-                allowfullscreen></iframe>
-            </div>`;
-        } else {
-          leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
-              <iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(postLink)}&show_text=false&width=500" 
-                style="width: 100%; height: 100%; min-height: 420px; border: 0; background: #000; border-radius: 8px;" 
-                frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
-                allowfullscreen></iframe>
             </div>`;
         }
       } else if (isRealDirectVideo) {
