@@ -4,6 +4,7 @@ import { OpenAIEmbeddings } from "@langchain/openai";
 import type { StructuredMemory } from "../types.js";
 import { createLogger } from "../utils/logger.js";
 import { getMongoDb } from "../utils/mongoClient.js";
+import { checkOpenAiStatus } from "../utils/llm.js";
 
 const logger = createLogger("Memory Store");
 
@@ -213,19 +214,28 @@ export class MemoryStore {
       return { found: false, answer: "No vector knowledge base available.", evidence: [], confidence: "none" };
     }
 
-    let questionEmbedding: number[];
-    try {
-      const embeddings = new OpenAIEmbeddings({ model: "text-embedding-3-small" });
-      questionEmbedding = await embeddings.embedQuery(question);
-    } catch (e) {
-      logger.warn("Failed to generate query embedding via OpenAI. Falling back to mock.");
-      questionEmbedding = this.mockEmbed(question);
+    const sampleFact = memory.vectorKnowledgeBase.facts[0];
+    const targetDim = sampleFact?.embedding?.length || 256;
+    let questionEmbedding: number[] | null = null;
+
+    // Only attempt OpenAI if stored facts were embedded with OpenAI (1536-dim) and OpenAI key is verified
+    if (targetDim === 1536 && (await checkOpenAiStatus())) {
+      try {
+        const embeddings = new OpenAIEmbeddings({ model: "text-embedding-3-small" });
+        questionEmbedding = await embeddings.embedQuery(question);
+      } catch (e: any) {
+        logger.warn(`Failed to generate query embedding via OpenAI (${e?.message || e}). Falling back to local embeddings.`);
+      }
+    }
+
+    if (!questionEmbedding || questionEmbedding.length !== targetDim) {
+      questionEmbedding = this.localEmbed(question, targetDim);
     }
     
     // Calculate cosine similarity for all facts
     const scoredFacts = memory.vectorKnowledgeBase.facts.map((fact) => ({
       ...fact,
-      score: this.cosineSimilarity(questionEmbedding, fact.embedding)
+      score: this.cosineSimilarity(questionEmbedding!, fact.embedding)
     }));
 
     // Sort by most relevant
@@ -299,47 +309,101 @@ export class MemoryStore {
 
     if (rawFacts.length === 0) return { facts };
 
-    try {
-      const embeddings = new OpenAIEmbeddings({ model: "text-embedding-3-small" });
-      const texts = rawFacts.map(f => f.text);
-      const vectors = await embeddings.embedDocuments(texts);
-      
-      for (let i = 0; i < rawFacts.length; i++) {
-        facts.push({
-          text: rawFacts[i].text,
-          source: rawFacts[i].source,
-          tokens: Math.ceil(rawFacts[i].text.length / 4), // simple rough estimate
-          embedding: vectors[i]
-        });
+    const isOpenAiWorking = await checkOpenAiStatus();
+    let embeddedWithOpenAi = false;
+
+    if (isOpenAiWorking) {
+      try {
+        const embeddings = new OpenAIEmbeddings({ model: "text-embedding-3-small" });
+        const texts = rawFacts.map(f => f.text);
+        const vectors = await embeddings.embedDocuments(texts);
+        
+        for (let i = 0; i < rawFacts.length; i++) {
+          facts.push({
+            text: rawFacts[i].text,
+            source: rawFacts[i].source,
+            tokens: Math.ceil(rawFacts[i].text.length / 4), // simple rough estimate
+            embedding: vectors[i]
+          });
+        }
+        embeddedWithOpenAi = true;
+      } catch (e: any) {
+        logger.warn(`OpenAIEmbeddings failed (${e?.message || e}). Using local semantic embeddings as fallback.`);
       }
-    } catch (e) {
-      logger.warn("OpenAIEmbeddings failed. Using mock embeddings as fallback.", e);
+    }
+
+    if (!embeddedWithOpenAi) {
       for (const f of rawFacts) {
         facts.push({
           ...f,
           tokens: Math.ceil(f.text.length / 4),
-          embedding: this.mockEmbed(f.text)
+          embedding: this.localEmbed(f.text, 256)
         });
       }
     }
 
-
     return { facts };
   }
 
-  private mockEmbed(text: string): number[] {
-    const vec = new Array(128).fill(0); // Using 128-dim for mock speed
-    for(let i=0; i<text.length; i++) {
-        vec[i % 128] += text.charCodeAt(i) / 255.0;
+  private static readonly STOPWORDS = new Set([
+    "the", "a", "an", "and", "or", "in", "on", "at", "to", "for", "of", "with", "is", "are",
+    "do", "you", "your", "tell", "me", "about", "what", "which", "how", "can", "our", "we", "they", "this", "that"
+  ]);
+
+  private localEmbed(text: string, dim = 256): number[] {
+    const vec = new Float64Array(dim);
+    if (!text || typeof text !== "string") return Array.from(vec);
+
+    const clean = text.toLowerCase();
+    const words = (clean.match(/[a-z0-9]+/g) || []).filter(w => !MemoryStore.STOPWORDS.has(w) && w.length > 1);
+
+    function fnv1a(str: string): number {
+      let h = 0x811c9dc5;
+      for (let i = 0; i < str.length; i++) {
+        h ^= str.charCodeAt(i);
+        h = Math.imul(h, 0x01000193);
+      }
+      return h >>> 0;
     }
-    const mag = Math.sqrt(vec.reduce((sum, val) => sum + val*val, 0));
-    return vec.map(v => v / (mag || 1));
+
+    for (let i = 0; i < words.length; i++) {
+      const w = words[i];
+      const h1 = fnv1a(w);
+      vec[h1 % dim] += 3.0;
+
+      if (i < words.length - 1) {
+        const bigram = `${w}_${words[i + 1]}`;
+        const h2 = fnv1a(bigram);
+        vec[h2 % dim] += 5.0;
+      }
+
+      if (w.length >= 4) {
+        for (let j = 0; j <= w.length - 4; j++) {
+          const sub = w.slice(j, j + 4);
+          vec[fnv1a(sub) % dim] += 1.0;
+        }
+      }
+    }
+
+    let sumSq = 0;
+    for (let i = 0; i < dim; i++) sumSq += vec[i] * vec[i];
+    const mag = Math.sqrt(sumSq) || 1;
+    const out = new Array<number>(dim);
+    for (let i = 0; i < dim; i++) out[i] = vec[i] / mag;
+    return out;
+  }
+
+  private mockEmbed(text: string): number[] {
+    return this.localEmbed(text, 128);
   }
 
   private cosineSimilarity(a: number[], b: number[]): number {
-     let dotProduct = 0;
-     for (let i = 0; i < a.length; i++) dotProduct += a[i] * b[i];
-     return dotProduct;
+    if (!a || !b) return 0;
+    const len = Math.min(a.length, b.length);
+    if (len === 0) return 0;
+    let dotProduct = 0;
+    for (let i = 0; i < len; i++) dotProduct += a[i] * b[i];
+    return dotProduct;
   }
 
 }

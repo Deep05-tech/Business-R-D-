@@ -21,9 +21,14 @@ export class VectorStore {
     const facts: Array<{ text: string; source: string; embedding: number[] }> = [];
 
     try {
+      if (!process.env.GOOGLE_API_KEY) {
+        logger.info("Google API key not configured. Skipping PDF vector embeddings.");
+        return;
+      }
       await model.embedContent("health check");
-    } catch (err) {
-      logger.warn(`Vector API unavailable. Skipping embeddings gracefully. (${err})`);
+    } catch (err: any) {
+      const msg = err?.message?.split("\n")[0] || String(err);
+      logger.warn(`Vector API unavailable (${msg}). Skipping embeddings gracefully.`);
       return;
     }
 

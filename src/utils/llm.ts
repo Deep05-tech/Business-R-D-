@@ -33,6 +33,10 @@ export async function checkOpenAiStatus(): Promise<boolean> {
   return openAiValid;
 }
 
+export function isOpenAiAvailable(): boolean {
+  return openAiValid === true;
+}
+
 // Initial probe on module load
 checkOpenAiStatus().catch(() => {});
 
