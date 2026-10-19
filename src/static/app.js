@@ -2111,6 +2111,256 @@ async function loadFeedUI() {
       return;
     }
     
+    // Helper functions for safe rendering, proxying, and media extraction
+    window.escapeHtml = function(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    };
+
+    window.getYouTubeId = function(str) {
+      if (!str || typeof str !== 'string') return null;
+      var match = str.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/)|vi\/)([\w-]{11})/i);
+      return match ? match[1] : null;
+    };
+
+    window.getSocialMediaProxyUrl = function(url) {
+      return `/api/proxy-media?url=${encodeURIComponent(url)}&mediaCache=4`;
+    };
+
+    window.extractSingleMediaUrl = function(post) {
+      if (!post) return null;
+      let candidates = [];
+      if (post.thumbnail) candidates.push(post.thumbnail);
+      if (post.thumbnail_url) candidates.push(post.thumbnail_url);
+      if (post.media_url) candidates.push(post.media_url);
+      if (Array.isArray(post.mediaUrl)) candidates.push(...post.mediaUrl);
+      if (Array.isArray(post.mediaUrls)) candidates.push(...post.mediaUrls);
+      if (typeof post.mediaUrl === 'string') candidates.push(...post.mediaUrl.split(','));
+      if (typeof post.mediaUrls === 'string') candidates.push(...post.mediaUrls.split(','));
+
+      for (let c of candidates) {
+        if (!c || typeof c !== 'string') continue;
+        let trimmed = c.trim();
+        if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+          let lower = trimmed.toLowerCase();
+
+          // Exclude static placeholders, small icons, profile pics, and LinkedIn aero-v1 static assets
+          if (lower.includes('static.licdn.com') || lower.includes('aero-v1') || lower.includes('c45fy346jw096z9pbphyyhdz7') ||
+              lower.includes('rsrc.php') || lower.includes('/images/icons/') || lower.includes('/static/images/') ||
+              lower.includes('p100x100') || lower.includes('p200x200') || lower.includes('p50x50') ||
+              lower.includes('p36x36') || lower.includes('p75x75') || lower.includes('p160x160') ||
+              lower.includes('p320x320') || lower.includes('s100x100') || lower.includes('s200x200') ||
+              lower.includes('s50x50') || lower.includes('s36x36') || lower.includes('s75x75') ||
+              lower.includes('profile_pic') || lower.includes('profile_photo') || lower.includes('avatar') ||
+              lower.includes('cover_photo') || lower.includes('profile_cover') || lower.includes('banner') ||
+              lower.includes('header') || lower.includes('emoji')) {
+            continue;
+          }
+
+          // Exclude HTML webpage/profile links
+          try {
+            const parsed = new URL(trimmed);
+            const host = parsed.hostname.toLowerCase();
+            const path = parsed.pathname.toLowerCase();
+
+            if (
+              ((host === 'instagram.com' || host === 'www.instagram.com') && (path.includes('/p/') || path.includes('/reel/') || path.includes('/stories/') || path.split('/').filter(Boolean).length <= 1)) ||
+              ((host === 'facebook.com' || host === 'www.facebook.com' || host === 'm.facebook.com' || host === 'web.facebook.com') && (path.includes('/posts/') || path.includes('/photos/') || path.includes('/videos/') || path.includes('story.php') || path.includes('permalink.php') || path.split('/').filter(Boolean).length <= 1)) ||
+              ((host === 'linkedin.com' || host === 'www.linkedin.com') && (path.includes('/posts/') || path.includes('/feed/update/') || path.includes('/in/') || path.includes('/company/'))) ||
+              (host === 'youtube.com' || host === 'www.youtube.com' || host === 'youtu.be')
+            ) {
+              continue;
+            }
+          } catch (e) {
+            continue;
+          }
+
+          // Accept media CDN domains or files with image/video extensions
+          if (lower.includes('cdninstagram') || lower.includes('fbcdn') || lower.includes('fbsbx') ||
+              lower.includes('lookaside') ||
+              lower.includes('media.licdn.com') || lower.includes('dms.licdn.com') || lower.includes('licdn.com/dms') ||
+              lower.includes('ytimg') || lower.includes('googleusercontent.com') || lower.includes('unsplash.com') ||
+              lower.match(/\.(jpeg|jpg|png|gif|webp|svg|mp4)(\?|$)/i)) {
+            return trimmed;
+          }
+        }
+      }
+      return null;
+    };
+
+    window.isMediaUrl = function(u) {
+      if (!u || typeof u !== 'string' || !u.startsWith('http')) return false;
+      const lower = u.toLowerCase();
+      if (lower.includes('static.licdn.com') || lower.includes('aero-v1') || lower.includes('c45fy346jw096z9pbphyyhdz7')) return false;
+      try {
+        const parsed = new URL(u);
+        const host = parsed.hostname.toLowerCase();
+        const path = parsed.pathname.toLowerCase();
+        if (
+          ((host === 'instagram.com' || host === 'www.instagram.com') && (path.includes('/p/') || path.includes('/reel/'))) ||
+          ((host === 'facebook.com' || host === 'www.facebook.com' || host === 'm.facebook.com') && (path.includes('/posts/') || path.includes('/videos/'))) ||
+          ((host === 'linkedin.com' || host === 'www.linkedin.com') && (path.includes('/posts/') || path.includes('/feed/update/')))
+        ) {
+          return false;
+        }
+      } catch(e) {
+        return false;
+      }
+      return lower.includes('fbcdn') || lower.includes('fbsbx') || lower.includes('lookaside') || lower.includes('cdninstagram') ||
+             lower.includes('media.licdn.com') || lower.includes('dms.licdn.com') || lower.includes('licdn.com/dms') ||
+             lower.includes('ytimg') || lower.includes('googleusercontent') || !!lower.match(/\.(jpeg|jpg|png|gif|webp|svg)(\?|$)/i) || lower.includes('unsplash');
+    };
+
+    window.gridVideoFailed = function(el, platform, icon, encodedBg) {
+      if (!el) return;
+      el.onerror = null;
+      const container = el.parentElement;
+      if (container) {
+        const bg = encodedBg ? decodeURIComponent(encodedBg) : 'linear-gradient(135deg, #1e293b, #0f172a)';
+        const pIcon = icon || '🌐';
+        const pName = platform || 'Social Post';
+        container.style.background = bg;
+        container.style.display = 'flex';
+        container.style.flexDirection = 'column';
+        container.style.alignItems = 'center';
+        container.style.justifyContent = 'center';
+        container.innerHTML = `
+          <div style="width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.16);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:6px;">${pIcon}</div>
+          <span style="font-size:12px;font-weight:700;color:#ffffff;letter-spacing:0.02em;">${pName}</span>
+          <span style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.78);margin-top:2px;">Preview Post ↗</span>
+        `;
+      }
+    };
+
+    const platformMeta = {
+      'YouTube': { icon: '▶️', color: '#ff0000', badgeBg: '#cc0000', bg: 'linear-gradient(135deg, #2b0606, #120303)' },
+      'Facebook': { icon: '📘', color: '#1877f2', badgeBg: '#1877f2', bg: 'linear-gradient(135deg, #0f2b5c, #071633)' },
+      'Instagram': { icon: '📸', color: '#e1306c', badgeBg: '#d62976', bg: 'linear-gradient(135deg, #3d0d2b, #1f0516)' },
+      'LinkedIn': { icon: '💼', color: '#0a66c2', badgeBg: '#0a66c2', bg: 'linear-gradient(135deg, #092747, #031224)' }
+    };
+
+    // Inject lightbox modal once
+    if (!document.getElementById('media-lightbox')) {
+      document.body.insertAdjacentHTML('beforeend', `
+        <div id="media-lightbox" onclick="if(event.target === this) this.style.display='none'" class="media-lightbox" style="display:none;">
+          <button class="media-lightbox-close" type="button" aria-label="Close post preview" onclick="document.getElementById('media-lightbox').style.display='none'">&times;</button>
+          <div id="media-lightbox-content" style="width: 100%; height: 100%; display:flex; justify-content:center; align-items:center; padding: 40px;"></div>
+        </div>
+      `);
+      
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          const lb = document.getElementById('media-lightbox');
+          if (lb && lb.style.display === 'flex') lb.style.display = 'none';
+        }
+      });
+    }
+
+    // Modal popup function using index lookup
+    window.openFeedItemModal = function(globalIndex) {
+      const post = window.allFeedPosts ? window.allFeedPosts[globalIndex] : null;
+      if (!post) return;
+
+      const lb = document.getElementById('media-lightbox');
+      const content = document.getElementById('media-lightbox-content');
+      if (!lb || !content) return;
+
+      const compName = post.company || post.competitorName || 'Competitor';
+      const platform = post.platform || post._detectedPlatform || 'Social Feed';
+      const meta = platformMeta[platform] || platformMeta['LinkedIn'];
+      const postLink = (post.post_url || post.link || post.postUrl || '').trim();
+      const rawText = (post.caption || post.content || '').trim();
+      const displayDate = post.date || post.published_date || post.timestamp || 'Recent';
+
+      const firstMediaUrl = post._mediaResolved || window.extractSingleMediaUrl(post);
+      const ytId = post._ytVidId || post._ytId || window.getYouTubeId(postLink) || window.getYouTubeId(firstMediaUrl || '') || window.getYouTubeId(rawText);
+
+      const isDirectVideo = (firstMediaUrl && (firstMediaUrl.match(/\.(mp4|webm|ogg)(\?|$)/i) || firstMediaUrl.includes('/playlist/vid/')));
+      const isMediaImg = window.isMediaUrl(firstMediaUrl);
+
+      let leftMediaHtml = '';
+
+      if (ytId) {
+        leftMediaHtml = `
+          <div style="width: 100%; height: 100%; background: #000; display:flex; align-items:center; justify-content:center; position:relative;">
+            <iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&enablejsapi=1" 
+              style="width: 100%; height: 100%; border: 0;" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen></iframe>
+          </div>`;
+      } else if (isDirectVideo) {
+        let videoSrc = window.getSocialMediaProxyUrl(firstMediaUrl);
+        leftMediaHtml = `
+          <div style="width: 100%; height: 100%; background: #000; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+            <video src="${videoSrc}" controls autoplay preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;"></video>
+          </div>`;
+      } else if (firstMediaUrl) {
+        let imgSrc = window.getSocialMediaProxyUrl(firstMediaUrl);
+        leftMediaHtml = `
+          <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px;">
+            <div style="position: absolute; top: 16px; left: 16px; background: ${meta.badgeBg || '#3b82f6'}; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+              ${meta.icon || '📷'} ${platform || 'Media'}
+            </div>
+            <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ this.parentElement.innerHTML=\`<div style='text-align:center; padding:40px; color:#ffffff;'><div style='font-size:64px; margin-bottom:16px;'>${meta.icon || '🌐'}</div><h3 style='margin:0 0 8px 0;'>${window.escapeHtml(compName)}</h3><p style='color:#94a3b8; margin-bottom:24px;'>Official ${platform} Content</p><a href='${postLink || firstMediaUrl}' target='_blank' style='background:${meta.color || '#3b82f6'}; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold;'>View Original Post ↗</a></div>\`; };" />
+          </div>`;
+      } else {
+        leftMediaHtml = `
+          <div style="width: 100%; height: 100%; background: ${meta.bg}; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 36px; box-sizing: border-box;">
+            <div style="width: 76px; height: 76px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
+              ${meta.icon}
+            </div>
+            <h3 style="font-size: 1.35rem; font-weight: 700; color: #ffffff; margin: 0 0 6px 0;">${window.escapeHtml(compName)}</h3>
+            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.75); margin: 0 0 20px 0;">Official ${platform} Post</p>
+            ${postLink ? `<a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: ${meta.badgeBg || '#3b82f6'}; color: white; padding: 11px 24px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
+              <span>View Original Post on ${platform}</span> ↗
+            </a>` : ''}
+          </div>`;
+      }
+
+      let likes = post.engagement?.likes || post.likes;
+      let comments = post.engagement?.comments || post.comments;
+      let likesHtml = likes && likes !== '0' && likes !== 'Hidden' ? `<span>❤️ ${window.escapeHtml(String(likes))}</span>` : '';
+      let commentsHtml = comments && comments !== '0' && comments !== 'Hidden' ? `<span>💬 ${window.escapeHtml(String(comments))}</span>` : '';
+      let statsBar = (likesHtml || commentsHtml) ? `<div style="display:flex; gap:16px; font-size:0.85rem; color:#94a3b8; margin-top:6px; font-weight:600;">${likesHtml}${commentsHtml}</div>` : '';
+
+      content.innerHTML = `
+        <div class="post-preview-dialog">
+          <div class="post-preview-media">
+            ${leftMediaHtml}
+          </div>
+          <div class="post-preview-details">
+            <div class="post-preview-header">
+              <div>
+                <div class="post-preview-author">${window.escapeHtml(compName)}</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">${window.escapeHtml(displayDate)}</div>
+                ${statsBar}
+              </div>
+              <span style="font-size: 0.65rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; background: ${meta.color || '#3b82f6'}; color: #ffffff; text-transform: uppercase; letter-spacing: 0.05em;">${platform}</span>
+            </div>
+            <div class="feed-text post-preview-caption">${window.escapeHtml(rawText || 'No caption available for this post.')}</div>
+            ${postLink ? `<div class="post-preview-footer">
+              <a href="${postLink}" target="_blank" onclick="event.stopPropagation(); window.open(this.href, '_blank'); return false;" style="display: block; width: 100%; padding: 12px; background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 8px; text-align: center; font-size: 13px; font-weight: 700; color: #60a5fa; text-decoration: none;">View Original Post ↗</a>
+            </div>` : ''}
+          </div>
+        </div>
+      `;
+
+      lb.style.display = 'flex';
+    };
+
+    // Backward-compatibility wrapper for window.openLightbox
+    window.openLightbox = function(encodedMediaUrl, isVideo, encodedPostLink, platform, mediaType, encodedContent, encodedAuthor, dateStr, platformColor, likes, comments) {
+      if (window.allFeedPosts && window.allFeedPosts.length > 0) {
+        window.openFeedItemModal(0);
+      }
+    };
+
     // Group posts into 4 separate dedicated platform sections
     const ytPosts = [];
     const igPosts = [];
@@ -2118,6 +2368,7 @@ async function loadFeedUI() {
     const liPosts = [];
 
     const seenKeys = new Set();
+    window.allFeedPosts = [];
 
     feed.forEach(rawPost => {
       let post = {
@@ -2144,9 +2395,19 @@ async function loadFeedUI() {
       seenKeys.add(dedupKey);
 
       let pLinkLower = pLink.toLowerCase();
-      let pMedia = (post.mediaUrl || '').toLowerCase();
       let rawContent = (post.content || '');
       let ytVidId = window.getYouTubeId(post.link || '') || window.getYouTubeId(post.mediaUrl || '') || window.getYouTubeId(rawContent);
+      let firstMediaUrl = window.extractSingleMediaUrl(post);
+
+      // Strictly require a valid media URL or YouTube ID so 100% of displayed cards have authentic thumbnails
+      if (!firstMediaUrl && !ytVidId) {
+        return;
+      }
+
+      post._globalIndex = window.allFeedPosts.length;
+      post._mediaResolved = firstMediaUrl;
+      post._ytVidId = ytVidId;
+      window.allFeedPosts.push(post);
 
       if (pLinkLower.includes('instagram.com') || (pName.includes('instagram') && !pLinkLower.includes('facebook.com'))) {
         igPosts.push({ ...post, _detectedPlatform: 'Instagram' });
@@ -2159,13 +2420,6 @@ async function loadFeedUI() {
       }
     });
 
-    const platformMeta = {
-      'YouTube': { icon: '▶️', color: '#ff0000', badgeBg: '#cc0000', bg: 'linear-gradient(135deg, #2b0606, #120303)' },
-      'Facebook': { icon: '📘', color: '#1877f2', badgeBg: '#1877f2', bg: 'linear-gradient(135deg, #0f2b5c, #071633)' },
-      'Instagram': { icon: '📸', color: '#e1306c', badgeBg: '#d62976', bg: 'linear-gradient(135deg, #3d0d2b, #1f0516)' },
-      'LinkedIn': { icon: '💼', color: '#0a66c2', badgeBg: '#0a66c2', bg: 'linear-gradient(135deg, #092747, #031224)' }
-    };
-
     let html = `
       <style>
         .social-section-header { display: flex; align-items: center; gap: 10px; font-size: 1.25rem; font-weight: 700; color: #ffffff; margin: 24px 0 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px; }
@@ -2176,229 +2430,6 @@ async function loadFeedUI() {
       </style>
       <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
     `;
-    
-    if (!document.getElementById('media-lightbox')) {
-      document.body.insertAdjacentHTML('beforeend', `
-        <div id="media-lightbox" onclick="if(event.target === this) this.style.display='none'" class="media-lightbox" style="display:none;">
-          <button class="media-lightbox-close" type="button" aria-label="Close post preview" onclick="document.getElementById('media-lightbox').style.display='none'">&times;</button>
-          <div id="media-lightbox-content" style="width: 100%; height: 100%; display:flex; justify-content:center; align-items:center; padding: 40px;"></div>
-        </div>
-      `);
-      
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          const lb = document.getElementById('media-lightbox');
-          if (lb && lb.style.display === 'flex') lb.style.display = 'none';
-        }
-      });
-
-      window.gridVideoFailed = function(el, platform, icon, encodedBg) {
-        if (!el) return;
-        el.onerror = null;
-        const container = el.parentElement;
-        if (container) {
-          const bg = encodedBg ? decodeURIComponent(encodedBg) : 'linear-gradient(135deg, #1e293b, #0f172a)';
-          const pIcon = icon || '🌐';
-          const pName = platform || 'Social Post';
-          container.style.background = bg;
-          container.style.display = 'flex';
-          container.style.flexDirection = 'column';
-          container.style.alignItems = 'center';
-          container.style.justifyContent = 'center';
-          container.innerHTML = `
-            <div style="width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.16);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:6px;">${pIcon}</div>
-            <span style="font-size:12px;font-weight:700;color:#ffffff;letter-spacing:0.02em;">${pName}</span>
-            <span style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.78);margin-top:2px;">Preview Post ↗</span>
-          `;
-        }
-      };
-
-      window.getYouTubeId = function(str) {
-        if (!str || typeof str !== 'string') return null;
-        var match = str.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/)|vi\/)([\w-]{11})/i);
-        return match ? match[1] : null;
-      };
-
-      window.getSocialMediaProxyUrl = function(url) {
-        return `/api/proxy-media?url=${encodeURIComponent(url)}&mediaCache=3`;
-      };
-
-      window.extractSingleMediaUrl = function(post) {
-        if (!post) return null;
-        let candidates = [];
-        if (post.thumbnail) candidates.push(post.thumbnail);
-        if (post.thumbnail_url) candidates.push(post.thumbnail_url);
-        if (post.media_url) candidates.push(post.media_url);
-        if (Array.isArray(post.mediaUrl)) candidates.push(...post.mediaUrl);
-        if (Array.isArray(post.mediaUrls)) candidates.push(...post.mediaUrls);
-        if (typeof post.mediaUrl === 'string') candidates.push(...post.mediaUrl.split(','));
-        if (typeof post.mediaUrls === 'string') candidates.push(...post.mediaUrls.split(','));
-
-        for (let c of candidates) {
-          if (!c || typeof c !== 'string') continue;
-          let trimmed = c.trim();
-          if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
-            let lower = trimmed.toLowerCase();
-
-            // Exclude static placeholders, small icons, profile pics, and LinkedIn aero-v1 static assets
-            if (lower.includes('static.licdn.com') || lower.includes('aero-v1') || lower.includes('c45fy346jw096z9pbphyyhdz7') ||
-                lower.includes('rsrc.php') || lower.includes('/images/icons/') || lower.includes('/static/images/') ||
-                lower.includes('p100x100') || lower.includes('p200x200') || lower.includes('p50x50') ||
-                lower.includes('p36x36') || lower.includes('p75x75') || lower.includes('p160x160') ||
-                lower.includes('p320x320') || lower.includes('s100x100') || lower.includes('s200x200') ||
-                lower.includes('s50x50') || lower.includes('s36x36') || lower.includes('s75x75') ||
-                lower.includes('profile_pic') || lower.includes('profile_photo') || lower.includes('avatar') ||
-                lower.includes('cover_photo') || lower.includes('profile_cover') || lower.includes('banner') ||
-                lower.includes('header') || lower.includes('emoji')) {
-              continue;
-            }
-
-            // Exclude HTML webpage/profile links (only match actual webpage hostnames)
-            try {
-              const parsed = new URL(trimmed);
-              const host = parsed.hostname.toLowerCase();
-              const path = parsed.pathname.toLowerCase();
-
-              if (
-                ((host === 'instagram.com' || host === 'www.instagram.com') && (path.includes('/p/') || path.includes('/reel/') || path.includes('/stories/') || path.split('/').filter(Boolean).length <= 1)) ||
-                ((host === 'facebook.com' || host === 'www.facebook.com' || host === 'm.facebook.com' || host === 'web.facebook.com') && (path.includes('/posts/') || path.includes('/photos/') || path.includes('/videos/') || path.includes('story.php') || path.includes('permalink.php') || path.split('/').filter(Boolean).length <= 1)) ||
-                ((host === 'linkedin.com' || host === 'www.linkedin.com') && (path.includes('/posts/') || path.includes('/feed/update/') || path.includes('/in/') || path.includes('/company/'))) ||
-                (host === 'youtube.com' || host === 'www.youtube.com' || host === 'youtu.be')
-              ) {
-                continue;
-              }
-            } catch (e) {
-              continue;
-            }
-
-            // Accept media CDN domains or files with image/video extensions
-            if (lower.includes('cdninstagram') || lower.includes('fbcdn') || lower.includes('fbsbx') ||
-                lower.includes('lookaside') ||
-                lower.includes('media.licdn.com') || lower.includes('dms.licdn.com') || lower.includes('licdn.com/dms') ||
-                lower.includes('ytimg') || lower.includes('googleusercontent.com') || lower.includes('unsplash.com') ||
-                lower.match(/\.(jpeg|jpg|png|gif|webp|svg|mp4)(\?|$)/i)) {
-              return trimmed;
-            }
-          }
-        }
-        return null;
-      };
-
-      window.isMediaUrl = function(u) {
-        if (!u || typeof u !== 'string' || !u.startsWith('http')) return false;
-        const lower = u.toLowerCase();
-        if (lower.includes('static.licdn.com') || lower.includes('aero-v1') || lower.includes('c45fy346jw096z9pbphyyhdz7')) return false;
-        try {
-          const parsed = new URL(u);
-          const host = parsed.hostname.toLowerCase();
-          const path = parsed.pathname.toLowerCase();
-          if (
-            ((host === 'instagram.com' || host === 'www.instagram.com') && (path.includes('/p/') || path.includes('/reel/'))) ||
-            ((host === 'facebook.com' || host === 'www.facebook.com' || host === 'm.facebook.com') && (path.includes('/posts/') || path.includes('/videos/'))) ||
-            ((host === 'linkedin.com' || host === 'www.linkedin.com') && (path.includes('/posts/') || path.includes('/feed/update/')))
-          ) {
-            return false;
-          }
-        } catch(e) {
-          return false;
-        }
-        return lower.includes('fbcdn') || lower.includes('fbsbx') || lower.includes('lookaside') || lower.includes('cdninstagram') ||
-               lower.includes('media.licdn.com') || lower.includes('dms.licdn.com') || lower.includes('licdn.com/dms') ||
-               lower.includes('ytimg') || lower.includes('googleusercontent') || !!lower.match(/\.(jpeg|jpg|png|gif|webp|svg)(\?|$)/i) || lower.includes('unsplash');
-      };
-
-      // Split Media Left / Caption Right Lightbox Modal function
-      window.openLightbox = function(encodedMediaUrl, isVideo, encodedPostLink, platform, mediaType, encodedContent, encodedAuthor, dateStr, platformColor, likes, comments) {
-        const lb = document.getElementById('media-lightbox');
-        const content = document.getElementById('media-lightbox-content');
-
-        let url = encodedMediaUrl ? decodeURIComponent(encodedMediaUrl) : '';
-        let postLink = encodedPostLink ? decodeURIComponent(encodedPostLink) : '';
-        let rawText = encodedContent ? decodeURIComponent(encodedContent) : '';
-        let authorName = encodedAuthor ? decodeURIComponent(encodedAuthor) : (platform || 'Competitor');
-        let displayDate = dateStr && dateStr !== 'undefined' && dateStr !== 'null' ? dateStr : 'Recent';
-
-        const meta = platformMeta[platform] || platformMeta['LinkedIn'];
-        const ytId = window.getYouTubeId(url) || window.getYouTubeId(postLink) || window.getYouTubeId(rawText);
-
-        const isDirectVideo = (url && (url.match(/\.(mp4|webm|ogg)(\?|$)/i) || url.includes('/playlist/vid/')));
-        const isMediaImg = window.isMediaUrl(url);
-
-        let leftMediaHtml = '';
-
-        if (ytId) {
-          leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #000; display:flex; align-items:center; justify-content:center; position:relative;">
-              <iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&enablejsapi=1" 
-                style="width: 100%; height: 100%; border: 0;" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                referrerpolicy="no-referrer-when-downgrade"
-                allowfullscreen></iframe>
-            </div>`;
-        } else if (isDirectVideo) {
-          let videoSrc = window.getSocialMediaProxyUrl(url);
-          leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #000; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
-              <video src="${videoSrc}" controls autoplay preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;"></video>
-            </div>`;
-        } else if (isMediaImg) {
-          let imgSrc = window.getSocialMediaProxyUrl(url);
-          leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px;">
-              <div style="position: absolute; top: 16px; left: 16px; background: ${meta.badgeBg || '#3b82f6'}; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
-                ${meta.icon || '📷'} ${platform || 'Media'}
-              </div>
-              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);" onerror="this.onerror=null; this.src='${url}'; this.onerror=function(){ this.parentElement.innerHTML=\`<div style='text-align:center; padding:40px; color:#ffffff;'><div style='font-size:64px; margin-bottom:16px;'>${meta.icon || '🌐'}</div><h3 style='margin:0 0 8px 0;'>${authorName}</h3><p style='color:#94a3b8; margin-bottom:24px;'>Official ${platform} Content</p><a href='${postLink || url}' target='_blank' style='background:${platformColor || '#3b82f6'}; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold;'>View Original Post ↗</a></div>\`; };" />
-            </div>`;
-        } else {
-          // Clean branded post details card for text-only posts
-          leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: ${meta.bg}; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 36px; box-sizing: border-box;">
-              <div style="width: 76px; height: 76px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
-                ${meta.icon}
-              </div>
-              <h3 style="font-size: 1.35rem; font-weight: 700; color: #ffffff; margin: 0 0 6px 0;">${authorName}</h3>
-              <p style="font-size: 0.9rem; color: rgba(255,255,255,0.75); margin: 0 0 20px 0;">Official ${platform} Post</p>
-              <div style="max-width: 440px; background: rgba(0,0,0,0.35); padding: 18px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); margin-bottom: 22px; color: #e2e8f0; font-size: 0.9rem; line-height: 1.5; text-align: left; max-height: 180px; overflow-y: auto;">
-                ${rawText ? rawText.substring(0, 320) + (rawText.length > 320 ? '...' : '') : 'No caption text provided for this post.'}
-              </div>
-              ${postLink ? `<a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: ${meta.badgeBg || '#3b82f6'}; color: white; padding: 11px 24px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
-                <span>View Original Post on ${platform}</span> ↗
-              </a>` : ''}
-            </div>`;
-        }
-
-        let likesHtml = likes && likes !== '0' && likes !== 'Hidden' ? `<span>❤️ ${likes}</span>` : '';
-        let commentsHtml = comments && comments !== '0' && comments !== 'Hidden' ? `<span>💬 ${comments}</span>` : '';
-        let statsBar = (likesHtml || commentsHtml) ? `<div style="display:flex; gap:16px; font-size:0.85rem; color:#94a3b8; margin-top:6px; font-weight:600;">${likesHtml}${commentsHtml}</div>` : '';
-
-        content.innerHTML = `
-          <div class="post-preview-dialog">
-            <!-- LEFT COLUMN: ACTUAL POST MEDIA (IMAGE / VIDEO) -->
-            <div class="post-preview-media">
-              ${leftMediaHtml}
-            </div>
-            <!-- RIGHT COLUMN: POST CAPTION & DETAILS -->
-            <div class="post-preview-details">
-              <div class="post-preview-header">
-                <div>
-                  <div class="post-preview-author">${authorName}</div>
-                  <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">${displayDate}</div>
-                  ${statsBar}
-                </div>
-                <span style="font-size: 0.65rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; background: ${platformColor || '#3b82f6'}; color: #ffffff; text-transform: uppercase; letter-spacing: 0.05em;">${platform || 'POST'}</span>
-              </div>
-              <div class="feed-text post-preview-caption">${rawText || 'No caption available for this post.'}</div>
-              ${postLink ? `<div class="post-preview-footer">
-                <a href="${postLink}" target="_blank" onclick="event.stopPropagation(); window.open(this.href, '_blank'); return false;" style="display: block; width: 100%; padding: 12px; background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 8px; text-align: center; font-size: 13px; font-weight: 700; color: #60a5fa; text-decoration: none;">View Original Post ↗</a>
-              </div>` : ''}
-            </div>
-          </div>
-        `;
-
-        lb.style.display = 'flex';
-      };
-    }
 
     const renderCard = (post) => {
       let compName = String(post.company || post.competitorName || 'Competitor').trim();
@@ -2422,18 +2453,13 @@ async function loadFeedUI() {
       }
       if (!dateStr || dateStr === 'undefined' || dateStr === 'null') dateStr = 'Recent';
 
-      let safeContent = encodeURIComponent(post.caption || post.content || '').replace(/'/g, "%27");
-      let safeAuthor = encodeURIComponent(compName).replace(/'/g, "%27");
-
       let cardThumbHtml = '';
-      const ytVidId = post._ytId || window.getYouTubeId(post.post_url || post.link || '') || window.getYouTubeId(post.thumbnail_url || post.mediaUrl || '') || window.getYouTubeId(post.caption || post.content || '');
-      let firstMediaUrl = window.extractSingleMediaUrl(post);
+      const ytVidId = post._ytVidId || post._ytId || window.getYouTubeId(post.post_url || post.link || '') || window.getYouTubeId(post.thumbnail_url || post.mediaUrl || '') || window.getYouTubeId(post.caption || post.content || '');
+      let firstMediaUrl = post._mediaResolved || window.extractSingleMediaUrl(post);
 
       const pLink = post.post_url || post.link || '';
-
       const isIgReelCard = (platform === 'Instagram' || post._detectedPlatform === 'Instagram') &&
                            (pLink.includes('/reel/') || post.media_type === 'Video' || post.mediaType === 'Video');
-
       const isLiVidCard = (platform === 'LinkedIn' || post._detectedPlatform === 'LinkedIn') &&
                           (post.media_type === 'Video' || post.mediaType === 'Video' || (firstMediaUrl && (firstMediaUrl.includes('/playlist/vid/') || firstMediaUrl.includes('video.licdn.com') || firstMediaUrl.includes('thumbnail-with-play-button'))));
       const isFacebookVideoCard = (platform === 'Facebook' || post._detectedPlatform === 'Facebook') &&
@@ -2446,66 +2472,36 @@ async function loadFeedUI() {
             <img src="${ytThumb}" referrerpolicy="no-referrer" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
           </div>`;
-      } else if (isIgReelCard && firstMediaUrl) {
-        let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
-        cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
-            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };" />
-            <div style="position:absolute; top:10px; right:10px; background:rgba(225,48,108,0.95); color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none;">📹 REEL</div>
-            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(225,48,108,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
-          </div>`;
-      } else if (isLiVidCard && firstMediaUrl) {
-        let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
-        cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
-            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };" />
-            <div style="position:absolute; top:10px; right:10px; background:rgba(10,102,194,0.95); color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none;">📹 VIDEO</div>
-            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(10,102,194,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
-          </div>`;
-      } else if (isFacebookVideoCard && firstMediaUrl) {
-        let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
-        cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
-            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };" />
-            <div style="position:absolute; top:10px; right:10px; background:rgba(24,119,242,.95); color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:.05em; box-shadow:0 2px 6px rgba(0,0,0,.5); pointer-events:none;">📹 VIDEO</div>
-            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(24,119,242,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.6);">▶</div>
-          </div>`;
       } else if (firstMediaUrl) {
         let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
+        let badgeText = isIgReelCard ? '📹 REEL' : ((isLiVidCard || isFacebookVideoCard) ? '📹 VIDEO' : '');
+        let playBtn = (isIgReelCard || isLiVidCard || isFacebookVideoCard) ? `<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(0,0,0,0.6);border:2px solid rgba(255,255,255,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>` : '';
+        let badgeHtml = badgeText ? `<div style="position:absolute; top:10px; right:10px; background:${meta.badgeBg}; color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none;">${badgeText}</div>` : '';
+
         cardThumbHtml = `
           <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
             <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };" />
-          </div>`;
-      } else {
-        cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: ${meta.bg}; flex-shrink: 0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white; position:relative;">
-            <div style="width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.18); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:6px;">${meta.icon}</div>
-            <span style="font-size:12px; font-weight:700; color:#ffffff;">${platform}</span>
-            <span style="font-size:11px; font-weight:500; color:rgba(255,255,255,0.8); margin-top:2px;">Preview Post ↗</span>
+            ${badgeHtml}
+            ${playBtn}
           </div>`;
       }
 
       let displayContent = (post.caption || post.content || '').trim();
       if (!displayContent || displayContent === 'No caption' || displayContent === 'No caption.') {
-        displayContent = platform === 'Facebook' ? 'No public caption is available for this Facebook post.' : `${compName} - ${post.post_url || post.link || platform}`;
+        displayContent = platform === 'Facebook' ? 'Public Competitor Update' : `${compName} - ${platform}`;
       }
 
-      let isMediaVidFlag = isIgReelCard || isLiVidCard || isFacebookVideoCard || post.media_type === 'Video' || post.mediaType === 'Video' || (firstMediaUrl && (firstMediaUrl.includes('mp4') || firstMediaUrl.includes('webm')));
-      let mediaToOpen = firstMediaUrl || pLink;
-      let likesVal = post.engagement?.likes || post.likes || '';
-      let commentsVal = post.engagement?.comments || post.comments || '';
-
       return `
-        <div class="feed-card-item" onclick="window.openLightbox(encodeURIComponent('${mediaToOpen}'), ${isMediaVidFlag ? true : false}, encodeURIComponent('${pLink}'), '${platform}', '${post.media_type || post.mediaType || ''}', '${safeContent}', '${safeAuthor}', '${dateStr}', '${meta.color}', '${likesVal}', '${commentsVal}')" style="min-width: 270px; max-width: 280px; flex-shrink: 0; padding: 14px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; height: 380px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)'">
+        <div class="feed-card-item" onclick="window.openFeedItemModal(${post._globalIndex})" style="min-width: 270px; max-width: 280px; flex-shrink: 0; padding: 14px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; height: 380px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)'">
           <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 6px;">
-            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px;">${compName}</span>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px;">${window.escapeHtml(compName)}</span>
             <div style="display: flex; align-items: center; gap: 6px;">
-              <span style="font-size: 0.72rem; color: var(--text-muted);">${dateStr}</span>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">${window.escapeHtml(dateStr)}</span>
               <span style="font-size: 0.62rem; font-weight: 800; padding: 2px 6px; border-radius: 3px; background: ${meta.badgeBg}; color: #ffffff; text-transform: uppercase;">${platform}</span>
             </div>
           </div>
           ${cardThumbHtml}
-          <div style="white-space: pre-wrap; font-size: 0.82rem; line-height: 1.4; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; margin-bottom: 10px; flex: 1;">${displayContent}</div>
+          <div style="white-space: pre-wrap; font-size: 0.82rem; line-height: 1.4; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; margin-bottom: 10px; flex: 1;">${window.escapeHtml(displayContent)}</div>
           <span style="display: block; text-align: left; font-size: 11px; font-weight: 600; color: #3b82f6; margin-top: auto; padding-top: 6px;">Preview Post In Dashboard ↗</span>
         </div>
       `;

@@ -880,7 +880,35 @@ export class SocialExtractorAgent {
         const enriched = await Promise.all(
             slice.map(p => this.enrichPostDetails(p, platform))
         );
-        return enriched.filter(p => !p._invalidAuthor);
+        return enriched.filter(p => !p._invalidAuthor && Boolean(p.thumbnail || p.platform === 'YouTube' || p._ytId));
+    }
+
+    public static cleanSocialCaption(text: string, platform?: string): string {
+        if (!text) return '';
+        let s = String(text).trim();
+
+        // Strip common Instagram headers & login noise
+        s = s.replace(/^.*?\bon (?:Instagram|Facebook):\s*["“]?/is, '');
+        s = s.replace(/^[\d,kK]+\s*likes,\s*[\d,kK]+\s*comments\s*-\s*[^\s:]+(?:\s+on\s+[A-Za-z]+\s+\d{1,2},\s*\d{4})?:\s*["“]?/is, '');
+        s = s.replace(/Log In Sign Up.*?Never miss a post from.*?Sign up/gis, '');
+        s = s.replace(/Log In Sign Up.*?Sign up for Instagram/gis, '');
+        s = s.replace(/Start the conversation\.\s*\d*\s*Log in to like or comment\./gis, '');
+        s = s.replace(/Log in to like or comment\./gis, '');
+        s = s.replace(/## No comments yet\.\s*Start the conversation\./gis, '');
+        s = s.replace(/May be an image of.*$/gis, '');
+        s = s.replace(/May be a graphic of.*$/gis, '');
+        s = s.replace(/Photo by .*? on .*?\./gis, '');
+        s = s.replace(/Video by .*? on .*?\./gis, '');
+        s = s.replace(/See more posts.*$/gis, '');
+        s = s.replace(/[a-zA-Z0-9._]+'s profile picture/gis, '');
+        s = s.replace(/[a-zA-Z0-9._]+ • Follow/gis, '');
+        s = s.replace(/^Title:\s*.*?\s*-\s*/is, '');
+        s = s.replace(/^[A-Za-z]{3}\s+\d{1,2},\s*\d{4}\s*·\s*/is, '');
+        s = s.replace(/\.\.\.\s*From\s*$/is, '');
+
+        if (s.startsWith('"') || s.startsWith('“')) s = s.slice(1);
+        if (s.endsWith('"') || s.endsWith('”')) s = s.slice(0, -1);
+        return s.trim();
     }
 
     private async enrichPostDetails(post: any, platform: string): Promise<any> {
@@ -928,34 +956,67 @@ export class SocialExtractorAgent {
             const ogImg = $("meta[property=\"og:image\"]").attr("content") || $("meta[name=\"og:image\"]").attr("content") || $("meta[name=\"twitter:image\"]").attr("content") || "";
 
             let extractedCaption = "";
-            if (ogDesc) {
-                const match = ogDesc.match(/: ["“](.*?)["”]?$/s) || ogDesc.match(/: (.*)$/s);
-                if (match && match[1]) {
-                    extractedCaption = match[1].replace(/["”]$/, "").trim();
-                } else {
-                    extractedCaption = ogDesc.trim();
-                }
-            }
-            if ((!extractedCaption || extractedCaption.length < 15) && ogTitle) {
-                const match = ogTitle.match(/: ["“](.*?)["”]?$/s) || ogTitle.match(/: (.*)$/s);
-                if (match && match[1]) {
-                    extractedCaption = match[1].replace(/["”]$/, "").trim();
-                } else {
-                    extractedCaption = ogTitle.trim();
+
+            // 1. Instagram structured OpenGraph regex extraction
+            if (platform === 'Instagram' && ogDesc) {
+                const igMatch = ogDesc.match(/^([\d,kK]+)\s*likes,\s*([\d,kK]+)\s*comments\s*-\s*([^\s:]+)(?:\s+on\s+([A-Za-z]+\s+\d{1,2},\s*\d{4}))?:\s*["“]([\s\S]*?)["”]?\s*$/);
+                if (igMatch) {
+                    post.engagement = {
+                        likes: igMatch[1],
+                        comments: igMatch[2]
+                    };
+                    post.likes = igMatch[1];
+                    post.comments = igMatch[2];
+                    if (igMatch[4]) {
+                        try {
+                            const parsedD = new Date(igMatch[4]);
+                            if (!isNaN(parsedD.getTime())) {
+                                post.date = parsedD.toISOString().split('T')[0];
+                                post.published_date = post.date;
+                                post.timestamp = post.date;
+                            }
+                        } catch(e) {}
+                    }
+                    if (igMatch[5]) {
+                        extractedCaption = SocialExtractorAgent.cleanSocialCaption(igMatch[5], 'Instagram');
+                    }
                 }
             }
 
-            if (extractedCaption) {
-                extractedCaption = extractedCaption
-                    .replace(/^.*?\bon Instagram:\s*["“]?/i, '')
-                    .replace(/^.*?\bon Facebook:\s*["“]?/i, '')
-                    .replace(/["”]$/, '')
-                    .trim();
+            if (!extractedCaption) {
+                if (ogDesc) {
+                    const match = ogDesc.match(/: ["“](.*?)["”]?$/s) || ogDesc.match(/: (.*)$/s);
+                    if (match && match[1]) {
+                        extractedCaption = match[1].replace(/["”]$/, "").trim();
+                    } else {
+                        extractedCaption = ogDesc.trim();
+                    }
+                }
+                if ((!extractedCaption || extractedCaption.length < 15) && ogTitle) {
+                    const match = ogTitle.match(/: ["“](.*?)["”]?$/s) || ogTitle.match(/: (.*)$/s);
+                    if (match && match[1]) {
+                        extractedCaption = match[1].replace(/["”]$/, "").trim();
+                    } else {
+                        extractedCaption = ogTitle.trim();
+                    }
+                }
             }
 
-            if (extractedCaption && extractedCaption.length > (post.caption ? post.caption.length : 0)) {
+            extractedCaption = SocialExtractorAgent.cleanSocialCaption(extractedCaption, platform);
+
+            const hasBoilerplate = (cap: string) => {
+                if (!cap) return true;
+                return cap.includes('Log In') || cap.includes('Sign Up') || cap.includes('profile picture') ||
+                       cap.includes('Start the conversation') || cap.includes('Never miss a post') ||
+                       cap.includes('May be an image') || cap.includes('Photo by ') || cap.includes('Video by ');
+            };
+
+            if (extractedCaption && (hasBoilerplate(post.caption) || extractedCaption.length > (post.caption ? post.caption.length : 0))) {
                 post.caption = extractedCaption;
                 post.content = extractedCaption;
+            } else if (post.caption) {
+                post.caption = SocialExtractorAgent.cleanSocialCaption(post.caption, platform);
+                post.content = post.caption;
             }
 
             const isAeroOrPlaceholder = !ogImg ||
