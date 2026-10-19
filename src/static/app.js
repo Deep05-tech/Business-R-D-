@@ -2195,12 +2195,22 @@ async function loadFeedUI() {
       window.gridVideoFailed = function(el, platform, icon, encodedBg) {
         if (!el) return;
         el.onerror = null;
-        let fallbackUrl = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop';
-        if (platform === 'LinkedIn') fallbackUrl = 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop';
-        else if (platform === 'Instagram') fallbackUrl = 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&auto=format&fit=crop';
-        else if (platform === 'YouTube') fallbackUrl = 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=800&auto=format&fit=crop';
-        el.src = window.getSocialMediaProxyUrl(fallbackUrl);
-        el.style.display = 'block';
+        const container = el.parentElement;
+        if (container) {
+          const bg = encodedBg ? decodeURIComponent(encodedBg) : 'linear-gradient(135deg, #1e293b, #0f172a)';
+          const pIcon = icon || '🌐';
+          const pName = platform || 'Social Post';
+          container.style.background = bg;
+          container.style.display = 'flex';
+          container.style.flexDirection = 'column';
+          container.style.alignItems = 'center';
+          container.style.justifyContent = 'center';
+          container.innerHTML = `
+            <div style="width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.16);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:6px;">${pIcon}</div>
+            <span style="font-size:12px;font-weight:700;color:#ffffff;letter-spacing:0.02em;">${pName}</span>
+            <span style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.78);margin-top:2px;">Preview Post ↗</span>
+          `;
+        }
       };
 
       window.getYouTubeId = function(str) {
@@ -2209,10 +2219,8 @@ async function loadFeedUI() {
         return match ? match[1] : null;
       };
 
-      // Bump this when changing proxy behaviour so an old cached fallback SVG
-      // cannot hide a now-available signed social CDN image.
       window.getSocialMediaProxyUrl = function(url) {
-        return `/api/proxy-media?url=${encodeURIComponent(url)}&mediaCache=2`;
+        return `/api/proxy-media?url=${encodeURIComponent(url)}&mediaCache=3`;
       };
 
       window.extractSingleMediaUrl = function(post) {
@@ -2225,21 +2233,19 @@ async function loadFeedUI() {
         if (Array.isArray(post.mediaUrls)) candidates.push(...post.mediaUrls);
         if (typeof post.mediaUrl === 'string') candidates.push(...post.mediaUrl.split(','));
         if (typeof post.mediaUrls === 'string') candidates.push(...post.mediaUrls.split(','));
-        if (post.post_url) candidates.push(post.post_url);
-        if (post.link) candidates.push(post.link);
 
         for (let c of candidates) {
           if (!c || typeof c !== 'string') continue;
           let trimmed = c.trim();
           if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
             let lower = trimmed.toLowerCase();
-            let cstpMatch = lower.match(/cstp=mx(\d+)x(\d+)/);
-            if (cstpMatch && cstpMatch[1] && cstpMatch[2]) {
-              let w = parseInt(cstpMatch[1], 10);
-              let h = parseInt(cstpMatch[2], 10);
-              if (w > 0 && h > 0 && (w / h > 2.1)) {
-                continue;
-              }
+            // Strictly exclude webpage links, login pages, and profile URLs
+            if (lower.includes('/p/') || lower.includes('/reel/') || lower.includes('/posts/') ||
+                lower.includes('/photos/') || lower.includes('/videos/') || lower.includes('story.php') ||
+                lower.includes('permalink.php') || lower.includes('facebook.com') || lower.includes('instagram.com') ||
+                lower.includes('linkedin.com/in') || lower.includes('linkedin.com/company') || lower.includes('youtube.com/watch') ||
+                lower.includes('/media/?size=')) {
+              continue;
             }
             if (lower.includes('p100x100') || lower.includes('p200x200') || lower.includes('p50x50') ||
                 lower.includes('p36x36') || lower.includes('p75x75') || lower.includes('p160x160') ||
@@ -2250,8 +2256,10 @@ async function loadFeedUI() {
                 lower.includes('header') || lower.includes('rsrc.php') || lower.includes('emoji')) {
               continue;
             }
-            if (lower.includes('cdninstagram') || lower.includes('fbcdn') || lower.includes('fbsbx') || lower.includes('licdn') || lower.includes('ytimg') || lower.match(/\.(jpeg|jpg|png|gif|webp|svg|mp4)(\?|$)/i) || lower.includes('facebook.com') || lower.includes('linkedin.com') || lower.includes('instagram.com') || lower.includes('youtube.com') || lower.includes('youtu.be')) {
-              return lower.includes('instagram.com') ? trimmed.replace(/\/media\/?(\?.*)?$/i, '/') : trimmed;
+            if (lower.includes('cdninstagram') || lower.includes('fbcdn') || lower.includes('fbsbx') ||
+                lower.includes('licdn') || lower.includes('ytimg') || lower.includes('unsplash.com') ||
+                lower.match(/\.(jpeg|jpg|png|gif|webp|svg|mp4)(\?|$)/i)) {
+              return trimmed;
             }
           }
         }
@@ -2459,9 +2467,6 @@ async function loadFeedUI() {
       let firstMediaUrl = window.extractSingleMediaUrl(post);
 
       const pLink = post.post_url || post.link || '';
-      if (!firstMediaUrl && pLink) {
-        firstMediaUrl = pLink;
-      }
 
       const isIgReelCard = (platform === 'Instagram' || post._detectedPlatform === 'Instagram') &&
                            (pLink.includes('/reel/') || post.media_type === 'Video' || post.mediaType === 'Video');

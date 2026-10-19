@@ -28,7 +28,6 @@ import { CompetitiveAnalysisAgent } from "./agents/competitiveAnalysisAgent.js";
 import { SeoAgent } from "./agents/seoAgent.js";
 import { CronAgent } from "./agents/cronAgent.js";
 import { Logger, createLogger } from "./utils/logger.js";
-import { fetchMetaPagePluginPosts } from "./utils/facebookParser.js";
 import { BrandIntelligenceAgent } from "./agents/brandIntelligenceAgent.js";
 import { DiagnosticAgent } from "./agents/diagnosticAgent.js";
 import { TrendingTopicsAgent } from "./agents/trendingTopicsAgent.js";
@@ -287,41 +286,55 @@ app.get('/api/instagram-embed', (req, res) => {
     `);
 });
 
-const sendPlatformSvgPlaceholder = async (res: express.Response, rawUrl: string) => {
+const sendPlatformSvgPlaceholder = (res: express.Response, rawUrl: string) => {
     const lower = (rawUrl || "").toLowerCase();
-    let fallbackImg = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop';
-    if (lower.includes('linkedin')) {
-        fallbackImg = 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop';
-    } else if (lower.includes('instagram')) {
-        fallbackImg = 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&auto=format&fit=crop';
-    } else if (lower.includes('youtube')) {
-        fallbackImg = 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=800&auto=format&fit=crop';
+    let platform = "Social Post";
+    let icon = "🌐";
+    let gradStart = "#1e293b";
+    let gradEnd = "#0f172a";
+
+    if (lower.includes("instagram")) {
+        platform = "Instagram";
+        icon = "📸";
+        gradStart = "#833ab4";
+        gradEnd = "#fd1d1d";
+    } else if (lower.includes("facebook") || lower.includes("fbcdn") || lower.includes("fbsbx")) {
+        platform = "Facebook";
+        icon = "📘";
+        gradStart = "#1877f2";
+        gradEnd = "#0d47a1";
+    } else if (lower.includes("linkedin") || lower.includes("licdn")) {
+        platform = "LinkedIn";
+        icon = "💼";
+        gradStart = "#0077b5";
+        gradEnd = "#004182";
+    } else if (lower.includes("youtube") || lower.includes("ytimg")) {
+        platform = "YouTube";
+        icon = "▶️";
+        gradStart = "#cc0000";
+        gradEnd = "#660000";
     }
 
-    try {
-        const imgRes = await axios.get(fallbackImg, { responseType: 'stream', timeout: 5000 });
-        res.setHeader('Content-Type', 'image/jpeg');
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Cache-Control', 'no-cache, max-age=0');
-        return imgRes.data.pipe(res);
-    } catch(e) {
-        let platform = "Social Post";
-        let icon = "🌐";
-        if (lower.includes("instagram")) { platform = "Instagram Post"; icon = "📸"; }
-        else if (lower.includes("facebook")) { platform = "Facebook Post"; icon = "📘"; }
-        else if (lower.includes("linkedin")) { platform = "LinkedIn Post"; icon = "💼"; }
-        else if (lower.includes("youtube")) { platform = "YouTube Video"; icon = "▶️"; }
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340">
+      <defs>
+        <linearGradient id="g_${Math.abs(rawUrl.length % 1000)}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="${gradStart}"/>
+          <stop offset="100%" stop-color="${gradEnd}"/>
+        </linearGradient>
+      </defs>
+      <rect width="600" height="340" fill="url(#g_${Math.abs(rawUrl.length % 1000)})"/>
+      <rect width="600" height="340" fill="rgba(0,0,0,0.25)"/>
+      <circle cx="300" cy="135" r="46" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+      <text x="300" y="148" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="34" text-anchor="middle" fill="#ffffff">${icon}</text>
+      <text x="300" y="220" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" text-anchor="middle" fill="#ffffff" letter-spacing="1">${platform.toUpperCase()}</text>
+      <text x="300" y="250" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500" text-anchor="middle" fill="rgba(255,255,255,0.78)">Public Competitor Update</text>
+    </svg>`;
 
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="360" viewBox="0 0 600 360">
-          <rect width="600" height="360" fill="#0d1527"/>
-          <circle cx="300" cy="180" r="40" fill="rgba(59, 130, 246, 0.2)"/>
-          <text x="300" y="190" font-family="sans-serif" font-size="32" text-anchor="middle" fill="#ffffff">${icon}</text>
-        </svg>`;
-        res.setHeader('Content-Type', 'image/svg+xml');
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Cache-Control', 'no-store, max-age=0');
-        return res.status(200).send(svg);
-    }
+    res.setHeader('Content-Type', 'image/svg+xml; charset=utf-8');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    return res.status(200).send(svg);
 };
 
 const handleProxyMedia = async (req: express.Request, res: express.Response) => {
@@ -358,9 +371,6 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
 
     try {
         let targetUrl = rawUrl;
-        if (targetUrl.includes('instagram.com') && /\/media\/?\?size=/i.test(targetUrl)) {
-            targetUrl = targetUrl.replace(/\/media\/?\?size=[^&]+$/i, '/');
-        }
         const lowerRaw = targetUrl.toLowerCase();
 
         // 1. If targetUrl is a YouTube URL/ID, automatically resolve to YouTube image thumbnail
@@ -377,41 +387,10 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
                               targetUrl.toLowerCase().includes('cdninstagram') || targetUrl.toLowerCase().includes('img.youtube.com') ||
                               targetUrl.toLowerCase().includes('ytimg') || targetUrl.toLowerCase().includes('unsplash.com');
 
-        const isIndividualPostPage = lowerRaw.includes('instagram.com/p/') || lowerRaw.includes('instagram.com/reel/') ||
-                                     lowerRaw.includes('/posts/') || lowerRaw.includes('/photos/') || lowerRaw.includes('/videos/') ||
-                                     lowerRaw.includes('story.php') || lowerRaw.includes('permalink.php') ||
-                                     lowerRaw.includes('facebook.com/watch') || lowerRaw.includes('facebook.com/reel') ||
-                                     lowerRaw.includes('linkedin.com/posts/') || lowerRaw.includes('linkedin.com/feed/update/') ||
-                                     lowerRaw.includes('youtube.com/watch') || lowerRaw.includes('youtu.be/') ||
-                                     lowerRaw.includes('youtube.com/shorts');
-
-        // 2. If targetUrl is not a direct media asset, attempt to resolve uncropped high-res OG image from target URL
-        if (!isDirectMedia && !targetUrl.includes('mp4')) {
-            try {
-                const pageRes = await axios.get(targetUrl, {
-                    timeout: 7000,
-                    headers: {
-                        'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
-                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-                        'Accept-Language': 'en-US,en;q=0.9',
-                        'Upgrade-Insecure-Requests': '1'
-                    }
-                });
-                const html = pageRes.data || '';
-                const ogMatch = html.match(/<meta\s+property=["']og:image["']\s+content=["']([^"']+)["']/i) ||
-                                html.match(/<meta\s+content=["']([^"']+)["']\s+property=["']og:image["']/i) ||
-                                html.match(/<meta\s+name=["']twitter:image["']\s+content=["']([^"']+)["']/i) ||
-                                html.match(/<meta\s+property=["']og:video["']\s+content=["']([^"']+)["']/i);
-                if (ogMatch && ogMatch[1]) {
-                    targetUrl = ogMatch[1].replace(/&amp;/g, '&');
-                    logger.info(`[Proxy-Media] Resolved OG image: ${targetUrl}`);
-                } else {
-                    return sendPlatformSvgPlaceholder(res, rawUrl);
-                }
-            } catch (pageErr: any) {
-                logger.warn(`[Proxy-Media] OG resolution page fetch failed for ${rawUrl}: ${pageErr.message}`);
-                return sendPlatformSvgPlaceholder(res, rawUrl);
-            }
+        // If targetUrl is an HTML webpage rather than a direct image/media file, immediately serve the fast SVG placeholder
+        // to avoid blocking the server with hanging external webpage scrapes.
+        if (!isDirectMedia && !targetUrl.includes('.mp4')) {
+            return sendPlatformSvgPlaceholder(res, rawUrl);
         }
 
         let referer = 'https://www.google.com/';
@@ -442,7 +421,7 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
             url: targetUrl,
             responseType: 'stream',
             headers: headers,
-            timeout: 10000,
+            timeout: 5000,
             validateStatus: (status) => status >= 200 && status < 400
         });
 
@@ -453,11 +432,15 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
         }
 
         res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Cache-Control', 'no-cache, max-age=0, must-revalidate');
+        res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+        res.setHeader('Cache-Control', 'public, max-age=86400');
 
         for (const [key, value] of Object.entries(response.headers)) {
             const lowerKey = key.toLowerCase();
-            if (lowerKey !== 'transfer-encoding' && lowerKey !== 'access-control-allow-origin' && lowerKey !== 'content-encoding' && lowerKey !== 'cache-control') {
+            if (lowerKey !== 'transfer-encoding' && lowerKey !== 'access-control-allow-origin' &&
+                lowerKey !== 'content-encoding' && lowerKey !== 'cache-control' &&
+                lowerKey !== 'content-security-policy' && lowerKey !== 'cross-origin-resource-policy' &&
+                lowerKey !== 'cross-origin-opener-policy' && lowerKey !== 'x-frame-options') {
                 res.set(key, value as string);
             }
         }
@@ -1316,51 +1299,6 @@ app.get("/api/social-feed", async (request, response) => {
         post.post_url = rawLink;
         post.link = rawLink;
         filteredFeed.push(post);
-      }
-    }
-
-    // Dynamic Meta Page Plugin Stream for Competitor Facebook Feeds
-    const COMPETITOR_FACEBOOK_PAGES: Record<string, string> = {
-      "isk bearings industries": "https://www.facebook.com/iskbearingsindustries/",
-      "delta bearing co": "https://www.facebook.com/deltabearings/",
-      "rhd bearings": "https://www.facebook.com/rhdbearings/",
-      "usa bearings & belts": "https://www.facebook.com/people/USA-Bearings-Belts/61554974161629/",
-      "scheerer bearing corp. | corporate office": "https://www.facebook.com/ScheererBearing/",
-      "scheerer bearing corp.": "https://www.facebook.com/ScheererBearing/",
-      "koyo bearings usa, llc.": "https://www.facebook.com/JTEKTNAMERICA/",
-      "koyo bearings usa": "https://www.facebook.com/JTEKTNAMERICA/",
-      "marc bearings pvt. ltd.": "https://www.facebook.com/profile.php?id=100008079918650",
-      "findling wälzlager gmbh": "https://www.facebook.com/findlingwaelzlager/",
-      "findling walzlager gmbh": "https://www.facebook.com/findlingwaelzlager/"
-    };
-
-    const compObjects = Array.isArray(memory.competitors) ? memory.competitors : [];
-    const fbPromises = compObjects.map(async (cObj: any, idx: number) => {
-      const competitor = cObj as CompetitorProfile & { company?: string; facebook?: string };
-      const compName = typeof cObj === "string" ? cObj : (competitor.name || competitor.company || `Competitor ${idx + 1}`);
-      const compKey = compName.toLowerCase().trim();
-      let officialFbUrl = COMPETITOR_FACEBOOK_PAGES[compKey] || (typeof cObj === "object" ? (competitor.socials?.facebook || competitor.facebook) : null);
-      if (!officialFbUrl || !officialFbUrl.includes("facebook.com")) {
-        const slug = compName.toLowerCase().replace(/[^a-z0-9]+/g, "");
-        officialFbUrl = `https://www.facebook.com/${slug}/`;
-      }
-      try {
-        return await fetchMetaPagePluginPosts(officialFbUrl, compName);
-      } catch {
-        return [];
-      }
-    });
-
-    const allFbResults = await Promise.all(fbPromises);
-    console.log("[SERVER SOCIAL FEED] FB RESULTS COUNT:", allFbResults.flat().length);
-    for (const pluginPosts of allFbResults) {
-      for (const p of pluginPosts) {
-        const normLink = String(p.link || "").toLowerCase().split("?")[0].split("#")[0].replace(/\/+$/, "");
-        const dKey = `facebook_${p.company.toLowerCase().trim()}_${normLink}`;
-        if (!seenUrls.has(dKey)) {
-          seenUrls.add(dKey);
-          filteredFeed.push(p);
-        }
       }
     }
 

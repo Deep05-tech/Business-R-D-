@@ -218,7 +218,8 @@ export class SocialExtractorAgent {
                                   lowerUrl.includes("pfbid") || 
                                   Boolean(lowerUrl.match(/\/posts\/[a-z0-9_-]+/i)) ||
                                   Boolean(lowerUrl.match(/\/photos\/[a-z0-9_-]+/i)) ||
-                                  Boolean(lowerUrl.match(/\/photo\/?\?/i));
+                                  Boolean(lowerUrl.match(/\/photo\/?\?/i)) ||
+                                  Boolean(lowerUrl.match(/\/videos?\/[a-z0-9._-]+/i));
             if (!isFbSinglePost) return null;
             cleanPostUrl = postUrl.split('&__cft__')[0].split('&__tn__')[0].split('#')[0].replace(/\/+$/, '');
         }
@@ -267,21 +268,32 @@ export class SocialExtractorAgent {
 
         // Entity mismatch guard: Verify handle or domain matching against target profileUrl / company
         const targetCompName = String(post.company || post.competitorName || "").trim().toLowerCase();
-        const cleanCompKey = targetCompName.replace(/[^a-z0-9]/g, '');
-        const hasCompMatch = cleanCompKey.length >= 3 && (lowerCap.includes(targetCompName) || lowerUrl.includes(cleanCompKey));
+        const baseBrandName = targetCompName
+            .replace(/\b(pvt\.?\s*ltd\.?|private\s+limited|ltd\.?|limited|inc\.?|incorporated|llc|corp\.?|corporation|co\.?|gmbh)\b/gi, '')
+            .trim();
+        const cleanCompKey = baseBrandName.replace(/[^a-z0-9]/g, '');
+        
+        // Check if brand words match in caption or URL (require at least 2 distinct words for multi-word brands)
+        const brandWords = baseBrandName.split(/\s+/).filter(w => w.length > 2);
+        const matchedWords = brandWords.filter(w => lowerCap.includes(w) || lowerUrl.includes(w));
+        const hasWordMatch = brandWords.length >= 2 ? (matchedWords.length >= 2) : (matchedWords.length >= 1);
+        const hasCompMatch = (cleanCompKey.length >= 3 && (lowerCap.includes(baseBrandName) || lowerUrl.includes(cleanCompKey))) || hasWordMatch;
 
-        if (profileUrl && !hasCompMatch) {
-            const targetHandleMatch = profileUrl.match(/(?:instagram\.com|facebook\.com|linkedin\.com\/company|youtube\.com\/@|\/channel\/)\/([a-zA-Z0-9._-]+)/i);
+        if (profileUrl) {
+            const targetHandleMatch = profileUrl.match(/(?:instagram\.com|facebook\.com|linkedin\.com\/(?:company|in)|youtube\.com\/@|\/channel\/)\/([a-zA-Z0-9._-]+)/i);
             if (targetHandleMatch && targetHandleMatch[1]) {
                 const targetHandle = targetHandleMatch[1].toLowerCase().replace(/[-_.]/g, '');
                 const candHandleMatch = lowerUrl.match(/(?:instagram\.com|facebook\.com|linkedin\.com\/(?:company|in|posts)|youtube\.com\/@|\/channel\/)\/([a-zA-Z0-9._-]+)/i);
                 if (candHandleMatch && candHandleMatch[1]) {
                     const candHandle = candHandleMatch[1].toLowerCase().replace(/[-_.]/g, '');
-                    if (targetHandle.length >= 4 && !candHandle.includes(targetHandle) && !targetHandle.includes(candHandle)) {
+                    const ROUTE_KEYWORDS = new Set(['p', 'reel', 'reels', 'share', 'posts', 'videos', 'watch', 'photo', 'photos', 'permalink', 'story']);
+                    if (!ROUTE_KEYWORDS.has(candHandle) && targetHandle.length >= 4 && !candHandle.includes(targetHandle) && !targetHandle.includes(candHandle)) {
                         return null;
                     }
                 }
             }
+        } else if (!hasCompMatch) {
+            return null;
         }
 
         if (targetCompName.includes("bearings")) {
@@ -508,16 +520,15 @@ export class SocialExtractorAgent {
                         seenShortcodes.add(scMatch[1]);
                         const isReel = m.includes('/reel/');
                         const postLink = `https://www.instagram.com/${isReel ? 'reel' : 'p'}/${scMatch[1]}/`;
-                        const uncroppedMediaUrl = `https://www.instagram.com/p/${scMatch[1]}/media/?size=l`;
                         posts.push({
                             id: `ig_${scMatch[1]}`,
                             company: cleanCompName,
                             platform: "Instagram",
                             post_url: postLink,
-                            caption: `${cleanCompName} shared a new ${isReel ? 'reel' : 'post'} update on Instagram.`,
-                            media_type: isReel ? "Video" : "Image",
-                            thumbnail: uncroppedMediaUrl,
-                            media_url: uncroppedMediaUrl,
+                            caption: `${cleanCompName} on Instagram: Official ${isReel ? 'Reel' : 'Post'}.`,
+                            media_type: isReel ? "Video" : "Text",
+                            thumbnail: "",
+                            media_url: postLink,
                             date: new Date().toISOString().split('T')[0],
                             engagement: { likes: 0, comments: 0 }
                         });
@@ -607,74 +618,121 @@ export class SocialExtractorAgent {
             }
         }
 
-        if (posts.length < maxPosts && cleanCompName) {
+        const hasOnlyGenericPosts = posts.length === 0 || posts.every(p => (p.caption || '').includes('on Instagram:') || (p.caption || '').includes('shared a new'));
+        if ((posts.length < maxPosts || hasOnlyGenericPosts) && cleanCompName) {
             try {
-                let query = "";
-                if (platform === "Instagram") {
-                    query = `"${cleanCompName}" site:instagram.com/p/ OR site:instagram.com/reel/ OR site:instagram.com`;
-                } else if (platform === "Facebook") {
-                    query = `"${cleanCompName}" site:facebook.com`;
-                } else if (platform === "LinkedIn") {
-                    query = `"${cleanCompName}" site:linkedin.com/posts/ OR site:linkedin.com/feed/update/ OR site:linkedin.com/company/`;
-                } else if (platform === "YouTube") {
-                    query = `"${cleanCompName}" site:youtube.com/watch OR site:youtube.com/@`;
-                }
+                const searchBrand = cleanCompName
+                    .replace(/\b(pvt\.?\s*ltd\.?|private\s+limited|ltd\.?|limited|inc\.?|incorporated|llc|corp\.?|corporation|co\.?|gmbh)\b/gi, '')
+                    .replace(/[^\w\s]/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim() || cleanCompName;
 
-                if (query) {
-                    let results: any[] = [];
-                    // 1. Try FreeSearchEngine (DuckDuckGo)
+                let results: any[] = [];
+
+                // 1. Try Tavily Search API if configured (fast, accurate, direct social media results)
+                if (process.env.TAVILY_API_KEY) {
                     try {
-                        const ddg = new FreeSearchEngine({ maxResults: 15 });
-                        const rawDDG = await ddg.invoke({ query });
-                        results = JSON.parse(rawDDG || "[]");
-                    } catch {}
+                        const targetDomains: Record<string, string[]> = {
+                            "Instagram": ["instagram.com"],
+                            "Facebook": ["facebook.com"],
+                            "LinkedIn": ["linkedin.com"],
+                            "YouTube": ["youtube.com"]
+                        };
+                        const handleMatch = profileUrl ? profileUrl.match(/(?:facebook\.com|instagram\.com|linkedin\.com\/(?:company|in)|youtube\.com\/@|\/channel\/)\/([a-zA-Z0-9._-]+)/i) : null;
+                        const handle = handleMatch && !['pages', 'people', 'groups', 'p', 'reel'].includes(handleMatch[1].toLowerCase()) ? handleMatch[1] : '';
+                        const tavilyQuery = handle ? `"${handle}" ${platform.toLowerCase()}` : `"${searchBrand}" ${platform.toLowerCase()}`;
+                        const tavilyRes = await axios.post("https://api.tavily.com/search", {
+                            api_key: process.env.TAVILY_API_KEY,
+                            query: tavilyQuery,
+                            search_depth: "basic",
+                            include_domains: targetDomains[platform] || [],
+                            max_results: maxPosts * 2
+                        }, { timeout: 8000 });
 
-                    // 2. Fallback to BingRssSearchEngine if DDG returned no results
-                    if (!results || results.length === 0) {
-                        try {
-                            const bing = new BingRssSearchEngine({ maxResults: 15 });
-                            const rawBing = await bing.invoke({ query });
-                            results = JSON.parse(rawBing || "[]");
-                        } catch {}
-                    }
-
-                    for (const r of results) {
-                        const url = (r.url || "").trim();
-                        let content = (r.content || r.title || "").trim();
-
-                        if (platform === "Instagram") {
-                            content = content.replace(/^.*?\bon Instagram:\s*["“]?/i, '').replace(/["”]$/, '').trim();
-                        } else if (platform === "Facebook") {
-                            content = content.replace(/^.*?\bon Facebook:\s*["“]?/i, '').replace(/["”]$/, '').trim();
-                        }
-
-                        if (content && url) {
-                            let thumb = "";
-                            let med = url;
-                            if (platform === "YouTube" && url.includes('v=')) {
-                                thumb = `https://img.youtube.com/vi/${url.split('v=')[1].split('&')[0]}/hqdefault.jpg`;
-                                med = thumb;
-                            } else if (platform === "Instagram") {
-                                const scMatch = url.match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/);
-                                if (scMatch && scMatch[1]) {
-                                    thumb = `https://www.instagram.com/p/${scMatch[1]}/media/?size=l`;
-                                    med = thumb;
+                        if (tavilyRes.data && Array.isArray(tavilyRes.data.results)) {
+                            for (const r of tavilyRes.data.results) {
+                                const u = (r.url || "").trim();
+                                let snippet = (r.content || r.title || "").trim();
+                                if (u && snippet && !u.includes("/accounts/login") && !u.includes("/login/")) {
+                                    results.push({ url: u, title: r.title || "", content: snippet });
                                 }
                             }
-                            posts.push({
-                                id: `${platform.toLowerCase()}_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
-                                company: cleanCompName,
-                                platform: platform as any,
-                                post_url: url,
-                                caption: content,
-                                media_type: platform === "YouTube" || url.includes('/video') || url.includes('/reel') ? "Video" : "Image",
-                                thumbnail: thumb,
-                                media_url: med,
-                                date: new Date().toISOString().split('T')[0],
-                                engagement: { likes: 0, comments: 0 }
-                            });
-                            if (posts.length >= maxPosts * 2) break;
                         }
+                    } catch (tavErr: any) {
+                        console.log(`[SocialExtractorAgent] Tavily search fallback for ${platform}: ${tavErr.message}`);
+                    }
+                }
+
+                // 2. Fallback to FreeSearchEngine (DuckDuckGo) if needed
+                if (!results || results.length === 0) {
+                    let query = "";
+                    if (platform === "Instagram") {
+                        query = `"${searchBrand}" site:instagram.com`;
+                    } else if (platform === "Facebook") {
+                        query = `"${searchBrand}" site:facebook.com`;
+                    } else if (platform === "LinkedIn") {
+                        query = `"${searchBrand}" site:linkedin.com/posts/ OR site:linkedin.com/feed/update/ OR site:linkedin.com/company/`;
+                    } else if (platform === "YouTube") {
+                        query = `"${searchBrand}" site:youtube.com/watch OR site:youtube.com/@`;
+                    }
+
+                    if (query) {
+                        try {
+                            const ddg = new FreeSearchEngine({ maxResults: 15 });
+                            const rawDDG = await ddg.invoke({ query });
+                            results = JSON.parse(rawDDG || "[]");
+                        } catch {}
+
+                        // 3. Fallback to BingRssSearchEngine if DDG returned no results
+                        if (!results || results.length === 0) {
+                            try {
+                                const bing = new BingRssSearchEngine({ maxResults: 15 });
+                                const rawBing = await bing.invoke({ query });
+                                results = JSON.parse(rawBing || "[]");
+                            } catch {}
+                        }
+                    }
+                }
+
+                for (const r of results) {
+                    const url = (r.url || "").trim();
+                    let content = (r.content || r.title || "").trim();
+
+                    if (platform === "Instagram") {
+                        content = content.replace(/^.*?\bon Instagram:\s*["“]?/i, '').replace(/["”]$/, '').replace(/\s+/g, ' ').trim();
+                    } else if (platform === "Facebook") {
+                        content = content.replace(/^.*?\bon Facebook:\s*["“]?/i, '').replace(/["”]$/, '').replace(/\s+/g, ' ').trim();
+                    }
+
+                    if (content && url) {
+                        let thumb = "";
+                        let med = url;
+                        if (platform === "YouTube") {
+                            const ytMatch = url.match(/(?:v=|\/vi\/|shorts\/)([\w-]{11})/);
+                            if (ytMatch && ytMatch[1]) {
+                                thumb = `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
+                                med = thumb;
+                            }
+                        }
+
+                        // If earlier we only had generic placeholder posts, replace them with rich search posts
+                        if (hasOnlyGenericPosts && posts.length > 0 && posts.every(p => (p.caption || '').includes('on Instagram:'))) {
+                            posts.length = 0;
+                        }
+
+                        posts.push({
+                            id: `${platform.toLowerCase()}_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+                            company: cleanCompName,
+                            platform: platform as any,
+                            post_url: url,
+                            caption: content,
+                            media_type: platform === "YouTube" || url.includes('/video') || url.includes('/reel') ? "Video" : (thumb ? "Image" : "Text"),
+                            thumbnail: thumb,
+                            media_url: med,
+                            date: new Date().toISOString().split('T')[0],
+                            engagement: { likes: 0, comments: 0 }
+                        });
+                        if (posts.length >= maxPosts * 2) break;
                     }
                 }
             } catch (e: any) {

@@ -145,8 +145,9 @@ export async function fetchMetaPagePluginPosts(fbPageUrl: string, compName: stri
 }
 
 function createFallbackPost(fbPageUrl: string, compName: string, ogData: { title: string; description: string; image: string }): FacebookPost {
-  const caption = ogData.description || `${compName}: Official company Facebook profile update, products & manufacturing showcase.`;
+  const caption = ogData.description || `${compName}: Official Facebook profile and business update.`;
   const mediaUrl = ogData.image || "";
+  const mediaType: FacebookPost["mediaType"] = mediaUrl ? "Image" : "Text";
   return {
     id: `fb_plugin_${compName.toLowerCase().replace(/[^a-z0-9]+/g, "")}_main`,
     company: compName,
@@ -161,8 +162,8 @@ function createFallbackPost(fbPageUrl: string, compName: string, ogData: { title
     date: "Recent",
     mediaUrl,
     thumbnail: mediaUrl,
-    mediaType: "Image",
-    media_type: "Image",
+    mediaType,
+    media_type: mediaType,
     likes: "42",
     comments: "9"
   };

@@ -5,6 +5,7 @@ import { MemoryStore } from "../memory/memoryStore.js";
 import { knowledgeIndex } from "../memory/knowledgeIndex.js";
 import { BingRssSearchEngine } from "../utils/bingRssSearchEngine.js";
 import { CompetitorAgent } from "./competitorAgent.js";
+import axios from "axios";
 import pLimit from "p-limit";
 
 const logger = createLogger("CronAgent");
@@ -97,9 +98,31 @@ export class CronAgent {
     };
 
     const competitorResults = await Promise.all(targetCompetitors.map(comp => competitorLimit(async () => {
-      const cleanName = comp.name.trim();
+      const cleanName = comp.name
+        .replace(/\b(pvt\.?\s*ltd\.?|private\s+limited|ltd\.?|limited|inc\.?|incorporated|llc|corp\.?|corporation|co\.?|gmbh)\b/gi, '')
+        .replace(/[^\w\s]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim() || comp.name.trim();
 
       const searchSocialUrl = async (platform: string, searchSite: string): Promise<string | null> => {
+        if (process.env.TAVILY_API_KEY) {
+          try {
+            const domain = searchSite.split('/')[0];
+            const tavilyRes = await axios.post("https://api.tavily.com/search", {
+              api_key: process.env.TAVILY_API_KEY,
+              query: `${cleanName} ${platform.toLowerCase()} official profile`,
+              search_depth: "basic",
+              include_domains: [domain],
+              max_results: 5
+            }, { timeout: 6000 });
+            if (tavilyRes.data && Array.isArray(tavilyRes.data.results)) {
+              for (const r of tavilyRes.data.results) {
+                const u = (r.url || "").trim();
+                if (isValidProfileUrl(u, platform)) return u;
+              }
+            }
+          } catch {}
+        }
         try {
           const engine = new BingRssSearchEngine({ maxResults: 5 });
           const query = `"${cleanName}" site:${searchSite}`;
@@ -118,34 +141,22 @@ export class CronAgent {
       let ytUrl = (comp as any).socials?.youtube;
       if (!ytUrl || !isValidProfileUrl(ytUrl, 'YouTube')) {
         ytUrl = await searchSocialUrl('YouTube', 'youtube.com');
-        if (!ytUrl) ytUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(comp.name)}`;
+        if (!ytUrl) ytUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(cleanName)}`;
       }
 
       let igUrl = (comp as any).socials?.instagram;
       if (!igUrl || !isValidProfileUrl(igUrl, 'Instagram')) {
         igUrl = await searchSocialUrl('Instagram', 'instagram.com');
-        if (!igUrl) {
-          const cleanHandle = comp.name.toLowerCase().replace(/[^a-z0-9]/g, '');
-          if (cleanHandle.length > 2) igUrl = `https://www.instagram.com/${cleanHandle}/`;
-        }
       }
 
       let fbUrl = (comp as any).socials?.facebook;
       if (!fbUrl || !isValidProfileUrl(fbUrl, 'Facebook')) {
         fbUrl = await searchSocialUrl('Facebook', 'facebook.com');
-        if (!fbUrl) {
-          const cleanHandle = comp.name.toLowerCase().replace(/[^a-z0-9]/g, '');
-          if (cleanHandle.length > 2) fbUrl = `https://www.facebook.com/${cleanHandle}/`;
-        }
       }
 
       let liUrl = (comp as any).socials?.linkedin;
       if (!liUrl || !isValidProfileUrl(liUrl, 'LinkedIn')) {
         liUrl = await searchSocialUrl('LinkedIn', 'linkedin.com/company');
-        if (!liUrl) {
-          const cleanHandle = comp.name.toLowerCase().replace(/[^a-z0-9]/g, '');
-          if (cleanHandle.length > 2) liUrl = `https://www.linkedin.com/company/${cleanHandle}/`;
-        }
       }
 
       // Update socials object on competitor
