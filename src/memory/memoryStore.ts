@@ -49,9 +49,13 @@ export class MemoryStore {
     const domainName = new URL(memory.input.websiteUrl).hostname.replace(/^www\./, "").replace(/\./g, "_");
     const fileName = `${cleanName}_${domainName}`;
     const filePath = join(this.directory, `${fileName}.json`);
-    
-    await writeFile(filePath, `${JSON.stringify(memory, null, 2)}\n`, "utf8");
+    const jsonContent = `${JSON.stringify(memory, null, 2)}\n`;
+    await writeFile(filePath, jsonContent, "utf8");
     logger.success(`Saved local memory for ${memory.input.websiteUrl} to ${filePath}`);
+
+    // 3. GitHub Cloud Persistence: Auto-commit directly into GitHub data/memory/ if GITHUB_TOKEN configured
+    this.syncToGitHub(`${fileName}.json`, jsonContent).catch(() => {});
+
     return filePath;
   }
 
@@ -163,6 +167,50 @@ export class MemoryStore {
       // directory may not exist
     }
 
+    // 3. Sync from GitHub repository data/memory/ if GITHUB_TOKEN or GH_TOKEN is configured
+    const ghToken = (process.env.GITHUB_TOKEN || process.env.GH_TOKEN || "").trim();
+    if (ghToken) {
+      try {
+        const repo = (process.env.GITHUB_REPOSITORY || "Deep05-tech/Business-R-D-").trim();
+        const branch = (process.env.GITHUB_BRANCH || "main").trim();
+        const listRes = await fetch(`https://api.github.com/repos/${repo}/contents/data/memory?ref=${branch}`, {
+          headers: {
+            "Authorization": `Bearer ${ghToken}`,
+            "Accept": "application/vnd.github.v3+json",
+            "User-Agent": "Business-RD-Agent-System"
+          }
+        });
+        if (listRes.ok) {
+          const items = (await listRes.json()) as any[];
+          if (Array.isArray(items)) {
+            for (const item of items) {
+              if (item.name?.endsWith(".json") && item.download_url) {
+                const localFilePath = join(this.directory, item.name);
+                try {
+                  const contentRes = await fetch(item.download_url, {
+                    headers: { "Authorization": `Bearer ${ghToken}` }
+                  });
+                  if (contentRes.ok) {
+                    const content = await contentRes.text();
+                    await writeFile(localFilePath, content, "utf8");
+                    const parsed = JSON.parse(content) as StructuredMemory;
+                    if (parsed.input?.websiteUrl) {
+                      const siteKey = parsed.input.websiteUrl.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+                      resultsMap.set(siteKey, parsed);
+                    }
+                  }
+                } catch {
+                  // ignore individual download error
+                }
+              }
+            }
+          }
+        }
+      } catch (err: any) {
+        logger.warn(`GitHub pull synchronization failed: ${err.message}`);
+      }
+    }
+
     return Array.from(resultsMap.values());
   }
 
@@ -180,7 +228,7 @@ export class MemoryStore {
       logger.warn(`Failed to delete memory from MongoDB: ${err.message}`);
     }
 
-    // 2. Delete from local filesystem
+    // 2. Delete from local filesystem and GitHub
     try {
       const files = await readdir(this.directory);
       for (const file of files) {
@@ -193,6 +241,7 @@ export class MemoryStore {
              await unlink(filePath);
              deleted = true;
              logger.success(`Deleted local memory file: ${file}`);
+             this.deleteFromGitHub(file).catch(() => {});
           }
         } catch {
           // ignore read/parse errors for other files
@@ -202,6 +251,97 @@ export class MemoryStore {
       // directory might not exist
     }
     return deleted;
+  }
+
+  private async syncToGitHub(fileName: string, fileContent: string): Promise<void> {
+    const token = (process.env.GITHUB_TOKEN || process.env.GH_TOKEN || "").trim();
+    if (!token) return;
+
+    const repo = (process.env.GITHUB_REPOSITORY || "Deep05-tech/Business-R-D-").trim();
+    const branch = (process.env.GITHUB_BRANCH || "main").trim();
+    const path = `data/memory/${fileName}`;
+    const url = `https://api.github.com/repos/${repo}/contents/${path}`;
+
+    try {
+      let sha: string | undefined;
+      const getRes = await fetch(`${url}?ref=${branch}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/vnd.github.v3+json",
+          "User-Agent": "Business-RD-Agent-System"
+        }
+      });
+      if (getRes.status === 200) {
+        const existingData = (await getRes.json()) as any;
+        sha = existingData.sha;
+      }
+
+      const putRes = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/vnd.github.v3+json",
+          "Content-Type": "application/json",
+          "User-Agent": "Business-RD-Agent-System"
+        },
+        body: JSON.stringify({
+          message: `feat(memory): auto-persist ${fileName} across deployments [skip ci]`,
+          content: Buffer.from(fileContent, "utf8").toString("base64"),
+          branch,
+          ...(sha ? { sha } : {})
+        })
+      });
+
+      if (putRes.ok) {
+        logger.success(`Synchronized ${fileName} directly to GitHub (${repo}) data/memory/ for permanent persistence across deployments!`);
+      } else {
+        const errText = await putRes.text();
+        logger.warn(`GitHub synchronization returned status ${putRes.status}: ${errText.slice(0, 150)}`);
+      }
+    } catch (err: any) {
+      logger.warn(`GitHub synchronization failed: ${err.message}`);
+    }
+  }
+
+  private async deleteFromGitHub(fileName: string): Promise<void> {
+    const token = (process.env.GITHUB_TOKEN || process.env.GH_TOKEN || "").trim();
+    if (!token) return;
+
+    const repo = (process.env.GITHUB_REPOSITORY || "Deep05-tech/Business-R-D-").trim();
+    const branch = (process.env.GITHUB_BRANCH || "main").trim();
+    const path = `data/memory/${fileName}`;
+    const url = `https://api.github.com/repos/${repo}/contents/${path}`;
+
+    try {
+      const getRes = await fetch(`${url}?ref=${branch}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/vnd.github.v3+json",
+          "User-Agent": "Business-RD-Agent-System"
+        }
+      });
+      if (getRes.status === 200) {
+        const existingData = (await getRes.json()) as any;
+        if (existingData.sha) {
+          await fetch(url, {
+            method: "DELETE",
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Accept": "application/vnd.github.v3+json",
+              "Content-Type": "application/json",
+              "User-Agent": "Business-RD-Agent-System"
+            },
+            body: JSON.stringify({
+              message: `chore(memory): delete ${fileName} [skip ci]`,
+              sha: existingData.sha,
+              branch
+            })
+          });
+        }
+      }
+    } catch (err: any) {
+      logger.warn(`GitHub delete synchronization failed: ${err.message}`);
+    }
   }
 
   // ---------------------------------------------------------------------------
