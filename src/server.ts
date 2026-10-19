@@ -386,7 +386,7 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
                               lowerTarget.includes('scontent') || lowerTarget.includes('fbcdn') ||
                               lowerTarget.includes('fbsbx') || lowerTarget.includes('licdn') ||
                               lowerTarget.includes('cdninstagram') || lowerTarget.includes('img.youtube.com') ||
-                              lowerTarget.includes('googleusercontent') ||
+                              lowerTarget.includes('googleusercontent') || lowerTarget.includes('lookaside') ||
                               lowerTarget.includes('ytimg') || lowerTarget.includes('unsplash.com');
 
         // If targetUrl is an HTML webpage rather than a direct image/media file, immediately serve the fast SVG placeholder
@@ -395,22 +395,27 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
             return sendPlatformSvgPlaceholder(res, rawUrl);
         }
 
-        const ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
-        let referer = 'https://www.google.com/';
+        let ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
+        let referer = '';
 
-        if (lowerTarget.includes('instagram') || lowerTarget.includes('cdninstagram')) {
-            referer = 'https://www.instagram.com/';
-        } else if (lowerTarget.includes('facebook') || lowerTarget.includes('fbcdn') || lowerTarget.includes('fbsbx')) {
+        if (lowerTarget.includes('lookaside.fbsbx.com') || lowerTarget.includes('facebook.com/')) {
+            ua = 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)';
+            referer = 'https://www.facebook.com/';
+        } else if (lowerTarget.includes('instagram') || lowerTarget.includes('cdninstagram')) {
+            referer = '';
+        } else if (lowerTarget.includes('fbcdn')) {
             referer = 'https://www.facebook.com/';
         } else if (lowerTarget.includes('linkedin') || lowerTarget.includes('licdn')) {
             referer = 'https://www.linkedin.com/';
+        } else {
+            referer = 'https://www.google.com/';
         }
 
         const isVideoReq = lowerTarget.match(/\.(mp4|webm|ogg)(\?|$)/i) || lowerTarget.includes('/playlist/vid/') || lowerTarget.includes('video.licdn.com');
         const headers: Record<string, string> = {
             'User-Agent': ua,
             'Accept': isVideoReq ? 'video/webm,video/mp4,video/*;q=0.9,*/*;q=0.8' : 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
-            'Referer': referer
+            ...(referer ? { 'Referer': referer } : {})
         };
 
         if (req.headers.range) {

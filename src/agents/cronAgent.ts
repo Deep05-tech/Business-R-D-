@@ -100,7 +100,7 @@ export class CronAgent {
           return lower.includes('facebook.com/');
         }
         if (platform === 'YouTube') {
-          return lower.includes('youtube.com/') || lower.includes('youtu.be/');
+          return (lower.includes('youtube.com/') || lower.includes('youtu.be/')) && !lower.includes('/results?');
         }
         return true;
       } catch {
@@ -152,7 +152,6 @@ export class CronAgent {
       let ytUrl = (comp as any).socials?.youtube;
       if (!ytUrl || !isValidProfileUrl(ytUrl, 'YouTube')) {
         ytUrl = await searchSocialUrl('YouTube', 'youtube.com');
-        if (!ytUrl) ytUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(cleanName)}`;
       }
 
       let igUrl = (comp as any).socials?.instagram;

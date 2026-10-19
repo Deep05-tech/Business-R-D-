@@ -2273,6 +2273,7 @@ async function loadFeedUI() {
 
             // Accept media CDN domains or files with image/video extensions
             if (lower.includes('cdninstagram') || lower.includes('fbcdn') || lower.includes('fbsbx') ||
+                lower.includes('lookaside') ||
                 lower.includes('media.licdn.com') || lower.includes('dms.licdn.com') || lower.includes('licdn.com/dms') ||
                 lower.includes('ytimg') || lower.includes('googleusercontent.com') || lower.includes('unsplash.com') ||
                 lower.match(/\.(jpeg|jpg|png|gif|webp|svg|mp4)(\?|$)/i)) {
@@ -2301,7 +2302,7 @@ async function loadFeedUI() {
         } catch(e) {
           return false;
         }
-        return lower.includes('fbcdn') || lower.includes('fbsbx') || lower.includes('cdninstagram') ||
+        return lower.includes('fbcdn') || lower.includes('fbsbx') || lower.includes('lookaside') || lower.includes('cdninstagram') ||
                lower.includes('media.licdn.com') || lower.includes('dms.licdn.com') || lower.includes('licdn.com/dms') ||
                lower.includes('ytimg') || lower.includes('googleusercontent') || !!lower.match(/\.(jpeg|jpg|png|gif|webp|svg)(\?|$)/i) || lower.includes('unsplash');
       };

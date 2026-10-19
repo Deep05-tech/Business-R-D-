@@ -177,8 +177,76 @@ export class SocialExtractorAgent {
         return null;
     }
 
+    public async verifyYouTubeVideo(videoId: string, compName?: string): Promise<{ valid: boolean; title: string; author: string; thumbnail: string; channelUrl: string } | null> {
+        if (!videoId || videoId.length !== 11) return null;
+        try {
+            const res = await axios.get(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`, {
+                timeout: 5000
+            });
+            const data = res.data;
+            if (!data || !data.title || !data.author_name) return null;
+
+            const author = String(data.author_name).trim();
+            const title = String(data.title).trim();
+            const cleanAuthor = author.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+            if (!compName) {
+                return {
+                    valid: true,
+                    title,
+                    author,
+                    thumbnail: data.thumbnail_url || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+                    channelUrl: data.author_url || ''
+                };
+            }
+
+            const cleanComp = compName
+                .toLowerCase()
+                .replace(/\b(pvt\.?\s*ltd\.?|private\s+limited|ltd\.?|limited|inc\.?|incorporated|llc|corp\.?|corporation|co\.?|gmbh)\b/gi, '')
+                .replace(/[^a-z0-9]/g, '');
+
+            const STOPWORDS = new Set(['agency', 'india', 'digital', 'marketing', 'media', 'solutions', 'online', 'services', 'pvt', 'ltd', 'inc', 'llc', 'corp', 'the', 'and', 'pr', 'group', 'company', 'channel', 'official', 'in', 'of', 'for', 'by', 'at', 'on', 'with', 'best', 'top', 'new', 'no', '1', 'to', 'from', 'a', 'an']);
+
+            const authorLower = author.toLowerCase();
+            const authorTokens = authorLower
+                .split(/[^a-z0-9]+/)
+                .filter(t => t.length >= 3 && !STOPWORDS.has(t));
+
+            const compTokens = compName
+                .toLowerCase()
+                .split(/[^a-z0-9]+/)
+                .filter(t => t.length >= 3 && !STOPWORDS.has(t));
+
+            const coreComp = compTokens.join('');
+            const coreAuthor = authorTokens.join('');
+
+            const hasCoreMatch = (coreComp.length >= 3 && (coreAuthor.includes(coreComp) || coreComp.includes(coreAuthor)));
+            const hasTokenMatch = compTokens.length > 0 && compTokens.some(t => authorTokens.includes(t) || cleanAuthor.includes(t));
+
+            // Strictly require author match; reject generic news broadcasters or unrelated third parties
+            const isBroadcaster = authorLower.includes('news') || authorLower.includes('nbc') || authorLower.includes('cnn') || authorLower.includes('bbc') || authorLower.includes('times');
+            const isMatch = (hasCoreMatch || hasTokenMatch) && !isBroadcaster;
+
+            if (!isMatch) {
+                console.log(`[SocialExtractorAgent] YouTube author mismatch: Author "${author}" does not match competitor "${compName}" for video ${videoId}. Discarding.`);
+                return null;
+            }
+
+            return {
+                valid: true,
+                title,
+                author,
+                thumbnail: data.thumbnail_url || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+                channelUrl: data.author_url || ''
+            };
+        } catch (e: any) {
+            return null;
+        }
+    }
+
     private validateSocialPost(post: any, platform: string, profileUrl: string): any | null {
         if (!post) return null;
+        if (post._invalidAuthor) return null;
 
         const postUrl = String(post.post_url || post.postUrl || "").trim();
         if (!postUrl || !postUrl.startsWith("http")) return null;
@@ -583,38 +651,73 @@ export class SocialExtractorAgent {
             }
         }
 
-        if (platform === "YouTube" && posts.length === 0) {
-            try {
-                const searchRes = await axios.get(`https://www.youtube.com/results?search_query=${encodeURIComponent(cleanCompName || profileUrl)}`, {
-                    headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' },
-                    timeout: 10000
-                });
-                const matches = searchRes.data.match(/"videoId":"([\w-]+)","thumbnail":\{"thumbnails":\[\{"url":"([^"]+)"/g);
-                if (matches) {
-                    const seenVids = new Set<string>();
-                    for (const m of matches) {
-                        const vidMatch = m.match(/"videoId":"([\w-]+)"/);
-                        if (vidMatch && !seenVids.has(vidMatch[1])) {
-                            seenVids.add(vidMatch[1]);
-                            const vId = vidMatch[1];
-                            posts.push({
-                                id: `yt_${vId}`,
-                                company: cleanCompName,
-                                platform: "YouTube",
-                                post_url: `https://www.youtube.com/watch?v=${vId}`,
-                                caption: `${cleanCompName} official video content`,
-                                media_type: "Video",
-                                thumbnail: `https://img.youtube.com/vi/${vId}/hqdefault.jpg`,
-                                media_url: `https://www.youtube.com/watch?v=${vId}`,
-                                date: new Date().toISOString().split('T')[0],
-                                engagement: { likes: 0, comments: 0 }
-                            });
-                            if (posts.length >= maxPosts) break;
+        if (platform === "YouTube") {
+            // 1. Direct channel scraping if profileUrl is provided
+            if (profileUrl && !profileUrl.includes('search_query')) {
+                try {
+                    let channelUrl = profileUrl.trim();
+                    if (!channelUrl.includes('/videos') && !channelUrl.includes('/watch') && !channelUrl.includes('search_query')) {
+                        channelUrl = `${channelUrl.replace(/\/+$/, '')}/videos`;
+                    }
+                    if (channelUrl.includes('v=')) {
+                        const vMatch = channelUrl.match(/v=([a-zA-Z0-9_-]{11})/);
+                        if (vMatch && vMatch[1]) {
+                            const verified = await this.verifyYouTubeVideo(vMatch[1], cleanCompName);
+                            if (verified) {
+                                posts.push({
+                                    id: `yt_${vMatch[1]}`,
+                                    company: cleanCompName,
+                                    platform: "YouTube",
+                                    post_url: `https://www.youtube.com/watch?v=${vMatch[1]}`,
+                                    caption: verified.title,
+                                    media_type: "Video",
+                                    thumbnail: verified.thumbnail,
+                                    media_url: verified.thumbnail,
+                                    date: new Date().toISOString().split('T')[0],
+                                    engagement: { likes: 0, comments: 0 }
+                                });
+                            }
+                        }
+                    } else {
+                        const chRes = await axios.get(channelUrl, {
+                            headers: {
+                                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                                'Accept-Language': 'en-US,en;q=0.9'
+                            },
+                            timeout: 8000
+                        }).catch(() => null);
+
+                        if (chRes && chRes.data) {
+                            const vidMatches = chRes.data.match(/"videoId":"([a-zA-Z0-9_-]{11})"/g) || [];
+                            const seenVids = new Set<string>();
+                            for (const m of vidMatches) {
+                                const vMatch = m.match(/"videoId":"([a-zA-Z0-9_-]{11})"/);
+                                if (vMatch && vMatch[1] && !seenVids.has(vMatch[1])) {
+                                    seenVids.add(vMatch[1]);
+                                    const vId = vMatch[1];
+                                    const verified = await this.verifyYouTubeVideo(vId, cleanCompName);
+                                    if (verified) {
+                                        posts.push({
+                                            id: `yt_${vId}`,
+                                            company: cleanCompName,
+                                            platform: "YouTube",
+                                            post_url: `https://www.youtube.com/watch?v=${vId}`,
+                                            caption: verified.title,
+                                            media_type: "Video",
+                                            thumbnail: verified.thumbnail,
+                                            media_url: verified.thumbnail,
+                                            date: new Date().toISOString().split('T')[0],
+                                            engagement: { likes: 0, comments: 0 }
+                                        });
+                                        if (posts.length >= maxPosts) break;
+                                    }
+                                }
+                            }
                         }
                     }
+                } catch (e: any) {
+                    console.log(`[SocialExtractorAgent] YouTube channel scrape error: ${e.message}`);
                 }
-            } catch (e: any) {
-                console.log(`[SocialExtractorAgent] YouTube HTTP fallback failed: ${e.message}`);
             }
         }
 
@@ -639,8 +742,19 @@ export class SocialExtractorAgent {
                             "YouTube": ["youtube.com"]
                         };
                         const handleMatch = profileUrl ? profileUrl.match(/(?:facebook\.com|instagram\.com|linkedin\.com\/(?:company|in)|youtube\.com\/@|\/channel\/)\/([a-zA-Z0-9._-]+)/i) : null;
-                        const handle = handleMatch && !['pages', 'people', 'groups', 'p', 'reel'].includes(handleMatch[1].toLowerCase()) ? handleMatch[1] : '';
-                        const tavilyQuery = handle ? `"${handle}" ${platform.toLowerCase()}` : `"${searchBrand}" ${platform.toLowerCase()}`;
+                        const handle = handleMatch && !['pages', 'people', 'groups', 'p', 'reel', 'watch', 'videos'].includes(handleMatch[1].toLowerCase()) ? handleMatch[1] : '';
+
+                        let tavilyQuery = "";
+                        if (platform === "Instagram") {
+                            tavilyQuery = handle ? `site:instagram.com/p/ OR site:instagram.com/reel/ "${handle}"` : `site:instagram.com/p/ OR site:instagram.com/reel/ "${searchBrand}"`;
+                        } else if (platform === "Facebook") {
+                            tavilyQuery = handle ? `site:facebook.com "${handle}"` : `site:facebook.com "${searchBrand}"`;
+                        } else if (platform === "LinkedIn") {
+                            tavilyQuery = handle ? `site:linkedin.com/posts/ "${handle}"` : `site:linkedin.com/posts/ "${searchBrand}"`;
+                        } else if (platform === "YouTube") {
+                            tavilyQuery = handle ? `site:youtube.com/watch "${handle}"` : `site:youtube.com/watch "${searchBrand}"`;
+                        }
+
                         const tavilyRes = await axios.post("https://api.tavily.com/search", {
                             api_key: process.env.TAVILY_API_KEY,
                             query: tavilyQuery,
@@ -704,14 +818,23 @@ export class SocialExtractorAgent {
                         content = content.replace(/^.*?\bon Facebook:\s*["“]?/i, '').replace(/["”]$/, '').replace(/\s+/g, ' ').trim();
                     }
 
-                    if (content && url) {
+                    if (url) {
                         let thumb = "";
                         let med = url;
+                        let vidTitle = content;
+
                         if (platform === "YouTube") {
                             const ytMatch = url.match(/(?:v=|\/vi\/|shorts\/)([\w-]{11})/);
                             if (ytMatch && ytMatch[1]) {
-                                thumb = `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
-                                med = thumb;
+                                const verified = await this.verifyYouTubeVideo(ytMatch[1], cleanCompName);
+                                if (!verified) {
+                                    continue;
+                                }
+                                thumb = verified.thumbnail;
+                                med = verified.thumbnail;
+                                vidTitle = verified.title;
+                            } else {
+                                continue;
                             }
                         }
 
@@ -725,7 +848,7 @@ export class SocialExtractorAgent {
                             company: cleanCompName,
                             platform: platform as any,
                             post_url: url,
-                            caption: content,
+                            caption: vidTitle || content,
                             media_type: platform === "YouTube" || url.includes('/video') || url.includes('/reel') ? "Video" : (thumb ? "Image" : "Text"),
                             thumbnail: thumb,
                             media_url: med,
@@ -757,39 +880,52 @@ export class SocialExtractorAgent {
         const enriched = await Promise.all(
             slice.map(p => this.enrichPostDetails(p, platform))
         );
-        return enriched;
+        return enriched.filter(p => !p._invalidAuthor);
     }
 
     private async enrichPostDetails(post: any, platform: string): Promise<any> {
         const postUrl = post.post_url || post.link || post.postUrl;
         if (!postUrl || !postUrl.startsWith('http')) return post;
 
-        if (post.caption && post.caption.length > 100 && post.thumbnail && post.thumbnail.startsWith('http')) {
+        if (platform === "YouTube") {
+            const ytMatch = postUrl.match(/(?:v=|\/vi\/|shorts\/)([\w-]{11})/);
+            if (ytMatch && ytMatch[1]) {
+                const verified = await this.verifyYouTubeVideo(ytMatch[1], post.company || post.competitorName);
+                if (verified) {
+                    post.caption = verified.title;
+                    post.content = verified.title;
+                    post.thumbnail = verified.thumbnail;
+                    post.thumbnail_url = verified.thumbnail;
+                    post.media_url = verified.thumbnail;
+                    post.mediaUrl = verified.thumbnail;
+                    post.mediaUrls = verified.thumbnail;
+                    post.media_type = "Video";
+                    post.mediaType = "Video";
+                } else {
+                    post._invalidAuthor = true;
+                }
+            }
             return post;
         }
 
         try {
-            const browserHeaders = {
+            const headers = (platform === 'Instagram' || platform === 'Facebook') ? {
+                'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.9'
+            } : {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-                'Accept-Language': 'en-US,en;q=0.9',
-                'Sec-Ch-Ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
-                'Sec-Ch-Ua-Mobile': '?0',
-                'Sec-Ch-Ua-Platform': '"Windows"',
-                'Sec-Fetch-Dest': 'document',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-Site': 'none',
-                'Sec-Fetch-User': '?1',
-                'Upgrade-Insecure-Requests': '1'
+                'Accept-Language': 'en-US,en;q=0.9'
             };
 
-            const res = await axios.get(postUrl, { headers: browserHeaders, timeout: 6000 }).catch(() => null);
+            const res = await axios.get(postUrl, { headers, timeout: 6000 }).catch(() => null);
             if (!res || !res.data) return post;
 
             const $ = cheerio.load(res.data);
-            const ogTitle = $("meta[property=\"og:title\"]").attr("content") || "";
-            const ogDesc = $("meta[property=\"og:description\"]").attr("content") || $("meta[name=\"description\"]").attr("content") || "";
-            const ogImg = $("meta[property=\"og:image\"]").attr("content") || $("meta[name=\"og:image\"]").attr("content") || "";
+            const ogTitle = $("meta[property=\"og:title\"]").attr("content") || $("meta[name=\"twitter:title\"]").attr("content") || "";
+            const ogDesc = $("meta[property=\"og:description\"]").attr("content") || $("meta[name=\"description\"]").attr("content") || $("meta[name=\"twitter:description\"]").attr("content") || "";
+            const ogImg = $("meta[property=\"og:image\"]").attr("content") || $("meta[name=\"og:image\"]").attr("content") || $("meta[name=\"twitter:image\"]").attr("content") || "";
 
             let extractedCaption = "";
             if (ogDesc) {
@@ -822,12 +958,25 @@ export class SocialExtractorAgent {
                 post.content = extractedCaption;
             }
 
-            if (ogImg && ogImg.startsWith("http") && !ogImg.includes("static/images") && !ogImg.includes("profile_pic")) {
+            const isAeroOrPlaceholder = !ogImg ||
+                ogImg.includes("static/images") ||
+                ogImg.includes("profile_pic") ||
+                ogImg.includes("profile_photo") ||
+                ogImg.includes("avatar") ||
+                ogImg.includes("static.licdn.com") ||
+                ogImg.includes("aero-v1") ||
+                ogImg.includes("c45fy346jw096z9pbphyyhdz7");
+
+            if (ogImg && ogImg.startsWith("http") && !isAeroOrPlaceholder) {
                 post.thumbnail = ogImg;
                 post.thumbnail_url = ogImg;
                 post.media_url = ogImg;
                 post.mediaUrl = ogImg;
                 post.mediaUrls = ogImg;
+                if (!post.media_type || post.media_type === "Text") {
+                    post.media_type = (postUrl.includes('/reel/') || postUrl.includes('/videos/') || postUrl.includes('/watch')) ? "Video" : "Image";
+                    post.mediaType = post.media_type;
+                }
             }
 
             const likeMatch = ogDesc.match(/([\d,kK]+)\s*likes/i);
