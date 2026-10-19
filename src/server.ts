@@ -1038,16 +1038,18 @@ app.post("/api/competitors-stream", async (request, response) => {
     memory.competitors = competitors;
     knowledgeIndex.add(memory);
 
+    // Persist to MongoDB, disk, and GitHub before concluding stream
+    try {
+      await memoryStore.save(memory);
+    } catch (saveErr: any) {
+      logger.warn(`Competitor persistence warning: ${saveErr.message}`);
+    }
+
     // Immediately notify the client and close the SSE stream so the dashboard loading finishes
     if (!response.writableEnded) {
       response.write(`data: ${JSON.stringify({ type: 'complete', competitors })}\n\n`);
       response.end();
     }
-
-    // Persist to MongoDB, disk, and GitHub once in background without blocking the HTTP completion
-    memoryStore.save(memory).catch((err: any) => {
-      logger.warn(`Background memory save error: ${err.message}`);
-    });
   } catch (err: any) {
     logger.error(`Competitor Stream error: ${err.message}`);
     if (!response.writableEnded) {
