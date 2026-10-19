@@ -51,7 +51,7 @@ export class PlacesApi {
 
     try {
       logger.debug(`Fetching Google Places for query: "${query}" (PageToken: ${!!pageToken})`);
-      const response = await axios.post<PlacesSearchResponse>(url, payload, { headers, timeout: 6000 });
+      const response = await axios.post<PlacesSearchResponse>(url, payload, { headers, timeout: 6000, signal: AbortSignal.timeout(6000) });
       return response.data;
     } catch (error: any) {
       const status = error?.response?.status;

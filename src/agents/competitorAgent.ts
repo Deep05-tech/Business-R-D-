@@ -32,7 +32,7 @@ const PLATFORM_PROVIDER_HANDLES = new Set([
 //   2. Minimum number of common products (deep scraped overlap).
 //   3. Minimum number of distinct social accounts.
 //   4. At least one checkable social account must be active (recent post within the window).
-const MIN_SOCIAL_ACCOUNTS = 2;
+const MIN_SOCIAL_ACCOUNTS = 1;
 const SOCIAL_ACTIVITY_WINDOW_DAYS = 180;
 
 // Strong tell-tale markers of verticals that are NOT the user's target industry. Used to reject
@@ -308,8 +308,8 @@ INSTRUCTIONS:
         const targetQuota = Math.min(target.quota, Math.max(0, MAX_TOTAL_COMPETITORS - finalCompetitors.length));
         if (targetQuota <= 0) break;
         const targetStartTime = Date.now();
-        const SEARCH_MAX_MS = 15_000;
-        const candidatePoolGoal = Math.max(18, targetQuota + 6);
+        const SEARCH_MAX_MS = 25_000;
+        const candidatePoolGoal = Math.max(25, targetQuota * 2);
         
         // Phase 1.1: Overfetch candidates across all offerings
         const candidateMap = new Map<string, { place: any, matchedOfferings: Set<string>, isSeed?: boolean }>();
@@ -338,7 +338,7 @@ INSTRUCTIONS:
 
         for (let i = 0; i < activeQueries.length; i++) {
             if (candidateMap.size >= candidatePoolGoal) break;
-            if (Date.now() - targetStartTime > SEARCH_MAX_MS && candidateMap.size >= Math.min(8, targetQuota)) break;
+            if (Date.now() - targetStartTime > SEARCH_MAX_MS && candidateMap.size >= targetQuota) break;
             const queryKeyword = activeQueries[i];
             const placesQueryKeyword = queryKeyword; // Semantic query already optimized
             
@@ -347,7 +347,7 @@ INSTRUCTIONS:
             
             for (const loc of activeLocations) {
                 if (candidateMap.size >= candidatePoolGoal) break;
-                if (Date.now() - targetStartTime > SEARCH_MAX_MS && candidateMap.size >= Math.min(8, targetQuota)) break;
+                if (Date.now() - targetStartTime > SEARCH_MAX_MS && candidateMap.size >= targetQuota) break;
                 onProgress?.(null, `Searching for "${queryKeyword}" in ${loc}...`);
                 logger.info(`Fetching pool for semantic query: "${queryKeyword}" in ${loc}`);
                 
@@ -477,7 +477,7 @@ INSTRUCTIONS:
         const VERIFY_MAX_MS = 45_000;
 
         // Evaluate candidates per target scope (top scored candidates)
-        const candidatePool = sortedCandidates.slice(0, Math.max(20, targetQuota + 6));
+        const candidatePool = sortedCandidates.slice(0, Math.max(25, targetQuota * 2));
 
         const pendingFallbacks: Array<{
             candidate: any;
@@ -497,67 +497,72 @@ INSTRUCTIONS:
 
             const batch = candidatePool.slice(batchIdx, batchIdx + BATCH_SIZE);
             await Promise.all(batch.map(async (candidate) => {
-                if (foundForTarget >= targetQuota) return;
+                await Promise.race([
+                    (async () => {
+                        if (foundForTarget >= targetQuota) return;
 
-                const { place, matchedOfferings } = candidate;
-                let domain = "";
-                try { domain = new URL(place.websiteUri).hostname.replace(/^www\./, ''); } catch {}
+                        const { place, matchedOfferings } = candidate;
+                        let domain = "";
+                        try { domain = new URL(place.websiteUri).hostname.replace(/^www\./, ''); } catch {}
 
-                if (!domain || uniqueDomains.has(domain)) return;
+                        if (!domain || uniqueDomains.has(domain)) return;
 
-                onProgress?.(null, `Analyzing candidate: ${place.displayName?.text || domain}...`);
-                const primaryOffering = Array.from(matchedOfferings)[0];
-                logger.debug(`Phase 2/3: Verifying social media & deep product scanning for ${place.websiteUri}...`);
-                const targetName = memory.businessIdentity?.officialName || "";
-                const scrapeResult = await this.scrapeWebsite(place.websiteUri, primaryOffering, allOfferings, targetIndustry, targetSubIndustry, targetName);
+                        onProgress?.(null, `Analyzing candidate: ${place.displayName?.text || domain}...`);
+                        const primaryOffering = Array.from(matchedOfferings)[0];
+                        logger.debug(`Phase 2/3: Verifying social media & deep product scanning for ${place.websiteUri}...`);
+                        const targetName = memory.businessIdentity?.officialName || "";
+                        const scrapeResult = await this.scrapeWebsite(place.websiteUri, primaryOffering, allOfferings, targetIndustry, targetSubIndustry, targetName);
 
-                if (!scrapeResult || scrapeResult.isDealer) return;
+                        if (!scrapeResult || scrapeResult.isDealer) return;
 
-                const deepMatchedOfferings = new Set([...matchedOfferings, ...scrapeResult.foundOfferings]);
-                if (!candidate.isSeed && deepMatchedOfferings.size < 1) return;
+                        const deepMatchedOfferings = new Set([...matchedOfferings, ...scrapeResult.foundOfferings]);
+                        if (!candidate.isSeed && deepMatchedOfferings.size < 1) return;
 
-                let socials = scrapeResult.socials;
-                let socialLinksCount = Object.values(socials).filter(v => v !== null).length;
+                        let socials = scrapeResult.socials;
+                        let socialLinksCount = Object.values(socials).filter(v => v !== null).length;
 
-                if (socialLinksCount < MIN_SOCIAL_ACCOUNTS) {
-                    const fallback = await this.findSocialLinksFallback(domain, place.displayName?.text || domain, place.websiteUri, combinedIndKws);
-                    socials = { ...socials, ...fallback };
-                    socialLinksCount = Object.values(socials).filter(v => v !== null).length;
-                }
+                        if (socialLinksCount < MIN_SOCIAL_ACCOUNTS) {
+                            const fallback = await this.findSocialLinksFallback(domain, place.displayName?.text || domain, place.websiteUri, combinedIndKws);
+                            socials = { ...socials, ...fallback };
+                            socialLinksCount = Object.values(socials).filter(v => v !== null).length;
+                        }
 
-                if (socialLinksCount >= 1) {
-                    if (foundForTarget >= targetQuota) return;
-                    foundForTarget++;
-                    uniqueDomains.add(domain);
+                        if (socialLinksCount >= 1) {
+                            if (foundForTarget >= targetQuota) return;
+                            foundForTarget++;
+                            uniqueDomains.add(domain);
 
-                    const commonProductList = cleanAndDeduplicateProductNames(Array.from(deepMatchedOfferings));
-                    const overlapStr = commonProductList.slice(0, 7).join(", ") + (commonProductList.length > 7 ? '...' : '');
-                    const industryEvidence = `${targetIndustry}${targetSubIndustry ? ` / ${targetSubIndustry}` : ""}`;
-                    const activity = await this.evaluateSocialActivity(socials);
-                    const activityEvidence = activity.evidence.length > 0 ? ` Socials: ${activity.evidence.join("; ")}.` : "";
-                    const llmReason = scrapeResult.whyCompetitorText ? ` LLM Verdict: ${scrapeResult.whyCompetitorText}.` : "";
+                            const commonProductList = cleanAndDeduplicateProductNames(Array.from(deepMatchedOfferings));
+                            const overlapStr = commonProductList.slice(0, 7).join(", ") + (commonProductList.length > 7 ? '...' : '');
+                            const industryEvidence = `${targetIndustry}${targetSubIndustry ? ` / ${targetSubIndustry}` : ""}`;
+                            const activity = await this.evaluateSocialActivity(socials);
+                            const activityEvidence = activity.evidence.length > 0 ? ` Socials: ${activity.evidence.join("; ")}.` : "";
+                            const llmReason = scrapeResult.whyCompetitorText ? ` LLM Verdict: ${scrapeResult.whyCompetitorText}.` : "";
 
-                    const newComp: CompetitorProfile = {
-                        name: place.displayName?.text || domain,
-                        url: place.websiteUri,
-                        type: target.type,
-                        location: place.formattedAddress || "Unknown",
-                        whyCompetitor: `Industry verified: ${industryEvidence}.${llmReason} ${commonProductList.length} common products: [${overlapStr}].${activityEvidence} Rating: ${place.rating || 'N/A'} | Phone: ${place.nationalPhoneNumber || 'N/A'}`,
-                        evidenceUrls: [
-                            { title: "Homepage", url: place.websiteUri },
-                            { title: `Product: ${primaryOffering}`, url: scrapeResult.productUrl }
-                        ],
-                        socials,
-                        products: commonProductList,
-                        commonProducts: commonProductList
-                    };
+                            const newComp: CompetitorProfile = {
+                                name: place.displayName?.text || domain,
+                                url: place.websiteUri,
+                                type: target.type,
+                                location: place.formattedAddress || "Unknown",
+                                whyCompetitor: `Industry verified: ${industryEvidence}.${llmReason} ${commonProductList.length} common products: [${overlapStr}].${activityEvidence} Rating: ${place.rating || 'N/A'} | Phone: ${place.nationalPhoneNumber || 'N/A'}`,
+                                evidenceUrls: [
+                                    { title: "Homepage", url: place.websiteUri },
+                                    { title: `Product: ${primaryOffering}`, url: scrapeResult.productUrl }
+                                ],
+                                socials,
+                                products: commonProductList,
+                                commonProducts: commonProductList
+                            };
 
-                    finalCompetitors.push(newComp);
-                    onProgress?.(newComp, `Discovered ${target.type} competitor: ${newComp.name}`);
-                    logger.info(`✅ Added ${domain} as ${target.type} (Deep Overlap: ${deepMatchedOfferings.size}, Socials: ${Object.values(socials).filter(v => v).length}). Target Progress: ${foundForTarget}/${targetQuota}`);
-                } else {
-                    pendingFallbacks.push({ candidate, scrapeResult, deepMatchedOfferings, socials });
-                }
+                            finalCompetitors.push(newComp);
+                            onProgress?.(newComp, `Discovered ${target.type} competitor: ${newComp.name}`);
+                            logger.info(`✅ Added ${domain} as ${target.type} (Deep Overlap: ${deepMatchedOfferings.size}, Socials: ${Object.values(socials).filter(v => v).length}). Target Progress: ${foundForTarget}/${targetQuota}`);
+                        } else {
+                            pendingFallbacks.push({ candidate, scrapeResult, deepMatchedOfferings, socials });
+                        }
+                    })(),
+                    new Promise<void>((resolve) => setTimeout(resolve, 8000))
+                ]);
             }));
         }
 
@@ -623,13 +628,12 @@ INSTRUCTIONS:
         let html = "";
         try {
             const res = await axios.get(url, { 
-                timeout: 4500, 
+                timeout: 4000, 
+                signal: AbortSignal.timeout(4000),
                 headers: { 
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-                    'Accept-Language': 'en-US,en;q=0.9',
-                    'Accept-Encoding': 'gzip, deflate, br',
-                    'Connection': 'keep-alive'
+                    'Accept-Language': 'en-US,en;q=0.9'
                 } 
             });
             html = res.data || "";
@@ -882,6 +886,7 @@ INSTRUCTIONS:
   private async extractSocialsFromPage(pageUrl: string, socials: SocialLinks): Promise<void> {
     const res = await axios.get(pageUrl, {
       timeout: 2500,
+      signal: AbortSignal.timeout(2500),
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -1210,7 +1215,8 @@ INSTRUCTIONS:
 
       try {
         const sRes = await axios.get(link, {
-          timeout: 3000,
+          timeout: 2500,
+          signal: AbortSignal.timeout(2500),
           headers: { 
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             'Accept-Language': 'en-US,en;q=0.9'
