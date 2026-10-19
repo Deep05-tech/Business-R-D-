@@ -1040,6 +1040,34 @@ export class SocialExtractorAgent {
                 }
             }
 
+            // Check for direct MP4 video streams on Instagram and Facebook
+            const mp4Regex = /https:[\\/]+[a-zA-Z0-9._-]+(?:fbcdn\.net|fbsbx\.com)[\\/]+[^\s"']+\.mp4[^\s"']*/g;
+            const mp4Matches = (res.data || '').match(mp4Regex) || [];
+            if (mp4Matches.length > 0) {
+                let cleanMp4 = mp4Matches[0].replace(/\\\/|\//g, '/').replace(/\\u0026/g, '&').replace(/&amp;/g, '&');
+                cleanMp4 = cleanMp4.split('<')[0].split('\\')[0].split('"')[0];
+                post.video_url = cleanMp4;
+                post.media_type = "Video";
+                post.mediaType = "Video";
+            }
+
+            if (platform === 'Instagram') {
+                const scMatch = postUrl.match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/);
+                if (scMatch && scMatch[1]) {
+                    post.shortcode = scMatch[1];
+                }
+            } else if (platform === 'LinkedIn') {
+                const actMatch = postUrl.match(/(?:activity-|activity:|ugcPost:|share:)(\d+)/);
+                if (actMatch && actMatch[1]) {
+                    post.activity_id = actMatch[1];
+                }
+            } else if (platform === 'Facebook') {
+                if (postUrl.includes('/videos/') || postUrl.includes('/reel/')) {
+                    post.media_type = "Video";
+                    post.mediaType = "Video";
+                }
+            }
+
             const likeMatch = ogDesc.match(/([\d,kK]+)\s*likes/i);
             const commentMatch = ogDesc.match(/([\d,kK]+)\s*comments/i);
             if (likeMatch || commentMatch) {

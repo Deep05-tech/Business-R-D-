@@ -398,13 +398,16 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
         let ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
         let referer = '';
 
-        if (lowerTarget.includes('lookaside.fbsbx.com') || lowerTarget.includes('facebook.com/')) {
+        if (lowerTarget.includes('lookaside.fbsbx.com')) {
             ua = 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)';
-            referer = 'https://www.facebook.com/';
+            referer = '';
+        } else if (lowerTarget.includes('facebook.com/')) {
+            ua = 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)';
+            referer = '';
         } else if (lowerTarget.includes('instagram') || lowerTarget.includes('cdninstagram')) {
             referer = '';
         } else if (lowerTarget.includes('fbcdn')) {
-            referer = 'https://www.facebook.com/';
+            referer = '';
         } else if (lowerTarget.includes('linkedin') || lowerTarget.includes('licdn')) {
             referer = 'https://www.linkedin.com/';
         } else {
@@ -433,7 +436,10 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
 
         const contentType = String(response.headers['content-type'] || '').toLowerCase();
         if (contentType.includes('text/html') && !isVideoReq) {
-            logger.warn(`[Proxy-Media] Target URL ${targetUrl} returned HTML content-type instead of image, serving placeholder.`);
+            logger.warn(`[Proxy-Media] Target URL ${targetUrl} returned HTML content-type instead of image, redirecting.`);
+            if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) {
+                return res.redirect(302, rawUrl);
+            }
             return sendPlatformSvgPlaceholder(res, rawUrl);
         }
 
@@ -450,13 +456,47 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
         res.status(response.status);
         response.data.pipe(res);
     } catch (error: any) {
-        logger.warn(`[Proxy-Media] Direct stream failed for ${rawUrl}, serving branded SVG placeholder: ${error.message}`);
+        logger.warn(`[Proxy-Media] Direct stream failed for ${rawUrl}: ${error.message}`);
+        if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) {
+            return res.redirect(302, rawUrl);
+        }
         return sendPlatformSvgPlaceholder(res, rawUrl);
     }
 };
 
 app.get('/api/proxy-media', handleProxyMedia);
 app.get('/api/proxy-video', handleProxyMedia);
+
+app.get('/api/social-video-url', async (req, res) => {
+    const rawPostUrl = (req.query.url as string || '').trim();
+    if (!rawPostUrl || (!rawPostUrl.startsWith('http://') && !rawPostUrl.startsWith('https://'))) {
+        return res.status(400).json({ success: false, error: 'Valid url query parameter required' });
+    }
+
+    try {
+        const fetchRes = await axios.get(rawPostUrl, {
+            headers: {
+                'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.9'
+            },
+            timeout: 7000
+        });
+
+        const html = fetchRes.data || '';
+        const regex = /https:[\\/]+[a-zA-Z0-9._-]+(?:fbcdn\.net|fbsbx\.com)[\\/]+[^\s"']+\.mp4[^\s"']*/g;
+        const matches = html.match(regex) || [];
+        if (matches.length > 0) {
+            let clean = matches[0].replace(/\\\/|\//g, '/').replace(/\\u0026/g, '&').replace(/&amp;/g, '&');
+            clean = clean.split('<')[0].split('\\')[0].split('"')[0];
+            return res.json({ success: true, videoUrl: clean });
+        }
+
+        return res.json({ success: false, message: 'No direct video stream found' });
+    } catch (e: any) {
+        return res.status(500).json({ success: false, error: e.message });
+    }
+});
 
 app.get('/api/linkedin-embed-player', async (req, res) => {
     const actId = req.query.id as string;
