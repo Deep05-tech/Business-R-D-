@@ -1357,8 +1357,9 @@ window.findCompetitors = async function(force = false) {
 
     let lastChunkTime = Date.now();
     const inactivityWatchdog = setInterval(() => {
-      // If 35 seconds pass without any chunk or heartbeat from the server, terminate reader
-      if (Date.now() - lastChunkTime > 35000) {
+      // If 60 seconds pass without any chunk or heartbeat from the server, terminate reader
+      if (Date.now() - lastChunkTime > 60000) {
+        console.warn("Competitor stream inactivity watchdog fired (60s idle).");
         clearInterval(inactivityWatchdog);
         try { reader.cancel(); } catch (_) {}
       }
@@ -1425,7 +1426,9 @@ window.findCompetitors = async function(force = false) {
     }
   } catch (e) {
     console.error("Competitor discovery error:", e);
-    list.innerHTML = `<div class="empty-state" style="color:var(--required)">Error: ${e.message}</div>`;
+    if (window.showToast) {
+      window.showToast("Error during discovery: " + e.message);
+    }
   } finally {
     window._isFindingCompetitors = false;
     const header = document.getElementById('live-comp-header');

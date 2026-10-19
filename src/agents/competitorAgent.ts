@@ -308,8 +308,8 @@ INSTRUCTIONS:
         const targetQuota = Math.min(target.quota, Math.max(0, MAX_TOTAL_COMPETITORS - finalCompetitors.length));
         if (targetQuota <= 0) break;
         const targetStartTime = Date.now();
-        const TARGET_MAX_DURATION_MS = 60_000;
-        const candidatePoolGoal = Math.max(30, targetQuota * 2);
+        const SEARCH_MAX_MS = 15_000;
+        const candidatePoolGoal = Math.max(18, targetQuota + 6);
         
         // Phase 1.1: Overfetch candidates across all offerings
         const candidateMap = new Map<string, { place: any, matchedOfferings: Set<string>, isSeed?: boolean }>();
@@ -333,12 +333,12 @@ INSTRUCTIONS:
         }
         
         // Cap search queries and location loops per target to achieve target quotas
-        const activeQueries = semanticQueries.slice(0, 4);
-        const activeLocations = target.locations.slice(0, 5);
+        const activeQueries = semanticQueries.slice(0, 3);
+        const activeLocations = target.locations.slice(0, 4);
 
         for (let i = 0; i < activeQueries.length; i++) {
             if (candidateMap.size >= candidatePoolGoal) break;
-            if (Date.now() - targetStartTime > TARGET_MAX_DURATION_MS) break;
+            if (Date.now() - targetStartTime > SEARCH_MAX_MS && candidateMap.size >= Math.min(8, targetQuota)) break;
             const queryKeyword = activeQueries[i];
             const placesQueryKeyword = queryKeyword; // Semantic query already optimized
             
@@ -347,7 +347,7 @@ INSTRUCTIONS:
             
             for (const loc of activeLocations) {
                 if (candidateMap.size >= candidatePoolGoal) break;
-                if (Date.now() - targetStartTime > TARGET_MAX_DURATION_MS) break;
+                if (Date.now() - targetStartTime > SEARCH_MAX_MS && candidateMap.size >= Math.min(8, targetQuota)) break;
                 onProgress?.(null, `Searching for "${queryKeyword}" in ${loc}...`);
                 logger.info(`Fetching pool for semantic query: "${queryKeyword}" in ${loc}`);
                 
@@ -473,8 +473,11 @@ INSTRUCTIONS:
         });
         logger.info(`Found ${sortedCandidates.length} potential candidates for ${target.type}. Highest overlap score: ${sortedCandidates[0]?.matchedOfferings.size || 0}`);
 
+        const verifyStartTime = Date.now();
+        const VERIFY_MAX_MS = 45_000;
+
         // Evaluate candidates per target scope (top scored candidates)
-        const candidatePool = sortedCandidates.slice(0, Math.max(30, targetQuota * 2));
+        const candidatePool = sortedCandidates.slice(0, Math.max(20, targetQuota + 6));
 
         const pendingFallbacks: Array<{
             candidate: any;
@@ -487,8 +490,8 @@ INSTRUCTIONS:
         const BATCH_SIZE = 6;
         for (let batchIdx = 0; batchIdx < candidatePool.length; batchIdx += BATCH_SIZE) {
             if (foundForTarget >= targetQuota) break;
-            if (Date.now() - targetStartTime > TARGET_MAX_DURATION_MS) {
-                logger.warn(`Time budget reached (${TARGET_MAX_DURATION_MS / 1000}s) for target ${target.type}. Wrapping up target.`);
+            if (Date.now() - verifyStartTime > VERIFY_MAX_MS && foundForTarget >= Math.min(6, targetQuota)) {
+                logger.warn(`Time budget reached (${VERIFY_MAX_MS / 1000}s) for target ${target.type}. Wrapping up target.`);
                 break;
             }
 

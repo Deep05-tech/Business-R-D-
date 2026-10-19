@@ -989,12 +989,15 @@ app.post("/api/competitors-stream", async (request, response) => {
   // Send immediate connected event so browser and reverse proxy know the stream is active
   response.write(`data: ${JSON.stringify({ type: 'progress', status: "Connected. Scanning competitor footprint..." })}\n\n`);
 
-  // Periodic heartbeat every 8 seconds prevents reverse proxy (Render/Cloudflare) 502 timeouts
+  // Periodic heartbeat every 4 seconds prevents reverse proxy (Render/Cloudflare) timeouts
   const heartbeat = setInterval(() => {
     if (!response.writableEnded) {
       response.write(`: keepalive\n\n`);
+      if (typeof (response as any).flush === 'function') {
+        (response as any).flush();
+      }
     }
-  }, 8000);
+  }, 4000);
 
   request.on("close", () => {
     clearInterval(heartbeat);
@@ -1039,6 +1042,9 @@ app.post("/api/competitors-stream", async (request, response) => {
             response.write(`data: ${JSON.stringify({ type: 'competitor', competitor: comp, status: statusMsg })}\n\n`);
           } else {
             response.write(`data: ${JSON.stringify({ type: 'progress', status: statusMsg })}\n\n`);
+          }
+          if (typeof (response as any).flush === 'function') {
+            (response as any).flush();
           }
         }
       },
