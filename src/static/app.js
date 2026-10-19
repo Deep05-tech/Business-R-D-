@@ -1324,17 +1324,22 @@ window.findCompetitors = async function(force = false) {
   `;
   
   // Hide buttons while loading
-  document.getElementById('btn-find-comp').style.display = 'none';
-  document.getElementById('btn-regen-comp').style.display = 'none';
+  const btnFind = document.getElementById('btn-find-comp');
+  const btnRegen = document.getElementById('btn-regen-comp');
+  const btnBackfill = document.getElementById('btn-backfill-socials');
+  if (btnFind) btnFind.style.display = 'none';
+  if (btnRegen) btnRegen.style.display = 'none';
+  if (btnBackfill) btnBackfill.style.display = 'none';
   
-  const scope = document.getElementById('comp-scope').value;
+  const scope = document.getElementById('comp-scope')?.value || 'all';
   const liveCompetitors = [];
+  let streamEndedNormally = false;
 
   try {
     const res = await fetch('/api/competitors-stream', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ websiteUrl: window.activeProjectUrl, scope })
+      body: JSON.stringify({ websiteUrl: window.activeProjectUrl, scope, force: Boolean(force) })
     });
 
     if (!res.ok) {
@@ -1388,22 +1393,27 @@ window.findCompetitors = async function(force = false) {
               }
             }
             if (data.type === 'complete') {
+              streamEndedNormally = true;
               window.showSuccess("Competitors successfully extracted!");
-              window._isFindingCompetitors = false;
-              await loadCompetitorsUI(false);
-              return;
+              break;
             }
           } catch(err) {
             console.error("Competitor SSE parse error", err);
+            if (line.includes('"type":"error"')) {
+              throw err;
+            }
           }
         }
       }
+      if (streamEndedNormally) break;
     }
   } catch (e) {
+    console.error("Competitor discovery error:", e);
     list.innerHTML = `<div class="empty-state" style="color:var(--required)">Error: ${e.message}</div>`;
-    document.getElementById('btn-find-comp').style.display = 'inline-block';
   } finally {
     window._isFindingCompetitors = false;
+    // Always refresh UI so loading animation is replaced by final categorized list and buttons are restored
+    await loadCompetitorsUI(false);
   }
 };
 

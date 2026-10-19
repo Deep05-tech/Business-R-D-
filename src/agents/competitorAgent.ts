@@ -124,8 +124,14 @@ INSTRUCTIONS:
     }
   }
 
-  async run(memory: StructuredMemory, scope: "local" | "regional" | "global" | "all" = "regional", onProgress?: (comp: CompetitorProfile | null, statusMsg: string) => void, maxResults?: number): Promise<CompetitorProfile[]> {
-    logger.info(`Running Google Places competitor discovery for ${memory.input.websiteUrl} with scope: ${scope}...`);
+  async run(
+    memory: StructuredMemory, 
+    scope: "local" | "regional" | "global" | "all" = "regional", 
+    onProgress?: (comp: CompetitorProfile | null, statusMsg: string) => void, 
+    maxResults?: number,
+    force = false
+  ): Promise<CompetitorProfile[]> {
+    logger.info(`Running Google Places competitor discovery for ${memory.input.websiteUrl} with scope: ${scope} (force=${force})...`);
 
     let industry = memory.industryClassification?.industry || "Manufacturing Companies";
     let location = memory.businessIdentity?.location || "India";
@@ -240,7 +246,8 @@ INSTRUCTIONS:
         }
     }
 
-    if (memory.competitors) {
+    const shouldKeepExisting = !force && scope !== "all";
+    if (shouldKeepExisting && memory.competitors) {
         for (const comp of memory.competitors) {
             try {
                 uniqueDomains.add(new URL(comp.url).hostname.replace(/^www\./, ''));
@@ -296,6 +303,8 @@ INSTRUCTIONS:
         if (maxResults && finalCompetitors.length >= maxResults) break;
         let foundForTarget = 0;
         const targetQuota = maxResults ? Math.min(target.quota, Math.max(0, maxResults - finalCompetitors.length)) : target.quota;
+        const targetStartTime = Date.now();
+        const TARGET_MAX_DURATION_MS = 60_000;
         
         // Phase 1.1: Overfetch candidates across all offerings
         const candidateMap = new Map<string, { place: any, matchedOfferings: Set<string>, isSeed?: boolean }>();
@@ -324,6 +333,7 @@ INSTRUCTIONS:
 
         for (let i = 0; i < activeQueries.length; i++) {
             if (candidateMap.size >= Math.max(25, targetQuota * 2)) break;
+            if (Date.now() - targetStartTime > TARGET_MAX_DURATION_MS) break;
             const queryKeyword = activeQueries[i];
             const placesQueryKeyword = queryKeyword; // Semantic query already optimized
             
@@ -332,6 +342,7 @@ INSTRUCTIONS:
             
             for (const loc of activeLocations) {
                 if (candidateMap.size >= Math.max(25, targetQuota * 2)) break;
+                if (Date.now() - targetStartTime > TARGET_MAX_DURATION_MS) break;
                 onProgress?.(null, `Searching for "${queryKeyword}" in ${loc}...`);
                 logger.info(`Fetching pool for semantic query: "${queryKeyword}" in ${loc}`);
                 
@@ -471,6 +482,10 @@ INSTRUCTIONS:
         const BATCH_SIZE = 6;
         for (let batchIdx = 0; batchIdx < candidatePool.length; batchIdx += BATCH_SIZE) {
             if (foundForTarget >= targetQuota) break;
+            if (Date.now() - targetStartTime > TARGET_MAX_DURATION_MS) {
+                logger.warn(`Time budget reached (${TARGET_MAX_DURATION_MS / 1000}s) for target ${target.type}. Wrapping up target.`);
+                break;
+            }
 
             const batch = candidatePool.slice(batchIdx, batchIdx + BATCH_SIZE);
             await Promise.all(batch.map(async (candidate) => {
@@ -678,7 +693,7 @@ INSTRUCTIONS:
             const verification = await Promise.race([
                 this.verifyCandidateViaLLM(pageProfile, targetName, targetIndustry, allOfferings),
                 new Promise<{ isCompetitor: boolean; reason: string }>((resolve) =>
-                    setTimeout(() => resolve({ isCompetitor: true, reason: "Heuristic industry match" }), 3500)
+                    setTimeout(() => resolve({ isCompetitor: true, reason: "Heuristic industry match" }), 2500)
                 )
             ]);
             if (!verification.isCompetitor) {

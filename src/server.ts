@@ -992,7 +992,7 @@ app.post("/api/competitors-stream", async (request, response) => {
     clearInterval(heartbeat);
   });
 
-  const { websiteUrl, scope } = request.body;
+  const { websiteUrl, scope, force } = request.body;
   if (!websiteUrl) {
     clearInterval(heartbeat);
     response.write(`data: ${JSON.stringify({ type: 'error', error: "Website URL is required" })}\n\n`);
@@ -1013,30 +1013,42 @@ app.post("/api/competitors-stream", async (request, response) => {
   }
 
   try {
-    const competitors = await competitorAgent.run(memory, scope || "regional", (comp, statusMsg) => {
-      if (!response.writableEnded) {
-        if (comp) {
-          if (!memory.competitors) memory.competitors = [];
-          if (!memory.competitors.some((c: any) => c.url === comp.url)) {
-            memory.competitors.push(comp);
-            memoryStore.save(memory).catch(() => {});
-            knowledgeIndex.add(memory);
+    if (force) {
+      memory.competitors = [];
+    }
+
+    const competitors = await competitorAgent.run(
+      memory, 
+      scope || "regional", 
+      (comp, statusMsg) => {
+        if (!response.writableEnded) {
+          if (comp) {
+            if (!memory.competitors) memory.competitors = [];
+            if (!memory.competitors.some((c: any) => c.url === comp.url)) {
+              memory.competitors.push(comp);
+              knowledgeIndex.add(memory);
+            }
+            response.write(`data: ${JSON.stringify({ type: 'competitor', competitor: comp, status: statusMsg })}\n\n`);
+          } else {
+            response.write(`data: ${JSON.stringify({ type: 'progress', status: statusMsg })}\n\n`);
           }
-          response.write(`data: ${JSON.stringify({ type: 'competitor', competitor: comp, status: statusMsg })}\n\n`);
-        } else {
-          response.write(`data: ${JSON.stringify({ type: 'progress', status: statusMsg })}\n\n`);
         }
-      }
-    });
+      },
+      undefined,
+      Boolean(force)
+    );
 
     memory.competitors = competitors;
-    await memoryStore.save(memory);
     knowledgeIndex.add(memory);
 
+    // Immediately notify the client and close the SSE stream so the dashboard loading finishes
     if (!response.writableEnded) {
       response.write(`data: ${JSON.stringify({ type: 'complete', competitors })}\n\n`);
       response.end();
     }
+
+    // Persist to MongoDB, disk, and GitHub once in background
+    await memoryStore.save(memory);
   } catch (err: any) {
     logger.error(`Competitor Stream error: ${err.message}`);
     if (!response.writableEnded) {

@@ -52,8 +52,8 @@ export function getFallbackKey(): string {
   return bytes.map(b => String.fromCharCode(b ^ 0x5a)).join("");
 }
 
-const GROQ_FAST_MODELS = ["qwen/qwen3.8-27b", "openai/gpt-oss-120b", "openai/gpt-oss-20b"];
-const GROQ_HEAVY_MODELS = ["openai/gpt-oss-120b", "qwen/qwen3.8-27b", "openai/gpt-oss-20b"];
+const GROQ_FAST_MODELS = ["openai/gpt-oss-20b", "openai/gpt-oss-120b", "qwen/qwen3.8-27b"];
+const GROQ_HEAVY_MODELS = ["openai/gpt-oss-120b", "openai/gpt-oss-20b", "qwen/qwen3.8-27b"];
 
 function createResilientGroqFetch(preferredModels: string[]) {
   const keys = [process.env.GROQ_API_KEY, getFallbackKey()]
