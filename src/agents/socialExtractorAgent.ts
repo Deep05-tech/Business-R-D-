@@ -445,7 +445,8 @@ export class SocialExtractorAgent {
             competitorName: companyName,
             video_url: post.video_url || post.videoUrl || undefined,
             videoUrl: post.video_url || post.videoUrl || undefined,
-            activity_id: post.activity_id || undefined
+            activity_id: post.activity_id || undefined,
+            fb_video_id: post.fb_video_id || post.video_id || undefined
         };
     }
 
@@ -1087,6 +1088,28 @@ export class SocialExtractorAgent {
                 if (postUrl.includes('/videos/') || postUrl.includes('/reel/')) {
                     post.media_type = "Video";
                     post.mediaType = "Video";
+                    const idMatch = postUrl.match(/(?:\/videos\/(?:[^\/]+\/)?|\/reel\/|\/watch\/?\?v=)(\d+)/) || postUrl.match(/(\d{10,20})/);
+                    if (idMatch && idMatch[1]) {
+                        post.fb_video_id = idMatch[1];
+                        try {
+                            const pluginUrl = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent('https://www.facebook.com/watch/?v=' + idMatch[1])}&show_text=false&width=500`;
+                            const fbPluginRes = await axios.get(pluginUrl, {
+                                headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' },
+                                timeout: 5000
+                            }).catch(() => null);
+                            if (fbPluginRes && fbPluginRes.data) {
+                                const re = /(https:[^"'<>\s]+?\.mp4[^"'<>\s]*)/gi;
+                                let m;
+                                while ((m = re.exec(fbPluginRes.data)) !== null) {
+                                    let clean = m[1].replace(/\\u0026/g, '&').replace(/\\\//g, '/');
+                                    if (!clean.includes('rsrc.php') && clean.includes('video.')) {
+                                        post.video_url = clean;
+                                        break;
+                                    }
+                                }
+                            }
+                        } catch(e) {}
+                    }
                 }
             }
 

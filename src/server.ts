@@ -227,7 +227,7 @@ app.delete("/api/admin/users/:username/projects", requireAuth, requireAdmin, asy
 app.use("/api", (req, res, next) => {
   // Browser media elements cannot attach Authorization headers. These routes
   // expose only the already-validated remote asset proxy, not workspace data.
-  if (req.path === "/proxy-media" || req.path === "/proxy-video" || req.path === "/linkedin-embed-player" || req.path === "/instagram-embed") return next();
+  if (req.path === "/proxy-media" || req.path === "/proxy-video" || req.path === "/linkedin-embed-player" || req.path === "/facebook-embed-player" || req.path === "/instagram-embed") return next();
   return requireAuth(req, res, next);
 });
 app.use("/memory", requireAuth);
@@ -576,6 +576,84 @@ app.get('/api/linkedin-embed-player', async (req, res) => {
   <div style="font-size: 48px; margin-bottom: 16px;">💼</div>
   <h3 style="margin: 0 0 16px 0;">Official LinkedIn Update</h3>
   <a href="https://www.linkedin.com/feed/update/urn:li:activity:${actId}" target="_blank" style="background: #0a66c2; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold;">View on LinkedIn ↗</a>
+</body>
+</html>`);
+    }
+});
+
+app.get('/api/facebook-embed-player', async (req, res) => {
+    const rawVidId = req.query.id as string;
+    const postUrl = req.query.url as string || '';
+    let vidId = rawVidId;
+    if (!vidId && postUrl) {
+        const m = postUrl.match(/(?:\/videos\/(?:[^\/]+\/)?|\/reel\/|\/watch\/?\?v=)(\d+)/) || postUrl.match(/(\d{10,20})/);
+        if (m) vidId = m[1];
+    }
+
+    if (!vidId && !postUrl) return res.status(400).send('Facebook Video ID or URL required');
+
+    const canonicalUrl = vidId ? `https://www.facebook.com/watch/?v=${vidId}` : postUrl;
+
+    try {
+        const pluginUrl = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(canonicalUrl)}&show_text=false&width=500`;
+        const embedRes = await axios.get(pluginUrl, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+            },
+            timeout: 7000
+        });
+
+        const rawHtml = embedRes.data || '';
+        const re = /(https:[^"'<>\s]+?\.mp4[^"'<>\s]*)/gi;
+        let m;
+        let foundMp4: string | null = null;
+        while ((m = re.exec(rawHtml)) !== null) {
+            let clean = m[1].replace(/\\u0026/g, '&').replace(/\\\//g, '/');
+            if (!clean.includes('rsrc.php') && clean.includes('video.')) {
+                foundMp4 = clean;
+                break;
+            }
+        }
+
+        if (foundMp4) {
+            const videoSrc = `/api/proxy-media?url=${encodeURIComponent(foundMp4)}`;
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+            return res.send(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body, html { margin: 0 !important; padding: 0 !important; width: 100vw !important; height: 100vh !important; background: #000 !important; overflow: hidden !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+    video { width: 100vw !important; height: 100vh !important; max-width: 100vw !important; max-height: 100vh !important; object-fit: contain !important; margin: 0 !important; background: #000 !important; }
+  </style>
+</head>
+<body>
+  <video src="${videoSrc}" controls autoplay playsinline preload="auto"></video>
+</body>
+</html>`);
+        }
+
+        // Clean responsive iframe embed fallback
+        const customStyle = `
+        <style>
+          body, html { margin: 0 !important; padding: 0 !important; width: 100% !important; min-height: 100% !important; background: #000 !important; overflow: hidden !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+        </style>
+        `;
+        let html = rawHtml.replace('</head>', `${customStyle}</head>`);
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        return res.send(html);
+    } catch (e: any) {
+        logger.warn(`[Facebook-Player] Failed to load embed HTML for ${vidId || postUrl}: ${e.message}`);
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        return res.send(`<!DOCTYPE html>
+<html>
+<head><style>body { background: #081b33; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }</style></head>
+<body>
+  <div style="font-size: 48px; margin-bottom: 16px;">📘</div>
+  <h3 style="margin: 0 0 16px 0;">Official Facebook Video</h3>
+  <a href="${canonicalUrl}" target="_blank" style="background: #1877f2; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold;">Watch on Facebook ↗</a>
 </body>
 </html>`);
     }
