@@ -142,7 +142,15 @@ app.use(express.urlencoded({ limit: "2mb", extended: true }));
 const staticPath = __dirname.endsWith("dist") 
   ? join(__dirname, "..", "src", "static")
   : join(__dirname, "static");
-app.use("/static", express.static(staticPath));
+app.use("/static", express.static(staticPath, {
+  etag: false,
+  maxAge: 0,
+  setHeaders: (res) => {
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+  }
+}));
 
 // ---------------------------------------------------------------------------
 // Authentication & SaaS Admin Projects APIs
@@ -1047,8 +1055,10 @@ app.post("/api/competitors-stream", async (request, response) => {
       response.end();
     }
 
-    // Persist to MongoDB, disk, and GitHub once in background
-    await memoryStore.save(memory);
+    // Persist to MongoDB, disk, and GitHub once in background without blocking the HTTP completion
+    memoryStore.save(memory).catch((err: any) => {
+      logger.warn(`Background memory save error: ${err.message}`);
+    });
   } catch (err: any) {
     logger.error(`Competitor Stream error: ${err.message}`);
     if (!response.writableEnded) {

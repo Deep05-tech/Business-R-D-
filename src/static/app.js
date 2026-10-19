@@ -1355,63 +1355,81 @@ window.findCompetitors = async function(force = false) {
     const decoder = new TextDecoder();
     let buffer = "";
 
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-      
-      let lines = buffer.split('\n\n');
-      buffer = lines.pop(); // Keep incomplete chunk
-      
-      for (const line of lines) {
-        if (line.startsWith('data: ')) {
-          try {
-            const data = JSON.parse(line.slice(6));
-            if (data.type === 'error') {
-              throw new Error(data.error || 'Competitor stream failed');
-            }
-            if (data.type === 'progress') {
-              const statusEl = document.getElementById('comp-agent-status');
-              if (statusEl && data.status) statusEl.innerText = data.status;
-            }
-            if (data.type === 'competitor' && data.competitor) {
-              liveCompetitors.push(data.competitor);
-              const statusEl = document.getElementById('comp-agent-status');
-              if (statusEl) {
-                const localCount = liveCompetitors.filter(c => c.type === 'local').length;
-                const regCount = liveCompetitors.filter(c => c.type === 'regional').length;
-                const globCount = liveCompetitors.filter(c => c.type === 'global').length;
-                statusEl.innerText = `Discovered ${liveCompetitors.length} competitors (${localCount} local, ${regCount} regional, ${globCount} global) — Latest: ${data.competitor.name}`;
+    let lastChunkTime = Date.now();
+    const inactivityWatchdog = setInterval(() => {
+      // If 15 seconds pass without any chunk and we have competitors, or 60s total max
+      if ((Date.now() - lastChunkTime > 15000 && liveCompetitors.length >= 6) || (Date.now() - lastChunkTime > 60000)) {
+        clearInterval(inactivityWatchdog);
+        try { reader.cancel(); } catch (_) {}
+      }
+    }, 2000);
+
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        lastChunkTime = Date.now();
+        buffer += decoder.decode(value, { stream: true });
+        
+        let lines = buffer.split('\n\n');
+        buffer = lines.pop(); // Keep incomplete chunk
+        
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(line.slice(6));
+              if (data.type === 'error') {
+                throw new Error(data.error || 'Competitor stream failed');
               }
-              const liveCardsContainer = document.getElementById('live-comp-cards');
-              if (liveCardsContainer) {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = window.renderCompetitorCard(data.competitor);
-                if (tempDiv.firstElementChild) {
-                  liveCardsContainer.prepend(tempDiv.firstElementChild);
+              if (data.type === 'progress') {
+                const statusEl = document.getElementById('comp-agent-status');
+                if (statusEl && data.status) statusEl.innerText = data.status;
+              }
+              if (data.type === 'competitor' && data.competitor) {
+                liveCompetitors.push(data.competitor);
+                const statusEl = document.getElementById('comp-agent-status');
+                if (statusEl) {
+                  const localCount = liveCompetitors.filter(c => c.type === 'local').length;
+                  const regCount = liveCompetitors.filter(c => c.type === 'regional').length;
+                  const globCount = liveCompetitors.filter(c => c.type === 'global').length;
+                  statusEl.innerText = `Discovered ${liveCompetitors.length} competitors (${localCount} local, ${regCount} regional, ${globCount} global) — Latest: ${data.competitor.name}`;
+                }
+                const liveCardsContainer = document.getElementById('live-comp-cards');
+                if (liveCardsContainer) {
+                  const tempDiv = document.createElement('div');
+                  tempDiv.innerHTML = window.renderCompetitorCard(data.competitor);
+                  if (tempDiv.firstElementChild) {
+                    liveCardsContainer.prepend(tempDiv.firstElementChild);
+                  }
                 }
               }
-            }
-            if (data.type === 'complete') {
-              streamEndedNormally = true;
-              window.showSuccess("Competitors successfully extracted!");
-              break;
-            }
-          } catch(err) {
-            console.error("Competitor SSE parse error", err);
-            if (line.includes('"type":"error"')) {
-              throw err;
+              if (data.type === 'complete') {
+                streamEndedNormally = true;
+                window.showSuccess("Competitors successfully extracted!");
+                const header = document.getElementById('live-comp-header');
+                if (header) header.remove();
+                break;
+              }
+            } catch(err) {
+              console.error("Competitor SSE parse error", err);
+              if (line.includes('"type":"error"')) {
+                throw err;
+              }
             }
           }
         }
+        if (streamEndedNormally) break;
       }
-      if (streamEndedNormally) break;
+    } finally {
+      clearInterval(inactivityWatchdog);
     }
   } catch (e) {
     console.error("Competitor discovery error:", e);
     list.innerHTML = `<div class="empty-state" style="color:var(--required)">Error: ${e.message}</div>`;
   } finally {
     window._isFindingCompetitors = false;
+    const header = document.getElementById('live-comp-header');
+    if (header) header.remove();
     // Always refresh UI so loading animation is replaced by final categorized list and buttons are restored
     await loadCompetitorsUI(false);
   }
@@ -1444,6 +1462,10 @@ window.backfillCompetitorSocials = async function() {
 async function loadCompetitorsUI(isLivePartial = false) {
   if (!window.activeProjectUrl) return;
   const list = document.getElementById('competitor-list');
+  if (!window._isFindingCompetitors && !isLivePartial) {
+    const header = document.getElementById('live-comp-header');
+    if (header) header.remove();
+  }
   
   try {
     const res = await fetch(`/api/competitors?url=${encodeURIComponent(window.activeProjectUrl)}`);
