@@ -531,7 +531,6 @@ Return ONLY valid JSON matching the structure of the input items without markdow
       marketingSales: state.marketingSales.data,
       sourceMap,
       socialFeed: [
-        ...(state.social?.data?.profiles || []).flatMap(p => p.posts || []),
         ...((state as any).competitors || []).flatMap((c: any) => c.posts || [])
       ]
         .filter(post => {

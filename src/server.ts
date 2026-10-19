@@ -1265,13 +1265,46 @@ app.get("/api/social-feed", async (request, response) => {
     
     const feed = ((memory as any).socialFeed || []) as any[];
 
+    // Extract target project identifiers so we strictly reject self-posts (the feed is ONLY for competitors)
+    const targetOfficialName = (memory.businessIdentity?.officialName || "").trim().toLowerCase();
+    const targetSiteUrl = (memory.input?.websiteUrl || "").toLowerCase();
+    let targetDomain = "";
+    try {
+      targetDomain = new URL(targetSiteUrl.startsWith("http") ? targetSiteUrl : `https://${targetSiteUrl}`).hostname.replace(/^www\./, "").toLowerCase();
+    } catch {}
+
+    const targetTokens = [
+      ...targetOfficialName.split(/[\s,.-]+/).filter(w => w.length >= 4 && !['solutions', 'pvt', 'ltd', 'private', 'limited', 'company', 'inc', 'corp', 'industries', 'group', 'agency', 'works', 'tech'].includes(w)),
+      targetDomain.split('.')[0]
+    ].filter(Boolean);
+
+    const targetHandles = (memory.input?.socialUrls || []).map(u => {
+      try {
+        const segs = new URL(u).pathname.split('/').filter(Boolean);
+        return segs[segs.length - 1]?.toLowerCase();
+      } catch { return null; }
+    }).filter(Boolean) as string[];
+
     // Return clean, strictly deduplicated competitor posts from memory
     const seenUrls = new Set<string>();
     const filteredFeed: any[] = [];
 
     for (const post of feed) {
       const rawLink = String(post.post_url || post.link || post.postUrl || "").trim();
+      const rawLinkLower = rawLink.toLowerCase();
       const platformStr = String(post.platform || "").toLowerCase();
+      const companyKey = String(post.company || post.competitorName || "").trim().toLowerCase();
+
+      // Strictly filter out posts belonging to the target project itself (this is the COMPETITOR Feed)
+      const isSelfPost = 
+        (targetOfficialName && (companyKey === targetOfficialName || companyKey.includes(targetOfficialName) || targetOfficialName.includes(companyKey))) ||
+        (targetDomain && rawLinkLower.includes(targetDomain)) ||
+        targetTokens.some(tok => companyKey.includes(tok) && targetOfficialName.includes(tok)) ||
+        targetHandles.some(h => h && h.length > 3 && rawLinkLower.includes(h));
+
+      if (isSelfPost) {
+        continue;
+      }
 
       // Skip generic placeholder links
       if (rawLink.includes("instagram.com/instagram") || rawLink.includes("facebook.com/facebook")) {
@@ -1293,7 +1326,6 @@ app.get("/api/social-feed", async (request, response) => {
         if (ytId && ytId[1]) normUrl = `https://www.youtube.com/watch?v=${ytId[1]}`;
       }
 
-      const companyKey = String(post.company || post.competitorName || "").trim().toLowerCase();
       const dedupKey = `${platformStr}_${companyKey}_${normUrl}`;
 
       if (!seenUrls.has(dedupKey)) {
@@ -1302,6 +1334,13 @@ app.get("/api/social-feed", async (request, response) => {
         post.link = rawLink;
         filteredFeed.push(post);
       }
+    }
+
+    // If the competitor feed is empty but competitors exist, trigger tracker once in the background
+    if (filteredFeed.length === 0 && memory.competitors && memory.competitors.length > 0) {
+      runTrackerOnce(memory).catch(err => {
+        logger.warn(`Auto-triggered social tracker error: ${err.message}`);
+      });
     }
 
     response.json({ feed: filteredFeed });

@@ -28,13 +28,24 @@ export class CronAgent {
 
     let allPosts: SocialPost[] = [];
     const socialExtractor = new SocialExtractorAgent();
-    const targetCompetitors = memory.competitors || [];
+    
+    // Balance top competitors across available scopes (local, regional, global)
+    // so the daily tracker completes efficiently while representing all competitor tiers
+    const localComps = (memory.competitors || []).filter(c => c.type === 'local');
+    const regionalComps = (memory.competitors || []).filter(c => c.type === 'regional');
+    const globalComps = (memory.competitors || []).filter(c => c.type === 'global');
+    const otherComps = (memory.competitors || []).filter(c => !['local', 'regional', 'global'].includes(c.type));
+
+    const selectedCompetitors = [
+      ...localComps.slice(0, 4),
+      ...regionalComps.slice(0, 4),
+      ...globalComps.slice(0, 4),
+      ...otherComps.slice(0, 2)
+    ];
+    const targetCompetitors = selectedCompetitors.length > 0 ? selectedCompetitors : (memory.competitors || []).slice(0, 12);
     const MAX_POSTS_PER_COMP = 3;
-    // Four platforms can each fall back to Chrome. Keep only a small number of
-    // competitors in flight so a busy host remains responsive and one slow
-    // account cannot take down the whole tracker.
-    const configuredConcurrency = Number(process.env.SOCIAL_TRACKER_CONCURRENCY || 2);
-    const competitorLimit = pLimit(Number.isFinite(configuredConcurrency) ? Math.max(1, Math.min(configuredConcurrency, 2)) : 2);
+    const configuredConcurrency = Number(process.env.SOCIAL_TRACKER_CONCURRENCY || 3);
+    const competitorLimit = pLimit(Number.isFinite(configuredConcurrency) ? Math.max(1, Math.min(configuredConcurrency, 4)) : 3);
 
     // A missing or human-readable date is not evidence of inactivity. We only
     // retire a competitor when every retrieved post has a reliable date and
