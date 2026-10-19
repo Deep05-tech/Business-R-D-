@@ -195,18 +195,19 @@ INSTRUCTIONS:
     if (targetCountry.toLowerCase() === "india") regionalHubs = indiaHubs;
     else if (targetCountry.toLowerCase() === "usa" || targetCountry.toLowerCase() === "united states") regionalHubs = usHubs;
 
-    // The user requested total 10-15 competitors across all categories combined
+    // The user requested 10-15 competitors for EACH category
+    const TARGET_QUOTA_EACH = 12;
+
     if (scope === "all") {
-        // 4 local, 4 regional, 4 global = 12 total competitors (within 10-15 total)
-        targets.push({ locations: localLocations, type: "local", quota: 4 });
-        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: 4 });
-        targets.push({ locations: globalHubs, type: "global", quota: 4 });
+        targets.push({ locations: localLocations, type: "local", quota: TARGET_QUOTA_EACH });
+        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: TARGET_QUOTA_EACH });
+        targets.push({ locations: globalHubs, type: "global", quota: TARGET_QUOTA_EACH });
     } else if (scope === "global") {
-        targets.push({ locations: globalHubs, type: "global", quota: 12 });
+        targets.push({ locations: globalHubs, type: "global", quota: TARGET_QUOTA_EACH });
     } else if (scope === "regional") {
-        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: 12 });
+        targets.push({ locations: regionalHubs.length > 0 ? regionalHubs.map(h => `${h}, ${targetCountry}`) : [targetCountry], type: "regional", quota: TARGET_QUOTA_EACH });
     } else if (scope === "local") {
-        targets.push({ locations: localLocations, type: "local", quota: 12 });
+        targets.push({ locations: localLocations, type: "local", quota: TARGET_QUOTA_EACH });
     }
 
     // Collect products and services to form specific queries
@@ -297,8 +298,8 @@ INSTRUCTIONS:
 
     logger.info(`Will search across quotas: ${JSON.stringify(targets)}`);
 
-    // Total quota cap: total 10-15 competitors (default 12 for all, max 14)
-    const MAX_TOTAL_COMPETITORS = maxResults || (scope === "all" ? 13 : 13);
+    // Total quota cap: up to 10-15 competitors per category
+    const MAX_TOTAL_COMPETITORS = maxResults || (scope === "all" ? 40 : TARGET_QUOTA_EACH);
 
     // Fetch competitors using multiple queries until we reach quotas
     for (const target of targets) {
@@ -307,8 +308,8 @@ INSTRUCTIONS:
         const targetQuota = Math.min(target.quota, Math.max(0, MAX_TOTAL_COMPETITORS - finalCompetitors.length));
         if (targetQuota <= 0) break;
         const targetStartTime = Date.now();
-        const TARGET_MAX_DURATION_MS = 30_000;
-        const candidatePoolGoal = Math.max(12, targetQuota * 2);
+        const TARGET_MAX_DURATION_MS = 60_000;
+        const candidatePoolGoal = Math.max(30, targetQuota * 2);
         
         // Phase 1.1: Overfetch candidates across all offerings
         const candidateMap = new Map<string, { place: any, matchedOfferings: Set<string>, isSeed?: boolean }>();
@@ -332,8 +333,8 @@ INSTRUCTIONS:
         }
         
         // Cap search queries and location loops per target to achieve target quotas
-        const activeQueries = semanticQueries.slice(0, 3);
-        const activeLocations = target.locations.slice(0, 4);
+        const activeQueries = semanticQueries.slice(0, 4);
+        const activeLocations = target.locations.slice(0, 5);
 
         for (let i = 0; i < activeQueries.length; i++) {
             if (candidateMap.size >= candidatePoolGoal) break;
@@ -473,7 +474,7 @@ INSTRUCTIONS:
         logger.info(`Found ${sortedCandidates.length} potential candidates for ${target.type}. Highest overlap score: ${sortedCandidates[0]?.matchedOfferings.size || 0}`);
 
         // Evaluate candidates per target scope (top scored candidates)
-        const candidatePool = sortedCandidates.slice(0, Math.max(12, targetQuota * 2));
+        const candidatePool = sortedCandidates.slice(0, Math.max(30, targetQuota * 2));
 
         const pendingFallbacks: Array<{
             candidate: any;
@@ -697,7 +698,7 @@ INSTRUCTIONS:
             const verification = await Promise.race([
                 this.verifyCandidateViaLLM(pageProfile, targetName, targetIndustry, allOfferings),
                 new Promise<{ isCompetitor: boolean; reason: string }>((resolve) =>
-                    setTimeout(() => resolve({ isCompetitor: true, reason: "Heuristic industry match" }), 2500)
+                    setTimeout(() => resolve({ isCompetitor: true, reason: "Heuristic industry match" }), 3500)
                 )
             ]);
             if (!verification.isCompetitor) {

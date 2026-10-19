@@ -1357,8 +1357,8 @@ window.findCompetitors = async function(force = false) {
 
     let lastChunkTime = Date.now();
     const inactivityWatchdog = setInterval(() => {
-      // If 15 seconds pass without any chunk and we have competitors, or 60s total max
-      if ((Date.now() - lastChunkTime > 15000 && liveCompetitors.length >= 6) || (Date.now() - lastChunkTime > 60000)) {
+      // If 35 seconds pass without any chunk or heartbeat from the server, terminate reader
+      if (Date.now() - lastChunkTime > 35000) {
         clearInterval(inactivityWatchdog);
         try { reader.cancel(); } catch (_) {}
       }
