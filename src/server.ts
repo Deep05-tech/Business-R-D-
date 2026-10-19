@@ -379,33 +379,34 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
             targetUrl = `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
         }
 
-        const isDirectMedia = targetUrl.toLowerCase().includes('.jpg') || targetUrl.toLowerCase().includes('.jpeg') ||
-                              targetUrl.toLowerCase().includes('.png') || targetUrl.toLowerCase().includes('.webp') ||
-                              targetUrl.toLowerCase().includes('.gif') || targetUrl.toLowerCase().includes('.mp4') ||
-                              targetUrl.toLowerCase().includes('scontent') || targetUrl.toLowerCase().includes('fbcdn') ||
-                              targetUrl.toLowerCase().includes('fbsbx') || targetUrl.toLowerCase().includes('licdn') ||
-                              targetUrl.toLowerCase().includes('cdninstagram') || targetUrl.toLowerCase().includes('img.youtube.com') ||
-                              targetUrl.toLowerCase().includes('ytimg') || targetUrl.toLowerCase().includes('unsplash.com');
+        const lowerTarget = targetUrl.toLowerCase();
+        const isDirectMedia = lowerTarget.includes('.jpg') || lowerTarget.includes('.jpeg') ||
+                              lowerTarget.includes('.png') || lowerTarget.includes('.webp') ||
+                              lowerTarget.includes('.gif') || lowerTarget.includes('.mp4') ||
+                              lowerTarget.includes('scontent') || lowerTarget.includes('fbcdn') ||
+                              lowerTarget.includes('fbsbx') || lowerTarget.includes('licdn') ||
+                              lowerTarget.includes('cdninstagram') || lowerTarget.includes('img.youtube.com') ||
+                              lowerTarget.includes('googleusercontent') ||
+                              lowerTarget.includes('ytimg') || lowerTarget.includes('unsplash.com');
 
         // If targetUrl is an HTML webpage rather than a direct image/media file, immediately serve the fast SVG placeholder
         // to avoid blocking the server with hanging external webpage scrapes.
-        if (!isDirectMedia && !targetUrl.includes('.mp4')) {
+        if (!isDirectMedia && !lowerTarget.includes('.mp4')) {
             return sendPlatformSvgPlaceholder(res, rawUrl);
         }
 
+        const ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
         let referer = 'https://www.google.com/';
-        let ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
 
-        if (targetUrl.includes('instagram') || targetUrl.includes('cdninstagram')) {
+        if (lowerTarget.includes('instagram') || lowerTarget.includes('cdninstagram')) {
             referer = 'https://www.instagram.com/';
-        } else if (targetUrl.includes('facebook') || targetUrl.includes('fbcdn') || targetUrl.includes('fbsbx')) {
+        } else if (lowerTarget.includes('facebook') || lowerTarget.includes('fbcdn') || lowerTarget.includes('fbsbx')) {
             referer = 'https://www.facebook.com/';
-            ua = 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)';
-        } else if (targetUrl.includes('linkedin') || targetUrl.includes('licdn')) {
+        } else if (lowerTarget.includes('linkedin') || lowerTarget.includes('licdn')) {
             referer = 'https://www.linkedin.com/';
         }
 
-        const isVideoReq = targetUrl.match(/\.(mp4|webm|ogg)(\?|$)/i) || targetUrl.includes('/playlist/vid/') || targetUrl.includes('video.licdn.com');
+        const isVideoReq = lowerTarget.match(/\.(mp4|webm|ogg)(\?|$)/i) || lowerTarget.includes('/playlist/vid/') || lowerTarget.includes('video.licdn.com');
         const headers: Record<string, string> = {
             'User-Agent': ua,
             'Accept': isVideoReq ? 'video/webm,video/mp4,video/*;q=0.9,*/*;q=0.8' : 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
@@ -421,7 +422,7 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
             url: targetUrl,
             responseType: 'stream',
             headers: headers,
-            timeout: 5000,
+            timeout: 10000,
             validateStatus: (status) => status >= 200 && status < 400
         });
 
@@ -434,15 +435,11 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
         res.setHeader('Cache-Control', 'public, max-age=86400');
-
-        for (const [key, value] of Object.entries(response.headers)) {
-            const lowerKey = key.toLowerCase();
-            if (lowerKey !== 'transfer-encoding' && lowerKey !== 'access-control-allow-origin' &&
-                lowerKey !== 'content-encoding' && lowerKey !== 'cache-control' &&
-                lowerKey !== 'content-security-policy' && lowerKey !== 'cross-origin-resource-policy' &&
-                lowerKey !== 'cross-origin-opener-policy' && lowerKey !== 'x-frame-options') {
-                res.set(key, value as string);
-            }
+        if (response.headers['content-type']) {
+            res.setHeader('Content-Type', String(response.headers['content-type']));
+        }
+        if (response.headers['accept-ranges']) {
+            res.setHeader('Accept-Ranges', String(response.headers['accept-ranges']));
         }
 
         res.status(response.status);

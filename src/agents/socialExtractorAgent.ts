@@ -1240,7 +1240,7 @@ export class SocialExtractorAgent {
                         var validImgs = [];
                         for (var k = 0; k < imgs.length; k++) {
                             var s = imgs[k].getAttribute('data-delayed-url') || imgs[k].getAttribute('src') || "";
-                            if (s.length > 20 && s.indexOf('data:') !== 0 && s.indexOf('blob:') !== 0 && s.indexOf('profile') === -1) {
+                            if (s.length > 20 && s.indexOf('data:') !== 0 && s.indexOf('blob:') !== 0 && s.indexOf('profile') === -1 && s.indexOf('static.licdn.com') === -1 && s.indexOf('aero-v1') === -1) {
                                 validImgs.push(s);
                             }
                         }

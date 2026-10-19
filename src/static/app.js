@@ -2239,25 +2239,42 @@ async function loadFeedUI() {
           let trimmed = c.trim();
           if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
             let lower = trimmed.toLowerCase();
-            // Strictly exclude webpage links, login pages, and profile URLs
-            if (lower.includes('/p/') || lower.includes('/reel/') || lower.includes('/posts/') ||
-                lower.includes('/photos/') || lower.includes('/videos/') || lower.includes('story.php') ||
-                lower.includes('permalink.php') || lower.includes('facebook.com') || lower.includes('instagram.com') ||
-                lower.includes('linkedin.com/in') || lower.includes('linkedin.com/company') || lower.includes('youtube.com/watch') ||
-                lower.includes('/media/?size=')) {
-              continue;
-            }
-            if (lower.includes('p100x100') || lower.includes('p200x200') || lower.includes('p50x50') ||
+
+            // Exclude static placeholders, small icons, profile pics, and LinkedIn aero-v1 static assets
+            if (lower.includes('static.licdn.com') || lower.includes('aero-v1') || lower.includes('c45fy346jw096z9pbphyyhdz7') ||
+                lower.includes('rsrc.php') || lower.includes('/images/icons/') || lower.includes('/static/images/') ||
+                lower.includes('p100x100') || lower.includes('p200x200') || lower.includes('p50x50') ||
                 lower.includes('p36x36') || lower.includes('p75x75') || lower.includes('p160x160') ||
                 lower.includes('p320x320') || lower.includes('s100x100') || lower.includes('s200x200') ||
                 lower.includes('s50x50') || lower.includes('s36x36') || lower.includes('s75x75') ||
                 lower.includes('profile_pic') || lower.includes('profile_photo') || lower.includes('avatar') ||
                 lower.includes('cover_photo') || lower.includes('profile_cover') || lower.includes('banner') ||
-                lower.includes('header') || lower.includes('rsrc.php') || lower.includes('emoji')) {
+                lower.includes('header') || lower.includes('emoji')) {
               continue;
             }
+
+            // Exclude HTML webpage/profile links (only match actual webpage hostnames)
+            try {
+              const parsed = new URL(trimmed);
+              const host = parsed.hostname.toLowerCase();
+              const path = parsed.pathname.toLowerCase();
+
+              if (
+                ((host === 'instagram.com' || host === 'www.instagram.com') && (path.includes('/p/') || path.includes('/reel/') || path.includes('/stories/') || path.split('/').filter(Boolean).length <= 1)) ||
+                ((host === 'facebook.com' || host === 'www.facebook.com' || host === 'm.facebook.com' || host === 'web.facebook.com') && (path.includes('/posts/') || path.includes('/photos/') || path.includes('/videos/') || path.includes('story.php') || path.includes('permalink.php') || path.split('/').filter(Boolean).length <= 1)) ||
+                ((host === 'linkedin.com' || host === 'www.linkedin.com') && (path.includes('/posts/') || path.includes('/feed/update/') || path.includes('/in/') || path.includes('/company/'))) ||
+                (host === 'youtube.com' || host === 'www.youtube.com' || host === 'youtu.be')
+              ) {
+                continue;
+              }
+            } catch (e) {
+              continue;
+            }
+
+            // Accept media CDN domains or files with image/video extensions
             if (lower.includes('cdninstagram') || lower.includes('fbcdn') || lower.includes('fbsbx') ||
-                lower.includes('licdn') || lower.includes('ytimg') || lower.includes('unsplash.com') ||
+                lower.includes('media.licdn.com') || lower.includes('dms.licdn.com') || lower.includes('licdn.com/dms') ||
+                lower.includes('ytimg') || lower.includes('googleusercontent.com') || lower.includes('unsplash.com') ||
                 lower.match(/\.(jpeg|jpg|png|gif|webp|svg|mp4)(\?|$)/i)) {
               return trimmed;
             }
@@ -2266,41 +2283,47 @@ async function loadFeedUI() {
         return null;
       };
 
+      window.isMediaUrl = function(u) {
+        if (!u || typeof u !== 'string' || !u.startsWith('http')) return false;
+        const lower = u.toLowerCase();
+        if (lower.includes('static.licdn.com') || lower.includes('aero-v1') || lower.includes('c45fy346jw096z9pbphyyhdz7')) return false;
+        try {
+          const parsed = new URL(u);
+          const host = parsed.hostname.toLowerCase();
+          const path = parsed.pathname.toLowerCase();
+          if (
+            ((host === 'instagram.com' || host === 'www.instagram.com') && (path.includes('/p/') || path.includes('/reel/'))) ||
+            ((host === 'facebook.com' || host === 'www.facebook.com' || host === 'm.facebook.com') && (path.includes('/posts/') || path.includes('/videos/'))) ||
+            ((host === 'linkedin.com' || host === 'www.linkedin.com') && (path.includes('/posts/') || path.includes('/feed/update/')))
+          ) {
+            return false;
+          }
+        } catch(e) {
+          return false;
+        }
+        return lower.includes('fbcdn') || lower.includes('fbsbx') || lower.includes('cdninstagram') ||
+               lower.includes('media.licdn.com') || lower.includes('dms.licdn.com') || lower.includes('licdn.com/dms') ||
+               lower.includes('ytimg') || lower.includes('googleusercontent') || !!lower.match(/\.(jpeg|jpg|png|gif|webp|svg)(\?|$)/i) || lower.includes('unsplash');
+      };
+
       // Split Media Left / Caption Right Lightbox Modal function
-      window.openLightbox = function(url, isVideo, postLink, platform, mediaType, encodedContent, encodedAuthor, dateStr, platformColor, likes, comments) {
+      window.openLightbox = function(encodedMediaUrl, isVideo, encodedPostLink, platform, mediaType, encodedContent, encodedAuthor, dateStr, platformColor, likes, comments) {
         const lb = document.getElementById('media-lightbox');
         const content = document.getElementById('media-lightbox-content');
 
+        let url = encodedMediaUrl ? decodeURIComponent(encodedMediaUrl) : '';
+        let postLink = encodedPostLink ? decodeURIComponent(encodedPostLink) : '';
         let rawText = encodedContent ? decodeURIComponent(encodedContent) : '';
         let authorName = encodedAuthor ? decodeURIComponent(encodedAuthor) : (platform || 'Competitor');
         let displayDate = dateStr && dateStr !== 'undefined' && dateStr !== 'null' ? dateStr : 'Recent';
 
+        const meta = platformMeta[platform] || platformMeta['LinkedIn'];
         const ytId = window.getYouTubeId(url) || window.getYouTubeId(postLink) || window.getYouTubeId(rawText);
-        const isIgReel = (platform === 'Instagram' || (postLink && postLink.includes('instagram.com'))) &&
-                         ((postLink && postLink.includes('/reel/')) || (url && url.includes('/reel/')) || mediaType === 'Video' || isVideo);
-        const igReelSc = isIgReel ? ((postLink || url || '').match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/)?.[1]) : null;
 
-        const liActId = (postLink || url || '').match(/activity-(\d+)/)?.[1] ||
-                        (postLink || url || '').match(/urn:li:(?:activity|ugcPost|share):(\d+)/)?.[1] ||
-                        ((postLink || url || '').includes('linkedin.com') ? (postLink || url || '').match(/(\d{18,19})/)?.[1] : null);
-
-        const isLiVid = (platform === 'LinkedIn' || (postLink && postLink.includes('linkedin.com'))) &&
-                        (mediaType === 'Video' || isVideo === true || (url && (url.includes('/playlist/vid/') || url.includes('video.licdn.com') || url.includes('.mp4'))));
-
-        const isDirectVideo = (url && (url.match(/\.(mp4|webm|ogg)(\?|$)/i) || url.includes('.mp4') || url.includes('/playlist/vid/'))) ||
-                              (postLink && (postLink.includes('/reel/') || postLink.includes('/watch') || postLink.includes('/videos/')));
-        const isVideoMedia = isDirectVideo || isLiVid || (isVideo && (url.includes('.mp4') || url.includes('/playlist/vid/') || mediaType === 'Video'));
-        const isFacebookVideo = (platform === 'Facebook' || (postLink && postLink.includes('facebook.com'))) &&
-                                (mediaType === 'Video' || isVideo || /\/(?:videos|reel|watch)\b/i.test(postLink || ''));
+        const isDirectVideo = (url && (url.match(/\.(mp4|webm|ogg)(\?|$)/i) || url.includes('/playlist/vid/')));
+        const isMediaImg = window.isMediaUrl(url);
 
         let leftMediaHtml = '';
-
-        const isMediaUrl = function(u) {
-          if (!u || typeof u !== 'string' || !u.startsWith('http')) return false;
-          const lower = u.toLowerCase();
-          if (lower.includes('/posts/') || lower.includes('/profile.php') || lower.includes('/feed/update/') || lower.includes('/p/') || lower.includes('/reel/') || lower.includes('/media/?size=')) return false;
-          return lower.includes('fbcdn') || lower.includes('fbsbx') || lower.includes('cdninstagram') || lower.includes('licdn') || lower.includes('ytimg') || !!lower.match(/\.(jpeg|jpg|png|gif|webp|svg)(\?|$)/i) || lower.includes('unsplash');
-        };
 
         if (ytId) {
           leftMediaHtml = `
@@ -2311,95 +2334,34 @@ async function loadFeedUI() {
                 referrerpolicy="no-referrer-when-downgrade"
                 allowfullscreen></iframe>
             </div>`;
-        } else if (isIgReel || (platform === 'Instagram' && (isVideo || mediaType === 'Video'))) {
-          const igTarget = (postLink && (postLink.includes('/p/') || postLink.includes('/reel/'))) ? postLink : ((url && (url.includes('/p/') || url.includes('/reel/'))) ? url : postLink || url);
-          if (igTarget) {
-            leftMediaHtml = `
-              <div style="width: 100%; height: 100%; background: #080d1a; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
-                <iframe src="/api/instagram-embed?url=${encodeURIComponent(igTarget)}" 
-                  style="width: 100%; height: 100%; border: 0; background: #080d1a;" 
-                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
-                  allowfullscreen scrolling="no"></iframe>
-                <a href="${igTarget}" target="_blank" rel="noopener noreferrer" style="position:absolute; right:14px; bottom:14px; z-index:2; padding:8px 12px; border-radius:6px; background:rgba(8,13,26,.86); color:#fff; font-size:12px; font-weight:700; text-decoration:none; border:1px solid rgba(255,255,255,.22);">Open on Instagram ↗</a>
-              </div>`;
-          }
-        } else if (isFacebookVideo && postLink) {
-          const fbEmbedUrl = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(postLink)}&show_text=false&width=720`;
+        } else if (isDirectVideo) {
+          let videoSrc = window.getSocialMediaProxyUrl(url);
           leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #080d1a; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
-              <iframe src="${fbEmbedUrl}" style="width:100%; height:100%; border:0; background:#080d1a;" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen scrolling="no"></iframe>
-              <a href="${postLink}" target="_blank" rel="noopener noreferrer" style="position:absolute; right:14px; bottom:14px; z-index:2; padding:8px 12px; border-radius:6px; background:rgba(8,13,26,.86); color:#fff; font-size:12px; font-weight:700; text-decoration:none; border:1px solid rgba(255,255,255,.22);">Open on Facebook ↗</a>
+            <div style="width: 100%; height: 100%; background: #000; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+              <video src="${videoSrc}" controls autoplay preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;"></video>
             </div>`;
-        } else if (isLiVid && liActId) {
-          leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #000; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; border-radius: 8px;">
-              <iframe src="/api/linkedin-embed-player?id=${liActId}" 
-                style="width: 100%; height: 100%; border: 0; background: #000;" 
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
-                allowfullscreen 
-                scrolling="no"></iframe>
-            </div>`;
-        } else if (isVideoMedia && (url || postLink)) {
-          let mediaTarget = (isLiVid && postLink && (postLink.includes('activity-') || postLink.includes('linkedin.com'))) ? postLink : url;
-          let videoSrc = window.getSocialMediaProxyUrl(mediaTarget);
-          leftMediaHtml = `<video src="${videoSrc}" controls autoplay preload="auto" playsinline style="width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;"></video>`;
-        } else if (isMediaUrl(url)) {
+        } else if (isMediaImg) {
           let imgSrc = window.getSocialMediaProxyUrl(url);
           leftMediaHtml = `
             <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px;">
-              <div style="position: absolute; top: 16px; left: 16px; background: rgba(59, 130, 246, 0.9); color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
-                ${platformMeta[platform]?.icon || '📷'} ${platform || 'Media'}
+              <div style="position: absolute; top: 16px; left: 16px; background: ${meta.badgeBg || '#3b82f6'}; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+                ${meta.icon || '📷'} ${platform || 'Media'}
               </div>
-              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);" onerror="this.onerror=null; this.parentElement.innerHTML=\`<div style='text-align:center; padding:40px; color:#ffffff;'><div style='font-size:64px; margin-bottom:16px;'>${platformMeta[platform]?.icon || '🌐'}</div><h3 style='margin:0 0 8px 0;'>${authorName}</h3><p style='color:#94a3b8; margin-bottom:24px;'>Official ${platform} Content</p><a href='${postLink || url}' target='_blank' style='background:${platformColor || '#3b82f6'}; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold;'>View Original Post ↗</a></div>\`;" />
-            </div>`;
-        } else if (platform === 'Instagram' || (postLink && postLink.includes('instagram.com')) || (url && url.includes('instagram.com'))) {
-          const igTarget = (postLink && (postLink.includes('/p/') || postLink.includes('/reel/'))) ? postLink : ((url && (url.includes('/p/') || url.includes('/reel/'))) ? url : postLink || url);
-          if (igTarget) {
-            leftMediaHtml = `
-              <div style="width: 100%; height: 100%; background: #080d1a; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
-                <iframe src="/api/instagram-embed?url=${encodeURIComponent(igTarget)}" 
-                  style="width: 100%; height: 100%; border: 0; background: #080d1a;" 
-                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
-                  allowfullscreen scrolling="no"></iframe>
-                <a href="${igTarget}" target="_blank" rel="noopener noreferrer" style="position:absolute; right:14px; bottom:14px; z-index:2; padding:8px 12px; border-radius:6px; background:rgba(8,13,26,.86); color:#fff; font-size:12px; font-weight:700; text-decoration:none; border:1px solid rgba(255,255,255,.22);">Open on Instagram ↗</a>
-              </div>`;
-          } else {
-            leftMediaHtml = `
-              <div style="width: 100%; height: 100%; background: #1f0516; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px;">
-                <div style="width: 88px; height: 88px; border-radius: 50%; background: rgba(225, 48, 108, 0.15); border: 2px solid rgba(225, 48, 108, 0.4); display: flex; align-items: center; justify-content: center; font-size: 44px; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(225, 48, 108, 0.2);">
-                  📸
-                </div>
-                <h3 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin: 0 0 8px 0;">${authorName}</h3>
-                <p style="font-size: 0.95rem; color: #94a3b8; margin: 0 0 24px 0;">Official Instagram Social Activity</p>
-                ${(postLink || url) ? `<a href="${postLink || url}" target="_blank" rel="noopener noreferrer" style="background: #e1306c; color: white; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px;">
-                  <span>View Original Post on Instagram</span> ↗
-                </a>` : ''}
-              </div>`;
-          }
-        } else if (platform === 'Facebook' || (postLink && postLink.includes('facebook.com'))) {
-          leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #0b0f19; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px;">
-              <div style="width: 88px; height: 88px; border-radius: 50%; background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.4); display: flex; align-items: center; justify-content: center; font-size: 44px; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);">
-                📘
-              </div>
-              <h3 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin: 0 0 8px 0;">${authorName}</h3>
-              <p style="font-size: 0.95rem; color: #94a3b8; margin: 0 0 24px 0;">Official Facebook Social Update</p>
-              ${(postLink || url) ? `<a href="${postLink || url}" target="_blank" rel="noopener noreferrer" style="background: #1877f2; color: white; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px;">
-                <span>View Original Post on Facebook</span> ↗
-              </a>` : ''}
+              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);" onerror="this.onerror=null; this.src='${url}'; this.onerror=function(){ this.parentElement.innerHTML=\`<div style='text-align:center; padding:40px; color:#ffffff;'><div style='font-size:64px; margin-bottom:16px;'>${meta.icon || '🌐'}</div><h3 style='margin:0 0 8px 0;'>${authorName}</h3><p style='color:#94a3b8; margin-bottom:24px;'>Official ${platform} Content</p><a href='${postLink || url}' target='_blank' style='background:${platformColor || '#3b82f6'}; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold;'>View Original Post ↗</a></div>\`; };" />
             </div>`;
         } else {
-          const platformIcons = { Facebook: '📘', Instagram: '📸', LinkedIn: '💼', YouTube: '▶️' };
-          const icon = platformIcons[platform] || '🌐';
-          const targetUrl = postLink || url || '';
+          // Clean branded post details card for text-only posts
           leftMediaHtml = `
-            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; width: 100%; height: 100%; background: #0b0f19;">
-              <div style="width: 88px; height: 88px; border-radius: 50%; background: ${platformColor || '#3b82f6'}22; border: 1px solid ${platformColor || '#3b82f6'}44; display: flex; align-items: center; justify-content: center; font-size: 44px; margin-bottom: 24px; box-shadow: 0 8px 24px ${platformColor || '#3b82f6'}33;">
-                ${icon}
+            <div style="width: 100%; height: 100%; background: ${meta.bg}; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 36px; box-sizing: border-box;">
+              <div style="width: 76px; height: 76px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
+                ${meta.icon}
               </div>
-              <h3 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin: 0 0 8px 0;">${authorName}</h3>
-              <p style="font-size: 0.95rem; color: #94a3b8; margin: 0 0 24px 0;">Official ${platform} Social Activity</p>
-              ${targetUrl ? `<a href="${targetUrl}" target="_blank" rel="noopener noreferrer" style="background: ${platformColor || '#3b82f6'}; color: white; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px;">
+              <h3 style="font-size: 1.35rem; font-weight: 700; color: #ffffff; margin: 0 0 6px 0;">${authorName}</h3>
+              <p style="font-size: 0.9rem; color: rgba(255,255,255,0.75); margin: 0 0 20px 0;">Official ${platform} Post</p>
+              <div style="max-width: 440px; background: rgba(0,0,0,0.35); padding: 18px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); margin-bottom: 22px; color: #e2e8f0; font-size: 0.9rem; line-height: 1.5; text-align: left; max-height: 180px; overflow-y: auto;">
+                ${rawText ? rawText.substring(0, 320) + (rawText.length > 320 ? '...' : '') : 'No caption text provided for this post.'}
+              </div>
+              ${postLink ? `<a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: ${meta.badgeBg || '#3b82f6'}; color: white; padding: 11px 24px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
                 <span>View Original Post on ${platform}</span> ↗
               </a>` : ''}
             </div>`;
@@ -2487,7 +2449,7 @@ async function loadFeedUI() {
         let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
         cardThumbHtml = `
           <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
-            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
+            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };" />
             <div style="position:absolute; top:10px; right:10px; background:rgba(225,48,108,0.95); color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none;">📹 REEL</div>
             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(225,48,108,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
           </div>`;
@@ -2495,7 +2457,7 @@ async function loadFeedUI() {
         let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
         cardThumbHtml = `
           <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
-            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
+            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };" />
             <div style="position:absolute; top:10px; right:10px; background:rgba(10,102,194,0.95); color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none;">📹 VIDEO</div>
             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(10,102,194,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
           </div>`;
@@ -2503,7 +2465,7 @@ async function loadFeedUI() {
         let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
         cardThumbHtml = `
           <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
-            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
+            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };" />
             <div style="position:absolute; top:10px; right:10px; background:rgba(24,119,242,.95); color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:.05em; box-shadow:0 2px 6px rgba(0,0,0,.5); pointer-events:none;">📹 VIDEO</div>
             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(24,119,242,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.6);">▶</div>
           </div>`;
@@ -2511,7 +2473,7 @@ async function loadFeedUI() {
         let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
         cardThumbHtml = `
           <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
-            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
+            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };" />
           </div>`;
       } else {
         cardThumbHtml = `
@@ -2533,7 +2495,7 @@ async function loadFeedUI() {
       let commentsVal = post.engagement?.comments || post.comments || '';
 
       return `
-        <div class="feed-card-item" onclick="window.openLightbox('${mediaToOpen}', ${isMediaVidFlag ? true : false}, '${pLink}', '${platform}', '${post.media_type || post.mediaType || ''}', '${safeContent}', '${safeAuthor}', '${dateStr}', '${meta.color}', '${likesVal}', '${commentsVal}')" style="min-width: 270px; max-width: 280px; flex-shrink: 0; padding: 14px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; height: 380px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)'">
+        <div class="feed-card-item" onclick="window.openLightbox(encodeURIComponent('${mediaToOpen}'), ${isMediaVidFlag ? true : false}, encodeURIComponent('${pLink}'), '${platform}', '${post.media_type || post.mediaType || ''}', '${safeContent}', '${safeAuthor}', '${dateStr}', '${meta.color}', '${likesVal}', '${commentsVal}')" style="min-width: 270px; max-width: 280px; flex-shrink: 0; padding: 14px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; height: 380px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)'">
           <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 6px;">
             <span style="font-size: 0.8rem; font-weight: 700; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px;">${compName}</span>
             <div style="display: flex; align-items: center; gap: 6px;">
