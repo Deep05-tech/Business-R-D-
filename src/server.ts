@@ -1,5 +1,6 @@
 import express from "express";
 import axios from "axios";
+import * as cheerio from "cheerio";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
@@ -452,6 +453,12 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
         if (response.headers['accept-ranges']) {
             res.setHeader('Accept-Ranges', String(response.headers['accept-ranges']));
         }
+        if (response.headers['content-range']) {
+            res.setHeader('Content-Range', String(response.headers['content-range']));
+        }
+        if (response.headers['content-length']) {
+            res.setHeader('Content-Length', String(response.headers['content-length']));
+        }
 
         res.status(response.status);
         response.data.pipe(res);
@@ -512,25 +519,57 @@ app.get('/api/linkedin-embed-player', async (req, res) => {
             timeout: 7000
         });
 
-        let html = embedRes.data || '';
+        const rawHtml = embedRes.data || '';
+        const $ = cheerio.load(rawHtml);
+        const rawSources = $('video').attr('data-sources');
 
+        if (rawSources) {
+            try {
+                const parsed = JSON.parse(rawSources);
+                const best = parsed.find((s: any) => s.src && s.src.includes('720p')) || parsed.find((s: any) => s.src && s.src.includes('480p')) || parsed[0];
+                if (best && best.src) {
+                    const videoSrc = `/api/proxy-media?url=${encodeURIComponent(best.src)}`;
+                    const videoPoster = $('video').attr('poster') || '';
+                    const posterAttr = videoPoster ? `poster="/api/proxy-media?url=${encodeURIComponent(videoPoster)}"` : '';
+                    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+                    return res.send(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body, html { margin: 0 !important; padding: 0 !important; width: 100vw !important; height: 100vh !important; background: #000 !important; overflow: hidden !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+    video { width: 100vw !important; height: 100vh !important; max-width: 100vw !important; max-height: 100vh !important; object-fit: contain !important; margin: 0 !important; background: #000 !important; }
+  </style>
+</head>
+<body>
+  <video src="${videoSrc}" ${posterAttr} controls autoplay playsinline preload="auto"></video>
+</body>
+</html>`);
+                }
+            } catch (err: any) {
+                logger.warn(`[LinkedIn-Player] Failed to parse video data-sources for ${actId}: ${err.message}`);
+            }
+        }
+
+        // Clean responsive embed fallback for image/text posts
         const customStyle = `
         <style>
-          body, html { margin: 0 !important; padding: 0 !important; width: 100vw !important; height: 100vh !important; background: #000 !important; overflow: hidden !important; }
-          article { border: none !important; padding: 0 !important; background: #000 !important; width: 100vw !important; height: 100vh !important; display: flex !important; align-items: center !important; justify-content: center !important; }
-          .base-main-feed-card__entity-lockup, [data-test-id*="entity-lockup"], p, header, footer, .embed-footer, .feed-shared-text, .main-feed-activity-embed-card__commentary, .social-details-social-counts { display: none !important; visibility: hidden !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }
-          .share-native-video, .video-js, video { width: 100vw !important; height: 100vh !important; max-height: 100vh !important; object-fit: contain !important; margin: 0 !important; border-radius: 8px !important; display: block !important; }
+          body, html { margin: 0 !important; padding: 0 !important; width: 100% !important; min-height: 100% !important; background: #080d1a !important; color: #fff !important; }
+          article { border: none !important; margin: 0 auto !important; background: #080d1a !important; color: #fff !important; }
+          .base-main-feed-card { background: #080d1a !important; color: #fff !important; }
+          .feed-shared-text, p, span, h1, h2, h3, h4 { color: #f1f5f9 !important; }
+          img { max-width: 100% !important; height: auto !important; border-radius: 8px !important; }
         </style>
         `;
 
-        html = html.replace('</head>', `${customStyle}</head>`);
+        let html = rawHtml.replace('</head>', `${customStyle}</head>`);
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
         return res.send(html);
     } catch (e: any) {
         logger.warn(`[LinkedIn-Player] Failed to load embed HTML for ${actId}: ${e.message}`);
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        return res.send(`
-<!DOCTYPE html>
+        return res.send(`<!DOCTYPE html>
 <html>
 <head><style>body { background: #031224; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }</style></head>
 <body>
@@ -538,8 +577,7 @@ app.get('/api/linkedin-embed-player', async (req, res) => {
   <h3 style="margin: 0 0 16px 0;">Official LinkedIn Update</h3>
   <a href="https://www.linkedin.com/feed/update/urn:li:activity:${actId}" target="_blank" style="background: #0a66c2; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold;">View on LinkedIn ↗</a>
 </body>
-</html>
-        `);
+</html>`);
     }
 });
 

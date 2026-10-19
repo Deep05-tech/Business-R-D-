@@ -442,7 +442,10 @@ export class SocialExtractorAgent {
             likes,
             comments,
             postUrl,
-            competitorName: companyName
+            competitorName: companyName,
+            video_url: post.video_url || post.videoUrl || undefined,
+            videoUrl: post.video_url || post.videoUrl || undefined,
+            activity_id: post.activity_id || undefined
         };
     }
 
@@ -1060,6 +1063,25 @@ export class SocialExtractorAgent {
                 const actMatch = postUrl.match(/(?:activity-|activity:|ugcPost:|share:)(\d+)/);
                 if (actMatch && actMatch[1]) {
                     post.activity_id = actMatch[1];
+                    try {
+                        const embedRes = await axios.get(`https://www.linkedin.com/embed/feed/update/urn:li:activity:${actMatch[1]}`, {
+                            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
+                            timeout: 5000
+                        }).catch(() => null);
+                        if (embedRes && embedRes.data) {
+                            const $li = cheerio.load(embedRes.data);
+                            const rawSources = $li('video').attr('data-sources');
+                            if (rawSources) {
+                                const parsed = JSON.parse(rawSources);
+                                const best = parsed.find((s: any) => s.src && s.src.includes('720p')) || parsed[0];
+                                if (best && best.src) {
+                                    post.video_url = best.src;
+                                    post.media_type = "Video";
+                                    post.mediaType = "Video";
+                                }
+                            }
+                        }
+                    } catch(e) {}
                 }
             } else if (platform === 'Facebook') {
                 if (postUrl.includes('/videos/') || postUrl.includes('/reel/')) {

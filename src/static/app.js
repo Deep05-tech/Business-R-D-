@@ -2302,7 +2302,8 @@ async function loadFeedUI() {
       const isIgReel = platform === 'Instagram' && (postLink.includes('/reel/') || post.media_type === 'Video' || post.mediaType === 'Video');
       const isIgPost = platform === 'Instagram' && !isIgReel && Boolean(igShortcode);
       const isFbVid = platform === 'Facebook' && (postLink.includes('/videos/') || postLink.includes('/reel/') || post.media_type === 'Video' || post.mediaType === 'Video');
-      const isLiVid = platform === 'LinkedIn' && (post.media_type === 'Video' || post.mediaType === 'Video' || postLink.includes('/video/') || Boolean(liActivityId));
+      const isLiVid = (platform === 'LinkedIn' || post._detectedPlatform === 'LinkedIn') &&
+                      (Boolean(post.video_url) || post.media_type === 'Video' || post.mediaType === 'Video' || postLink.includes('/video/') || (firstMediaUrl && (firstMediaUrl.includes('/playlist/vid/') || firstMediaUrl.includes('video.licdn.com') || firstMediaUrl.includes('thumbnail-with-play-button'))));
 
       let leftMediaHtml = '';
       let activeMode = mode || 'default';
@@ -2382,16 +2383,45 @@ async function loadFeedUI() {
                 </div>` : ''}
             </div>`;
         }
-      } else if (isLiVid && liActivityId) {
-        // Issue 3: LinkedIn Video preview fix
-        // Embed the official LinkedIn player rather than passing a thumbnail JPEG to <video src="...">
-        leftMediaHtml = `
-          <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
-            <iframe src="/api/linkedin-embed-player?id=${liActivityId}" 
-              style="width: 100%; height: 100%; border: 0; background: #000; border-radius: 8px;" 
-              frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" 
-              allowfullscreen></iframe>
-          </div>`;
+      } else if (isLiVid) {
+        // LinkedIn Video preview: High quality direct MP4 stream or official player
+        if (activeMode === 'embed' && liActivityId) {
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
+              <iframe src="/api/linkedin-embed-player?id=${liActivityId}" 
+                style="width: 100%; height: 100%; border: 0; background: #000; border-radius: 8px;" 
+                frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" 
+                allowfullscreen></iframe>
+              ${post.video_url ? `
+                <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
+                  <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'video')" style="background: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;">Direct MP4 Player ▶</button>
+                </div>` : ''}
+            </div>`;
+        } else if (post.video_url) {
+          let videoSrc = window.getSocialMediaProxyUrl(post.video_url);
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
+              <video src="${videoSrc}" controls autoplay preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;"></video>
+              ${liActivityId ? `
+                <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
+                  <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;">LinkedIn Player ↗</button>
+                </div>` : ''}
+            </div>`;
+        } else if (liActivityId) {
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
+              <iframe src="/api/linkedin-embed-player?id=${liActivityId}" 
+                style="width: 100%; height: 100%; border: 0; background: #000; border-radius: 8px;" 
+                frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" 
+                allowfullscreen></iframe>
+            </div>`;
+        } else if (firstMediaUrl) {
+          let videoSrc = window.getSocialMediaProxyUrl(firstMediaUrl);
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: #000; display:flex; align-items:center; justify-content:center; position:relative;">
+              <video src="${videoSrc}" controls autoplay preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;"></video>
+            </div>`;
+        }
       } else if (isFbVid) {
         // Issue 2: Facebook video preview fix
         if (post.video_url) {
@@ -2423,6 +2453,10 @@ async function loadFeedUI() {
               ${meta.icon || '📷'} ${platform || 'Media'}
             </div>
             <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ this.parentElement.innerHTML=\`<div style='text-align:center; padding:40px; color:#ffffff;'><div style='font-size:64px; margin-bottom:16px;'>${meta.icon || '🌐'}</div><h3 style='margin:0 0 8px 0;'>${window.escapeHtml(compName)}</h3><p style='color:#94a3b8; margin-bottom:24px;'>Official ${platform} Content</p><a href='${postLink || firstMediaUrl}' target='_blank' style='background:${meta.color || '#3b82f6'}; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold;'>View Original Post ↗</a></div>\`; };" />
+            ${postLink ? `
+              <div style="position: absolute; bottom: 12px; right: 12px; z-index: 10;">
+                <a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 4px 10px; font-size: 11px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">View on ${platform} ↗</a>
+              </div>` : ''}
           </div>`;
       } else {
         leftMediaHtml = `
@@ -2576,7 +2610,7 @@ async function loadFeedUI() {
       const isIgReelCard = (platform === 'Instagram' || post._detectedPlatform === 'Instagram') &&
                            (pLink.includes('/reel/') || post.media_type === 'Video' || post.mediaType === 'Video');
       const isLiVidCard = (platform === 'LinkedIn' || post._detectedPlatform === 'LinkedIn') &&
-                          (post.media_type === 'Video' || post.mediaType === 'Video' || (firstMediaUrl && (firstMediaUrl.includes('/playlist/vid/') || firstMediaUrl.includes('video.licdn.com') || firstMediaUrl.includes('thumbnail-with-play-button'))));
+                          (Boolean(post.video_url) || post.media_type === 'Video' || post.mediaType === 'Video' || (firstMediaUrl && (firstMediaUrl.includes('/playlist/vid/') || firstMediaUrl.includes('video.licdn.com') || firstMediaUrl.includes('thumbnail-with-play-button'))));
       const isFacebookVideoCard = (platform === 'Facebook' || post._detectedPlatform === 'Facebook') &&
                                   (post.media_type === 'Video' || post.mediaType === 'Video' || /\/(?:videos|reel|watch)\b/i.test(pLink));
 
