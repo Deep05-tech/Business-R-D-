@@ -221,7 +221,43 @@
         "aiLaymanSummary": "Fodder Bajra Seeds are specially cultivated seeds used to grow bajra crops, which serve as nutritious animal feed. These seeds come in different varieties, such as NIDHI-JUMBO and NIDHI-RAJKA BAJARI, catering to various farming needs. Farmers can plant these seeds to produce high-quality fodder that helps in raising healthy livestock. \n\nBenefits of using Fodder Bajra Seeds include: \n- Improved animal health due to better nutrition from fresh fodder. \n- Increased crop yield, leading to more sustainable farming practices. \n- Versatility in growing different types of bajra, allowing farmers to choose the best fit for their operations."
       }
     ],
-    "services": [],
+    "services": [
+      {
+        "name": "Seed Processing & Quality Conditioning",
+        "description": "Advanced seed cleaning, grading, gravity separation, and seed treatment for high germination rates.",
+        "applications": [
+          "Commercial Agriculture",
+          "Farmer Support"
+        ],
+        "processes": [
+          "Grading",
+          "Cleaning",
+          "Treatment"
+        ]
+      },
+      {
+        "name": "Agronomic Advisory & Field Consulting",
+        "description": "Technical consulting on soil prep, sowing density, irrigation, and pest management.",
+        "applications": [
+          "Crop Yield Optimization"
+        ],
+        "processes": [
+          "Field Demonstrations",
+          "Agronomy Support"
+        ]
+      },
+      {
+        "name": "Germination & Genetic Purity Testing",
+        "description": "Rigorous laboratory testing certifying high physical and genetic seed purity.",
+        "applications": [
+          "Quality Assurance"
+        ],
+        "processes": [
+          "Lab Germination Tests",
+          "DNA Testing"
+        ]
+      }
+    ],
     "valuePropositions": []
   },
   "processes": {
