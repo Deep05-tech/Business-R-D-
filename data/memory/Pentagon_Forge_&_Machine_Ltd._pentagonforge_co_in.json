@@ -1200,7 +1200,61 @@
         "aiLaymanSummary": "Automotive Components are specially crafted parts designed for use in vehicles. These components are forged and finished using advanced CNC (Computer Numerical Control) technology, ensuring they meet the high standards required in the automotive industry. They're crucial for assembling various systems in vehicles, including engines, chassis, transmissions, and steering and suspension units.\n\nHere's a quick overview of what Automotive Components offer:\n\n- **Diverse Applications**: These parts are used in many critical vehicle systems, ensuring safety and performance.\n- **Key Products**: The lineup includes items like Drop Arm Levers for steering, Shaft Mounting Brackets for chassis, and various components for suspension and driveline systems.\n- **Reliable Performance**: With precision manufacturing, these components enhance the durability and efficiency of automotive systems, making vehicles safer and more reliable on the road."
       }
     ],
-    "services": [],
+    "services": [
+      {
+        "name": "Custom Component Manufacturing & Forging",
+        "description": "Precision manufacturing and forging tailored to customer CAD models, technical drawings, and metallurgical requirements.",
+        "applications": [
+          "Automotive",
+          "Heavy Engineering",
+          "Industrial Assemblies"
+        ],
+        "processes": [
+          "Hot/Warm Forging",
+          "Die Design",
+          "Quality Inspection"
+        ]
+      },
+      {
+        "name": "CNC Precision Machining & Turning",
+        "description": "High-precision CNC turning, milling, and fine-tolerance machining for mission-critical parts.",
+        "applications": [
+          "Power Transmission",
+          "Aerospace",
+          "Capital Equipment"
+        ],
+        "processes": [
+          "CNC Turning",
+          "VMC Milling",
+          "Grinding"
+        ]
+      },
+      {
+        "name": "Heat Treatment & Surface Processing",
+        "description": "Complete heat treatment cycles including annealing, normalizing, hardening, and stress relieving.",
+        "applications": [
+          "High-Load Applications",
+          "Wear Resistance"
+        ],
+        "processes": [
+          "Controlled Atmosphere Furnaces",
+          "Quenching"
+        ]
+      },
+      {
+        "name": "Quality Assurance & Metallurgical Lab Testing",
+        "description": "Comprehensive testing including CMM 3D inspection, spectrometry, microstructure analysis, and ultrasonic NDT.",
+        "applications": [
+          "Zero-Defect Mandates",
+          "PPAP Submissions"
+        ],
+        "processes": [
+          "CMM",
+          "Spectrometry",
+          "NDT Testing"
+        ]
+      }
+    ],
     "valuePropositions": [
       "In-house production capabilities ensure high quality and precision.",
       "Certified by IATF 16949, ISO 9001, PED 2014/68/EU, and AD2000-Merkblatt WO.",
@@ -1311,7 +1365,13 @@
     ]
   },
   "audience": {
-    "buyerPersonas": [],
+    "buyerPersonas": [
+      "Procurement Managers",
+      "VP of Supply Chain",
+      "Plant Operations Directors",
+      "Chief Mechanical Engineers",
+      "Tier-1 OEM Sourcing Leads"
+    ],
     "geographies": [
       "India",
       "Germany",
