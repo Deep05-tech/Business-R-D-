@@ -32,6 +32,7 @@ import { Logger, createLogger } from "./utils/logger.js";
 import { BrandIntelligenceAgent } from "./agents/brandIntelligenceAgent.js";
 import { DiagnosticAgent } from "./agents/diagnosticAgent.js";
 import { TrendingTopicsAgent } from "./agents/trendingTopicsAgent.js";
+import { ProjectSocialAgent } from "./agents/projectSocialAgent.js";
 import { AuthStore, type AuthUser } from "./auth/authStore.js";
 
 import helmet from "helmet";
@@ -120,6 +121,7 @@ const competitiveAnalysisAgent = new CompetitiveAnalysisAgent();
 const seoAgent = new SeoAgent();
 const cronAgent = new CronAgent();
 const trendingTopicsAgent = new TrendingTopicsAgent();
+const projectSocialAgent = new ProjectSocialAgent();
 const memoryStore = new MemoryStore();
 const authStore = new AuthStore();
 const port = Number(process.env.PORT ?? 3000);
@@ -1019,6 +1021,15 @@ app.post("/api/memory/update", async (request, response) => {
     if (updates.rejectedCompetitors !== undefined) {
       memory.rejectedCompetitors = updates.rejectedCompetitors;
     }
+    if (updates.ownSocials !== undefined) {
+      memory.ownSocials = updates.ownSocials;
+    }
+    if (updates.ownSocialFeed !== undefined) {
+      memory.ownSocialFeed = updates.ownSocialFeed;
+    }
+    if (updates.brandVoicePattern !== undefined) {
+      memory.brandVoicePattern = updates.brandVoicePattern;
+    }
 
     await memoryStore.save(memory);
     knowledgeIndex.add(memory); // Update the cache
@@ -1550,6 +1561,91 @@ app.get("/api/social-feed", async (request, response) => {
 
     response.json({ feed: filteredFeed });
   } catch (e: any) {
+    response.status(500).json({ error: e.message });
+  }
+});
+
+app.get("/api/own-social-feed", async (request, response) => {
+  const url = request.query.url as string;
+  if (!url) return response.status(400).json({ error: "Missing url parameter" });
+
+  try {
+    let memory = await memoryStore.loadBySite(url);
+    if (!memory) {
+      const allMemories = await memoryStore.loadAll();
+      memory = allMemories.find(m => {
+        const u = (m.input?.websiteUrl || "").toLowerCase();
+        return u.includes(url.toLowerCase()) || url.toLowerCase().includes(u.replace(/^https?:\/\//, "").replace(/\/+$/, ""));
+      }) || allMemories[0] || null;
+    }
+    if (!memory) return response.status(404).json({ error: "Memory not found" });
+
+    // Ensure baseline brandVoicePattern exists if not set
+    if (!memory.brandVoicePattern) {
+      const companyContext = {
+        name: memory.businessIdentity?.officialName || "Business",
+        industry: memory.businessIdentity?.industry,
+        subIndustry: memory.businessIdentity?.subIndustry,
+        description: memory.businessIdentity?.description,
+        offerings: memory.offerings
+      };
+      memory.brandVoicePattern = await projectSocialAgent.analyzePattern(memory.ownSocialFeed || [], companyContext);
+      await memoryStore.save(memory);
+    }
+
+    response.json({
+      feed: memory.ownSocialFeed || [],
+      pattern: memory.brandVoicePattern || null,
+      socials: memory.ownSocials || {}
+    });
+  } catch (e: any) {
+    logger.error(`Error in /api/own-social-feed: ${e.message}`);
+    response.status(500).json({ error: e.message });
+  }
+});
+
+app.post("/api/refresh-own-socials", async (request, response) => {
+  const { websiteUrl, socials } = request.body;
+  if (!websiteUrl) return response.status(400).json({ error: "Missing websiteUrl" });
+
+  try {
+    let memory = await memoryStore.loadBySite(websiteUrl);
+    if (!memory) {
+      const allMemories = await memoryStore.loadAll();
+      memory = allMemories.find(m => {
+        const u = (m.input?.websiteUrl || "").toLowerCase();
+        return u.includes(websiteUrl.toLowerCase()) || websiteUrl.toLowerCase().includes(u.replace(/^https?:\/\//, "").replace(/\/+$/, ""));
+      }) || allMemories[0] || null;
+    }
+    if (!memory) return response.status(404).json({ error: "Memory not found" });
+
+    const companyName = memory.businessIdentity?.officialName || "Target Business";
+    const existingSocials = socials || memory.ownSocials || memory.input?.socialUrls;
+
+    logger.info(`Re-crawling official socials for ${companyName}...`);
+    const result = await projectSocialAgent.run(
+      companyName,
+      memory.input.websiteUrl,
+      existingSocials,
+      undefined,
+      memory
+    );
+
+    memory.ownSocials = result.ownSocials;
+    memory.ownSocialFeed = result.ownSocialFeed;
+    memory.brandVoicePattern = result.brandVoicePattern;
+
+    await memoryStore.save(memory);
+    knowledgeIndex.add(memory);
+
+    response.json({
+      success: true,
+      feed: memory.ownSocialFeed,
+      pattern: memory.brandVoicePattern,
+      socials: memory.ownSocials
+    });
+  } catch (e: any) {
+    logger.error(`Error refreshing own socials: ${e.message}`);
     response.status(500).json({ error: e.message });
   }
 });

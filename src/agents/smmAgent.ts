@@ -293,6 +293,50 @@ Format each object in the array with the EXACT following keys:
 `;
     }
 
+    let brandVoiceAndAntiRepetitionContext = "";
+    const ownPosts = (memory.ownSocialFeed || []) as any[];
+    const voice = memory.brandVoicePattern;
+
+    if (ownPosts.length > 0 || voice) {
+      const recentPostsList = ownPosts.slice(0, 15).map((p, idx) => {
+        const plat = p.platform || "Social";
+        const dt = p.date || p.published_date || "";
+        const cap = (p.caption || p.content || "").slice(0, 200).replace(/\n+/g, " ");
+        return `- [${plat}${dt ? ' ' + dt : ''}] ${cap}`;
+      }).join("\n");
+
+      const recentTopicsList = (voice?.recentPostTopics && voice.recentPostTopics.length > 0)
+        ? voice.recentPostTopics.map(t => `- "${t}"`).join("\n")
+        : ownPosts.slice(0, 10).map(p => `- "${(p.caption || p.content || "").slice(0, 80)}"`).join("\n");
+
+      const voiceDirectives = voice ? `
+COMPANY'S VERIFIED BRAND VOICE & POSTING PATTERN:
+- Caption Style: ${voice.captionStyle || 'Professional and engaging'}
+- Tone: ${voice.tone || 'Authoritative industry leader'}
+- Signature Hashtags (include these naturally): ${(voice.signatureHashtags || []).join(' ')}
+- Preferred Call-To-Action Style: ${(voice.preferredCTAs || []).join(' | ')}
+- Typical Content Themes: ${(voice.frequentThemes || []).join(', ')}
+- Formatting Habits: ${(voice.formattingPreferences || []).join(', ')}
+` : "";
+
+      brandVoiceAndAntiRepetitionContext = `
+======================================================================
+CRITICAL ANTI-REPETITION SHIELD & BRAND VOICE ALIGNMENT:
+The company has already published the following posts on their official social accounts:
+${recentPostsList || 'No raw posts available, but recent topics were indexed.'}
+
+RECENT TOPICS ALREADY COVERED BY THE COMPANY:
+${recentTopicsList}
+
+${voiceDirectives}
+
+MANDATORY RULES:
+1. ANTI-REPETITION: You MUST NOT repeat, rehash, or clone the topics, headlines, or announcements listed above. Pick an untouched product/service, a different engineering process, an alternate buyer persona, or a complementary storyline.
+2. VOICE ADOPTION: Emulate the company's verified caption style, tone, and formatting habits so the output feels like their authentic in-house marketing team wrote it.
+======================================================================
+`;
+    }
+
     const personasList = (memory.audience?.buyerPersonas || []).join(", ") || "Industry Buyers & Decision Makers";
 
     const prompt = `You are a world-class Chief Content Strategist & B2B Copywriter.
@@ -334,6 +378,7 @@ ${customInstructionsContext}
 ${competitorContext}
 ${subThemeFocusInstruction}
 ${trendingContext}
+${brandVoiceAndAntiRepetitionContext}
 
 Begin generating the posts now:`;
 

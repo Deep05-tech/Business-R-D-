@@ -291,6 +291,30 @@
               <label>Target Audience (Buyer Personas) <span class="muted">(Comma separated)</span></label>
               <textarea id="edit-audience" rows="2" placeholder="The AI did not identify a target audience. You can manually type one here..."></textarea>
             </div>
+
+            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+              <label style="font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); display: flex; align-items: center; gap: 6px; margin-bottom: 12px;">
+                <span>🌐</span> Official Company Social Media Accounts
+              </label>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label style="font-size: 11px; font-weight: 600; color: #0a66c2; margin-bottom: 4px;">💼 LinkedIn Company URL</label>
+                  <input type="url" id="edit-own-li" placeholder="https://linkedin.com/company/name">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label style="font-size: 11px; font-weight: 600; color: #e1306c; margin-bottom: 4px;">📸 Instagram Profile URL</label>
+                  <input type="url" id="edit-own-ig" placeholder="https://instagram.com/handle">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label style="font-size: 11px; font-weight: 600; color: #ff0000; margin-bottom: 4px;">▶️ YouTube Channel URL</label>
+                  <input type="url" id="edit-own-yt" placeholder="https://youtube.com/@channel">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label style="font-size: 11px; font-weight: 600; color: #1877f2; margin-bottom: 4px;">📘 Facebook Page URL</label>
+                  <input type="url" id="edit-own-fb" placeholder="https://facebook.com/page">
+                </div>
+              </div>
+            </div>
           </form>
           
           <div id="details-toast" style="display:none; margin-top: 15px; padding: 10px; background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid #22c55e; border-radius: 6px;">
@@ -379,6 +403,14 @@
         <div class="card fade-in">
           <h2>Social Media Marketing (SMM) Generation</h2>
           <p class="subtitle">Generate high-converting social media content for this project.</p>
+
+          <div id="smm-anti-repetition-banner" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.25); border-radius: 10px; padding: 10px 16px; margin-bottom: 20px; font-size: 13px; color: #22c55e;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">🛡️</span>
+              <span><strong>Anti-Repetition Shield: Active</strong> — Past company posts are analyzed to guarantee 100% original, non-duplicate content.</span>
+            </div>
+            <span id="smm-voice-badge" style="background: rgba(34, 197, 94, 0.15); padding: 3px 10px; border-radius: 12px; font-weight: 600; font-size: 11px;">🎙️ Brand Voice Aligned</span>
+          </div>
 
           <div class="form-group">
             <label>Strategy</label>
@@ -508,14 +540,45 @@
       <!-- TAB: SOCIAL FEED (CRON) -->
       <div class="tab-panel" id="panel-social-feed">
         <div class="card fade-in">
-          <div class="flex-between">
-            <h2>Competitor Social Media Tracker</h2>
-            <button class="btn btn-secondary" onclick="window.triggerCron()" id="btn-cron">Run Daily Tracker
-              Now</button>
+          <!-- Toggle Sub-navigation -->
+          <div style="display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; gap: 8px;">
+              <button id="feed-tab-competitors" class="btn btn-primary" onclick="window.switchSocialFeedView('competitors')" style="padding: 8px 18px; font-size: 13px; font-weight: 600; border-radius: 8px;">
+                🎯 Competitor Feeds
+              </button>
+              <button id="feed-tab-own" class="btn btn-secondary" onclick="window.switchSocialFeedView('own')" style="padding: 8px 18px; font-size: 13px; font-weight: 600; border-radius: 8px;">
+                🏢 Company Feed & Voice Pattern
+              </button>
+            </div>
+            <div id="feed-actions-competitors">
+              <button class="btn btn-secondary" onclick="window.triggerCron()" id="btn-cron" style="font-size: 13px;">Run Competitor Tracker Now</button>
+            </div>
+            <div id="feed-actions-own" style="display: none;">
+              <button class="btn btn-primary" onclick="window.refreshOwnSocials()" id="btn-refresh-own-socials" style="font-size: 13px; font-weight: 600;">🔄 Re-scan Company Socials</button>
+            </div>
           </div>
-          <p class="subtitle">A feed of recent social media posts and YouTube scripts from your competitors.</p>
-          <div id="feed-list">
-            <div class="empty-state">Run the daily tracker to find recent competitor posts.</div>
+
+          <!-- Sub-view 1: Competitor Feed -->
+          <div id="view-competitors-feed">
+            <div class="flex-between" style="margin-bottom: 8px;">
+              <h2 style="margin: 0; font-size: 1.25rem;">Competitor Social Media Tracker</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px;">A feed of recent social media posts, reels, and video scripts from your top market rivals.</p>
+            <div id="feed-list">
+              <div class="empty-state">Run the daily tracker to find recent competitor posts.</div>
+            </div>
+          </div>
+
+          <!-- Sub-view 2: Company Feed & Voice Pattern -->
+          <div id="view-own-feed" style="display: none;">
+            <div id="brand-voice-pattern-container" style="margin-bottom: 24px;"></div>
+            <div class="flex-between" style="margin-bottom: 8px;">
+              <h2 style="margin: 0; font-size: 1.25rem;">Company's Live Social Media Footprint</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px;">Recent posts published on your official accounts. The SMM engine automatically references these to prevent duplicate content and align with your brand voice.</p>
+            <div id="own-feed-list">
+              <div class="empty-state">Loading company feed...</div>
+            </div>
           </div>
         </div>
       </div>
@@ -529,7 +592,7 @@
   </main>
   </div>
 
-  <script src="/static/app.js?v=28"></script>
+  <script src="/static/app.js?v=29"></script>
 </body>
 
 </html>

@@ -1215,6 +1215,7 @@ async function loadProjectDetails() {
     
     const mem = data.memory;
     window.projectMemory = mem; // Save globally for UI updates
+    if (window.updateSmmAntiRepetitionBadge) window.updateSmmAntiRepetitionBadge();
     
     document.getElementById('edit-name').value = mem.businessIdentity?.officialName || '';
     document.getElementById('edit-industry').value = mem.businessIdentity?.industry || '';
@@ -1226,6 +1227,13 @@ async function loadProjectDetails() {
     document.getElementById('edit-products').value = (mem.offerings?.products || []).map(p => typeof p === 'string' ? p : p.name).join(', ');
     document.getElementById('edit-services').value = (mem.offerings?.services || []).map(s => typeof s === 'string' ? s : s.name).join(', ');
     document.getElementById('edit-audience').value = (mem.audience?.buyerPersonas || []).join(', ');
+
+    // Official Company Social Media Accounts
+    const socials = mem.ownSocials || {};
+    if (document.getElementById('edit-own-li')) document.getElementById('edit-own-li').value = socials.linkedin || '';
+    if (document.getElementById('edit-own-ig')) document.getElementById('edit-own-ig').value = socials.instagram || '';
+    if (document.getElementById('edit-own-yt')) document.getElementById('edit-own-yt').value = socials.youtube || '';
+    if (document.getElementById('edit-own-fb')) document.getElementById('edit-own-fb').value = socials.facebook || '';
     
     // Initialize Dynamic SMM UI
     if (window.updateSmmSuboptions) window.updateSmmSuboptions();
@@ -1260,6 +1268,12 @@ window.saveProjectDetails = async function() {
     },
     audience: {
       buyerPersonas: document.getElementById('edit-audience').value.split(',').map(s => s.trim()).filter(Boolean)
+    },
+    ownSocials: {
+      linkedin: document.getElementById('edit-own-li')?.value?.trim() || null,
+      instagram: document.getElementById('edit-own-ig')?.value?.trim() || null,
+      youtube: document.getElementById('edit-own-yt')?.value?.trim() || null,
+      facebook: document.getElementById('edit-own-fb')?.value?.trim() || null,
     }
   };
 
@@ -2336,6 +2350,9 @@ window.triggerCron = async function() {
 
 async function loadFeedUI() {
   if (!window.activeProjectUrl) return;
+  if (window.currentSocialFeedSubView === 'own') {
+    return loadOwnFeedUI();
+  }
   const list = document.getElementById('feed-list');
   
   try {
@@ -2978,3 +2995,235 @@ async function loadFeedUI() {
     list.innerHTML = '<div class="empty-state">Failed to load social feed.</div>';
   }
 }
+
+window.currentSocialFeedSubView = 'competitors';
+
+window.switchSocialFeedView = function(view) {
+  window.currentSocialFeedSubView = view;
+  const tabComp = document.getElementById('feed-tab-competitors');
+  const tabOwn = document.getElementById('feed-tab-own');
+  const viewComp = document.getElementById('view-competitors-feed');
+  const viewOwn = document.getElementById('view-own-feed');
+  const actComp = document.getElementById('feed-actions-competitors');
+  const actOwn = document.getElementById('feed-actions-own');
+
+  if (view === 'competitors') {
+    if (tabComp) { tabComp.className = 'btn btn-primary'; }
+    if (tabOwn) { tabOwn.className = 'btn btn-secondary'; }
+    if (viewComp) viewComp.style.display = 'block';
+    if (viewOwn) viewOwn.style.display = 'none';
+    if (actComp) actComp.style.display = 'block';
+    if (actOwn) actOwn.style.display = 'none';
+    loadFeedUI();
+  } else {
+    if (tabComp) { tabComp.className = 'btn btn-secondary'; }
+    if (tabOwn) { tabOwn.className = 'btn btn-primary'; }
+    if (viewComp) viewComp.style.display = 'none';
+    if (viewOwn) viewOwn.style.display = 'block';
+    if (actComp) actComp.style.display = 'none';
+    if (actOwn) actOwn.style.display = 'block';
+    loadOwnFeedUI();
+  }
+};
+
+window.refreshOwnSocials = async function() {
+  if (!window.activeProjectUrl) {
+    window.showError && window.showError("Please select a project first.");
+    return;
+  }
+  const btn = document.getElementById('btn-refresh-own-socials');
+  const originalText = btn ? btn.innerHTML : '🔄 Re-scan Company Socials';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:6px;"></span> Scanning official accounts...';
+  }
+
+  try {
+    const res = await fetch('/api/refresh-own-socials', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ websiteUrl: window.activeProjectUrl })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    if (window.projectMemory) {
+      window.projectMemory.ownSocials = data.socials;
+      window.projectMemory.ownSocialFeed = data.feed;
+      window.projectMemory.brandVoicePattern = data.pattern;
+    }
+
+    window.showSuccess && window.showSuccess("✅ Successfully crawled company accounts and updated brand voice pattern!");
+    await loadOwnFeedUI();
+    if (window.updateSmmAntiRepetitionBadge) window.updateSmmAntiRepetitionBadge();
+  } catch (err) {
+    window.showError && window.showError(`Failed to refresh socials: ${err.message}`);
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
+  }
+};
+
+async function loadOwnFeedUI() {
+  if (!window.activeProjectUrl) return;
+  const patternBox = document.getElementById('brand-voice-pattern-container');
+  const feedList = document.getElementById('own-feed-list');
+  if (!feedList) return;
+
+  feedList.innerHTML = '<div class="spinner"></div><p style="text-align:center;color:var(--text-muted);margin-top:12px;">Loading official company feed & voice patterns...</p>';
+
+  try {
+    const res = await fetch(`/api/own-social-feed?url=${encodeURIComponent(window.activeProjectUrl)}`);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    const pattern = data.pattern;
+    const feed = data.feed || [];
+
+    // Render Brand Voice Pattern Card
+    if (patternBox && pattern) {
+      const hashtagsHtml = (pattern.signatureHashtags || []).map(h => `<span style="background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 600;">${window.escapeHtml(h)}</span>`).join(' ') || '<span style="color:var(--text-muted);font-size:12px;">None specified</span>';
+      
+      const ctasHtml = (pattern.preferredCTAs || []).map(c => `<span style="background: rgba(34, 197, 94, 0.12); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.25); padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 500;">${window.escapeHtml(c)}</span>`).join(' ') || '<span style="color:var(--text-muted);font-size:12px;">Standard B2B CTAs</span>';
+      
+      const themesHtml = (pattern.frequentThemes || []).map(t => `<span style="background: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.25); padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 500;">${window.escapeHtml(t)}</span>`).join(' ') || '<span style="color:var(--text-muted);font-size:12px;">General capabilities</span>';
+
+      const recentTopics = pattern.recentPostTopics || [];
+      const topicsHtml = recentTopics.length > 0 
+        ? recentTopics.map(t => `<div style="display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-color); margin-bottom:4px;"><span style="color:#22c55e;">🚫</span> <span>${window.escapeHtml(t)}</span></div>`).join('')
+        : '<div style="font-size:12px; color:var(--text-muted);">No past topics indexed yet. Run "Re-scan Company Socials" to crawl historical topics.</div>';
+
+      patternBox.innerHTML = `
+        <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95)); border: 1px solid rgba(99, 102, 241, 0.25); border-radius: 16px; padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; flex-wrap:wrap; gap:10px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:22px;">🎙️</span>
+              <div>
+                <h3 style="margin:0; font-size:1.15rem; font-weight:700;">Company Social DNA & Brand Voice Pattern</h3>
+                <span style="font-size:12px; color:var(--text-muted);">Analyzed across official social accounts • SMM engine automatically mirrors this voice</span>
+              </div>
+            </div>
+            <span style="background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;">
+              🛡️ Anti-Repetition Shield: Active (${recentTopics.length} Topics Excluded)
+            </span>
+          </div>
+
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div style="background: rgba(0,0,0,0.25); padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+              <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">Tone & Cadence</div>
+              <div style="font-size: 13px; font-weight: 600; color: #e2e8f0; line-height: 1.4;">${window.escapeHtml(pattern.tone || 'Authoritative B2B')}</div>
+              <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">${window.escapeHtml(pattern.captionStyle || '')}</div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.25); padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+              <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; margin-bottom: 8px;">Signature Hashtags</div>
+              <div style="display:flex; flex-wrap:wrap; gap:6px;">${hashtagsHtml}</div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.25); padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+              <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; margin-bottom: 8px;">Preferred CTAs</div>
+              <div style="display:flex; flex-wrap:wrap; gap:6px;">${ctasHtml}</div>
+            </div>
+          </div>
+
+          <div style="background: rgba(0,0,0,0.3); padding: 16px; border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.2);">
+            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #4ade80; font-weight: 700; margin-bottom: 8px; display:flex; align-items:center; gap:6px;">
+              <span>🛡️</span> Excluded Recent Post Topics (Anti-Repetition List)
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted); margin: 0 0 10px 0;">The SMM generator is strictly instructed NEVER to repeat these exact topics or hooks:</p>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 4px;">
+              ${topicsHtml}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Render Posts
+    if (feed.length === 0) {
+      feedList.innerHTML = `
+        <div class="empty-state" style="padding: 40px; text-align: center;">
+          <div style="font-size: 32px; margin-bottom: 12px;">🏢</div>
+          <h3 style="margin: 0 0 8px 0;">No official posts crawled yet</h3>
+          <p style="color: var(--text-muted); font-size: 13px; max-width: 480px; margin: 0 auto 20px auto;">
+            Click the button below or make sure your company's social URLs are entered under <strong>Project Details</strong>.
+          </p>
+          <button class="btn btn-primary" onclick="window.refreshOwnSocials()" style="font-weight: 600;">🔄 Re-scan Company Socials Now</button>
+        </div>
+      `;
+      return;
+    }
+
+    const platformMeta = {
+      'YouTube': { icon: '▶️', color: '#ff0000', badgeBg: '#cc0000' },
+      'Facebook': { icon: '📘', color: '#1877f2', badgeBg: '#1877f2' },
+      'Instagram': { icon: '📸', color: '#e1306c', badgeBg: '#d62976' },
+      'LinkedIn': { icon: '💼', color: '#0a66c2', badgeBg: '#0a66c2' }
+    };
+
+    let postHtml = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">';
+    
+    feed.forEach((post, idx) => {
+      const plat = post.platform || 'Social';
+      const meta = platformMeta[plat] || platformMeta['LinkedIn'];
+      const rawText = (post.caption || post.content || '').trim();
+      const displayDate = post.date || post.published_date || post.timestamp || 'Recent';
+      const postLink = post.post_url || post.link || post.postUrl || '#';
+      const thumb = post.thumbnail || post.thumbnail_url || post.media_url || '';
+
+      const mediaPreview = thumb
+        ? `<div style="height: 150px; background: #0b1120; position: relative; overflow: hidden; border-radius: 8px 8px 0 0;">
+             <img src="${window.getSocialMediaProxyUrl ? window.getSocialMediaProxyUrl(thumb) : thumb}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.parentElement.style.display='none';" />
+             <span style="position: absolute; top: 8px; left: 8px; background: ${meta.badgeBg}; color: white; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">${meta.icon} ${plat}</span>
+           </div>`
+        : `<div style="height: 48px; background: rgba(0,0,0,0.2); padding: 8px 12px; display: flex; align-items: center; border-radius: 8px 8px 0 0;">
+             <span style="background: ${meta.badgeBg}; color: white; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">${meta.icon} ${plat}</span>
+           </div>`;
+
+      postHtml += `
+        <div style="background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+          ${mediaPreview}
+          <div style="padding: 14px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">${window.escapeHtml(displayDate)}</div>
+              <div style="font-size: 13px; color: var(--text-color); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;">
+                ${window.escapeHtml(rawText || 'No caption text')}
+              </div>
+            </div>
+            ${postLink && postLink !== '#' ? `
+              <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06);">
+                <a href="${postLink}" target="_blank" rel="noopener noreferrer" style="font-size: 12px; color: #60a5fa; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                  View on ${plat} ↗
+                </a>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    });
+
+    postHtml += '</div>';
+    feedList.innerHTML = postHtml;
+  } catch (err) {
+    feedList.innerHTML = `<div class="empty-state" style="color:#ef4444;">Failed to load company feed: ${err.message}</div>`;
+  }
+}
+
+window.updateSmmAntiRepetitionBadge = function() {
+  const mem = window.projectMemory;
+  const banner = document.getElementById('smm-anti-repetition-banner');
+  if (!banner) return;
+
+  const topicsCount = mem?.brandVoicePattern?.recentPostTopics?.length || 0;
+  if (topicsCount > 0) {
+    banner.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 16px;">🛡️</span>
+        <span><strong>Anti-Repetition Shield: Active</strong> — ${topicsCount} historical company post topics excluded from generation to guarantee 100% original content.</span>
+      </div>
+      <span id="smm-voice-badge" style="background: rgba(34, 197, 94, 0.15); padding: 3px 10px; border-radius: 12px; font-weight: 600; font-size: 11px;">🎙️ Brand Voice Aligned</span>
+    `;
+  }
+};

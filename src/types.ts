@@ -292,6 +292,18 @@ export interface CompetitorProfile {
   isDeadAccount?: boolean;
 }
 
+export interface BrandVoicePattern {
+  captionStyle: string;
+  tone: string;
+  formattingPreferences: string[];
+  signatureHashtags: string[];
+  preferredCTAs: string[];
+  frequentThemes: string[];
+  recentPostTopics: string[];
+  analyzedPostCount: number;
+  lastAnalyzedAt: string;
+}
+
 export interface StructuredMemory {
   generatedAt: string;
   input: BusinessInput;
@@ -322,6 +334,15 @@ export interface StructuredMemory {
   competitors?: CompetitorProfile[];
   rejectedCompetitors?: string[];
   socialFeed?: any[];
+  ownSocials?: {
+    linkedin?: string | null;
+    instagram?: string | null;
+    facebook?: string | null;
+    youtube?: string | null;
+    twitter?: string | null;
+  };
+  ownSocialFeed?: any[];
+  brandVoicePattern?: BrandVoicePattern;
 }
 
 export interface BusinessIntelligenceProfile {

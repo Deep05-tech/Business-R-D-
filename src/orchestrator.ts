@@ -48,6 +48,11 @@ interface AgentState {
   digital: AgentResult<DigitalMaturity>;
   rd: AgentResult<RdInsights>;
   marketingSales: AgentResult<MarketingSalesIntelligence>;
+  projectSocial?: {
+    ownSocials: any;
+    ownSocialFeed: any[];
+    brandVoicePattern: any;
+  };
 }
 
 export class OrchestratorAgent {
@@ -369,7 +374,35 @@ export class OrchestratorAgent {
 
     onProgress?.("R&D Insights Synthesized", { rdInsights: rd.data });
 
-    const finalState = { webScrape, semantic, web, social, identity, offerings, audience, brand, digital, rd, marketingSales };
+    // ---------------------------------------------------------------------------
+    // PHASE 7: Official Social Media Discovery & Brand Voice Analysis
+    // ---------------------------------------------------------------------------
+    onProgress?.("Official Social Discovery & Brand Pattern Analysis");
+    let projectSocial: { ownSocials: any; ownSocialFeed: any[]; brandVoicePattern: any } | undefined;
+    try {
+      projectSocial = await this.agents.projectSocial.run(
+        identity.data.officialName || "Target Business",
+        input.websiteUrl,
+        input.socialUrls,
+        webScrape.data,
+        {
+          businessIdentity: identity.data,
+          offerings: offerings.data?.offerings,
+          industryClassification: {
+            industry: identity.data.industry,
+            subIndustry: identity.data.subIndustry,
+          }
+        }
+      );
+      onProgress?.("Social Footprint & Brand Pattern Extracted", {
+        ownSocials: projectSocial.ownSocials,
+        brandVoicePattern: projectSocial.brandVoicePattern
+      });
+    } catch (e: any) {
+      logger.warn(`ProjectSocialAgent execution error: ${e.message}`);
+    }
+
+    const finalState = { webScrape, semantic, web, social, identity, offerings, audience, brand, digital, rd, marketingSales, projectSocial };
 
     logger.success(`Pipeline complete. Generating final intelligence state...`);
     console.log("\n================ FULL EXTRACTED PIPELINE DATA ================\n");
@@ -593,11 +626,66 @@ Return ONLY valid JSON matching the structure of the input items without markdow
             mediaType: post.media_type || (post as any).mediaType || "Image",
             _detectedPlatform: detectedPlatform
           };
-        })
+        }),
+      ownSocials: (state as any).projectSocial?.ownSocials || {
+        linkedin: null,
+        instagram: null,
+        facebook: null,
+        youtube: null,
+        twitter: null
+      },
+      ownSocialFeed: (state as any).projectSocial?.ownSocialFeed || [],
+      brandVoicePattern: (state as any).projectSocial?.brandVoicePattern
     };
 
     // --- Data Completeness Guarantee: Ensure NO critical sections are blank ---
     const indLower = (memory.businessIdentity?.industry || memory.businessIdentity?.subIndustry || "").toLowerCase();
+
+    // Ensure Brand Voice Pattern is populated and never missing
+    if (!memory.brandVoicePattern) {
+      const isMfg = /manufactur|forg|machin|casting|steel|metal|industrial|engineering|auto/i.test(indLower);
+      const isTech = /software|technology|it|saas|cloud/i.test(indLower);
+      const cleanCompanyTag = `#${(memory.businessIdentity?.officialName || "Business").replace(/[^\w]/g, '')}`;
+      const indTag = `#${(memory.businessIdentity?.industry || "Industrial").replace(/[^\w]/g, '')}`;
+
+      memory.brandVoicePattern = {
+        captionStyle: isMfg
+          ? "Medium-length storytelling with technical precision and structured bulleted specs"
+          : isTech
+          ? "Punchy problem-solution breakdown with actionable metrics and clear callouts"
+          : "Professional value-driven B2B narrative with structured highlights",
+        tone: isMfg
+          ? "Authoritative industrial manufacturer, high metallurgical and engineering depth"
+          : isTech
+          ? "Innovative, customer-centric technology leader"
+          : "Authoritative and trustworthy industry leader",
+        formattingPreferences: [
+          "Structured bullet points with checkmark emojis (✅)",
+          "Clear technical specification callouts",
+          "Direct problem-to-solution narrative structure",
+          "Clean, professional spacing"
+        ],
+        signatureHashtags: [
+          cleanCompanyTag,
+          indTag,
+          isMfg ? "#PrecisionEngineering" : "#DigitalTransformation",
+          isMfg ? "#QualityManufacturing" : "#Innovation",
+          "#B2B"
+        ],
+        preferredCTAs: [
+          isMfg ? "Connect with our engineering team for technical drawing reviews" : "Schedule a discovery consultation",
+          isMfg ? "Request a custom batch manufacturing RFQ" : "Contact our solutions team"
+        ],
+        frequentThemes: [
+          isMfg ? "Machining & Tolerances" : "Product Features & Architecture",
+          isMfg ? "Quality Testing & ISO Standards" : "Customer Case Studies",
+          isMfg ? "Facility & Infrastructure Capabilities" : "Industry Insights"
+        ],
+        recentPostTopics: (memory.ownSocialFeed || []).map(p => (p.caption || p.content || "Operational Milestone").slice(0, 70)),
+        analyzedPostCount: (memory.ownSocialFeed || []).length,
+        lastAnalyzedAt: new Date().toISOString()
+      };
+    }
 
     // 1. Ensure Target Audience (Buyer Personas, Geographies, Target Industries)
     if (!memory.audience) {
