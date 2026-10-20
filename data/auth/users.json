@@ -19,5 +19,12 @@
     "passwordHash": "6a8aff81789c0f928be6d7b82d9745c1:faa1c273a68a2718beb24426f9a5550a3a9add77288dac8947d63af2f513cf542fb6c75b217afc65f4e335c63e6a2dbdffa490e832b2011cc26bf0a8b5210f58",
     "createdAt": "2026-10-20T05:07:52.580Z",
     "assignedProjectUrls": []
+  },
+  {
+    "username": "Uday",
+    "role": "user",
+    "passwordHash": "d861ee3c83a6355f0da3f59f1ecbb6ec:80e76a86a4a9e011fc49e693bbf7b810b1330bdb2d934bb0d79fa440ec2070809b83999614cdad26b230ccd0ea185568e1180ceafc293c4b55476def105d9912",
+    "createdAt": "2026-10-20T05:08:45.192Z",
+    "assignedProjectUrls": []
   }
 ]
