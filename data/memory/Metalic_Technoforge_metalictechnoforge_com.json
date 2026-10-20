@@ -91026,6 +91026,100 @@
         "Big Rings",
         "Small Rings"
       ]
+    },
+    {
+      "name": "Forgewell Industries Private Limited",
+      "url": "https://forgewellindustries.com/",
+      "type": "local",
+      "location": "Gat.No1559, Plot No.B-11, near IIFA weigh Bridge, Vitthal Nagar, Shelarvasti, Industrial Estate, Chikhali, Pimpri-Chinchwad, Maharashtra 411062, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Forgewell Industries is an ISO 9001:2015 certified manufacturer of open die forged components, which is a direct competitor in the for. 9 common products: [Big Rings, Small Rings, Gears & Shafts, Advanced Forging Solutions, IIoT-Enabled Machining, Gear Manufacturing, Forging Services...]. Socials: LinkedIn verified; Instagram verified; YouTube verified. Rating: 4.4 | Phone: 099708 02028",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://forgewellindustries.com/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "https://forgewellindustries.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/forgewell-industries---india/",
+        "instagram": "https://www.instagram.com/forgewell.pvt?igsh=cWIyY2oxMGptbjJo",
+        "facebook": null,
+        "youtube": "https://youtube.com/@forgewellindustriespvtltd?si=xvJBYAjaFRc6rz06"
+      },
+      "products": [
+        "Big Rings",
+        "Small Rings",
+        "Gears & Shafts",
+        "Advanced Forging Solutions",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Small Rings",
+        "Gears & Shafts",
+        "Advanced Forging Solutions",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ]
+    },
+    {
+      "name": "Emerson Forge Pvt Ltd",
+      "url": "https://emersonforge.in/",
+      "type": "local",
+      "location": "Survey No. 269, P1/P2,, Shapar (Veraval), Dist. Rajkot, Gujrat (India), Shapar, Gujarat 360026, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 11 common products: [Small Rings, Gear Blanks with Broaching, Gears, Gears & Shafts, Gear Blanks, Hydraulic Cylinder, IIoT-Enabled Machining...]. Socials: Facebook verified; YouTube verified. Rating: 4.7 | Phone: 098251 71101",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://emersonforge.in/"
+        },
+        {
+          "title": "Product: Small Rings",
+          "url": "https://emersonforge.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Emerson-Forge-Pvt-Ltd-Leading-Open-Closed-Die-Forging-Company-India-620561228299005/",
+        "youtube": "https://www.youtube.com/channel/UCBThy-wgptNdCVtYfPbACUg"
+      },
+      "products": [
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gears",
+        "Gears & Shafts",
+        "Gear Blanks",
+        "Hydraulic Cylinder",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ],
+      "commonProducts": [
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gears",
+        "Gears & Shafts",
+        "Gear Blanks",
+        "Hydraulic Cylinder",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ]
     }
   ]
 }
