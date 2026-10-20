@@ -1067,7 +1067,7 @@ app.delete("/api/memory", requireAuth, requireAdmin, async (request, response) =
 
 app.post("/api/generate-smm", async (request, response) => {
   try {
-    const { websiteUrl, type, totalPosts, language, strategy, theme, subTheme, mirrorCompetitor, mirrorPost, industryFocus, customGoal, trendingTopic } = request.body;
+    const { websiteUrl, type, totalPosts, language, strategy, theme, subTheme, mirrorCompetitor, mirrorPost, industryFocus, customGoal, trendingTopic, targetPersona, targetPlatform } = request.body;
     if (!websiteUrl || !type || !totalPosts) {
       response.status(400).json({ error: "Missing required parameters." });
       return;
@@ -1083,7 +1083,7 @@ app.post("/api/generate-smm", async (request, response) => {
       return;
     }
 
-    const posts = await smmAgent.run(memory, type as "video" | "image", Number(totalPosts), language || "English", strategy || "new", theme || "brand", subTheme, mirrorCompetitor, mirrorPost, industryFocus, customGoal, trendingTopic);
+    const posts = await smmAgent.run(memory, type as "video" | "image", Number(totalPosts), language || "English", strategy || "new", theme || "brand", subTheme, mirrorCompetitor, mirrorPost, industryFocus, customGoal, trendingTopic, targetPersona, targetPlatform);
     logger.success(`✅ Successfully generated ${posts.length} SMM posts for ${websiteUrl}`);
     response.json({ posts });
   } catch (error: any) {

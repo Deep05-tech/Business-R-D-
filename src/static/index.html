@@ -436,6 +436,17 @@
               </select>
             </div>
             <div class="form-group flex-1">
+              <label>Target Platform</label>
+              <select id="smm-platform">
+                <option value="LinkedIn" selected>💼 LinkedIn (B2B & Thought Leadership)</option>
+                <option value="Instagram">📸 Instagram (Visual Hook & Storytelling)</option>
+                <option value="Facebook">📘 Facebook (Community & Trust)</option>
+                <option value="YouTube">▶️ YouTube / Shorts / Reels (Cinematic Video)</option>
+                <option value="Twitter">𝕏 Twitter / X (Punchy Insights)</option>
+                <option value="All">🌐 Multi-Platform (Omnichannel)</option>
+              </select>
+            </div>
+            <div class="form-group flex-1">
               <label>Language</label>
               <select id="smm-language">
                 <option value="English">English</option>
@@ -445,20 +456,27 @@
             </div>
           </div>
 
+          <div class="form-group">
+            <label>Target Audience (Buyer Persona)</label>
+            <select id="smm-target-persona">
+              <option value="all">🎯 All Buyer Personas (Broad Market Appeal)</option>
+            </select>
+          </div>
+
           <!-- Strategy: New Ideas -->
           <div id="smm-new-options-container" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px;">
             <div class="form-group">
               <label>Content Theme</label>
               <select id="smm-theme">
-                <option value="brand">Brand (Vision & Scale)</option>
-                <option value="product">Product (Features & Benefits)</option>
-                <option value="technical">Technical (Deep Engineering Dive)</option>
-                <option value="educative">Informative/Educative (How-to & Insights)</option>
-                <option value="ugc">UGC (Behind the Scenes & Authentic)</option>
+                <option value="product">Product / Core Offerings (Features, Benefits & Specs)</option>
+                <option value="technical">Technical Capabilities & Engineering (Processes & Workflows)</option>
+                <option value="brand">Brand Authority & Positioning (Vision, Scale & USPs)</option>
+                <option value="educative">Informative & Educative (Industry Guides & Problem Solving)</option>
+                <option value="ugc">Authentic & Behind-the-Scenes (Operations, Craft & Team)</option>
               </select>
             </div>
-            <div class="form-group smm-suboption-container" id="smm-suboption-container" style="display: none;">
-              <label id="smm-suboption-label">Target Options</label>
+            <div class="form-group smm-suboption-container" id="smm-suboption-container">
+              <label id="smm-suboption-label">Target Offering / Topic</label>
               <select id="smm-suboption">
                 <option value="">Select...</option>
               </select>
@@ -592,7 +610,7 @@
   </main>
   </div>
 
-  <script src="/static/app.js?v=29"></script>
+  <script src="/static/app.js?v=30"></script>
 </body>
 
 </html>

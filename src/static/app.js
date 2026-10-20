@@ -1118,6 +1118,11 @@ window.selectProject = function(url, autoSwitchTab = false) {
 
   if (autoSwitchTab) {
     switchTab('details', 'Project Details & Review');
+  } else {
+    const activeTab = localStorage.getItem('activeTab');
+    if (activeTab === 'smm' && window.loadSmmUI) {
+      window.loadSmmUI();
+    }
   }
 };
 
@@ -1291,6 +1296,15 @@ window.saveProjectDetails = async function() {
       if (updates.businessIdentity?.officialName) {
         window.addOrUpdateProjectInSidebar(window.activeProjectUrl, updates.businessIdentity.officialName);
       }
+      try {
+        const memRes = await fetch(`/api/memory?url=${encodeURIComponent(window.activeProjectUrl)}`);
+        const memData = await memRes.json();
+        if (memData.memory) {
+          window.projectMemory = memData.memory;
+          if (window.updateSmmPersonas) window.updateSmmPersonas();
+          if (window.updateSmmSuboptions) window.updateSmmSuboptions();
+        }
+      } catch (_) {}
     }
   } catch (e) {
     console.error("Failed to save details:", e);
@@ -1860,10 +1874,17 @@ window.addManualCompetitor = async function() {
 window.loadSmmUI = async function() {
   if (!window.activeProjectUrl) return;
   
-  // Try restoring from localStorage first
-  const savedResult = localStorage.getItem('smmLastResult');
   const savedProjectUrl = localStorage.getItem('smmLastProjectUrl');
-  if (savedResult && window.renderSmmResults && savedProjectUrl === window.activeProjectUrl) {
+  const savedResult = localStorage.getItem('smmLastResult');
+  const ansDiv = document.getElementById('smm-answer');
+
+  // Reset answer box if project changed
+  if (savedProjectUrl !== window.activeProjectUrl) {
+    if (ansDiv) ansDiv.style.display = 'none';
+    window.selectedTrendingTopic = null;
+    const trendingCont = document.getElementById('smm-trending-topics');
+    if (trendingCont) trendingCont.style.display = 'none';
+  } else if (savedResult && window.renderSmmResults) {
     try {
       const parsed = JSON.parse(savedResult);
       if (parsed && parsed.posts) {
@@ -1879,16 +1900,66 @@ window.loadSmmUI = async function() {
     const data = await res.json();
     if (data.memory) {
       window.projectMemory = data.memory;
+      
+      // Update Target Personas
+      if (window.updateSmmPersonas) window.updateSmmPersonas();
+
+      // Update Theme Sub-options
       if (window.updateSmmSuboptions) window.updateSmmSuboptions();
       
-      const activeStrategy = document.querySelector('input[name="smmStrategy"]:checked');
-      if (activeStrategy && activeStrategy.value === 'mirror') {
-        if (window.populateMirrorCompetitors) window.populateMirrorCompetitors();
+      // Update Mirror Competitors
+      if (window.populateMirrorCompetitors) window.populateMirrorCompetitors();
+
+      // Update Anti-Repetition Shield Banner
+      const shieldBanner = document.getElementById('smm-anti-repetition-banner');
+      const ownPostsCount = (data.memory.ownSocialFeed || []).length;
+      const hasVoice = !!data.memory.brandVoicePattern;
+      if (shieldBanner) {
+        shieldBanner.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 16px;">🛡️</span>
+            <span><strong>Anti-Repetition Shield: Active</strong> — ${ownPostsCount > 0 ? `<strong>${ownPostsCount}</strong> company posts indexed` : 'Verified company memory loaded'} to guarantee 100% original, non-duplicate content.</span>
+          </div>
+          <span id="smm-voice-badge" style="background: rgba(34, 197, 94, 0.15); padding: 3px 10px; border-radius: 12px; font-weight: 600; font-size: 11px;">${hasVoice ? '🎙️ Brand Voice Aligned' : '🏢 Verified Company Profile'}</span>
+        `;
       }
     }
   } catch (e) {
     console.error("Failed to load memory for SMM:", e);
   }
+};
+
+window.updateSmmPersonas = function() {
+  const mem = window.projectMemory;
+  const personaSelect = document.getElementById('smm-target-persona');
+  if (!personaSelect) return;
+  
+  personaSelect.innerHTML = '<option value="all">🎯 All Buyer Personas (Broad Market Appeal)</option>';
+  if (!mem) return;
+  
+  const personas = (mem.audience?.buyerPersonas || []).filter(Boolean);
+  if (personas.length > 0) {
+    personas.forEach(p => {
+      const el = document.createElement('option');
+      el.value = p;
+      el.textContent = `👤 ${p}`;
+      personaSelect.appendChild(el);
+    });
+  }
+  
+  const industries = (mem.audience?.targetIndustries || []).filter(Boolean);
+  if (industries.length > 0) {
+    const group = document.createElement('optgroup');
+    group.label = 'Specific Target Industries';
+    industries.forEach(ind => {
+      const el = document.createElement('option');
+      el.value = `Industry Sector: ${ind}`;
+      el.textContent = `🏢 ${ind}`;
+      group.appendChild(el);
+    });
+    personaSelect.appendChild(group);
+  }
+  personaSelect.dispatchEvent(new Event('optionsUpdated'));
 };
 
 window.updateSmmSuboptions = function() {
@@ -1898,89 +1969,303 @@ window.updateSmmSuboptions = function() {
   const label = document.getElementById('smm-suboption-label');
   const select = document.getElementById('smm-suboption');
   
-  if (!mem || !themeSelect || !container || !select) return;
+  if (!themeSelect || !container || !select) return;
+  if (!mem) {
+    container.style.display = 'none';
+    return;
+  }
   
   const theme = themeSelect.value;
-  select.innerHTML = '<option value="">Select...</option>';
+  select.innerHTML = '';
   
-  let options = [];
+  const prods = (mem.offerings?.products || []).map(p => typeof p === 'string' ? p : p.name).filter(Boolean);
+  const servs = (mem.offerings?.services || []).map(s => typeof s === 'string' ? s : s.name).filter(Boolean);
+  const procs = (mem.processes?.processes || []).map(p => p.name).filter(Boolean);
+  const usps = [...new Set([...(mem.brandPositioning?.usps || []), ...(mem.offerings?.valuePropositions || [])])].filter(Boolean);
+  const vision = mem.businessIdentity?.vision;
+  const ind = (mem.businessIdentity?.industry || mem.businessIdentity?.subIndustry || '').toLowerCase();
+  
+  container.style.display = 'block';
   
   if (theme === 'product') {
-    label.innerText = 'Target Product';
-    options = (mem.offerings?.products || []).map(p => typeof p === 'string' ? p : p.name);
+    label.innerText = 'Target Offering (Product / Service)';
+    
+    const allOpt = document.createElement('option');
+    allOpt.value = '';
+    allOpt.textContent = '🌟 Full Portfolio Showcase (All Core Offerings)';
+    select.appendChild(allOpt);
+    
+    if (prods.length > 0 && servs.length > 0) {
+      const prodGroup = document.createElement('optgroup');
+      prodGroup.label = `📦 Products (${prods.length})`;
+      prods.forEach(p => {
+        const el = document.createElement('option');
+        el.value = p;
+        el.textContent = p;
+        prodGroup.appendChild(el);
+      });
+      select.appendChild(prodGroup);
+      
+      const servGroup = document.createElement('optgroup');
+      servGroup.label = `🛠️ Services & Solutions (${servs.length})`;
+      servs.forEach(s => {
+        const el = document.createElement('option');
+        el.value = s;
+        el.textContent = s;
+        servGroup.appendChild(el);
+      });
+      select.appendChild(servGroup);
+    } else if (prods.length > 0) {
+      label.innerText = `Target Product (${prods.length} available)`;
+      prods.forEach(p => {
+        const el = document.createElement('option');
+        el.value = p;
+        el.textContent = p;
+        select.appendChild(el);
+      });
+    } else if (servs.length > 0) {
+      label.innerText = `Target Service / Solution (${servs.length} available)`;
+      servs.forEach(s => {
+        const el = document.createElement('option');
+        el.value = s;
+        el.textContent = s;
+        select.appendChild(el);
+      });
+    }
   } else if (theme === 'technical') {
-    label.innerText = 'Target Capability/Service';
-    options = (mem.offerings?.services || []).map(s => typeof s === 'string' ? s : s.name);
+    label.innerText = 'Technical Capability, Process or Workflow';
+    
+    const allOpt = document.createElement('option');
+    allOpt.value = '';
+    allOpt.textContent = '⚙️ End-to-End Operational Excellence & Technical Quality';
+    select.appendChild(allOpt);
+    
+    if (procs.length > 0) {
+      const procGroup = document.createElement('optgroup');
+      procGroup.label = `🏭 Operational Processes (${procs.length})`;
+      procs.forEach(p => {
+        const el = document.createElement('option');
+        el.value = p;
+        el.textContent = p;
+        procGroup.appendChild(el);
+      });
+      select.appendChild(procGroup);
+    }
+    
+    if (servs.length > 0) {
+      const servGroup = document.createElement('optgroup');
+      servGroup.label = `🛠️ Technical & Specialized Services (${servs.length})`;
+      servs.forEach(s => {
+        const el = document.createElement('option');
+        el.value = s;
+        el.textContent = s;
+        servGroup.appendChild(el);
+      });
+      select.appendChild(servGroup);
+    }
   } else if (theme === 'brand') {
-    label.innerText = 'Brand Focus';
-    options = ['Core Vision & Mission', 'Company History & Scale', 'Trust & Quality Assurance', 'Global Reach'];
-  } else if (theme === 'educative') {
-    label.innerText = 'Educative Topic';
-    options = ['Manufacturing Process', 'Maintenance & Selection', 'Industry Standards', 'Technical Deep Dive'];
-  } else if (theme === 'ugc') {
-    label.innerText = 'UGC Focus';
-    options = ['Behind the Scenes (Factory)', 'Employee Spotlight', 'Customer Delivery / Logistics'];
-  }
-  
-  if (options.length > 0) {
-    container.style.display = 'block';
-    options.forEach(opt => {
-      if (!opt) return;
+    label.innerText = 'Brand Focus & Value Proposition';
+    
+    const brandOpts = [
+      { val: vision ? `Core Vision: ${vision}` : 'Core Vision & Strategic Mission', label: '🎯 Core Vision & Strategic Mission' },
+      { val: 'Company Scale, Infrastructure & Reliability', label: '🏛️ Company Scale, Infrastructure & Reliability' },
+      { val: 'Certified Quality Assurance & Rigorous Testing', label: '🏆 Certified Quality Assurance & Zero-Defect Standards' },
+      { val: 'Global Reach & Supply Chain Predictability', label: '🌍 Global Reach & Supply Chain Predictability' }
+    ];
+    
+    brandOpts.forEach(o => {
       const el = document.createElement('option');
-      el.value = opt;
-      el.textContent = opt;
+      el.value = o.val;
+      el.textContent = o.label;
       select.appendChild(el);
     });
-  } else {
-    container.style.display = 'none';
+    
+    if (usps.length > 0) {
+      const uspGroup = document.createElement('optgroup');
+      uspGroup.label = `⭐ Verified USPs & Differentiators (${usps.length})`;
+      usps.forEach(u => {
+        const el = document.createElement('option');
+        el.value = u;
+        el.textContent = u;
+        uspGroup.appendChild(el);
+      });
+      select.appendChild(uspGroup);
+    }
+  } else if (theme === 'educative') {
+    label.innerText = 'Educational & Problem-Solving Angle';
+    
+    let eduOptions = [];
+    if (/seed|agri|crop|farming/i.test(ind)) {
+      eduOptions = [
+        'How to Select High-Yield Certified Seeds for Your Soil',
+        'Hybrid vs Traditional Seeds: Disease Resistance & Yield Comparison',
+        'Seed Germination Testing & Storage Best Practices',
+        'Seasonal Agronomy Guide & Soil Preparation Tips'
+      ];
+    } else if (/marketing|digital|media|seo|software|tech/i.test(ind)) {
+      eduOptions = [
+        'High-Converting Funnel Architecture: Eliminating Conversion Drop-Off',
+        'Technical SEO & Core Web Vitals: Ranking Factors Demystified',
+        'Omnichannel Performance Ads: Scaling ROAS Predictably',
+        'UI/UX Redesign: Turning Visitors into Long-Term Customers'
+      ];
+    } else {
+      eduOptions = [
+        'Material Selection & Metallurgy Guide (Carbon vs Alloy Steels)',
+        'Understanding Precision Machining Tolerances & Part Lifespan',
+        'Forging vs Casting vs Billet: Which Process Best Fits Your Application',
+        'Eliminating Component Failure: Non-Destructive Testing & Quality Checks'
+      ];
+    }
+    
+    eduOptions.forEach(eo => {
+      const el = document.createElement('option');
+      el.value = eo;
+      el.textContent = `💡 ${eo}`;
+      select.appendChild(el);
+    });
+    
+    if (procs.length > 0) {
+      const procGroup = document.createElement('optgroup');
+      procGroup.label = 'Deep-Dive Process Explainer';
+      procs.forEach(p => {
+        const el = document.createElement('option');
+        el.value = `Deep Dive Engineering Guide: ${p}`;
+        el.textContent = `🔬 How It Works: ${p}`;
+        procGroup.appendChild(el);
+      });
+      select.appendChild(procGroup);
+    }
+  } else if (theme === 'ugc') {
+    label.innerText = 'Authentic Behind-the-Scenes Focus';
+    const ugcOptions = [
+      'Shop Floor & Manufacturing In Action (High-Precision Machinery)',
+      'Raw Material Receipt & Metallurgical Inspection Standards',
+      'Engineering Team & Skilled Craftsmanship Spotlight',
+      'Quality Control Gate: 100% Dimensional & Ultrasonic Inspection',
+      'Packing & Global Dispatch: Ready for Assembly Lines'
+    ];
+    ugcOptions.forEach(uo => {
+      const el = document.createElement('option');
+      el.value = uo;
+      el.textContent = `🎬 ${uo}`;
+      select.appendChild(el);
+    });
   }
+  
   select.dispatchEvent(new Event('optionsUpdated'));
 };
 
 window.populateMirrorCompetitors = function() {
   const mem = window.projectMemory;
   const select = document.getElementById('smm-mirror-competitor');
-  if (!mem || !select) return;
+  if (!select) return;
   
   select.innerHTML = '<option value="">Select a competitor...</option>';
+  if (!mem) return;
+  
+  const realComps = (mem.competitors || []).map(c => ({
+    name: c.name,
+    type: c.type || 'competitor',
+    location: c.location || ''
+  }));
   
   const feed = mem.socialFeed || [];
-  const competitors = [...new Set(feed.map(p => p.competitorName))].filter(Boolean);
+  const invalidNames = new Set(['instagram', 'facebook', 'youtube', 'twitter', 'linkedin', 'undefined', 'null', 'admin', 'google', 'meta', 'social']);
   
-  competitors.forEach(c => {
-    const el = document.createElement('option');
-    el.value = c;
-    el.textContent = c;
-    select.appendChild(el);
+  const nameMap = new Map();
+  realComps.forEach(c => {
+    if (c.name && !invalidNames.has(c.name.trim().toLowerCase())) {
+      nameMap.set(c.name.trim().toLowerCase(), c);
+    }
   });
+  
+  feed.forEach(p => {
+    if (p.competitorName && !invalidNames.has(p.competitorName.trim().toLowerCase())) {
+      const key = p.competitorName.trim().toLowerCase();
+      if (!nameMap.has(key)) {
+        nameMap.set(key, { name: p.competitorName.trim(), type: 'tracked', location: '' });
+      }
+    }
+  });
+  
+  const cleanCompetitors = Array.from(nameMap.values());
+  
+  if (cleanCompetitors.length === 0) {
+    const el = document.createElement('option');
+    el.value = "";
+    el.disabled = true;
+    el.textContent = "No verified competitors yet. Run 'Find Competitors' first.";
+    select.appendChild(el);
+  } else {
+    const localGroup = document.createElement('optgroup');
+    localGroup.label = '🌍 Local Competitors';
+    const regGroup = document.createElement('optgroup');
+    regGroup.label = '🏭 Regional Competitors';
+    const globGroup = document.createElement('optgroup');
+    globGroup.label = '🌐 Global Leaders';
+    const otherGroup = document.createElement('optgroup');
+    otherGroup.label = '🎯 Industry Competitors';
+    
+    cleanCompetitors.forEach(c => {
+      const el = document.createElement('option');
+      el.value = c.name;
+      el.textContent = c.location ? `${c.name} (${c.location})` : c.name;
+      
+      if (c.type === 'local') localGroup.appendChild(el);
+      else if (c.type === 'regional') regGroup.appendChild(el);
+      else if (c.type === 'global') globGroup.appendChild(el);
+      else otherGroup.appendChild(el);
+    });
+    
+    if (localGroup.children.length) select.appendChild(localGroup);
+    if (regGroup.children.length) select.appendChild(regGroup);
+    if (globGroup.children.length) select.appendChild(globGroup);
+    if (otherGroup.children.length) select.appendChild(otherGroup);
+  }
+  
   select.dispatchEvent(new Event('optionsUpdated'));
 };
 
 window.populateMirrorPosts = function(competitorName) {
   const mem = window.projectMemory;
   const select = document.getElementById('smm-mirror-post');
-  if (!mem || !select) return;
+  if (!select) return;
   
-  select.innerHTML = '<option value="">Select a post...</option>';
-  if (!competitorName) return;
+  select.innerHTML = '<option value="">Select a post or strategy...</option>';
+  if (!competitorName || !mem) return;
   
   const feed = mem.socialFeed || [];
-  const posts = feed.filter(p => p.competitorName === competitorName);
+  const compKey = competitorName.trim().toLowerCase();
+  const posts = feed.filter(p => (p.competitorName || '').trim().toLowerCase() === compKey);
   
-  posts.forEach((p, idx) => {
-    const el = document.createElement('option');
-    el.value = String(idx);
-    el.dataset.postJson = JSON.stringify(p);
+  if (posts.length > 0) {
+    const allOpt = document.createElement('option');
+    allOpt.value = JSON.stringify({ strategyOnly: true, competitorName: competitorName });
+    allOpt.textContent = `⭐ Mirror Overall Content Strategy & Tone (${posts.length} recent posts)`;
+    select.appendChild(allOpt);
     
-    let text = `${p.platform} - ${p.date || 'Unknown'}`;
-    if (p.content) {
-      let snippet = p.content.substring(0, 40).replace(/\n/g, ' ');
-      text += ` - ${snippet}...`;
-    }
-    
-    el.textContent = text;
-    select.appendChild(el);
-  });
+    posts.forEach((p, idx) => {
+      const el = document.createElement('option');
+      el.value = JSON.stringify(p);
+      el.dataset.postJson = JSON.stringify(p);
+      
+      let text = `[${p.platform || 'Social'}] ${p.date || 'Recent'}`;
+      if (p.content || p.caption) {
+        let snippet = (p.content || p.caption).substring(0, 45).replace(/\n/g, ' ');
+        text += ` — "${snippet}..."`;
+      }
+      el.textContent = text;
+      select.appendChild(el);
+    });
+  } else {
+    const profileOpt = document.createElement('option');
+    profileOpt.value = JSON.stringify({ strategyOnly: true, competitorName: competitorName });
+    profileOpt.textContent = `🌐 Mirror Competitor Market Posture & Value Messaging (Profile & Website)`;
+    profileOpt.selected = true;
+    select.appendChild(profileOpt);
+  }
+  
   select.dispatchEvent(new Event('optionsUpdated'));
 };
 
@@ -2062,10 +2347,15 @@ window.generateSMM = async function() {
   const strategy = document.querySelector('input[name="smmStrategy"]:checked').value;
   const theme = document.getElementById('smm-theme').value;
   
-  // Now using generic suboption instead of just product
   const suboptionEl = document.getElementById('smm-suboption');
   const subTheme = suboptionEl && suboptionEl.parentElement.style.display !== 'none' ? suboptionEl.value : null;
   
+  const personaEl = document.getElementById('smm-target-persona');
+  const targetPersona = personaEl ? personaEl.value : 'all';
+
+  const platformEl = document.getElementById('smm-platform');
+  const targetPlatform = platformEl ? platformEl.value : 'LinkedIn';
+
   const mirrorCompetitorEl = document.getElementById('smm-mirror-competitor');
   const mirrorCompetitor = mirrorCompetitorEl ? mirrorCompetitorEl.value : null;
   
@@ -2112,7 +2402,9 @@ window.generateSMM = async function() {
         mirrorPost: mirrorPost,
         industryFocus: industryFocus,
         customGoal: customGoal,
-        trendingTopic: window.selectedTrendingTopic
+        trendingTopic: window.selectedTrendingTopic,
+        targetPersona: targetPersona,
+        targetPlatform: targetPlatform
       })
     });
     

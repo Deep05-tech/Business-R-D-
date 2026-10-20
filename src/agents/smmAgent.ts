@@ -8,13 +8,13 @@ export class SmmAgent {
   readonly name = "smm-agent";
   readonly version = "1.0.0";
 
-  async run(memory: StructuredMemory, type: "video" | "image", totalPosts: number, language: string = "English", strategy: string = "new", theme: string = "brand", subTheme?: string, mirrorCompetitor?: string, mirrorPost?: any, industryFocus?: string, customGoal?: string, trendingTopic?: any): Promise<string[]> {
-    logger.info(`Generating ${totalPosts} SMM ${type} posts in ${language} for ${memory.input.websiteUrl} (Strategy: ${strategy}, Theme: ${theme}, SubTheme: ${subTheme || 'None'}, Industry Focus: ${industryFocus || 'all'}, Trending Topic: ${trendingTopic?.title || 'None'})...`);
+  async run(memory: StructuredMemory, type: "video" | "image", totalPosts: number, language: string = "English", strategy: string = "new", theme: string = "brand", subTheme?: string, mirrorCompetitor?: string, mirrorPost?: any, industryFocus?: string, customGoal?: string, trendingTopic?: any, targetPersona?: string, targetPlatform?: string): Promise<string[]> {
+    logger.info(`Generating ${totalPosts} SMM ${type} posts in ${language} for ${memory.input.websiteUrl} (Strategy: ${strategy}, Theme: ${theme}, SubTheme: ${subTheme || 'None'}, Platform: ${targetPlatform || 'All'}, Persona: ${targetPersona || 'all'}, Industry Focus: ${industryFocus || 'all'}, Trending Topic: ${trendingTopic?.title || 'None'})...`);
 
     const llm = createChatModel({
       model: "gpt-4o",
       temperature: 0.85,
-      maxTokens: 8192,
+      maxTokens: 2500,
     });
 
     const ind = (memory.businessIdentity?.industry || memory.businessIdentity?.subIndustry || "").toLowerCase();
@@ -23,6 +23,28 @@ export class SmmAgent {
     const isAgri = /seed|agri|crop|farming|fertilizer/i.test(ind);
     const isAgency = /marketing|seo|advertising|digital|media|branding/i.test(ind);
 
+    const subThemeLower = (subTheme || "").toLowerCase().trim();
+
+    // Select targeted products (prioritize selected subTheme, max 8)
+    const allRawProducts = memory.offerings?.products || [];
+    const sortedProducts = [...allRawProducts].sort((a, b) => {
+      const aName = (typeof a === 'string' ? a : a.name).toLowerCase();
+      const bName = (typeof b === 'string' ? b : b.name).toLowerCase();
+      if (aName === subThemeLower) return -1;
+      if (bName === subThemeLower) return 1;
+      return 0;
+    }).slice(0, 8);
+
+    // Select targeted services (prioritize selected subTheme, max 8)
+    const allRawServices = memory.offerings?.services || [];
+    const sortedServices = [...allRawServices].sort((a, b) => {
+      const aName = (typeof a === 'string' ? a : a.name).toLowerCase();
+      const bName = (typeof b === 'string' ? b : b.name).toLowerCase();
+      if (aName === subThemeLower) return -1;
+      if (bName === subThemeLower) return 1;
+      return 0;
+    }).slice(0, 8);
+
     const memoryContext = JSON.stringify({
       businessIdentity: {
         officialName: memory.businessIdentity?.officialName,
@@ -30,25 +52,24 @@ export class SmmAgent {
         subIndustry: memory.businessIdentity?.subIndustry,
         location: memory.businessIdentity?.location,
         vision: memory.businessIdentity?.vision,
-        description: memory.businessIdentity?.description,
+        description: (memory.businessIdentity?.description || "").slice(0, 600),
       },
       offerings: {
-        products: (memory.offerings?.products || []).map(p => typeof p === 'string' ? { name: p } : {
+        products: sortedProducts.map(p => typeof p === 'string' ? { name: p } : {
           name: p.name,
           category: p.category,
-          description: p.description,
-          keyFeatures: p.keyFeatures,
-          technicalSpecs: p.technicalSpecs,
-          useCases: p.useCases,
-          subProducts: p.subProducts
+          description: p.description?.slice(0, 200),
+          keyFeatures: (p.keyFeatures || []).slice(0, 4),
+          technicalSpecs: p.technicalSpecs || {},
+          useCases: (p.useCases || []).slice(0, 3)
         }),
-        services: (memory.offerings?.services || []).map(s => typeof s === 'string' ? { name: s } : {
+        services: sortedServices.map(s => typeof s === 'string' ? { name: s } : {
           name: s.name,
-          description: s.description,
-          applications: s.applications,
-          processes: s.processes
+          description: s.description?.slice(0, 200),
+          applications: (s.applications || []).slice(0, 3),
+          processes: (s.processes || []).slice(0, 3)
         }),
-        valuePropositions: memory.offerings?.valuePropositions || []
+        valuePropositions: (memory.offerings?.valuePropositions || []).slice(0, 6)
       },
       targetAudience: {
         buyerPersonas: memory.audience?.buyerPersonas || [],
@@ -58,35 +79,46 @@ export class SmmAgent {
       brandPositioning: {
         tone: memory.brandPositioning?.tone,
         positioning: memory.brandPositioning?.positioning,
-        usps: memory.brandPositioning?.usps || [],
+        usps: (memory.brandPositioning?.usps || []).slice(0, 6),
         messagingStyle: memory.brandPositioning?.messagingStyle
       },
-      processes: (memory.processes?.processes || []).map(pr => ({
+      processes: (memory.processes?.processes || []).slice(0, 5).map(pr => ({
         name: pr.name,
-        description: pr.description,
-        workflow: pr.workflow,
-        machineryUsed: pr.machineryUsed,
-        capacity: pr.capacity
+        description: pr.description?.slice(0, 200),
+        workflow: (pr.workflow || []).slice(0, 4),
+        machineryUsed: (pr.machineryUsed || []).slice(0, 4)
       })),
       rdInsights: {
-        opportunities: memory.rdInsights?.opportunities || [],
-        gaps: memory.rdInsights?.gaps || [],
-        improvements: memory.rdInsights?.improvements || []
+        opportunities: (memory.rdInsights?.opportunities || []).slice(0, 4),
+        gaps: (memory.rdInsights?.gaps || []).slice(0, 3)
       }
     }, null, 2);
 
     let competitorContext = "";
-    if (strategy === "mirror" && mirrorPost) {
+    if (strategy === "mirror" && mirrorPost && !mirrorPost.strategyOnly && (mirrorPost.content || mirrorPost.caption)) {
       competitorContext = `
 CRITICAL STRATEGY INSTRUCTION: 
 The user has requested to MIRROR a specific competitor's post perfectly.
 Competitor: ${mirrorCompetitor}
-Original Post Platform: ${mirrorPost.platform}
-Original Post Date: ${mirrorPost.date}
+Original Post Platform: ${mirrorPost.platform || 'Social Media'}
+Original Post Date: ${mirrorPost.date || 'Recent'}
 Original Post Content: 
-"${mirrorPost.content}"
+"${mirrorPost.content || mirrorPost.caption}"
 
 Your generated content MUST emulate the exact tone, structure, topic, and pacing used in this specific post. Do not copy the text word-for-word, but write a post for the current business that achieves the exact same strategic goal and style as the mirrored post.
+`;
+    } else if (strategy === "mirror" && mirrorCompetitor) {
+      const matchedComp = (memory.competitors || []).find(c => c.name.toLowerCase() === mirrorCompetitor.toLowerCase());
+      competitorContext = `
+CRITICAL STRATEGY INSTRUCTION: 
+The user has requested to MIRROR the strategic market posture and positioning of competitor: "${mirrorCompetitor}".
+Competitor Profile Details:
+- Name: ${mirrorCompetitor}
+${matchedComp?.location ? `- Location: ${matchedComp.location}` : ''}
+${matchedComp?.whyCompetitor ? `- Competitive Overlap: ${matchedComp.whyCompetitor}` : ''}
+${matchedComp?.products && matchedComp.products.length ? `- Competitor Product Areas: ${matchedComp.products.join(', ')}` : ''}
+
+Your generated content MUST emulate the tone, structure, and market authority of this leading competitor. Position the target company as the superior, more reliable, and technically advanced choice in this domain.
 `;
     } else if (strategy === "mirror" && memory.competitors && memory.competitors.length > 0) {
       competitorContext = `
@@ -97,17 +129,21 @@ ${memory.competitors.map(c => `- ${c.name} (Socials: ${JSON.stringify(c.socials)
 
 Your generated content MUST emulate the tone, structure, and pacing typically used by these specific competitors in this exact industry. If they rely heavily on technical showcases, do the same. Analyze what these market leaders likely do to succeed, and adopt that exact posture for your posts.
 `;
-    } else if (strategy === "industry" && memory.socialFeed && memory.socialFeed.length > 0) {
+    } else if (strategy === "industry") {
       let focusText = "the macro trends, tone, and subjects that the industry leaders are currently posting about, and adopt that exact posture";
       if (industryFocus === "visuals") focusText = "the exact visual aesthetics, imagery choices, and formatting styles used by the industry leaders, and structure your visual descriptions to perfectly match them";
       if (industryFocus === "messaging") focusText = "the specific core messaging, primary hooks, and value propositions that industry leaders are emphasizing right now, and adopt that exact messaging posture";
       if (industryFocus === "format") focusText = "the content formats (e.g. fast-paced videos vs detailed text carousels) dominating the feed right now, and adapt your script/post structure to match the leading format";
 
+      const feedSnippet = (memory.socialFeed && memory.socialFeed.length > 0)
+        ? JSON.stringify(memory.socialFeed.slice(0, 15))
+        : `Industry: ${memory.businessIdentity?.industry || 'B2B'}, Opportunities: ${JSON.stringify(memory.rdInsights?.opportunities || [])}`;
+
       competitorContext = `
 CRITICAL STRATEGY INSTRUCTION:
-The user has requested to MIRROR INDUSTRY TRENDS based on their competitors' recent social media footprint.
-Below is the recent social feed from top competitors in this specific industry:
-${JSON.stringify(memory.socialFeed.slice(0, 15))}
+The user has requested to MIRROR INDUSTRY TRENDS based on competitor and market footprint.
+Market Footprint:
+${feedSnippet}
 
 Analyze ${focusText} for your posts.
 `;
@@ -217,6 +253,60 @@ You MUST heavily bias the entire post narrative, structure, and focus to achieve
 `;
     }
 
+    let personaDirective = "";
+    if (targetPersona && targetPersona !== "all" && targetPersona.trim().length > 0) {
+      personaDirective = `
+CRITICAL TARGET BUYER PERSONA DIRECTIVE:
+The user explicitly specified the target buyer persona for this content: "${targetPersona}".
+Every single post hook, body, operational problem statement, and call-to-action MUST speak directly to this specific persona's day-to-day responsibilities, risk factors, ROI expectations, and technical needs!
+`;
+    }
+
+    let platformDirective = "";
+    if (targetPlatform && targetPlatform !== "All") {
+      switch (targetPlatform.toLowerCase()) {
+        case "linkedin":
+          platformDirective = `
+TARGET PLATFORM DIRECTIVE: LINKEDIN (B2B Thought Leadership)
+- Tone: Highly professional, authoritative, strategic, and data-driven.
+- Structure: Start with a crisp, compelling insight hook. Use single-line spacing between short paragraphs. Integrate hard facts, specifications, or proven business ROI.
+- Call-to-action: Professional invite for technical consultation, RFQ, or thought leadership discussion.
+- Hashtags: 3-5 high-impact industry and B2B hashtags.
+`;
+          break;
+        case "instagram":
+          platformDirective = `
+TARGET PLATFORM DIRECTIVE: INSTAGRAM (Visual-First & High Engagement)
+- Tone: High-energy, visually descriptive, conversational yet credible and authoritative.
+- Structure: Punchy first sentence before the fold. Use bullet points with emojis for readability. 
+- Visual Idea: Describe bold, graphic-rich imagery, factory action, or macro component detail.
+- Hashtags: 6-9 targeted niche and industry hashtags.
+`;
+          break;
+        case "facebook":
+          platformDirective = `
+TARGET PLATFORM DIRECTIVE: FACEBOOK (Community, Trust & Storytelling)
+- Tone: Relatable, customer-centric, emphasizing long-term partnership, trust, and local/global heritage.
+- Structure: Clear narrative arc demonstrating how the company solves real problems.
+`;
+          break;
+        case "twitter":
+        case "x":
+          platformDirective = `
+TARGET PLATFORM DIRECTIVE: TWITTER / X (Punchy & High Signal)
+- Tone: Fast, concise, high signal-to-noise ratio.
+- Structure: Crisp punchy sentences with maximum insight per word.
+`;
+          break;
+        case "youtube":
+          platformDirective = `
+TARGET PLATFORM DIRECTIVE: YOUTUBE / SHORTS / REELS (Cinematic & Fast-Paced Video)
+- Tone: Engaging cinematic hook within 0-3s, clear visual cuts, sound design cues, and dynamic delivery.
+`;
+          break;
+      }
+    }
+
     let formatInstructions = "";
     if (type === "video") {
       const sfxGuide = isMfg
@@ -272,10 +362,11 @@ Format each script explicitly as follows:
 ---
 `;
     } else {
-      totalPosts = 5; // Always 5 variations for image
+      totalPosts = totalPosts ? Math.min(Math.max(totalPosts, 1), 5) : 5;
       formatInstructions = `
 You must generate exactly ${totalPosts} highly engaging, deeply researched image post concepts for social media (LinkedIn/Instagram).
 CRITICAL: Every single post MUST be radically unique, exploring different products, services, value propositions, and buyer personas.
+Keep each post concise, punchy, and information-dense (2-3 crisp sentences per caption body) so all concepts are focused and complete.
 
 You MUST output your response as a valid JSON array containing exactly ${totalPosts} objects. Do not include any other text outside the JSON array.
 Format each object in the array with the EXACT following keys:
@@ -373,6 +464,8 @@ CORE RULES FOR POWERFUL & GROUNDED CONTENT:
 8. EXACT COUNT: You must generate EXACTLY ${totalPosts} posts.
 9. LANGUAGE REQUIREMENT: You must write the entire output exclusively in the **${language}** language.
 
+${personaDirective}
+${platformDirective}
 ${customGoalInstruction}
 ${customInstructionsContext}
 ${competitorContext}
@@ -388,17 +481,73 @@ Begin generating the posts now:`;
       let posts: string[] = [];
       if (type === "image") {
         try {
-          const start = content.indexOf('[');
-          const end = content.lastIndexOf(']');
-          if (start !== -1 && end !== -1) {
-             const parsed = JSON.parse(content.substring(start, end + 1));
-             posts = parsed.map((p: any) => JSON.stringify(p));
-          } else {
-             logger.error("Failed to find JSON array in response.");
-             posts = [];
+          let cleaned = content.trim();
+          if (cleaned.startsWith("```")) {
+            cleaned = cleaned.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "").trim();
           }
-        } catch(e) {
-          logger.error("Failed to parse JSON response.");
+          const start = cleaned.indexOf('[');
+          const end = cleaned.lastIndexOf(']');
+          if (start !== -1) {
+            const rawArray = (end > start) ? cleaned.substring(start, end + 1) : cleaned.substring(start) + "]";
+            let parsed: any[] = [];
+
+            const tryParse = (text: string): any[] | null => {
+              try {
+                const res = JSON.parse(text);
+                return Array.isArray(res) ? res : [res];
+              } catch {
+                return null;
+              }
+            };
+
+            // Attempt 1: direct parse
+            let attempt = tryParse(rawArray);
+            if (attempt && attempt.length > 0) {
+              parsed = attempt;
+            } else {
+              // Attempt 2: sanitize unescaped newlines/tabs inside string values & trailing commas
+              const sanitized = rawArray
+                .replace(/"((?:[^"\\]|\\.)*)"/gs, (_, inner) => {
+                  return "\"" + inner.replace(/\r?\n/g, "\\n").replace(/\r/g, "\\n").replace(/\t/g, "\\t") + "\"";
+                })
+                .replace(/,\s*([\]}])/g, '$1');
+
+              attempt = tryParse(sanitized);
+              if (attempt && attempt.length > 0) {
+                parsed = attempt;
+              } else {
+                // Attempt 3: recover individual complete JSON objects
+                const objectRegex = /\{[\s\S]*?\}(?=\s*,\s*\{|\s*\]|$)/g;
+                const matches = sanitized.match(objectRegex);
+                if (matches && matches.length > 0) {
+                  for (const m of matches) {
+                    try {
+                      parsed.push(JSON.parse(m));
+                    } catch {
+                      try {
+                        const fixedM = m.replace(/"((?:[^"\\]|\\.)*)"/gs, (_, inner) => {
+                          return "\"" + inner.replace(/\r?\n/g, "\\n").replace(/\r/g, "\\n").replace(/\t/g, "\\t") + "\"";
+                        }).replace(/,\s*\}/g, '}');
+                        parsed.push(JSON.parse(fixedM));
+                      } catch (_) {}
+                    }
+                  }
+                }
+              }
+            }
+
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              posts = parsed.map((p: any) => JSON.stringify(p));
+            } else {
+              logger.error(`Parsed JSON was empty. Length: ${content.length}. Preview: ${content.slice(0, 300)}`);
+              posts = [];
+            }
+          } else {
+            logger.error(`Failed to find JSON array in response. Length: ${content.length}. Preview: ${content.slice(0, 300)}`);
+            posts = [];
+          }
+        } catch(e: any) {
+          logger.error(`Failed to parse JSON response: ${e?.message}. Preview: ${content.slice(0, 300)}`);
           posts = [];
         }
       } else {

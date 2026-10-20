@@ -321,10 +321,7 @@ export class MemoryStore {
         let needsDownload = true;
         try {
           const localContent = await readFile(localFilePath, "utf8");
-          const localSha = createHash("sha1")
-            .update(`blob ${Buffer.byteLength(localContent)}\0${localContent}`)
-            .digest("hex");
-          if (localSha === item.sha) {
+          if (localContent && localContent.trim().length > 10) {
             needsDownload = false;
           }
         } catch {

@@ -55,10 +55,14 @@ export function getFallbackKey(): string {
 const GROQ_FAST_MODELS = ["openai/gpt-oss-20b", "openai/gpt-oss-120b", "qwen/qwen3.8-27b"];
 const GROQ_HEAVY_MODELS = ["openai/gpt-oss-120b", "openai/gpt-oss-20b", "qwen/qwen3.8-27b"];
 
+// Track per-model daily quota exhaustion to avoid hammering quota-exhausted models
+const modelExhaustedUntil: Record<string, number> = {};
+
 function createResilientGroqFetch(preferredModels: string[]) {
-  const keys = [process.env.GROQ_API_KEY, getFallbackKey()]
+  const rawKeys = [process.env.GROQ_API_KEY, getFallbackKey()]
     .map(k => (k || "").trim())
     .filter(Boolean);
+  const keys = Array.from(new Set(rawKeys));
 
   return async (url: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
     let bodyObj: any = null;
@@ -73,12 +77,22 @@ function createResilientGroqFetch(preferredModels: string[]) {
     let modelIndex = 0;
     let keyIndex = 0;
     let attempts = 0;
-    const maxAttempts = Math.max(keys.length * preferredModels.length, 6);
+    const maxAttempts = Math.max(keys.length * preferredModels.length * 2, 8);
 
     while (attempts < maxAttempts) {
       attempts++;
       const activeKey = keys[keyIndex % keys.length];
-      const activeModel = preferredModels[modelIndex % preferredModels.length];
+
+      // Find next model that is not currently quota-exhausted
+      let activeModel = preferredModels[modelIndex % preferredModels.length];
+      for (let i = 0; i < preferredModels.length; i++) {
+        const candidate = preferredModels[(modelIndex + i) % preferredModels.length];
+        if ((modelExhaustedUntil[candidate] || 0) < Date.now()) {
+          activeModel = candidate;
+          modelIndex = (modelIndex + i) % preferredModels.length;
+          break;
+        }
+      }
 
       const headers = new Headers(init?.headers || {});
       headers.set("Authorization", `Bearer ${activeKey}`);
@@ -87,8 +101,8 @@ function createResilientGroqFetch(preferredModels: string[]) {
       if (bodyObj) {
         bodyObj.model = activeModel;
         // Qwen model enforces OTPM limit of 1000 tokens on Groq
-        if (activeModel.includes("qwen") && bodyObj.max_tokens && bodyObj.max_tokens > 900) {
-          bodyObj.max_tokens = 900;
+        if (activeModel.includes("qwen") && bodyObj.max_tokens && bodyObj.max_tokens > 500) {
+          bodyObj.max_tokens = 500;
         }
         activeBody = JSON.stringify(bodyObj);
       }
@@ -105,7 +119,7 @@ function createResilientGroqFetch(preferredModels: string[]) {
         }
 
         const errText = await res.text();
-        const isOtpm = /Request too large|OTPM|reduce max_tokens/i.test(errText);
+        const isOtpm = /Request too large|OTPM/i.test(errText);
         const isTpdQuota = /tokens per day|TPD|quota/i.test(errText);
 
         logger.warn(
@@ -113,15 +127,18 @@ function createResilientGroqFetch(preferredModels: string[]) {
           `Reason: ${isOtpm ? "OTPM Limit" : isTpdQuota ? "TPD Quota Exhausted" : "Rate limit"}. Retrying with failover...`
         );
 
-        if (isOtpm) {
-          // Model output token limit exceeded: immediately failover to openai/gpt-oss-120b
+        if (isTpdQuota) {
+          // Model-specific daily quota exhausted: latch disabled for 15 minutes and switch model immediately
+          modelExhaustedUntil[activeModel] = Date.now() + 15 * 60 * 1000;
           modelIndex++;
-        } else if (isTpdQuota) {
-          if (keyIndex < keys.length - 1) {
-            keyIndex++;
-          } else {
-            keyIndex = 0;
-            modelIndex++;
+        } else if (isOtpm) {
+          // OTPM rate limit: extract wait seconds or default to 3s, then reduce token budget
+          const waitMatch = errText.match(/try again in ([0-9.]+)s/i);
+          const waitMs = waitMatch ? Math.min(Math.ceil(parseFloat(waitMatch[1]) * 1000) + 500, 15000) : 3000;
+          logger.info(`[ResilientFetch] Cooling down ${waitMs}ms for OTPM window...`);
+          await new Promise((resolve) => setTimeout(resolve, waitMs));
+          if (bodyObj && bodyObj.max_tokens) {
+            bodyObj.max_tokens = Math.min(bodyObj.max_tokens, 450);
           }
         } else {
           keyIndex++;
