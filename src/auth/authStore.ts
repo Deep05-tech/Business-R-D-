@@ -188,20 +188,25 @@ export class AuthStore {
     await mkdir(dirname(this.filePath), { recursive: true });
     await writeFile(this.filePath, `${JSON.stringify([...this.users.values()], null, 2)}\n`, "utf8");
 
-    try {
-      const db = await getMongoDb();
+    // Background sync to MongoDB cloud without blocking HTTP callers
+    getMongoDb().then(db => {
       if (db) {
-        for (const user of this.users.values()) {
-          await db.collection("users").updateOne(
-            { username: user.username },
-            { $set: user },
-            { upsert: true }
-          );
+        const ops = [...this.users.values()].map(user => ({
+          updateOne: {
+            filter: { username: user.username },
+            update: { $set: user },
+            upsert: true
+          }
+        }));
+        if (ops.length > 0) {
+          db.collection("users").bulkWrite(ops).catch((err: any) => {
+            console.warn("MongoDB user sync failed:", err.message);
+          });
         }
       }
-    } catch (err: any) {
-      console.warn("MongoDB user sync failed:", err.message);
-    }
+    }).catch((err: any) => {
+      console.warn("MongoDB user sync error:", err.message);
+    });
   }
 
   private getSessionSecret(): string {
@@ -332,10 +337,48 @@ export class AuthStore {
 
   async usersAssignedToProject(projectUrl: string): Promise<string[]> {
     await this.initialize();
+    const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+    const targetNorm = normalize(projectUrl);
     return [...this.users.values()]
-      .filter(user => user.assignedProjectUrls?.includes(projectUrl))
+      .filter(user => (user.assignedProjectUrls || []).some(url => url === projectUrl || normalize(url) === targetNorm))
       .map(user => user.username)
       .sort((a, b) => a.localeCompare(b));
+  }
+
+  getProjectAssignmentsMap(): Map<string, string[]> {
+    const map = new Map<string, string[]>();
+    const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+    for (const user of this.users.values()) {
+      for (const url of (user.assignedProjectUrls || [])) {
+        if (!url) continue;
+        const norm = normalize(url);
+        const list = map.get(norm) || [];
+        if (!list.includes(user.username)) {
+          list.push(user.username);
+        }
+        map.set(norm, list);
+      }
+    }
+    return map;
+  }
+
+  async assignProjectToUsers(usernames: string[], projectUrl: string): Promise<void> {
+    await this.initialize();
+    if (!projectUrl || !usernames.length) return;
+    let changed = false;
+    for (const uname of usernames) {
+      const user = this.users.get(this.normalizeUsername(uname));
+      if (user) {
+        const current = user.assignedProjectUrls || [];
+        if (!current.includes(projectUrl)) {
+          user.assignedProjectUrls = [...current, projectUrl];
+          changed = true;
+        }
+      }
+    }
+    if (changed) {
+      await this.persist();
+    }
   }
 
   async assignProject(username: string, projectUrl: string): Promise<void> {

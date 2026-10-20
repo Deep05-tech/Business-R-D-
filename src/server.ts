@@ -253,9 +253,7 @@ app.put("/api/admin/projects/assignments", requireAuth, requireAdmin, async (req
       return res.status(400).json({ error: "At least one username is required." });
     }
 
-    for (const username of usernames) {
-      await authStore.assignProject(username, projectUrl);
-    }
+    await authStore.assignProjectToUsers(usernames, projectUrl);
     return res.json({ success: true, count: usernames.length });
   } catch (error: any) {
     return res.status(400).json({ error: error.message });
@@ -300,17 +298,23 @@ app.get("/api/projects", async (req, res) => {
     const onDisk = await memoryStore.loadAll();
     const user = (req as express.Request & { currentUser?: AuthUser }).currentUser;
     const assignedUrls = new Set(user ? await authStore.assignedProjects(user.username) : []);
-    const projects = await Promise.all(onDisk.map(async m => ({
-      id: Buffer.from(m.input.websiteUrl).toString('base64').replace(/=/g, ''),
-      url: m.input.websiteUrl,
-      name: m.businessIdentity?.officialName || m.input.websiteUrl.replace(/^https?:\/\//, '').replace(/\/$/, ''),
-      industry: m.businessIdentity?.industry || "Business Intelligence",
-      competitorCount: m.competitors?.length || 0,
-      postCount: m.socialFeed?.length || 0,
-      lastAnalyzed: "Active Intelligence",
-      assigned: assignedUrls.has(m.input.websiteUrl),
-      ...(user?.role === "admin" ? { assignedTo: await authStore.usersAssignedToProject(m.input.websiteUrl) } : {})
-    })));
+    const assignmentsMap = user?.role === "admin" ? authStore.getProjectAssignmentsMap() : null;
+    const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+
+    const projects = onDisk.map(m => {
+      const urlNorm = normalize(m.input.websiteUrl);
+      return {
+        id: Buffer.from(m.input.websiteUrl).toString('base64').replace(/=/g, ''),
+        url: m.input.websiteUrl,
+        name: m.businessIdentity?.officialName || m.input.websiteUrl.replace(/^https?:\/\//, '').replace(/\/$/, ''),
+        industry: m.businessIdentity?.industry || "Business Intelligence",
+        competitorCount: m.competitors?.length || 0,
+        postCount: m.socialFeed?.length || 0,
+        lastAnalyzed: "Active Intelligence",
+        assigned: assignedUrls.has(m.input.websiteUrl),
+        ...(user?.role === "admin" ? { assignedTo: (assignmentsMap?.get(urlNorm) || []).sort((a, b) => a.localeCompare(b)) } : {})
+      };
+    });
     projects.sort((a, b) => Number(b.assigned) - Number(a.assigned) || a.name.localeCompare(b.name));
 
     res.json({

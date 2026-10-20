@@ -383,12 +383,17 @@ window.deleteDashboardUser = async function(encodedUsername) {
   } catch (error) { window.showSuccess(error.message || 'Unable to remove user.'); }
 };
 
-window.loadAdminProjects = async function() {
+window.loadAdminProjects = async function(isSilent = false) {
   if (window.currentUser?.role !== 'admin') return;
   const list = document.getElementById('admin-project-list');
   const count = document.getElementById('admin-overview-project-count');
   if (!list) return;
-  list.innerHTML = '<div class="empty-state">Loading projects…</div>';
+
+  // Only show the loading placeholder on cold loads when the list is completely empty
+  if (!isSilent && (!list.children.length || list.querySelector('.empty-state'))) {
+    list.innerHTML = '<div class="empty-state">Loading projects…</div>';
+  }
+
   try {
     const [projectResponse, userResponse] = await Promise.all([fetch('/api/projects'), fetch('/api/admin/users')]);
     const data = await projectResponse.json();
@@ -399,7 +404,7 @@ window.loadAdminProjects = async function() {
     const assignableUsers = (userData.users || []).filter(user => user.role === 'user');
     if (count) count.textContent = projects.length;
     list.innerHTML = projects.length ? projects.map(project => `
-      <article class="admin-project-row">
+      <article class="admin-project-row" data-project-url="${window.escapeHtml(project.url)}">
         <div class="admin-project-main">
           <div class="admin-project-icon">⚡</div>
           <div class="admin-project-details">
@@ -426,9 +431,9 @@ window.loadAdminProjects = async function() {
               <div class="project-assignees-list">
                 <span class="assignee-label">Assigned:</span>
                 ${project.assignedTo.map(username => `
-                  <span class="project-assignee">
+                  <span class="project-assignee" data-username="${window.escapeHtml(username)}">
                     ${window.escapeHtml(username)}
-                    <button type="button" onclick="window.unassignProject('${encodeURIComponent(username)}','${encodeURIComponent(project.url)}')" aria-label="Unassign ${window.escapeHtml(username)}">×</button>
+                    <button type="button" onclick="window.unassignProject('${encodeURIComponent(username)}','${encodeURIComponent(project.url)}', event)" aria-label="Unassign ${window.escapeHtml(username)}">×</button>
                   </span>
                 `).join('')}
               </div>
@@ -447,7 +452,9 @@ window.loadAdminProjects = async function() {
       </article>`).join('') : '<div class="empty-state">No saved projects found.</div>';
     setTimeout(initializeCustomSelects, 0);
   } catch (error) {
-    list.innerHTML = `<div class="empty-state">${window.escapeHtml(error.message || 'Unable to load projects.')}</div>`;
+    if (!isSilent) {
+      list.innerHTML = `<div class="empty-state">${window.escapeHtml(error.message || 'Unable to load projects.')}</div>`;
+    }
   }
 };
 
@@ -466,6 +473,45 @@ window.assignProject = async function(encodedUrl, selectId) {
     return window.showSuccess('Select at least one user from the dropdown first.');
   }
 
+  // --- Instant Optimistic UI Update (0 ms latency) ---
+  const row = select.closest('.admin-project-row');
+  const assigneesContainer = row?.querySelector('.admin-project-assignees');
+  if (assigneesContainer) {
+    const existingBadges = Array.from(assigneesContainer.querySelectorAll('.project-assignee'))
+      .map(el => (el.getAttribute('data-username') || el.textContent.replace('×', '').trim()));
+    const mergedUsernames = [...new Set([...existingBadges, ...usernames])];
+
+    assigneesContainer.innerHTML = `
+      <div class="project-assignees-list">
+        <span class="assignee-label">Assigned:</span>
+        ${mergedUsernames.map(u => `
+          <span class="project-assignee" data-username="${window.escapeHtml(u)}">
+            ${window.escapeHtml(u)}
+            <button type="button" onclick="window.unassignProject('${encodeURIComponent(u)}','${encodeURIComponent(projectUrl)}', event)" aria-label="Unassign ${window.escapeHtml(u)}">×</button>
+          </span>
+        `).join('')}
+      </div>
+    `;
+
+    // Mark options as assigned and deselect them
+    select.querySelectorAll('option').forEach(opt => {
+      if (usernames.includes(opt.value)) {
+        opt.selected = false;
+        opt.setAttribute('data-assigned', 'true');
+        if (!opt.textContent.includes('(Assigned)')) {
+          opt.textContent = `${opt.value} (Assigned)`;
+        }
+      }
+    });
+
+    // Refresh custom select dropdown without disrupting screen
+    setTimeout(initializeCustomSelects, 0);
+  }
+
+  window.showSuccess(usernames.length === 1 
+    ? `Project assigned to ${usernames[0]}.` 
+    : `Project assigned to ${usernames.length} users (${usernames.join(', ')}).`);
+
   try {
     const response = await fetch('/api/admin/projects/assignments', {
       method: 'PUT',
@@ -474,10 +520,9 @@ window.assignProject = async function(encodedUrl, selectId) {
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'Unable to assign project.');
-    window.showSuccess(usernames.length === 1 
-      ? `Project assigned to ${usernames[0]}.` 
-      : `Project assigned to ${usernames.length} users (${usernames.join(', ')}).`);
-    await window.loadAdminProjects();
+
+    // Silent background sync
+    await window.loadAdminProjects(true);
   } catch (error) {
     try {
       for (const username of usernames) {
@@ -487,23 +532,56 @@ window.assignProject = async function(encodedUrl, selectId) {
           body: JSON.stringify({ projectUrl })
         });
       }
-      window.showSuccess(`Project assigned to ${usernames.join(', ')}.`);
-      await window.loadAdminProjects();
+      await window.loadAdminProjects(true);
     } catch (fallbackError) {
       window.showSuccess(error.message || 'Unable to assign project.');
+      await window.loadAdminProjects(false);
     }
   }
 };
 
-window.unassignProject = async function(encodedUsername, encodedUrl) {
+window.unassignProject = async function(encodedUsername, encodedUrl, event) {
   const username = decodeURIComponent(encodedUsername);
+  const projectUrl = decodeURIComponent(encodedUrl);
+
+  // --- Instant Optimistic UI Update (0 ms latency) ---
+  const triggerBtn = event?.target;
+  const chip = triggerBtn?.closest('.project-assignee');
+  const container = chip?.closest('.admin-project-assignees');
+  const row = triggerBtn?.closest('.admin-project-row');
+
+  if (chip) chip.remove();
+  if (container && !container.querySelector('.project-assignee')) {
+    container.innerHTML = '<span class="project-unassigned">Not assigned to a user</span>';
+  }
+
+  // Unmark assigned state in corresponding select dropdown
+  if (row) {
+    const select = row.querySelector('.project-assignment-control select');
+    if (select) {
+      select.querySelectorAll('option').forEach(opt => {
+        if (opt.value === username) {
+          opt.removeAttribute('data-assigned');
+          opt.textContent = username;
+        }
+      });
+      setTimeout(initializeCustomSelects, 0);
+    }
+  }
+
+  window.showSuccess(`Project unassigned from ${username}.`);
+
   try {
-    const response = await fetch(`/api/admin/users/${encodeURIComponent(username)}/projects?projectUrl=${encodeURIComponent(decodeURIComponent(encodedUrl))}`, { method: 'DELETE' });
+    const response = await fetch(`/api/admin/users/${encodeURIComponent(username)}/projects?projectUrl=${encodeURIComponent(projectUrl)}`, { method: 'DELETE' });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'Unable to unassign project.');
-    window.showSuccess(`Project unassigned from ${username}.`);
-    await window.loadAdminProjects();
-  } catch (error) { window.showSuccess(error.message || 'Unable to unassign project.'); }
+
+    // Silent background sync
+    await window.loadAdminProjects(true);
+  } catch (error) {
+    window.showSuccess(error.message || 'Unable to unassign project.');
+    await window.loadAdminProjects(false);
+  }
 };
 
 window.openAdminProject = async function(encodedUrl) {

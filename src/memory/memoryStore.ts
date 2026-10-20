@@ -25,16 +25,45 @@ export interface QueryResult {
 }
 
 export class MemoryStore {
+  private readonly memoryCache = new Map<string, StructuredMemory>();
+  private cacheInitialized = false;
+  private isSyncingWithCloud = false;
+
   constructor(private readonly directory = process.env.DATA_DIR ? join(process.env.DATA_DIR, "memory") : "data/memory") {}
+
+  private normalizeKey(url: string): string {
+    return (url || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+  }
+
+  private updateCache(memory: StructuredMemory): void {
+    if (memory?.input?.websiteUrl) {
+      this.memoryCache.set(this.normalizeKey(memory.input.websiteUrl), memory);
+    }
+  }
+
+  private evictCache(url: string): void {
+    const key = this.normalizeKey(url);
+    this.memoryCache.delete(key);
+    let host = key.split("/")[0].split(":")[0];
+    for (const [k, mem] of this.memoryCache.entries()) {
+      if (k === key || k.includes(host) || this.normalizeKey(mem.input.websiteUrl) === key) {
+        this.memoryCache.delete(k);
+      }
+    }
+  }
 
   // ---------------------------------------------------------------------------
   // Persistence (MongoDB + Local Filesystem Dual-Layer)
   // ---------------------------------------------------------------------------
 
   async save(memory: StructuredMemory): Promise<string> {
+    // Immediately update memory cache for instant UI reads
+    this.updateCache(memory);
+
     // Generate Vector Knowledge Base only if missing or empty
     if (!memory.vectorKnowledgeBase || !memory.vectorKnowledgeBase.facts || memory.vectorKnowledgeBase.facts.length === 0) {
       memory.vectorKnowledgeBase = await this.generateVectorKnowledgeBase(memory);
+      this.updateCache(memory);
     }
 
     // 1. Cloud Persistence: Save to MongoDB if configured
@@ -75,11 +104,36 @@ export class MemoryStore {
   }
 
   async loadBySite(websiteUrl: string): Promise<StructuredMemory | null> {
-    // 1. Try MongoDB first
+    if (!websiteUrl || typeof websiteUrl !== "string") return null;
+    const normTarget = this.normalizeKey(websiteUrl);
+
+    // 1. Check in-memory cache first (0.01 ms!)
+    if (this.memoryCache.has(normTarget)) {
+      return this.memoryCache.get(normTarget)!;
+    }
+    for (const [k, mem] of this.memoryCache.entries()) {
+      if (k === normTarget || (normTarget.length > 4 && (k.includes(normTarget) || normTarget.includes(k)))) {
+        return mem;
+      }
+    }
+
+    // If cache not initialized, fast load from disk
+    if (!this.cacheInitialized) {
+      await this.loadAll();
+      if (this.memoryCache.has(normTarget)) {
+        return this.memoryCache.get(normTarget)!;
+      }
+      for (const [k, mem] of this.memoryCache.entries()) {
+        if (k === normTarget || (normTarget.length > 4 && (k.includes(normTarget) || normTarget.includes(k)))) {
+          return mem;
+        }
+      }
+    }
+
+    // 2. Try MongoDB
     try {
       const db = await getMongoDb();
       if (db) {
-        const normTarget = websiteUrl.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
         const doc = await db.collection("memories").findOne({
           $or: [
             { "input.websiteUrl": websiteUrl },
@@ -88,14 +142,16 @@ export class MemoryStore {
         });
         if (doc) {
           const { _id, ...cleanDoc } = doc as any;
-          return cleanDoc as StructuredMemory;
+          const parsed = cleanDoc as StructuredMemory;
+          this.updateCache(parsed);
+          return parsed;
         }
       }
     } catch (err: any) {
       logger.warn(`Failed to load memory from MongoDB: ${err.message}`);
     }
 
-    // 2. Fallback to Local Filesystem
+    // 3. Fallback to Local Filesystem
     let latestMemory: StructuredMemory | null = null;
     try {
       const files = await readdir(this.directory);
@@ -109,9 +165,8 @@ export class MemoryStore {
           const raw = await readFile(filePath, "utf8");
           const memory = JSON.parse(raw) as StructuredMemory;
           
-          const normInputUrl = (memory.input?.websiteUrl || "").toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
-          const normTargetUrl = websiteUrl.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
-          if (normInputUrl === normTargetUrl || memory.input?.websiteUrl === websiteUrl || (normInputUrl && normTargetUrl && (normInputUrl.includes(normTargetUrl) || normTargetUrl.includes(normInputUrl)))) {
+          const normInputUrl = this.normalizeKey(memory.input?.websiteUrl || "");
+          if (normInputUrl === normTarget || memory.input?.websiteUrl === websiteUrl || (normInputUrl && normTarget && (normInputUrl.includes(normTarget) || normTarget.includes(normInputUrl)))) {
              const stat = await import("node:fs/promises").then(fs => fs.stat(filePath));
              if (stat.mtimeMs > latestMtime) {
                latestMtime = stat.mtimeMs;
@@ -126,13 +181,17 @@ export class MemoryStore {
       // directory may not exist yet
     }
 
-    // 3. Fallback to GitHub Cloud Persistence if local memory is missing or has no competitors
+    if (latestMemory) {
+      this.updateCache(latestMemory);
+      return latestMemory;
+    }
+
+    // 4. Fallback to GitHub Cloud Persistence ONLY if missing locally
     const ghToken = getGitHubToken();
-    if (ghToken && (!latestMemory || !latestMemory.competitors || latestMemory.competitors.length === 0)) {
+    if (ghToken) {
       try {
         const repo = (process.env.GITHUB_REPOSITORY || "Deep05-tech/Business-R-D-").trim();
         const branch = (process.env.GITHUB_BRANCH || "main").trim();
-        const normTarget = websiteUrl.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
         const cleanDomain = normTarget.replace(/\./g, "_");
 
         const listRes = await fetch(`https://api.github.com/repos/${repo}/contents/data/memory?ref=${branch}`, {
@@ -158,6 +217,7 @@ export class MemoryStore {
                   if (parsed.input?.websiteUrl) {
                     await mkdir(this.directory, { recursive: true });
                     await writeFile(join(this.directory, item.name), content, "utf8");
+                    this.updateCache(parsed);
                     if (!latestMemory || (parsed.competitors && parsed.competitors.length > (latestMemory.competitors?.length || 0))) {
                       latestMemory = parsed;
                     }
@@ -172,32 +232,18 @@ export class MemoryStore {
       }
     }
 
+    if (latestMemory) {
+      this.updateCache(latestMemory);
+    }
     return latestMemory;
   }
 
-  async loadAll(): Promise<StructuredMemory[]> {
-    const resultsMap = new Map<string, StructuredMemory>();
-
-    // 1. Load from MongoDB if available
-    let dbInstance: any = null;
-    try {
-      dbInstance = await getMongoDb();
-      if (dbInstance) {
-        const docs = await dbInstance.collection("memories").find({}).toArray();
-        for (const doc of docs) {
-          const { _id, ...cleanDoc } = doc as any;
-          if (cleanDoc.input?.websiteUrl) {
-            const normKey = cleanDoc.input.websiteUrl.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
-            resultsMap.set(normKey, cleanDoc as StructuredMemory);
-          }
-        }
-        logger.info(`Loaded ${resultsMap.size} projects from MongoDB cloud storage.`);
-      }
-    } catch (err: any) {
-      logger.warn(`Failed to load all memories from MongoDB: ${err.message}`);
+  async loadAll(options?: { forceFresh?: boolean }): Promise<StructuredMemory[]> {
+    if (this.cacheInitialized && !options?.forceFresh && this.memoryCache.size > 0) {
+      return Array.from(this.memoryCache.values());
     }
 
-    // 2. Load from local filesystem and merge
+    // 1. Fast load from local filesystem (~20ms)
     try {
       const files = await readdir(this.directory);
       for (const file of files) {
@@ -206,18 +252,7 @@ export class MemoryStore {
           const raw = await readFile(join(this.directory, file), "utf8");
           const memory = JSON.parse(raw) as StructuredMemory;
           if (memory.input?.websiteUrl) {
-            const normKey = memory.input.websiteUrl.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
-            if (!resultsMap.has(normKey)) {
-              resultsMap.set(normKey, memory);
-              // Backfill from disk to MongoDB so cloud database stays in sync with baked files
-              if (dbInstance) {
-                dbInstance.collection("memories").updateOne(
-                  { "input.websiteUrl": memory.input.websiteUrl },
-                  { $set: memory },
-                  { upsert: true }
-                ).catch(() => {});
-              }
-            }
+            this.updateCache(memory);
           }
         } catch {
           // skip malformed files
@@ -227,58 +262,95 @@ export class MemoryStore {
       // directory may not exist
     }
 
-    // 3. Sync from GitHub repository data/memory/
-    const ghToken = getGitHubToken();
-    if (ghToken) {
+    this.cacheInitialized = true;
+
+    // 2. Asynchronous background cloud synchronization (non-blocking)
+    this.syncWithCloudInBackground();
+
+    return Array.from(this.memoryCache.values());
+  }
+
+  private syncWithCloudInBackground(): void {
+    if (this.isSyncingWithCloud || this.directory.includes("tmp") || process.env.NODE_ENV === "test") return;
+    this.isSyncingWithCloud = true;
+
+    (async () => {
       try {
-        const repo = (process.env.GITHUB_REPOSITORY || "Deep05-tech/Business-R-D-").trim();
-        const branch = (process.env.GITHUB_BRANCH || "main").trim();
-        const listRes = await fetch(`https://api.github.com/repos/${repo}/contents/data/memory?ref=${branch}`, {
-          headers: {
-            "Authorization": `Bearer ${ghToken}`,
-            "Accept": "application/vnd.github.v3+json",
-            "User-Agent": "Business-RD-Agent-System"
-          },
-          signal: AbortSignal.timeout(8000)
-        });
-        if (listRes.ok) {
-          const items = (await listRes.json()) as any[];
-          if (Array.isArray(items)) {
-            for (const item of items) {
-              if (item.name?.endsWith(".json") && item.download_url) {
-                const localFilePath = join(this.directory, item.name);
-                try {
-                  const contentRes = await fetch(item.download_url, {
-                    headers: { "Authorization": `Bearer ${ghToken}` },
-                    signal: AbortSignal.timeout(8000)
-                  });
-                  if (contentRes.ok) {
-                    const content = await contentRes.text();
-                    await writeFile(localFilePath, content, "utf8");
-                    const parsed = JSON.parse(content) as StructuredMemory;
-                    if (parsed.input?.websiteUrl) {
-                      const siteKey = parsed.input.websiteUrl.toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
-                      resultsMap.set(siteKey, parsed);
-                    }
+        // Sync with MongoDB in background
+        const db = await getMongoDb();
+        if (db) {
+          const docs = await db.collection("memories").find({}).toArray();
+          for (const doc of docs) {
+            const { _id, ...cleanDoc } = doc as any;
+            if (cleanDoc.input?.websiteUrl) {
+              const normKey = this.normalizeKey(cleanDoc.input.websiteUrl);
+              if (!this.memoryCache.has(normKey)) {
+                this.updateCache(cleanDoc as StructuredMemory);
+              }
+            }
+          }
+        }
+
+        // Sync missing files from GitHub in background without blocking
+        const ghToken = getGitHubToken();
+        if (ghToken) {
+          const repo = (process.env.GITHUB_REPOSITORY || "Deep05-tech/Business-R-D-").trim();
+          const branch = (process.env.GITHUB_BRANCH || "main").trim();
+          const listRes = await fetch(`https://api.github.com/repos/${repo}/contents/data/memory?ref=${branch}`, {
+            headers: {
+              "Authorization": `Bearer ${ghToken}`,
+              "Accept": "application/vnd.github.v3+json",
+              "User-Agent": "Business-RD-Agent-System"
+            },
+            signal: AbortSignal.timeout(6000)
+          });
+          if (listRes.ok) {
+            const items = (await listRes.json()) as any[];
+            if (Array.isArray(items)) {
+              for (const item of items) {
+                if (item.name?.endsWith(".json") && item.download_url) {
+                  const localFilePath = join(this.directory, item.name);
+                  let exists = false;
+                  try {
+                    await import("node:fs/promises").then(fs => fs.access(localFilePath));
+                    exists = true;
+                  } catch { exists = false; }
+
+                  if (!exists) {
+                    try {
+                      const contentRes = await fetch(item.download_url, {
+                        headers: { "Authorization": `Bearer ${ghToken}` },
+                        signal: AbortSignal.timeout(6000)
+                      });
+                      if (contentRes.ok) {
+                        const content = await contentRes.text();
+                        await writeFile(localFilePath, content, "utf8");
+                        const parsed = JSON.parse(content) as StructuredMemory;
+                        if (parsed.input?.websiteUrl) {
+                          this.updateCache(parsed);
+                        }
+                      }
+                    } catch {}
                   }
-                } catch {
-                  // ignore individual download error
                 }
               }
             }
           }
         }
       } catch (err: any) {
-        logger.warn(`GitHub pull synchronization failed: ${err.message}`);
+        logger.warn(`Background cloud sync warning: ${err.message}`);
+      } finally {
+        this.isSyncingWithCloud = false;
       }
-    }
-
-    return Array.from(resultsMap.values());
+    })();
   }
 
   async deleteBySite(websiteUrl: string): Promise<boolean> {
     if (!websiteUrl || typeof websiteUrl !== "string") return false;
     let deleted = false;
+
+    // Immediately evict from cache for real-time consistency
+    this.evictCache(websiteUrl);
 
     const rawUrl = websiteUrl.trim();
     const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
