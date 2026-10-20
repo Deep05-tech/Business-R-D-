@@ -479,12 +479,14 @@ export class AuthStore {
   async assignProjectToUsers(usernames: string[], projectUrl: string): Promise<void> {
     await this.initialize();
     if (!projectUrl || !usernames.length) return;
+    const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+    const targetNorm = normalize(projectUrl);
     let changed = false;
     for (const uname of usernames) {
       const user = this.users.get(this.normalizeUsername(uname));
       if (user) {
         const current = user.assignedProjectUrls || [];
-        if (!current.includes(projectUrl)) {
+        if (!current.some(url => url === projectUrl || normalize(url) === targetNorm)) {
           user.assignedProjectUrls = [...current, projectUrl];
           changed = true;
         }
@@ -499,15 +501,27 @@ export class AuthStore {
     await this.initialize();
     const user = this.users.get(this.normalizeUsername(username));
     if (!user) throw new Error("User not found.");
-    user.assignedProjectUrls = [...new Set([...(user.assignedProjectUrls || []), projectUrl])];
-    await this.persist();
+    const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+    const targetNorm = normalize(projectUrl);
+    const existing = user.assignedProjectUrls || [];
+    if (!existing.some(url => url === projectUrl || normalize(url) === targetNorm)) {
+      user.assignedProjectUrls = [...existing, projectUrl];
+      await this.persist();
+    }
   }
 
   async unassignProject(username: string, projectUrl: string): Promise<void> {
     await this.initialize();
     const user = this.users.get(this.normalizeUsername(username));
     if (!user) throw new Error("User not found.");
-    user.assignedProjectUrls = (user.assignedProjectUrls || []).filter(url => url !== projectUrl);
+    const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+    const targetNorm = normalize(projectUrl);
+    const existing = user.assignedProjectUrls || [];
+    user.assignedProjectUrls = existing.filter(url => {
+      if (!url) return false;
+      if (url === projectUrl) return false;
+      return normalize(url) !== targetNorm;
+    });
     await this.persist();
   }
 

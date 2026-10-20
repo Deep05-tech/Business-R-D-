@@ -29,15 +29,114 @@ export class MemoryStore {
   private readonly memoryCache = new Map<string, StructuredMemory>();
   private cacheInitialized = false;
   private isSyncingWithCloud = false;
+  private readonly tombstones = new Set<string>();
+  private tombstonesLoaded = false;
 
   constructor(private readonly directory = process.env.DATA_DIR ? join(process.env.DATA_DIR, "memory") : "data/memory") {}
+
+  private get tombstonesFilePath(): string {
+    return join(this.directory, ".tombstones.json");
+  }
 
   private normalizeKey(url: string): string {
     return (url || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
   }
 
+  private getTombstoneTokens(urlOrDomain: string): string[] {
+    const raw = (urlOrDomain || "").trim();
+    if (!raw) return [];
+    const norm = this.normalizeKey(raw);
+    let host = "";
+    try {
+      const p = new URL(raw.startsWith("http") ? raw : `https://${raw}`);
+      host = p.hostname.toLowerCase().replace(/^www\./, "");
+    } catch {
+      host = norm.split("/")[0].split(":")[0];
+    }
+    const slug = host.replace(/[\.-]/g, "_");
+    const tokens = new Set<string>();
+    if (norm) tokens.add(norm);
+    if (host && host.length >= 3) tokens.add(host);
+    if (slug && slug.length >= 3) tokens.add(slug);
+    return Array.from(tokens);
+  }
+
+  async loadTombstones(): Promise<Set<string>> {
+    if (this.tombstonesLoaded) return this.tombstones;
+    try {
+      const raw = await readFile(this.tombstonesFilePath, "utf8");
+      const list = JSON.parse(raw);
+      if (Array.isArray(list)) {
+        for (const item of list) {
+          if (typeof item === "string" && item.trim()) {
+            this.tombstones.add(item.trim().toLowerCase());
+          }
+        }
+      }
+    } catch {
+      // file might not exist yet
+    }
+    this.tombstonesLoaded = true;
+    return this.tombstones;
+  }
+
+  private async saveTombstones(): Promise<void> {
+    try {
+      await mkdir(this.directory, { recursive: true });
+      const content = `${JSON.stringify(Array.from(this.tombstones).sort(), null, 2)}\n`;
+      await writeFile(this.tombstonesFilePath, content, "utf8");
+      this.syncToGitHub(".tombstones.json", content).catch(() => {});
+    } catch (e: any) {
+      logger.warn(`Failed to save tombstones: ${e.message}`);
+    }
+  }
+
+  async addTombstone(urlOrDomain: string): Promise<void> {
+    await this.loadTombstones();
+    const tokens = this.getTombstoneTokens(urlOrDomain);
+    let changed = false;
+    for (const t of tokens) {
+      if (!this.tombstones.has(t)) {
+        this.tombstones.add(t);
+        changed = true;
+      }
+    }
+    if (changed) {
+      await this.saveTombstones();
+    }
+  }
+
+  async removeTombstone(urlOrDomain: string): Promise<void> {
+    await this.loadTombstones();
+    const tokens = this.getTombstoneTokens(urlOrDomain);
+    let changed = false;
+    for (const t of tokens) {
+      if (this.tombstones.has(t)) {
+        this.tombstones.delete(t);
+        changed = true;
+      }
+    }
+    if (changed) {
+      await this.saveTombstones();
+    }
+  }
+
+  isTombstoned(val: string): boolean {
+    if (!val || this.tombstones.size === 0) return false;
+    const lower = val.toLowerCase().trim();
+    const norm = this.normalizeKey(lower);
+    if (this.tombstones.has(norm)) return true;
+    for (const token of this.tombstones) {
+      if (!token || token.length < 3) continue;
+      if (lower === token || norm === token || lower.includes(token) || norm.includes(token) || token.includes(norm)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private updateCache(memory: StructuredMemory): void {
-    if (memory?.input?.websiteUrl) {
+    if (memory?.input?.websiteUrl && !this.isTombstoned(memory.input.websiteUrl)) {
       this.memoryCache.set(this.normalizeKey(memory.input.websiteUrl), memory);
     }
   }
@@ -58,6 +157,9 @@ export class MemoryStore {
   // ---------------------------------------------------------------------------
 
   async save(memory: StructuredMemory): Promise<string> {
+    // If this website was previously tombstoned/deleted, clear the tombstone
+    await this.removeTombstone(memory.input.websiteUrl);
+
     // Immediately update memory cache for instant UI reads
     this.updateCache(memory);
 
@@ -127,11 +229,18 @@ export class MemoryStore {
 
   async loadBySite(websiteUrl: string): Promise<StructuredMemory | null> {
     if (!websiteUrl || typeof websiteUrl !== "string") return null;
+    await this.loadTombstones();
+    if (this.isTombstoned(websiteUrl)) return null;
+
     const normTarget = this.normalizeKey(websiteUrl);
 
     // 1. Check in-memory cache first (0.01 ms!)
     if (this.memoryCache.has(normTarget)) {
-      return this.memoryCache.get(normTarget)!;
+      const cached = this.memoryCache.get(normTarget)!;
+      if (!this.isTombstoned(cached.input?.websiteUrl || "")) {
+        return cached;
+      }
+      this.memoryCache.delete(normTarget);
     }
     for (const [k, mem] of this.memoryCache.entries()) {
       if (k === normTarget || (normTarget.length > 4 && (k.includes(normTarget) || normTarget.includes(k)))) {
@@ -261,19 +370,25 @@ export class MemoryStore {
   }
 
   async loadAll(options?: { forceFresh?: boolean }): Promise<StructuredMemory[]> {
+    await this.loadTombstones();
+
     if (this.cacheInitialized && !options?.forceFresh && this.memoryCache.size > 0) {
-      return Array.from(this.memoryCache.values());
+      return Array.from(this.memoryCache.values()).filter(m => !this.isTombstoned(m.input?.websiteUrl || ""));
     }
 
     // 1. Fast load from local filesystem (~20ms)
     try {
       const files = await readdir(this.directory);
       for (const file of files) {
-        if (!file.endsWith(".json")) continue;
+        if (!file.endsWith(".json") || file.startsWith(".")) continue;
+        if (this.isTombstoned(file)) {
+          await unlink(join(this.directory, file)).catch(() => {});
+          continue;
+        }
         try {
           const raw = await readFile(join(this.directory, file), "utf8");
           const memory = JSON.parse(raw) as StructuredMemory;
-          if (memory.input?.websiteUrl) {
+          if (memory.input?.websiteUrl && !this.isTombstoned(memory.input.websiteUrl)) {
             this.updateCache(memory);
           }
         } catch {
@@ -286,16 +401,25 @@ export class MemoryStore {
 
     this.cacheInitialized = true;
 
+    // Purge any tombstoned entries from memoryCache
+    for (const [k, m] of this.memoryCache.entries()) {
+      if (this.isTombstoned(m.input?.websiteUrl || "") || this.isTombstoned(k)) {
+        this.memoryCache.delete(k);
+      }
+    }
+
     // 2. Asynchronous background cloud synchronization (non-blocking)
     this.syncWithCloudInBackground();
 
-    return Array.from(this.memoryCache.values());
+    return Array.from(this.memoryCache.values()).filter(m => !this.isTombstoned(m.input?.websiteUrl || ""));
   }
 
   async syncFromCloud(): Promise<void> {
     if (this.directory.includes("tmp") || process.env.NODE_ENV === "test") return;
     const ghToken = getGitHubToken();
     if (!ghToken) return;
+
+    await this.loadTombstones();
 
     try {
       const repo = (process.env.GITHUB_REPOSITORY || "Deep05-tech/Business-R-D-").trim();
@@ -316,7 +440,16 @@ export class MemoryStore {
       await mkdir(this.directory, { recursive: true });
 
       for (const item of items) {
-        if (!item.name?.endsWith(".json") || !item.download_url) continue;
+        if (!item.name?.endsWith(".json") || item.name.startsWith(".") || !item.download_url) continue;
+
+        // Never download tombstoned files from cloud
+        if (this.isTombstoned(item.name)) {
+          const localFilePath = join(this.directory, item.name);
+          await unlink(localFilePath).catch(() => {});
+          await this.deleteFromGitHub(item.name).catch(() => {});
+          continue;
+        }
+
         const localFilePath = join(this.directory, item.name);
         let needsDownload = true;
         try {
@@ -336,12 +469,15 @@ export class MemoryStore {
             });
             if (contentRes.ok) {
               const content = await contentRes.text();
-              await writeFile(localFilePath, content, "utf8");
               const parsed = JSON.parse(content) as StructuredMemory;
-              if (parsed.input?.websiteUrl) {
+              if (parsed.input?.websiteUrl && !this.isTombstoned(parsed.input.websiteUrl)) {
+                await writeFile(localFilePath, content, "utf8");
                 this.updateCache(parsed);
+                logger.success(`Downloaded latest cloud version of ${item.name} from GitHub`);
+              } else if (this.isTombstoned(parsed.input?.websiteUrl || "")) {
+                await unlink(localFilePath).catch(() => {});
+                await this.deleteFromGitHub(item.name).catch(() => {});
               }
-              logger.success(`Downloaded latest cloud version of ${item.name} from GitHub`);
             }
           } catch {}
         }
@@ -357,6 +493,8 @@ export class MemoryStore {
 
     (async () => {
       try {
+        await this.loadTombstones();
+
         // Sync with MongoDB in background
         const db = await getMongoDb();
         if (db) {
@@ -364,6 +502,10 @@ export class MemoryStore {
           for (const doc of docs) {
             const { _id, ...cleanDoc } = doc as any;
             if (cleanDoc.input?.websiteUrl) {
+              if (this.isTombstoned(cleanDoc.input.websiteUrl)) {
+                await db.collection("memories").deleteOne({ _id }).catch(() => {});
+                continue;
+              }
               const normKey = this.normalizeKey(cleanDoc.input.websiteUrl);
               if (!this.memoryCache.has(normKey)) {
                 this.updateCache(cleanDoc as StructuredMemory);
@@ -385,6 +527,9 @@ export class MemoryStore {
   async deleteBySite(websiteUrl: string): Promise<boolean> {
     if (!websiteUrl || typeof websiteUrl !== "string") return false;
     let deleted = false;
+
+    // Immediately record persistent tombstone so cloud background sync cannot resurrect it
+    await this.addTombstone(websiteUrl);
 
     // Immediately evict from cache for real-time consistency
     this.evictCache(websiteUrl);
@@ -427,7 +572,7 @@ export class MemoryStore {
     try {
       const files = await readdir(this.directory);
       for (const file of files) {
-        if (!file.endsWith(".json")) continue;
+        if (!file.endsWith(".json") || file.startsWith(".")) continue;
         try {
           const filePath = join(this.directory, file);
           const raw = await readFile(filePath, "utf8");
@@ -437,9 +582,10 @@ export class MemoryStore {
 
           const isUrlMatch = Boolean(fileNorm && targetNorm && (fileNorm === targetNorm || fileNorm.includes(targetNorm) || targetNorm.includes(fileNorm)));
           const isDomainMatch = Boolean(targetHostname && targetSlug.length >= 3 && (siteUrl.toLowerCase().includes(targetHostname) || file.toLowerCase().includes(targetSlug)));
+          const isTombMatch = this.isTombstoned(file) || (siteUrl && this.isTombstoned(siteUrl));
 
-          if (isUrlMatch || isDomainMatch) {
-            await unlink(filePath);
+          if (isUrlMatch || isDomainMatch || isTombMatch) {
+            await unlink(filePath).catch(() => {});
             deleted = true;
             logger.success(`Deleted local memory file: ${file}`);
             await this.deleteFromGitHub(file).catch(() => {});

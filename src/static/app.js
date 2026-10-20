@@ -609,16 +609,17 @@ window.deleteAdminProject = async function(encodedUrl, projectName = '') {
       if (!fbResponse.ok) throw new Error(data.error || fbData.error || 'Unable to delete project.');
     }
 
-    if (window.activeProjectUrl === url) {
+    if (window.activeProjectUrl === url || localStorage.getItem('activeProjectUrl') === url) {
       window.activeProjectUrl = null;
       localStorage.removeItem('activeProjectUrl');
+      window.selectProject(null, false);
     }
 
     window.showSuccess('Project and all associated data deleted successfully.');
     await Promise.all([
       window.loadAdminProjects && window.loadAdminProjects(),
       window.renderProjectsDirectoryUI && window.renderProjectsDirectoryUI(),
-      window.updateProjectsDropdown && window.updateProjectsDropdown()
+      window.loadProjects && window.loadProjects(true)
     ]);
   } catch (error) {
     window.showSuccess(error.message || 'Unable to delete project.');
@@ -630,6 +631,7 @@ window.renderProjectsDirectoryUI = async function() {
   const allGrid = document.getElementById('all-projects-grid');
   const yourCount = document.getElementById('your-projects-count');
   const allCount = document.getElementById('all-projects-count');
+  const allOtherSection = document.getElementById('section-all-other-projects') || document.getElementById('all-projects-grid')?.parentElement;
   
   if (!yourGrid || !allGrid) return;
   
@@ -637,12 +639,20 @@ window.renderProjectsDirectoryUI = async function() {
     const res = await fetch('/api/projects');
     const data = await res.json();
     const projects = data.allProjects || [];
+    const isAdmin = window.currentUser?.role === 'admin';
     const assignedProjects = projects.filter(project => project.assigned);
-    const otherProjects = projects.filter(project => !project.assigned);
+    const otherProjects = isAdmin ? projects.filter(project => !project.assigned) : [];
     
-    if (projects.length === 0) {
-      yourGrid.innerHTML = '<div class="empty-state">No active projects found. Click "Start New Analysis" above to analyze a website.</div>';
-      allGrid.innerHTML = '<div class="empty-state">No historical projects found.</div>';
+    // Hide the unassigned "Other Projects & Historical Analyses" section completely for regular users
+    if (allOtherSection) {
+      allOtherSection.style.display = isAdmin ? 'block' : 'none';
+    }
+    
+    if (assignedProjects.length === 0) {
+      yourGrid.innerHTML = isAdmin 
+        ? '<div class="empty-state">No active projects found. Click "Start New Analysis" above to analyze a website.</div>'
+        : '<div class="empty-state">No projects have been assigned to your account yet. Please contact your administrator.</div>';
+      if (allGrid) allGrid.innerHTML = '<div class="empty-state">No historical projects found.</div>';
       if (yourCount) yourCount.textContent = '0';
       if (allCount) allCount.textContent = '0';
       return;
@@ -655,7 +665,7 @@ window.renderProjectsDirectoryUI = async function() {
       if (!items.length) return `<div class="empty-state">${emptyMessage}</div>`;
       return items.map(p => {
       const isCurrentActive = p.url === window.activeProjectUrl;
-      const isAdmin = window.currentUser?.role === 'admin';
+      const isAdminUser = window.currentUser?.role === 'admin';
       return `
         <div class="project-card ${isCurrentActive ? 'active' : ''}" style="${isCurrentActive ? 'border-color: var(--primary); background: rgba(99, 102, 241, 0.05);' : ''}">
           <div class="project-card-header">
@@ -680,7 +690,7 @@ window.renderProjectsDirectoryUI = async function() {
             <button class="btn btn-primary" style="flex: 1; padding: 10px; font-size: 13px;" onclick="window.selectProject(decodeURIComponent('${encodeURIComponent(p.url)}'), true); window.switchTab('details', 'Project Details & Review');">
               Open Intelligence Workspace
             </button>
-            ${isAdmin ? `
+            ${isAdminUser ? `
               <button class="admin-card-delete-btn" type="button" onclick="event.stopPropagation(); window.deleteAdminProject('${encodeURIComponent(p.url)}', '${window.escapeHtml(p.name)}')" title="Delete project and all data">
                 🗑️ Delete
               </button>
@@ -690,8 +700,10 @@ window.renderProjectsDirectoryUI = async function() {
       `;
       }).join('');
     };
-    yourGrid.innerHTML = renderProjectCards(assignedProjects, 'No projects have been assigned to you yet.');
-    allGrid.innerHTML = renderProjectCards(otherProjects, 'No other projects found.');
+    yourGrid.innerHTML = renderProjectCards(assignedProjects, isAdmin ? 'No assigned projects found.' : 'No projects have been assigned to your account yet.');
+    if (allGrid && isAdmin) {
+      allGrid.innerHTML = renderProjectCards(otherProjects, 'No other projects found.');
+    }
   } catch(e) {
     console.error("Failed to render projects directory UI", e);
   }
@@ -988,6 +1000,7 @@ window.switchTab = function(name, title) {
   if (name === 'competitors') loadCompetitorsUI();
   if (name === 'social-feed') loadFeedUI();
   if (name === 'smm') { if (window.loadSmmUI) window.loadSmmUI(); }
+  if (name === 'projects') { if (window.renderProjectsDirectoryUI) window.renderProjectsDirectoryUI(); }
 };
 
 // ---- Projects ----
@@ -1035,9 +1048,13 @@ window.loadProjects = async function(isSilent = false) {
     const siteMap = new Map();
     sites.forEach(s => siteMap.set(s.url, s.name));
 
+    // CRITICAL FIX: If currentVal is NOT in sites returned by the server,
+    // the project was DELETED or UNASSIGNED. DO NOT add it back to siteMap!
+    let activeSiteUrl = currentVal;
     if (currentVal && !siteMap.has(currentVal)) {
-      const activeOpt = Array.from(select.options).find(o => o.value === currentVal);
-      siteMap.set(currentVal, activeOpt ? activeOpt.text : currentVal);
+      activeSiteUrl = null;
+      window.activeProjectUrl = null;
+      localStorage.removeItem('activeProjectUrl');
     }
 
     const existingOptions = Array.from(select.options).filter(o => o.value !== "");
@@ -1056,7 +1073,7 @@ window.loadProjects = async function(isSilent = false) {
         const opt = document.createElement('option');
         opt.value = u;
         opt.text = name;
-        if (u === currentVal) opt.selected = true;
+        if (u === activeSiteUrl) opt.selected = true;
         frag.appendChild(opt);
       });
 
@@ -1064,20 +1081,27 @@ window.loadProjects = async function(isSilent = false) {
       select.onchange = null;
       select.innerHTML = '';
       select.appendChild(frag);
-      select.value = currentVal || "";
+      select.value = activeSiteUrl || "";
       select.onchange = oldOnChange;
 
       select.dispatchEvent(new CustomEvent('optionsUpdated'));
     } else {
-      if (currentVal && select.value !== currentVal) {
-        select.value = currentVal;
+      if (select.value !== (activeSiteUrl || "")) {
+        select.value = activeSiteUrl || "";
       }
     }
 
-    if (currentVal && Array.from(select.options).some(o => o.value === currentVal)) {
-      if (!isSilent) {
-        window.selectProject(currentVal, false);
+    if (activeSiteUrl && siteMap.has(activeSiteUrl)) {
+      if (!isSilent && window.activeProjectUrl !== activeSiteUrl) {
+        window.selectProject(activeSiteUrl, false);
       }
+    } else if (sites.length > 0 && !activeSiteUrl) {
+      const firstUrl = sites[0].url;
+      select.value = firstUrl;
+      if (!isSilent) window.selectProject(firstUrl, false);
+    } else if (sites.length === 0) {
+      select.value = "";
+      window.selectProject(null, false);
     }
   } catch (err) {
     console.error("Failed to load projects:", err);
@@ -1137,7 +1161,17 @@ function startLiveSync() {
     if (!window.activeProjectUrl) return;
     try {
       const res = await fetch(`/api/memory?url=${encodeURIComponent(window.activeProjectUrl)}`);
-      if (!res.ok) return;
+      if (!res.ok) {
+        if (res.status === 404 || res.status === 403) {
+          // Project was deleted or unassigned! Clean up state immediately
+          window.activeProjectUrl = null;
+          localStorage.removeItem('activeProjectUrl');
+          window.selectProject(null, false);
+          await window.loadProjects(true);
+          if (window.renderProjectsDirectoryUI) await window.renderProjectsDirectoryUI();
+        }
+        return;
+      }
       const data = await res.json();
       if (!data.memory) return;
       

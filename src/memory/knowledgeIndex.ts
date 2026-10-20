@@ -27,7 +27,15 @@ export class KnowledgeIndex {
 
   /** Remove a site from the index */
   remove(websiteUrl: string): void {
-    this.index.delete(this.normalizeUrl(websiteUrl));
+    const key = this.normalizeUrl(websiteUrl);
+    this.index.delete(key);
+    const host = key.split("/")[0].split(":")[0];
+    for (const [k, memory] of this.index.entries()) {
+      const memKey = this.normalizeUrl(memory.input?.websiteUrl || "");
+      if (k === key || (host && host.length >= 3 && k.includes(host)) || memKey === key || (host && memKey.includes(host))) {
+        this.index.delete(k);
+      }
+    }
   }
 
   /** Return all stored site URLs */

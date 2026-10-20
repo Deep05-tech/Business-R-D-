@@ -209,6 +209,15 @@ const requireAdmin: express.RequestHandler = (req, res, next) => {
   next();
 };
 
+const hasProjectAccess = async (user?: AuthUser, projectUrl?: string): Promise<boolean> => {
+  if (!user || !projectUrl) return false;
+  if (user.role === "admin") return true;
+  const assigned = await authStore.assignedProjects(user.username);
+  const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+  const targetNorm = normalize(projectUrl);
+  return assigned.some(a => normalize(a) === targetNorm);
+};
+
 app.get("/api/admin/users", requireAuth, requireAdmin, async (_req, res) => res.json({ users: await authStore.listUsers() }));
 app.post("/api/admin/users", requireAuth, requireAdmin, async (req, res) => {
   try {
@@ -302,9 +311,12 @@ app.get("/api/projects", async (req, res) => {
     const assignedUrls = new Set(user ? await authStore.assignedProjects(user.username) : []);
     const assignmentsMap = user?.role === "admin" ? authStore.getProjectAssignmentsMap() : null;
     const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+    const assignedNorms = new Set(Array.from(assignedUrls).map(normalize));
+    const isAdmin = user?.role === "admin";
 
-    const projects = onDisk.map(m => {
+    const allProjectsList = onDisk.map(m => {
       const urlNorm = normalize(m.input.websiteUrl);
+      const isAssigned = assignedUrls.has(m.input.websiteUrl) || assignedNorms.has(urlNorm);
       return {
         id: Buffer.from(m.input.websiteUrl).toString('base64').replace(/=/g, ''),
         url: m.input.websiteUrl,
@@ -313,15 +325,26 @@ app.get("/api/projects", async (req, res) => {
         competitorCount: m.competitors?.length || 0,
         postCount: m.socialFeed?.length || 0,
         lastAnalyzed: "Active Intelligence",
-        assigned: assignedUrls.has(m.input.websiteUrl),
-        ...(user?.role === "admin" ? { assignedTo: (assignmentsMap?.get(urlNorm) || []).sort((a, b) => a.localeCompare(b)) } : {})
+        assigned: isAssigned,
+        ...(isAdmin ? { assignedTo: (assignmentsMap?.get(urlNorm) || []).sort((a, b) => a.localeCompare(b)) } : {})
       };
     });
-    projects.sort((a, b) => Number(b.assigned) - Number(a.assigned) || a.name.localeCompare(b.name));
+
+    const userProjects = allProjectsList.filter(p => p.assigned);
+
+    if (!isAdmin) {
+      // Non-admin users ONLY receive their assigned projects
+      return res.json({
+        userProjects,
+        allProjects: userProjects
+      });
+    }
+
+    allProjectsList.sort((a, b) => Number(b.assigned) - Number(a.assigned) || a.name.localeCompare(b.name));
 
     res.json({
-      userProjects: projects,
-      allProjects: projects
+      userProjects,
+      allProjects: allProjectsList
     });
   } catch (e: any) {
     res.status(500).json({ error: e.message });
@@ -949,6 +972,11 @@ app.get("/api/memory", async (request, response) => {
     const url = request.query.url as string;
     if (!url) return response.status(400).json({ error: "Missing url param" });
 
+    const user = (request as express.Request & { currentUser?: AuthUser }).currentUser;
+    if (!(await hasProjectAccess(user, url))) {
+      return response.status(403).json({ error: "Access denied. This project is not assigned to your account." });
+    }
+
     const memory = knowledgeIndex.get(url) || await memoryStore.loadBySite(url);
     if (!memory) return response.status(404).json({ error: "Memory not found" });
 
@@ -1073,6 +1101,11 @@ app.post("/api/generate-smm", async (request, response) => {
       return;
     }
 
+    const user = (request as express.Request & { currentUser?: AuthUser }).currentUser;
+    if (!(await hasProjectAccess(user, websiteUrl))) {
+      return response.status(403).json({ error: "Access denied. This project is not assigned to your account." });
+    }
+
     let memory = knowledgeIndex.get(websiteUrl);
     if (!memory) {
       memory = await memoryStore.loadBySite(websiteUrl) ?? undefined;
@@ -1132,6 +1165,11 @@ app.get("/api/competitors", async (request, response) => {
   try {
     const url = request.query.url as string;
     if (!url) return response.status(400).json({ error: "Missing url param" });
+
+    const user = (request as express.Request & { currentUser?: AuthUser }).currentUser;
+    if (!(await hasProjectAccess(user, url))) {
+      return response.status(403).json({ error: "Access denied. This project is not assigned to your account." });
+    }
 
     const memory = knowledgeIndex.get(url) || await memoryStore.loadBySite(url);
     if (!memory) return response.status(404).json({ error: "Memory not found" });
@@ -1466,13 +1504,18 @@ app.post("/api/cron/run", async (request, response) => {
 app.get("/api/social-feed", async (request, response) => {
   try {
     const url = request.query.url as string;
-    let memory = await memoryStore.loadBySite(url);
+    const user = (request as express.Request & { currentUser?: AuthUser }).currentUser;
+    if (url && !(await hasProjectAccess(user, url))) {
+      return response.status(403).json({ error: "Access denied. This project is not assigned to your account." });
+    }
+
+    let memory = url ? await memoryStore.loadBySite(url) : null;
     if (!memory && url) {
       const allMemories = await memoryStore.loadAll();
       memory = allMemories.find(m => {
         const u = (m.input?.websiteUrl || "").toLowerCase();
         return u.includes(url.toLowerCase()) || url.toLowerCase().includes(u.replace(/^https?:\/\//, "").replace(/\/+$/, ""));
-      }) || allMemories[0] || null;
+      }) || null;
     }
     if (!memory) return response.status(404).json({ error: "Memory not found" });
     
@@ -1667,11 +1710,27 @@ app.get("/api/sites", async (request, response) => {
   const onDisk = await memoryStore.loadAll();
   const user = (request as express.Request & { currentUser?: AuthUser }).currentUser;
   const assignedUrls = new Set(user ? await authStore.assignedProjects(user.username) : []);
-  const sites = onDisk.map(m => ({
-    url: m.input.websiteUrl,
-    name: m.businessIdentity?.officialName || m.input.websiteUrl,
-    assigned: assignedUrls.has(m.input.websiteUrl)
-  })).sort((a, b) => Number(b.assigned) - Number(a.assigned) || a.name.localeCompare(b.name));
+  const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+  const assignedNorms = new Set(Array.from(assignedUrls).map(normalize));
+  const isAdmin = user?.role === "admin";
+
+  let sites = onDisk.map(m => {
+    const urlNorm = normalize(m.input.websiteUrl);
+    const isAssigned = assignedUrls.has(m.input.websiteUrl) || assignedNorms.has(urlNorm);
+    return {
+      url: m.input.websiteUrl,
+      name: m.businessIdentity?.officialName || m.input.websiteUrl,
+      assigned: isAssigned
+    };
+  });
+
+  if (!isAdmin) {
+    // Non-admin users ONLY receive sites assigned to them
+    sites = sites.filter(s => s.assigned);
+  } else {
+    sites.sort((a, b) => Number(b.assigned) - Number(a.assigned) || a.name.localeCompare(b.name));
+  }
+
   response.json(sites);
 });
 
