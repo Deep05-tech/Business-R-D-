@@ -40127,5 +40127,42 @@
       "postUrl": "https://de.linkedin.com/posts/findling-w%C3%A4lzlager-gmbh_findlingw%C3%A4lzlager-findlinginzahlen-service-activity-7500437540601090048-QPs1",
       "competitorName": "Findling Wälzlager GmbH"
     }
-  ]
+  ],
+  "ownSocials": {
+    "linkedin": null,
+    "instagram": null,
+    "facebook": null,
+    "youtube": null,
+    "twitter": null
+  },
+  "ownSocialFeed": [],
+  "brandVoicePattern": {
+    "captionStyle": "Medium-length storytelling with technical precision and structured bulleted specs",
+    "tone": "Authoritative industrial manufacturer, high metallurgical and engineering depth",
+    "formattingPreferences": [
+      "Structured bullet points with checkmark emojis (✅)",
+      "Clear technical specification callouts",
+      "Direct problem-to-solution narrative structure",
+      "Clean, professional spacing"
+    ],
+    "signatureHashtags": [
+      "#CECBearings",
+      "#Manufacturing",
+      "#PrecisionEngineering",
+      "#QualityManufacturing",
+      "#B2B"
+    ],
+    "preferredCTAs": [
+      "Connect with our engineering team for technical drawing reviews",
+      "Request a custom batch manufacturing RFQ"
+    ],
+    "frequentThemes": [
+      "Machining & Tolerances",
+      "Quality Testing & ISO Standards",
+      "Facility & Infrastructure Capabilities"
+    ],
+    "recentPostTopics": [],
+    "analyzedPostCount": 0,
+    "lastAnalyzedAt": "2026-10-20T06:09:39.097Z"
+  }
 }
