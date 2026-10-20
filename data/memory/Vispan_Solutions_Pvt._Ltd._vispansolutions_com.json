@@ -403,10 +403,85 @@
         "aiLaymanSummary": "Conversion Optimization is a marketing service that helps businesses turn more website or app visitors into paying customers. Think of it as a systematic way to fine‑tune every part of the customer journey— from the first headline you see to the final checkout button—so that more people complete the action you want them to take.\n\nThe process starts with data: we look at how visitors behave, where they drop off, and what motivates them. Then we run small experiments—A/B tests, heat‑maps, or user surveys—to see which changes make the biggest difference. Once a winning tweak is found, we implement it across the site or app, monitor the results, and repeat the cycle to keep improving.\n\nBenefits for your business include:\n- **Higher conversion rates** → more sales or leads with the same traffic volume.\n- **Better return on investment** → you get more value from existing marketing spend.\n- **Improved user experience** → visitors find what they need faster and feel more confident making a purchase."
       }
     ],
-    "valuePropositions": []
+    "valuePropositions": [
+      "Full-Funnel Digital Growth: Technical Development + Creative Production + Performance Advertising",
+      "Global Cross-Market Delivery: Serving high-growth enterprises in USA, Canada, Australia, and India",
+      "One-Stop Digital Agency: Seamless integration of web engineering, SEO, and paid performance marketing",
+      "Conversion-Rate-Obsessed: Data-driven UI/UX design and rigorous A/B testing frameworks",
+      "Modern Technology Stack: Specialized expertise in Flutter, Shopify, WordPress, and custom cloud apps"
+    ]
   },
   "processes": {
-    "processes": []
+    "processes": [
+      {
+        "name": "Technical SEO Audit & Keyword Architecture",
+        "description": "Comprehensive crawlability, indexability, site speed optimization, and semantic search keyword mapping.",
+        "workflow": [
+          "Technical Site Crawl",
+          "Keyword Gap Analysis",
+          "On-Page Optimization",
+          "High-Authority Backlink Acquisition"
+        ],
+        "capacity": "Continuous 24/7 rank monitoring",
+        "machineryUsed": [
+          "Ahrefs",
+          "SEMrush",
+          "Google Search Console",
+          "Screaming Frog"
+        ]
+      },
+      {
+        "name": "Agile Web & App Engineering",
+        "description": "End-to-end full-stack development covering bespoke UI/UX, Flutter cross-platform apps, and scalable Shopify/WordPress e-commerce platforms.",
+        "workflow": [
+          "Figma Wireframing & Prototyping",
+          "Component-Driven Coding",
+          "QA & Cross-Device Testing",
+          "Zero-Downtime Deployment"
+        ],
+        "capacity": "Enterprise web & mobile deployments",
+        "machineryUsed": [
+          "Flutter",
+          "Shopify Plus",
+          "WordPress / WooCommerce",
+          "Node.js",
+          "React"
+        ]
+      },
+      {
+        "name": "Performance Advertising & ROAS Scaling",
+        "description": "Omnichannel paid ad campaign creation, precision audience targeting, and real-time bid optimization across Meta and Google Ads.",
+        "workflow": [
+          "Audience Persona Segmentation",
+          "High-CTR Creative Ideation",
+          "Conversion Tracking & Pixel Setup",
+          "A/B Testing & ROAS Optimization"
+        ],
+        "capacity": "Multi-region ad spend management",
+        "machineryUsed": [
+          "Meta Ads Manager",
+          "Google Ads & GA4",
+          "Hotjar",
+          "Triple Whale"
+        ]
+      },
+      {
+        "name": "Conversion Rate Optimization (CRO)",
+        "description": "Systematic behavioral analysis, friction elimination, and heat-map evaluation to maximize visitor-to-lead conversion rates.",
+        "workflow": [
+          "User Funnel Drop-off Analysis",
+          "Hypothesis Generation",
+          "Split Testing Implementation",
+          "Permanent CRO Feature Rollout"
+        ],
+        "capacity": "Continuous conversion optimization",
+        "machineryUsed": [
+          "Google Optimize / VWO",
+          "Hotjar Heatmaps",
+          "Mixpanel"
+        ]
+      }
+    ]
   },
   "audience": {
     "buyerPersonas": [
@@ -422,14 +497,23 @@
       "Australia"
     ],
     "targetIndustries": [
-      "Digital Marketing"
+      "Digital Marketing",
+      "E-Commerce",
+      "B2B SaaS",
+      "Professional Services"
     ]
   },
   "brandPositioning": {
-    "tone": null,
-    "positioning": null,
-    "usps": [],
-    "messagingStyle": null
+    "tone": "Modern, data-driven, authoritative digital growth partner",
+    "positioning": "Full-service digital growth agency blending creative firepower, high-performance web engineering, and ROI-driven marketing for ambitious global brands",
+    "usps": [
+      "Full-Funnel Digital Growth: Technical Development + Creative Production + Performance Advertising",
+      "Global Cross-Market Delivery: Serving high-growth enterprises in USA, Canada, Australia, and India",
+      "One-Stop Digital Agency: Seamless integration of web engineering, SEO, and paid performance marketing",
+      "Conversion-Rate-Obsessed: Data-driven UI/UX design and rigorous A/B testing frameworks",
+      "Modern Technology Stack: Specialized expertise in Flutter, Shopify, WordPress, and custom cloud apps"
+    ],
+    "messagingStyle": "Growth-focused, analytical, and performance-oriented"
   },
   "digitalMaturity": {
     "score": 91,
