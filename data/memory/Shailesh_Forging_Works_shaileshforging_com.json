@@ -56377,89 +56377,1667 @@
   },
   "competitors": [
     {
-      "name": "Bharat Forge",
-      "url": "https://www.bharatforge.com",
-      "type": "global",
-      "location": "Pune, Maharashtra",
+      "name": "Akron Ring Forge Pvt. Ltd.",
+      "url": "http://www.akronringforge.com/",
+      "type": "local",
+      "location": "Plot No.: 39 & 40, Survey No.: 275, Ankur Industrial Estate, NH-27, Shapar, Gujarat 360026, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 8 common products: [Seamless Rolled Rings, Casing Connectors, Standard Flanges, Pellet Mill Dies, Plug Valve Body, Pellet Ring Dies, Custom Component Manufacturing & Forging...]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.2 | Phone: 094269 98013",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.akronringforge.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://akronringforge.com/seamless-rolled-rings/"
+        }
+      ],
       "socials": {
-        "facebook": "https://www.facebook.com/bharatforgelimited",
-        "linkedin": "https://in.linkedin.com/company/bharat-forge-ltd",
-        "instagram": "https://www.instagram.com/bharatforgeltd?utm_source=ig_web_button_share_sheet&igsh=zdnlzdc0mzixnw==",
-        "youtube": "https://www.youtube.com/@bharatforgelimitedindia912",
-        "twitter": null
-      }
+        "linkedin": "https://www.linkedin.com/company/millennium-ring-mfg-company",
+        "instagram": "https://www.instagram.com/millennium_ring_mfg.co/",
+        "facebook": "https://www.facebook.com/profile.php?id=61550079624825",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Casing Connectors",
+        "Standard Flanges",
+        "Pellet Mill Dies",
+        "Plug Valve Body",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Casing Connectors",
+        "Standard Flanges",
+        "Pellet Mill Dies",
+        "Plug Valve Body",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ]
     },
     {
-      "name": "Larsen & Toubro",
-      "url": "https://www.larsentoubro.com",
-      "type": "global",
-      "location": "Mumbai, Maharashtra",
+      "name": "S R INDUSTRIES - Jewellery Machinery, Jewellery Tools and Dies, Manufacturer and Exporter..",
+      "url": "https://www.srindustriesrajkot.in/",
+      "type": "local",
+      "location": "4, Bhoja Bhagat Chowk, Patel Nagar, Jangleshwar, Rajkot, Gujarat 360002, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 8 common products: [Seamless Rolled Rings, Casing Connectors, Standard Flanges, Pellet Mill Dies, Pellet Ring Dies, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning...]. Socials: Facebook verified; Instagram verified. Rating: 4.8 | Phone: 084909 57777",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.srindustriesrajkot.in/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://www.srindustriesrajkot.in/"
+        }
+      ],
       "socials": {
-        "facebook": "https://www.facebook.com/search/top?q=Larsen%20%26%20Toubro",
-        "linkedin": "https://www.linkedin.com/company/larsen-&-toubro-limited/?originalsubdomain=in",
-        "instagram": "https://www.instagram.com/explore/tags/LarsenToubro/",
-        "youtube": "https://www.youtube.com/larsentoubrogroup",
-        "twitter": null
-      }
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/srjewellery1999/",
+        "facebook": "https://www.facebook.com/102678262364981/",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Casing Connectors",
+        "Standard Flanges",
+        "Pellet Mill Dies",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Casing Connectors",
+        "Standard Flanges",
+        "Pellet Mill Dies",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing"
+      ]
     },
     {
-      "name": "Ramkrishna Forgings",
-      "url": "https://www.ramkrishnaforgings.com",
-      "type": "global",
-      "location": "Kolkata, West Bengal",
+      "name": "Shree Surya Engineers-Die Forging, Forged Steel Ring, Bearing Races, Bearing Ring, Forging Manufacturer, Rajkot, India",
+      "url": "https://suryaengi.com/",
+      "type": "local",
+      "location": "Atika Industrial Area, Bhakti Nagar, Rajkot, Gujarat 360002, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: The candidate, Shree Surya Engineers, is explicitly described as a 'distinguished leader in the forging manufacturing industry' established in 1994. This directly aligns with Shailesh Forging Works' core business of manufacturing forged products such as seamless rolled rings, casing connectors, and flanges. Both are operating businesses in the same specific vertical (industrial forging), making them direct competitors.. 8 common products: [Seamless Rolled Rings, Standard Flanges, Plug Valve Body, Forged Valve Components, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning, Heat Treatment & Surface Processing...]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.3 | Phone: 094095 01042",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://suryaengi.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://suryaengi.com/"
+        }
+      ],
       "socials": {
-        "facebook": "https://www.facebook.com/search/top?q=Ramkrishna%20Forgings",
-        "linkedin": "https://www.linkedin.com/company/ramkrishna-forgings-ltd",
-        "instagram": "https://www.instagram.com/explore/tags/RamkrishnaForgings/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
-      }
+        "linkedin": "http://www.linkedin.com/company/shree-surya-engineers/",
+        "instagram": "https://www.instagram.com/shree_surya_engineers/",
+        "facebook": "https://www.facebook.com/people/Shree-Surya-Engineers/61559842683888/",
+        "youtube": "https://www.youtube.com/channel/UCpvt11wLUQy5f5DBfg5ugrg"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
     },
     {
-      "name": "SIFCO Industries, Inc.",
-      "url": "https://www.sifco.com",
+      "name": "Scot Forge",
+      "url": "https://www.scotforge.com/",
       "type": "global",
-      "location": "Cleveland, Ohio, USA",
+      "location": "8001 Winn Rd, Spring Grove, IL 60081, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 8 common products: [Seamless Rolled Rings, Pellet Mill Dies, Plug Valve Body, Forged Valve Components, Pellet Ring Dies, Custom Component Manufacturing & Forging, Heat Treatment & Surface Processing...]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 3.7 | Phone: (800) 435-6621",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.scotforge.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://www.scotforge.com/forged-products/forged-rolled-rings"
+        }
+      ],
       "socials": {
-        "facebook": "https://www.facebook.com/search/top?q=SIFCO%20Industries%2C%20Inc.",
-        "linkedin": "https://www.linkedin.com/company/sifco-industries-inc/",
-        "instagram": "https://www.instagram.com/explore/tags/SIFCOIndustriesInc/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
-      }
+        "linkedin": "https://www.linkedin.com/company/scot-forge",
+        "instagram": "https://www.instagram.com/scot_forge/",
+        "facebook": "https://www.facebook.com/scotforge",
+        "youtube": "https://www.youtube.com/user/ScotForgeCompany"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Pellet Mill Dies",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Pellet Mill Dies",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
     },
     {
-      "name": "Ellwood Group Incorporated",
-      "url": "https://www.ellwoodgroup.com",
+      "name": "All Metals & Forge Group",
+      "url": "https://www.steelforge.com/",
       "type": "global",
-      "location": "Ellwood City, Pennsylvania, USA",
+      "location": "75 Lane Rd, Fairfield, NJ 07004, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 8 common products: [Seamless Rolled Rings, Standard Flanges, Plug Valve Body, Forged Valve Components, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning, Heat Treatment & Surface Processing...]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: N/A | Phone: (973) 276-5000",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.steelforge.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://steelforge.com/forged-seamless-roll-rings/"
+        }
+      ],
       "socials": {
-        "facebook": "https://www.facebook.com/ellwoodgroup/",
-        "linkedin": "https://www.linkedin.com/search/results/all/?keywords=Ellwood%20Group%20Incorporated",
-        "instagram": "https://www.instagram.com/explore/tags/EllwoodGroupIncorporated/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
-      }
+        "linkedin": "https://www.linkedin.com/company/all-metals-&-forge/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/AllMetalsForgeGroup",
+        "youtube": "https://www.youtube.com/@Steelforge/videos"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
     },
     {
-      "name": "Iraeta (IRAETA)",
+      "name": "ACTIVE STEEL FORGE",
+      "url": "http://activesteelforge.com/",
+      "type": "local",
+      "location": "SHIVBHUMI INDUS AREA SURVEY NO 242, PLT NO 2, Anand liners gate, 3/4, Shapar, Gujarat 360024, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 7 common products: [Seamless Rolled Rings, Standard Flanges, Forged Valve Components, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning, Heat Treatment & Surface Processing, Quality Assurance & Metallurgical Lab Testing]. Socials: LinkedIn verified. Rating: 4.3 | Phone: 099094 00022",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://activesteelforge.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://activesteelforge.com/products/spherical-roller-thrust-rings/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/active-steel-forge-a0768130b/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "SHACHA TECHNOFORGE PVT. LTD.",
+      "url": "http://www.shachatechnoforge.com/",
+      "type": "local",
+      "location": "Survey No. 146, Opp Ankit Industrial Village .: Padavala, Tal .: Kotda sanaghani, Veraval, Gujarat 360024, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 7 common products: [Casing Connectors, Standard Flanges, Plug Valve Body, Slip Segments, Forged Valve Components, Custom Component Manufacturing & Forging, Heat Treatment & Surface Processing]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4.8 | Phone: 099095 97710",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.shachatechnoforge.com/"
+        },
+        {
+          "title": "Product: Casing Connectors",
+          "url": "http://www.shachatechnoforge.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/shachatechnoforge/",
+        "facebook": "https://www.facebook.com/Shacha-techno-forge-pvt-ltd-114568800093533",
+        "youtube": "https://www.youtube.com/watch?v=788setjw7SI"
+      },
+      "products": [
+        "Casing Connectors",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Slip Segments",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "Heat Treatment & Surface Processing"
+      ],
+      "commonProducts": [
+        "Casing Connectors",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Slip Segments",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "Heat Treatment & Surface Processing"
+      ]
+    },
+    {
+      "name": "Forgewell Industries Private Limited",
+      "url": "https://forgewellindustries.com/",
+      "type": "regional",
+      "location": "Gat.No1559, Plot No.B-11, near IIFA weigh Bridge, Vitthal Nagar, Shelarvasti, Industrial Estate, Chikhali, Pimpri-Chinchwad, Maharashtra 411062, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Forgewell Industries is a legitimate operating manufacturer of open die forged components in Pune, India, serving the same industrial sectors (automotive, aerospace, oil & gas) as Shailesh Forging Works. While the specific product lists differ slightly in the excerpt (open die vs. seamless rings/flanges), both are forging manufacturers producing heavy-duty metal components for similar end-use industries, making them direct competitors in the manufacturing sector.. 7 common products: [Seamless Rolled Rings, Standard Flanges, Forged Valve Components, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning, Heat Treatment & Surface Processing, Quality Assurance & Metallurgical Lab Testing]. Socials: LinkedIn verified; Instagram verified; YouTube verified. Rating: 4.4 | Phone: 099708 02028",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://forgewellindustries.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://forgewellindustries.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/forgewell-industries---india/",
+        "instagram": "https://www.instagram.com/forgewell.pvt?igsh=cWIyY2oxMGptbjJo",
+        "facebook": null,
+        "youtube": "https://youtube.com/@forgewellindustriespvtltd?si=xvJBYAjaFRc6rz06"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Independent Forgings & Alloys",
+      "url": "https://independentforgings.com/",
+      "type": "global",
+      "location": "Livesey St, Sheffield S6 2BL, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: The candidate, Independent Forgings and Alloys (IFA), is a legitimate operating manufacturing business specializing in open-die and closed-die forging, including ring rolling. This directly overlaps with the target's core offering of 'Seamless Rolled Rings' and general forging capabilities. Both companies operate in the same industrial forging sector, making them direct competitors.. 7 common products: [Seamless Rolled Rings, Standard Flanges, Plug Valve Body, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning, Heat Treatment & Surface Processing, Quality Assurance & Metallurgical Lab Testing]. Socials: LinkedIn verified. Rating: 4.6 | Phone: 0114 234 3000",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://independentforgings.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://independentforgings.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/independent-forgings-and-alloys-ltd/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Master Rings",
+      "url": "http://www.masterringforge.com/",
+      "type": "local",
+      "location": "22°13'48. 70°40'56., 3, Street Number 3, Race Course, Shaw Nagar, Rajkot, Gujarat 360021, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: The candidate, Master Rings, is a direct competitor as they explicitly manufacture 'Seamless rolled rings' and 'Flanges,' which are core offerings of the target company. Additionally, they produce other forged components like ring gears and bearing rings, placing them in the same industrial forging sector.. 6 common products: [Seamless Rolled Rings, Standard Flanges, Forged Valve Components, Custom Component Manufacturing & Forging, Heat Treatment & Surface Processing, Quality Assurance & Metallurgical Lab Testing]. Socials: LinkedIn verified; YouTube verified. Rating: 4.7 | Phone: 099742 24058",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.masterringforge.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://www.linkedin.com/company/master-rings/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/master-rings/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/channel/UCyuSmmWl-Uahr9DutcTED5A"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "SHAILESH STEEL FORGING",
+      "url": "http://www.shaileshrings.com/",
+      "type": "local",
+      "location": "B/h. Rajkamal Petrol Pump Kothariya, 6QXX+4GR, Gondal Rd, Samrat Industrial Area, Rajkot, Gujarat 360004, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 6 common products: [Seamless Rolled Rings, Standard Flanges, Forged Valve Components, Pellet Ring Dies, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning]. Socials: Facebook verified. Rating: 4.4 | Phone: 0281 238 8861",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.shaileshrings.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://www.shaileshrings.com/ringrolledforging.html"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/ShaileshSteelForging",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ]
+    },
+    {
+      "name": "Tirupati Forge Ltd.",
+      "url": "http://www.tirupatiforge.com/",
+      "type": "local",
+      "location": "Survey No.92, Rajkot Gondal National Highway, Tal.: Kotda Sangani, 27 Vill.:, Hadamtala, Gujarat 360311, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: The candidate, Tirupati Forge Limited, is a manufacturer and exporter of forged products, explicitly listing 'seamless rolled ring' and 'flanges' in their navigation and body text. These offerings directly overlap with the target's core products (Seamless Rolled Rings, Standard Flanges). Both are operating businesses in the metal forging and manufacturing industry.. 6 common products: [Seamless Rolled Rings, Standard Flanges, Forged Valve Components, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning, Quality Assurance & Metallurgical Lab Testing]. Socials: Facebook verified. Rating: 4.1 | Phone: 02827 270 512",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.tirupatiforge.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://www.tirupatiforge.com/rolled-ring.php"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Tirupati-Forge-Pvt-Ltd-226380254389901/",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Real Techno Forge",
+      "url": "https://www.realtechnoforge.com/",
+      "type": "local",
+      "location": "4, GONDAL, Umiya Industrial Zone, PLOT NO-47, NH 27, AT, Ribda, Rajkot, Gujarat 360311, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 6 common products: [Casing Connectors, Seamless Rolled Rings, Standard Flanges, Plug Valve Body, Forged Valve Components, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified. Rating: 5 | Phone: 096875 00852",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.realtechnoforge.com/"
+        },
+        {
+          "title": "Product: Casing Connectors",
+          "url": "https://www.realtechnoforge.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/cws/share?url=https://www.realtechnoforge.com/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Casing Connectors",
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Casing Connectors",
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Metaforge Engineering (I) Pvt Ltd",
+      "url": "https://www.metaforgeindia.com/",
+      "type": "regional",
+      "location": "Nasik - Dindori Road, Mhasrul, next to Harikrupa Lawns, Mhasrul Gaon, Nashik, Maharashtra 422004, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: The candidate, Metaforge Engineering (I) Pvt. Ltd., is a legitimate operating manufacturer specializing in cold forging and fasteners. While their primary focus is fasteners, they operate in the same core industry (metal forging/manufacturing) as Shailesh Forging Works. Both companies utilize forging processes to produce industrial metal components. In the manufacturing sector, companies specializing in different types of forged parts (e.g., fasteners vs. rings/flanges) are considered direct. 6 common products: [Casing Connectors, Standard Flanges, Plug Valve Body, Forged Valve Components, Custom Component Manufacturing & Forging, Quality Assurance & Metallurgical Lab Testing]. Socials: LinkedIn verified; Facebook verified. Rating: 4.7 | Phone: 0253 253 0505",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.metaforgeindia.com/"
+        },
+        {
+          "title": "Product: Casing Connectors",
+          "url": "https://www.metaforgeindia.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/metaforge-engineering-pvt-ltd---india/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/METAFORGEINDIA/",
+        "youtube": null
+      },
+      "products": [
+        "Casing Connectors",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Casing Connectors",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "MEKATRONICS SOURCING AND SOLUTION PVT LTD",
+      "url": "http://www.mekatronicsgroup.com/",
+      "type": "regional",
+      "location": "Gat No.58, Dehu - Alandi Rd, opp. Bharat Weigh Bridge, near Mega Fusion, Ganesh Nagar Chikhali, Talwade, Pimpri-Chinchwad, Maharashtra 411062, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 6 common products: [Casing Connectors, Plug Valve Body, Forged Valve Components, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning, Quality Assurance & Metallurgical Lab Testing]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: 089565 84295",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.mekatronicsgroup.com/"
+        },
+        {
+          "title": "Product: Casing Connectors",
+          "url": "http://www.mekatronicsgroup.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "http://linkedin.com/company/mekatronicsgroup",
+        "instagram": "https://www.instagram.com/mekatronics.group/",
+        "facebook": "https://www.facebook.com/mekatronicsgroup/",
+        "youtube": "https://www.youtube.com/embed/Y-x0efG1seA?playlist=Y-x0efG1seA&mute=0&autoplay=1&loop=1&controls=0&start=0&end="
+      },
+      "products": [
+        "Casing Connectors",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Casing Connectors",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Weldaloy Specialty Forgings",
+      "url": "http://weldaloy.com/",
+      "type": "global",
+      "location": "24011 Hoover Rd, Warren, MI 48089, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: The candidate, Weldaloy, is a specialty forging manufacturer that provides custom forging services, heat treatment, and machining. This directly overlaps with the target's core business of manufacturing forged components (such as seamless rolled rings, casing connectors, and flanges). Both companies operate in the industrial forging sector and compete for similar manufacturing contracts and industrial clients.. 6 common products: [Seamless Rolled Rings, Forged Valve Components, Pellet Ring Dies, Custom Component Manufacturing & Forging, Heat Treatment & Surface Processing, Quality Assurance & Metallurgical Lab Testing]. Socials: YouTube verified. Rating: 4 | Phone: (586) 758-5550",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://weldaloy.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://weldaloy.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/channel/UC4q4ZK1Ydfa2Qgd8ddAN-mQ"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Forged Valve Components",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Forged Valve Components",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Brooks Forgings Ltd",
+      "url": "https://www.brooksforgings.co.uk/",
+      "type": "global",
+      "location": "Doulton Rd, Cradley Heath B64 5QJ, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 6 common products: [Seamless Rolled Rings, Standard Flanges, Forged Valve Components, Pellet Ring Dies, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: N/A | Phone: 01384 563356",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.brooksforgings.co.uk/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://brooksforgings.co.uk/products/mooring-ring-products"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/brooks-forgings-ltd",
+        "instagram": "https://www.instagram.com/brooksforgings/",
+        "facebook": "https://www.facebook.com/brooksforgings",
+        "youtube": "https://www.youtube.com/user/BrooksForgingsLtd"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ]
+    },
+    {
+      "name": "Monocraft Forge and Machining",
+      "url": "http://www.monocraft.co.in/",
+      "type": "local",
+      "location": "Plot no. 10 & 11, Survey no.59/1, Near Evin cast SIDC Road, Ta, Shapar, Veraval, Gujarat 360024, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: The candidate, Monocraft Forge and Machining, is a legitimate operating business in the manufacturing sector specializing in forging and machining. This directly overlaps with the target company's core business of producing forged components such as seamless rolled rings, casing connectors, and valve bodies. As both companies manufacture industrial forged products, they are direct competitors in the same industry.. 5 common products: [Seamless Rolled Rings, Casing Connectors, Plug Valve Body, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning]. Socials: LinkedIn verified; Facebook verified. Rating: 4.3 | Phone: 098798 74251",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.monocraft.co.in/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://www.monocraft.co.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/milan-hingu-b21a7a1b1/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Monocraft-Private-Limited-105115141526054",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Casing Connectors",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Casing Connectors",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ]
+    },
+    {
+      "name": "en.iraeta.com",
       "url": "https://en.iraeta.com/",
-      "type": "global",
-      "location": "Amurrio, Álava, Spain",
-      "whyCompetitor": "Matches 3 offering(s): [Seamless Rolled Rings, Standard Flanges, Forged Valve Components] | Verified in-industry: Metal Forging (steel forgings)",
+      "type": "local",
+      "location": "Rajkot, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 5 common products: [Seamless Rolled Rings, Standard Flanges, Forged Valve Components, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: N/A | Phone: N/A",
       "evidenceUrls": [
         {
           "title": "Homepage",
           "url": "https://en.iraeta.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://en.iraeta.com/star-products/11"
         }
       ],
       "socials": {
+        "linkedin": "https://www.linkedin.com/company/10247076/admin/dashboard/",
+        "instagram": "https://www.instagram.com/iraeta_forgings/",
         "facebook": "https://www.facebook.com/iraetaforgings/",
-        "linkedin": "https://www.linkedin.com/search/results/all/?keywords=Iraeta%20(IRAETA)",
-        "instagram": "https://www.instagram.com/explore/tags/IraetaIRAETA/",
-        "youtube": "https://www.youtube.com/@IraetaForgings",
-        "twitter": null
-      }
+        "youtube": "https://www.youtube.com/@IraetaForgings"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ]
+    },
+    {
+      "name": "Vimal Steel Forge",
+      "url": "http://www.vimalsteelforge.com/",
+      "type": "local",
+      "location": "Plot No. 3/B, Serve No. 237,, Jai Industrial Estate,B/H Vikas Stove, Veraval(shapar), Rajkot, Veraval, Gujarat 360024, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 5 common products: [Seamless Rolled Rings, Standard Flanges, Plug Valve Body, Forged Valve Components, Custom Component Manufacturing & Forging]. Socials: Facebook verified. Rating: 4 | Phone: 099797 77787",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.vimalsteelforge.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://www.vimalsteelforge.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/vimalsteelforge",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Seamless",
+      "url": "https://seamless.ai/",
+      "type": "local",
+      "location": "Rajkot, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 5 common products: [Seamless Rolled Rings, Casing Connectors, Pellet Mill Dies, Pellet Ring Dies, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: N/A | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://seamless.ai/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://chrome.google.com/webstore/detail/seamlessai/dbepenphjfofmnjmlacfcdehikakmaap"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/groups/17857012/",
+        "instagram": "https://www.instagram.com/seamless.ai/",
+        "facebook": "https://www.facebook.com/SeamlessAI/",
+        "youtube": "https://www.youtube.com/@Seamless_AI"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Casing Connectors",
+        "Pellet Mill Dies",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Casing Connectors",
+        "Pellet Mill Dies",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Panache Industries",
+      "url": "https://www.panacheind.com/",
+      "type": "regional",
+      "location": "Shop NO. 8B, JAI Siddhivinayak CHS, Ardeshir Dadi St., X Street, Cawasji Patel Tank, Bhuleshwar, Mumbai, Maharashtra 400004, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 5 common products: [Seamless Rolled Rings, Standard Flanges, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning, Quality Assurance & Metallurgical Lab Testing]. Socials: Facebook verified; YouTube verified. Rating: 4.8 | Phone: 098927 02393",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.panacheind.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://www.panacheind.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/panacheindustries/",
+        "youtube": "https://www.youtube.com/channel/UC8LHhyZBPSBbuck4nE4fG9g/"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Ashish International",
+      "url": "http://www.ashishexports.com/",
+      "type": "regional",
+      "location": "D254 & E409, Focal Point Phase 6, Focal Point, Ludhiana, Punjab 141003, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 5 common products: [Seamless Rolled Rings, Standard Flanges, Plug Valve Body, Custom Component Manufacturing & Forging, Quality Assurance & Metallurgical Lab Testing]. Socials: LinkedIn verified. Rating: 4.9 | Phone: 099888 54380",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.ashishexports.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://www.ashishexports.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/ashishinternational/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Forgewell Limited",
+      "url": "http://www.forgewell.com/",
+      "type": "regional",
+      "location": "phase 2, Plot 24, DLF Industrial Area, Sector 32, Faridabad, Haryana 121013, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 5 common products: [Seamless Rolled Rings, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning, Heat Treatment & Surface Processing, Quality Assurance & Metallurgical Lab Testing]. Socials: LinkedIn verified; Facebook verified. Rating: 3.8 | Phone: 0129 487 1978",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.forgewell.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://www.forgewell.com/rolled-rings-gear-blanks.html"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/forgewell-limited/?originalSubdomain=in",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/forgewell/",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Conex Metals",
+      "url": "https://conexmetals.com/",
+      "type": "regional",
+      "location": "1406, 14th, Dalamal Towers, Nariman Point, Mumbai, Maharashtra 400021, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 5 common products: [Casing Connectors, Standard Flanges, Plug Valve Body, Forged Valve Components, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 3.7 | Phone: 022 4344 9300",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://conexmetals.com/"
+        },
+        {
+          "title": "Product: Casing Connectors",
+          "url": "https://conexmetals.com/product/copper-mechanical-connectors-lugs/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/conex-metals-india",
+        "instagram": "https://www.instagram.com/conexindia/",
+        "facebook": "https://www.facebook.com/conexbrass",
+        "youtube": "https://www.youtube.com/@conexsales"
+      },
+      "products": [
+        "Casing Connectors",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Casing Connectors",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Forged Valve Components",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Metalica Forging Inc",
+      "url": "https://metalicaforginginc.com/",
+      "type": "regional",
+      "location": "Office No.03, Ground Floor, 93 Parekh Bhuvan, Bhandari St, near Goldeval Temple, Cawasji Patel Tank, Bhuleshwar, Mumbai, Maharashtra 400004, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 5 common products: [Casing Connectors, Standard Flanges, Slip Segments, Custom Component Manufacturing & Forging, Heat Treatment & Surface Processing]. Socials: LinkedIn verified; Facebook verified. Rating: 4.8 | Phone: 095949 93959",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://metalicaforginginc.com/"
+        },
+        {
+          "title": "Product: Casing Connectors",
+          "url": "https://metalicaforginginc.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/metalica-forging-inc/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/people/Metalica-Forging-Inc/61567127843697",
+        "youtube": null
+      },
+      "products": [
+        "Casing Connectors",
+        "Standard Flanges",
+        "Slip Segments",
+        "Custom Component Manufacturing & Forging",
+        "Heat Treatment & Surface Processing"
+      ],
+      "commonProducts": [
+        "Casing Connectors",
+        "Standard Flanges",
+        "Slip Segments",
+        "Custom Component Manufacturing & Forging",
+        "Heat Treatment & Surface Processing"
+      ]
+    },
+    {
+      "name": "Viking Forge LLC",
+      "url": "http://www.viking-forge.com/",
+      "type": "global",
+      "location": "4500 Crane Centre Dr, Streetsboro, OH 44241, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 5 common products: [Seamless Rolled Rings, Standard Flanges, Plug Valve Body, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 3 | Phone: (330) 562-3366",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.viking-forge.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://www.viking-forge.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/viking-forge-corporation/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Viking-Forge-Corporation-357292587674055/",
+        "youtube": "https://www.youtube.com/channel/UCBkXDoS_GUAMU8NMxF3CeHg"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ]
+    },
+    {
+      "name": "Rosswag Engineering",
+      "url": "https://www.rosswag-engineering.de/",
+      "type": "global",
+      "location": "August Roßwag Str. 1, 76327 Pfinztal, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 5 common products: [Seamless Rolled Rings, Standard Flanges, Plug Valve Body, Pellet Ring Dies, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified; YouTube verified. Rating: 4.6 | Phone: 07240 9410131",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.rosswag-engineering.de/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://www.rosswag-engineering.de/referenzen/functionally-optimized-lightweight-bearings/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/rosswag-engineering/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/channel/UCRA07vq6JOrpec5VVijPshA"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "All",
+      "url": "https://seamlesshr.com/",
+      "type": "local",
+      "location": "Rajkot, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 4 common products: [Seamless Rolled Rings, Plug Valve Body, Slip Segments, Pellet Ring Dies]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: N/A | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://seamlesshr.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://seamlesshr.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://ng.linkedin.com/company/seamlesshr-ltd",
+        "instagram": "https://www.instagram.com/seamless_hr/?hl=en",
+        "facebook": "https://www.facebook.com/seamlesshrlimited/",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Plug Valve Body",
+        "Slip Segments",
+        "Pellet Ring Dies"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Plug Valve Body",
+        "Slip Segments",
+        "Pellet Ring Dies"
+      ]
+    },
+    {
+      "name": "A.M. Engineering works",
+      "url": "https://amengineeringworks.net/",
+      "type": "regional",
+      "location": "Khan Compound, Plot no15, behind Balaji compound, Tondare, Taloja, Panvel, Maharashtra 410208, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 4 common products: [Seamless Rolled Rings, Standard Flanges, Pellet Ring Dies, Custom Component Manufacturing & Forging]. Socials: Facebook verified; Instagram verified. Rating: 4.7 | Phone: 073858 63226",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://amengineeringworks.net/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://amengineeringworks.net/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/teepublic/",
+        "facebook": "https://www.facebook.com/TeePubliccom-865099700332025",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Specialty Ring Products, Inc.",
+      "url": "https://www.specialtyring.com/",
+      "type": "global",
+      "location": "2374 State Rd., Bensalem, PA 19020, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: The candidate, Specialty Ring Products, Inc., is a direct competitor as it explicitly manufactures 'seamless rolled rings' and 'forged discs,' which directly overlap with the target's core offering of 'Seamless Rolled Rings.' Both companies operate in the same manufacturing sector (forging and precision machining) and serve similar high-stress industrial applications.. 4 common products: [Seamless Rolled Rings, Plug Valve Body, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning]. Socials: LinkedIn verified; Facebook verified. Rating: 3 | Phone: (215) 245-7060",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.specialtyring.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://www.specialtyring.com/product/seamless-rolled-rings/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/specialty-ring-products-inc.",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/pages/biz/19020-7326/Specialty-Ring-Products-107148626008584/",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ]
+    },
+    {
+      "name": "USA Tolerance Rings",
+      "url": "http://www.usatolerancerings.com/",
+      "type": "global",
+      "location": "20 Lexington Ave Ste 1&2, Ewing Township, NJ 08618, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 4 common products: [Seamless Rolled Rings, Plug Valve Body, Pellet Ring Dies, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 5 | Phone: (609) 745-5000",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.usatolerancerings.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://usatolerancerings.com/new-project-information-form-rev/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/usa-tolerance-rings/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/usatolerancerings",
+        "youtube": "https://www.youtube.com/channel/UC8jo0sKSDKRr21j7AXgTQ0g"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Plug Valve Body",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Plug Valve Body",
+        "Pellet Ring Dies",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "The Angle Ring Company Limited",
+      "url": "http://www.anglering.com/",
+      "type": "global",
+      "location": "Bloomfield Rd, Tipton DY4 9EH, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 4 common products: [Seamless Rolled Rings, Plug Valve Body, Custom Component Manufacturing & Forging, Quality Assurance & Metallurgical Lab Testing]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.5 | Phone: 0121 557 7241",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.anglering.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://www.anglering.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/angle-ring-company-ltd/",
+        "instagram": "https://www.instagram.com/angle_ring_/",
+        "facebook": "https://www.facebook.com/AngleRingCompany",
+        "youtube": "https://www.youtube.com/channel/UC63l-3f_NBCVMHBwM7nRuLg"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Merrell Casting",
+      "url": "https://merrellcasting.co.uk/",
+      "type": "global",
+      "location": "70-71 Warstone Ln, Birmingham B18 6NG, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 4 common products: [Seamless Rolled Rings, Plug Valve Body, Custom Component Manufacturing & Forging, Quality Assurance & Metallurgical Lab Testing]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 3.7 | Phone: 0121 236 3767",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://merrellcasting.co.uk/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://merrellcasting.co.uk/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/merrell-casting/",
+        "instagram": "https://www.instagram.com/merrell_casting/",
+        "facebook": "https://www.facebook.com/Hockleymint/",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Sindhav Industries",
+      "url": "https://sindhavindustries.com/",
+      "type": "local",
+      "location": "atika ind. area, 7/4 corner, Dhebar Rd, Atika Industrial Area, Bhakti Nagar, Rajkot, Gujarat 360002, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 3 common products: [Seamless Rolled Rings, Standard Flanges, Custom Component Manufacturing & Forging]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: 094282 56283",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://sindhavindustries.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://sindhavindustries.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://instagram.com/jewelomatic.1/",
+        "facebook": "https://facebook.com/share/14XmhydD7Fv/",
+        "youtube": "https://youtube.com/@Jewellerymachine13"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "CROMONIMET STEEL LTD",
+      "url": "http://www.cromonimet.com/",
+      "type": "regional",
+      "location": "Gulalwadi Cir, Marine Lines East, Jamli Mohalla, Gulal Wadi, Bhuleshwar, Mumbai, Maharashtra 400004, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 3 common products: [Seamless Rolled Rings, Standard Flanges, Plug Valve Body]. Socials: YouTube verified. Rating: 4.8 | Phone: 083698 79635",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.cromonimet.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://www.cromonimet.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/channel/UCyMu3JDctozU0ZbsGbbShRw"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Plug Valve Body"
+      ]
+    },
+    {
+      "name": "Forge Auto International Ltd",
+      "url": "http://www.faipl.com/",
+      "type": "regional",
+      "location": "Kohara Macchiwara Link Rd, Ludhiana, Kohara, Punjab 141112, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 3 common products: [Seamless Rolled Rings, Custom Component Manufacturing & Forging, Heat Treatment & Surface Processing]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.3 | Phone: 089999 99195",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.faipl.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://www.faipl.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/forgeautointernational/",
+        "instagram": "https://www.instagram.com/forgeautointernational.ltd?igsh=aGFhMng4cjJ0a3J6",
+        "facebook": "https://www.facebook.com/forgeautointernationallimited",
+        "youtube": "https://www.youtube.com/watch?v=15qbEPQGg0g"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Custom Component Manufacturing & Forging",
+        "Heat Treatment & Surface Processing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Custom Component Manufacturing & Forging",
+        "Heat Treatment & Surface Processing"
+      ]
+    },
+    {
+      "name": "Magnus Steels",
+      "url": "https://magnussteels.in/",
+      "type": "regional",
+      "location": "13'A, Mahalakshmi Nagar, Lakshmipuram, Mullai Nagar, Masakali Palayam, Coimbatore, Tamil Nadu 641015, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 3 common products: [Seamless Rolled Rings, Standard Flanges, Custom Component Manufacturing & Forging]. Socials: Facebook verified; Instagram verified. Rating: 4.9 | Phone: 080155 27611",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://magnussteels.in/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://magnussteels.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/magnus__steels/",
+        "facebook": "https://www.facebook.com/profile.php?id=61558122275773",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Eimor Customs",
+      "url": "http://www.eimorcustoms.com/",
+      "type": "regional",
+      "location": "Shed no.1, Sy. No. 68, 78, IGHS/81, 80 to 87, Telangana NGOS Colony, Rajendranagar, Gaganpahad, Hyderabad, Telangana 500077, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 3 common products: [Seamless Rolled Rings, Plug Valve Body, Custom Component Manufacturing & Forging]. Socials: Facebook verified; Instagram verified. Rating: 4.4 | Phone: 077022 77755",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.eimorcustoms.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://www.eimorcustoms.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/eimorcustoms/",
+        "facebook": "http://www.facebook.com/EIMORCustomsIND",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Rujuta Corporation - Braco Dealer, Connectwell Dealer, Rolycab Dealer",
+      "url": "https://rujutaent.com/",
+      "type": "regional",
+      "location": "Ground floor, Devkaran Mansion Compound, G-14B, Shamaldas Gandhi Marg, Pathakwadi, Lohar Chawl, Kalbadevi, Mumbai, Maharashtra 400002, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 3 common products: [Casing Connectors, Plug Valve Body, Custom Component Manufacturing & Forging]. Socials: Facebook verified. Rating: 5 | Phone: 098208 25440",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://rujutaent.com/"
+        },
+        {
+          "title": "Product: Casing Connectors",
+          "url": "https://rujutaent.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/rujutacorporation/",
+        "youtube": null
+      },
+      "products": [
+        "Casing Connectors",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Casing Connectors",
+        "Plug Valve Body",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "RINGSPANN GmbH",
+      "url": "https://www.ringspann.de/",
+      "type": "global",
+      "location": "Schaberweg 30-38, 61348 Bad Homburg vor der Höhe, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 3 common products: [Seamless Rolled Rings, Standard Flanges, Pellet Ring Dies]. Socials: LinkedIn verified; YouTube verified. Rating: 4.9 | Phone: 06172 2750",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.ringspann.de/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://www.ringspann-rcs.de/de/produkte/fernbetaetigungen"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/ringspanngmbh",
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/user/RingspannGmbH"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Pellet Ring Dies"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges",
+        "Pellet Ring Dies"
+      ]
+    },
+    {
+      "name": "Indus Overseas",
+      "url": "http://www.indusforge.com/",
+      "type": "regional",
+      "location": "Hassangarh, Sonipat, Haryana 124404, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 2 common products: [Seamless Rolled Rings, Quality Assurance & Metallurgical Lab Testing]. Socials: LinkedIn verified; YouTube verified. Rating: 3.7 | Phone: 098106 36669",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.indusforge.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://www.indusforge.com/forged-d-rings.htm"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/gaurav-gupta-0a33376/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/watch?v=2ud8wB-51XA&autoplay=1&mute=1&rel=0"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "McInnes Rolled Rings",
+      "url": "http://mcinnesrolledrings.com/",
+      "type": "global",
+      "location": "1533 E 12th St, Erie, PA 16511, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 2 common products: [Seamless Rolled Rings, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified; Facebook verified. Rating: 4.2 | Phone: (800) 569-1420",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://mcinnesrolledrings.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "http://www.linkedin.com/company/mcinnes-rolled-rings"
+        }
+      ],
+      "socials": {
+        "linkedin": "http://www.linkedin.com/company/mcinnes-rolled-rings",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/pages/McInnes-Rolled-Rings/162312432870",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "August Gerstner Ringfabrik GmbH & Co.KG",
+      "url": "https://gerstner-trauringe.de/",
+      "type": "global",
+      "location": "Calwer Str. 131, 75175 Pforzheim, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 2 common products: [Seamless Rolled Rings, Pellet Ring Dies]. Socials: Facebook verified; Instagram verified. Rating: 4.9 | Phone: 07231 962033",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://gerstner-trauringe.de/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://gerstner-trauringe.de/ueber-uns/qualitaet-eines-gerstner-traurings"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/augustgerstner/",
+        "facebook": "https://www.facebook.com/Gerstner.Trauringe",
+        "youtube": null
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Pellet Ring Dies"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Pellet Ring Dies"
+      ]
+    },
+    {
+      "name": "Ring Maschinenbau GmbH",
+      "url": "https://www.ring-group.com/",
+      "type": "global",
+      "location": "Blocksbergstraße 151, 66955 Pirmasens-Winzeln, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Metal Forging. LLM Verdict: Fallback (error during LLM check). 2 common products: [Seamless Rolled Rings, Standard Flanges]. Socials: Facebook verified; YouTube verified. Rating: 4.1 | Phone: 06331 51810",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.ring-group.com/"
+        },
+        {
+          "title": "Product: Seamless Rolled Rings",
+          "url": "https://www.ring-group.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Ring-Group-1413081102073708/",
+        "youtube": "https://www.youtube.com/channel/UCwYVzGKzlkp_zT5j0tW7sqA"
+      },
+      "products": [
+        "Seamless Rolled Rings",
+        "Standard Flanges"
+      ],
+      "commonProducts": [
+        "Seamless Rolled Rings",
+        "Standard Flanges"
+      ]
     }
   ],
   "socialFeed": [
