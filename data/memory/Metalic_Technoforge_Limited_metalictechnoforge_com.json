@@ -44107,179 +44107,11 @@
   },
   "competitors": [
     {
-      "name": "synnova.in",
-      "url": "https://synnova.in/",
-      "type": "local",
-      "location": "Rajkot",
-      "whyCompetitor": "Matches 4 offering(s): [Gears, Gear Blanks, Gear Manufacturing, Manufacturing] | Rating: N/A | Phone: N/A",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "https://synnova.in/"
-        },
-        {
-          "title": "Product: Gears",
-          "url": "https://www.linkedin.com/company/synnova-gears-&-transmissions-pvt-ltd-/"
-        }
-      ],
-      "socials": {
-        "facebook": "https://www.facebook.com/search/top?q=synnova.in",
-        "linkedin": "https://www.linkedin.com/company/synnova-gears-&-transmissions-pvt-ltd-/",
-        "instagram": "https://www.instagram.com/synnovamacleod",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
-      },
-      "socialStatus": {
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "YouTube": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 2
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
-    },
-    {
-      "name": "Malkar Industries",
-      "url": "https://www.malkar.in/",
-      "type": "regional",
-      "location": "D-260, MIDC Main Rd, TTC Industrial Area, Naka, Turbhe, Navi Mumbai, Maharashtra 400705, India",
-      "whyCompetitor": "Matches 5 offering(s): [Gears, Hydraulic Cylinder, Gear Blanks, Gear Manufacturing, Manufacturing] | Rating: 4.7 | Phone: 093222 74241",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "https://www.malkar.in/"
-        },
-        {
-          "title": "Product: Gears",
-          "url": "https://www.malkar.in/gears"
-        }
-      ],
-      "socials": {
-        "facebook": "https://www.facebook.com/malkarindustries",
-        "linkedin": "https://in.linkedin.com/company/malkarindia",
-        "instagram": "https://www.instagram.com/malkarindia",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
-      },
-      "socialStatus": {
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "YouTube": {
-          "status": "Success",
-          "count": 2
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 3
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
-    },
-    {
-      "name": "Gear Manufacturing Inc",
-      "url": "https://www.gearmfg.com/",
-      "type": "global",
-      "location": "3721 E Miraloma Ave, Anaheim, CA 92806, USA",
-      "whyCompetitor": "Matches 10 offering(s): [Gears, Hydraulic Cylinder, Gear Blanks, Gear Manufacturing, Machining, IIoT-Enabled Machining, Manufacturing...] | Rating: N/A | Phone: (714) 792-2895",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "https://www.gearmfg.com/"
-        },
-        {
-          "title": "Product: Gears",
-          "url": "https://www.gearmfg.com/"
-        }
-      ],
-      "socials": {
-        "facebook": "https://www.facebook.com/search/top?q=Gear%20Manufacturing%20Inc",
-        "linkedin": "https://www.linkedin.com/company/gear-manufacturing-inc.",
-        "instagram": "https://www.instagram.com/forestcitygear",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
-      },
-      "socialStatus": {
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "YouTube": {
-          "status": "Success",
-          "count": 1
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "LinkedIn": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
-    },
-    {
-      "name": "C-B Gear & Machine Inc",
-      "url": "http://www.cbgear.com/",
-      "type": "global",
-      "location": "4232 Mooney Rd, Houston, TX 77093, USA",
-      "whyCompetitor": "Matches 6 offering(s): [Gears, Hydraulic Cylinder, Gear Blanks, Gear Manufacturing, Manufacturing, prominent] | Rating: 5 | Phone: (281) 449-0777",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "http://www.cbgear.com/"
-        },
-        {
-          "title": "Product: Gears",
-          "url": "https://www.cbgear.com/?page_id=848"
-        }
-      ],
-      "socials": {
-        "facebook": "https://www.facebook.com/CBGearandMachine/",
-        "linkedin": "https://www.linkedin.com/company/c-b-gear-machine-inc",
-        "instagram": "https://www.instagram.com/explore/tags/CBGearMachineInc/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
-      },
-      "socialStatus": {
-        "YouTube": {
-          "status": "Success",
-          "count": 1
-        },
-        "LinkedIn": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Facebook": {
-          "status": "Success",
-          "count": 2
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
-    },
-    {
       "name": "pentagonforge.co.in",
       "url": "https://pentagonforge.co.in/",
-      "type": "regional",
-      "location": "Maharashtra, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Heuristic industry match. 9 common products: [Gears, Gear Blanks, Hydraulic Cylinder Components, Forged Crankshafts, Hydraulic Cylinder, Gear Manufacturing, Machining...]. Socials: LinkedIn verified. Rating: N/A | Phone: N/A",
+      "type": "local",
+      "location": "Rajkot, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Pentagon Forge & Machine Ltd. produces drop forging and CNC‑machined forged components that overlap with Metalic Technoforge’s gears, crankshafts and hydraulic cylinder parts.. 9 common products: [Gears, Gear Blanks, Hydraulic Cylinder Components, Forged Crankshafts, Hydraulic Cylinder, Gear Manufacturing, Machining...]. Socials: LinkedIn verified. Rating: N/A | Phone: N/A",
       "evidenceUrls": [
         {
           "title": "Homepage",
@@ -44317,6 +44149,1638 @@
         "Machining",
         "IIoT-Enabled Machining",
         "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Forging – Process, Classification &amp; Methods",
+      "url": "https://fractory.com/forging-process-explained/",
+      "type": "regional",
+      "location": "Maharashtra, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: The candidate website (Fractory) is an educational resource and blog explaining the forging process, classification, and methods. It is not a manufacturing business that produces or supplies specific industrial components like gears, crankshafts, or hydraulic cylinder parts. Therefore, it does not compete with Metalic Technoforge Limited in the manufacturing of these specific products.. 9 common products: [Gears, Gear Blanks, Hydraulic Cylinder Components, Forged Crankshafts, Hydraulic Cylinder, Gear Manufacturing, Machining...]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: N/A | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://fractory.com/forging-process-explained/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://fractory.com/types-of-gears/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/fractoryint",
+        "instagram": "https://www.instagram.com/fractory_int/",
+        "facebook": "https://www.facebook.com/fractoryint/",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Jagdambay Forgings",
+      "url": "http://www.jagdambayforgings.co.in/",
+      "type": "regional",
+      "location": "Near Longowal Colony, Industrial Area C, Dhandari Kalan, Ludhiana, Punjab 141016, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: They manufacture forged components such as hydraulic cylinder parts and gear-related parts, overlapping with Metalic Technoforge's product range. 9 common products: [Gears, Gear Blanks, Hydraulic Cylinder Components, Forged Crankshafts, Hydraulic Cylinder, Gear Manufacturing, Machining...]. Socials: LinkedIn verified; Facebook verified. Rating: 4.1 | Phone: 098155 44161",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.jagdambayforgings.co.in/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://www.jagdambayforgings.co.in/pinion-gears-forgings-manufacturer.html"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/jagdambay-forgings-18501a67",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/jagdambay.forgings.7?mibextid=LQQJ4d",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Innoforge Pvt Ltd",
+      "url": "http://www.innoforge.net/",
+      "type": "regional",
+      "location": "Sipcot Ph. I, Hosur, Tamil Nadu 635126, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Innoforge is a forging manufacturer producing components like gears and crankshafts, making it a direct competitor in the same manufacturing sector.. 9 common products: [Gears, Gear Blanks, Hydraulic Cylinder Components, Forged Crankshafts, Hydraulic Cylinder, Gear Manufacturing, Machining...]. Socials: LinkedIn verified; Facebook verified. Rating: 4.4 | Phone: 04344 420 101",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.innoforge.net/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://www.innoforge.net/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/inno-technicals-62aa9218b",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/innoforge/",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Emerson Forge Pvt Ltd",
+      "url": "https://emersonforge.in/",
+      "type": "local",
+      "location": "Survey No. 269, P1/P2,, Shapar (Veraval), Dist. Rajkot, Gujrat (India), Shapar, Gujarat 360026, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Emerson Forge manufactures customized hydraulic forged parts and components that overlap with Metalic Technoforge’s hydraulic cylinder components and forging products.. 8 common products: [Gears, Gear Blanks, Hydraulic Cylinder Components, Forged Crankshafts, Hydraulic Cylinder, Gear Manufacturing, Machining...]. Socials: Facebook verified; YouTube verified. Rating: 4.7 | Phone: 098251 71101",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://emersonforge.in/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://emersonforge.in/gears/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Emerson-Forge-Pvt-Ltd-Leading-Open-Closed-Die-Forging-Company-India-620561228299005/",
+        "youtube": "https://www.youtube.com/channel/UCBThy-wgptNdCVtYfPbACUg"
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ]
+    },
+    {
+      "name": "Shivam forge",
+      "url": "http://shivamforge.com/",
+      "type": "local",
+      "location": "Ganga forging gate, Chaitanya ind.area, near Shapar(veraval, Shapar, Gujarat 360026, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Shivam Forge is a precision forging and casting manufacturer specializing in hot forging, closed-die forging, and CNC machining for industries such as automotive, tractor, and oil & gas. This directly overlaps with Metalic Technoforge Limited's offerings of forged components (like crankshafts and gear blanks) and hydraulic cylinder components, as both companies operate in the same industrial forging sector and produce similar metal components for machinery and automotive applications.. 8 common products: [Gears, Gear Blanks, Hydraulic Cylinder Components, Forged Crankshafts, Hydraulic Cylinder, Gear Manufacturing, Machining...]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 5 | Phone: 092657 72827",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://shivamforge.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://shivamforge.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/shivamforge/",
+        "instagram": "https://www.instagram.com/shivam_forge_",
+        "facebook": "https://www.facebook.com/people/Shivam-Forge/61562313057709/",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ]
+    },
+    {
+      "name": "What Is Forging? Process, Benefits and Applications",
+      "url": "https://www.weforging.com/what-is-forging/",
+      "type": "local",
+      "location": "Rajkot, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: The candidate is a legitimate operating manufacturing business specializing in forging, CNC machining, and heat treatment. Their product list explicitly includes 'forged gear components' and 'hydraulic cylinders parts,' which directly overlap with the target's offerings of Gears, Gear Blanks, and Hydraulic Cylinder Components. They operate in the same industrial manufacturing sector and provide competing products.. 8 common products: [Gears, Gear Blanks, Hydraulic Cylinder Components, Forged Crankshafts, Hydraulic Cylinder, Gear Manufacturing, Machining...]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: N/A | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.weforging.com/what-is-forging/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.weforging.com/gears-and-shafts/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/steven-chan-forging/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/anming.xia.96?mibextid=wwXIfr&mibextid=wwXIfr",
+        "youtube": "https://youtube.com/@maddysmith-x9i?si=EW0vAlzjghINYrEd"
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ]
+    },
+    {
+      "name": "Aris Global Forging & Machining LLP",
+      "url": "http://arisglobalforging.com/",
+      "type": "local",
+      "location": "Plot No. 4 & 5, R S No. 34/1 Sardar Industrial Area National Highway 27, Bharudi, Rajkot, Bharudi, Gujarat 360311, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: The candidate, Aris Global Forging & Machining LLP, is a legitimate operating business in the manufacturing sector specializing in forging and machining. While the excerpt does not explicitly list 'gears' or 'hydraulic cylinders,' it confirms they produce 'precise forged and machined components.' In the industrial forging industry, companies that produce general precision forgings and machined parts are direct competitors or adjacent suppliers to those making specific components like gears,缸. 7 common products: [Gears, Gear Blanks, Forged Crankshafts, Gear Manufacturing, Machining, IIoT-Enabled Machining, Advanced Forging Solutions]. Socials: LinkedIn verified; Facebook verified. Rating: 4.6 | Phone: 097255 87206",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://arisglobalforging.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://arisglobalforging.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/aris-global-forging-machining-llp/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/profile.php?id=100064160581885",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Anvil Techno Forge",
+      "url": "https://www.anviltechnoforge.co.in/",
+      "type": "local",
+      "location": "Sarvey No. 251, Captain Gate, Anupam Plasto Street, Plot no. 04, Shapar, Veraval, Gujarat 360026, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Anvil Techno Forge manufactures closed‑die steel forgings, overlapping with Metalic Technoforge’s forged components and thus is a direct competitor.. 7 common products: [Gears, Gear Blanks, Forged Crankshafts, Gear Manufacturing, Machining, IIoT-Enabled Machining, Advanced Forging Solutions]. Socials: Facebook verified; Instagram verified. Rating: 5 | Phone: 099980 22557",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.anviltechnoforge.co.in/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.anviltechnoforge.co.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/anvil_techno_forge",
+        "facebook": "https://www.facebook.com/people/Anvil-Techno-Froge/61550111096502/",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "SHAILESH STEEL FORGING",
+      "url": "http://www.shaileshrings.com/",
+      "type": "local",
+      "location": "B/h. Rajkamal Petrol Pump Kothariya, 6QXX+4GR, Gondal Rd, Samrat Industrial Area, Rajkot, Gujarat 360004, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Shailesh Steel Forging manufactures forged steel components such as gears and crankshafts, directly competing with Metalic Technoforge’s offerings.. 7 common products: [Gears, Gear Blanks, Forged Crankshafts, Gear Manufacturing, Machining, IIoT-Enabled Machining, Advanced Forging Solutions]. Socials: Facebook verified. Rating: 4.4 | Phone: 0281 238 8861",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.shaileshrings.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://www.shaileshrings.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/ShaileshSteelForging",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Kay Jay Forgings Limited (Corporate Office)",
+      "url": "http://www.kayjayforgings.com/",
+      "type": "regional",
+      "location": "E-2, Aristocrat Rd, Phase V, Focal Point, Ludhiana, Punjab 141003, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: The candidate, Kay Jay Forgings, is a direct competitor in the manufacturing industry. The target company specializes in gears, gear blanks, and forged components like crankshafts. The candidate explicitly lists 'gear blanks,' 'crankshafts,' and 'forging parts' in their product offerings, indicating they manufacture the same or highly similar industrial components.. 7 common products: [Gears, Gear Blanks, Forged Crankshafts, Gear Manufacturing, Machining, IIoT-Enabled Machining, Advanced Forging Solutions]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.4 | Phone: 0161 468 7000",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.kayjayforgings.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://www.kayjayforgings.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/kayjayforgings/",
+        "instagram": "https://www.instagram.com/kayjayforgings/",
+        "facebook": "https://www.facebook.com/KayJayForgingsOfficial",
+        "youtube": "https://www.youtube.com/watch?v=JG4-6rFDUuo"
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Patriot Forge Corporation",
+      "url": "https://www.patriotforge.com/",
+      "type": "global",
+      "location": "280 Henry St, Brantford, ON N3T 5S7, Canada",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Patriot Forge offers forging and machining services that produce similar components such as gears, crankshafts, and hydraulic cylinders, directly competing with Metalic Technoforge.. 7 common products: [Gears, Gear Blanks, Forged Crankshafts, Gear Manufacturing, Machining, IIoT-Enabled Machining, Advanced Forging Solutions]. Socials: LinkedIn verified; Instagram verified; YouTube verified. Rating: 4.7 | Phone: (519) 758-8100",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.patriotforge.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.patriotforge.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "http://www.linkedin.com/company/patriot-forge-co.?trk=top_nav_home",
+        "instagram": "https://www.instagram.com/patriot_forge",
+        "facebook": null,
+        "youtube": "https://www.youtube.com/channel/UCSsWjMMpqIAuUeXd_QYn_JQ"
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Commercial Forged Products",
+      "url": "http://www.commercialforged.com/",
+      "type": "global",
+      "location": "5757 W 65th St, Chicago, IL 60638, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: The candidate, Commercial Forged Products, is a contract manufacturer of steel forgings with over 145 years of experience. Their product line includes industrial forgings for sectors like energy, drilling, and off-highway, which directly overlaps with Metalic Technoforge's offerings of forged crankshafts, gear blanks, and hydraulic cylinder components. Both are manufacturers in the metal forging industry, making them direct competitors.. 7 common products: [Gears, Gear Blanks, Hydraulic Cylinder Components, Forged Crankshafts, Hydraulic Cylinder, Gear Manufacturing, Advanced Forging Solutions]. Rating: 4.7 | Phone: (708) 458-1220",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.commercialforged.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://www.commercialforged.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Forgewell Industries Private Limited",
+      "url": "https://forgewellindustries.com/",
+      "type": "regional",
+      "location": "Gat.No1559, Plot No.B-11, near IIFA weigh Bridge, Vitthal Nagar, Shelarvasti, Industrial Estate, Chikhali, Pimpri-Chinchwad, Maharashtra 411062, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Forgewell Industries manufactures open die forged components such as gears and crankshafts, directly overlapping Metalic Technoforge Limited’s product line.. 6 common products: [Gears, Forged Crankshafts, Gear Manufacturing, Machining, IIoT-Enabled Machining, Advanced Forging Solutions]. Socials: LinkedIn verified; Instagram verified; YouTube verified. Rating: 4.4 | Phone: 099708 02028",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://forgewellindustries.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://forgewellindustries.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/forgewell-industries---india/",
+        "instagram": "https://www.instagram.com/forgewell.pvt?igsh=cWIyY2oxMGptbjJo",
+        "facebook": null,
+        "youtube": "https://youtube.com/@forgewellindustriespvtltd?si=xvJBYAjaFRc6rz06"
+      },
+      "products": [
+        "Gears",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Mahakali Industries Forging",
+      "url": "https://www.sme.in/mahakalimetal/services.html",
+      "type": "regional",
+      "location": "D 13/10, TTC Industrial Area, MIDC Industrial Area, Turbhe, Navi Mumbai, Maharashtra 400703, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Mahakali Metal And Alloys is a metal forging manufacturer serving sectors like railways, oil & gas, and automobiles, offering precision forged parts that overlap with Metalic Technoforge's gear and hydraulic component offerings.. 6 common products: [Gears, Forged Crankshafts, Gear Manufacturing, Machining, IIoT-Enabled Machining, Advanced Forging Solutions]. Rating: 5 | Phone: 090048 10119",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.sme.in/mahakalimetal/services.html"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.sme.in/mahakalimetal/services.html"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "All Metals & Forge Group",
+      "url": "https://www.steelforge.com/",
+      "type": "global",
+      "location": "75 Lane Rd, Fairfield, NJ 07004, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: They manufacture open‑die forged gear blanks and other forged components, directly overlapping with Metalic Technoforge's gear and crankshaft products. 6 common products: [Gears, Gear Blanks, Forged Crankshafts, Gear Manufacturing, Machining, IIoT-Enabled Machining]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: N/A | Phone: (973) 276-5000",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.steelforge.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.steelforge.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/all-metals-&-forge/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/AllMetalsForgeGroup",
+        "youtube": "https://www.youtube.com/@Steelforge/videos"
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ]
+    },
+    {
+      "name": "Gibbs Gears Precision Engineers Ltd",
+      "url": "https://gibbsgears.com/",
+      "type": "global",
+      "location": "Unit 3 & 4, Triangle Business Park, Quilters Way,, Stoke Mandeville, Aylesbury HP22 5BL, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: They manufacture gears and gear components, directly competing with Metalic Technoforge's gear offerings.. 6 common products: [Gears, Gear Blanks, Gear Manufacturing, Machining, IIoT-Enabled Machining, Advanced Forging Solutions]. Socials: LinkedIn verified; Facebook verified. Rating: 4.9 | Phone: 01296 739020",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://gibbsgears.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://gibbsgears.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/gibbs-gears-precision-engineers-limited",
+        "instagram": null,
+        "facebook": "https://facebook.com/GibbsGearsPrecisionEngineersLtd/",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "United Brass Manufacturers Inc",
+      "url": "https://www.unitedbrass.com/",
+      "type": "global",
+      "location": "35030 Goddard Rd, Romulus, MI 48174, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: United Brass manufactures forged gear blanks and other forged components, overlapping with Metalic Technoforge's gear blank offerings, making them a direct competitor in the manufacturing sector.. 6 common products: [Gears, Gear Blanks, Forged Crankshafts, Gear Manufacturing, Machining, IIoT-Enabled Machining]. Rating: 5 | Phone: (734) 941-0700",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.unitedbrass.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.unitedbrass.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ]
+    },
+    {
+      "name": "SENDURA FORGE PVT LTD",
+      "url": "https://www.sendura.in/",
+      "type": "local",
+      "location": "4PM5+4J, Makhavad, Gujarat 360311, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Sendura Forge manufactures forged engineering components that overlap with gears, crankshafts and hydraulic parts, making it a direct competitor in the same manufacturing sector.. 5 common products: [Gears, Gear Blanks, Forged Crankshafts, Gear Manufacturing, Advanced Forging Solutions]. Socials: Facebook verified. Rating: 4.8 | Phone: 098222 67830",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.sendura.in/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.sendura.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/senduraforgepvtltd",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "SHACHA TECHNOFORGE PVT. LTD.",
+      "url": "http://www.shachatechnoforge.com/",
+      "type": "local",
+      "location": "Survey No. 146, Opp Ankit Industrial Village .: Padavala, Tal .: Kotda sanaghani, Veraval, Gujarat 360024, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: The candidate, Shacha Technoforge, is a manufacturing company specializing in forged products, specifically listing 'gears' as a core offering. This directly overlaps with the target's offering of 'Gears' and 'Gear Blanks'. Both companies operate in the same industrial forging sector, making them direct competitors.. 5 common products: [Gears, Gear Blanks, Forged Crankshafts, Gear Manufacturing, Advanced Forging Solutions]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4.8 | Phone: 099095 97710",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.shachatechnoforge.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://shachatechnoforge.com/product/gears"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/shachatechnoforge/",
+        "facebook": "https://www.facebook.com/Shacha-techno-forge-pvt-ltd-114568800093533",
+        "youtube": "https://www.youtube.com/watch?v=788setjw7SI"
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Scot Forge",
+      "url": "https://www.scotforge.com/",
+      "type": "global",
+      "location": "8001 Winn Rd, Spring Grove, IL 60081, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Scot Forge is a legitimate operating manufacturer specializing in open die forgings and rolled rings, which directly competes with Metalic Technoforge's core business of producing forged components such as gear blanks, crankshafts, and hydraulic cylinder parts. Both companies operate in the industrial metal forging sector, supplying similar heavy-duty forged metal solutions to manufacturing clients.. 5 common products: [Gears, Gear Blanks, Forged Crankshafts, Gear Manufacturing, Advanced Forging Solutions]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 3.7 | Phone: (800) 435-6621",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.scotforge.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.scotforge.com/market-expertise/forged-gears"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/scot-forge",
+        "instagram": "https://www.instagram.com/scot_forge/",
+        "facebook": "https://www.facebook.com/scotforge",
+        "youtube": "https://www.youtube.com/user/ScotForgeCompany"
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Highfield Gears and Machining Ltd",
+      "url": "https://www.highfieldgears.co.uk/?utm_source=Organic&utm_medium=GMB",
+      "type": "global",
+      "location": "Nile St, Huddersfield HD1 3LP, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Highfield Gears manufactures gears and gearboxes, directly overlapping Metalic Technoforge’s gear offerings.. 5 common products: [Gears, Gear Blanks, Gear Manufacturing, Machining, IIoT-Enabled Machining]. Socials: Facebook verified. Rating: 4 | Phone: 01484 531010",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.highfieldgears.co.uk/?utm_source=Organic&utm_medium=GMB"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.highfieldgears.co.uk/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/HighfieldGears",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ]
+    },
+    {
+      "name": "Longford Gear Cutting Co Ltd",
+      "url": "http://www.longfordgear.co.uk/",
+      "type": "global",
+      "location": "Island Works/Bayton Road, Exhall, Coventry CV7 9EL, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Longford Gear manufactures precision gears and provides gear cutting services, directly competing with Metalic Technoforge's gear offerings.. 5 common products: [Gears, Gear Blanks, Gear Manufacturing, Machining, IIoT-Enabled Machining]. Socials: Facebook verified. Rating: 5 | Phone: 024 7636 5777",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.longfordgear.co.uk/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://www.longfordgear.co.uk/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/profile.php?id=61571522204153",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ]
+    },
+    {
+      "name": "Monocraft Forge and Machining",
+      "url": "http://www.monocraft.co.in/",
+      "type": "local",
+      "location": "Plot no. 10 & 11, Survey no.59/1, Near Evin cast SIDC Road, Ta, Shapar, Veraval, Gujarat 360024, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Monocraft offers forging and machining services that include gears, crankshafts, and hydraulic cylinder components, directly competing with Metalic Technoforge's product line.. 4 common products: [Gears, Gear Manufacturing, Machining, IIoT-Enabled Machining]. Socials: LinkedIn verified; Facebook verified. Rating: 4.3 | Phone: 098798 74251",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.monocraft.co.in/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://www.monocraft.co.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/milan-hingu-b21a7a1b1/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Monocraft-Private-Limited-105115141526054",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ]
+    },
+    {
+      "name": "Elpar Industries & Suppliers",
+      "url": "http://www.elparindustries.co/",
+      "type": "regional",
+      "location": "S. No 64, Handewadi Rd, near Mango Tree, Autadwadi Handewadi, Indira Nagar, Hadapsar, Pune, Maharashtra 411028, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: The candidate (Elpar Industries) is a legitimate manufacturing company in the same broad sector (Precision Engineering/Industrial Components). However, their specific product offerings listed (hydraulic fittings, oil drain plugs, fasteners, general machined components) are distinct from the target's core heavy forging products (Gears, Gear Blanks, Forged Crankshafts, Hydraulic Cylinder Components). While both serve industrial sectors, Elpar focuses on smaller precision machined parts and fit. 4 common products: [Gears, Hydraulic Cylinder Components, Hydraulic Cylinder, Gear Manufacturing]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.9 | Phone: 093097 57935",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.elparindustries.co/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://www.elparindustries.co/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/elpar-industries-and-suppliers/",
+        "instagram": "https://www.instagram.com/p/DZ1-egwMVEn/",
+        "facebook": "https://www.facebook.com/elparindustriesandsuppliers/",
+        "youtube": "https://www.youtube.com/@ElparIndustriesandSuppliers"
+      },
+      "products": [
+        "Gears",
+        "Hydraulic Cylinder Components",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Hydraulic Cylinder Components",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "Swarn Industries",
+      "url": "https://www.swarnindustries.com/",
+      "type": "regional",
+      "location": "Daba Road, G T Road, Near Oswal unit number 4, Sherpur byepass, Daba Rd, Guru Amar Das Colony, Ludhiana, Punjab 141003, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Swarn Industries manufactures forged metal components, shafts, and connecting rods that overlap with Metalic Technoforge’s forged crankshafts and other manufacturing offerings.. 4 common products: [Gears, Gear Blanks, Forged Crankshafts, Gear Manufacturing]. Socials: LinkedIn verified. Rating: 4.3 | Phone: 080 4764 5498",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.swarnindustries.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.swarnindustries.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/cws/share?url=https://www.swarnindustries.com/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "Metalage Industries- ci casting",
+      "url": "http://www.metalageindia.com/",
+      "type": "regional",
+      "location": "Village Khakat, Near Airport, Sahnewal, Grand Trunk Rd, Jugiana, Ludhiana, Sahnewal, Punjab 141120, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Metalage India manufactures metal castings, forged components and machined parts for agriculture and automotive applications, overlapping with the forged gears, crankshafts and hydraulic cylinder components offered by Metalic Technoforge. 4 common products: [Gears, Gear Blanks, Forged Crankshafts, Gear Manufacturing]. Socials: LinkedIn verified. Rating: 4.9 | Phone: 097793 30819",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.metalageindia.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://www.metalageindia.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/metalage-industries/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "Jasnoor Enterprises",
+      "url": "https://www.jasnoorenterprises.com/",
+      "type": "regional",
+      "location": "49 Industrial Zone, Jaspal Bangar Road, near Maan Dharam Kanda, Industrial Area C, Dhandari Kalan, Ludhiana, Punjab 141003, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: The candidate, Jasnoor Enterprises, is an ISO 9001:2015 certified drop forging company that manufactures forged components for agriculture, automobiles, railways, and construction equipment (JCB). This directly overlaps with Metalic Technoforge's offerings of forged crankshafts, gear blanks, and hydraulic cylinder components, as both are industrial forging manufacturers supplying similar heavy-duty mechanical parts.. 4 common products: [Gears, Forged Crankshafts, Gear Manufacturing, Advanced Forging Solutions]. Socials: Facebook verified; Instagram verified. Rating: 5 | Phone: 098154 41083",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.jasnoorenterprises.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.jasnoorenterprises.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/jasnoor_entp/",
+        "facebook": "https://www.facebook.com/people/Jasnoor-Enterprise/100083262442971/",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Sunil Forging & Steel Industries Unit-1",
+      "url": "https://www.sunilforging.co.in/",
+      "type": "regional",
+      "location": "Industrial Area, Plot No. D, 3 Road No. H, MIDC Rd, opposite Shifa Health Care, Taloja, Panvel, Maharashtra 410208, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Sunil Forging & Steel Industries is an operating forging manufacturer producing custom forged components that overlap with Metalic Technoforge’s gear, crankshaft and hydraulic cylinder products.. 4 common products: [Gears, Gear Blanks, Forged Crankshafts, Gear Manufacturing]. Rating: 4.7 | Phone: 098204 42752",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.sunilforging.co.in/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.sunilforging.co.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Forged Crankshafts",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "Standard Forge Products",
+      "url": "https://standardforgedproductsinc.com/",
+      "type": "global",
+      "location": "75 Nichol Ave, McKees Rocks, PA 15136, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Standard Forge manufactures forged industrial components that overlap with Metalic Technoforge’s gears, crankshafts, and hydraulic cylinder parts.. 4 common products: [Gears, Forged Crankshafts, Gear Manufacturing, Advanced Forging Solutions]. Socials: LinkedIn verified. Rating: 3.9 | Phone: (412) 778-2020",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://standardforgedproductsinc.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://standardforgedproductsinc.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/ferroworksllc/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Forged Crankshafts",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Independent Forgings & Alloys",
+      "url": "https://independentforgings.com/",
+      "type": "global",
+      "location": "Livesey St, Sheffield S6 2BL, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Independent Forgings provides forged components (e.g., gear blanks, crankshafts, hydraulic parts) that directly overlap with Metalic Technoforge's product range, making it a competitor in the manufacturing sector.. 4 common products: [Gears, Hydraulic Cylinder, Machining, IIoT-Enabled Machining]. Socials: LinkedIn verified. Rating: 4.6 | Phone: 0114 234 3000",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://independentforgings.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://independentforgings.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/independent-forgings-and-alloys-ltd/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Hydraulic Cylinder",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Hydraulic Cylinder",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ]
+    },
+    {
+      "name": "Mar's Engineering Co",
+      "url": "http://www.marseng.com/",
+      "type": "global",
+      "location": "699 Montague Ave, San Leandro, CA 94577, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: They manufacture precision screw machine products, not gears or hydraulic cylinder components, so they are not direct competitors.. 4 common products: [Gears, Gear Manufacturing, Machining, IIoT-Enabled Machining]. Rating: 5 | Phone: (510) 483-0541",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.marseng.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://www.marseng.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining"
+      ]
+    },
+    {
+      "name": "synnova.in",
+      "url": "https://synnova.in/",
+      "type": "local",
+      "location": "Rajkot, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Synnova manufactures gears and gear components, directly competing with Metalic Technoforge's gear offerings.. 3 common products: [Gears, Gear Blanks, Gear Manufacturing]. Socials: LinkedIn verified; YouTube verified. Rating: N/A | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://synnova.in/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.linkedin.com/company/synnova-gears-&-transmissions-pvt-ltd-/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/synnova-gears-&-transmissions-pvt-ltd-/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/watch?v=mSHl-q-cf9k"
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "Sun Forge Private Limited - Manufacturer of Rolled Rings & Bearing Races",
+      "url": "http://www.sunforgeindia.in/",
+      "type": "local",
+      "location": "Plot No. G-511/512, Kalavad Rd, GIDC Lodhika, Metoda, Rajkot, Gujarat 360021, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Sun Forge Pvt. Ltd. is a manufacturer of automotive components, rolled rings, and bearing races. While their specific product list (rolled rings/bearing races) differs slightly from Metalic Technoforge's (gears/crankshafts), they operate in the same heavy industrial forging and metalworking sector, producing similar types of precision metal components for the automotive and industrial machinery markets. They are direct competitors in the broader field of industrial forging and component制造.. 3 common products: [Gears, Gear Blanks, Gear Manufacturing]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.4 | Phone: 02827 287 091",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.sunforgeindia.in/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://www.sunforgeindia.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/sun-forge-pvt-ltd",
+        "instagram": "https://www.instagram.com/sun__forge/",
+        "facebook": "https://www.facebook.com/profile.php?id=100068609152437",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "𝗜𝗺𝗽𝗲𝗿𝗶𝗮𝗹𝗹 𝗧𝗲𝗰𝗵𝗻𝗼𝗳𝗼𝗿𝗴𝗲 𝗣𝘃𝘁 𝗟𝘁𝗱 - Auto Parts Manufacturers in Shapar/Flanges and Fittings Manufacturers/Forged Valve",
+      "url": "https://www.imperialltech.com/",
+      "type": "local",
+      "location": "Survey No 190, Part A-B Near Orchev Phrama National Highway, 27, Veraval, Shapar, Gujarat 360024, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Imperiall Technoforge manufactures forged crankshafts and transmission components, overlapping with Metalic Technoforge's gear and hydraulic cylinder product lines.. 3 common products: [Gears, Gear Blanks, Advanced Forging Solutions]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.8 | Phone: 02827 252 431",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.imperialltech.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.imperialltech.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/samir-patel-77276b285",
+        "instagram": "https://instagram.com/imperialltech1?igshid=MjEwN2IyYWYwYw==",
+        "facebook": "https://www.facebook.com/pages/Imperiall-Technoforge-Pvt-Ltd/1514591718825507",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Shree Vallabh Forge",
+      "url": "http://shreevallabhforge.com/",
+      "type": "local",
+      "location": "Survey no. 171, Plot no. 40, Poin, 41, SIDC Rd, near Revlon Rubber, Shapar, Veraval, Gujarat 360024, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: They manufacture gears and forging components that overlap with Metalic Technoforge's offerings.. 3 common products: [Gears, Gear Blanks, Gear Manufacturing]. Socials: Facebook verified. Rating: 5 | Phone: 099788 16685",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://shreevallabhforge.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://shreevallabhforge.com/gears.html"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/profile.php?id=100009515452710&ref=br_rs",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "Divine Gears, Industrial Gear, Spur Gears, Helical Gears, Timing Gear Pulley, CNC Machining, VMC Machining",
+      "url": "http://www.divinegear.in/",
+      "type": "local",
+      "location": "J k industrial zone, Gokul - A gate no. 5, Plot no. 43/44 - 2, Survey no. 245 to 250, Near Snap Decore, Piplana, Taluko, kotda sangani, Rajkot, Gujarat 360020, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Divine Gears manufactures industrial gears and related products, directly competing with Metalic Technoforge's gear offerings.. 3 common products: [Gears, Gear Blanks, Gear Manufacturing]. Socials: Facebook verified. Rating: 4.4 | Phone: 097260 35008",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.divinegear.in/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://divinegear.in/productlist.php?id=4548"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/DevineGear/",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "Auto-Mach Technologies",
+      "url": "http://www.automachgears.com/",
+      "type": "regional",
+      "location": "Sr. No. 145, Ganesh Nagar Industrial Area, Phursungi, Pune, Maharashtra 412308, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: They manufacture and export industrial gears, directly competing with Metalic Technoforge's gear products.. 3 common products: [Gears, Gear Blanks, Gear Manufacturing]. Socials: LinkedIn verified. Rating: 5 | Phone: 080 4895 0089",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.automachgears.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://www.automachgears.com/industrial-gear.html#brass-spur-gears"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/cws/share?url=https://www.automachgears.com/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "Malkar Industries",
+      "url": "https://www.malkar.in/",
+      "type": "regional",
+      "location": "D-260, MIDC Main Rd, TTC Industrial Area, Naka, Turbhe, Navi Mumbai, Maharashtra 400703, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Both companies manufacture gears and gear-related components, directly competing in the manufacturing sector.. 3 common products: [Gears, Gear Blanks, Gear Manufacturing]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.7 | Phone: 093222 74241",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.malkar.in/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.malkar.in/gears"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/malkarindia",
+        "instagram": "https://www.instagram.com/malkarindia",
+        "facebook": "https://www.facebook.com/malkarindustries",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "Munish Forge Limited",
+      "url": "http://www.munishforge.com/",
+      "type": "regional",
+      "location": "adjoining Phase 7, Focal Point Phase 6, Focal Point, Gobindgarh, Ludhiana, Punjab 141003, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Munish Forge is a forging manufacturing company that produces components similar to Metalic Technoforge's gears, cylinders, and crankshafts.. 3 common products: [Gears, Gear Manufacturing, Advanced Forging Solutions]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.5 | Phone: 0161 521 8900",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.munishforge.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://www.munishforge.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://in.linkedin.com/company/munish-forge-private-limited",
+        "instagram": "https://www.instagram.com/munishforge1981/",
+        "facebook": "https://www.facebook.com/munishforge1981/",
+        "youtube": "https://www.youtube.com/@munishforge"
+      },
+      "products": [
+        "Gears",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Manufacturing",
+        "Advanced Forging Solutions"
+      ]
+    },
+    {
+      "name": "Precision Gear Manufacturing Company",
+      "url": "http://precisiongear.co.in/",
+      "type": "regional",
+      "location": "Plot No-81/B-5, General Block, MIDC, Bhosari, Pimpri-Chinchwad, Maharashtra 411026, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: They manufacture gears and gearboxes, directly competing with Metalic Technoforge's gear offerings.. 3 common products: [Gears, Gear Blanks, Gear Manufacturing]. Rating: 3.8 | Phone: 093264 35001",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://precisiongear.co.in/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "http://precisiongear.co.in/products.html#Rack-and-Pinion"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "PAI Industries Inc",
+      "url": "https://www.paiindustries.com/",
+      "type": "global",
+      "location": "950 Northbrook Pkwy, Suwanee, GA 30024, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: PAI Industries is a legitimate operating manufacturer in the heavy-duty truck parts sector. Their product lineup explicitly includes 'gearing components' and 'engine components,' which directly overlaps with Metalic Technoforge's offerings of gears, gear blanks, and forged crankshafts. Both companies operate in the manufacturing of industrial and automotive metal components, making them competitors in the same vertical.. 3 common products: [Gears, Gear Blanks, Gear Manufacturing]. Socials: Facebook verified; Instagram verified. Rating: 4 | Phone: (770) 822-1000",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.paiindustries.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.paiindustries.com/gears"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/paiindustries/",
+        "facebook": "https://www.facebook.com/paiindustries/",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "Wezel GmbH Kaltumform-Technik",
+      "url": "https://www.wezel.de/",
+      "type": "global",
+      "location": "Nürtinger Str. 53, 72636 Frickenhausen, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: The candidate, Wezel GmbH, is a manufacturer of precision gears (Zahnräder) and gear components using cold forming and machining techniques. This directly overlaps with the target's core offering of 'Gears' and 'Gear Blanks'. Both companies operate in the manufacturing sector, specifically in the production of drivetrain and transmission components, making them direct competitors.. 3 common products: [Gears, Gear Blanks, Gear Manufacturing]. Socials: Facebook verified. Rating: 4.8 | Phone: 07022 94450",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.wezel.de/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.wezel.de/index.html"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Wezel-GmbH-Kaltumform-Technik-102534254883433/",
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "Rush Gears inc",
+      "url": "http://www.rushgears.com/",
+      "type": "global",
+      "location": "550 Virginia Dr, Fort Washington, PA 19034, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: The candidate, Rush Gears, is a manufacturer of custom gears and machine parts, which directly overlaps with the target's core offering of 'Gears' and 'Gear Blanks'. Both operate in the same manufacturing sector and provide competing products.. 3 common products: [Gears, Gear Blanks, Gear Manufacturing]. Rating: 3.3 | Phone: (215) 542-9000",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.rushgears.com/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.rushgears.com/tech-tools/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "Rosswag Engineering",
+      "url": "https://www.rosswag-engineering.de/",
+      "type": "global",
+      "location": "August Roßwag Str. 1, 76327 Pfinztal, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Rosswag Engineering offers metal 3D‑printing of custom metal parts, which can include gears and hydraulic components, making it a competing manufacturing service.. 2 common products: [Gears, Gear Manufacturing]. Socials: LinkedIn verified; YouTube verified. Rating: 4.6 | Phone: 07240 9410131",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.rosswag-engineering.de/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://www.rosswag-engineering.de/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/rosswag-engineering/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/channel/UCRA07vq6JOrpec5VVijPshA"
+      },
+      "products": [
+        "Gears",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Manufacturing"
       ]
     }
   ],
