@@ -277,20 +277,44 @@ export class MemoryStore {
   }
 
   async deleteBySite(websiteUrl: string): Promise<boolean> {
+    if (!websiteUrl || typeof websiteUrl !== "string") return false;
     let deleted = false;
 
-    // 1. Delete from MongoDB
+    const rawUrl = websiteUrl.trim();
+    const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+    const targetNorm = normalize(rawUrl);
+    let targetHostname = "";
+    try {
+      const parsed = new URL(rawUrl.startsWith("http") ? rawUrl : `https://${rawUrl}`);
+      targetHostname = parsed.hostname.toLowerCase().replace(/^www\./, "");
+    } catch {
+      targetHostname = targetNorm.split("/")[0].split(":")[0];
+    }
+    const targetSlug = targetHostname.replace(/[\.-]/g, "_");
+
+    // 1. Delete from MongoDB memories collection
     try {
       const db = await getMongoDb();
       if (db) {
-        const res = await db.collection("memories").deleteOne({ "input.websiteUrl": websiteUrl });
-        if (res.deletedCount > 0) deleted = true;
+        const domainPattern = targetHostname ? targetHostname.replace(/\./g, "\\.") : "";
+        const mongoFilter: any = {
+          $or: [
+            { "input.websiteUrl": rawUrl },
+            ...(targetNorm ? [{ "input.websiteUrl": { $regex: targetNorm, $options: "i" } }] : []),
+            ...(domainPattern ? [{ "input.websiteUrl": { $regex: domainPattern, $options: "i" } }] : [])
+          ]
+        };
+        const res = await db.collection("memories").deleteMany(mongoFilter);
+        if (res.deletedCount && res.deletedCount > 0) {
+          deleted = true;
+          logger.success(`Deleted ${res.deletedCount} memory document(s) from MongoDB for ${rawUrl}`);
+        }
       }
     } catch (err: any) {
       logger.warn(`Failed to delete memory from MongoDB: ${err.message}`);
     }
 
-    // 2. Delete from local filesystem and GitHub
+    // 2. Delete from local filesystem (data/memory) and GitHub
     try {
       const files = await readdir(this.directory);
       for (const file of files) {
@@ -299,11 +323,17 @@ export class MemoryStore {
           const filePath = join(this.directory, file);
           const raw = await readFile(filePath, "utf8");
           const memory = JSON.parse(raw) as StructuredMemory;
-          if (memory.input?.websiteUrl === websiteUrl) {
-             await unlink(filePath);
-             deleted = true;
-             logger.success(`Deleted local memory file: ${file}`);
-             this.deleteFromGitHub(file).catch(() => {});
+          const siteUrl = memory.input?.websiteUrl || "";
+          const fileNorm = normalize(siteUrl);
+
+          const isUrlMatch = Boolean(fileNorm && targetNorm && (fileNorm === targetNorm || fileNorm.includes(targetNorm) || targetNorm.includes(fileNorm)));
+          const isDomainMatch = Boolean(targetHostname && targetSlug.length >= 3 && (siteUrl.toLowerCase().includes(targetHostname) || file.toLowerCase().includes(targetSlug)));
+
+          if (isUrlMatch || isDomainMatch) {
+            await unlink(filePath);
+            deleted = true;
+            logger.success(`Deleted local memory file: ${file}`);
+            await this.deleteFromGitHub(file).catch(() => {});
           }
         } catch {
           // ignore read/parse errors for other files
@@ -312,6 +342,25 @@ export class MemoryStore {
     } catch {
       // directory might not exist
     }
+
+    // 3. Delete from data/reports (PDF reports and vectors)
+    try {
+      const reportsDir = join(process.cwd(), "data", "reports");
+      const reportFiles = await readdir(reportsDir);
+      for (const rFile of reportFiles) {
+        const lowerR = rFile.toLowerCase();
+        if (targetSlug && targetSlug.length >= 3 && (lowerR.includes(targetSlug) || (targetHostname && lowerR.includes(targetHostname.replace(/\./g, "_"))))) {
+          try {
+            await unlink(join(reportsDir, rFile));
+            logger.success(`Deleted project report/vector file: ${rFile}`);
+            deleted = true;
+          } catch {}
+        }
+      }
+    } catch {
+      // reports directory might not exist or be empty
+    }
+
     return deleted;
   }
 

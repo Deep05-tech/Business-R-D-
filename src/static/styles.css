@@ -1333,6 +1333,43 @@ body.dark-theme .admin-role-badge.user { color: #7dd3fc; background: rgba(14,165
   opacity: 0.85;
 }
 
+.admin-delete-btn,
+.admin-card-delete-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.admin-delete-btn:hover,
+.admin-card-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: #ef4444;
+  color: #dc2626;
+  transform: translateY(-1px);
+}
+body.dark-theme .admin-delete-btn,
+body.dark-theme .admin-card-delete-btn {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #f87171;
+}
+body.dark-theme .admin-delete-btn:hover,
+body.dark-theme .admin-card-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.28);
+  border-color: #f87171;
+  color: #ffffff;
+}
+
 .admin-project-footer {
   display: flex;
   align-items: center;

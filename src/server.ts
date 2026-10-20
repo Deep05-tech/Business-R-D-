@@ -262,6 +262,28 @@ app.put("/api/admin/projects/assignments", requireAuth, requireAdmin, async (req
   }
 });
 
+app.delete("/api/admin/projects", requireAuth, requireAdmin, async (req, res) => {
+  try {
+    const rawUrl = String(req.query.url || req.body?.url || req.body?.projectUrl || "").trim();
+    if (!rawUrl) return res.status(400).json({ error: "Missing project url parameter." });
+
+    const deleted = await memoryStore.deleteBySite(rawUrl);
+    await authStore.removeProjectFromAssignments(rawUrl);
+    knowledgeIndex.remove(rawUrl);
+
+    logger.success(`Project ${rawUrl} and all related data deleted by administrator.`);
+    return res.json({
+      success: true,
+      deleted: true,
+      url: rawUrl,
+      message: "Project and all associated data deleted successfully."
+    });
+  } catch (error: any) {
+    logger.error(`Failed to delete project: ${error.message}`);
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 // All application data and actions require an authenticated session. Auth
 // endpoints above and static assets stay public so users can reach the login page.
 app.use("/api", (req, res, next) => {
@@ -977,19 +999,20 @@ app.post("/api/memory/update", async (request, response) => {
   }
 });
 
-app.delete("/api/memory", requireAdmin, async (request, response) => {
+app.delete("/api/memory", requireAuth, requireAdmin, async (request, response) => {
   try {
-    const url = request.query.url as string;
+    const url = (request.query.url as string) || (request.body?.url as string);
     if (!url) return response.status(400).json({ error: "Missing url param" });
 
     const deleted = await memoryStore.deleteBySite(url);
-    if (deleted) {
-      await authStore.removeProjectFromAssignments(url);
-      knowledgeIndex.remove(url);
-      response.json({ success: true });
-    } else {
-      response.status(404).json({ error: "Memory not found to delete" });
-    }
+    await authStore.removeProjectFromAssignments(url);
+    knowledgeIndex.remove(url);
+
+    response.json({
+      success: true,
+      deleted,
+      message: "Project and all associated data deleted successfully."
+    });
   } catch (e: any) {
     logger.error(`Memory Delete error: ${e.message}`);
     response.status(500).json({ error: e.message });

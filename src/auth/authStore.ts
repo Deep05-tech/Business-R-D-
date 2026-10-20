@@ -356,10 +356,19 @@ export class AuthStore {
 
   async removeProjectFromAssignments(projectUrl: string): Promise<void> {
     await this.initialize();
+    if (!projectUrl) return;
+    const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+    const targetNorm = normalize(projectUrl);
+
     let changed = false;
     for (const user of this.users.values()) {
       const assignments = user.assignedProjectUrls || [];
-      const filtered = assignments.filter(url => url !== projectUrl);
+      const filtered = assignments.filter(url => {
+        if (!url) return false;
+        if (url === projectUrl) return false;
+        const uNorm = normalize(url);
+        return uNorm !== targetNorm;
+      });
       if (filtered.length !== assignments.length) {
         user.assignedProjectUrls = filtered;
         changed = true;

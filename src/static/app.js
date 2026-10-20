@@ -416,7 +416,7 @@ window.loadAdminProjects = async function() {
           </div>
           <div class="admin-project-quick-actions">
             <button class="btn btn-secondary admin-action-btn" type="button" onclick="window.openAdminProject('${encodeURIComponent(project.url)}')">Open</button>
-            <button class="admin-delete-user" type="button" onclick="window.deleteAdminProject('${encodeURIComponent(project.url)}')">Remove</button>
+            <button class="admin-delete-btn" type="button" onclick="window.deleteAdminProject('${encodeURIComponent(project.url)}', '${window.escapeHtml(project.name)}')" title="Delete project and all associated intelligence data">🗑️ Delete</button>
           </div>
         </div>
 
@@ -513,17 +513,38 @@ window.openAdminProject = async function(encodedUrl) {
   window.switchTab('details', 'Project Details & Review');
 };
 
-window.deleteAdminProject = async function(encodedUrl) {
+window.deleteAdminProject = async function(encodedUrl, projectName = '') {
   const url = decodeURIComponent(encodedUrl);
-  if (!window.confirm('Permanently remove this project and its saved intelligence?')) return;
+  const nameLabel = projectName ? `"${projectName}"` : 'this project';
+  const confirmed = window.confirm(
+    `Are you sure you want to permanently delete ${nameLabel} and all its stored data (intelligence profile, reports, and assignments)?\n\nThis action cannot be undone.`
+  );
+  if (!confirmed) return;
+
   try {
-    const response = await fetch(`/api/memory?url=${encodeURIComponent(url)}`, { method: 'DELETE' });
+    window.showSuccess(`Deleting ${nameLabel} and associated data…`);
+    const response = await fetch(`/api/admin/projects?url=${encodeURIComponent(url)}`, { method: 'DELETE' });
     const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error || 'Unable to remove project.');
-    if (window.activeProjectUrl === url) window.activeProjectUrl = null;
-    window.showSuccess('Project removed.');
-    await Promise.all([window.loadAdminProjects(), window.renderProjectsDirectoryUI()]);
-  } catch (error) { window.showSuccess(error.message || 'Unable to remove project.'); }
+    if (!response.ok) {
+      const fbResponse = await fetch(`/api/memory?url=${encodeURIComponent(url)}`, { method: 'DELETE' });
+      const fbData = await fbResponse.json().catch(() => ({}));
+      if (!fbResponse.ok) throw new Error(data.error || fbData.error || 'Unable to delete project.');
+    }
+
+    if (window.activeProjectUrl === url) {
+      window.activeProjectUrl = null;
+      localStorage.removeItem('activeProjectUrl');
+    }
+
+    window.showSuccess('Project and all associated data deleted successfully.');
+    await Promise.all([
+      window.loadAdminProjects && window.loadAdminProjects(),
+      window.renderProjectsDirectoryUI && window.renderProjectsDirectoryUI(),
+      window.updateProjectsDropdown && window.updateProjectsDropdown()
+    ]);
+  } catch (error) {
+    window.showSuccess(error.message || 'Unable to delete project.');
+  }
 };
 
 window.renderProjectsDirectoryUI = async function() {
@@ -556,6 +577,7 @@ window.renderProjectsDirectoryUI = async function() {
       if (!items.length) return `<div class="empty-state">${emptyMessage}</div>`;
       return items.map(p => {
       const isCurrentActive = p.url === window.activeProjectUrl;
+      const isAdmin = window.currentUser?.role === 'admin';
       return `
         <div class="project-card ${isCurrentActive ? 'active' : ''}" style="${isCurrentActive ? 'border-color: var(--primary); background: rgba(99, 102, 241, 0.05);' : ''}">
           <div class="project-card-header">
@@ -580,6 +602,11 @@ window.renderProjectsDirectoryUI = async function() {
             <button class="btn btn-primary" style="flex: 1; padding: 10px; font-size: 13px;" onclick="window.selectProject(decodeURIComponent('${encodeURIComponent(p.url)}'), true); window.switchTab('details', 'Project Details & Review');">
               Open Intelligence Workspace
             </button>
+            ${isAdmin ? `
+              <button class="admin-card-delete-btn" type="button" onclick="event.stopPropagation(); window.deleteAdminProject('${encodeURIComponent(p.url)}', '${window.escapeHtml(p.name)}')" title="Delete project and all data">
+                🗑️ Delete
+              </button>
+            ` : ''}
           </div>
         </div>
       `;
@@ -1178,23 +1205,10 @@ window.saveProjectDetails = async function() {
 window.deleteProjectDetails = async function() {
   if (window.currentUser?.role !== 'admin') return;
   if (!window.activeProjectUrl) return;
-  if (!confirm("Are you sure you want to permanently delete this business analysis? This cannot be undone.")) return;
-
-  try {
-    const res = await fetch(`/api/memory?url=${encodeURIComponent(window.activeProjectUrl)}`, {
-      method: 'DELETE'
-    });
-    
-    if (res.ok) {
-      window.showSuccess("Project deleted successfully!");
-      window.activeProjectUrl = null;
-      setTimeout(() => window.location.reload(), 1500); // Reload to fetch fresh project list
-    } else {
-      alert("Failed to delete project.");
-    }
-  } catch (e) {
-    console.error("Failed to delete details:", e);
-    alert("Error deleting project.");
+  const projectUrlToDelete = window.activeProjectUrl;
+  await window.deleteAdminProject(encodeURIComponent(projectUrlToDelete));
+  if (!window.activeProjectUrl) {
+    window.switchTab('projects', 'Projects Overview');
   }
 };
 
