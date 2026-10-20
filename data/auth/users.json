@@ -12,5 +12,12 @@
     "createdAt": "2026-09-11T06:17:10.112Z",
     "passwordHash": "deaef2c025406a6f49e7415cc439e4a1:d298086f253389f009e859e672e92ff9dd99234f5709e27ce0050675e7d5aea72b806055aa1acf75d3f557c8089a8888bae854246e882d0352bdc247bcabad58",
     "assignedProjectUrls": []
+  },
+  {
+    "username": "Smit",
+    "role": "user",
+    "passwordHash": "6a8aff81789c0f928be6d7b82d9745c1:faa1c273a68a2718beb24426f9a5550a3a9add77288dac8947d63af2f513cf542fb6c75b217afc65f4e335c63e6a2dbdffa490e832b2011cc26bf0a8b5210f58",
+    "createdAt": "2026-10-20T05:07:52.580Z",
+    "assignedProjectUrls": []
   }
 ]
