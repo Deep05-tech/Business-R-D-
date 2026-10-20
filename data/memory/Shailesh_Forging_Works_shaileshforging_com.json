@@ -239,7 +239,61 @@
         "aiLaymanSummary": "Pellet Ring Dies are specialized tools used in the production of pellets from biomass materials, which are often used as fuel or animal feed. These dies are precisely crafted and treated with heat to ensure they function effectively and last longer. Their main job is to help form raw materials into small, uniform pellets that are easy to handle and use.\n\n**Benefits of Pellet Ring Dies:**\n- **High Precision:** They are made from high-grade tool steel, ensuring that the pellets produced are consistent in size and quality.\n- **Durability:** The heat treatment process enhances the strength of the dies, allowing them to withstand the rigors of heavy use in processing plants.\n- **Efficiency:** By supporting consistent pelletizing, these dies help improve production efficiency, making it easier for businesses to produce quality biomass fuel and feed."
       }
     ],
-    "services": [],
+    "services": [
+      {
+        "name": "Custom Component Manufacturing & Forging",
+        "description": "Precision manufacturing and forging tailored to customer CAD models, technical drawings, and metallurgical requirements.",
+        "applications": [
+          "Automotive",
+          "Heavy Engineering",
+          "Industrial Assemblies"
+        ],
+        "processes": [
+          "Hot/Warm Forging",
+          "Die Design",
+          "Quality Inspection"
+        ]
+      },
+      {
+        "name": "CNC Precision Machining & Turning",
+        "description": "High-precision CNC turning, milling, and fine-tolerance machining for mission-critical parts.",
+        "applications": [
+          "Power Transmission",
+          "Aerospace",
+          "Capital Equipment"
+        ],
+        "processes": [
+          "CNC Turning",
+          "VMC Milling",
+          "Grinding"
+        ]
+      },
+      {
+        "name": "Heat Treatment & Surface Processing",
+        "description": "Complete heat treatment cycles including annealing, normalizing, hardening, and stress relieving.",
+        "applications": [
+          "High-Load Applications",
+          "Wear Resistance"
+        ],
+        "processes": [
+          "Controlled Atmosphere Furnaces",
+          "Quenching"
+        ]
+      },
+      {
+        "name": "Quality Assurance & Metallurgical Lab Testing",
+        "description": "Comprehensive testing including CMM 3D inspection, spectrometry, microstructure analysis, and ultrasonic NDT.",
+        "applications": [
+          "Zero-Defect Mandates",
+          "PPAP Submissions"
+        ],
+        "processes": [
+          "CMM",
+          "Spectrometry",
+          "NDT Testing"
+        ]
+      }
+    ],
     "valuePropositions": [
       "Commitment to quality with rigorous testing and ISO-certified processes.",
       "Capability to produce custom sizes and profiles based on client specifications.",
