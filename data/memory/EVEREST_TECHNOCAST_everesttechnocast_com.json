@@ -7522,27 +7522,26 @@
   },
   "competitors": [
     {
-      "name": "Crafton Technocast Private Limited",
-      "url": "https://craftoncast.com/",
-      "type": "local",
-      "location": "Om Décora, 9 Square Wing-B, Office 8th, Fr 814, Nana Mava Rd, Karan Park, Rajkot, Gujarat 360005, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Both companies manufacture industrial valves and pipe fittings, targeting similar industries.. 10 common products: [Brake Drum, Brake Disc, Cast Iron Casting, Centrifugal Pump Parts, Casting Pulley, Wheel Hub, Connecting Rod...]. Socials: Twitter present. Rating: 4.9 | Phone: 090332 04758",
+      "name": "Raj Technometallics : CI Casting | SG Iron Casting Manufacturer",
+      "url": "https://www.rajtechnometallics.com/",
+      "type": "regional",
+      "location": "Vadgaon Kasaba, Maharashtra 416112, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: The candidate, Raj Techno Metallics, is a manufacturer of Cast Iron (CI) and SG Iron castings. The website explicitly lists 'Brake Disc' and 'Brake Drum' as specific products, which directly match the target's offerings. Additionally, they produce general cast iron components for automotive and industrial applications, making them a direct competitor in the casting and brake component manufacturing sector.. 13 common products: [Brake Drum, Brake Disc, Cast Iron Casting, Centrifugal Pump Parts, Casting Pulley, Wheel Hub, Connecting Rod...]. Rating: 5 | Phone: 093711 59595",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "https://craftoncast.com/"
+          "url": "https://www.rajtechnometallics.com/"
         },
         {
           "title": "Product: Brake Drum",
-          "url": "https://craftoncast.com/"
+          "url": "https://www.rajtechnometallics.com/brake-disc-manufacturers-in-india.php"
         }
       ],
       "socials": {
-        "facebook": "https://www.facebook.com/search/top?q=Crafton%20Technocast%20Private%20Limited",
-        "linkedin": "https://in.linkedin.com/company/crafton-technocast-private-limited",
-        "instagram": "https://www.instagram.com/craftontechnocastprivatelimited/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
       },
       "products": [
         "Brake Drum",
@@ -7553,8 +7552,11 @@
         "Wheel Hub",
         "Connecting Rod",
         "Crank Castings",
-        "Valves & Pipe Fittings",
-        "S.G Iron Casting"
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
       ],
       "commonProducts": [
         "Brake Drum",
@@ -7565,234 +7567,531 @@
         "Wheel Hub",
         "Connecting Rod",
         "Crank Castings",
-        "Valves & Pipe Fittings",
-        "S.G Iron Casting"
-      ],
-      "socialStatus": {
-        "YouTube": {
-          "status": "Success",
-          "count": 14
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 10
-        },
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
     },
     {
-      "name": "Rajneesh Cast Alloys",
-      "url": "http://www.rajneeshcast.com/",
+      "name": "MK Auto Clutch Co. 267, Faridabad",
+      "url": "http://www.mkautoindia.com/",
       "type": "regional",
-      "location": "B-41, Main Focal Point Road, Focal Point Phase 6, Focal Point, Ludhiana, Punjab 141003, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Both companies manufacture valves and pipe fittings, indicating they operate in the same industry.. 10 common products: [Brake Drum, Cast Iron Casting, Centrifugal Pump Parts, Casting Pulley, Flanges, Wheel Hub, Connecting Rod...]. Rating: 5 | Phone: 087288 39000",
+      "location": "Sector 24, Faridabad, Haryana 121005, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: MK Auto manufactures brake components such as brake shoes and disc brakes, overlapping with EVEREST TECHNOCAST’s brake disc offerings.. 12 common products: [Brake Drum, Brake Disc, Cast Iron Casting, Centrifugal Pump Parts, Casting Pulley, Wheel Hub, Connecting Rod...]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: 072900 10810",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "http://www.rajneeshcast.com/"
+          "url": "http://www.mkautoindia.com/"
         },
         {
           "title": "Product: Brake Drum",
-          "url": "http://www.rajneeshcast.com/"
+          "url": "https://www.mkautoindia.com/vng-brakes/"
         }
       ],
       "socials": {
-        "facebook": "https://www.facebook.com/RajneeshCastAlloys",
-        "linkedin": "https://www.linkedin.com/company/rajneeshcastalloys/",
-        "instagram": "https://www.instagram.com/rajneeshcastalloys/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
+        "linkedin": "https://www.linkedin.com/in/nitin-bhandari-9ba06149",
+        "instagram": "https://www.instagram.com/mkauto_india/",
+        "facebook": "https://www.facebook.com/Mkautoco/",
+        "youtube": "https://www.youtube.com/@mkautoclutch6193/featured"
       },
       "products": [
         "Brake Drum",
+        "Brake Disc",
         "Cast Iron Casting",
         "Centrifugal Pump Parts",
         "Casting Pulley",
-        "Flanges",
         "Wheel Hub",
         "Connecting Rod",
         "Crank Castings",
-        "Valves & Pipe Fittings",
-        "S.G Iron Casting"
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing"
       ],
       "commonProducts": [
         "Brake Drum",
+        "Brake Disc",
         "Cast Iron Casting",
         "Centrifugal Pump Parts",
         "Casting Pulley",
-        "Flanges",
         "Wheel Hub",
         "Connecting Rod",
         "Crank Castings",
-        "Valves & Pipe Fittings",
-        "S.G Iron Casting"
-      ],
-      "socialStatus": {
-        "YouTube": {
-          "status": "Success",
-          "count": 12
-        },
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "LinkedIn": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing"
+      ]
     },
     {
-      "name": "SUPER QUALI CAST (INDIA) PVT. LTD.",
-      "url": "http://www.superqualicast.com/",
+      "name": "R.M.Engineering",
+      "url": "http://www.rmengineering.net/",
       "type": "local",
-      "location": "behind RajKamal Petrol Pump, off Gondal Road, Samrat Industrial Area, Rajkot, Gujarat 360004, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Both companies manufacture parts for pumps and valves, indicating they operate in the same industry.. 7 common products: [Brake Drum, Cast Iron Casting, Centrifugal Pump Parts, Casting Pulley, Connecting Rod, Crank Castings, S.G Iron Casting]. Socials: Twitter present. Rating: 4.9 | Phone: 099090 44501",
+      "location": "Survey No. 201, Tal, Gondal, Bhunava, Gujarat 360311, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: RM Engineering manufactures brake discs, drums, and castings, directly competing with EVEREST TECHNOCAST's similar products.. 10 common products: [Brake Drum, Brake Disc, Cast Iron Casting, Casting Pulley, Wheel Hub, Connecting Rod, Crank Castings...]. Socials: YouTube verified. Rating: 4.7 | Phone: 098248 70008",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "http://www.superqualicast.com/"
+          "url": "http://www.rmengineering.net/"
         },
         {
           "title": "Product: Brake Drum",
-          "url": "http://www.superqualicast.com/"
+          "url": "https://rmengineering.net/product"
         }
       ],
       "socials": {
-        "facebook": "https://www.facebook.com/SuperQualiCast",
-        "linkedin": "https://www.linkedin.com/company/super-quali-cast-india-pvt-ltd-/?viewAsMember=true",
-        "instagram": "https://www.instagram.com/superqualicast/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": "https://twitter.com/Super_QualiCast"
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/watch?v=EZlL8f81s5k"
       },
       "products": [
         "Brake Drum",
-        "Cast Iron Casting",
-        "Centrifugal Pump Parts",
-        "Casting Pulley",
-        "Connecting Rod",
-        "Crank Castings",
-        "S.G Iron Casting"
-      ],
-      "commonProducts": [
-        "Brake Drum",
-        "Cast Iron Casting",
-        "Centrifugal Pump Parts",
-        "Casting Pulley",
-        "Connecting Rod",
-        "Crank Castings",
-        "S.G Iron Casting"
-      ],
-      "socialStatus": {
-        "YouTube": {
-          "status": "Success",
-          "count": 18
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 9
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
-    },
-    {
-      "name": "SULOHAK CAST",
-      "url": "http://www.sulohakcast.com/",
-      "type": "local",
-      "location": "Sulohak Cast, subh industrial zone - 6, Rajkot - Gondal Hwy, Ribda, Gujarat 360311, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Both companies manufacture castings and engineering components for similar industries.. 6 common products: [Brake Drum, Cast Iron Casting, Casting Pulley, Wheel Hub, Connecting Rod, Crank Castings]. Rating: 5 | Phone: 097245 87678",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "http://www.sulohakcast.com/"
-        },
-        {
-          "title": "Product: Brake Drum",
-          "url": "http://www.sulohakcast.com/"
-        }
-      ],
-      "socials": {
-        "facebook": "https://www.facebook.com/sulohakcast/",
-        "linkedin": "https://www.linkedin.com/in/manish-makwana-2a2074100/",
-        "instagram": "https://www.instagram.com/sulohakcast/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
-      },
-      "products": [
-        "Brake Drum",
+        "Brake Disc",
         "Cast Iron Casting",
         "Casting Pulley",
         "Wheel Hub",
         "Connecting Rod",
-        "Crank Castings"
+        "Crank Castings",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Quality Assurance & Metallurgical Lab Testing"
       ],
       "commonProducts": [
         "Brake Drum",
+        "Brake Disc",
         "Cast Iron Casting",
         "Casting Pulley",
         "Wheel Hub",
         "Connecting Rod",
-        "Crank Castings"
-      ],
-      "socialStatus": {
-        "YouTube": {
-          "status": "Success",
-          "count": 14
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "LinkedIn": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
+        "Crank Castings",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
     },
     {
-      "name": "Prajapati Foundry Pvt. Ltd.",
-      "url": "https://prajapatifoundry.com/",
+      "name": "AAY ESS CASTINGS",
+      "url": "http://aayesscastings.com/",
       "type": "regional",
-      "location": "F-II Block, Plot No. 14, Telco Material Gate Road, Block F-2, MIDC, Pimpri Colony, Pimpri-Chinchwad, Maharashtra 411018, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Both companies manufacture cast iron and S.G iron castings, targeting similar industrial markets.. 6 common products: [Brake Drum, Cast Iron Casting, Casting Pulley, Connecting Rod, Crank Castings, S.G Iron Casting]. Rating: 4.7 | Phone: 098227 68944",
+      "location": "XXIX-536, Plot No -B, Sua Rd, near EASTMAN CHOWK, Industrial Area C, Dhandari Kalan, Ludhiana, Punjab 141016, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: The candidate, Aay Ess Castings Private Limited, is a manufacturer of cast iron and SG iron castings, specifically producing truck parts, tractor parts, and general cast iron castings. This directly overlaps with the target's offerings of 'Cast Iron Casting' and 'Brake Drum/Brake Disc' (which are standard truck/vehicle castings). Both operate in the same manufacturing sector (metal casting) and produce competing or highly related industrial components.. 10 common products: [Brake Drum, Brake Disc, Cast Iron Casting, Centrifugal Pump Parts, Casting Pulley, Wheel Hub, Connecting Rod...]. Socials: LinkedIn verified. Rating: 4.5 | Phone: 097790 74000",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "https://prajapatifoundry.com/"
+          "url": "http://aayesscastings.com/"
         },
         {
           "title": "Product: Brake Drum",
-          "url": "https://prajapatifoundry.com/"
+          "url": "http://aayesscastings.com/drum-brake.html#truck-brake-drum"
         }
       ],
       "socials": {
-        "facebook": "https://www.facebook.com/search/top?q=Prajapati%20Foundry%20Pvt.%20Ltd.",
-        "linkedin": "https://www.linkedin.com/company/prajapatifoundrypvtltd/",
-        "instagram": "https://www.instagram.com/prajapati.foundry.pvt.ltd",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
+        "linkedin": "https://www.linkedin.com/cws/share?url=https://www.aayesscastings.com/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Centrifugal Pump Parts",
+        "Casting Pulley",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Crank Castings",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Centrifugal Pump Parts",
+        "Casting Pulley",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Crank Castings",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "FIE SPHEROTECH",
+      "url": "http://www.fiespherotech.com/",
+      "type": "regional",
+      "location": "Plot # 1,6,7,8,9, Laxmi Industrial Estate, Shri Laxmi Co-op. Industrial Estate, Hatkanangale, Maharashtra 416109, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: They produce cast iron castings and related components, overlapping with target's brake drum, brake disc, and cast iron casting offerings.. 10 common products: [Brake Drum, Cast Iron Casting, Casting Pulley, Wheel Hub, Connecting Rod, S.G Iron Casting, Custom Component Manufacturing & Forging...]. Rating: 4.4 | Phone: 098500 52050",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.fiespherotech.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "http://www.fiespherotech.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Cast Iron Casting",
+        "Casting Pulley",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Cast Iron Casting",
+        "Casting Pulley",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "RAVIRAJ METALS",
+      "url": "https://www.ravirajcastings.com/",
+      "type": "regional",
+      "location": "FIVE STAR, PLOT NO. A-75 & 76, MIDC, Kagal 5 Star MIDC Industrial Area, Halsavade, Maharashtra 416236, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: They manufacture grey cast iron castings, directly overlapping with EVEREST TECHNOCAST's cast iron casting product line. 10 common products: [Brake Drum, Brake Disc, Cast Iron Casting, Centrifugal Pump Parts, Casting Pulley, Wheel Hub, Connecting Rod...]. Rating: 4.4 | Phone: 094211 07799",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.ravirajcastings.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://www.ravirajcastings.com/grey-ci-brake-drums.php"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Centrifugal Pump Parts",
+        "Casting Pulley",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Crank Castings",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Centrifugal Pump Parts",
+        "Casting Pulley",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Crank Castings",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Brakes India Private Limited",
+      "url": "https://www.brakesindia.com/",
+      "type": "regional",
+      "location": "Padi, 454R+R47, TVS 30 Feet Rd, TVS Industries, Korattur, Chennai, Tamil Nadu 600050, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Brakes India manufactures brake drums/discs and metal castings, directly overlapping with EVEREST TECHNOCAST's product line. 9 common products: [Brake Drum, Brake Disc, Cast Iron Casting, Casting Pulley, Wheel Hub, Connecting Rod, Crank Castings...]. Socials: LinkedIn verified; YouTube verified. Rating: 4.4 | Phone: 044 2652 6000",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.brakesindia.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://www.brakesindia.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/brakes-india/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/@brakesindiapvt.ltd.3227"
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Casting Pulley",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Crank Castings",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Casting Pulley",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Crank Castings",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Pooja Techno Cast",
+      "url": "https://poojatechnocast.com/",
+      "type": "local",
+      "location": "Pooja TechnoCast, 7QGQ+35J, Pandit Dindayal Upadhyay Road, Jamuna Park, Mavadi Industrial Area, Chandreshnagar, Rajkot, Gujarat 360004, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Pooja Auto Industries manufactures cast iron casting, directly overlapping with EVEREST TECHNOCAST’s cast iron casting offering.. 8 common products: [Brake Disc, Cast Iron Casting, Centrifugal Pump Parts, Casting Pulley, Connecting Rod, Crank Castings, Valves & Pipe Fittings...]. Socials: Facebook verified. Rating: 5 | Phone: 099241 42281",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://poojatechnocast.com/"
+        },
+        {
+          "title": "Product: Brake Disc",
+          "url": "https://poojatechnocast.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/www.poojaautoindustries.co.in/",
+        "youtube": null
+      },
+      "products": [
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Centrifugal Pump Parts",
+        "Casting Pulley",
+        "Connecting Rod",
+        "Crank Castings",
+        "Valves & Pipe Fittings",
+        "S.G Iron Casting"
+      ],
+      "commonProducts": [
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Centrifugal Pump Parts",
+        "Casting Pulley",
+        "Connecting Rod",
+        "Crank Castings",
+        "Valves & Pipe Fittings",
+        "S.G Iron Casting"
+      ]
+    },
+    {
+      "name": "Rana Metals",
+      "url": "https://www.ranametals.com/",
+      "type": "regional",
+      "location": "near Old Income Tax Office, Nawi Basti, Sirhind, Punjab 140406, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Rana Metals is a manufacturing company that produces brake rotor discs (directly competing with Everest's Brake Discs) and other castings/components such as bell hubs and planetary hubs, which fall under the broader category of cast iron castings and industrial components. The company operates in the same manufacturing sector and offers overlapping product lines.. 8 common products: [Brake Drum, Brake Disc, Cast Iron Casting, Casting Pulley, Wheel Hub, Connecting Rod, S.G Iron Casting...]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: 098766 28220",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.ranametals.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://ranametals.com/truck-parts-trailer-parts-brake-parts/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/suri.vikas.3/",
+        "facebook": "https://www.facebook.com/pages/category/Local-Business/Rana-Metals-1459585934321831/",
+        "youtube": "https://www.youtube.com/watch?v=35AGfvmNpzs"
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Casting Pulley",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Casting Pulley",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "SHAMA SPRING INDUSTRIES INDIA",
+      "url": "http://shamasprings.com/",
+      "type": "regional",
+      "location": "Plot no 196, Sector 7, Infront of Arise, International School, Indrayani Nagar Rd, MIDC Sector 2 Industrial Area, MIDC, Bhosari, Pune, Pimpri-Chinchwad, Maharashtra 411026, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Shama Springs manufactures springs, which is a different product line from Everest Technocast's brake drums, discs, castings, pump parts, and grates.. 8 common products: [Brake Disc, Grates, Wheel Hub, Connecting Rod, S.G Iron Casting, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning...]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.7 | Phone: 098906 35659",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://shamasprings.com/"
+        },
+        {
+          "title": "Product: Brake Disc",
+          "url": "http://shamasprings.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/shama-springs-industries-165bb527a/",
+        "instagram": "https://www.instagram.com/shamaspring7272/",
+        "facebook": "https://www.facebook.com/profile.php?id=100093327622050",
+        "youtube": "https://www.youtube.com/channel/UCtmBceVilJ3PIwwzPf1Fcrw"
+      },
+      "products": [
+        "Brake Disc",
+        "Grates",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Brake Disc",
+        "Grates",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Industrial Brakes",
+      "url": "http://www.industrialbrakes.co.uk/",
+      "type": "global",
+      "location": "Webnor Industrial Estate, Ettingshall Rd, Wolverhampton WV2 2LD, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Industrial Brakes manufactures and supplies brake components such as drums and discs, directly competing with EVEREST TECHNOCAST’s brake offerings.. 8 common products: [Brake Drum, Brake Disc, Grates, Wheel Hub, Connecting Rod, S.G Iron Casting, Custom Component Manufacturing & Forging...]. Socials: LinkedIn verified; Facebook verified. Rating: 5 | Phone: 01902 492337",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.industrialbrakes.co.uk/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://www.industrialbrakes.co.uk/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/5647634",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/profile.php?id=61578438787742",
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Grates",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Grates",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Super Auto Industries, Forging components Manufacturers in Rajkot, CNC Components, Machined Components, Elevator Components",
+      "url": "http://superautocomponent.com/",
+      "type": "local",
+      "location": "Plot No. 2518 Gate No 1, No.H Corner, G.I, GIDC, Main Road, Road, D.C, Lodhika, Metoda, Gujarat 360021, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: They manufacture forging and machined auto components that can include brake drums/discs, making them a competitor in the manufacturing sector.. 7 common products: [Brake Drum, Brake Disc, Wheel Hub, Connecting Rod, Crank Castings, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4.9 | Phone: 098985 56199",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://superautocomponent.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "http://superautocomponent.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/superautoindustries/?hl=en",
+        "facebook": "https://www.facebook.com/superautoindustries/",
+        "youtube": "https://www.youtube.com/channel/UCyA-jVtF528A8oKz_t5MMKw"
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Crank Castings",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Crank Castings",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning"
+      ]
+    },
+    {
+      "name": "✅ AAY ESS CASTINGS PVT LTD",
+      "url": "https://oswalmetcast.com/",
+      "type": "regional",
+      "location": "adjoining SUNGRAIN FOODS, Malhipur, Doraha, Punjab 141421, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: The candidate, Aay Ess Castings (Oswal Met Cast), is a manufacturer of cast iron and alloy steel castings, including automotive components and agricultural parts. This directly overlaps with the target's offerings of Cast Iron Casting, Brake Drums, and Brake Discs, as both operate in the metal casting and manufacturing sector for similar industrial and automotive applications.. 7 common products: [Brake Drum, Cast Iron Casting, Casting Pulley, Connecting Rod, Crank Castings, S.G Iron Casting, Custom Component Manufacturing & Forging]. Rating: 5 | Phone: 097790 74000",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://oswalmetcast.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://oswalmetcast.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
       },
       "products": [
         "Brake Drum",
@@ -7800,7 +8099,8 @@
         "Casting Pulley",
         "Connecting Rod",
         "Crank Castings",
-        "S.G Iron Casting"
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
       ],
       "commonProducts": [
         "Brake Drum",
@@ -7808,26 +8108,1171 @@
         "Casting Pulley",
         "Connecting Rod",
         "Crank Castings",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Svendborg Brakes Germany",
+      "url": "http://www.svendborg-brakes.com/",
+      "type": "global",
+      "location": "Pestelstraße 46, 49324 Melle-Alrune, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Svendborg Brakes manufactures brake components such as discs and drums, directly competing with Everest Technocast’s brake product line.. 7 common products: [Brake Drum, Brake Disc, Centrifugal Pump Parts, Wheel Hub, Connecting Rod, Custom Component Manufacturing & Forging, Quality Assurance & Metallurgical Lab Testing]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: N/A | Phone: 05422 9272000",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.svendborg-brakes.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://svendborgbrakes.kontainer.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/80911138",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/119685541412261",
+        "youtube": "https://www.youtube.com/channel/UCkfqZHN1Amu1AxB7eOnzYlw"
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Centrifugal Pump Parts",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Centrifugal Pump Parts",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Midland Brakes Ltd",
+      "url": "http://www.midlandbrakes.com/",
+      "type": "global",
+      "location": "Unit 4 Station Rd Industrial Est, Station Rd, Rowley Regis B65 0JY, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Midland Brakes manufactures and services industrial brake components, directly overlapping with EVEREST TECHNOCAST's brake drum and disc offerings. 7 common products: [Brake Drum, Brake Disc, Grates, Wheel Hub, Connecting Rod, S.G Iron Casting, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.8 | Phone: 0121 561 2212",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.midlandbrakes.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://www.midlandbrakes.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/midland-brakes-ltd",
+        "instagram": "https://www.instagram.com/midlandbrakes/",
+        "facebook": "https://www.facebook.com/midlandbrakes",
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Grates",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Grates",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Ruby Engineering Co.",
+      "url": "https://www.rubyengineeringco.in/",
+      "type": "local",
+      "location": "C-1/8 G.I.D.C, Aji Industrial Estate, Rajkot, Gujarat 360003, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Ruby Engineering Co. manufactures belt pulleys and chain sprockets, not the brake drums, discs, cast‑iron brake castings, centrifugal pump parts, or grates offered by EVEREST TECHNOCAST.. 6 common products: [Brake Disc, Cast Iron Casting, Casting Pulley, Wheel Hub, Connecting Rod, S.G Iron Casting]. Socials: LinkedIn verified. Rating: 4.8 | Phone: 084693 55314",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.rubyengineeringco.in/"
+        },
+        {
+          "title": "Product: Brake Disc",
+          "url": "https://www.rubyengineeringco.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/cws/share?url=https://www.rubyengineeringco.in/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Casting Pulley",
+        "Wheel Hub",
+        "Connecting Rod",
         "S.G Iron Casting"
       ],
-      "socialStatus": {
-        "YouTube": {
-          "status": "Success",
-          "count": 3
+      "commonProducts": [
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Casting Pulley",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting"
+      ]
+    },
+    {
+      "name": "Super Auto Industries",
+      "url": "http://superautocomponents.com/",
+      "type": "local",
+      "location": "Gate No 1, Super Auto Industries, Plot No 2518, Kalavad Rd, Lodhika Gidc, Metoda, Rajkot, Gujarat 360021, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Super Auto Industries manufactures forged metal components, an adjacent product line to EVEREST TECHNOCAST's castings and pump parts, making them a competitor.. 6 common products: [Brake Disc, Flanges, Connecting Rod, Custom Component Manufacturing & Forging, CNC Precision Machining & Turning, Heat Treatment & Surface Processing]. Socials: LinkedIn verified. Rating: 4.3 | Phone: 079 4254 5868",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://superautocomponents.com/"
         },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "LinkedIn": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
+        {
+          "title": "Product: Brake Disc",
+          "url": "http://superautocomponents.com/"
         }
-      }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/cws/share?url=https://www.superautocomponents.com/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Disc",
+        "Flanges",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing"
+      ],
+      "commonProducts": [
+        "Brake Disc",
+        "Flanges",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging",
+        "CNC Precision Machining & Turning",
+        "Heat Treatment & Surface Processing"
+      ]
+    },
+    {
+      "name": "Impel Motors",
+      "url": "https://www.impelmotors.com/",
+      "type": "local",
+      "location": "C/1/55, Rd Number D, Aji Vasahat, GIDC, Rajkot, Gujarat 360003, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Impetus Prolific manufactures industrial motors and brake-related cast iron components, overlapping with EVEREST TECHNOCAST's cast iron casting and brake product lines. 6 common products: [Brake Disc, Brake Drum, Cast Iron Casting, Wheel Hub, Connecting Rod, S.G Iron Casting]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 4.4 | Phone: 096247 42265",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.impelmotors.com/"
+        },
+        {
+          "title": "Product: Brake Disc",
+          "url": "https://www.impelmotors.com/product/series/brake-motor-cast-iron"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/impel-motors",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/impelmotors123",
+        "youtube": "https://www.youtube.com/channel/UCwnocHNmjuG0OnCdsccyEfQ"
+      },
+      "products": [
+        "Brake Disc",
+        "Brake Drum",
+        "Cast Iron Casting",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting"
+      ],
+      "commonProducts": [
+        "Brake Disc",
+        "Brake Drum",
+        "Cast Iron Casting",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting"
+      ]
+    },
+    {
+      "name": "Radhe Auto Industries",
+      "url": "http://www.radheautoindustries.com/",
+      "type": "local",
+      "location": "New Jain Chawl, 26, Gondal Rd, opposite Gurukul, Gunatit Nagar, Sardar Nagar, Rajkot, Gujarat 360004, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Radhe Auto Industries is a manufacturer of auto parts, specifically mentioning trucks and cars. While the specific product list in the excerpt is truncated, auto parts manufacturers in this sector typically produce components like brake drums, brake discs, and cast iron castings, which directly overlap with Everest Technocast's target offerings. As a direct manufacturer of similar automotive components, it is a competitor.. 6 common products: [Brake Disc, Grates, Wheel Hub, Connecting Rod, S.G Iron Casting, Custom Component Manufacturing & Forging]. Socials: Instagram verified. Rating: 4.1 | Phone: 099044 64222",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.radheautoindustries.com/"
+        },
+        {
+          "title": "Product: Brake Disc",
+          "url": "http://www.radheautoindustries.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/radhe_group_of_industries?igsh=OGQ5ZDc2ODk2ZA==",
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Disc",
+        "Grates",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Disc",
+        "Grates",
+        "Wheel Hub",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Jay Industries",
+      "url": "https://jayautospares.com/",
+      "type": "local",
+      "location": "5, UMAKANT PANDIT, near Rajdoot estate, Mavadi Plot, Udyog nagar, Chandreshnagar, Rajkot, Gujarat 360004, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Jay Industries manufactures two‑wheeler and three‑wheeler spare parts (engine components) and does not produce brake drums, brake discs, cast‑iron castings, centrifugal pump parts, or grates, so it is not a direct competitor.. 6 common products: [Brake Drum, Brake Disc, Wheel Hub, Connecting Rod, Custom Component Manufacturing & Forging, Quality Assurance & Metallurgical Lab Testing]. Rating: 5 | Phone: 094267 86112",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://jayautospares.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://jayautospares.com/brake-shoes.php"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "JASBIR & BROTHERS / Combine Break Disc,Combine rear hub Manufacturer",
+      "url": "http://www.jasbirandbrothers.com/",
+      "type": "regional",
+      "location": "7094, 1, Street Number 14, opp. Maggar Di Chaki, Mohalla Durga Nagar, New Janta Nagar, Ludhiana, Punjab 141003, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: They manufacture precision agricultural machinery parts, which likely include brake components, cast iron castings, pump parts, and grates, overlapping EVEREST's offerings.. 6 common products: [Brake Drum, Brake Disc, Cast Iron Casting, Casting Pulley, Connecting Rod, S.G Iron Casting]. Rating: 5 | Phone: 098148 14995",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.jasbirandbrothers.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "http://www.jasbirandbrothers.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Casting Pulley",
+        "Connecting Rod",
+        "S.G Iron Casting"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Cast Iron Casting",
+        "Casting Pulley",
+        "Connecting Rod",
+        "S.G Iron Casting"
+      ]
+    },
+    {
+      "name": "Brakes International",
+      "url": "https://www.brakeparts.co.uk/",
+      "type": "global",
+      "location": "12 Moore St, Rochdale OL16 1QN, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: They sell brake discs, a core product of Everest Technocast, making them a direct competitor in the brake component market.. 6 common products: [Brake Drum, Brake Disc, Connecting Rod, S.G Iron Casting, Custom Component Manufacturing & Forging, Quality Assurance & Metallurgical Lab Testing]. Socials: Facebook verified; YouTube verified. Rating: 4.7 | Phone: 01706 666999",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.brakeparts.co.uk/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://www.brakeparts.co.uk/pages/pads"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/brakeparts.co.uk",
+        "youtube": "https://www.youtube.com/channel/UCljop6SvRvWgiCwMYzB9GYQ"
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Arrow Automobile",
+      "url": "http://www.arrowautomobile.com/",
+      "type": "local",
+      "location": "Nilkanth Industry, B/h Natraj Pipe Gondal Chokadi, Dhebar Rd, Swati Park, Rajkot, Kotharia, Gujarat 360022, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Arrow Automobile manufactures rocker arms and camshaft assemblies, not brake drums, discs, cast iron castings, centrifugal pump parts or grates, so it is not a direct competitor.. 5 common products: [Brake Drum, Brake Disc, Wheel Hub, Connecting Rod, Heat Treatment & Surface Processing]. Socials: LinkedIn verified. Rating: 5 | Phone: 090169 55401",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.arrowautomobile.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "http://www.arrowautomobile.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/cws/share?url=https://www.arrowautomobile.com/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Heat Treatment & Surface Processing"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Heat Treatment & Surface Processing"
+      ]
+    },
+    {
+      "name": "SKATO AUTOMOTIVE PRIVATE LIMITED CLUTCH & CLUTCH PLATE TRUCK & TRACTOR",
+      "url": "http://skatoautomotive.com/",
+      "type": "regional",
+      "location": "PLOT NO. 9, Sohna Rd, BALLABGARH, Pali Village, Haryana 121005, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Skato Automotive manufactures automotive clutch plates and assemblies, which is a related manufacturing sector but does not produce brake drums, brake discs, cast iron castings, centrifugal pump parts, or grates, so it is not a direct competitor to Everest Technocast.. 5 common products: [Brake Drum, Brake Disc, Wheel Hub, Connecting Rod, Custom Component Manufacturing & Forging]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: 097160 16630",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://skatoautomotive.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://skatoautomotive.com/brake-lining/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/skatoautomotive_/",
+        "facebook": "https://www.facebook.com/skatoautomotive/",
+        "youtube": "https://www.youtube.com/@skatoautomotive"
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Macas Brakes Automotive Private Limited",
+      "url": "https://macasautomotive.com/",
+      "type": "regional",
+      "location": "Plot No-111, Sector 6, Sector 6, Faridabad, Haryana 121006, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: The site appears to be an automotive service/retail business and does not show manufacturing of brake drums, discs, cast iron castings, centrifugal pump parts, or grates, so it is not a direct competitor.. 5 common products: [Brake Drum, Brake Disc, Wheel Hub, Connecting Rod, Custom Component Manufacturing & Forging]. Socials: Facebook verified. Rating: 4 | Phone: 0129 418 8505",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://macasautomotive.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://macasautomotive.com/brake-lining/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/MACAS-Automotive-103234465887043",
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Wilwood Engineering",
+      "url": "https://www.wilwood.com/",
+      "type": "global",
+      "location": "4700 Calle Bolero, Camarillo, CA 93012, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Both manufacture brake discs.. 5 common products: [Brake Drum, Brake Disc, Wheel Hub, Connecting Rod, Valves & Pipe Fittings]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4 | Phone: (805) 388-1188",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.wilwood.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://www.facebook.com/pages/Wilwood-Disc-Brakes/371029616341"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/wilwooddiscbrakes/",
+        "facebook": "https://www.facebook.com/pages/Wilwood-Disc-Brakes/371029616341",
+        "youtube": "https://www.youtube.com/user/wilwooddiscbrakes?feature=mhum"
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Valves & Pipe Fittings"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Valves & Pipe Fittings"
+      ]
+    },
+    {
+      "name": "OPTIMAL Automotive GmbH",
+      "url": "https://www.emotive.group/",
+      "type": "global",
+      "location": "Alfred-Kühne-Straße 3, 85416 Langenbach, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Emotive Group operates in the automotive aftermarket and offers braking components, overlapping with EVEREST TECHNOCAST's brake drum and disc products.. 5 common products: [Brake Drum, Brake Disc, Connecting Rod, Custom Component Manufacturing & Forging, Quality Assurance & Metallurgical Lab Testing]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.5 | Phone: 08761 72060",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.emotive.group/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://www.emotive.group/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://linkedin.com/company/emotive-group/",
+        "instagram": "https://instagram.com/emotivegroup/",
+        "facebook": "https://facebook.com/emotivegroupgmbh/",
+        "youtube": "https://www.youtube.com/@emotivegroup"
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging",
+        "Quality Assurance & Metallurgical Lab Testing"
+      ]
+    },
+    {
+      "name": "Brembo Deutschland GmbH",
+      "url": "http://www.brembo.com/",
+      "type": "global",
+      "location": "Friedrich-List-Straße 46, 70771 Leinfelden-Echterdingen-Echterdingen, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Brembo manufactures brake discs and drums, directly competing with EVEREST’s brake components.. 5 common products: [Brake Drum, Brake Disc, Wheel Hub, Connecting Rod, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 3.3 | Phone: 035 605 1111",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.brembo.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://it.pinterest.com/brembobrakes/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/brembo/",
+        "instagram": "https://www.instagram.com/brembo/",
+        "facebook": "https://www.facebook.com/Brembo/",
+        "youtube": "https://www.youtube.com/channel/UCkjF3cxr2MHD5p1fE2eDwSg"
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Bremsen Technik Motorsport",
+      "url": "https://www.bremsentechnikmotorsport.com/",
+      "type": "global",
+      "location": "Bremsen Technik House, Station Rd, Brompton on Swale, Richmond DL10 7SN, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: They distribute high‑performance brake discs and drums, directly competing with EVEREST’s brake component offerings.. 5 common products: [Brake Drum, Brake Disc, Connecting Rod, S.G Iron Casting, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified; Facebook verified. Rating: 4.8 | Phone: 01748 831200",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.bremsentechnikmotorsport.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://www.bremsentechnikmotorsport.com/brembo-upgrade/brembo-sport/brembo-sport-brake-pads.html"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/bremsen-technik-group/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/BremsenTechnik/",
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "S.G Iron Casting",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Taksh Engineering",
+      "url": "https://www.takshengineering.com/",
+      "type": "local",
+      "location": "Survey No.217, Plot No.10, Shivnagar-4 B/H Korat Vidhyalaya, Veraval Main Road, Veraval, Shapar, Veraval, Gujarat 360024, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Taksh Engineering manufactures brake discs/rotors and brake drums, directly competing with Everest Technocast's offerings.. 4 common products: [Brake Drum, Brake Disc, Connecting Rod, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.7 | Phone: 094995 45627",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.takshengineering.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://www.takshengineering.com/brake-disc-rotor"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/takshengineering/",
+        "instagram": "https://instagram.com/taksh_engineering?utm_medium=copy_link",
+        "facebook": "https://www.facebook.com/Taksh-Engineering-102488109012709",
+        "youtube": "https://youtube.com/channel/UCivi5HDI9OlaXHcxw_rcnSA"
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Embicon Tech Hub",
+      "url": "https://www.embicon.in/",
+      "type": "local",
+      "location": "Shed No 1, RK Induatrial Area, Plot No 1, Swati Park Main Road, opp. Swati High-rise, near Fortune Industries, Swati Park, Kotharia, Gujarat 360022, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Embicon manufactures industrial automation and crane control products, not brake drums, discs, cast iron castings, pump parts, or grates, so it is not a direct competitor.. 4 common products: [Brake Disc, Wheel Hub, Connecting Rod, Heat Treatment & Surface Processing]. Socials: LinkedIn verified. Rating: 4.7 | Phone: 099982 70747",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.embicon.in/"
+        },
+        {
+          "title": "Product: Brake Disc",
+          "url": "https://www.embicon.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/cws/share?url=https://www.embicon.in/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Heat Treatment & Surface Processing"
+      ],
+      "commonProducts": [
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod",
+        "Heat Treatment & Surface Processing"
+      ]
+    },
+    {
+      "name": "J. K. Auto Spares",
+      "url": "http://www.jkautospares.com/",
+      "type": "local",
+      "location": "Srihari Industrial Area, GIDC, Rajkot, Gujarat 360002, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: J.K. Auto Spares manufactures brake discs and brake drums, which are core products offered by EVEREST TECHNOCAST.. 4 common products: [Brake Drum, Brake Disc, Wheel Hub, Connecting Rod]. Rating: 4.7 | Phone: 080 4764 3625",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.jkautospares.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "http://www.jkautospares.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod"
+      ]
+    },
+    {
+      "name": "Rajesh Engineering Works",
+      "url": "http://rajeshengineeringwork.com/",
+      "type": "local",
+      "location": "Laxmi Nagar Main Road, Mahadevwadi Main Rd, near Shrinathji Haveli, Nandkishor Society, Laxmi Nagar, Chandreshnagar, Rajkot, Gujarat 360004, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Rajesh Engineering Works manufactures brake discs and brake drums, which are core products offered by EVEREST TECHNOCAST.. 4 common products: [Brake Drum, Brake Disc, Wheel Hub, Connecting Rod]. Rating: 5 | Phone: 080 4861 7854",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://rajeshengineeringwork.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "http://rajeshengineeringwork.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Wheel Hub",
+        "Connecting Rod"
+      ]
+    },
+    {
+      "name": "Powertek Equipment Co. - Gear Boxes, Geared Motors & Electric Winch",
+      "url": "https://www.powertekindia.com/",
+      "type": "regional",
+      "location": "203, Runwal Commercial Complex, Lal Bahadur Shastri Marg, opp. Veena Nagar, Vardhman Nagar, Mulund West, Mumbai, Maharashtra 400080, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Powertek India manufactures gearboxes, winches, and motors, which are not the brake drums, discs, cast iron castings, centrifugal pump parts, or grates produced by EVEREST TECHNOCAST.. 4 common products: [Brake Disc, Brake Drum, Connecting Rod, Custom Component Manufacturing & Forging]. Socials: Facebook verified; Instagram verified. Rating: 4.1 | Phone: 090040 05888",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.powertekindia.com/"
+        },
+        {
+          "title": "Product: Brake Disc",
+          "url": "https://www.powertekindia.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/powertekindia3/?hl=en",
+        "facebook": "https://www.facebook.com/profile.php?id=61585419578238",
+        "youtube": null
+      },
+      "products": [
+        "Brake Disc",
+        "Brake Drum",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Disc",
+        "Brake Drum",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Knott Brake Co",
+      "url": "http://www.knottbrake.com/",
+      "type": "global",
+      "location": "144 West Dr, Lodi, OH 44254, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Knott Brake manufactures brake discs and drums, directly competing with EVEREST TECHNOCAST's brake products.. 4 common products: [Brake Drum, Brake Disc, Connecting Rod, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified. Rating: 3 | Phone: (800) 566-8887",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.knottbrake.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://knottbrake.com/categories/special-solutions/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://linkedin.com/company/knott_brake_company",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "ATTC Manufacturing, Inc.",
+      "url": "https://attcmfg.com/",
+      "type": "global",
+      "location": "10455 IN-37, Tell City, IN 47586, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: No evidence that ATTC Manufacturing produces brake drums, discs, cast iron castings, centrifugal pump parts, or grates.. 4 common products: [Brake Drum, Brake Disc, Connecting Rod, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified; Facebook verified. Rating: 3.7 | Phone: (812) 547-5060",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://attcmfg.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://attcmfg.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/attc-manufacturing",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/attcmanufacturing/",
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "BrakeSTUFF c/o SITEC Industrietechnologie GmbH",
+      "url": "https://brake-stuff.de/",
+      "type": "global",
+      "location": "Bornaer Str. 192, 09114 Chemnitz, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: The site sells MTB brake discs, directly overlapping EVEREST TECHNOCAST’s brake disc offering.. 4 common products: [Brake Drum, Brake Disc, Connecting Rod, Custom Component Manufacturing & Forging]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4.1 | Phone: 01511 4664761",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://brake-stuff.de/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://brake-stuff.de/bremsen-know-how"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/brake_stuff/",
+        "facebook": "https://www.facebook.com/Brakestuff",
+        "youtube": "https://www.youtube.com/channel/UCI4YkydD-6VkLccinrAdzoQ"
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "BREMSKERL-REIBBELAGWERKE Emmerling GmbH & Co. KG",
+      "url": "https://bremskerl.de/",
+      "type": "global",
+      "location": "Brakenhof 7, 31629 Estorf-Leeseringen, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Both companies manufacture and supply brake components for industrial and commercial vehicles.. 4 common products: [Brake Drum, Brake Disc, Connecting Rod, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.2 | Phone: 05025 9780",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://bremskerl.de/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://bremskerl.de/en/railway-vehicles/disc-brake-pads/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/724661/",
+        "instagram": "https://instagram.com/bremskerl",
+        "facebook": "https://www.facebook.com/profile.php?id=61579226943911",
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "BURG GERMANY GmbH",
+      "url": "http://burggermany.de/",
+      "type": "global",
+      "location": "Kastanienweg 11, 44799 Bochum, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: They produce brake discs and related automotive components, directly competing with EVEREST TECHNOCAST's brake disc offering.. 4 common products: [Brake Drum, Brake Disc, Connecting Rod, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified; Instagram verified. Rating: N/A | Phone: 01522 5866397",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://burggermany.de/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://burggermany.de/parts-and-products/brake-pads-and-discs/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/burg-germany-gmbh/about/?viewAsMember=true",
+        "instagram": "https://www.instagram.com/burg_germany/",
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Bremsen Technik Reman Ltd",
+      "url": "http://btreman.co.uk/",
+      "type": "global",
+      "location": "Unit H2, Grovelands Industrial Estate, Longford Rd, Exhall, Coventry CV7 9ND, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Bremsen Technik Reman manufactures and supplies brake components such as drums and discs, directly competing with EVEREST TECHNOCAST’s brake product line.. 4 common products: [Brake Drum, Brake Disc, Connecting Rod, Custom Component Manufacturing & Forging]. Socials: LinkedIn verified. Rating: 4.9 | Phone: 024 7636 2523",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://btreman.co.uk/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "http://btreman.co.uk/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/bremsen-technik-group",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod",
+        "Custom Component Manufacturing & Forging"
+      ]
+    },
+    {
+      "name": "Rotex Engineering",
+      "url": "http://www.rotexengineering.com/",
+      "type": "local",
+      "location": "survey no.257, dist, near natraj paking ind, Shapar, Gujarat 360026, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: They manufacture brake discs and drums, directly competing with EVEREST's brake components.. 3 common products: [Brake Drum, Brake Disc, Connecting Rod]. Rating: 4.6 | Phone: 088666 23668",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.rotexengineering.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "http://www.rotexengineering.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod"
+      ]
+    },
+    {
+      "name": "BRAKO INDUSTRIES",
+      "url": "http://www.brakoindustries.com/",
+      "type": "regional",
+      "location": "54 A, Pacha thottam, near ashok nagar, Kalapatti, Coimbatore, Tamil Nadu 641048, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Brako Industries manufactures brake systems and components, overlapping with Everest Technocast's brake drum and disc products, making it a direct competitor in the same manufacturing sector.. 3 common products: [Brake Drum, Brake Disc, Connecting Rod]. Socials: Facebook verified; Instagram verified. Rating: 4.6 | Phone: 091598 03006",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.brakoindustries.com/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "http://www.brakoindustries.com/electromagnetic-fail-safe-brake.html"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/brakobrakes/",
+        "facebook": "https://www.facebook.com/profile.php?id=61585199829223",
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod"
+      ]
+    },
+    {
+      "name": "Astemo India Pvt Ltd - Pune Office",
+      "url": "https://www.hitachiastemo.com/en/",
+      "type": "regional",
+      "location": "MCCIA Trade Towers Senapati Bapat Road Shivajinagar, Laxmi Society, Model Colony, Shivajinagar, Pune, Maharashtra 411016, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Astemo produces automotive brake components and related cast iron parts, directly overlapping with Everest Technocast's brake drums, discs, and casting offerings. 3 common products: [Brake Drum, Brake Disc, Connecting Rod]. Rating: 4.4 | Phone: 020 7198 7200",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.hitachiastemo.com/en/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "https://www.hitachiastemo.com/en/products/motorcycle/#brake-system"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Brake Disc",
+        "Connecting Rod"
+      ]
+    },
+    {
+      "name": "Axel Wirth Maschinen GmbH",
+      "url": "http://axel-wirth-maschinen.de/",
+      "type": "global",
+      "location": "Aalener Str. 76-80, 73447 Oberkochen, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Axel Wirth Maschinen supplies coating and drying equipment for various industries, not brake drums, discs, cast iron castings, pump parts or grates, so it is not a direct competitor.. 3 common products: [Brake Drum, Wheel Hub, Connecting Rod]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4.5 | Phone: 07364 9577090",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://axel-wirth-maschinen.de/"
+        },
+        {
+          "title": "Product: Brake Drum",
+          "url": "http://axel-wirth-maschinen.de/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/axelwirthmaschinen/",
+        "facebook": "https://www.facebook.com/Axel-Wirth-Maschinen-104565731436448",
+        "youtube": "https://www.youtube.com/channel/UCcIKXCRXW5Y9JhCXZrJT3Ng"
+      },
+      "products": [
+        "Brake Drum",
+        "Wheel Hub",
+        "Connecting Rod"
+      ],
+      "commonProducts": [
+        "Brake Drum",
+        "Wheel Hub",
+        "Connecting Rod"
+      ]
+    },
+    {
+      "name": "Airking Industries",
+      "url": "http://www.airkingind.com/contact-us.html",
+      "type": "local",
+      "location": "Plot No-366, D C, G I, 80 Feet Rd, Aji Vasahat, GIDC, Rajkot, Gujarat 360003, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Casting Components for Automotive. LLM Verdict: Airking Industries manufactures pumps and related components, overlapping with EVEREST TECHNOCAST’s centrifugal pump parts.. 2 common products: [Brake Disc, Connecting Rod]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.9 | Phone: 098242 99884",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.airkingind.com/contact-us.html"
+        },
+        {
+          "title": "Product: Brake Disc",
+          "url": "http://www.airkingind.com/contact-us.html"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/airking-industries-009b28244?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+        "instagram": "https://www.instagram.com/airkingindustries?igsh=bGg2a2N4Y3Fzcmh0",
+        "facebook": "https://www.facebook.com/AirkingIndustries",
+        "youtube": null
+      },
+      "products": [
+        "Brake Disc",
+        "Connecting Rod"
+      ],
+      "commonProducts": [
+        "Brake Disc",
+        "Connecting Rod"
+      ]
     }
   ],
   "socialFeed": [
