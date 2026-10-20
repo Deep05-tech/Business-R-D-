@@ -4,48 +4,62 @@
     "role": "user",
     "createdAt": "2026-09-11T06:17:10.112Z",
     "passwordHash": "deaef2c025406a6f49e7415cc439e4a1:d298086f253389f009e859e672e92ff9dd99234f5709e27ce0050675e7d5aea72b806055aa1acf75d3f557c8089a8888bae854246e882d0352bdc247bcabad58",
-    "assignedProjectUrls": []
+    "assignedProjectUrls": [
+      "https://metalictechnoforge.com/"
+    ]
   },
   {
     "username": "admin",
     "role": "admin",
     "createdAt": "2026-09-11T06:15:46.702Z",
     "passwordHash": "2f4fe7661dd613d3ca6820d1cce86b42:48435a33e4c1028ef9a7075f10450f7d57f917a5930a5aa8dd2614b8fa85aee24c28807981ed394da8bbff7702f934d103a9674f6c0efb9deb5e5049619c4063",
-    "assignedProjectUrls": []
+    "assignedProjectUrls": [
+      "https://example.com"
+    ]
   },
   {
     "username": "Smit",
     "role": "user",
     "passwordHash": "6a8aff81789c0f928be6d7b82d9745c1:faa1c273a68a2718beb24426f9a5550a3a9add77288dac8947d63af2f513cf542fb6c75b217afc65f4e335c63e6a2dbdffa490e832b2011cc26bf0a8b5210f58",
     "createdAt": "2026-10-20T05:07:52.580Z",
-    "assignedProjectUrls": []
+    "assignedProjectUrls": [
+      "https://metalictechnoforge.com/"
+    ]
   },
   {
     "username": "Uday",
     "role": "user",
     "passwordHash": "d861ee3c83a6355f0da3f59f1ecbb6ec:80e76a86a4a9e011fc49e693bbf7b810b1330bdb2d934bb0d79fa440ec2070809b83999614cdad26b230ccd0ea185568e1180ceafc293c4b55476def105d9912",
     "createdAt": "2026-10-20T05:09:45.273Z",
-    "assignedProjectUrls": []
+    "assignedProjectUrls": [
+      "https://metalictechnoforge.com/"
+    ]
   },
   {
     "username": "Pratik",
     "role": "user",
     "createdAt": "2026-10-20T05:12:41.918Z",
     "passwordHash": "3a830b6aad9092a92838eb9b1a8fbee2:6d7b67a5455e83402ffb5ac7aba52b5de136f16852a796c6b2d7e54d9183fe8054d2c934a6da9165f9eec8807b8c7dad6ef28ac24e922fb73794a5316b71d358",
-    "assignedProjectUrls": []
+    "assignedProjectUrls": [
+      "https://metalictechnoforge.com/"
+    ]
   },
   {
     "username": "Parth",
     "role": "user",
     "createdAt": "2026-10-20T05:12:42.541Z",
     "passwordHash": "7a568695e551d7bf0ac4922fd017e329:08005350f04f9387e748acb9cbbe62ef9a9499300a11c436cf115324bf29a2db764f5c4fc7f9ea990375f36fa849df24126b4170b02f65a6b02b8fa6644f03bf",
-    "assignedProjectUrls": []
+    "assignedProjectUrls": [
+      "https://metalictechnoforge.com/"
+    ]
   },
   {
     "username": "Shivam",
     "role": "user",
     "createdAt": "2026-10-20T05:12:43.235Z",
     "passwordHash": "4adbdc17f0bc9ffe628fd8c7ef4beebd:395664cc362115d48d3a59c4fcaa48367a24176fcca7e3734c611ddcf310d501e8f4d624663cec854cb705aadccf9b44a3b8c930bcdcaffaaf1049a40858fe98",
-    "assignedProjectUrls": []
+    "assignedProjectUrls": [
+      "https://metalictechnoforge.com/"
+    ]
   }
 ]
