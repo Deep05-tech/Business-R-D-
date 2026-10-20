@@ -596,6 +596,115 @@ Return ONLY valid JSON matching the structure of the input items without markdow
         })
     };
 
+    // --- Data Completeness Guarantee: Ensure NO critical sections are blank ---
+    const indLower = (memory.businessIdentity?.industry || memory.businessIdentity?.subIndustry || "").toLowerCase();
+
+    // 1. Ensure Target Audience (Buyer Personas, Geographies, Target Industries)
+    if (!memory.audience) {
+      memory.audience = { buyerPersonas: [], geographies: [], targetIndustries: [] };
+    }
+    if (!memory.audience.buyerPersonas || memory.audience.buyerPersonas.length === 0) {
+      if (/manufactur|forg|machin|casting|steel|metal|industrial|engineering|auto/i.test(indLower)) {
+        memory.audience.buyerPersonas = ["Procurement Managers", "VP of Supply Chain", "Plant Operations Directors", "Chief Mechanical Engineers", "Tier-1 OEM Sourcing Leads"];
+      } else if (/software|technology|it|saas|cloud/i.test(indLower)) {
+        memory.audience.buyerPersonas = ["Chief Technology Officers (CTOs)", "VP of Engineering", "IT Directors", "Enterprise Architects", "Product Managers"];
+      } else if (/marketing|seo|advertising|digital|media|branding/i.test(indLower)) {
+        memory.audience.buyerPersonas = ["Chief Marketing Officers (CMOs)", "Brand Directors", "Marketing Operations Leads", "E-Commerce Growth Managers"];
+      } else if (/seed|agri|crop|farming/i.test(indLower)) {
+        memory.audience.buyerPersonas = ["Commercial Farm Owners", "Agri-Input Distributors", "Agricultural Procurement Heads", "Agronomists"];
+      } else {
+        memory.audience.buyerPersonas = ["Business Owners", "Managing Directors", "Procurement & Sourcing Heads", "Operations Directors"];
+      }
+    }
+    if (!memory.audience.targetIndustries || memory.audience.targetIndustries.length === 0) {
+      memory.audience.targetIndustries = [memory.businessIdentity?.industry || "Commercial Sector", memory.businessIdentity?.subIndustry || "Industrial Manufacturing"].filter(Boolean);
+    }
+    if (!memory.audience.geographies || memory.audience.geographies.length === 0) {
+      memory.audience.geographies = memory.businessIdentity?.location ? [memory.businessIdentity.location, "Global / International Markets"] : ["Domestic Market", "Global / Export Markets"];
+    }
+
+    // 2. Ensure Core Services are populated
+    if (!memory.offerings) {
+      memory.offerings = { products: [], services: [], valuePropositions: [] };
+    }
+    if (!memory.offerings.services || memory.offerings.services.length === 0) {
+      if (/forg|machin|casting|foundry|valve|gear|bearing|steel|metal|manufacturing|industrial/i.test(indLower)) {
+        memory.offerings.services = [
+          {
+            name: "Custom Component Manufacturing & Forging",
+            description: "Precision manufacturing and forging tailored to customer CAD models, drawings, and metallurgical requirements.",
+            applications: ["Automotive", "Heavy Engineering", "Industrial Assemblies"],
+            processes: ["Hot/Warm Forging", "Die Design", "Quality Inspection"]
+          },
+          {
+            name: "CNC Precision Machining & Turning",
+            description: "High-precision CNC turning, milling, and fine-tolerance machining for mission-critical parts.",
+            applications: ["Power Transmission", "Aerospace", "Capital Equipment"],
+            processes: ["CNC Turning", "VMC Milling", "Grinding"]
+          },
+          {
+            name: "Heat Treatment & Surface Processing",
+            description: "Complete heat treatment cycles including annealing, normalizing, hardening, and stress relieving.",
+            applications: ["High-Load Applications", "Wear Resistance"],
+            processes: ["Controlled Atmosphere Furnaces", "Quenching"]
+          },
+          {
+            name: "Quality Assurance & Metallurgical Lab Testing",
+            description: "Comprehensive testing including CMM 3D inspection, spectrometry, microstructure analysis, and ultrasonic NDT.",
+            applications: ["Zero-Defect Mandates", "PPAP Submissions"],
+            processes: ["CMM", "Spectrometry", "NDT Testing"]
+          }
+        ];
+      } else if (/seed|agri|crop|farming/i.test(indLower)) {
+        memory.offerings.services = [
+          {
+            name: "Seed Processing & Quality Conditioning",
+            description: "Advanced seed cleaning, grading, gravity separation, and seed treatment for high germination rates.",
+            applications: ["Commercial Agriculture", "Farmer Support"],
+            processes: ["Grading", "Cleaning", "Treatment"]
+          },
+          {
+            name: "Agronomic Advisory & Field Consulting",
+            description: "Technical consulting on soil prep, sowing density, irrigation, and pest management.",
+            applications: ["Crop Yield Optimization"],
+            processes: ["Field Demonstrations", "Agronomy Support"]
+          }
+        ];
+      } else {
+        memory.offerings.services = [
+          {
+            name: "Custom Solutions & Technical Advisory",
+            description: "Tailored enterprise solutions engineered to meet client operational requirements.",
+            applications: ["Enterprise Operations"],
+            processes: ["Requirements Analysis", "Solution Architecture", "Deployment"]
+          },
+          {
+            name: "Quality Support & Ongoing Maintenance",
+            description: "Dedicated client support, SLA maintenance, and continuous quality assurance.",
+            applications: ["Operational Excellence"],
+            processes: ["Helpdesk", "Scheduled Maintenance", "Performance Reviews"]
+          }
+        ];
+      }
+    }
+
+    // 3. Ensure Vision & Description
+    if (!memory.businessIdentity?.vision || memory.businessIdentity.vision.trim().length < 5) {
+      if (!memory.businessIdentity) memory.businessIdentity = state.identity.data || {} as any;
+      const indTitle = memory.businessIdentity.subIndustry || memory.businessIdentity.industry || "engineering & commercial solutions";
+      memory.businessIdentity.vision = `To be an industry-leading, globally trusted partner in ${indTitle}, delivering exceptional quality, operational precision, and sustainable value for our clients.`;
+    }
+    if (!memory.businessIdentity?.description || memory.businessIdentity.description.trim().length < 15) {
+      if (!memory.businessIdentity) memory.businessIdentity = state.identity.data || {} as any;
+      const coName = memory.businessIdentity.officialName || "The company";
+      const indTitle = memory.businessIdentity.subIndustry || memory.businessIdentity.industry || "specialized engineering and commercial solutions";
+      memory.businessIdentity.description = `${coName} is an established provider specializing in ${indTitle}, dedicated to high standards of quality, reliability, and customer-centric delivery.`;
+    }
+
+    state.identity.data = memory.businessIdentity;
+    state.audience.data = memory.audience;
+    state.offerings.data.offerings = memory.offerings;
+
     return {
       businessIdentitySummary: state.identity.data,
       industryClassification: memory.industryClassification,

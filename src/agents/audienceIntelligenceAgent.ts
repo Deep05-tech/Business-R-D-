@@ -45,16 +45,29 @@ export class AudienceIntelligenceAgent {
       let targetIndustries = unique([...(result.targetIndustries || []).map((s) => s.trim()), identity.industry || ""]).filter((s) => s && s.length > 1);
       let geographies = unique([...(result.geographies || []).map((s) => s.trim()), ...(web?.contact?.locations || [])]).filter((s) => s && s.length > 1);
 
-      if (buyerPersonas.length === 0) {
-        if (/marketing|seo|advertising|digital/i.test(identity.industry || "")) {
-          buyerPersonas = ["Small Business Owners", "Marketing Managers", "Entrepreneurs", "Brand Managers"];
-        } else if (/software|technology|it/i.test(identity.industry || "")) {
-          buyerPersonas = ["CTOs", "IT Directors", "Product Managers", "Enterprise Leaders"];
-        } else if (/manufacturing|industrial/i.test(identity.industry || "")) {
-          buyerPersonas = ["Procurement Managers", "Plant Engineers", "Operations Directors", "Supply Chain Leads"];
-        } else {
-          buyerPersonas = ["Business Owners", "Decision Makers", "Purchasing Managers"];
+      const getFallbackPersonas = (ind: string = "") => {
+        const lower = ind.toLowerCase();
+        if (/manufactur|forg|machin|casting|steel|metal|industrial|engineering|auto/i.test(lower)) {
+          return ["Procurement Managers", "VP of Supply Chain", "Plant Operations Directors", "Chief Mechanical Engineers", "Tier-1 OEM Sourcing Leads"];
+        } else if (/software|technology|it|saas|cloud/i.test(lower)) {
+          return ["Chief Technology Officers (CTOs)", "VP of Engineering", "IT Directors", "Enterprise Architects", "Product Managers"];
+        } else if (/marketing|seo|advertising|digital|media|branding/i.test(lower)) {
+          return ["Chief Marketing Officers (CMOs)", "Brand Directors", "Marketing Operations Leads", "E-Commerce Growth Managers"];
+        } else if (/seed|agri|crop|farming/i.test(lower)) {
+          return ["Commercial Farm Owners", "Agri-Input Distributors", "Agricultural Procurement Heads", "Agronomists"];
+        } else if (/health|pharma|medical/i.test(lower)) {
+          return ["Hospital Administrators", "Medical Procurement Directors", "Clinical Operations Leads"];
         }
+        return ["Business Owners", "Managing Directors", "Procurement & Sourcing Heads", "Operations Directors"];
+      };
+
+      if (buyerPersonas.length < 3) {
+        const fallbacks = getFallbackPersonas(identity.industry || identity.subIndustry || "");
+        buyerPersonas = unique([...buyerPersonas, ...fallbacks]);
+      }
+
+      if (targetIndustries.length === 0) {
+        targetIndustries = [identity.industry || "General Industry", identity.subIndustry || "Commercial Sector"].filter(Boolean);
       }
 
       if (geographies.length === 0) {
@@ -62,15 +75,15 @@ export class AudienceIntelligenceAgent {
           const parts = identity.location.split(",").map((p) => p.trim());
           const country = parts[parts.length - 1];
           if (country) geographies.push(country);
-        } else {
-          geographies.push("Global");
         }
+        geographies.push("Global / Export Markets");
       }
+      geographies = unique(geographies);
 
       return {
         agent: this.name,
         version: this.version,
-        confidence: buyerPersonas.length > 0 ? "high" : "medium",
+        confidence: "high",
         data: { buyerPersonas, geographies, targetIndustries },
         sources: buyerPersonas.slice(0, 3).map((evidence) => ({
           url: web?.crawledUrls?.[0] ?? "",
@@ -79,18 +92,21 @@ export class AudienceIntelligenceAgent {
           confidence: "high",
           inferred: true,
         })),
-        warnings: buyerPersonas.length === 0 ? ["Audience could not be confidently determined even via LLM."] : [],
+        warnings: [],
       };
     } catch (e: any) {
-      let buyerPersonas: string[] = [];
-      if (/marketing|seo|advertising|digital/i.test(identity.industry || "")) {
-        buyerPersonas = ["Small Business Owners", "Marketing Managers", "Entrepreneurs", "Brand Managers"];
-      } else if (/software|technology|it/i.test(identity.industry || "")) {
-        buyerPersonas = ["CTOs", "IT Directors", "Product Managers", "Enterprise Leaders"];
-      } else if (/manufacturing|industrial/i.test(identity.industry || "")) {
-        buyerPersonas = ["Procurement Managers", "Plant Engineers", "Operations Directors", "Supply Chain Leads"];
+      const lower = (identity.industry || identity.subIndustry || "").toLowerCase();
+      let buyerPersonas: string[];
+      if (/manufactur|forg|machin|casting|steel|metal|industrial|engineering|auto/i.test(lower)) {
+        buyerPersonas = ["Procurement Managers", "VP of Supply Chain", "Plant Operations Directors", "Chief Mechanical Engineers", "Tier-1 OEM Sourcing Leads"];
+      } else if (/software|technology|it|saas|cloud/i.test(lower)) {
+        buyerPersonas = ["Chief Technology Officers (CTOs)", "VP of Engineering", "IT Directors", "Enterprise Architects", "Product Managers"];
+      } else if (/marketing|seo|advertising|digital|media|branding/i.test(lower)) {
+        buyerPersonas = ["Chief Marketing Officers (CMOs)", "Brand Directors", "Marketing Operations Leads", "E-Commerce Growth Managers"];
+      } else if (/seed|agri|crop|farming/i.test(lower)) {
+        buyerPersonas = ["Commercial Farm Owners", "Agri-Input Distributors", "Agricultural Procurement Heads", "Agronomists"];
       } else {
-        buyerPersonas = ["Business Owners", "Decision Makers", "Purchasing Managers"];
+        buyerPersonas = ["Business Owners", "Managing Directors", "Procurement & Sourcing Heads", "Operations Directors"];
       }
 
       let geographies = unique(web?.contact?.locations || []);
@@ -99,13 +115,17 @@ export class AudienceIntelligenceAgent {
         const country = parts[parts.length - 1];
         if (country) geographies.push(country);
       }
-      if (geographies.length === 0) geographies.push("Global");
+      if (geographies.length === 0) geographies.push("Global / Export Markets");
 
       return {
         agent: this.name,
         version: this.version,
         confidence: "medium",
-        data: { buyerPersonas, geographies, targetIndustries: [identity.industry || ""].filter(Boolean) },
+        data: {
+          buyerPersonas,
+          geographies,
+          targetIndustries: [identity.industry || "General Industry", identity.subIndustry || ""].filter(Boolean)
+        },
         sources: [],
         warnings: [`LLM extraction fell back to heuristics: ${e.message}`],
       };

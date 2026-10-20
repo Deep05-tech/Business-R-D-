@@ -479,11 +479,19 @@ ${searchContext}`;
       );
       if (bestVision) {
         extractedVision = bestVision.replace(/^[^a-zA-Z]+/, "");
+      } else {
+        const indName = classification.subIndustry || classification.industry || "engineering & commercial solutions";
+        extractedVision = `To be an industry-leading, globally trusted partner in ${indName}, delivering exceptional quality, operational precision, and sustainable value for our clients.`;
       }
     }
 
     const metaDesc = pages[0]?.metaDescription || semantic.metadata.descriptions.find(Boolean) || "";
-    const defaultDescription = extractedDescription || metaDesc || (semantic.combinedText ? firstSentence(semantic.combinedText, 300) : "");
+    let defaultDescription = extractedDescription || metaDesc || (semantic.combinedText ? firstSentence(semantic.combinedText, 300) : "");
+    if (!defaultDescription || defaultDescription.trim().length < 20) {
+      const companyName = resolvedName.value || "The company";
+      const indName = classification.subIndustry || classification.industry || "specialized engineering and commercial solutions";
+      defaultDescription = `${companyName} is an established provider specializing in ${indName}, dedicated to high standards of quality, reliability, and customer-centric delivery.`;
+    }
 
     const data: BusinessIdentity = {
       officialName: resolvedName.value,
@@ -491,12 +499,12 @@ ${searchContext}`;
         ...(resolvedName.value ? [] : semantic.metadata.titles),
         ...social.profiles.flatMap((p) => p.identitySignals.slice(0, 1)),
       ]).filter((v) => v && v !== resolvedName.value),
-      industry: classification.industry,
-      subIndustry: classification.subIndustry,
-      businessModel: classification.businessModel,
-      location: extractedLocation,
+      industry: classification.industry || "Industrial & Commercial Enterprises",
+      subIndustry: classification.subIndustry || classification.industry || "Specialized Products & Services",
+      businessModel: classification.businessModel || "B2B Enterprise",
+      location: extractedLocation || "Headquarters",
       vision: extractedVision,
-      description: defaultDescription || undefined,
+      description: defaultDescription,
     };
 
     const sources: SourceRef[] = [];

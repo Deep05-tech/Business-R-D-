@@ -17,10 +17,7 @@ export class ReconAgent {
   public generateDag(homepage: PageSnapshot): ReconDag {
     const text = compactText(`${homepage.title} ${homepage.metaDescription} ${homepage.headings.join(" ")}`).toLowerCase();
     
-    // Heuristic: Local business / restaurant detection
-    const isLocalBusiness = /(restaurant|menu|cafe|bakery|salon|plumbing|roofing|hvac|landscaping|dental|clinic)/i.test(text);
-
-    // Default agents
+    // Full intelligence pipeline: all agents are required so no project sections are ever left blank
     const allAgents = [
       "businessIdentity",
       "industryClassification",
@@ -31,18 +28,10 @@ export class ReconAgent {
       "rdInsight"
     ];
 
-    if (isLocalBusiness) {
-      return {
-        requiredAgents: allAgents.filter(a => a !== "rdInsight" && a !== "digitalMaturity"),
-        skippedAgents: ["rdInsight", "digitalMaturity"],
-        reasoning: "Detected local B2C service/hospitality business. Skipping R&D Insights and Digital Maturity as they are mostly irrelevant."
-      };
-    }
-
     return {
       requiredAgents: allAgents,
       skippedAgents: [],
-      reasoning: "Detected standard B2B/B2C entity. Running full intelligence pipeline."
+      reasoning: "Running full intelligence pipeline to guarantee complete business intelligence across all modules."
     };
   }
 }
