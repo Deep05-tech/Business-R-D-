@@ -44159,11 +44159,11 @@
           "status": "Success",
           "count": 3
         },
-        "Instagram": {
+        "YouTube": {
           "status": "No posts found",
           "count": 0
         },
-        "YouTube": {
+        "Instagram": {
           "status": "No posts found",
           "count": 0
         }
@@ -44214,21 +44214,21 @@
         "Advanced Forging Solutions"
       ],
       "socialStatus": {
-        "Facebook": {
-          "status": "Success",
-          "count": 1
-        },
         "YouTube": {
-          "status": "Success",
-          "count": 1
-        },
-        "LinkedIn": {
           "status": "Success",
           "count": 1
         },
         "Instagram": {
           "status": "No posts found",
           "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 1
         }
       }
     },
@@ -44277,21 +44277,21 @@
         "Advanced Forging Solutions"
       ],
       "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
         "Instagram": {
           "status": "No posts found",
           "count": 0
         },
-        "Facebook": {
+        "LinkedIn": {
           "status": "No posts found",
           "count": 0
         },
         "YouTube": {
           "status": "Success",
           "count": 3
-        },
-        "LinkedIn": {
-          "status": "No posts found",
-          "count": 0
         }
       }
     },
@@ -44340,11 +44340,11 @@
         "Advanced Forging Solutions"
       ],
       "socialStatus": {
-        "YouTube": {
-          "status": "Success",
-          "count": 3
-        },
         "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
           "status": "No posts found",
           "count": 0
         },
@@ -44352,9 +44352,9 @@
           "status": "Success",
           "count": 2
         },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
+        "YouTube": {
+          "status": "Success",
+          "count": 3
         }
       }
     },
@@ -44409,13 +44409,13 @@
           "status": "Success",
           "count": 1
         },
-        "YouTube": {
-          "status": "Success",
-          "count": 3
-        },
         "Instagram": {
           "status": "Success",
           "count": 2
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
         }
       }
     },
@@ -44466,10 +44466,6 @@
           "status": "No posts found",
           "count": 0
         },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 3
-        },
         "YouTube": {
           "status": "Success",
           "count": 2
@@ -44477,6 +44473,10 @@
         "Instagram": {
           "status": "No posts found",
           "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 2
         }
       }
     },
@@ -44527,17 +44527,17 @@
           "status": "No posts found",
           "count": 0
         },
-        "YouTube": {
-          "status": "Success",
-          "count": 3
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
         },
         "LinkedIn": {
           "status": "Success",
           "count": 2
         },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
+        "YouTube": {
+          "status": "Success",
+          "count": 3
         }
       }
     },
@@ -44764,13 +44764,13 @@
         "Advanced Forging Solutions"
       ],
       "socialStatus": {
-        "LinkedIn": {
-          "status": "Success",
-          "count": 2
-        },
         "Facebook": {
           "status": "No posts found",
           "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 2
         },
         "YouTube": {
           "status": "Success",
@@ -44823,13 +44823,13 @@
         "Advanced Forging Solutions"
       ],
       "socialStatus": {
-        "YouTube": {
-          "status": "Success",
-          "count": 3
-        },
         "Facebook": {
           "status": "No posts found",
           "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
         },
         "LinkedIn": {
           "status": "No posts found",
@@ -44958,10 +44958,6 @@
         "IIoT-Enabled Machining"
       ],
       "socialStatus": {
-        "YouTube": {
-          "status": "Success",
-          "count": 3
-        },
         "LinkedIn": {
           "status": "Success",
           "count": 3
@@ -44969,6 +44965,10 @@
         "Instagram": {
           "status": "No posts found",
           "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
         },
         "Facebook": {
           "status": "Success",
@@ -45015,21 +45015,21 @@
         "Advanced Forging Solutions"
       ],
       "socialStatus": {
-        "LinkedIn": {
-          "status": "Success",
-          "count": 3
-        },
-        "YouTube": {
-          "status": "Success",
-          "count": 2
-        },
         "Instagram": {
           "status": "No posts found",
           "count": 0
         },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
         "Facebook": {
           "status": "No posts found",
           "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 2
         }
       }
     },
@@ -46002,7 +46002,7 @@
   ],
   "socialFeed": [
     {
-      "id": "yt_5xbPQDW7brY",
+      "id": "youtube_1792481765930_c5iaw",
       "company": "Emerson Forge Pvt Ltd",
       "platform": "YouTube",
       "post_url": "https://www.youtube.com/watch?v=5xbPQDW7brY",
@@ -46086,7 +46086,7 @@
       "competitorName": "What Is Forging? Process, Benefits and Applications"
     },
     {
-      "id": "youtube_1792481620206_yeqf2",
+      "id": "youtube_1792481779230_kxpp8",
       "company": "Forging – Process, Classification &amp; Methods",
       "platform": "YouTube",
       "post_url": "https://www.youtube.com/watch?v=o4vQJnPwgiA",
@@ -46310,7 +46310,7 @@
       "competitorName": "Gibbs Gears Precision Engineers Ltd"
     },
     {
-      "id": "youtube_1792481608805_1qm1w",
+      "id": "youtube_1792481774831_huojp",
       "company": "Emerson Forge Pvt Ltd",
       "platform": "YouTube",
       "post_url": "https://www.youtube.com/watch?v=ZJFFCp6-wKs",
@@ -46338,7 +46338,7 @@
       "competitorName": "Emerson Forge Pvt Ltd"
     },
     {
-      "id": "youtube_1792481599202_y9cqy",
+      "id": "youtube_1792481758230_j1lk6",
       "company": "Shivam forge",
       "platform": "YouTube",
       "post_url": "https://www.youtube.com/shorts/utCZYBrCZBA",
@@ -46394,7 +46394,7 @@
       "competitorName": "What Is Forging? Process, Benefits and Applications"
     },
     {
-      "id": "youtube_1792481628638_ls5vx",
+      "id": "youtube_1792481782225_ztk1p",
       "company": "Jagdambay Forgings",
       "platform": "YouTube",
       "post_url": "https://www.youtube.com/watch?v=-2kMlci5mFE",
@@ -46450,7 +46450,7 @@
       "competitorName": "Innoforge Pvt Ltd"
     },
     {
-      "id": "youtube_1792481629900_4bduu",
+      "id": "youtube_1792481787226_0m2s4",
       "company": "Kay Jay Forgings Limited (Corporate Office)",
       "platform": "YouTube",
       "post_url": "https://www.youtube.com/watch?v=vHMVzBxfM6U",
@@ -46562,7 +46562,7 @@
       "competitorName": "All Metals & Forge Group"
     },
     {
-      "id": "youtube_1792481658814_jvjr1",
+      "id": "youtube_1792481807533_dhpj7",
       "company": "Gibbs Gears Precision Engineers Ltd",
       "platform": "YouTube",
       "post_url": "https://www.youtube.com/watch?v=2CFCkkAlqow",
@@ -46590,7 +46590,7 @@
       "competitorName": "Gibbs Gears Precision Engineers Ltd"
     },
     {
-      "id": "youtube_1792481609203_x17v7",
+      "id": "youtube_1792481774939_j3ddh",
       "company": "Emerson Forge Pvt Ltd",
       "platform": "YouTube",
       "post_url": "https://www.youtube.com/watch?v=9CKkcg_j-dk",
@@ -46646,7 +46646,7 @@
       "competitorName": "What Is Forging? Process, Benefits and Applications"
     },
     {
-      "id": "youtube_1792481628691_0eiqb",
+      "id": "youtube_1792481782927_kcw9k",
       "company": "Jagdambay Forgings",
       "platform": "YouTube",
       "post_url": "https://www.youtube.com/watch?v=9BS8PpM8J4g",
@@ -46702,7 +46702,7 @@
       "competitorName": "Innoforge Pvt Ltd"
     },
     {
-      "id": "youtube_1792481631308_joaqn",
+      "id": "youtube_1792481792729_94yu3",
       "company": "Kay Jay Forgings Limited (Corporate Office)",
       "platform": "YouTube",
       "post_url": "https://www.youtube.com/watch?v=jnUwoItnwXQ",
@@ -46786,27 +46786,27 @@
       "competitorName": "All Metals & Forge Group"
     },
     {
-      "id": "instagram_1792481604608_5h0lc",
+      "id": "instagram_1792481756225_ns400",
       "company": "Emerson Forge Pvt Ltd",
       "platform": "Instagram",
       "post_url": "https://www.instagram.com/zan.metals/p/CwoLcn8s5Fh?hl=bn",
       "caption": ". ✨Zan Emerson (they/them) @zan.metals “Impractical Vessel No. 2” “I am a craftsperson driven by a love for material and fire arts, working",
       "media_type": "Image",
-      "thumbnail": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=qPq1x6AZg8gpsIe0qUBRJg&_nc_ss=7060f&oh=00_AQOt8HKKYVfsH2L7Pn8YKls-QR1WIw-bwJgzE81mq26z9Q&oe=6ADCD99A",
-      "media_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=qPq1x6AZg8gpsIe0qUBRJg&_nc_ss=7060f&oh=00_AQOt8HKKYVfsH2L7Pn8YKls-QR1WIw-bwJgzE81mq26z9Q&oe=6ADCD99A",
+      "thumbnail": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=iXLBCNUYf81bnBZLSiAOJg&_nc_ss=7060f&oh=00_AQOdoZkNwTla3Bfre0BZoVYpDIIrGbG2oJAWuaYlYYIKYA&oe=6ADCD99A",
+      "media_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=iXLBCNUYf81bnBZLSiAOJg&_nc_ss=7060f&oh=00_AQOdoZkNwTla3Bfre0BZoVYpDIIrGbG2oJAWuaYlYYIKYA&oe=6ADCD99A",
       "date": "2026-10-20",
       "engagement": {
         "likes": "12",
         "comments": "0"
       },
       "profile_url": "https://www.instagram.com/zan.metals",
-      "thumbnail_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=qPq1x6AZg8gpsIe0qUBRJg&_nc_ss=7060f&oh=00_AQOt8HKKYVfsH2L7Pn8YKls-QR1WIw-bwJgzE81mq26z9Q&oe=6ADCD99A",
+      "thumbnail_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=iXLBCNUYf81bnBZLSiAOJg&_nc_ss=7060f&oh=00_AQOdoZkNwTla3Bfre0BZoVYpDIIrGbG2oJAWuaYlYYIKYA&oe=6ADCD99A",
       "published_date": "2026-10-20",
       "link": "https://www.instagram.com/zan.metals/p/CwoLcn8s5Fh?hl=bn",
       "content": ". ✨Zan Emerson (they/them) @zan.metals “Impractical Vessel No. 2” “I am a craftsperson driven by a love for material and fire arts, working",
       "timestamp": "2026-10-20",
-      "mediaUrl": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=qPq1x6AZg8gpsIe0qUBRJg&_nc_ss=7060f&oh=00_AQOt8HKKYVfsH2L7Pn8YKls-QR1WIw-bwJgzE81mq26z9Q&oe=6ADCD99A",
-      "mediaUrls": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=qPq1x6AZg8gpsIe0qUBRJg&_nc_ss=7060f&oh=00_AQOt8HKKYVfsH2L7Pn8YKls-QR1WIw-bwJgzE81mq26z9Q&oe=6ADCD99A",
+      "mediaUrl": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=iXLBCNUYf81bnBZLSiAOJg&_nc_ss=7060f&oh=00_AQOdoZkNwTla3Bfre0BZoVYpDIIrGbG2oJAWuaYlYYIKYA&oe=6ADCD99A",
+      "mediaUrls": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=iXLBCNUYf81bnBZLSiAOJg&_nc_ss=7060f&oh=00_AQOdoZkNwTla3Bfre0BZoVYpDIIrGbG2oJAWuaYlYYIKYA&oe=6ADCD99A",
       "mediaType": "Image",
       "likes": "12",
       "comments": "0",
@@ -46815,27 +46815,27 @@
       "shortcode": "CwoLcn8s5Fh"
     },
     {
-      "id": "instagram_1792481604608_ekiv7",
+      "id": "instagram_1792481756225_qzsjt",
       "company": "Emerson Forge Pvt Ltd",
       "platform": "Instagram",
       "post_url": "https://www.instagram.com/zan.metals/p/CfAVT3QuT8d?hl=bn",
       "caption": "salt and pepper shakers - brass - 2007\n(the little thing is a custom screw driver for the screws i made for the bottom. i never used them)\". -এ 7 likes, 1 comments - zan.metals",
       "media_type": "Image",
-      "thumbnail": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=QqBBqeHM4lqpLtKXQ3YjaQ&_nc_ss=7060f&oh=00_AQM7dYdgaPmEWT51s0YsDiGGRlmqlGjdgILj6niyZ3A9aQ&oe=6ADCD1E5",
-      "media_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=QqBBqeHM4lqpLtKXQ3YjaQ&_nc_ss=7060f&oh=00_AQM7dYdgaPmEWT51s0YsDiGGRlmqlGjdgILj6niyZ3A9aQ&oe=6ADCD1E5",
+      "thumbnail": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=j-1hYQ0IqLBpUl6uAeKqag&_nc_ss=7060f&oh=00_AQOrXwBwRhySJio0cuX74TUhsjmwsyw9Td12Wwr1EYK03g&oe=6ADCD1E5",
+      "media_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=j-1hYQ0IqLBpUl6uAeKqag&_nc_ss=7060f&oh=00_AQOrXwBwRhySJio0cuX74TUhsjmwsyw9Td12Wwr1EYK03g&oe=6ADCD1E5",
       "date": "2026-10-20",
       "engagement": {
         "likes": "7",
         "comments": "1"
       },
       "profile_url": "https://www.instagram.com/zan.metals",
-      "thumbnail_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=QqBBqeHM4lqpLtKXQ3YjaQ&_nc_ss=7060f&oh=00_AQM7dYdgaPmEWT51s0YsDiGGRlmqlGjdgILj6niyZ3A9aQ&oe=6ADCD1E5",
+      "thumbnail_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=j-1hYQ0IqLBpUl6uAeKqag&_nc_ss=7060f&oh=00_AQOrXwBwRhySJio0cuX74TUhsjmwsyw9Td12Wwr1EYK03g&oe=6ADCD1E5",
       "published_date": "2026-10-20",
       "link": "https://www.instagram.com/zan.metals/p/CfAVT3QuT8d?hl=bn",
       "content": "salt and pepper shakers - brass - 2007\n(the little thing is a custom screw driver for the screws i made for the bottom. i never used them)\". -এ 7 likes, 1 comments - zan.metals",
       "timestamp": "2026-10-20",
-      "mediaUrl": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=QqBBqeHM4lqpLtKXQ3YjaQ&_nc_ss=7060f&oh=00_AQM7dYdgaPmEWT51s0YsDiGGRlmqlGjdgILj6niyZ3A9aQ&oe=6ADCD1E5",
-      "mediaUrls": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=QqBBqeHM4lqpLtKXQ3YjaQ&_nc_ss=7060f&oh=00_AQM7dYdgaPmEWT51s0YsDiGGRlmqlGjdgILj6niyZ3A9aQ&oe=6ADCD1E5",
+      "mediaUrl": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=j-1hYQ0IqLBpUl6uAeKqag&_nc_ss=7060f&oh=00_AQOrXwBwRhySJio0cuX74TUhsjmwsyw9Td12Wwr1EYK03g&oe=6ADCD1E5",
+      "mediaUrls": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=j-1hYQ0IqLBpUl6uAeKqag&_nc_ss=7060f&oh=00_AQOrXwBwRhySJio0cuX74TUhsjmwsyw9Td12Wwr1EYK03g&oe=6ADCD1E5",
       "mediaType": "Image",
       "likes": "7",
       "comments": "1",
@@ -46844,27 +46844,27 @@
       "shortcode": "CfAVT3QuT8d"
     },
     {
-      "id": "facebook_1792481600698_bqjct",
+      "id": "facebook_1792481757622_ywpoo",
       "company": "Emerson Forge Pvt Ltd",
       "platform": "Facebook",
       "post_url": "https://www.facebook.com/620561228299005/posts/precision-forged-automobile-clutch-fork-suppliers-from-india-emerson-forge-pvt-l/768453153509811",
       "caption": "Precision Forged Automobile Clutch Fork Suppliers From India, Emerson forge Pvt. Ltd. are expert to produce custom forged automotive components from Rajkot, Gujarat, India....",
       "media_type": "Image",
-      "thumbnail": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=Pc3uzyld_yMLfhBRpgMIaA&_nc_zt=3&oh=06_Q3_EAenCjZBJv6TX0bSBnPkOloxS5nzmOmc2TG4lZO34i9eZ&oe=6AD8DCB2",
-      "media_url": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=Pc3uzyld_yMLfhBRpgMIaA&_nc_zt=3&oh=06_Q3_EAenCjZBJv6TX0bSBnPkOloxS5nzmOmc2TG4lZO34i9eZ&oe=6AD8DCB2",
+      "thumbnail": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=vH0XRgP9iLoyV5EioL--KA&_nc_zt=3&oh=06_Q3_EAW7hQR5IGF_VZKMK1jJ2tBx_uE_X3kv8Rnq6C1H5gUjO&oe=6AD8DCB2",
+      "media_url": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=vH0XRgP9iLoyV5EioL--KA&_nc_zt=3&oh=06_Q3_EAW7hQR5IGF_VZKMK1jJ2tBx_uE_X3kv8Rnq6C1H5gUjO&oe=6AD8DCB2",
       "date": "2026-10-20",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
       "profile_url": "https://www.facebook.com/Emerson-Forge-Pvt-Ltd-Leading-Open-Closed-Die-Forging-Company-India-620561228299005/",
-      "thumbnail_url": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=Pc3uzyld_yMLfhBRpgMIaA&_nc_zt=3&oh=06_Q3_EAenCjZBJv6TX0bSBnPkOloxS5nzmOmc2TG4lZO34i9eZ&oe=6AD8DCB2",
+      "thumbnail_url": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=vH0XRgP9iLoyV5EioL--KA&_nc_zt=3&oh=06_Q3_EAW7hQR5IGF_VZKMK1jJ2tBx_uE_X3kv8Rnq6C1H5gUjO&oe=6AD8DCB2",
       "published_date": "2026-10-20",
       "link": "https://www.facebook.com/620561228299005/posts/precision-forged-automobile-clutch-fork-suppliers-from-india-emerson-forge-pvt-l/768453153509811",
       "content": "Precision Forged Automobile Clutch Fork Suppliers From India, Emerson forge Pvt. Ltd. are expert to produce custom forged automotive components from Rajkot, Gujarat, India....",
       "timestamp": "2026-10-20",
-      "mediaUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=Pc3uzyld_yMLfhBRpgMIaA&_nc_zt=3&oh=06_Q3_EAenCjZBJv6TX0bSBnPkOloxS5nzmOmc2TG4lZO34i9eZ&oe=6AD8DCB2",
-      "mediaUrls": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=Pc3uzyld_yMLfhBRpgMIaA&_nc_zt=3&oh=06_Q3_EAenCjZBJv6TX0bSBnPkOloxS5nzmOmc2TG4lZO34i9eZ&oe=6AD8DCB2",
+      "mediaUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=vH0XRgP9iLoyV5EioL--KA&_nc_zt=3&oh=06_Q3_EAW7hQR5IGF_VZKMK1jJ2tBx_uE_X3kv8Rnq6C1H5gUjO&oe=6AD8DCB2",
+      "mediaUrls": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=vH0XRgP9iLoyV5EioL--KA&_nc_zt=3&oh=06_Q3_EAW7hQR5IGF_VZKMK1jJ2tBx_uE_X3kv8Rnq6C1H5gUjO&oe=6AD8DCB2",
       "mediaType": "Image",
       "likes": "0",
       "comments": "0",
@@ -46872,27 +46872,27 @@
       "competitorName": "Emerson Forge Pvt Ltd"
     },
     {
-      "id": "facebook_1792481618305_taq5l",
+      "id": "facebook_1792481776025_xfmpx",
       "company": "Forging – Process, Classification &amp; Methods",
       "platform": "Facebook",
       "post_url": "https://www.facebook.com/fractoryint/posts/-learning-series-168-agentic-ai-in-procurementthe-shift-from-basic-automation-to/1578831444260500",
       "caption": "🔍 Learning series #168 — Agentic AI in Procurement\n\nThe shift from basic automation to agentic AI is giving category managers autonomous co-pilots that plan, execute, and adapt multi-step workflows...",
       "media_type": "Image",
-      "thumbnail": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=urIrO8lwjKadamJvO_RFIw&_nc_zt=3&oh=06_Q3_EAa4WP5bd-_gm19HbzLrY3PIKKMZ2y-j2WFnG0p_ylQ67&oe=6AD8DC2E",
-      "media_url": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=urIrO8lwjKadamJvO_RFIw&_nc_zt=3&oh=06_Q3_EAa4WP5bd-_gm19HbzLrY3PIKKMZ2y-j2WFnG0p_ylQ67&oe=6AD8DC2E",
+      "thumbnail": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=5SA7zWBQ2Sffq_G2Y4Emmg&_nc_zt=3&oh=06_Q3_EAYn6pstwLKQmUNvgv3mi_L1l8KMZ97owtT7w_3kjapuC&oe=6AD8DC2E",
+      "media_url": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=5SA7zWBQ2Sffq_G2Y4Emmg&_nc_zt=3&oh=06_Q3_EAYn6pstwLKQmUNvgv3mi_L1l8KMZ97owtT7w_3kjapuC&oe=6AD8DC2E",
       "date": "2026-10-20",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
       "profile_url": "https://www.facebook.com/fractoryint/",
-      "thumbnail_url": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=urIrO8lwjKadamJvO_RFIw&_nc_zt=3&oh=06_Q3_EAa4WP5bd-_gm19HbzLrY3PIKKMZ2y-j2WFnG0p_ylQ67&oe=6AD8DC2E",
+      "thumbnail_url": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=5SA7zWBQ2Sffq_G2Y4Emmg&_nc_zt=3&oh=06_Q3_EAYn6pstwLKQmUNvgv3mi_L1l8KMZ97owtT7w_3kjapuC&oe=6AD8DC2E",
       "published_date": "2026-10-20",
       "link": "https://www.facebook.com/fractoryint/posts/-learning-series-168-agentic-ai-in-procurementthe-shift-from-basic-automation-to/1578831444260500",
       "content": "🔍 Learning series #168 — Agentic AI in Procurement\n\nThe shift from basic automation to agentic AI is giving category managers autonomous co-pilots that plan, execute, and adapt multi-step workflows...",
       "timestamp": "2026-10-20",
-      "mediaUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=urIrO8lwjKadamJvO_RFIw&_nc_zt=3&oh=06_Q3_EAa4WP5bd-_gm19HbzLrY3PIKKMZ2y-j2WFnG0p_ylQ67&oe=6AD8DC2E",
-      "mediaUrls": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=urIrO8lwjKadamJvO_RFIw&_nc_zt=3&oh=06_Q3_EAa4WP5bd-_gm19HbzLrY3PIKKMZ2y-j2WFnG0p_ylQ67&oe=6AD8DC2E",
+      "mediaUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=5SA7zWBQ2Sffq_G2Y4Emmg&_nc_zt=3&oh=06_Q3_EAYn6pstwLKQmUNvgv3mi_L1l8KMZ97owtT7w_3kjapuC&oe=6AD8DC2E",
+      "mediaUrls": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=5SA7zWBQ2Sffq_G2Y4Emmg&_nc_zt=3&oh=06_Q3_EAYn6pstwLKQmUNvgv3mi_L1l8KMZ97owtT7w_3kjapuC&oe=6AD8DC2E",
       "mediaType": "Image",
       "likes": "0",
       "comments": "0",
@@ -46900,27 +46900,27 @@
       "competitorName": "Forging – Process, Classification &amp; Methods"
     },
     {
-      "id": "facebook_1792481630504_mw4ix",
+      "id": "facebook_1792481779725_epebf",
       "company": "Innoforge Pvt Ltd",
       "platform": "Facebook",
       "post_url": "https://www.facebook.com/innoforge/videos/team-innoforge-celebrated-15-years/801683611195731",
       "caption": "Team Innoforge Celebrated 15 years. Feeling very happy for the terrific management team. Ltd. celebrated their 5th glorious year's company",
       "media_type": "Video",
-      "thumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Sm3HMpB2VJE6mzLWh9GJfg&_nc_ss=7020f&oh=00_AQPaC8POv1A2JLhHI7JQ0p1wMF4cDnpwAjhOMoOWcFPdhw&oe=6ADCE55A",
-      "media_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Sm3HMpB2VJE6mzLWh9GJfg&_nc_ss=7020f&oh=00_AQPaC8POv1A2JLhHI7JQ0p1wMF4cDnpwAjhOMoOWcFPdhw&oe=6ADCE55A",
+      "thumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=zusZATvYy914x_mDx1PHWQ&_nc_ss=7020f&oh=00_AQNUkQF4WsVP6M9vNZ3aM6XVQcpHNL84jQ20rV0XrFsg2A&oe=6ADCE55A",
+      "media_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=zusZATvYy914x_mDx1PHWQ&_nc_ss=7020f&oh=00_AQNUkQF4WsVP6M9vNZ3aM6XVQcpHNL84jQ20rV0XrFsg2A&oe=6ADCE55A",
       "date": "2026-10-20",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
       "profile_url": "https://www.facebook.com/innoforge/",
-      "thumbnail_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Sm3HMpB2VJE6mzLWh9GJfg&_nc_ss=7020f&oh=00_AQPaC8POv1A2JLhHI7JQ0p1wMF4cDnpwAjhOMoOWcFPdhw&oe=6ADCE55A",
+      "thumbnail_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=zusZATvYy914x_mDx1PHWQ&_nc_ss=7020f&oh=00_AQNUkQF4WsVP6M9vNZ3aM6XVQcpHNL84jQ20rV0XrFsg2A&oe=6ADCE55A",
       "published_date": "2026-10-20",
       "link": "https://www.facebook.com/innoforge/videos/team-innoforge-celebrated-15-years/801683611195731",
       "content": "Team Innoforge Celebrated 15 years. Feeling very happy for the terrific management team. Ltd. celebrated their 5th glorious year's company",
       "timestamp": "2026-10-20",
-      "mediaUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Sm3HMpB2VJE6mzLWh9GJfg&_nc_ss=7020f&oh=00_AQPaC8POv1A2JLhHI7JQ0p1wMF4cDnpwAjhOMoOWcFPdhw&oe=6ADCE55A",
-      "mediaUrls": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Sm3HMpB2VJE6mzLWh9GJfg&_nc_ss=7020f&oh=00_AQPaC8POv1A2JLhHI7JQ0p1wMF4cDnpwAjhOMoOWcFPdhw&oe=6ADCE55A",
+      "mediaUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=zusZATvYy914x_mDx1PHWQ&_nc_ss=7020f&oh=00_AQNUkQF4WsVP6M9vNZ3aM6XVQcpHNL84jQ20rV0XrFsg2A&oe=6ADCE55A",
+      "mediaUrls": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=zusZATvYy914x_mDx1PHWQ&_nc_ss=7020f&oh=00_AQNUkQF4WsVP6M9vNZ3aM6XVQcpHNL84jQ20rV0XrFsg2A&oe=6ADCE55A",
       "mediaType": "Video",
       "likes": "0",
       "comments": "0",
@@ -46929,7 +46929,7 @@
       "fb_video_id": "801683611195731"
     },
     {
-      "id": "facebook_1792481647799_nh5ag",
+      "id": "facebook_1792481797349_r41ed",
       "company": "All Metals & Forge Group",
       "platform": "Facebook",
       "post_url": "https://www.facebook.com/AllMetalsForgeGroup/posts/all-metals-forge-group-is-an-iso-90012015-and-as9100d-registered-manufacturer-of/1696813539121174",
@@ -46957,7 +46957,7 @@
       "competitorName": "All Metals & Forge Group"
     },
     {
-      "id": "facebook_1792481630504_ad1a7",
+      "id": "facebook_1792481779725_l6nlo",
       "company": "Innoforge Pvt Ltd",
       "platform": "Facebook",
       "post_url": "https://www.facebook.com/innoforge/posts/1500138702128929",
@@ -46985,27 +46985,27 @@
       "competitorName": "Innoforge Pvt Ltd"
     },
     {
-      "id": "facebook_1792481647799_3jpdc",
+      "id": "facebook_1792481797349_evd0q",
       "company": "All Metals & Forge Group",
       "platform": "Facebook",
       "post_url": "https://www.facebook.com/AllMetalsForgeGroup/videos/when-production-schedules-are-tight-your-forging-partner-must-deliver-all-metals/1250013070557313",
       "caption": "When production schedules are tight, your forging partner must deliver. All Metals & Forge Group provides open die forged parts in as little as 7 to 9 weeks on most orders, helping machine shops and...",
       "media_type": "Video",
-      "thumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Qqxj4pHN65AFAmuQUWVUZg&_nc_ss=7020f&oh=00_AQN4Xfwyq5TfRIC0B5GRg575sTgGakGtSD-vCtyWRX3jMA&oe=6ADD043E",
-      "media_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Qqxj4pHN65AFAmuQUWVUZg&_nc_ss=7020f&oh=00_AQN4Xfwyq5TfRIC0B5GRg575sTgGakGtSD-vCtyWRX3jMA&oe=6ADD043E",
+      "thumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=R11oPgxIFpkXmL5fc3WMlw&_nc_ss=7020f&oh=00_AQOAsLg5l3CO2UDT_6b9jLlyx5BHeHXnHhjSBQEsyeDR9w&oe=6ADD043E",
+      "media_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=R11oPgxIFpkXmL5fc3WMlw&_nc_ss=7020f&oh=00_AQOAsLg5l3CO2UDT_6b9jLlyx5BHeHXnHhjSBQEsyeDR9w&oe=6ADD043E",
       "date": "2026-10-20",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
       "profile_url": "https://www.facebook.com/AllMetalsForgeGroup",
-      "thumbnail_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Qqxj4pHN65AFAmuQUWVUZg&_nc_ss=7020f&oh=00_AQN4Xfwyq5TfRIC0B5GRg575sTgGakGtSD-vCtyWRX3jMA&oe=6ADD043E",
+      "thumbnail_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=R11oPgxIFpkXmL5fc3WMlw&_nc_ss=7020f&oh=00_AQOAsLg5l3CO2UDT_6b9jLlyx5BHeHXnHhjSBQEsyeDR9w&oe=6ADD043E",
       "published_date": "2026-10-20",
       "link": "https://www.facebook.com/AllMetalsForgeGroup/videos/when-production-schedules-are-tight-your-forging-partner-must-deliver-all-metals/1250013070557313",
       "content": "When production schedules are tight, your forging partner must deliver. All Metals & Forge Group provides open die forged parts in as little as 7 to 9 weeks on most orders, helping machine shops and...",
       "timestamp": "2026-10-20",
-      "mediaUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Qqxj4pHN65AFAmuQUWVUZg&_nc_ss=7020f&oh=00_AQN4Xfwyq5TfRIC0B5GRg575sTgGakGtSD-vCtyWRX3jMA&oe=6ADD043E",
-      "mediaUrls": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Qqxj4pHN65AFAmuQUWVUZg&_nc_ss=7020f&oh=00_AQN4Xfwyq5TfRIC0B5GRg575sTgGakGtSD-vCtyWRX3jMA&oe=6ADD043E",
+      "mediaUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=R11oPgxIFpkXmL5fc3WMlw&_nc_ss=7020f&oh=00_AQOAsLg5l3CO2UDT_6b9jLlyx5BHeHXnHhjSBQEsyeDR9w&oe=6ADD043E",
+      "mediaUrls": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=R11oPgxIFpkXmL5fc3WMlw&_nc_ss=7020f&oh=00_AQOAsLg5l3CO2UDT_6b9jLlyx5BHeHXnHhjSBQEsyeDR9w&oe=6ADD043E",
       "mediaType": "Video",
       "likes": "0",
       "comments": "0",
@@ -47014,7 +47014,7 @@
       "fb_video_id": "1250013070557313"
     },
     {
-      "id": "li_1792481602308_dh2fk",
+      "id": "li_1792481762322_50lbs",
       "company": "pentagonforge.co.in",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/pentagon-forge_metalforging-steelforging-precisionforging-activity-7513572559481757696-U7Ap",
@@ -47043,7 +47043,7 @@
       "activity_id": "7513572559481757696"
     },
     {
-      "id": "li_1792481596301_fom2y",
+      "id": "li_1792481759623_4z21g",
       "company": "Shivam forge",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/shivamforge_shivamforge-cncmachining-precisionengineering-activity-7517807191987359744-l04B",
@@ -47072,7 +47072,7 @@
       "activity_id": "7517807191987359744"
     },
     {
-      "id": "linkedin_1792481617801_pwa07",
+      "id": "linkedin_1792481775727_ka3a8",
       "company": "What Is Forging? Process, Benefits and Applications",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/steven-chan-forging_cncmachining-forging-precisionengineering-activity-7359487589231308800-_8rl",
@@ -47102,7 +47102,7 @@
       "activity_id": "7359487589231308800"
     },
     {
-      "id": "li_1792481616103_yy4zd",
+      "id": "li_1792481779128_2wzis",
       "company": "Forging – Process, Classification &amp; Methods",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/fractoryint_how-to-vet-a-cloud-manufacturing-partner-activity-7514266351977402368-rdyh",
@@ -47131,7 +47131,7 @@
       "activity_id": "7514266351977402368"
     },
     {
-      "id": "li_1792481627605_u4eij",
+      "id": "li_1792481787224_zowxj",
       "company": "Kay Jay Forgings Limited (Corporate Office)",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/kayjayforgings_newyearcelebrations-kayjayforgings-employeeengagement-activity-7412443034992336897-KH5d",
@@ -47160,7 +47160,7 @@
       "activity_id": "7412443034992336897"
     },
     {
-      "id": "li_1792481641310_omrd7",
+      "id": "li_1792481792325_poqbh",
       "company": "Patriot Forge Corporation",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/patriot-forge-co%2E_all-of-us-at-patriot-forge-would-all-like-activity-7409340154580119552-bI6a",
@@ -47189,7 +47189,7 @@
       "activity_id": "7409340154580119552"
     },
     {
-      "id": "li_1792481645609_3ki4r",
+      "id": "li_1792481798432_5japt",
       "company": "All Metals & Forge Group",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/all-metals-%26-forge_opendieforging-manufacturing-machineshop-activity-7515872664725479424-8Wzf",
@@ -47218,7 +47218,7 @@
       "activity_id": "7515872664725479424"
     },
     {
-      "id": "li_1792481655904_0y2mw",
+      "id": "li_1792481802631_vn24t",
       "company": "Gibbs Gears Precision Engineers Ltd",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/gibbs-gears-precision-engineers-limited_familybusiness-buckinghamshirebusiness-activity-7516422952217722881-sneo",
@@ -47247,7 +47247,7 @@
       "activity_id": "7516422952217722881"
     },
     {
-      "id": "li_1792481602308_ewuz5",
+      "id": "li_1792481762322_8oyfh",
       "company": "pentagonforge.co.in",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/pentagon-forge_gandhijayanti-pentagonforge-manufacturingindia-activity-7511676214395424768-vLDS",
@@ -47276,7 +47276,7 @@
       "activity_id": "7511676214395424768"
     },
     {
-      "id": "li_1792481596398_d7foh",
+      "id": "li_1792481759623_8bbb8",
       "company": "Shivam forge",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/shivamforge_shivamforge-forgingindustry-forgedcomponents-activity-7469753844999135232--tkj",
@@ -47305,7 +47305,7 @@
       "activity_id": "7469753844999135232"
     },
     {
-      "id": "linkedin_1792481617801_gjy0h",
+      "id": "linkedin_1792481775727_rup8c",
       "company": "What Is Forging? Process, Benefits and Applications",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/steven-chan-forging_forgingmaterials-oemmanufacturing-industrialprocurement-activity-7424021565736153088-DvsH",
@@ -47334,7 +47334,36 @@
       "activity_id": "7424021565736153088"
     },
     {
-      "id": "linkedin_1792481629800_welfi",
+      "id": "li_1792481779128_9ff5g",
+      "company": "Forging – Process, Classification &amp; Methods",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/fractoryint_agentic-ai-in-procurement-beyond-automation-activity-7511334805196853248-4zI_",
+      "caption": "🔍 Learning series #168 — Agentic AI in Procurement\n\nThe shift from basic automation to agentic AI is giving category managers autonomous co-pilots that plan, execute, and adapt multi-step workflows in real time.\n\nCheck out our full guide to see how AI agents are redefining procurement operations, mitigating risk, and driving real strategic ROI 👇",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/sync/v2/D4D27AQH6OZBydJORuA/articleshare-shrink_1280_800/B4DaD2fKOsGkAk-/0/1790841759422?e=2147483647&v=beta&t=ycHXF0d4KTeLCXFwtkJY-51vz8rL-QWlUy14qaXWYMc",
+      "media_url": "https://media.licdn.com/dms/image/sync/v2/D4D27AQH6OZBydJORuA/articleshare-shrink_1280_800/B4DaD2fKOsGkAk-/0/1790841759422?e=2147483647&v=beta&t=ycHXF0d4KTeLCXFwtkJY-51vz8rL-QWlUy14qaXWYMc",
+      "date": "2026-10-01",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/fractoryint",
+      "thumbnail_url": "https://media.licdn.com/dms/image/sync/v2/D4D27AQH6OZBydJORuA/articleshare-shrink_1280_800/B4DaD2fKOsGkAk-/0/1790841759422?e=2147483647&v=beta&t=ycHXF0d4KTeLCXFwtkJY-51vz8rL-QWlUy14qaXWYMc",
+      "published_date": "2026-10-01",
+      "link": "https://www.linkedin.com/posts/fractoryint_agentic-ai-in-procurement-beyond-automation-activity-7511334805196853248-4zI_",
+      "content": "🔍 Learning series #168 — Agentic AI in Procurement\n\nThe shift from basic automation to agentic AI is giving category managers autonomous co-pilots that plan, execute, and adapt multi-step workflows in real time.\n\nCheck out our full guide to see how AI agents are redefining procurement operations, mitigating risk, and driving real strategic ROI 👇",
+      "timestamp": "2026-10-01",
+      "mediaUrl": "https://media.licdn.com/dms/image/sync/v2/D4D27AQH6OZBydJORuA/articleshare-shrink_1280_800/B4DaD2fKOsGkAk-/0/1790841759422?e=2147483647&v=beta&t=ycHXF0d4KTeLCXFwtkJY-51vz8rL-QWlUy14qaXWYMc",
+      "mediaUrls": "https://media.licdn.com/dms/image/sync/v2/D4D27AQH6OZBydJORuA/articleshare-shrink_1280_800/B4DaD2fKOsGkAk-/0/1790841759422?e=2147483647&v=beta&t=ycHXF0d4KTeLCXFwtkJY-51vz8rL-QWlUy14qaXWYMc",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/fractoryint_agentic-ai-in-procurement-beyond-automation-activity-7511334805196853248-4zI_",
+      "competitorName": "Forging – Process, Classification &amp; Methods",
+      "activity_id": "7511334805196853248"
+    },
+    {
+      "id": "linkedin_1792481787526_rvbkp",
       "company": "Kay Jay Forgings Limited (Corporate Office)",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/kayjayforgings_precision-durability-excellence-activity-7297934890535133184-jWKk",
@@ -47364,7 +47393,7 @@
       "activity_id": "7297934890535133184"
     },
     {
-      "id": "li_1792481641310_wc6br",
+      "id": "li_1792481792325_wpx4e",
       "company": "Patriot Forge Corporation",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/patriot-forge-co%2E_we-will-not-forget-activity-7394007128832794624-0BhG",
@@ -47393,7 +47422,7 @@
       "activity_id": "7394007128832794624"
     },
     {
-      "id": "li_1792481645609_pqr7o",
+      "id": "li_1792481798432_dri7a",
       "company": "All Metals & Forge Group",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/all-metals-%26-forge_manufacturing-machineshops-forgings-activity-7513692855366950913-1ow-",
@@ -47422,7 +47451,7 @@
       "activity_id": "7513692855366950913"
     },
     {
-      "id": "li_1792481655904_gaqz0",
+      "id": "li_1792481802631_38ut5",
       "company": "Gibbs Gears Precision Engineers Ltd",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/gibbs-gears-precision-engineers-limited_gibbsgears-aerospacemanufacturing-pumpgears-activity-7514288731592454144-xLLS",
@@ -47451,7 +47480,7 @@
       "activity_id": "7514288731592454144"
     },
     {
-      "id": "li_1792481602308_ajwxt",
+      "id": "li_1792481762322_bafky",
       "company": "pentagonforge.co.in",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/pentagon-forge_pentagonforge-forging-precisionforging-activity-7503323926878392320-I2Mq",
@@ -47480,36 +47509,36 @@
       "activity_id": "7503323926878392320"
     },
     {
-      "id": "li_1792481596398_dybzq",
-      "company": "Shivam forge",
+      "id": "li_1792481779128_r8u0t",
+      "company": "Forging – Process, Classification &amp; Methods",
       "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/shivamforge_shivamforge-forging-precisionforging-activity-7469075012142989313-mYZM",
-      "caption": "🔥 Precision Forged Components\n⚙️ High Strength | Durability | Reliability\n\n✅ Flanges\n✅ Yokes & Clamps\n✅ Precision Forgings\n✅ Plugs & Blocks\n\n📞 9265772827\n📧 info@shivamforge.com\n🌐 www.shivamforge.com\n\n#ShivamForge #Forging #PrecisionForging #CNCMachining #IndustrialParts #ForgedComponents #Engineering #Manufacturing #HydraulicParts #MetalForging #IndiaIndustry #RajkotBusiness",
+      "post_url": "https://www.linkedin.com/posts/fractoryint_ai-in-procurement-guide-for-manufacturing-activity-7500902979475275778-obh9",
+      "caption": "🔍 Learning series #167 — AI in Procurement\n\nUsing AI purely to cut headcount misses the real opportunity: building stronger, data-backed manufacturing partnerships. Explore how combining human expertise with intelligent automation elevates spend management, contract oversight and direct engineering sourcing.\n\nRead the complete article 👇",
       "media_type": "Image",
-      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQGNmaMzk9crzQ/feedshare-shrink_800/B4DZ6d8JOEGcAc-/0/1780766250143?e=2147483647&v=beta&t=Sm2vXIJbiMLZKYUTnxtfJLLmfcjMrZLn3YzxkIjZ0Iw",
-      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQGNmaMzk9crzQ/feedshare-shrink_800/B4DZ6d8JOEGcAc-/0/1780766250143?e=2147483647&v=beta&t=Sm2vXIJbiMLZKYUTnxtfJLLmfcjMrZLn3YzxkIjZ0Iw",
-      "date": "2026-06-06",
+      "thumbnail": "https://media.licdn.com/dms/image/sync/v2/D4D27AQHk7ieUSUNHIg/articleshare-shrink_1280_800/B4DaBiPd59IYAg-/0/1788354617937?e=2147483647&v=beta&t=YAQNaFI2Ioi2CI1ninpjBVUE3e0fkd41Udsml2iAChI",
+      "media_url": "https://media.licdn.com/dms/image/sync/v2/D4D27AQHk7ieUSUNHIg/articleshare-shrink_1280_800/B4DaBiPd59IYAg-/0/1788354617937?e=2147483647&v=beta&t=YAQNaFI2Ioi2CI1ninpjBVUE3e0fkd41Udsml2iAChI",
+      "date": "2026-09-02",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
-      "profile_url": "https://www.linkedin.com/company/shivamforge/",
-      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQGNmaMzk9crzQ/feedshare-shrink_800/B4DZ6d8JOEGcAc-/0/1780766250143?e=2147483647&v=beta&t=Sm2vXIJbiMLZKYUTnxtfJLLmfcjMrZLn3YzxkIjZ0Iw",
-      "published_date": "2026-06-06",
-      "link": "https://www.linkedin.com/posts/shivamforge_shivamforge-forging-precisionforging-activity-7469075012142989313-mYZM",
-      "content": "🔥 Precision Forged Components\n⚙️ High Strength | Durability | Reliability\n\n✅ Flanges\n✅ Yokes & Clamps\n✅ Precision Forgings\n✅ Plugs & Blocks\n\n📞 9265772827\n📧 info@shivamforge.com\n🌐 www.shivamforge.com\n\n#ShivamForge #Forging #PrecisionForging #CNCMachining #IndustrialParts #ForgedComponents #Engineering #Manufacturing #HydraulicParts #MetalForging #IndiaIndustry #RajkotBusiness",
-      "timestamp": "2026-06-06",
-      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQGNmaMzk9crzQ/feedshare-shrink_800/B4DZ6d8JOEGcAc-/0/1780766250143?e=2147483647&v=beta&t=Sm2vXIJbiMLZKYUTnxtfJLLmfcjMrZLn3YzxkIjZ0Iw",
-      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQGNmaMzk9crzQ/feedshare-shrink_800/B4DZ6d8JOEGcAc-/0/1780766250143?e=2147483647&v=beta&t=Sm2vXIJbiMLZKYUTnxtfJLLmfcjMrZLn3YzxkIjZ0Iw",
+      "profile_url": "https://www.linkedin.com/company/fractoryint",
+      "thumbnail_url": "https://media.licdn.com/dms/image/sync/v2/D4D27AQHk7ieUSUNHIg/articleshare-shrink_1280_800/B4DaBiPd59IYAg-/0/1788354617937?e=2147483647&v=beta&t=YAQNaFI2Ioi2CI1ninpjBVUE3e0fkd41Udsml2iAChI",
+      "published_date": "2026-09-02",
+      "link": "https://www.linkedin.com/posts/fractoryint_ai-in-procurement-guide-for-manufacturing-activity-7500902979475275778-obh9",
+      "content": "🔍 Learning series #167 — AI in Procurement\n\nUsing AI purely to cut headcount misses the real opportunity: building stronger, data-backed manufacturing partnerships. Explore how combining human expertise with intelligent automation elevates spend management, contract oversight and direct engineering sourcing.\n\nRead the complete article 👇",
+      "timestamp": "2026-09-02",
+      "mediaUrl": "https://media.licdn.com/dms/image/sync/v2/D4D27AQHk7ieUSUNHIg/articleshare-shrink_1280_800/B4DaBiPd59IYAg-/0/1788354617937?e=2147483647&v=beta&t=YAQNaFI2Ioi2CI1ninpjBVUE3e0fkd41Udsml2iAChI",
+      "mediaUrls": "https://media.licdn.com/dms/image/sync/v2/D4D27AQHk7ieUSUNHIg/articleshare-shrink_1280_800/B4DaBiPd59IYAg-/0/1788354617937?e=2147483647&v=beta&t=YAQNaFI2Ioi2CI1ninpjBVUE3e0fkd41Udsml2iAChI",
       "mediaType": "Image",
       "likes": "0",
       "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/shivamforge_shivamforge-forging-precisionforging-activity-7469075012142989313-mYZM",
-      "competitorName": "Shivam forge",
-      "activity_id": "7469075012142989313"
+      "postUrl": "https://www.linkedin.com/posts/fractoryint_ai-in-procurement-guide-for-manufacturing-activity-7500902979475275778-obh9",
+      "competitorName": "Forging – Process, Classification &amp; Methods",
+      "activity_id": "7500902979475275778"
     },
     {
-      "id": "linkedin_1792481629800_s9f9w",
+      "id": "linkedin_1792481787526_cx192",
       "company": "Kay Jay Forgings Limited (Corporate Office)",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/kayjayforgings_didyouknow-forgingfacts-kayjayforgings-activity-7293935943214866432-_jbX",
@@ -47538,7 +47567,7 @@
       "activity_id": "7293935943214866432"
     },
     {
-      "id": "li_1792481645609_k68ez",
+      "id": "li_1792481798432_twnjw",
       "company": "All Metals & Forge Group",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/all-metals-%26-forge_spindle-off-downtime-why-idle-cnc-machines-activity-7512960580543082496-y7HK",
@@ -47567,7 +47596,7 @@
       "activity_id": "7512960580543082496"
     },
     {
-      "id": "li_1792481655904_ior8u",
+      "id": "li_1792481802631_fu98g",
       "company": "Gibbs Gears Precision Engineers Ltd",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/gibbs-gears-precision-engineers-limited_gibbsgears-aerospacemanufacturing-aerospaceactuation-activity-7512931767205515264-63Gs",
