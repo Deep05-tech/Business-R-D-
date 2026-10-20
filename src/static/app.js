@@ -1749,15 +1749,15 @@ async function loadCompetitorsUI(isLivePartial = false) {
     
     let html = '';
     if (localComps.length > 0) {
-      html += `<div style="grid-column: 1 / -1; margin-top:10px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px;">🌍 Local Competitors</h3></div>`;
+      html += `<div style="grid-column: 1 / -1; margin-top:10px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px; display:flex; align-items:center; gap:8px;">🌍 Local Competitors <span class="badge" style="background:rgba(99,102,241,0.15); color:var(--primary); font-size:12px; font-weight:700; padding:2px 8px; border-radius:12px;">${localComps.length}</span></h3></div>`;
       html += localComps.map(renderCard).join('');
     }
     if (regionalComps.length > 0) {
-      html += `<div style="grid-column: 1 / -1; margin-top:20px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px;">🏭 Regional & National Competitors</h3></div>`;
+      html += `<div style="grid-column: 1 / -1; margin-top:20px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px; display:flex; align-items:center; gap:8px;">🏭 Regional & National Competitors <span class="badge" style="background:rgba(99,102,241,0.15); color:var(--primary); font-size:12px; font-weight:700; padding:2px 8px; border-radius:12px;">${regionalComps.length}</span></h3></div>`;
       html += regionalComps.map(renderCard).join('');
     }
     if (globalComps.length > 0) {
-      html += `<div style="grid-column: 1 / -1; margin-top:20px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px;">🌐 Global Leaders</h3></div>`;
+      html += `<div style="grid-column: 1 / -1; margin-top:20px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px; display:flex; align-items:center; gap:8px;">🌐 Global Leaders <span class="badge" style="background:rgba(99,102,241,0.15); color:var(--primary); font-size:12px; font-weight:700; padding:2px 8px; border-radius:12px;">${globalComps.length}</span></h3></div>`;
       html += globalComps.map(renderCard).join('');
     }
     

@@ -7,6 +7,7 @@ import { BingRssSearchEngine } from "../utils/bingRssSearchEngine.js";
 import { ChatOpenAI } from "@langchain/openai";
 import { createChatModel } from "../utils/llm.js";
 import { z } from "zod";
+import https from "https";
 import axios from "axios";
 import * as cheerio from "cheerio";
 import { SocialExtractorAgent } from "./socialExtractorAgent.js";
@@ -14,6 +15,9 @@ import { WebTool } from "../tools/webTool.js";
 import { agentRules } from "../config/agentRules.js";
 
 const logger = createLogger("CompetitorAgent");
+
+// Reusable HTTPS agent that allows self-signed/legacy SSL certificates common on manufacturing websites
+const insecureHttpsAgent = new https.Agent({ rejectUnauthorized: false });
 
 type SocialLinks = { linkedin: string | null; instagram: string | null; facebook: string | null; youtube: string | null };
 
@@ -38,16 +42,17 @@ const SOCIAL_ACTIVITY_WINDOW_DAYS = 180;
 // Strong tell-tale markers of verticals that are NOT the user's target industry. Used to reject
 // candidates/social accounts that merely share a brand word (e.g. "Forge" in a gym's name) but
 // operate in a completely different line of business.
+// Multi-word phrases ensure we do NOT falsely flag pages with standard nav "menu" or "travel" text.
 const FOREIGN_INDUSTRY_MARKERS: Record<string, string[]> = {
-  fitness: ["gym", "fitness", "personal training", "workout", "crossfit", "health club", "bodybuilding", "pilates", "yoga studio", "nutrition coaching", "membership"],
-  healthcare: ["clinic", "hospital", "medical center", "dental", "physiotherapy", "patient care", "healthcare"],
-  restaurant: ["restaurant", "cafe", "catering", "bakery", "food truck", "kitchen", "menu"],
-  hospitality: ["hotel", "resort", "spa", "salon", "travel"],
-  realEstate: ["real estate", "realtor", "property management", "apartments for"],
-  software: ["software development", "web development", "app development", "it services", "digital marketing", "seo services"],
-  education: ["tuition", "coaching institute", "academy", "online courses"],
-  retail: ["retail store", "supermarket", "e-commerce store", "fashion"],
-  recruitment: ["recruitment", "staffing", "placement agency", "manpower"],
+  fitness: ["fitness gym", "personal training", "workout session", "crossfit", "health club", "bodybuilding", "pilates studio", "yoga studio", "nutrition coaching", "gym membership"],
+  healthcare: ["medical clinic", "hospital ward", "medical center", "dental clinic", "physiotherapy clinic", "patient care", "healthcare clinic"],
+  restaurant: ["restaurant menu", "dining restaurant", "cafe and bistro", "catering service", "bakery and pastry", "food truck", "chef kitchen"],
+  hospitality: ["hotel & resort", "luxury resort", "hotel rooms", "spa and wellness", "hair salon", "travel agency", "tour operator"],
+  realEstate: ["real estate agency", "realtor listings", "property management", "apartments for rent", "condo sales"],
+  software: ["software development company", "web development agency", "mobile app development", "it services agency", "digital marketing agency", "seo services company"],
+  education: ["tuition classes", "coaching institute", "entrance exam coaching", "online course academy"],
+  retail: ["retail clothing store", "supermarket grocery", "fashion boutique", "e-commerce apparel"],
+  recruitment: ["recruitment agency", "staffing firm", "placement agency", "manpower supply agency"],
 };
 
 const NON_PRODUCT_KEYWORDS = new Set([
@@ -105,19 +110,20 @@ export class CompetitorAgent {
     try {
       const llm = createChatModel({ model: agentRules.models.fast, temperature: 0 });
       const structuredLlm = llm.withStructuredOutput(this.llmCandidateSchema);
-      const prompt = `You are evaluating whether a candidate business is a direct competitor to ${targetName} in the ${targetIndustry} industry.
+      const prompt = `You are evaluating whether a candidate business is a competitor to ${targetName} in the ${targetIndustry} industry.
 Target Offerings: ${targetOfferings.slice(0, 5).join(", ")}
 
 Candidate Website Profile:
 ${pageProfile}
 
 INSTRUCTIONS:
-1. Reject consumer directories, marketplaces (Alibaba, IndiaMart), review sites, encyclopedias, and completely unrelated verticals.
-2. Accept real operating businesses in the same industry that manufacture, supply, or provide similar offerings.`;
+1. Reject consumer directories, marketplaces (Alibaba, IndiaMart, JustDial), review sites, encyclopedias, and completely unrelated verticals.
+2. Accept real operating businesses in the same or adjacent industry that manufacture, supply, or provide similar, competing, or related products/services.
+3. DO NOT reject a legitimate operating company in this sector simply because their brief homepage excerpt does not list all specific sub-offerings (e.g. if target produces forged gears and candidate produces industrial forgings, they ARE competitors).`;
 
       const res = await structuredLlm.invoke(prompt);
       logger.debug(`LLM candidate gate: inIndustry=${res.inIndustry} isCompetitor=${res.isCompetitor} reason="${res.reason}"`);
-      return { isCompetitor: res.inIndustry && res.isCompetitor, reason: res.reason };
+      return { isCompetitor: res.inIndustry && (res.isCompetitor || !res.reason.toLowerCase().includes("unrelated")), reason: res.reason };
     } catch (e: any) {
       logger.warn(`LLM candidate gate failed, defaulting to accept. Error: ${e.message}`);
       return { isCompetitor: true, reason: "Fallback (error during LLM check)" };
@@ -196,7 +202,7 @@ INSTRUCTIONS:
     else if (targetCountry.toLowerCase() === "usa" || targetCountry.toLowerCase() === "united states") regionalHubs = usHubs;
 
     // The user requested 10-15 competitors for EACH category
-    const TARGET_QUOTA_EACH = 12;
+    const TARGET_QUOTA_EACH = 15;
 
     if (scope === "all") {
         targets.push({ locations: localLocations, type: "local", quota: TARGET_QUOTA_EACH });
@@ -220,8 +226,9 @@ INSTRUCTIONS:
     const nicheContext = targetSubIndustry || targetIndustry;
     // Strong industry/sub-industry keywords used by the industry gate (must exist on a candidate's
     // site or in a candidate social's bio before it is accepted as a competitor).
-    const extractStrongKeywords = (text?: string | null) => (text || "").toLowerCase().split(" ").filter(w => w.length > 4 && !["manufacturer", "supplier", "company", "service", "provider"].includes(w));
-    const combinedIndKws = [...new Set([...extractStrongKeywords(targetIndustry), ...extractStrongKeywords(targetSubIndustry)])];
+    const extractStrongKeywords = (text?: string | null) => (text || "").toLowerCase().split(" ").filter(w => w.length > 3 && !["manufacturer", "supplier", "company", "service", "provider", "limited", "pvt", "ltd"].includes(w));
+    const offeringKeywords = allOfferings.flatMap(o => o.toLowerCase().split(/[\s,/-]+/)).filter(w => w.length > 3 && !["manufacturer", "supplier", "company", "service", "provider"].includes(w));
+    const combinedIndKws = [...new Set([...extractStrongKeywords(targetIndustry), ...extractStrongKeywords(targetSubIndustry), ...offeringKeywords])];
     
     if (allOfferings.length === 0) allOfferings.push(nicheContext || industry);
     
@@ -256,7 +263,13 @@ INSTRUCTIONS:
     }
 
     // Content/non-business domains are never competitors (encyclopedias, wikis, directories, review sites).
-    const blockedDomains = ["indiamart.com", "tradeindia.com", "justdial.com", "facebook.com", "linkedin.com", "instagram.com", "twitter.com", "youtube.com", "wikipedia.org", "wikimedia.org", "imdb.com", "yelp.com", "glassdoor.com", "crunchbase.com"];
+    const blockedDomains = [
+      "indiamart.com", "tradeindia.com", "justdial.com", "exportersindia.com", "dial4trade.com",
+      "maharashtradirectory.com", "gujaratdirectory.com", "yellowpages.com", "thomasnet.com",
+      "ensun.io", "localfrog.in", "facebook.com", "linkedin.com", "instagram.com", "twitter.com",
+      "x.com", "youtube.com", "wikipedia.org", "wikimedia.org", "imdb.com", "yelp.com",
+      "glassdoor.com", "crunchbase.com", "zoominfo.com", "kompass.com"
+    ];
 
     const seedUrls: string[] = (memory as any).seedCompetitorUrls ? [...(memory as any).seedCompetitorUrls] : [];
     if (memory.marketingSales?.competitors && Array.isArray(memory.marketingSales.competitors)) {
@@ -299,7 +312,7 @@ INSTRUCTIONS:
     logger.info(`Will search across quotas: ${JSON.stringify(targets)}`);
 
     // Total quota cap: up to 10-15 competitors per category
-    const MAX_TOTAL_COMPETITORS = maxResults || (scope === "all" ? 40 : TARGET_QUOTA_EACH);
+    const MAX_TOTAL_COMPETITORS = maxResults || (scope === "all" ? 45 : TARGET_QUOTA_EACH);
 
     // Fetch competitors using multiple queries until we reach quotas
     for (const target of targets) {
@@ -308,8 +321,8 @@ INSTRUCTIONS:
         const targetQuota = Math.min(target.quota, Math.max(0, MAX_TOTAL_COMPETITORS - finalCompetitors.length));
         if (targetQuota <= 0) break;
         const targetStartTime = Date.now();
-        const SEARCH_MAX_MS = 25_000;
-        const candidatePoolGoal = Math.max(25, targetQuota * 2);
+        const SEARCH_MAX_MS = 45_000;
+        const candidatePoolGoal = Math.max(50, targetQuota * 3);
         
         // Phase 1.1: Overfetch candidates across all offerings
         const candidateMap = new Map<string, { place: any, matchedOfferings: Set<string>, isSeed?: boolean }>();
@@ -332,13 +345,58 @@ INSTRUCTIONS:
             } catch {}
         }
         
-        // Cap search queries and location loops per target to achieve target quotas
-        const activeQueries = semanticQueries.slice(0, 3);
-        const activeLocations = target.locations.slice(0, 4);
+        // Expand search queries and location loops per target to achieve target quotas
+        const activeQueries = semanticQueries.slice(0, 5);
+        const activeLocations = target.locations.slice(0, 6);
+
+        // Helper to query Brave / Bing web search with directory exclusions
+        const fetchWebSearchPlaces = async (queryKw: string, locationStr: string): Promise<any[]> => {
+            const out: any[] = [];
+            const dirFilters = "-site:indiamart.com -site:tradeindia.com -site:justdial.com -site:exportersindia.com -site:dial4trade.com -site:maharashtradirectory.com -site:gujaratdirectory.com -site:yellowpages.com -site:thomasnet.com -site:ensun.io -site:localfrog.in -site:facebook.com -site:linkedin.com -site:youtube.com -site:wikipedia.org";
+            const searchQuery = `"${queryKw}" "${locationStr}" ${dirFilters}`;
+            try {
+                const brave = new BraveSearchEngine({ maxResults: 15 });
+                const raw = await brave.invoke({ query: searchQuery });
+                const items = JSON.parse(raw);
+                for (const item of items) {
+                    if (item.url && item.url.startsWith("http")) {
+                        out.push({
+                            id: item.url,
+                            displayName: { text: item.title?.split("-")[0]?.split("|")[0]?.split("›")[0]?.trim() || item.title },
+                            websiteUri: item.url,
+                            formattedAddress: locationStr,
+                            rating: undefined,
+                            nationalPhoneNumber: undefined
+                        });
+                    }
+                }
+            } catch {}
+
+            if (out.length < 5) {
+                try {
+                    const bing = new BingRssSearchEngine({ maxResults: 15 });
+                    const raw = await bing.invoke({ query: searchQuery });
+                    const items = JSON.parse(raw);
+                    for (const item of items) {
+                        if (item.url && item.url.startsWith("http")) {
+                            out.push({
+                                id: item.url,
+                                displayName: { text: item.title?.split("-")[0]?.split("|")[0]?.split("›")[0]?.trim() || item.title },
+                                websiteUri: item.url,
+                                formattedAddress: locationStr,
+                                rating: undefined,
+                                nationalPhoneNumber: undefined
+                            });
+                        }
+                    }
+                } catch {}
+            }
+            return out;
+        };
 
         for (let i = 0; i < activeQueries.length; i++) {
             if (candidateMap.size >= candidatePoolGoal) break;
-            if (Date.now() - targetStartTime > SEARCH_MAX_MS && candidateMap.size >= targetQuota) break;
+            if (Date.now() - targetStartTime > SEARCH_MAX_MS && candidateMap.size >= targetQuota * 2) break;
             const queryKeyword = activeQueries[i];
             const placesQueryKeyword = queryKeyword; // Semantic query already optimized
             
@@ -347,39 +405,39 @@ INSTRUCTIONS:
             
             for (const loc of activeLocations) {
                 if (candidateMap.size >= candidatePoolGoal) break;
-                if (Date.now() - targetStartTime > SEARCH_MAX_MS && candidateMap.size >= targetQuota) break;
+                if (Date.now() - targetStartTime > SEARCH_MAX_MS && candidateMap.size >= targetQuota * 2) break;
                 onProgress?.(null, `Searching for "${queryKeyword}" in ${loc}...`);
                 logger.info(`Fetching pool for semantic query: "${queryKeyword}" in ${loc}`);
                 
-                // Fetch up to 1-2 pages per keyword to balance pool coverage with API limits
                 let rawPlaces: any[] = [];
-                try {
-                    rawPlaces = await this.placesApi.fetchAllCompetitors(placesQueryKeyword, loc, 1);
-                } catch (e: any) {
-                    logger.warn(`Places API fetch failed: ${e.message}`);
-                }
-
-                // If Places API returned 0 or very few places with websites, augment with Bing RSS
-                const placesWithWebsites = rawPlaces.filter(p => !!p.websiteUri);
-                if (placesWithWebsites.length < 5) {
+                if (target.type === "global") {
+                    // For global, web search is primary because Places API is heavily IP-anchored
+                    const webResults = await fetchWebSearchPlaces(placesQueryKeyword, loc);
+                    rawPlaces.push(...webResults);
                     try {
-                        const bing = new BingRssSearchEngine({ maxResults: 20 });
-                        const searchQuery = `"${placesQueryKeyword}" "${loc}" -site:indiamart.com -site:justdial.com -site:tradeindia.com -site:facebook.com -site:linkedin.com -site:youtube.com -site:wikipedia.org`;
-                        const raw = await bing.invoke({ query: searchQuery });
-                        const items = JSON.parse(raw);
-                        for (const item of items) {
-                            if (item.url && item.url.startsWith("http")) {
-                                rawPlaces.push({
-                                    id: item.url,
-                                    displayName: { text: item.title?.split("-")[0]?.split("|")[0]?.trim() || item.title },
-                                    websiteUri: item.url,
-                                    formattedAddress: loc,
-                                    rating: undefined,
-                                    nationalPhoneNumber: undefined
-                                });
-                            }
-                        }
+                        const placesResults = await this.placesApi.fetchAllCompetitors(placesQueryKeyword, loc, 1);
+                        rawPlaces.push(...placesResults);
                     } catch {}
+                } else if (target.type === "regional") {
+                    try {
+                        rawPlaces = await this.placesApi.fetchAllCompetitors(placesQueryKeyword, loc, 1);
+                    } catch (e: any) {
+                        logger.warn(`Places API fetch failed: ${e.message}`);
+                    }
+                    // Augment regional with web search to overcome IP-locality biases
+                    const webResults = await fetchWebSearchPlaces(placesQueryKeyword, loc);
+                    rawPlaces.push(...webResults);
+                } else {
+                    // Local: Places API is primary
+                    try {
+                        rawPlaces = await this.placesApi.fetchAllCompetitors(placesQueryKeyword, loc, 1);
+                    } catch (e: any) {
+                        logger.warn(`Places API fetch failed: ${e.message}`);
+                    }
+                    if (candidateMap.size < 25) {
+                        const webResults = await fetchWebSearchPlaces(placesQueryKeyword, loc);
+                        rawPlaces.push(...webResults);
+                    }
                 }
             
             for (const place of rawPlaces) {
@@ -415,7 +473,8 @@ INSTRUCTIONS:
                             "west bengal", "kerala", "andhra pradesh", "pune", "mumbai", "ahmedabad", 
                             "chennai", "bengaluru", "bangalore", "ludhiana", "gurgaon", "noida", 
                             "kolkata", "hyderabad", "faridabad", "coimbatore", "rajkot", "vadodara",
-                            "surat", "nagpur", "nashik", "aurangabad", "indore", "bhopal", "jaipur"
+                            "surat", "nagpur", "nashik", "aurangabad", "indore", "bhopal", "jaipur",
+                            "kolhapur", "solapur", "belgaum", "jalandhar", "mohali"
                         ];
                         return indianMarkers.some(m => addrText.includes(m));
                     } else if (countryLow === "usa" || countryLow === "united states") {
@@ -474,10 +533,10 @@ INSTRUCTIONS:
         logger.info(`Found ${sortedCandidates.length} potential candidates for ${target.type}. Highest overlap score: ${sortedCandidates[0]?.matchedOfferings.size || 0}`);
 
         const verifyStartTime = Date.now();
-        const VERIFY_MAX_MS = 45_000;
+        const VERIFY_MAX_MS = 60_000;
 
         // Evaluate candidates per target scope (top scored candidates)
-        const candidatePool = sortedCandidates.slice(0, Math.max(25, targetQuota * 2));
+        const candidatePool = sortedCandidates.slice(0, Math.max(45, targetQuota * 3));
 
         const pendingFallbacks: Array<{
             candidate: any;
@@ -487,10 +546,10 @@ INSTRUCTIONS:
         }> = [];
 
         // Phase 1.3 & 2 & 3: Verify in parallel batches
-        const BATCH_SIZE = 6;
+        const BATCH_SIZE = 5;
         for (let batchIdx = 0; batchIdx < candidatePool.length; batchIdx += BATCH_SIZE) {
             if (foundForTarget >= targetQuota) break;
-            if (Date.now() - verifyStartTime > VERIFY_MAX_MS && foundForTarget >= Math.min(6, targetQuota)) {
+            if (Date.now() - verifyStartTime > VERIFY_MAX_MS && foundForTarget >= Math.min(10, targetQuota)) {
                 logger.warn(`Time budget reached (${VERIFY_MAX_MS / 1000}s) for target ${target.type}. Wrapping up target.`);
                 break;
             }
@@ -561,7 +620,7 @@ INSTRUCTIONS:
                             pendingFallbacks.push({ candidate, scrapeResult, deepMatchedOfferings, socials });
                         }
                     })(),
-                    new Promise<void>((resolve) => setTimeout(resolve, 8000))
+                    new Promise<void>((resolve) => setTimeout(resolve, 15000))
                 ]);
             }));
         }
@@ -628,8 +687,9 @@ INSTRUCTIONS:
         let html = "";
         try {
             const res = await axios.get(url, { 
-                timeout: 4000, 
-                signal: AbortSignal.timeout(4000),
+                timeout: 6500, 
+                signal: AbortSignal.timeout(6500),
+                httpsAgent: insecureHttpsAgent,
                 headers: { 
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
@@ -640,7 +700,7 @@ INSTRUCTIONS:
         } catch {
             // Axios failed or blocked by WAF — lightweight fallback
             try {
-                const webTool = new WebTool({ timeoutMs: 4000 });
+                const webTool = new WebTool({ timeoutMs: 6500 });
                 const snapshot = await webTool.fetchPage(url);
                 html = snapshot.contentText ? `<html><body><h1>${snapshot.title || ''}</h1><p>${snapshot.contentText}</p></body></html>` : "";
             } catch {}
@@ -674,14 +734,19 @@ INSTRUCTIONS:
         }
         
         // Strict Industry / Sub-Industry Verification
-        const extractStrongKeywords = (text: string) => text.toLowerCase().split(" ").filter(w => w.length > 4 && !["manufacturer", "supplier", "company", "service", "provider"].includes(w));
+        const extractStrongKeywords = (text: string) => text.toLowerCase().split(" ").filter(w => w.length > 3 && !["manufacturer", "supplier", "company", "service", "provider", "limited", "pvt", "ltd"].includes(w));
         const indKeywords = extractStrongKeywords(targetIndustry);
         const subIndKeywords = extractStrongKeywords(targetSubIndustry);
-        const combinedIndKws = [...new Set([...indKeywords, ...subIndKeywords])];
+        const offeringKeywords = allOfferings.flatMap(o => o.toLowerCase().split(/[\s,/-]+/)).filter(w => w.length > 3 && !["manufacturer", "supplier", "company", "service", "provider"].includes(w));
+        const combinedIndKws = [...new Set([...indKeywords, ...subIndKeywords, ...offeringKeywords])];
+
+        const titleText = ($('title').text() || "").toLowerCase();
+        const headingsText = ($('h1, h2, h3').text() || "").toLowerCase();
+        const fullScanText = `${titleText} ${headingsText} ${bodyText}`;
 
         if (combinedIndKws.length > 0) {
-            const industryWordsPresent = combinedIndKws.some(kw => bodyText.includes(kw));
-            const foreignMarkerHits = Object.entries(FOREIGN_INDUSTRY_MARKERS).filter(([, markers]) => markers.some(m => bodyText.includes(m))).map(([k]) => k);
+            const industryWordsPresent = combinedIndKws.some(kw => fullScanText.includes(kw));
+            const foreignMarkerHits = Object.entries(FOREIGN_INDUSTRY_MARKERS).filter(([, markers]) => markers.some(m => fullScanText.includes(m))).map(([k]) => k);
 
             // Cheap pre-filter: a foreign vertical (e.g. a gym) OR total absence of industry words → reject now.
             if (foreignMarkerHits.length > 0 && !industryWordsPresent) {
@@ -689,7 +754,7 @@ INSTRUCTIONS:
                 return null;
             }
             if (!industryWordsPresent) {
-                logger.debug(`Discarding ${url}: no target industry keywords [${combinedIndKws.join(",")}] found on page.`);
+                logger.debug(`Discarding ${url}: no target industry keywords [${combinedIndKws.slice(0, 5).join(",")}] found on page.`);
                 return null;
             }
 
@@ -705,7 +770,7 @@ INSTRUCTIONS:
             const verification = await Promise.race([
                 this.verifyCandidateViaLLM(pageProfile, targetName, targetIndustry, allOfferings),
                 new Promise<{ isCompetitor: boolean; reason: string }>((resolve) =>
-                    setTimeout(() => resolve({ isCompetitor: true, reason: "Heuristic industry match" }), 3500)
+                    setTimeout(() => resolve({ isCompetitor: true, reason: "Heuristic industry match" }), 5000)
                 )
             ]);
             if (!verification.isCompetitor) {

@@ -1161,7 +1161,7 @@ app.post("/api/competitors", async (request, response) => {
     }
 
     const competitorAgentToUse = competitorAgent;
-    const competitors = await (competitorAgentToUse as any).run(memory, scope || "regional");
+    const competitors = await (competitorAgentToUse as any).run(memory, scope || "all");
     
     // Overwrite the existing competitor list with the brand new fresh scrape.
     // (Deleted competitors are already permanently skipped because they are in rejectedCompetitors)
@@ -1229,7 +1229,7 @@ app.post("/api/competitors-stream", async (request, response) => {
 
     const competitors = await competitorAgent.run(
       memory, 
-      scope || "regional", 
+      scope || "all", 
       (comp, statusMsg) => {
         if (!response.writableEnded) {
           if (comp) {
