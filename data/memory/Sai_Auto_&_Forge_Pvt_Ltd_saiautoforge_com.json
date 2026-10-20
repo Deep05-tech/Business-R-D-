@@ -324,7 +324,61 @@
         "aiLaymanSummary": "The Pully Wheel is a specially designed component used in machinery to efficiently transmit power between different shafts. It is precision-forged, meaning it is crafted to exact specifications for optimal performance. These pulley wheels are built to last, providing both high performance and durability, which makes them essential for various industrial applications.\n\nKey benefits of the Pully Wheel include:\n- **High performance**: Ensures effective power transfer, improving overall machinery efficiency.\n- **Durability**: Designed to withstand tough operating conditions, reducing the need for frequent replacements.\n\nWith a weight range of 1.50 kg to 45 kg and dimensions of 350 mm in outer diameter and 650 mm in length, these pulley wheels are versatile enough to be used in different machinery setups, providing a reliable solution for power transmission needs."
       }
     ],
-    "services": [],
+    "services": [
+      {
+        "name": "Custom Component Manufacturing & Forging",
+        "description": "Precision manufacturing and forging tailored to customer CAD models, technical drawings, and metallurgical requirements.",
+        "applications": [
+          "Automotive",
+          "Heavy Engineering",
+          "Industrial Assemblies"
+        ],
+        "processes": [
+          "Hot/Warm Forging",
+          "Die Design",
+          "Quality Inspection"
+        ]
+      },
+      {
+        "name": "CNC Precision Machining & Turning",
+        "description": "High-precision CNC turning, milling, and fine-tolerance machining for mission-critical parts.",
+        "applications": [
+          "Power Transmission",
+          "Aerospace",
+          "Capital Equipment"
+        ],
+        "processes": [
+          "CNC Turning",
+          "VMC Milling",
+          "Grinding"
+        ]
+      },
+      {
+        "name": "Heat Treatment & Surface Processing",
+        "description": "Complete heat treatment cycles including annealing, normalizing, hardening, and stress relieving.",
+        "applications": [
+          "High-Load Applications",
+          "Wear Resistance"
+        ],
+        "processes": [
+          "Controlled Atmosphere Furnaces",
+          "Quenching"
+        ]
+      },
+      {
+        "name": "Quality Assurance & Metallurgical Lab Testing",
+        "description": "Comprehensive testing including CMM 3D inspection, spectrometry, microstructure analysis, and ultrasonic NDT.",
+        "applications": [
+          "Zero-Defect Mandates",
+          "PPAP Submissions"
+        ],
+        "processes": [
+          "CMM",
+          "Spectrometry",
+          "NDT Testing"
+        ]
+      }
+    ],
     "valuePropositions": [
       "High-quality forged and machined components for diverse industrial needs.",
       "Commitment to precision, durability, and superior performance.",
