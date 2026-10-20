@@ -1,4 +1,5 @@
 import { mkdir, readdir, readFile, unlink, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { join } from "node:path";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import type { StructuredMemory } from "../types.js";
@@ -88,14 +89,35 @@ export class MemoryStore {
     const cleanName = officialName.replace(/[<>:"/\\|?*\x00-\x1F\s]/g, "_").trim() || "unknown-business";
     const domainName = new URL(memory.input.websiteUrl).hostname.replace(/^www\./, "").replace(/\./g, "_");
     const fileName = `${cleanName}_${domainName}`;
-    const filePath = join(this.directory, `${fileName}.json`);
+    const targetFileName = `${fileName}.json`;
+    const filePath = join(this.directory, targetFileName);
+
+    // Scan for and remove any superseded files for this website URL so no stale duplicate files exist on disk or GitHub
+    try {
+      const existingFiles = await readdir(this.directory);
+      const targetNorm = this.normalizeKey(memory.input.websiteUrl);
+      for (const ef of existingFiles) {
+        if (ef.endsWith(".json") && ef !== targetFileName) {
+          try {
+            const rawEf = await readFile(join(this.directory, ef), "utf8");
+            const parsedEf = JSON.parse(rawEf);
+            if (this.normalizeKey(parsedEf.input?.websiteUrl || "") === targetNorm) {
+              await unlink(join(this.directory, ef)).catch(() => {});
+              await this.deleteFromGitHub(ef).catch(() => {});
+              logger.info(`Cleaned up superseded file ${ef} for ${memory.input.websiteUrl}`);
+            }
+          } catch {}
+        }
+      }
+    } catch {}
+
     const jsonContent = `${JSON.stringify(memory, null, 2)}\n`;
     await writeFile(filePath, jsonContent, "utf8");
     logger.success(`Saved local memory for ${memory.input.websiteUrl} to ${filePath}`);
 
     // 3. GitHub Cloud Persistence: Auto-commit directly into GitHub data/memory/
     try {
-      await this.syncToGitHub(`${fileName}.json`, jsonContent);
+      await this.syncToGitHub(targetFileName, jsonContent);
     } catch (err: any) {
       logger.warn(`GitHub synchronization warning: ${err.message}`);
     }
@@ -270,6 +292,68 @@ export class MemoryStore {
     return Array.from(this.memoryCache.values());
   }
 
+  async syncFromCloud(): Promise<void> {
+    if (this.directory.includes("tmp") || process.env.NODE_ENV === "test") return;
+    const ghToken = getGitHubToken();
+    if (!ghToken) return;
+
+    try {
+      const repo = (process.env.GITHUB_REPOSITORY || "Deep05-tech/Business-R-D-").trim();
+      const branch = (process.env.GITHUB_BRANCH || "main").trim();
+      const listRes = await fetch(`https://api.github.com/repos/${repo}/contents/data/memory?ref=${branch}`, {
+        headers: {
+          "Authorization": `Bearer ${ghToken}`,
+          "Accept": "application/vnd.github.v3+json",
+          "User-Agent": "Business-RD-Agent-System"
+        },
+        signal: AbortSignal.timeout(8000)
+      });
+      if (!listRes.ok) return;
+
+      const items = (await listRes.json()) as any[];
+      if (!Array.isArray(items)) return;
+
+      await mkdir(this.directory, { recursive: true });
+
+      for (const item of items) {
+        if (!item.name?.endsWith(".json") || !item.download_url) continue;
+        const localFilePath = join(this.directory, item.name);
+        let needsDownload = true;
+        try {
+          const localContent = await readFile(localFilePath, "utf8");
+          const localSha = createHash("sha1")
+            .update(`blob ${Buffer.byteLength(localContent)}\0${localContent}`)
+            .digest("hex");
+          if (localSha === item.sha) {
+            needsDownload = false;
+          }
+        } catch {
+          needsDownload = true;
+        }
+
+        if (needsDownload) {
+          try {
+            const contentRes = await fetch(item.download_url, {
+              headers: { "Authorization": `Bearer ${ghToken}` },
+              signal: AbortSignal.timeout(8000)
+            });
+            if (contentRes.ok) {
+              const content = await contentRes.text();
+              await writeFile(localFilePath, content, "utf8");
+              const parsed = JSON.parse(content) as StructuredMemory;
+              if (parsed.input?.websiteUrl) {
+                this.updateCache(parsed);
+              }
+              logger.success(`Downloaded latest cloud version of ${item.name} from GitHub`);
+            }
+          } catch {}
+        }
+      }
+    } catch (err: any) {
+      logger.warn(`Cloud memory synchronization warning: ${err.message}`);
+    }
+  }
+
   private syncWithCloudInBackground(): void {
     if (this.isSyncingWithCloud || this.directory.includes("tmp") || process.env.NODE_ENV === "test") return;
     this.isSyncingWithCloud = true;
@@ -291,52 +375,8 @@ export class MemoryStore {
           }
         }
 
-        // Sync missing files from GitHub in background without blocking
-        const ghToken = getGitHubToken();
-        if (ghToken) {
-          const repo = (process.env.GITHUB_REPOSITORY || "Deep05-tech/Business-R-D-").trim();
-          const branch = (process.env.GITHUB_BRANCH || "main").trim();
-          const listRes = await fetch(`https://api.github.com/repos/${repo}/contents/data/memory?ref=${branch}`, {
-            headers: {
-              "Authorization": `Bearer ${ghToken}`,
-              "Accept": "application/vnd.github.v3+json",
-              "User-Agent": "Business-RD-Agent-System"
-            },
-            signal: AbortSignal.timeout(6000)
-          });
-          if (listRes.ok) {
-            const items = (await listRes.json()) as any[];
-            if (Array.isArray(items)) {
-              for (const item of items) {
-                if (item.name?.endsWith(".json") && item.download_url) {
-                  const localFilePath = join(this.directory, item.name);
-                  let exists = false;
-                  try {
-                    await import("node:fs/promises").then(fs => fs.access(localFilePath));
-                    exists = true;
-                  } catch { exists = false; }
-
-                  if (!exists) {
-                    try {
-                      const contentRes = await fetch(item.download_url, {
-                        headers: { "Authorization": `Bearer ${ghToken}` },
-                        signal: AbortSignal.timeout(6000)
-                      });
-                      if (contentRes.ok) {
-                        const content = await contentRes.text();
-                        await writeFile(localFilePath, content, "utf8");
-                        const parsed = JSON.parse(content) as StructuredMemory;
-                        if (parsed.input?.websiteUrl) {
-                          this.updateCache(parsed);
-                        }
-                      }
-                    } catch {}
-                  }
-                }
-              }
-            }
-          }
-        }
+        // Sync with GitHub cloud storage (SHA-verified download)
+        await this.syncFromCloud();
       } catch (err: any) {
         logger.warn(`Background cloud sync warning: ${err.message}`);
       } finally {
@@ -446,7 +486,8 @@ export class MemoryStore {
 
     const repo = (process.env.GITHUB_REPOSITORY || "Deep05-tech/Business-R-D-").trim();
     const branch = (process.env.GITHUB_BRANCH || "main").trim();
-    const path = `data/memory/${fileName}`;
+    const encodedFileName = encodeURIComponent(fileName);
+    const path = `data/memory/${encodedFileName}`;
     const url = `https://api.github.com/repos/${repo}/contents/${path}`;
 
     try {
@@ -484,6 +525,30 @@ export class MemoryStore {
       if (putRes.ok) {
         logger.success(`Synchronized ${fileName} directly to GitHub (${repo}) data/memory/ for permanent persistence across deployments!`);
         return true;
+      } else if (putRes.status === 409) {
+        // Concurrency conflict: fetch latest sha and retry once
+        const retryGet = await fetch(`${url}?ref=${branch}`, {
+          headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github.v3+json" }
+        });
+        if (retryGet.ok) {
+          const retryData = (await retryGet.json()) as any;
+          const retryPut = await fetch(url, {
+            method: "PUT",
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Accept": "application/vnd.github.v3+json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              message: `feat(memory): auto-persist ${fileName} across deployments [skip ci]`,
+              content: Buffer.from(fileContent, "utf8").toString("base64"),
+              branch,
+              sha: retryData.sha
+            })
+          });
+          return retryPut.ok;
+        }
+        return false;
       } else {
         const errText = await putRes.text();
         logger.warn(`GitHub synchronization returned status ${putRes.status}: ${errText.slice(0, 150)}`);
@@ -505,7 +570,8 @@ export class MemoryStore {
 
     const repo = (process.env.GITHUB_REPOSITORY || "Deep05-tech/Business-R-D-").trim();
     const branch = (process.env.GITHUB_BRANCH || "main").trim();
-    const path = `data/memory/${fileName}`;
+    const encodedFileName = encodeURIComponent(fileName);
+    const path = `data/memory/${encodedFileName}`;
     const url = `https://api.github.com/repos/${repo}/contents/${path}`;
 
     try {

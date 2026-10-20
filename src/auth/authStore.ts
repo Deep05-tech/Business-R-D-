@@ -3,6 +3,7 @@ import { promisify } from "node:util";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { getMongoDb } from "../utils/mongoClient.js";
+import { getGitHubToken } from "../memory/memoryStore.js";
 
 const scrypt = promisify(scryptCallback);
 
@@ -44,7 +45,42 @@ export class AuthStore {
     if (this.loaded) return;
     this.loaded = true;
 
-    // 1. Try loading users from MongoDB first
+    // 1. Try loading users directly from GitHub Cloud repository (persists across all ephemeral deployments)
+    const ghToken = getGitHubToken();
+    if (ghToken && !this.filePath.includes("tmp") && process.env.NODE_ENV !== "test") {
+      try {
+        const repo = (process.env.GITHUB_REPOSITORY || "Deep05-tech/Business-R-D-").trim();
+        const branch = (process.env.GITHUB_BRANCH || "main").trim();
+        const url = `https://api.github.com/repos/${repo}/contents/data/auth/users.json?ref=${branch}`;
+        const res = await fetch(url, {
+          headers: {
+            "Authorization": `Bearer ${ghToken}`,
+            "Accept": "application/vnd.github.v3+json",
+            "User-Agent": "Business-RD-Agent-System"
+          },
+          signal: AbortSignal.timeout(6000)
+        });
+        if (res.ok) {
+          const data = (await res.json()) as any;
+          if (data.content) {
+            const raw = Buffer.from(data.content, "base64").toString("utf8");
+            const ghUsers = JSON.parse(raw) as StoredUser[];
+            for (const user of ghUsers) {
+              if (user.username && user.passwordHash) {
+                user.assignedProjectUrls = Array.isArray(user.assignedProjectUrls) ? user.assignedProjectUrls : [];
+                this.users.set(this.normalizeUsername(user.username), user);
+              }
+            }
+            await mkdir(dirname(this.filePath), { recursive: true });
+            await writeFile(this.filePath, raw, "utf8");
+          }
+        }
+      } catch (err: any) {
+        console.warn("GitHub user synchronization warning on initialize:", err.message);
+      }
+    }
+
+    // 2. Try loading users from MongoDB
     let dbInstance: any = null;
     try {
       dbInstance = await getMongoDb();
@@ -188,6 +224,10 @@ export class AuthStore {
     await mkdir(dirname(this.filePath), { recursive: true });
     await writeFile(this.filePath, `${JSON.stringify([...this.users.values()], null, 2)}\n`, "utf8");
 
+    // Asynchronously synchronize users and project assignments to GitHub repository
+    // so any assignment or user changes persist permanently across new cloud deployments
+    this.syncToGitHub().catch(() => {});
+
     // Background sync to MongoDB cloud without blocking HTTP callers
     getMongoDb().then(db => {
       if (db) {
@@ -207,6 +247,80 @@ export class AuthStore {
     }).catch((err: any) => {
       console.warn("MongoDB user sync error:", err.message);
     });
+  }
+
+  async syncToGitHub(): Promise<boolean> {
+    if (this.filePath.includes("tmp") || process.env.NODE_ENV === "test") return false;
+    const token = getGitHubToken();
+    if (!token) return false;
+
+    const repo = (process.env.GITHUB_REPOSITORY || "Deep05-tech/Business-R-D-").trim();
+    const branch = (process.env.GITHUB_BRANCH || "main").trim();
+    const path = "data/auth/users.json";
+    const url = `https://api.github.com/repos/${repo}/contents/${path}`;
+
+    try {
+      let sha: string | undefined;
+      const getRes = await fetch(`${url}?ref=${branch}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/vnd.github.v3+json",
+          "User-Agent": "Business-RD-Agent-System"
+        },
+        signal: AbortSignal.timeout(8000)
+      });
+      if (getRes.status === 200) {
+        const existingData = (await getRes.json()) as any;
+        sha = existingData.sha;
+      }
+
+      const fileContent = `${JSON.stringify([...this.users.values()], null, 2)}\n`;
+      const putRes = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/vnd.github.v3+json",
+          "Content-Type": "application/json",
+          "User-Agent": "Business-RD-Agent-System"
+        },
+        body: JSON.stringify({
+          message: "chore(auth): persist user accounts & project assignments across deployments [skip ci]",
+          content: Buffer.from(fileContent, "utf8").toString("base64"),
+          branch,
+          ...(sha ? { sha } : {})
+        }),
+        signal: AbortSignal.timeout(12000)
+      });
+
+      if (putRes.ok) {
+        return true;
+      } else if (putRes.status === 409) {
+        const retryGet = await fetch(`${url}?ref=${branch}`, {
+          headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github.v3+json" }
+        });
+        if (retryGet.ok) {
+          const retryData = (await retryGet.json()) as any;
+          const retryPut = await fetch(url, {
+            method: "PUT",
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Accept": "application/vnd.github.v3+json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              message: "chore(auth): persist user accounts & project assignments across deployments [skip ci]",
+              content: Buffer.from(fileContent, "utf8").toString("base64"),
+              branch,
+              sha: retryData.sha
+            })
+          });
+          return retryPut.ok;
+        }
+      }
+    } catch (err: any) {
+      console.warn("Failed to synchronize users.json to GitHub:", err.message);
+    }
+    return false;
   }
 
   private getSessionSecret(): string {

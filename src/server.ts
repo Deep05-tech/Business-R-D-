@@ -968,6 +968,9 @@ app.post("/api/memory/update", async (request, response) => {
     if (updates.businessIdentity) {
       memory.businessIdentity = { ...memory.businessIdentity, ...updates.businessIdentity };
     }
+    if (updates.industryClassification) {
+      memory.industryClassification = { ...memory.industryClassification, ...updates.industryClassification };
+    }
     if (updates.brandPositioning) {
       memory.brandPositioning = { ...memory.brandPositioning, ...updates.brandPositioning };
     }
@@ -988,9 +991,33 @@ app.post("/api/memory/update", async (request, response) => {
           return existing || { name, description: "", applications: [], processes: [] };
         });
       }
+      if (updates.offerings.valuePropositions) {
+        memory.offerings.valuePropositions = updates.offerings.valuePropositions;
+      }
+    }
+    if (updates.processes) {
+      memory.processes = { ...memory.processes, ...updates.processes };
     }
     if (updates.audience) {
       memory.audience = { ...memory.audience, ...updates.audience };
+    }
+    if (updates.competitors !== undefined) {
+      memory.competitors = updates.competitors;
+    }
+    if (updates.socialFeed !== undefined) {
+      memory.socialFeed = updates.socialFeed;
+    }
+    if (updates.marketingSales) {
+      memory.marketingSales = { ...memory.marketingSales, ...updates.marketingSales };
+    }
+    if (updates.digitalMaturity) {
+      memory.digitalMaturity = { ...memory.digitalMaturity, ...updates.digitalMaturity };
+    }
+    if (updates.rdInsights) {
+      memory.rdInsights = { ...memory.rdInsights, ...updates.rdInsights };
+    }
+    if (updates.rejectedCompetitors !== undefined) {
+      memory.rejectedCompetitors = updates.rejectedCompetitors;
     }
 
     await memoryStore.save(memory);
@@ -1563,6 +1590,7 @@ const server = app.listen(port, async () => {
   // Warm up and bootstrap auth store and project memories into knowledge index
   try {
     await authStore.initialize();
+    await memoryStore.syncFromCloud();
     const loadedMemories = await memoryStore.loadAll();
     for (const m of loadedMemories) {
       knowledgeIndex.add(m);

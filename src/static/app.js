@@ -1274,6 +1274,9 @@ window.saveProjectDetails = async function() {
       window.showSuccess("Memory successfully updated and saved!");
       const toast = document.getElementById('details-toast');
       if (toast) toast.style.display = 'none';
+      if (updates.businessIdentity?.officialName) {
+        window.addOrUpdateProjectInSidebar(window.activeProjectUrl, updates.businessIdentity.officialName);
+      }
     }
   } catch (e) {
     console.error("Failed to save details:", e);
