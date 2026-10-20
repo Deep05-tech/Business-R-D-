@@ -46,8 +46,6 @@
     "role": "user",
     "createdAt": "2026-10-20T05:12:43.235Z",
     "passwordHash": "4adbdc17f0bc9ffe628fd8c7ef4beebd:395664cc362115d48d3a59c4fcaa48367a24176fcca7e3734c611ddcf310d501e8f4d624663cec854cb705aadccf9b44a3b8c930bcdcaffaaf1049a40858fe98",
-    "assignedProjectUrls": [
-      "https://vispansolutions.com/"
-    ]
+    "assignedProjectUrls": []
   }
 ]
