@@ -89820,6 +89820,68 @@
         "Big Rings",
         "Small Rings"
       ]
+    },
+    {
+      "name": "Royal Chain Limited",
+      "url": "https://royalchaingroup.com/",
+      "type": "regional",
+      "location": "A-606/2, MIDC Industrial Area, Mahape, Navi Mumbai, Maharashtra 400710, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Fallback (error during LLM check). 2 common products: [Big Rings, Gear Manufacturing]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.7 | Phone: 022 6996 3333",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://royalchaingroup.com/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "https://royalchaingroup.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://in.linkedin.com/company/royal-chain-private-limited",
+        "instagram": "https://www.instagram.com/royalchainlimited/",
+        "facebook": "https://www.facebook.com/RoyalChains",
+        "youtube": null
+      },
+      "products": [
+        "Big Rings",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "NVision Diamjewel LLP",
+      "url": "http://www.nvisiondiamjewel.co.in/",
+      "type": "regional",
+      "location": "Magic Square, 1503, off Poddar Road, opp. ICICI Bank, Malad, Malad East, Mumbai, Maharashtra 400097, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Direct operating competitor with confirmed offerings: Big Rings, Small Rings. 2 common products: [Big Rings, Small Rings]. Socials: Facebook verified. Rating: 4.9 | Phone: 098190 58581",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.nvisiondiamjewel.co.in/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "https://www.nvisiondiamjewel.co.in/diamond-earrings.htm"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/profile.php?id=100063821564232&mibextid=ZbWKwL",
+        "youtube": null
+      },
+      "products": [
+        "Big Rings",
+        "Small Rings"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Small Rings"
+      ]
     }
   ]
 }
