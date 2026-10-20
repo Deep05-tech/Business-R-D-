@@ -44124,9 +44124,9 @@
       ],
       "socials": {
         "linkedin": "https://www.linkedin.com/company/pentagon-forge/",
-        "instagram": null,
-        "facebook": null,
-        "youtube": null
+        "instagram": "https://www.instagram.com/popular/official-profile",
+        "facebook": "https://m.facebook.com/profile.php?id=261126224543612",
+        "youtube": "https://www.youtube.com/watch?v=OeRCoFcT4Lk"
       },
       "products": [
         "Gears",
@@ -44149,7 +44149,25 @@
         "Machining",
         "IIoT-Enabled Machining",
         "Advanced Forging Solutions"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Forging – Process, Classification &amp; Methods",
@@ -44171,7 +44189,7 @@
         "linkedin": "https://www.linkedin.com/company/fractoryint",
         "instagram": "https://www.instagram.com/fractory_int/",
         "facebook": "https://www.facebook.com/fractoryint/",
-        "youtube": null
+        "youtube": "https://www.youtube.com/watch?v=UqvCoZfXepg"
       },
       "products": [
         "Gears",
@@ -44194,7 +44212,25 @@
         "Machining",
         "IIoT-Enabled Machining",
         "Advanced Forging Solutions"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "Success",
+          "count": 1
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 1
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 1
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Jagdambay Forgings",
@@ -44216,7 +44252,7 @@
         "linkedin": "https://www.linkedin.com/in/jagdambay-forgings-18501a67",
         "instagram": null,
         "facebook": "https://www.facebook.com/jagdambay.forgings.7?mibextid=LQQJ4d",
-        "youtube": null
+        "youtube": "https://www.youtube.com/watch?v=fzxignaxlus"
       },
       "products": [
         "Gears",
@@ -44239,7 +44275,25 @@
         "Machining",
         "IIoT-Enabled Machining",
         "Advanced Forging Solutions"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Innoforge Pvt Ltd",
@@ -44259,9 +44313,9 @@
       ],
       "socials": {
         "linkedin": "https://www.linkedin.com/in/inno-technicals-62aa9218b",
-        "instagram": null,
+        "instagram": "https://www.instagram.com/inno_forge",
         "facebook": "https://www.facebook.com/innoforge/",
-        "youtube": null
+        "youtube": "https://www.youtube.com/channel/UC03UrjaRwe6R-I_lgysvSHg"
       },
       "products": [
         "Gears",
@@ -44284,7 +44338,25 @@
         "Machining",
         "IIoT-Enabled Machining",
         "Advanced Forging Solutions"
-      ]
+      ],
+      "socialStatus": {
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 2
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Emerson Forge Pvt Ltd",
@@ -44303,8 +44375,8 @@
         }
       ],
       "socials": {
-        "linkedin": null,
-        "instagram": null,
+        "linkedin": "https://www.linkedin.com/company/emerson-forge-private-limited",
+        "instagram": "https://www.instagram.com/zan.metals",
         "facebook": "https://www.facebook.com/Emerson-Forge-Pvt-Ltd-Leading-Open-Closed-Die-Forging-Company-India-620561228299005/",
         "youtube": "https://www.youtube.com/channel/UCBThy-wgptNdCVtYfPbACUg"
       },
@@ -44327,7 +44399,25 @@
         "Gear Manufacturing",
         "Machining",
         "IIoT-Enabled Machining"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 1
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 2
+        }
+      }
     },
     {
       "name": "Shivam forge",
@@ -44349,7 +44439,7 @@
         "linkedin": "https://www.linkedin.com/company/shivamforge/",
         "instagram": "https://www.instagram.com/shivam_forge_",
         "facebook": "https://www.facebook.com/people/Shivam-Forge/61562313057709/",
-        "youtube": null
+        "youtube": "https://www.youtube.com/watch?v=zoBL_VsgA9Q"
       },
       "products": [
         "Gears",
@@ -44370,7 +44460,25 @@
         "Gear Manufacturing",
         "Machining",
         "IIoT-Enabled Machining"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 2
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "What Is Forging? Process, Benefits and Applications",
@@ -44413,7 +44521,25 @@
         "Gear Manufacturing",
         "Machining",
         "IIoT-Enabled Machining"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 2
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Aris Global Forging & Machining LLP",
@@ -44577,7 +44703,25 @@
         "Machining",
         "IIoT-Enabled Machining",
         "Advanced Forging Solutions"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Patriot Forge Corporation",
@@ -44598,7 +44742,7 @@
       "socials": {
         "linkedin": "http://www.linkedin.com/company/patriot-forge-co.?trk=top_nav_home",
         "instagram": "https://www.instagram.com/patriot_forge",
-        "facebook": null,
+        "facebook": "https://www.facebook.com/story.php?story_fbid=871911098285835&id=100064008580739",
         "youtube": "https://www.youtube.com/channel/UCSsWjMMpqIAuUeXd_QYn_JQ"
       },
       "products": [
@@ -44618,7 +44762,25 @@
         "Machining",
         "IIoT-Enabled Machining",
         "Advanced Forging Solutions"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "Success",
+          "count": 2
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 2
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Commercial Forged Products",
@@ -44637,10 +44799,10 @@
         }
       ],
       "socials": {
-        "linkedin": null,
-        "instagram": null,
-        "facebook": null,
-        "youtube": null
+        "linkedin": "https://www.linkedin.com/company/commercialforgedproducts",
+        "instagram": "https://www.instagram.com/reputeforge",
+        "facebook": "https://www.facebook.com/people/King-Forged/100083190189174",
+        "youtube": "https://www.youtube.com/forgedinfire"
       },
       "products": [
         "Gears",
@@ -44659,7 +44821,25 @@
         "Hydraulic Cylinder",
         "Gear Manufacturing",
         "Advanced Forging Solutions"
-      ]
+      ],
+      "socialStatus": {
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Forgewell Industries Private Limited",
@@ -44776,7 +44956,25 @@
         "Gear Manufacturing",
         "Machining",
         "IIoT-Enabled Machining"
-      ]
+      ],
+      "socialStatus": {
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 2
+        }
+      }
     },
     {
       "name": "Gibbs Gears Precision Engineers Ltd",
@@ -44796,9 +44994,9 @@
       ],
       "socials": {
         "linkedin": "https://www.linkedin.com/company/gibbs-gears-precision-engineers-limited",
-        "instagram": null,
+        "instagram": "https://www.instagram.com/gibbsmachinery",
         "facebook": "https://facebook.com/GibbsGearsPrecisionEngineersLtd/",
-        "youtube": null
+        "youtube": "https://www.youtube.com/watch?v=TI4LShMa5v8"
       },
       "products": [
         "Gears",
@@ -44815,7 +45013,25 @@
         "Machining",
         "IIoT-Enabled Machining",
         "Advanced Forging Solutions"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 2
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "United Brass Manufacturers Inc",
@@ -45786,320 +46002,1598 @@
   ],
   "socialFeed": [
     {
-      "id": "youtube_1792472356917_m3ie1",
-      "company": "Malkar Industries",
+      "id": "yt_5xbPQDW7brY",
+      "company": "Emerson Forge Pvt Ltd",
       "platform": "YouTube",
-      "post_url": "https://www.youtube.com/watch?v=Q3mvemZUxV8",
-      "caption": "RAPID F205 Form Knurling Tool Holder",
+      "post_url": "https://www.youtube.com/watch?v=5xbPQDW7brY",
+      "caption": "Emerson Forge Cold Hot Die Forging Manufacturers India",
       "media_type": "Video",
-      "thumbnail": "https://i.ytimg.com/vi/Q3mvemZUxV8/hqdefault.jpg",
-      "media_url": "https://i.ytimg.com/vi/Q3mvemZUxV8/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/5xbPQDW7brY/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/5xbPQDW7brY/hqdefault.jpg",
       "date": "2026-10-20",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
-      "profile_url": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-      "thumbnail_url": "https://i.ytimg.com/vi/Q3mvemZUxV8/hqdefault.jpg",
+      "profile_url": "https://www.youtube.com/channel/UCBThy-wgptNdCVtYfPbACUg",
+      "thumbnail_url": "https://i.ytimg.com/vi/5xbPQDW7brY/hqdefault.jpg",
       "published_date": "2026-10-20",
-      "link": "https://www.youtube.com/watch?v=Q3mvemZUxV8",
-      "content": "RAPID F205 Form Knurling Tool Holder",
+      "link": "https://www.youtube.com/watch?v=5xbPQDW7brY",
+      "content": "Emerson Forge Cold Hot Die Forging Manufacturers India",
       "timestamp": "2026-10-20",
-      "mediaUrl": "https://i.ytimg.com/vi/Q3mvemZUxV8/hqdefault.jpg",
-      "mediaUrls": "https://i.ytimg.com/vi/Q3mvemZUxV8/hqdefault.jpg",
+      "mediaUrl": "https://i.ytimg.com/vi/5xbPQDW7brY/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/5xbPQDW7brY/hqdefault.jpg",
       "mediaType": "Video",
       "likes": "0",
       "comments": "0",
-      "postUrl": "https://www.youtube.com/watch?v=Q3mvemZUxV8",
-      "competitorName": "Malkar Industries"
+      "postUrl": "https://www.youtube.com/watch?v=5xbPQDW7brY",
+      "competitorName": "Emerson Forge Pvt Ltd"
     },
     {
-      "id": "youtube_1792472365565_lyv0w",
-      "company": "Gear Manufacturing Inc",
+      "id": "yt_zoBL_VsgA9Q",
+      "company": "Shivam forge",
       "platform": "YouTube",
-      "post_url": "https://www.youtube.com/watch?v=fJB_j4dO6CY",
-      "caption": "Leveling Up Precision Gear Manufacturing | American Precision Gear x Helios",
+      "post_url": "https://www.youtube.com/watch?v=zoBL_VsgA9Q",
+      "caption": "WHO’S NEXT? 🔥 Drawing Subscribers LIVE 🎨#drawing #art #shorts #short #sketch",
       "media_type": "Video",
-      "thumbnail": "https://i.ytimg.com/vi/fJB_j4dO6CY/hqdefault.jpg",
-      "media_url": "https://i.ytimg.com/vi/fJB_j4dO6CY/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/zoBL_VsgA9Q/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/zoBL_VsgA9Q/hqdefault.jpg",
       "date": "2026-10-20",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
-      "profile_url": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-      "thumbnail_url": "https://i.ytimg.com/vi/fJB_j4dO6CY/hqdefault.jpg",
+      "profile_url": "https://www.youtube.com/watch?v=zoBL_VsgA9Q",
+      "thumbnail_url": "https://i.ytimg.com/vi/zoBL_VsgA9Q/hqdefault.jpg",
       "published_date": "2026-10-20",
-      "link": "https://www.youtube.com/watch?v=fJB_j4dO6CY",
-      "content": "Leveling Up Precision Gear Manufacturing | American Precision Gear x Helios",
+      "link": "https://www.youtube.com/watch?v=zoBL_VsgA9Q",
+      "content": "WHO’S NEXT? 🔥 Drawing Subscribers LIVE 🎨#drawing #art #shorts #short #sketch",
       "timestamp": "2026-10-20",
-      "mediaUrl": "https://i.ytimg.com/vi/fJB_j4dO6CY/hqdefault.jpg",
-      "mediaUrls": "https://i.ytimg.com/vi/fJB_j4dO6CY/hqdefault.jpg",
+      "mediaUrl": "https://i.ytimg.com/vi/zoBL_VsgA9Q/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/zoBL_VsgA9Q/hqdefault.jpg",
       "mediaType": "Video",
       "likes": "0",
       "comments": "0",
-      "postUrl": "https://www.youtube.com/watch?v=fJB_j4dO6CY",
-      "competitorName": "Gear Manufacturing Inc"
+      "postUrl": "https://www.youtube.com/watch?v=zoBL_VsgA9Q",
+      "competitorName": "Shivam forge"
     },
     {
-      "id": "youtube_1792472370832_1h1ie",
-      "company": "C-B Gear & Machine Inc",
+      "id": "yt_sLS2oe777zM",
+      "company": "What Is Forging? Process, Benefits and Applications",
       "platform": "YouTube",
-      "post_url": "https://www.youtube.com/watch?v=n-ps72gehB4",
-      "caption": "Our TOP 3 Superautomatic Espresso Machines of 2024! Seattle Coffee Gear's TOP 3 Series is BACK!",
+      "post_url": "https://www.youtube.com/watch?v=sLS2oe777zM",
+      "caption": "40+ Years of Precision – Roll Forging Process in Action!",
       "media_type": "Video",
-      "thumbnail": "https://i.ytimg.com/vi/n-ps72gehB4/hqdefault.jpg",
-      "media_url": "https://i.ytimg.com/vi/n-ps72gehB4/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/sLS2oe777zM/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/sLS2oe777zM/hqdefault.jpg",
       "date": "2026-10-20",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
-      "profile_url": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-      "thumbnail_url": "https://i.ytimg.com/vi/n-ps72gehB4/hqdefault.jpg",
+      "profile_url": "https://youtube.com/@maddysmith-x9i?si=EW0vAlzjghINYrEd",
+      "thumbnail_url": "https://i.ytimg.com/vi/sLS2oe777zM/hqdefault.jpg",
       "published_date": "2026-10-20",
-      "link": "https://www.youtube.com/watch?v=n-ps72gehB4",
-      "content": "Our TOP 3 Superautomatic Espresso Machines of 2024! Seattle Coffee Gear's TOP 3 Series is BACK!",
+      "link": "https://www.youtube.com/watch?v=sLS2oe777zM",
+      "content": "40+ Years of Precision – Roll Forging Process in Action!",
       "timestamp": "2026-10-20",
-      "mediaUrl": "https://i.ytimg.com/vi/n-ps72gehB4/hqdefault.jpg",
-      "mediaUrls": "https://i.ytimg.com/vi/n-ps72gehB4/hqdefault.jpg",
+      "mediaUrl": "https://i.ytimg.com/vi/sLS2oe777zM/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/sLS2oe777zM/hqdefault.jpg",
       "mediaType": "Video",
       "likes": "0",
       "comments": "0",
-      "postUrl": "https://www.youtube.com/watch?v=n-ps72gehB4",
-      "competitorName": "C-B Gear & Machine Inc"
+      "postUrl": "https://www.youtube.com/watch?v=sLS2oe777zM",
+      "competitorName": "What Is Forging? Process, Benefits and Applications"
     },
     {
-      "id": "youtube_1792472357019_pfyl6",
-      "company": "Malkar Industries",
+      "id": "youtube_1792481620206_yeqf2",
+      "company": "Forging – Process, Classification &amp; Methods",
       "platform": "YouTube",
-      "post_url": "https://www.youtube.com/watch?v=PgAh9wBHrLs",
-      "caption": "RAPID I202 Internal Knurling Tool",
+      "post_url": "https://www.youtube.com/watch?v=o4vQJnPwgiA",
+      "caption": "What Is Forging And What Are The Benefits? - Brooks Forgings Ltd",
       "media_type": "Video",
-      "thumbnail": "https://i.ytimg.com/vi/PgAh9wBHrLs/hqdefault.jpg",
-      "media_url": "https://i.ytimg.com/vi/PgAh9wBHrLs/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/o4vQJnPwgiA/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/o4vQJnPwgiA/hqdefault.jpg",
       "date": "2026-10-20",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
-      "profile_url": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-      "thumbnail_url": "https://i.ytimg.com/vi/PgAh9wBHrLs/hqdefault.jpg",
+      "profile_url": "https://www.youtube.com/watch?v=UqvCoZfXepg",
+      "thumbnail_url": "https://i.ytimg.com/vi/o4vQJnPwgiA/hqdefault.jpg",
       "published_date": "2026-10-20",
-      "link": "https://www.youtube.com/watch?v=PgAh9wBHrLs",
-      "content": "RAPID I202 Internal Knurling Tool",
+      "link": "https://www.youtube.com/watch?v=o4vQJnPwgiA",
+      "content": "What Is Forging And What Are The Benefits? - Brooks Forgings Ltd",
       "timestamp": "2026-10-20",
-      "mediaUrl": "https://i.ytimg.com/vi/PgAh9wBHrLs/hqdefault.jpg",
-      "mediaUrls": "https://i.ytimg.com/vi/PgAh9wBHrLs/hqdefault.jpg",
+      "mediaUrl": "https://i.ytimg.com/vi/o4vQJnPwgiA/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/o4vQJnPwgiA/hqdefault.jpg",
       "mediaType": "Video",
       "likes": "0",
       "comments": "0",
-      "postUrl": "https://www.youtube.com/watch?v=PgAh9wBHrLs",
-      "competitorName": "Malkar Industries"
+      "postUrl": "https://www.youtube.com/watch?v=o4vQJnPwgiA",
+      "competitorName": "Forging – Process, Classification &amp; Methods"
     },
     {
-      "id": "facebook_1792472370236_ec1ab",
-      "company": "C-B Gear & Machine Inc",
+      "id": "yt_fzxignaxlus",
+      "company": "Jagdambay Forgings",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=fzxignaxlus",
+      "caption": "Hot Forging Components From Jagdambay Forgings Ludhiana",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/fzxignaxlus/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/fzxignaxlus/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=fzxignaxlus",
+      "thumbnail_url": "https://i.ytimg.com/vi/fzxignaxlus/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=fzxignaxlus",
+      "content": "Hot Forging Components From Jagdambay Forgings Ludhiana",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/fzxignaxlus/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/fzxignaxlus/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=fzxignaxlus",
+      "competitorName": "Jagdambay Forgings"
+    },
+    {
+      "id": "yt_z7veXpp0c1A",
+      "company": "Innoforge Pvt Ltd",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=z7veXpp0c1A",
+      "caption": "Precise log splitter machine for firewood: Heavy Timber Processing #innovation #worktool #process",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/z7veXpp0c1A/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/z7veXpp0c1A/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/channel/UC03UrjaRwe6R-I_lgysvSHg",
+      "thumbnail_url": "https://i.ytimg.com/vi/z7veXpp0c1A/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=z7veXpp0c1A",
+      "content": "Precise log splitter machine for firewood: Heavy Timber Processing #innovation #worktool #process",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/z7veXpp0c1A/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/z7veXpp0c1A/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=z7veXpp0c1A",
+      "competitorName": "Innoforge Pvt Ltd"
+    },
+    {
+      "id": "yt_JG4-6rFDUuo",
+      "company": "Kay Jay Forgings Limited (Corporate Office)",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=JG4-6rFDUuo",
+      "caption": "Kay Jay Forgings - India's Leading Manufacturer of Precision Forged & Machined Components",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/JG4-6rFDUuo/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/JG4-6rFDUuo/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=JG4-6rFDUuo",
+      "thumbnail_url": "https://i.ytimg.com/vi/JG4-6rFDUuo/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=JG4-6rFDUuo",
+      "content": "Kay Jay Forgings - India's Leading Manufacturer of Precision Forged & Machined Components",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/JG4-6rFDUuo/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/JG4-6rFDUuo/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=JG4-6rFDUuo",
+      "competitorName": "Kay Jay Forgings Limited (Corporate Office)"
+    },
+    {
+      "id": "yt_UyBorKH2eM4",
+      "company": "Patriot Forge Corporation",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=UyBorKH2eM4",
+      "caption": "Patriot Forge Clamshell Heat Treatment Facility",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/UyBorKH2eM4/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/UyBorKH2eM4/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/channel/UCSsWjMMpqIAuUeXd_QYn_JQ",
+      "thumbnail_url": "https://i.ytimg.com/vi/UyBorKH2eM4/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=UyBorKH2eM4",
+      "content": "Patriot Forge Clamshell Heat Treatment Facility",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/UyBorKH2eM4/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/UyBorKH2eM4/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=UyBorKH2eM4",
+      "competitorName": "Patriot Forge Corporation"
+    },
+    {
+      "id": "yt_mzO5Gne7II8",
+      "company": "Commercial Forged Products",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=mzO5Gne7II8",
+      "caption": "3 Deadly Weapons From Japan, Africa & China | Marathon | Forged in Fire",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/mzO5Gne7II8/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/mzO5Gne7II8/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/forgedinfire",
+      "thumbnail_url": "https://i.ytimg.com/vi/mzO5Gne7II8/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=mzO5Gne7II8",
+      "content": "3 Deadly Weapons From Japan, Africa & China | Marathon | Forged in Fire",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/mzO5Gne7II8/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/mzO5Gne7II8/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=mzO5Gne7II8",
+      "competitorName": "Commercial Forged Products"
+    },
+    {
+      "id": "yt_O3UhLBxO7Z8",
+      "company": "All Metals & Forge Group",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=O3UhLBxO7Z8",
+      "caption": "Fast Delivery of Open-die Forged Parts",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/O3UhLBxO7Z8/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/O3UhLBxO7Z8/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@Steelforge/videos",
+      "thumbnail_url": "https://i.ytimg.com/vi/O3UhLBxO7Z8/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=O3UhLBxO7Z8",
+      "content": "Fast Delivery of Open-die Forged Parts",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/O3UhLBxO7Z8/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/O3UhLBxO7Z8/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=O3UhLBxO7Z8",
+      "competitorName": "All Metals & Forge Group"
+    },
+    {
+      "id": "yt_TI4LShMa5v8",
+      "company": "Gibbs Gears Precision Engineers Ltd",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=TI4LShMa5v8",
+      "caption": "Precision Gear Manufacturers",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/TI4LShMa5v8/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/TI4LShMa5v8/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=TI4LShMa5v8",
+      "thumbnail_url": "https://i.ytimg.com/vi/TI4LShMa5v8/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=TI4LShMa5v8",
+      "content": "Precision Gear Manufacturers",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/TI4LShMa5v8/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/TI4LShMa5v8/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=TI4LShMa5v8",
+      "competitorName": "Gibbs Gears Precision Engineers Ltd"
+    },
+    {
+      "id": "youtube_1792481608805_1qm1w",
+      "company": "Emerson Forge Pvt Ltd",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=ZJFFCp6-wKs",
+      "caption": "Blacksmithings most iconic tool, the ANVIL",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/ZJFFCp6-wKs/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/ZJFFCp6-wKs/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/channel/UCBThy-wgptNdCVtYfPbACUg",
+      "thumbnail_url": "https://i.ytimg.com/vi/ZJFFCp6-wKs/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=ZJFFCp6-wKs",
+      "content": "Blacksmithings most iconic tool, the ANVIL",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/ZJFFCp6-wKs/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/ZJFFCp6-wKs/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=ZJFFCp6-wKs",
+      "competitorName": "Emerson Forge Pvt Ltd"
+    },
+    {
+      "id": "youtube_1792481599202_y9cqy",
+      "company": "Shivam forge",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/shorts/utCZYBrCZBA",
+      "caption": "Another revenge taken in mob control gameplay 😎🤯🔥 #mobcontrol #gaming #shorts",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/utCZYBrCZBA/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/utCZYBrCZBA/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=zoBL_VsgA9Q",
+      "thumbnail_url": "https://i.ytimg.com/vi/utCZYBrCZBA/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/shorts/utCZYBrCZBA",
+      "content": "Another revenge taken in mob control gameplay 😎🤯🔥 #mobcontrol #gaming #shorts",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/utCZYBrCZBA/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/utCZYBrCZBA/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/shorts/utCZYBrCZBA",
+      "competitorName": "Shivam forge"
+    },
+    {
+      "id": "yt_HQIgzzfv_gU",
+      "company": "What Is Forging? Process, Benefits and Applications",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=HQIgzzfv_gU",
+      "caption": "How Industrial Gears Are Made | Full Gear Manufacturing Process in 2 Minutes",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/HQIgzzfv_gU/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/HQIgzzfv_gU/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://youtube.com/@maddysmith-x9i?si=EW0vAlzjghINYrEd",
+      "thumbnail_url": "https://i.ytimg.com/vi/HQIgzzfv_gU/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=HQIgzzfv_gU",
+      "content": "How Industrial Gears Are Made | Full Gear Manufacturing Process in 2 Minutes",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/HQIgzzfv_gU/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/HQIgzzfv_gU/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=HQIgzzfv_gU",
+      "competitorName": "What Is Forging? Process, Benefits and Applications"
+    },
+    {
+      "id": "youtube_1792481628638_ls5vx",
+      "company": "Jagdambay Forgings",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=-2kMlci5mFE",
+      "caption": "Hot Forged Parts by Jagdambay Forgings Ludhiana (info@jagdambayforgings.co.in)",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/-2kMlci5mFE/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/-2kMlci5mFE/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=fzxignaxlus",
+      "thumbnail_url": "https://i.ytimg.com/vi/-2kMlci5mFE/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=-2kMlci5mFE",
+      "content": "Hot Forged Parts by Jagdambay Forgings Ludhiana (info@jagdambayforgings.co.in)",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/-2kMlci5mFE/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/-2kMlci5mFE/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=-2kMlci5mFE",
+      "competitorName": "Jagdambay Forgings"
+    },
+    {
+      "id": "yt_xHgFT7U6wKI",
+      "company": "Innoforge Pvt Ltd",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=xHgFT7U6wKI",
+      "caption": "Efficient Plumbing fittings: Pipe Thermal Installation #innovation #worktool #process",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/xHgFT7U6wKI/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/xHgFT7U6wKI/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/channel/UC03UrjaRwe6R-I_lgysvSHg",
+      "thumbnail_url": "https://i.ytimg.com/vi/xHgFT7U6wKI/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=xHgFT7U6wKI",
+      "content": "Efficient Plumbing fittings: Pipe Thermal Installation #innovation #worktool #process",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/xHgFT7U6wKI/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/xHgFT7U6wKI/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=xHgFT7U6wKI",
+      "competitorName": "Innoforge Pvt Ltd"
+    },
+    {
+      "id": "youtube_1792481629900_4bduu",
+      "company": "Kay Jay Forgings Limited (Corporate Office)",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=vHMVzBxfM6U",
+      "caption": "KayJay Forgings",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/vHMVzBxfM6U/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/vHMVzBxfM6U/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=JG4-6rFDUuo",
+      "thumbnail_url": "https://i.ytimg.com/vi/vHMVzBxfM6U/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=vHMVzBxfM6U",
+      "content": "KayJay Forgings",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/vHMVzBxfM6U/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/vHMVzBxfM6U/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=vHMVzBxfM6U",
+      "competitorName": "Kay Jay Forgings Limited (Corporate Office)"
+    },
+    {
+      "id": "yt_YKxvMMEBwQI",
+      "company": "Patriot Forge Corporation",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=YKxvMMEBwQI",
+      "caption": "Patriot Forge Overview",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/YKxvMMEBwQI/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/YKxvMMEBwQI/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/channel/UCSsWjMMpqIAuUeXd_QYn_JQ",
+      "thumbnail_url": "https://i.ytimg.com/vi/YKxvMMEBwQI/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=YKxvMMEBwQI",
+      "content": "Patriot Forge Overview",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/YKxvMMEBwQI/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/YKxvMMEBwQI/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=YKxvMMEBwQI",
+      "competitorName": "Patriot Forge Corporation"
+    },
+    {
+      "id": "yt_j0psDdzARng",
+      "company": "Commercial Forged Products",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=j0psDdzARng",
+      "caption": "Blades Break, Warp & Fail in Punishing Tests | Forged in Fire",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/j0psDdzARng/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/j0psDdzARng/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/forgedinfire",
+      "thumbnail_url": "https://i.ytimg.com/vi/j0psDdzARng/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=j0psDdzARng",
+      "content": "Blades Break, Warp & Fail in Punishing Tests | Forged in Fire",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/j0psDdzARng/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/j0psDdzARng/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=j0psDdzARng",
+      "competitorName": "Commercial Forged Products"
+    },
+    {
+      "id": "yt_gpaXnQrrsYE",
+      "company": "All Metals & Forge Group",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=gpaXnQrrsYE",
+      "caption": "All Metals & Forge Group",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/gpaXnQrrsYE/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/gpaXnQrrsYE/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@Steelforge/videos",
+      "thumbnail_url": "https://i.ytimg.com/vi/gpaXnQrrsYE/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=gpaXnQrrsYE",
+      "content": "All Metals & Forge Group",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/gpaXnQrrsYE/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/gpaXnQrrsYE/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=gpaXnQrrsYE",
+      "competitorName": "All Metals & Forge Group"
+    },
+    {
+      "id": "youtube_1792481658814_jvjr1",
+      "company": "Gibbs Gears Precision Engineers Ltd",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=2CFCkkAlqow",
+      "caption": "Gear Manufacturing - Rupkala Engineers Pvt Ltd",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/2CFCkkAlqow/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/2CFCkkAlqow/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=TI4LShMa5v8",
+      "thumbnail_url": "https://i.ytimg.com/vi/2CFCkkAlqow/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=2CFCkkAlqow",
+      "content": "Gear Manufacturing - Rupkala Engineers Pvt Ltd",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/2CFCkkAlqow/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/2CFCkkAlqow/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=2CFCkkAlqow",
+      "competitorName": "Gibbs Gears Precision Engineers Ltd"
+    },
+    {
+      "id": "youtube_1792481609203_x17v7",
+      "company": "Emerson Forge Pvt Ltd",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=9CKkcg_j-dk",
+      "caption": "Emerson College: Creating the Extraordinary",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/9CKkcg_j-dk/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/9CKkcg_j-dk/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/channel/UCBThy-wgptNdCVtYfPbACUg",
+      "thumbnail_url": "https://i.ytimg.com/vi/9CKkcg_j-dk/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=9CKkcg_j-dk",
+      "content": "Emerson College: Creating the Extraordinary",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/9CKkcg_j-dk/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/9CKkcg_j-dk/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=9CKkcg_j-dk",
+      "competitorName": "Emerson Forge Pvt Ltd"
+    },
+    {
+      "id": "yt_7Lk9vqYZ3sQ",
+      "company": "What Is Forging? Process, Benefits and Applications",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=7Lk9vqYZ3sQ",
+      "caption": "\"Mastering Forging Machining: Precision Cutting & Perfect Threads | CNC Machining Secrets Revealed!\"",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/7Lk9vqYZ3sQ/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/7Lk9vqYZ3sQ/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://youtube.com/@maddysmith-x9i?si=EW0vAlzjghINYrEd",
+      "thumbnail_url": "https://i.ytimg.com/vi/7Lk9vqYZ3sQ/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=7Lk9vqYZ3sQ",
+      "content": "\"Mastering Forging Machining: Precision Cutting & Perfect Threads | CNC Machining Secrets Revealed!\"",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/7Lk9vqYZ3sQ/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/7Lk9vqYZ3sQ/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=7Lk9vqYZ3sQ",
+      "competitorName": "What Is Forging? Process, Benefits and Applications"
+    },
+    {
+      "id": "youtube_1792481628691_0eiqb",
+      "company": "Jagdambay Forgings",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=9BS8PpM8J4g",
+      "caption": "Precision Forgings by Jagdambay Forgings Ludhiana (info@jagdambayforgings.co.in)",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/9BS8PpM8J4g/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/9BS8PpM8J4g/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=fzxignaxlus",
+      "thumbnail_url": "https://i.ytimg.com/vi/9BS8PpM8J4g/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=9BS8PpM8J4g",
+      "content": "Precision Forgings by Jagdambay Forgings Ludhiana (info@jagdambayforgings.co.in)",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/9BS8PpM8J4g/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/9BS8PpM8J4g/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=9BS8PpM8J4g",
+      "competitorName": "Jagdambay Forgings"
+    },
+    {
+      "id": "yt_hXCoTYNoIBE",
+      "company": "Innoforge Pvt Ltd",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=hXCoTYNoIBE",
+      "caption": "PVC pipes diy: Drywall Joint Compound Tool #innovation #worktool #process",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/hXCoTYNoIBE/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/hXCoTYNoIBE/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/channel/UC03UrjaRwe6R-I_lgysvSHg",
+      "thumbnail_url": "https://i.ytimg.com/vi/hXCoTYNoIBE/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=hXCoTYNoIBE",
+      "content": "PVC pipes diy: Drywall Joint Compound Tool #innovation #worktool #process",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/hXCoTYNoIBE/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/hXCoTYNoIBE/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=hXCoTYNoIBE",
+      "competitorName": "Innoforge Pvt Ltd"
+    },
+    {
+      "id": "youtube_1792481631308_joaqn",
+      "company": "Kay Jay Forgings Limited (Corporate Office)",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=jnUwoItnwXQ",
+      "caption": "Kayjay Forgings - Engineering Precision for India’s Leading Two-Wheeler OEMs",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/jnUwoItnwXQ/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/jnUwoItnwXQ/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=JG4-6rFDUuo",
+      "thumbnail_url": "https://i.ytimg.com/vi/jnUwoItnwXQ/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=jnUwoItnwXQ",
+      "content": "Kayjay Forgings - Engineering Precision for India’s Leading Two-Wheeler OEMs",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/jnUwoItnwXQ/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/jnUwoItnwXQ/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=jnUwoItnwXQ",
+      "competitorName": "Kay Jay Forgings Limited (Corporate Office)"
+    },
+    {
+      "id": "yt_3KO0IaJvgQQ",
+      "company": "Commercial Forged Products",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=3KO0IaJvgQQ",
+      "caption": "Deadliest Weapons From the Viking Age to the Persian Empire | Marathon | Forged in Fire",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/3KO0IaJvgQQ/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/3KO0IaJvgQQ/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/forgedinfire",
+      "thumbnail_url": "https://i.ytimg.com/vi/3KO0IaJvgQQ/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=3KO0IaJvgQQ",
+      "content": "Deadliest Weapons From the Viking Age to the Persian Empire | Marathon | Forged in Fire",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/3KO0IaJvgQQ/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/3KO0IaJvgQQ/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=3KO0IaJvgQQ",
+      "competitorName": "Commercial Forged Products"
+    },
+    {
+      "id": "yt_gpAY8q-itr8",
+      "company": "All Metals & Forge Group",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=gpAY8q-itr8",
+      "caption": "All Metals & Forge Group",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/gpAY8q-itr8/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/gpAY8q-itr8/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@Steelforge/videos",
+      "thumbnail_url": "https://i.ytimg.com/vi/gpAY8q-itr8/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=gpAY8q-itr8",
+      "content": "All Metals & Forge Group",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/gpAY8q-itr8/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/gpAY8q-itr8/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=gpAY8q-itr8",
+      "competitorName": "All Metals & Forge Group"
+    },
+    {
+      "id": "instagram_1792481604608_5h0lc",
+      "company": "Emerson Forge Pvt Ltd",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/zan.metals/p/CwoLcn8s5Fh?hl=bn",
+      "caption": ". ✨Zan Emerson (they/them) @zan.metals “Impractical Vessel No. 2” “I am a craftsperson driven by a love for material and fire arts, working",
+      "media_type": "Image",
+      "thumbnail": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=qPq1x6AZg8gpsIe0qUBRJg&_nc_ss=7060f&oh=00_AQOt8HKKYVfsH2L7Pn8YKls-QR1WIw-bwJgzE81mq26z9Q&oe=6ADCD99A",
+      "media_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=qPq1x6AZg8gpsIe0qUBRJg&_nc_ss=7060f&oh=00_AQOt8HKKYVfsH2L7Pn8YKls-QR1WIw-bwJgzE81mq26z9Q&oe=6ADCD99A",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "12",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/zan.metals",
+      "thumbnail_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=qPq1x6AZg8gpsIe0qUBRJg&_nc_ss=7060f&oh=00_AQOt8HKKYVfsH2L7Pn8YKls-QR1WIw-bwJgzE81mq26z9Q&oe=6ADCD99A",
+      "published_date": "2026-10-20",
+      "link": "https://www.instagram.com/zan.metals/p/CwoLcn8s5Fh?hl=bn",
+      "content": ". ✨Zan Emerson (they/them) @zan.metals “Impractical Vessel No. 2” “I am a craftsperson driven by a love for material and fire arts, working",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=qPq1x6AZg8gpsIe0qUBRJg&_nc_ss=7060f&oh=00_AQOt8HKKYVfsH2L7Pn8YKls-QR1WIw-bwJgzE81mq26z9Q&oe=6ADCD99A",
+      "mediaUrls": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/656017171_18069544331251734_7876547431687479766_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=l56kjpVHN0IQ7kNvwEZmHYL&_nc_oc=AdqnFrGiukvI2VwZd21ubLAc_Afm3m3vx_JENMHK_SbHCiALdP-N3EqliVWQmA0h5V8&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=qPq1x6AZg8gpsIe0qUBRJg&_nc_ss=7060f&oh=00_AQOt8HKKYVfsH2L7Pn8YKls-QR1WIw-bwJgzE81mq26z9Q&oe=6ADCD99A",
+      "mediaType": "Image",
+      "likes": "12",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/zan.metals/p/CwoLcn8s5Fh?hl=bn",
+      "competitorName": "Emerson Forge Pvt Ltd",
+      "shortcode": "CwoLcn8s5Fh"
+    },
+    {
+      "id": "instagram_1792481604608_ekiv7",
+      "company": "Emerson Forge Pvt Ltd",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/zan.metals/p/CfAVT3QuT8d?hl=bn",
+      "caption": "salt and pepper shakers - brass - 2007\n(the little thing is a custom screw driver for the screws i made for the bottom. i never used them)\". -এ 7 likes, 1 comments - zan.metals",
+      "media_type": "Image",
+      "thumbnail": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=QqBBqeHM4lqpLtKXQ3YjaQ&_nc_ss=7060f&oh=00_AQM7dYdgaPmEWT51s0YsDiGGRlmqlGjdgILj6niyZ3A9aQ&oe=6ADCD1E5",
+      "media_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=QqBBqeHM4lqpLtKXQ3YjaQ&_nc_ss=7060f&oh=00_AQM7dYdgaPmEWT51s0YsDiGGRlmqlGjdgILj6niyZ3A9aQ&oe=6ADCD1E5",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "7",
+        "comments": "1"
+      },
+      "profile_url": "https://www.instagram.com/zan.metals",
+      "thumbnail_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=QqBBqeHM4lqpLtKXQ3YjaQ&_nc_ss=7060f&oh=00_AQM7dYdgaPmEWT51s0YsDiGGRlmqlGjdgILj6niyZ3A9aQ&oe=6ADCD1E5",
+      "published_date": "2026-10-20",
+      "link": "https://www.instagram.com/zan.metals/p/CfAVT3QuT8d?hl=bn",
+      "content": "salt and pepper shakers - brass - 2007\n(the little thing is a custom screw driver for the screws i made for the bottom. i never used them)\". -এ 7 likes, 1 comments - zan.metals",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=QqBBqeHM4lqpLtKXQ3YjaQ&_nc_ss=7060f&oh=00_AQM7dYdgaPmEWT51s0YsDiGGRlmqlGjdgILj6niyZ3A9aQ&oe=6ADCD1E5",
+      "mediaUrls": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/624336196_18066821042209435_8673810333275828916_n.jpg?stp=c124.0.375.374a_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=EMyRvU2_EqUQ7kNvwGaag6V&_nc_oc=Adps1NVO8PBIL1RCZUE02szSZyCpHCb9jyxNfDFckV3OJpUkC9ePBD684xBEAY6O8Dk&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=QqBBqeHM4lqpLtKXQ3YjaQ&_nc_ss=7060f&oh=00_AQM7dYdgaPmEWT51s0YsDiGGRlmqlGjdgILj6niyZ3A9aQ&oe=6ADCD1E5",
+      "mediaType": "Image",
+      "likes": "7",
+      "comments": "1",
+      "postUrl": "https://www.instagram.com/zan.metals/p/CfAVT3QuT8d?hl=bn",
+      "competitorName": "Emerson Forge Pvt Ltd",
+      "shortcode": "CfAVT3QuT8d"
+    },
+    {
+      "id": "facebook_1792481600698_bqjct",
+      "company": "Emerson Forge Pvt Ltd",
       "platform": "Facebook",
-      "post_url": "https://www.facebook.com/CBGearandMachine/posts/1694021696060470",
-      "caption": "C-B Gear and Machine is a custom gear manufacturer ... Since 1952, we've been turning ski building gears and gearboxes made to work",
-      "media_type": "Video",
-      "thumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/813836946_1817802339385649_5435992356016413890_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=c26028&_nc_ohc=M4sNQksidZMQ7kNvwFqcugm&_nc_oc=AdqlVglPn1G7qV0yP99oaHmCatq5PCZnau3Hm-xEZj7XwHNs5Tn2L3zm4Do-5eEf5Nc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=2l-AXQC4OmxrsUUymu344g&_nc_ss=7020f&oh=00_AQOC2yrjKA5fHaBUNoFBBBC8i6FNfLQHFv_XeA4ektTVeQ&oe=6ADCDDB7",
-      "media_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/813836946_1817802339385649_5435992356016413890_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=c26028&_nc_ohc=M4sNQksidZMQ7kNvwFqcugm&_nc_oc=AdqlVglPn1G7qV0yP99oaHmCatq5PCZnau3Hm-xEZj7XwHNs5Tn2L3zm4Do-5eEf5Nc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=2l-AXQC4OmxrsUUymu344g&_nc_ss=7020f&oh=00_AQOC2yrjKA5fHaBUNoFBBBC8i6FNfLQHFv_XeA4ektTVeQ&oe=6ADCDDB7",
+      "post_url": "https://www.facebook.com/620561228299005/posts/precision-forged-automobile-clutch-fork-suppliers-from-india-emerson-forge-pvt-l/768453153509811",
+      "caption": "Precision Forged Automobile Clutch Fork Suppliers From India, Emerson forge Pvt. Ltd. are expert to produce custom forged automotive components from Rajkot, Gujarat, India....",
+      "media_type": "Image",
+      "thumbnail": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=Pc3uzyld_yMLfhBRpgMIaA&_nc_zt=3&oh=06_Q3_EAenCjZBJv6TX0bSBnPkOloxS5nzmOmc2TG4lZO34i9eZ&oe=6AD8DCB2",
+      "media_url": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=Pc3uzyld_yMLfhBRpgMIaA&_nc_zt=3&oh=06_Q3_EAenCjZBJv6TX0bSBnPkOloxS5nzmOmc2TG4lZO34i9eZ&oe=6AD8DCB2",
       "date": "2026-10-20",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
-      "profile_url": "https://www.facebook.com/CBGearandMachine/",
-      "thumbnail_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/813836946_1817802339385649_5435992356016413890_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=c26028&_nc_ohc=M4sNQksidZMQ7kNvwFqcugm&_nc_oc=AdqlVglPn1G7qV0yP99oaHmCatq5PCZnau3Hm-xEZj7XwHNs5Tn2L3zm4Do-5eEf5Nc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=2l-AXQC4OmxrsUUymu344g&_nc_ss=7020f&oh=00_AQOC2yrjKA5fHaBUNoFBBBC8i6FNfLQHFv_XeA4ektTVeQ&oe=6ADCDDB7",
+      "profile_url": "https://www.facebook.com/Emerson-Forge-Pvt-Ltd-Leading-Open-Closed-Die-Forging-Company-India-620561228299005/",
+      "thumbnail_url": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=Pc3uzyld_yMLfhBRpgMIaA&_nc_zt=3&oh=06_Q3_EAenCjZBJv6TX0bSBnPkOloxS5nzmOmc2TG4lZO34i9eZ&oe=6AD8DCB2",
       "published_date": "2026-10-20",
-      "link": "https://www.facebook.com/CBGearandMachine/posts/1694021696060470",
-      "content": "C-B Gear and Machine is a custom gear manufacturer ... Since 1952, we've been turning ski building gears and gearboxes made to work",
+      "link": "https://www.facebook.com/620561228299005/posts/precision-forged-automobile-clutch-fork-suppliers-from-india-emerson-forge-pvt-l/768453153509811",
+      "content": "Precision Forged Automobile Clutch Fork Suppliers From India, Emerson forge Pvt. Ltd. are expert to produce custom forged automotive components from Rajkot, Gujarat, India....",
       "timestamp": "2026-10-20",
-      "mediaUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/813836946_1817802339385649_5435992356016413890_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=c26028&_nc_ohc=M4sNQksidZMQ7kNvwFqcugm&_nc_oc=AdqlVglPn1G7qV0yP99oaHmCatq5PCZnau3Hm-xEZj7XwHNs5Tn2L3zm4Do-5eEf5Nc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=2l-AXQC4OmxrsUUymu344g&_nc_ss=7020f&oh=00_AQOC2yrjKA5fHaBUNoFBBBC8i6FNfLQHFv_XeA4ektTVeQ&oe=6ADCDDB7",
-      "mediaUrls": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/813836946_1817802339385649_5435992356016413890_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=c26028&_nc_ohc=M4sNQksidZMQ7kNvwFqcugm&_nc_oc=AdqlVglPn1G7qV0yP99oaHmCatq5PCZnau3Hm-xEZj7XwHNs5Tn2L3zm4Do-5eEf5Nc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=2l-AXQC4OmxrsUUymu344g&_nc_ss=7020f&oh=00_AQOC2yrjKA5fHaBUNoFBBBC8i6FNfLQHFv_XeA4ektTVeQ&oe=6ADCDDB7",
-      "mediaType": "Video",
+      "mediaUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=Pc3uzyld_yMLfhBRpgMIaA&_nc_zt=3&oh=06_Q3_EAenCjZBJv6TX0bSBnPkOloxS5nzmOmc2TG4lZO34i9eZ&oe=6AD8DCB2",
+      "mediaUrls": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/475458960958421913?url=https%3A%2F%2Fwww.emersonforge.in%2Fwp-content%2Fuploads%2F2015%2F10%2FEmerson-Final-Logo-2.png&fb_obo=1&utld=emersonforge.in&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=Pc3uzyld_yMLfhBRpgMIaA&_nc_zt=3&oh=06_Q3_EAenCjZBJv6TX0bSBnPkOloxS5nzmOmc2TG4lZO34i9eZ&oe=6AD8DCB2",
+      "mediaType": "Image",
       "likes": "0",
       "comments": "0",
-      "postUrl": "https://www.facebook.com/CBGearandMachine/posts/1694021696060470",
-      "competitorName": "C-B Gear & Machine Inc",
-      "video_url": "https://video-sea5-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQOvxHlmFYcLWQGiu6ws6od4YQr74QgW8IqgQipc504cPsPWWd15fq9GgLCzx-sc7k8TGFG9pwsIhD9YcB-8KAKnWwEd2-CPzUybXUtMQNjbvQ.mp4?_nc_cat=108&_nc_sid=9ca052&_nc_ht=video-sea5-1.xx.fbcdn.net&_nc_ohc=8IuVXhqiissQ7kNvwH949wh&efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfaDI2NC1iYXNpYy1nZW4yXzM2MHAiLCJ2aWRlb19pZCI6MjI4MDY5NzA0Mjc1MDg2MCwib2lsX3VybGdlbl9hcHBfaWQiOjAsImNsaWVudF9uYW1lIjoidW5rbm93biIsInhwdl9hc3NldF9pZCI6MTA4NjY3OTgwMDM5NTYzNywiYXNzZXRfYWdlX2RheXMiOjMzLCJ2aV91c2VjYXNlX2lkIjoxMDEyMiwiZHVyYXRpb25fcyI6MjA3LCJiaXRyYXRlIjo1MzQ2MiwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&_nc_gid=ySTtONZ7cCTOy0pbw4KG6w&_nc_ss=7020f&_nc_zt=28&oh=00_AQM2JLnvagHOOWbaLvP9MHM-bFPqV6OmnLY1f3zgaIafVg&oe=6ADCC9EC"
+      "postUrl": "https://www.facebook.com/620561228299005/posts/precision-forged-automobile-clutch-fork-suppliers-from-india-emerson-forge-pvt-l/768453153509811",
+      "competitorName": "Emerson Forge Pvt Ltd"
     },
     {
-      "id": "facebook_1792472370236_1fxpq",
-      "company": "C-B Gear & Machine Inc",
+      "id": "facebook_1792481618305_taq5l",
+      "company": "Forging – Process, Classification &amp; Methods",
       "platform": "Facebook",
-      "post_url": "https://www.facebook.com/CBGearandMachine/videos/1429879672410559",
-      "caption": "C-B Gear & Machine, a company specializing in custom gear manufacturing. creating precision gearboxes … reverse engineering, and metalworking.",
-      "media_type": "Video",
-      "thumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/806984486_1094028080182818_1213771918732059430_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=c26028&_nc_ohc=1nRjMVf1UY4Q7kNvwGRzaB7&_nc_oc=Adry2IVHaGxRCECYEOLDVw7xj-d8NJGoNqdwT9OqDZYL4-STTh8NOyS2b-FaXE9sHEc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=JqDgHNr8EH9orkL5_WFyvQ&_nc_ss=7020f&oh=00_AQOB0On2ltyu5i1qMO7HlV2ZqRnsnUlsDf0Kl_tVoD-npw&oe=6ADCD7C4",
-      "media_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/806984486_1094028080182818_1213771918732059430_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=c26028&_nc_ohc=1nRjMVf1UY4Q7kNvwGRzaB7&_nc_oc=Adry2IVHaGxRCECYEOLDVw7xj-d8NJGoNqdwT9OqDZYL4-STTh8NOyS2b-FaXE9sHEc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=JqDgHNr8EH9orkL5_WFyvQ&_nc_ss=7020f&oh=00_AQOB0On2ltyu5i1qMO7HlV2ZqRnsnUlsDf0Kl_tVoD-npw&oe=6ADCD7C4",
+      "post_url": "https://www.facebook.com/fractoryint/posts/-learning-series-168-agentic-ai-in-procurementthe-shift-from-basic-automation-to/1578831444260500",
+      "caption": "🔍 Learning series #168 — Agentic AI in Procurement\n\nThe shift from basic automation to agentic AI is giving category managers autonomous co-pilots that plan, execute, and adapt multi-step workflows...",
+      "media_type": "Image",
+      "thumbnail": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=urIrO8lwjKadamJvO_RFIw&_nc_zt=3&oh=06_Q3_EAa4WP5bd-_gm19HbzLrY3PIKKMZ2y-j2WFnG0p_ylQ67&oe=6AD8DC2E",
+      "media_url": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=urIrO8lwjKadamJvO_RFIw&_nc_zt=3&oh=06_Q3_EAa4WP5bd-_gm19HbzLrY3PIKKMZ2y-j2WFnG0p_ylQ67&oe=6AD8DC2E",
       "date": "2026-10-20",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
-      "profile_url": "https://www.facebook.com/CBGearandMachine/",
-      "thumbnail_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/806984486_1094028080182818_1213771918732059430_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=c26028&_nc_ohc=1nRjMVf1UY4Q7kNvwGRzaB7&_nc_oc=Adry2IVHaGxRCECYEOLDVw7xj-d8NJGoNqdwT9OqDZYL4-STTh8NOyS2b-FaXE9sHEc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=JqDgHNr8EH9orkL5_WFyvQ&_nc_ss=7020f&oh=00_AQOB0On2ltyu5i1qMO7HlV2ZqRnsnUlsDf0Kl_tVoD-npw&oe=6ADCD7C4",
+      "profile_url": "https://www.facebook.com/fractoryint/",
+      "thumbnail_url": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=urIrO8lwjKadamJvO_RFIw&_nc_zt=3&oh=06_Q3_EAa4WP5bd-_gm19HbzLrY3PIKKMZ2y-j2WFnG0p_ylQ67&oe=6AD8DC2E",
       "published_date": "2026-10-20",
-      "link": "https://www.facebook.com/CBGearandMachine/videos/1429879672410559",
-      "content": "C-B Gear & Machine, a company specializing in custom gear manufacturing. creating precision gearboxes … reverse engineering, and metalworking.",
+      "link": "https://www.facebook.com/fractoryint/posts/-learning-series-168-agentic-ai-in-procurementthe-shift-from-basic-automation-to/1578831444260500",
+      "content": "🔍 Learning series #168 — Agentic AI in Procurement\n\nThe shift from basic automation to agentic AI is giving category managers autonomous co-pilots that plan, execute, and adapt multi-step workflows...",
       "timestamp": "2026-10-20",
-      "mediaUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/806984486_1094028080182818_1213771918732059430_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=c26028&_nc_ohc=1nRjMVf1UY4Q7kNvwGRzaB7&_nc_oc=Adry2IVHaGxRCECYEOLDVw7xj-d8NJGoNqdwT9OqDZYL4-STTh8NOyS2b-FaXE9sHEc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=JqDgHNr8EH9orkL5_WFyvQ&_nc_ss=7020f&oh=00_AQOB0On2ltyu5i1qMO7HlV2ZqRnsnUlsDf0Kl_tVoD-npw&oe=6ADCD7C4",
-      "mediaUrls": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/806984486_1094028080182818_1213771918732059430_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=c26028&_nc_ohc=1nRjMVf1UY4Q7kNvwGRzaB7&_nc_oc=Adry2IVHaGxRCECYEOLDVw7xj-d8NJGoNqdwT9OqDZYL4-STTh8NOyS2b-FaXE9sHEc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=JqDgHNr8EH9orkL5_WFyvQ&_nc_ss=7020f&oh=00_AQOB0On2ltyu5i1qMO7HlV2ZqRnsnUlsDf0Kl_tVoD-npw&oe=6ADCD7C4",
+      "mediaUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=urIrO8lwjKadamJvO_RFIw&_nc_zt=3&oh=06_Q3_EAa4WP5bd-_gm19HbzLrY3PIKKMZ2y-j2WFnG0p_ylQ67&oe=6AD8DC2E",
+      "mediaUrls": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/17389552197158153795?url=https%3A%2F%2Ffractory.com%2Fwp-content%2Fuploads%2F2026%2F09%2Fagentic-ai-in-procurement.jpg%3Fwsr&fb_obo=1&utld=fractory.com&dfr=1&_nc_sid=867500&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=dst-jpg_p600x600_tt6&ccb=18-1&_nc_gid=urIrO8lwjKadamJvO_RFIw&_nc_zt=3&oh=06_Q3_EAa4WP5bd-_gm19HbzLrY3PIKKMZ2y-j2WFnG0p_ylQ67&oe=6AD8DC2E",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.facebook.com/fractoryint/posts/-learning-series-168-agentic-ai-in-procurementthe-shift-from-basic-automation-to/1578831444260500",
+      "competitorName": "Forging – Process, Classification &amp; Methods"
+    },
+    {
+      "id": "facebook_1792481630504_mw4ix",
+      "company": "Innoforge Pvt Ltd",
+      "platform": "Facebook",
+      "post_url": "https://www.facebook.com/innoforge/videos/team-innoforge-celebrated-15-years/801683611195731",
+      "caption": "Team Innoforge Celebrated 15 years. Feeling very happy for the terrific management team. Ltd. celebrated their 5th glorious year's company",
+      "media_type": "Video",
+      "thumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Sm3HMpB2VJE6mzLWh9GJfg&_nc_ss=7020f&oh=00_AQPaC8POv1A2JLhHI7JQ0p1wMF4cDnpwAjhOMoOWcFPdhw&oe=6ADCE55A",
+      "media_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Sm3HMpB2VJE6mzLWh9GJfg&_nc_ss=7020f&oh=00_AQPaC8POv1A2JLhHI7JQ0p1wMF4cDnpwAjhOMoOWcFPdhw&oe=6ADCE55A",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.facebook.com/innoforge/",
+      "thumbnail_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Sm3HMpB2VJE6mzLWh9GJfg&_nc_ss=7020f&oh=00_AQPaC8POv1A2JLhHI7JQ0p1wMF4cDnpwAjhOMoOWcFPdhw&oe=6ADCE55A",
+      "published_date": "2026-10-20",
+      "link": "https://www.facebook.com/innoforge/videos/team-innoforge-celebrated-15-years/801683611195731",
+      "content": "Team Innoforge Celebrated 15 years. Feeling very happy for the terrific management team. Ltd. celebrated their 5th glorious year's company",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Sm3HMpB2VJE6mzLWh9GJfg&_nc_ss=7020f&oh=00_AQPaC8POv1A2JLhHI7JQ0p1wMF4cDnpwAjhOMoOWcFPdhw&oe=6ADCE55A",
+      "mediaUrls": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/655062561_2112927616299928_1808845292650145353_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=111&ccb=1-7&_nc_sid=c26028&_nc_ohc=rpA9ksjJ1-oQ7kNvwF0-P3V&_nc_oc=Adoku04K8XWxiSM10H1Ay3Z0k0VY5fRVswkYnW_0-o18YeHfVBno9cQgKlrb0REq40E&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Sm3HMpB2VJE6mzLWh9GJfg&_nc_ss=7020f&oh=00_AQPaC8POv1A2JLhHI7JQ0p1wMF4cDnpwAjhOMoOWcFPdhw&oe=6ADCE55A",
       "mediaType": "Video",
       "likes": "0",
       "comments": "0",
-      "postUrl": "https://www.facebook.com/CBGearandMachine/videos/1429879672410559",
-      "competitorName": "C-B Gear & Machine Inc",
-      "video_url": "https://video-sea5-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQPhGK48_ZQNCXZQ2bSl4ROtcY86P2LYQpNyeCDTiy98KSLxtybHxaEW9hm8nexq99R1bB_PQ3wWy3O4UpTYxQ78I_m98XL3b83R_Ede285ZPg.mp4?_nc_cat=108&_nc_sid=9ca052&_nc_ht=video-sea5-1.xx.fbcdn.net&_nc_ohc=dNjzZ9WH2oYQ7kNvwHfJ9HJ&efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfaDI2NC1iYXNpYy1nZW4yXzM2MHAiLCJ2aWRlb19pZCI6MTQyOTg3OTY3MjQxMDU1OSwib2lsX3VybGdlbl9hcHBfaWQiOjAsImNsaWVudF9uYW1lIjoidW5rbm93biIsInhwdl9hc3NldF9pZCI6MzEwNTY1NTM2OTc3MDkyNywiYXNzZXRfYWdlX2RheXMiOjM3LCJ2aV91c2VjYXNlX2lkIjoxMjM3MywiZHVyYXRpb25fcyI6MjQyLCJiaXRyYXRlIjo0OTIxNCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&_nc_gid=nmek0MwzkqkGoCeg3QbWkg&_nc_ss=7020f&_nc_zt=28&oh=00_AQOPPrDjH3EzrbT0ycg9yvjDDMPJm1t1vD_c6aBIpI8s3g&oe=6ADCB100",
-      "fb_video_id": "1429879672410559"
+      "postUrl": "https://www.facebook.com/innoforge/videos/team-innoforge-celebrated-15-years/801683611195731",
+      "competitorName": "Innoforge Pvt Ltd",
+      "fb_video_id": "801683611195731"
     },
     {
-      "id": "li_1792472351722_72948",
-      "company": "synnova.in",
-      "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/synnova-gears-%26-transmissions-pvt-ltd-_happy-ganesh-chaturthi-may-lord-ganesha-activity-7505134244587966466-vDvM",
-      "caption": "🙏Happy Ganesh Chaturthi!💐💐\nMay Lord Ganesha bless us with success, prosperity, happiness, and new beginnings.Warm wishes to all on this auspicious occasion!\n— Synnova Gears & Transmissions Pvt. Ltd.",
+      "id": "facebook_1792481647799_nh5ag",
+      "company": "All Metals & Forge Group",
+      "platform": "Facebook",
+      "post_url": "https://www.facebook.com/AllMetalsForgeGroup/posts/all-metals-forge-group-is-an-iso-90012015-and-as9100d-registered-manufacturer-of/1696813539121174",
+      "caption": "All Metals & Forge Group is an ISO 9001:2015 and AS9100D registered manufacturer of open-die forgings and seamless rolled rings.\n\nFor customers, that means quality is not treated as an afterthought...",
       "media_type": "Image",
-      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQEHVhTo3gLT5w/feedshare-shrink_800/B4DaCeX0wGKAAc-/0/1789363440992?e=2147483647&v=beta&t=VT6qQGjOf7RVcVG_k60F_Jk3w1a81-RqZStWNOCXkWQ",
-      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQEHVhTo3gLT5w/feedshare-shrink_800/B4DaCeX0wGKAAc-/0/1789363440992?e=2147483647&v=beta&t=VT6qQGjOf7RVcVG_k60F_Jk3w1a81-RqZStWNOCXkWQ",
-      "date": "2026-09-14",
+      "thumbnail": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1696813202454541",
+      "media_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1696813202454541",
+      "date": "2026-10-20",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
-      "profile_url": "https://www.linkedin.com/company/synnova-gears-&-transmissions-pvt-ltd-/",
-      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQEHVhTo3gLT5w/feedshare-shrink_800/B4DaCeX0wGKAAc-/0/1789363440992?e=2147483647&v=beta&t=VT6qQGjOf7RVcVG_k60F_Jk3w1a81-RqZStWNOCXkWQ",
-      "published_date": "2026-09-14",
-      "link": "https://www.linkedin.com/posts/synnova-gears-%26-transmissions-pvt-ltd-_happy-ganesh-chaturthi-may-lord-ganesha-activity-7505134244587966466-vDvM",
-      "content": "🙏Happy Ganesh Chaturthi!💐💐\nMay Lord Ganesha bless us with success, prosperity, happiness, and new beginnings.Warm wishes to all on this auspicious occasion!\n— Synnova Gears & Transmissions Pvt. Ltd.",
-      "timestamp": "2026-09-14",
-      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQEHVhTo3gLT5w/feedshare-shrink_800/B4DaCeX0wGKAAc-/0/1789363440992?e=2147483647&v=beta&t=VT6qQGjOf7RVcVG_k60F_Jk3w1a81-RqZStWNOCXkWQ",
-      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQEHVhTo3gLT5w/feedshare-shrink_800/B4DaCeX0wGKAAc-/0/1789363440992?e=2147483647&v=beta&t=VT6qQGjOf7RVcVG_k60F_Jk3w1a81-RqZStWNOCXkWQ",
+      "profile_url": "https://www.facebook.com/AllMetalsForgeGroup",
+      "thumbnail_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1696813202454541",
+      "published_date": "2026-10-20",
+      "link": "https://www.facebook.com/AllMetalsForgeGroup/posts/all-metals-forge-group-is-an-iso-90012015-and-as9100d-registered-manufacturer-of/1696813539121174",
+      "content": "All Metals & Forge Group is an ISO 9001:2015 and AS9100D registered manufacturer of open-die forgings and seamless rolled rings.\n\nFor customers, that means quality is not treated as an afterthought...",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1696813202454541",
+      "mediaUrls": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1696813202454541",
       "mediaType": "Image",
       "likes": "0",
       "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/synnova-gears-%26-transmissions-pvt-ltd-_happy-ganesh-chaturthi-may-lord-ganesha-activity-7505134244587966466-vDvM",
-      "competitorName": "synnova.in",
-      "activity_id": "7505134244587966466"
+      "postUrl": "https://www.facebook.com/AllMetalsForgeGroup/posts/all-metals-forge-group-is-an-iso-90012015-and-as9100d-registered-manufacturer-of/1696813539121174",
+      "competitorName": "All Metals & Forge Group"
     },
     {
-      "id": "li_1792472356720_6tmo1",
-      "company": "Malkar Industries",
-      "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/malkarindia_automationexpo2026-engineering-industrialsolutions-activity-7486302526494121984-8F4k",
-      "caption": "It's Day 3, and we're still going strong! 🔧\nA big thank you to everyone who has stopped by our booth so far. Your interest and valuable discussions have made this event truly worthwhile.\nHaven't visited us yet? There's still time—come explore our precision engineering solutions and connect with our team.\n#AutomationExpo2026 #Engineering #IndustrialSolutions #PrecisionTools #Manufacturing #MalkarIndustries",
+      "id": "facebook_1792481630504_ad1a7",
+      "company": "Innoforge Pvt Ltd",
+      "platform": "Facebook",
+      "post_url": "https://www.facebook.com/innoforge/posts/1500138702128929",
+      "caption": "Wanted Operators for Drop hammer forging urgently · Welcome to our new members: -before you ask, have a look at all the information in the documents section of",
       "media_type": "Image",
-      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQF9bJqwO_q_CA/feedshare-image-high-res/B4EZ.SweniJIAU-/0/1784873610001?e=2147483647&v=beta&t=16bjge2CGWyIvBJMeFhajo3GLOFy-k0dQlLTIrLuEEM",
-      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQF9bJqwO_q_CA/feedshare-image-high-res/B4EZ.SweniJIAU-/0/1784873610001?e=2147483647&v=beta&t=16bjge2CGWyIvBJMeFhajo3GLOFy-k0dQlLTIrLuEEM",
-      "date": "2026-07-24",
+      "thumbnail": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1500138672128932",
+      "media_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1500138672128932",
+      "date": "2026-10-20",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
-      "profile_url": "https://in.linkedin.com/company/malkarindia",
-      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQF9bJqwO_q_CA/feedshare-image-high-res/B4EZ.SweniJIAU-/0/1784873610001?e=2147483647&v=beta&t=16bjge2CGWyIvBJMeFhajo3GLOFy-k0dQlLTIrLuEEM",
-      "published_date": "2026-07-24",
-      "link": "https://www.linkedin.com/posts/malkarindia_automationexpo2026-engineering-industrialsolutions-activity-7486302526494121984-8F4k",
-      "content": "It's Day 3, and we're still going strong! 🔧\nA big thank you to everyone who has stopped by our booth so far. Your interest and valuable discussions have made this event truly worthwhile.\nHaven't visited us yet? There's still time—come explore our precision engineering solutions and connect with our team.\n#AutomationExpo2026 #Engineering #IndustrialSolutions #PrecisionTools #Manufacturing #MalkarIndustries",
-      "timestamp": "2026-07-24",
-      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQF9bJqwO_q_CA/feedshare-image-high-res/B4EZ.SweniJIAU-/0/1784873610001?e=2147483647&v=beta&t=16bjge2CGWyIvBJMeFhajo3GLOFy-k0dQlLTIrLuEEM",
-      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQF9bJqwO_q_CA/feedshare-image-high-res/B4EZ.SweniJIAU-/0/1784873610001?e=2147483647&v=beta&t=16bjge2CGWyIvBJMeFhajo3GLOFy-k0dQlLTIrLuEEM",
+      "profile_url": "https://www.facebook.com/innoforge/",
+      "thumbnail_url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1500138672128932",
+      "published_date": "2026-10-20",
+      "link": "https://www.facebook.com/innoforge/posts/1500138702128929",
+      "content": "Wanted Operators for Drop hammer forging urgently · Welcome to our new members: -before you ask, have a look at all the information in the documents section of",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1500138672128932",
+      "mediaUrls": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1500138672128932",
       "mediaType": "Image",
       "likes": "0",
       "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/malkarindia_automationexpo2026-engineering-industrialsolutions-activity-7486302526494121984-8F4k",
-      "competitorName": "Malkar Industries",
-      "activity_id": "7486302526494121984"
+      "postUrl": "https://www.facebook.com/innoforge/posts/1500138702128929",
+      "competitorName": "Innoforge Pvt Ltd"
     },
     {
-      "id": "li_1792472351722_gsgxx",
-      "company": "synnova.in",
-      "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/synnova-gears-%26-transmissions-pvt-ltd-_we-are-proud-to-share-that-tmtl-has-recognized-activity-7484837589447933952-rtzI",
-      "caption": "We are proud to share that TMTL has recognized Synnova Gears for our outstanding efforts in successfully delivering Deutz engine gears with a \"First Time Right\" approach and ensuring on-time delivery.\n\nThis achievement reflects our team's commitment to quality, precision, and customer satisfaction. We are also excited that this recognition has opened the opportunity for us to supply gears directly to Deutz Germany 🇩🇪.\n\nCongratulations to the entire Synnova Gears team on this significant milestone. Together, we look forward to achieving many more successes. Synnova Gears & Transmissions Pvt. Ltd.",
-      "media_type": "Image",
-      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQG0peuAOT1Bag/feedshare-shrink_800/B4DZ998H_lHgAk-/0/1784524341454?e=2147483647&v=beta&t=3g-424mgWHn09K6KduDV0_iOrzIYoq1_xaCCs_9x0xc",
-      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQG0peuAOT1Bag/feedshare-shrink_800/B4DZ998H_lHgAk-/0/1784524341454?e=2147483647&v=beta&t=3g-424mgWHn09K6KduDV0_iOrzIYoq1_xaCCs_9x0xc",
-      "date": "2026-07-20",
+      "id": "facebook_1792481647799_3jpdc",
+      "company": "All Metals & Forge Group",
+      "platform": "Facebook",
+      "post_url": "https://www.facebook.com/AllMetalsForgeGroup/videos/when-production-schedules-are-tight-your-forging-partner-must-deliver-all-metals/1250013070557313",
+      "caption": "When production schedules are tight, your forging partner must deliver. All Metals & Forge Group provides open die forged parts in as little as 7 to 9 weeks on most orders, helping machine shops and...",
+      "media_type": "Video",
+      "thumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Qqxj4pHN65AFAmuQUWVUZg&_nc_ss=7020f&oh=00_AQN4Xfwyq5TfRIC0B5GRg575sTgGakGtSD-vCtyWRX3jMA&oe=6ADD043E",
+      "media_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Qqxj4pHN65AFAmuQUWVUZg&_nc_ss=7020f&oh=00_AQN4Xfwyq5TfRIC0B5GRg575sTgGakGtSD-vCtyWRX3jMA&oe=6ADD043E",
+      "date": "2026-10-20",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
-      "profile_url": "https://www.linkedin.com/company/synnova-gears-&-transmissions-pvt-ltd-/",
-      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQG0peuAOT1Bag/feedshare-shrink_800/B4DZ998H_lHgAk-/0/1784524341454?e=2147483647&v=beta&t=3g-424mgWHn09K6KduDV0_iOrzIYoq1_xaCCs_9x0xc",
-      "published_date": "2026-07-20",
-      "link": "https://www.linkedin.com/posts/synnova-gears-%26-transmissions-pvt-ltd-_we-are-proud-to-share-that-tmtl-has-recognized-activity-7484837589447933952-rtzI",
-      "content": "We are proud to share that TMTL has recognized Synnova Gears for our outstanding efforts in successfully delivering Deutz engine gears with a \"First Time Right\" approach and ensuring on-time delivery.\n\nThis achievement reflects our team's commitment to quality, precision, and customer satisfaction. We are also excited that this recognition has opened the opportunity for us to supply gears directly to Deutz Germany 🇩🇪.\n\nCongratulations to the entire Synnova Gears team on this significant milestone. Together, we look forward to achieving many more successes. Synnova Gears & Transmissions Pvt. Ltd.",
-      "timestamp": "2026-07-20",
-      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQG0peuAOT1Bag/feedshare-shrink_800/B4DZ998H_lHgAk-/0/1784524341454?e=2147483647&v=beta&t=3g-424mgWHn09K6KduDV0_iOrzIYoq1_xaCCs_9x0xc",
-      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQG0peuAOT1Bag/feedshare-shrink_800/B4DZ998H_lHgAk-/0/1784524341454?e=2147483647&v=beta&t=3g-424mgWHn09K6KduDV0_iOrzIYoq1_xaCCs_9x0xc",
-      "mediaType": "Image",
+      "profile_url": "https://www.facebook.com/AllMetalsForgeGroup",
+      "thumbnail_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Qqxj4pHN65AFAmuQUWVUZg&_nc_ss=7020f&oh=00_AQN4Xfwyq5TfRIC0B5GRg575sTgGakGtSD-vCtyWRX3jMA&oe=6ADD043E",
+      "published_date": "2026-10-20",
+      "link": "https://www.facebook.com/AllMetalsForgeGroup/videos/when-production-schedules-are-tight-your-forging-partner-must-deliver-all-metals/1250013070557313",
+      "content": "When production schedules are tight, your forging partner must deliver. All Metals & Forge Group provides open die forged parts in as little as 7 to 9 weeks on most orders, helping machine shops and...",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Qqxj4pHN65AFAmuQUWVUZg&_nc_ss=7020f&oh=00_AQN4Xfwyq5TfRIC0B5GRg575sTgGakGtSD-vCtyWRX3jMA&oe=6ADD043E",
+      "mediaUrls": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/643946412_874326235594118_2189908536457521897_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c26028&_nc_ohc=8UbYYIj3vj4Q7kNvwEFdOPB&_nc_oc=AdpEQG6gpSBN4Mwu-f81EVOwkQqjlsHMKI-hl3KY-9-M_siEUi9wN9C-s4jGK4oD9p4&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=Qqxj4pHN65AFAmuQUWVUZg&_nc_ss=7020f&oh=00_AQN4Xfwyq5TfRIC0B5GRg575sTgGakGtSD-vCtyWRX3jMA&oe=6ADD043E",
+      "mediaType": "Video",
       "likes": "0",
       "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/synnova-gears-%26-transmissions-pvt-ltd-_we-are-proud-to-share-that-tmtl-has-recognized-activity-7484837589447933952-rtzI",
-      "competitorName": "synnova.in",
-      "activity_id": "7484837589447933952"
+      "postUrl": "https://www.facebook.com/AllMetalsForgeGroup/videos/when-production-schedules-are-tight-your-forging-partner-must-deliver-all-metals/1250013070557313",
+      "competitorName": "All Metals & Forge Group",
+      "fb_video_id": "1250013070557313"
     },
     {
-      "id": "li_1792472356720_0hwsg",
-      "company": "Malkar Industries",
+      "id": "li_1792481602308_dh2fk",
+      "company": "pentagonforge.co.in",
       "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/malkarindia_amtex2026-amtex-manufacturing-activity-7483476557743898624-ijFX",
-      "caption": "🏭 Struggling to find a one-stop solution for your manufacturing needs? Visit Malkar Industries at AMTEX 2026 | Hall 12 | Stall D15.\n\n#AMTEX2026 #AMTEX #Manufacturing #IndustrialAutomation #MachineTools #PrecisionEngineering #Engineering #ManufacturingSolutions #MotionControl #LeadScrews #KnurlingTools #WormGear #SpurGear #HelicalGear #MadeInIndia #OEM #FactoryAutomation #IndustrialSolutions #B2BManufacturing #MalkarIndustries",
+      "post_url": "https://www.linkedin.com/posts/pentagon-forge_metalforging-steelforging-precisionforging-activity-7513572559481757696-U7Ap",
+      "caption": "Material compliance is one of the foundations of a reliable forged component.\n\nAt Pentagon Forge & Machine, the material grade is defined by the customer based on drawing, application and performance requirements. Our role is to ensure that the specified material is sourced, verified and processed correctly throughout manufacturing.\n\nOur forging capabilities cover:\n\n* Low Carbon Steel\n* Medium Carbon Steel\n* Alloy Steel\n* Stainless Steel\n* Aluminium Alloys\n\nCommon grades include SAE 1018, SAE 1020, SAE1045 EN32B, S355, SAE 4140, SAE 4340, SS304/304L, SS316/316L, HE15 and HE30.\n\nRaw materials are sourced from OEM-approved Indian steel manufacturers, supporting consistency, traceability and dependable manufacturing quality.\n\nFrom raw material receipt to the finished forged component, every stage matters.\n\n#MetalForging #SteelForging #PrecisionForging #ForgingManufacturer #EngineeringComponents #AlloySteel #Manufacturing #PentagonForge",
       "media_type": "Image",
-      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D10AQEGZVn8mNnQdg/image-shrink_1280/B4DZ9qmRyIGkAc-/0/1784199847460?e=2147483647&v=beta&t=qpGnqxEeaC3JqQFfsuqrbs_mjhctKJYqmnzy9GsNtdE",
-      "media_url": "https://media.licdn.com/dms/image/v2/D4D10AQEGZVn8mNnQdg/image-shrink_1280/B4DZ9qmRyIGkAc-/0/1784199847460?e=2147483647&v=beta&t=qpGnqxEeaC3JqQFfsuqrbs_mjhctKJYqmnzy9GsNtdE",
-      "date": "2026-07-16",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQHZrfJPem-a3g/feedshare-shrink_800/B4EaEWSbYxGUAc-/0/1791375292415?e=2147483647&v=beta&t=ZyH-E0ifW4D3Vbj7VNkJcr65QHdtcvUIVhMbXz7b1-U",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQHZrfJPem-a3g/feedshare-shrink_800/B4EaEWSbYxGUAc-/0/1791375292415?e=2147483647&v=beta&t=ZyH-E0ifW4D3Vbj7VNkJcr65QHdtcvUIVhMbXz7b1-U",
+      "date": "2026-10-07",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
-      "profile_url": "https://in.linkedin.com/company/malkarindia",
-      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D10AQEGZVn8mNnQdg/image-shrink_1280/B4DZ9qmRyIGkAc-/0/1784199847460?e=2147483647&v=beta&t=qpGnqxEeaC3JqQFfsuqrbs_mjhctKJYqmnzy9GsNtdE",
-      "published_date": "2026-07-16",
-      "link": "https://www.linkedin.com/posts/malkarindia_amtex2026-amtex-manufacturing-activity-7483476557743898624-ijFX",
-      "content": "🏭 Struggling to find a one-stop solution for your manufacturing needs? Visit Malkar Industries at AMTEX 2026 | Hall 12 | Stall D15.\n\n#AMTEX2026 #AMTEX #Manufacturing #IndustrialAutomation #MachineTools #PrecisionEngineering #Engineering #ManufacturingSolutions #MotionControl #LeadScrews #KnurlingTools #WormGear #SpurGear #HelicalGear #MadeInIndia #OEM #FactoryAutomation #IndustrialSolutions #B2BManufacturing #MalkarIndustries",
-      "timestamp": "2026-07-16",
-      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D10AQEGZVn8mNnQdg/image-shrink_1280/B4DZ9qmRyIGkAc-/0/1784199847460?e=2147483647&v=beta&t=qpGnqxEeaC3JqQFfsuqrbs_mjhctKJYqmnzy9GsNtdE",
-      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D10AQEGZVn8mNnQdg/image-shrink_1280/B4DZ9qmRyIGkAc-/0/1784199847460?e=2147483647&v=beta&t=qpGnqxEeaC3JqQFfsuqrbs_mjhctKJYqmnzy9GsNtdE",
+      "profile_url": "https://www.linkedin.com/company/pentagon-forge/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQHZrfJPem-a3g/feedshare-shrink_800/B4EaEWSbYxGUAc-/0/1791375292415?e=2147483647&v=beta&t=ZyH-E0ifW4D3Vbj7VNkJcr65QHdtcvUIVhMbXz7b1-U",
+      "published_date": "2026-10-07",
+      "link": "https://www.linkedin.com/posts/pentagon-forge_metalforging-steelforging-precisionforging-activity-7513572559481757696-U7Ap",
+      "content": "Material compliance is one of the foundations of a reliable forged component.\n\nAt Pentagon Forge & Machine, the material grade is defined by the customer based on drawing, application and performance requirements. Our role is to ensure that the specified material is sourced, verified and processed correctly throughout manufacturing.\n\nOur forging capabilities cover:\n\n* Low Carbon Steel\n* Medium Carbon Steel\n* Alloy Steel\n* Stainless Steel\n* Aluminium Alloys\n\nCommon grades include SAE 1018, SAE 1020, SAE1045 EN32B, S355, SAE 4140, SAE 4340, SS304/304L, SS316/316L, HE15 and HE30.\n\nRaw materials are sourced from OEM-approved Indian steel manufacturers, supporting consistency, traceability and dependable manufacturing quality.\n\nFrom raw material receipt to the finished forged component, every stage matters.\n\n#MetalForging #SteelForging #PrecisionForging #ForgingManufacturer #EngineeringComponents #AlloySteel #Manufacturing #PentagonForge",
+      "timestamp": "2026-10-07",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQHZrfJPem-a3g/feedshare-shrink_800/B4EaEWSbYxGUAc-/0/1791375292415?e=2147483647&v=beta&t=ZyH-E0ifW4D3Vbj7VNkJcr65QHdtcvUIVhMbXz7b1-U",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQHZrfJPem-a3g/feedshare-shrink_800/B4EaEWSbYxGUAc-/0/1791375292415?e=2147483647&v=beta&t=ZyH-E0ifW4D3Vbj7VNkJcr65QHdtcvUIVhMbXz7b1-U",
       "mediaType": "Image",
       "likes": "0",
       "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/malkarindia_amtex2026-amtex-manufacturing-activity-7483476557743898624-ijFX",
-      "competitorName": "Malkar Industries",
-      "activity_id": "7483476557743898624"
+      "postUrl": "https://www.linkedin.com/posts/pentagon-forge_metalforging-steelforging-precisionforging-activity-7513572559481757696-U7Ap",
+      "competitorName": "pentagonforge.co.in",
+      "activity_id": "7513572559481757696"
     },
     {
-      "id": "li_1792472356720_6za6w",
-      "company": "Malkar Industries",
+      "id": "li_1792481596301_fom2y",
+      "company": "Shivam forge",
       "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/malkarindia_automationexpo2026-automationexpo-industrialautomation-activity-7483475263205412864-Vtli",
-      "caption": "Looking for Better Motion, Better Precision & Better Productivity? Meet Malkar Industries at Automation Expo 2026 | Hall 02 | Stall N34.\n#AutomationExpo2026 #AutomationExpo #IndustrialAutomation #Manufacturing #Engineering #MachineTools #PrecisionEngineering #IndustrialSolutions #Productivity #MotionControl #Leadscrew #KnurlingTools #Gears #MadeInIndia #MalkarIndustries",
+      "post_url": "https://www.linkedin.com/posts/shivamforge_shivamforge-cncmachining-precisionengineering-activity-7517807191987359744-l04B",
+      "caption": "⚙️ SHIVAM FORGE | Precision CNC Machining & Forging Solutions\n\nPrecision in Every Detail! 🔩\n\nAt Shivam Forge, we focus on quality, accuracy, and reliable manufacturing solutions.\n\n✅ Precision CNC Turning & Milling\n✅ High Accuracy & Consistency\n✅ Superior Surface Finish\n✅ Dimensional Quality Inspection\n✅ Custom Components as per Drawing\n✅ Forging & Machining Solutions\n\n🤝 Your Trust • Our Strength\n\n📩 Email: info@shivamforge.com\n🌐 Website: www.shivamforge.com\n\n📞 Contact us for business inquiries, new projects, and manufacturing requirements.\n\n#ShivamForge #CNCMachining #PrecisionEngineering #Forging #CNCTurning #CNCMilling #Manufacturing #IndustrialComponents #EngineeringSolutions #QualityManufacturing #AutomotiveComponents #B2BManufacturing",
       "media_type": "Image",
-      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D10AQGt1hOkbrUCSg/image-shrink_1280/B4DZ9qlGbqJ4Ak-/0/1784199538699?e=2147483647&v=beta&t=keGmWXzMrPMMQBUXP-D5J93rssogHWQ4_4hrg5km-34",
-      "media_url": "https://media.licdn.com/dms/image/v2/D4D10AQGt1hOkbrUCSg/image-shrink_1280/B4DZ9qlGbqJ4Ak-/0/1784199538699?e=2147483647&v=beta&t=keGmWXzMrPMMQBUXP-D5J93rssogHWQ4_4hrg5km-34",
-      "date": "2026-07-16",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQFVFlLCjdCWCg/feedshare-image-high-res/B4DaFSdznEJ0AY-/0/1792384908008?e=2147483647&v=beta&t=qV9ZqgJ5WP8Pm2CFwcigrkIHr0PtT-kA_dydbT4cIXE",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQFVFlLCjdCWCg/feedshare-image-high-res/B4DaFSdznEJ0AY-/0/1792384908008?e=2147483647&v=beta&t=qV9ZqgJ5WP8Pm2CFwcigrkIHr0PtT-kA_dydbT4cIXE",
+      "date": "2026-10-19",
       "engagement": {
         "likes": "0",
         "comments": "0"
       },
-      "profile_url": "https://in.linkedin.com/company/malkarindia",
-      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D10AQGt1hOkbrUCSg/image-shrink_1280/B4DZ9qlGbqJ4Ak-/0/1784199538699?e=2147483647&v=beta&t=keGmWXzMrPMMQBUXP-D5J93rssogHWQ4_4hrg5km-34",
-      "published_date": "2026-07-16",
-      "link": "https://www.linkedin.com/posts/malkarindia_automationexpo2026-automationexpo-industrialautomation-activity-7483475263205412864-Vtli",
-      "content": "Looking for Better Motion, Better Precision & Better Productivity? Meet Malkar Industries at Automation Expo 2026 | Hall 02 | Stall N34.\n#AutomationExpo2026 #AutomationExpo #IndustrialAutomation #Manufacturing #Engineering #MachineTools #PrecisionEngineering #IndustrialSolutions #Productivity #MotionControl #Leadscrew #KnurlingTools #Gears #MadeInIndia #MalkarIndustries",
-      "timestamp": "2026-07-16",
-      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D10AQGt1hOkbrUCSg/image-shrink_1280/B4DZ9qlGbqJ4Ak-/0/1784199538699?e=2147483647&v=beta&t=keGmWXzMrPMMQBUXP-D5J93rssogHWQ4_4hrg5km-34",
-      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D10AQGt1hOkbrUCSg/image-shrink_1280/B4DZ9qlGbqJ4Ak-/0/1784199538699?e=2147483647&v=beta&t=keGmWXzMrPMMQBUXP-D5J93rssogHWQ4_4hrg5km-34",
+      "profile_url": "https://www.linkedin.com/company/shivamforge/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQFVFlLCjdCWCg/feedshare-image-high-res/B4DaFSdznEJ0AY-/0/1792384908008?e=2147483647&v=beta&t=qV9ZqgJ5WP8Pm2CFwcigrkIHr0PtT-kA_dydbT4cIXE",
+      "published_date": "2026-10-19",
+      "link": "https://www.linkedin.com/posts/shivamforge_shivamforge-cncmachining-precisionengineering-activity-7517807191987359744-l04B",
+      "content": "⚙️ SHIVAM FORGE | Precision CNC Machining & Forging Solutions\n\nPrecision in Every Detail! 🔩\n\nAt Shivam Forge, we focus on quality, accuracy, and reliable manufacturing solutions.\n\n✅ Precision CNC Turning & Milling\n✅ High Accuracy & Consistency\n✅ Superior Surface Finish\n✅ Dimensional Quality Inspection\n✅ Custom Components as per Drawing\n✅ Forging & Machining Solutions\n\n🤝 Your Trust • Our Strength\n\n📩 Email: info@shivamforge.com\n🌐 Website: www.shivamforge.com\n\n📞 Contact us for business inquiries, new projects, and manufacturing requirements.\n\n#ShivamForge #CNCMachining #PrecisionEngineering #Forging #CNCTurning #CNCMilling #Manufacturing #IndustrialComponents #EngineeringSolutions #QualityManufacturing #AutomotiveComponents #B2BManufacturing",
+      "timestamp": "2026-10-19",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQFVFlLCjdCWCg/feedshare-image-high-res/B4DaFSdznEJ0AY-/0/1792384908008?e=2147483647&v=beta&t=qV9ZqgJ5WP8Pm2CFwcigrkIHr0PtT-kA_dydbT4cIXE",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQFVFlLCjdCWCg/feedshare-image-high-res/B4DaFSdznEJ0AY-/0/1792384908008?e=2147483647&v=beta&t=qV9ZqgJ5WP8Pm2CFwcigrkIHr0PtT-kA_dydbT4cIXE",
       "mediaType": "Image",
       "likes": "0",
       "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/malkarindia_automationexpo2026-automationexpo-industrialautomation-activity-7483475263205412864-Vtli",
-      "competitorName": "Malkar Industries",
-      "activity_id": "7483475263205412864"
+      "postUrl": "https://www.linkedin.com/posts/shivamforge_shivamforge-cncmachining-precisionengineering-activity-7517807191987359744-l04B",
+      "competitorName": "Shivam forge",
+      "activity_id": "7517807191987359744"
+    },
+    {
+      "id": "linkedin_1792481617801_pwa07",
+      "company": "What Is Forging? Process, Benefits and Applications",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/steven-chan-forging_cncmachining-forging-precisionengineering-activity-7359487589231308800-_8rl",
+      "caption": "Precision CNC Machining for Heavy-Duty Applications – Backed by 42 Years of Forging\nAt Weforging, we combine 42 years of forging expertise, ISO-certified quality management, and advanced CNC machining to deliver components that excel in the toughest industrial environments.\n🔧 Technical Expertise:\n From forging to precision machining, every step follows strict process control to ensure dimensional accuracy, superior surface finish, and long service life. Our latest technical whitepaper shares insights into forging grain flow optimization and high-precision CNC finishing techniques.\n🏗 Industry-Specific Solutions:\n For construction machinery, energy, and mining sectors, we provide heavy-duty part durability solutions — engineered to withstand extreme loads, abrasive environments, and continuous operation.\n🤝 Customer Success Story:\n A leading mining equipment OEM partnered with us to upgrade their hydraulic cylinder components. Result:\n30% reduction in machining steps through optimized forging preforms\n2× longer component lifespan under heavy-duty cycles\n📈 Data-Driven Results:\n99.8% on-time delivery rate\nDefect rate < 0.3%\nConsistent performance under ISO 9001 & ISO/TS standards\nIf you’re looking for CNC-machined forged parts that combine durability, precision, and cost-efficiency, let’s talk.\n#CNCmachining #Forging #PrecisionEngineering #ISOcertified #MiningEquipment #ConstructionMachinery #EnergyIndustry #HeavyDutySolutions #Weforging",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D5605AQE-9eFjhShl2g/thumbnail-with-play-button-overlay-high/B56ZiIm33VG4D4-/0/1754638565092?e=2147483647&v=beta&t=YpJaOJx2Okh0URYPRmVzpazTDPYIObBP_swXMLlWso8",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQE-9eFjhShl2g/thumbnail-with-play-button-overlay-high/B56ZiIm33VG4D4-/0/1754638565092?e=2147483647&v=beta&t=YpJaOJx2Okh0URYPRmVzpazTDPYIObBP_swXMLlWso8",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/in/steven-chan-forging/",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQE-9eFjhShl2g/thumbnail-with-play-button-overlay-high/B56ZiIm33VG4D4-/0/1754638565092?e=2147483647&v=beta&t=YpJaOJx2Okh0URYPRmVzpazTDPYIObBP_swXMLlWso8",
+      "published_date": "2026-10-20",
+      "link": "https://www.linkedin.com/posts/steven-chan-forging_cncmachining-forging-precisionengineering-activity-7359487589231308800-_8rl",
+      "content": "Precision CNC Machining for Heavy-Duty Applications – Backed by 42 Years of Forging\nAt Weforging, we combine 42 years of forging expertise, ISO-certified quality management, and advanced CNC machining to deliver components that excel in the toughest industrial environments.\n🔧 Technical Expertise:\n From forging to precision machining, every step follows strict process control to ensure dimensional accuracy, superior surface finish, and long service life. Our latest technical whitepaper shares insights into forging grain flow optimization and high-precision CNC finishing techniques.\n🏗 Industry-Specific Solutions:\n For construction machinery, energy, and mining sectors, we provide heavy-duty part durability solutions — engineered to withstand extreme loads, abrasive environments, and continuous operation.\n🤝 Customer Success Story:\n A leading mining equipment OEM partnered with us to upgrade their hydraulic cylinder components. Result:\n30% reduction in machining steps through optimized forging preforms\n2× longer component lifespan under heavy-duty cycles\n📈 Data-Driven Results:\n99.8% on-time delivery rate\nDefect rate < 0.3%\nConsistent performance under ISO 9001 & ISO/TS standards\nIf you’re looking for CNC-machined forged parts that combine durability, precision, and cost-efficiency, let’s talk.\n#CNCmachining #Forging #PrecisionEngineering #ISOcertified #MiningEquipment #ConstructionMachinery #EnergyIndustry #HeavyDutySolutions #Weforging",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D5605AQE-9eFjhShl2g/thumbnail-with-play-button-overlay-high/B56ZiIm33VG4D4-/0/1754638565092?e=2147483647&v=beta&t=YpJaOJx2Okh0URYPRmVzpazTDPYIObBP_swXMLlWso8",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D5605AQE-9eFjhShl2g/thumbnail-with-play-button-overlay-high/B56ZiIm33VG4D4-/0/1754638565092?e=2147483647&v=beta&t=YpJaOJx2Okh0URYPRmVzpazTDPYIObBP_swXMLlWso8",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/steven-chan-forging_cncmachining-forging-precisionengineering-activity-7359487589231308800-_8rl",
+      "competitorName": "What Is Forging? Process, Benefits and Applications",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQE-9eFjhShl2g/mp4-720p-30fp-crf28/B56ZiIm33VG4B4-/0/1754638566209?e=2147483647&v=beta&t=CG3aO_Qtb3PprTEXAs7HOzXp9WGxkRdMbwwKdz8prco",
+      "activity_id": "7359487589231308800"
+    },
+    {
+      "id": "li_1792481616103_yy4zd",
+      "company": "Forging – Process, Classification &amp; Methods",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/fractoryint_how-to-vet-a-cloud-manufacturing-partner-activity-7514266351977402368-rdyh",
+      "caption": "🔍 Learning series #169 — How to Vet a Cloud Manufacturing Partner\n\nThe supplier audit has gone digital. Since you can't walk the shop floor of a distributed network, modern procurement requires a shift from physical site visits to auditing digital workflows, Quality Management Systems, and platform liability.\n\nCheck out our comprehensive guide to learn how to evaluate technical capabilities, ensure IP security, and build a resilient supply chain with the right digital partner 👇",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/sync/v2/D4D27AQGCmJvO8n60mQ/articleshare-shrink_1280_800/B4DaEgJU5OJUAk-/0/1791540679100?e=2147483647&v=beta&t=_i4DlxbHytSeRjWb8_uLtwj5XI7UKJwsOVB4IXdq6c4",
+      "media_url": "https://media.licdn.com/dms/image/sync/v2/D4D27AQGCmJvO8n60mQ/articleshare-shrink_1280_800/B4DaEgJU5OJUAk-/0/1791540679100?e=2147483647&v=beta&t=_i4DlxbHytSeRjWb8_uLtwj5XI7UKJwsOVB4IXdq6c4",
+      "date": "2026-10-09",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/fractoryint",
+      "thumbnail_url": "https://media.licdn.com/dms/image/sync/v2/D4D27AQGCmJvO8n60mQ/articleshare-shrink_1280_800/B4DaEgJU5OJUAk-/0/1791540679100?e=2147483647&v=beta&t=_i4DlxbHytSeRjWb8_uLtwj5XI7UKJwsOVB4IXdq6c4",
+      "published_date": "2026-10-09",
+      "link": "https://www.linkedin.com/posts/fractoryint_how-to-vet-a-cloud-manufacturing-partner-activity-7514266351977402368-rdyh",
+      "content": "🔍 Learning series #169 — How to Vet a Cloud Manufacturing Partner\n\nThe supplier audit has gone digital. Since you can't walk the shop floor of a distributed network, modern procurement requires a shift from physical site visits to auditing digital workflows, Quality Management Systems, and platform liability.\n\nCheck out our comprehensive guide to learn how to evaluate technical capabilities, ensure IP security, and build a resilient supply chain with the right digital partner 👇",
+      "timestamp": "2026-10-09",
+      "mediaUrl": "https://media.licdn.com/dms/image/sync/v2/D4D27AQGCmJvO8n60mQ/articleshare-shrink_1280_800/B4DaEgJU5OJUAk-/0/1791540679100?e=2147483647&v=beta&t=_i4DlxbHytSeRjWb8_uLtwj5XI7UKJwsOVB4IXdq6c4",
+      "mediaUrls": "https://media.licdn.com/dms/image/sync/v2/D4D27AQGCmJvO8n60mQ/articleshare-shrink_1280_800/B4DaEgJU5OJUAk-/0/1791540679100?e=2147483647&v=beta&t=_i4DlxbHytSeRjWb8_uLtwj5XI7UKJwsOVB4IXdq6c4",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/fractoryint_how-to-vet-a-cloud-manufacturing-partner-activity-7514266351977402368-rdyh",
+      "competitorName": "Forging – Process, Classification &amp; Methods",
+      "activity_id": "7514266351977402368"
+    },
+    {
+      "id": "li_1792481627605_u4eij",
+      "company": "Kay Jay Forgings Limited (Corporate Office)",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/kayjayforgings_newyearcelebrations-kayjayforgings-employeeengagement-activity-7412443034992336897-KH5d",
+      "caption": "✨ New Year Celebrations at Kay Jay Forgings ✨\nWe began the New Year on a joyful and positive note by warmly welcoming all our associates with a shower of flowers, symbolising appreciation, respect, and togetherness.\nTo add sweetness to the celebrations, halwa was distributed among everyone, sharing happiness and festive cheer across the workplace.\nAs we step into the New Year, we thank our associates for their dedication and commitment, and we look forward to another year of growth, collaboration, and success together.\n🌸 Wishing everyone a Happy, Prosperous, and Successful New Year! 🌸\n#NewYearCelebrations #KayJayForgings #EmployeeEngagement #TogetherWeGrow #NewBeginnings",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQFI5rUpSRg4Ng/feedshare-shrink_800/B56Zt5Jp9PHYAg-/0/1767264133984?e=2147483647&v=beta&t=_oLb87va4J-Htf4m_cQJTQlEDua9LE5ScvsZIv32XYc",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQFI5rUpSRg4Ng/feedshare-shrink_800/B56Zt5Jp9PHYAg-/0/1767264133984?e=2147483647&v=beta&t=_oLb87va4J-Htf4m_cQJTQlEDua9LE5ScvsZIv32XYc",
+      "date": "2026-01-01",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/kayjayforgings/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQFI5rUpSRg4Ng/feedshare-shrink_800/B56Zt5Jp9PHYAg-/0/1767264133984?e=2147483647&v=beta&t=_oLb87va4J-Htf4m_cQJTQlEDua9LE5ScvsZIv32XYc",
+      "published_date": "2026-01-01",
+      "link": "https://www.linkedin.com/posts/kayjayforgings_newyearcelebrations-kayjayforgings-employeeengagement-activity-7412443034992336897-KH5d",
+      "content": "✨ New Year Celebrations at Kay Jay Forgings ✨\nWe began the New Year on a joyful and positive note by warmly welcoming all our associates with a shower of flowers, symbolising appreciation, respect, and togetherness.\nTo add sweetness to the celebrations, halwa was distributed among everyone, sharing happiness and festive cheer across the workplace.\nAs we step into the New Year, we thank our associates for their dedication and commitment, and we look forward to another year of growth, collaboration, and success together.\n🌸 Wishing everyone a Happy, Prosperous, and Successful New Year! 🌸\n#NewYearCelebrations #KayJayForgings #EmployeeEngagement #TogetherWeGrow #NewBeginnings",
+      "timestamp": "2026-01-01",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQFI5rUpSRg4Ng/feedshare-shrink_800/B56Zt5Jp9PHYAg-/0/1767264133984?e=2147483647&v=beta&t=_oLb87va4J-Htf4m_cQJTQlEDua9LE5ScvsZIv32XYc",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQFI5rUpSRg4Ng/feedshare-shrink_800/B56Zt5Jp9PHYAg-/0/1767264133984?e=2147483647&v=beta&t=_oLb87va4J-Htf4m_cQJTQlEDua9LE5ScvsZIv32XYc",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/kayjayforgings_newyearcelebrations-kayjayforgings-employeeengagement-activity-7412443034992336897-KH5d",
+      "competitorName": "Kay Jay Forgings Limited (Corporate Office)",
+      "activity_id": "7412443034992336897"
+    },
+    {
+      "id": "li_1792481641310_omrd7",
+      "company": "Patriot Forge Corporation",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/patriot-forge-co%2E_all-of-us-at-patriot-forge-would-all-like-activity-7409340154580119552-bI6a",
+      "caption": "All of us at Patriot Forge would all like to wish you and your families a peaceful and happy holiday.",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQGOunD68emqxw/feedshare-shrink_1280/B56ZtNDmxrG4As-/0/1766524350020?e=2147483647&v=beta&t=_tZdPyjYwh0mX40gYhYQVUfcqvuCeyW1mzmFg3-mQpE",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQGOunD68emqxw/feedshare-shrink_1280/B56ZtNDmxrG4As-/0/1766524350020?e=2147483647&v=beta&t=_tZdPyjYwh0mX40gYhYQVUfcqvuCeyW1mzmFg3-mQpE",
+      "date": "2025-12-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "http://www.linkedin.com/company/patriot-forge-co.?trk=top_nav_home",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQGOunD68emqxw/feedshare-shrink_1280/B56ZtNDmxrG4As-/0/1766524350020?e=2147483647&v=beta&t=_tZdPyjYwh0mX40gYhYQVUfcqvuCeyW1mzmFg3-mQpE",
+      "published_date": "2025-12-23",
+      "link": "https://www.linkedin.com/posts/patriot-forge-co%2E_all-of-us-at-patriot-forge-would-all-like-activity-7409340154580119552-bI6a",
+      "content": "All of us at Patriot Forge would all like to wish you and your families a peaceful and happy holiday.",
+      "timestamp": "2025-12-23",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQGOunD68emqxw/feedshare-shrink_1280/B56ZtNDmxrG4As-/0/1766524350020?e=2147483647&v=beta&t=_tZdPyjYwh0mX40gYhYQVUfcqvuCeyW1mzmFg3-mQpE",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQGOunD68emqxw/feedshare-shrink_1280/B56ZtNDmxrG4As-/0/1766524350020?e=2147483647&v=beta&t=_tZdPyjYwh0mX40gYhYQVUfcqvuCeyW1mzmFg3-mQpE",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/patriot-forge-co%2E_all-of-us-at-patriot-forge-would-all-like-activity-7409340154580119552-bI6a",
+      "competitorName": "Patriot Forge Corporation",
+      "activity_id": "7409340154580119552"
+    },
+    {
+      "id": "li_1792481645609_3ki4r",
+      "company": "All Metals & Forge Group",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/all-metals-%26-forge_opendieforging-manufacturing-machineshop-activity-7515872664725479424-8Wzf",
+      "caption": "We bring together the capabilities and services that matter to machine shops and OEMs:\n\n• Open-die forgings and seamless rolled rings in a broad range of alloys.\n• Rough machining to 250 RMS included.\n• Ultrasonic testing at no additional cost.\n• ISO 9001:2015 and AS9100D registered quality systems.\n• Competitive pricing and delivery in 7–9 weeks on most orders.\n\nEvery one of those advantages serves the same purpose: helping you purchase with confidence and move your job toward completion.\nIf your current supplier has become the automatic choice, make the next order a considered one.\n\nSend your RFQ to sales@steelforge.com or submit it at steelforge.com. Let AMFG earn your business.\n\n#OpenDieForging #Manufacturing #MachineShop",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQFPT-HlTTnSYQ/feedshare-image-high-res/B4EaE2.XR9HIAU-/0/1791923680672?e=2147483647&v=beta&t=xJMO1X1N9fr_0AryHo4Ll0wvnPnpCrP3XTsqLUwnmHo",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQFPT-HlTTnSYQ/feedshare-image-high-res/B4EaE2.XR9HIAU-/0/1791923680672?e=2147483647&v=beta&t=xJMO1X1N9fr_0AryHo4Ll0wvnPnpCrP3XTsqLUwnmHo",
+      "date": "2026-10-13",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/all-metals-&-forge/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQFPT-HlTTnSYQ/feedshare-image-high-res/B4EaE2.XR9HIAU-/0/1791923680672?e=2147483647&v=beta&t=xJMO1X1N9fr_0AryHo4Ll0wvnPnpCrP3XTsqLUwnmHo",
+      "published_date": "2026-10-13",
+      "link": "https://www.linkedin.com/posts/all-metals-%26-forge_opendieforging-manufacturing-machineshop-activity-7515872664725479424-8Wzf",
+      "content": "We bring together the capabilities and services that matter to machine shops and OEMs:\n\n• Open-die forgings and seamless rolled rings in a broad range of alloys.\n• Rough machining to 250 RMS included.\n• Ultrasonic testing at no additional cost.\n• ISO 9001:2015 and AS9100D registered quality systems.\n• Competitive pricing and delivery in 7–9 weeks on most orders.\n\nEvery one of those advantages serves the same purpose: helping you purchase with confidence and move your job toward completion.\nIf your current supplier has become the automatic choice, make the next order a considered one.\n\nSend your RFQ to sales@steelforge.com or submit it at steelforge.com. Let AMFG earn your business.\n\n#OpenDieForging #Manufacturing #MachineShop",
+      "timestamp": "2026-10-13",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQFPT-HlTTnSYQ/feedshare-image-high-res/B4EaE2.XR9HIAU-/0/1791923680672?e=2147483647&v=beta&t=xJMO1X1N9fr_0AryHo4Ll0wvnPnpCrP3XTsqLUwnmHo",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQFPT-HlTTnSYQ/feedshare-image-high-res/B4EaE2.XR9HIAU-/0/1791923680672?e=2147483647&v=beta&t=xJMO1X1N9fr_0AryHo4Ll0wvnPnpCrP3XTsqLUwnmHo",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/all-metals-%26-forge_opendieforging-manufacturing-machineshop-activity-7515872664725479424-8Wzf",
+      "competitorName": "All Metals & Forge Group",
+      "activity_id": "7515872664725479424"
+    },
+    {
+      "id": "li_1792481655904_0y2mw",
+      "company": "Gibbs Gears Precision Engineers Ltd",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/gibbs-gears-precision-engineers-limited_familybusiness-buckinghamshirebusiness-activity-7516422952217722881-sneo",
+      "caption": "A proud moment for our business! 🏆\n\nBeing named a finalist for the Buckinghamshire Family Business of the Year Award is a fantastic achievement and a reflection of our team's hard work and dedication.\n\nWe're looking forward to the awards and celebrating alongside other fantastic businesses! 👏\n\n#FamilyBusiness #BuckinghamshireBusiness #BusinessAwards\n#BucksbusinessAwards\n#Oneteam",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQFelnf2j0VVKQ/feedshare-shrink_800/B4EaE.gtd0GgAc-/0/1792050124892?e=2147483647&v=beta&t=pH6gmizKuNrRpVxSUL8nChgXaDiRTziiUxsKMpEIPuc",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQFelnf2j0VVKQ/feedshare-shrink_800/B4EaE.gtd0GgAc-/0/1792050124892?e=2147483647&v=beta&t=pH6gmizKuNrRpVxSUL8nChgXaDiRTziiUxsKMpEIPuc",
+      "date": "2026-10-15",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/gibbs-gears-precision-engineers-limited",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQFelnf2j0VVKQ/feedshare-shrink_800/B4EaE.gtd0GgAc-/0/1792050124892?e=2147483647&v=beta&t=pH6gmizKuNrRpVxSUL8nChgXaDiRTziiUxsKMpEIPuc",
+      "published_date": "2026-10-15",
+      "link": "https://www.linkedin.com/posts/gibbs-gears-precision-engineers-limited_familybusiness-buckinghamshirebusiness-activity-7516422952217722881-sneo",
+      "content": "A proud moment for our business! 🏆\n\nBeing named a finalist for the Buckinghamshire Family Business of the Year Award is a fantastic achievement and a reflection of our team's hard work and dedication.\n\nWe're looking forward to the awards and celebrating alongside other fantastic businesses! 👏\n\n#FamilyBusiness #BuckinghamshireBusiness #BusinessAwards\n#BucksbusinessAwards\n#Oneteam",
+      "timestamp": "2026-10-15",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQFelnf2j0VVKQ/feedshare-shrink_800/B4EaE.gtd0GgAc-/0/1792050124892?e=2147483647&v=beta&t=pH6gmizKuNrRpVxSUL8nChgXaDiRTziiUxsKMpEIPuc",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQFelnf2j0VVKQ/feedshare-shrink_800/B4EaE.gtd0GgAc-/0/1792050124892?e=2147483647&v=beta&t=pH6gmizKuNrRpVxSUL8nChgXaDiRTziiUxsKMpEIPuc",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/gibbs-gears-precision-engineers-limited_familybusiness-buckinghamshirebusiness-activity-7516422952217722881-sneo",
+      "competitorName": "Gibbs Gears Precision Engineers Ltd",
+      "activity_id": "7516422952217722881"
+    },
+    {
+      "id": "li_1792481602308_ewuz5",
+      "company": "pentagonforge.co.in",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/pentagon-forge_gandhijayanti-pentagonforge-manufacturingindia-activity-7511676214395424768-vLDS",
+      "caption": "Some values never really get old.\n\nTruth. Integrity. Doing your work with purpose.\n\nOn Gandhi Jayanti, we remember Mahatma Gandhi and the values he stood for - values that still have meaning in the way we work, build relationships, and take responsibility for what we deliver.\n\nIn manufacturing, good work is not only about machines, technology or numbers. It is also about doing things the right way, even when no one is watching.\n\nThat is something we continue to believe in at Pentagon Forge & Machine Ltd.\n\nWork with Purpose. Build with Integrity. Deliver with Quality.\n\nWishing everyone a Happy Gandhi Jayanti.\n\n#GandhiJayanti #PentagonForge #ManufacturingIndia #Purpose #Engineering",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQF7XABxUMvMUg/feedshare-shrink_800/B4DaD7Vtc1LIAc-/0/1790923168052?e=2147483647&v=beta&t=3SQWT8PLPGCCxQcmqQ8LRNOeuCuYWj41jK94E1WppE8",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQF7XABxUMvMUg/feedshare-shrink_800/B4DaD7Vtc1LIAc-/0/1790923168052?e=2147483647&v=beta&t=3SQWT8PLPGCCxQcmqQ8LRNOeuCuYWj41jK94E1WppE8",
+      "date": "2026-10-02",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/pentagon-forge/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQF7XABxUMvMUg/feedshare-shrink_800/B4DaD7Vtc1LIAc-/0/1790923168052?e=2147483647&v=beta&t=3SQWT8PLPGCCxQcmqQ8LRNOeuCuYWj41jK94E1WppE8",
+      "published_date": "2026-10-02",
+      "link": "https://www.linkedin.com/posts/pentagon-forge_gandhijayanti-pentagonforge-manufacturingindia-activity-7511676214395424768-vLDS",
+      "content": "Some values never really get old.\n\nTruth. Integrity. Doing your work with purpose.\n\nOn Gandhi Jayanti, we remember Mahatma Gandhi and the values he stood for - values that still have meaning in the way we work, build relationships, and take responsibility for what we deliver.\n\nIn manufacturing, good work is not only about machines, technology or numbers. It is also about doing things the right way, even when no one is watching.\n\nThat is something we continue to believe in at Pentagon Forge & Machine Ltd.\n\nWork with Purpose. Build with Integrity. Deliver with Quality.\n\nWishing everyone a Happy Gandhi Jayanti.\n\n#GandhiJayanti #PentagonForge #ManufacturingIndia #Purpose #Engineering",
+      "timestamp": "2026-10-02",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQF7XABxUMvMUg/feedshare-shrink_800/B4DaD7Vtc1LIAc-/0/1790923168052?e=2147483647&v=beta&t=3SQWT8PLPGCCxQcmqQ8LRNOeuCuYWj41jK94E1WppE8",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQF7XABxUMvMUg/feedshare-shrink_800/B4DaD7Vtc1LIAc-/0/1790923168052?e=2147483647&v=beta&t=3SQWT8PLPGCCxQcmqQ8LRNOeuCuYWj41jK94E1WppE8",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/pentagon-forge_gandhijayanti-pentagonforge-manufacturingindia-activity-7511676214395424768-vLDS",
+      "competitorName": "pentagonforge.co.in",
+      "activity_id": "7511676214395424768"
+    },
+    {
+      "id": "li_1792481596398_d7foh",
+      "company": "Shivam forge",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/shivamforge_shivamforge-forgingindustry-forgedcomponents-activity-7469753844999135232--tkj",
+      "caption": "🔩 SHIVAM FORGE – Precision. Strength. Performance. 🔩\n\nAt Shivam Forge, we specialize in manufacturing high-quality forged components engineered for durability, accuracy, and superior performance.\n\n✅ Premium Quality Forgings\n✅ Precision Engineered Components\n✅ Reliable Industrial Solutions\n✅ Trusted by Industry Leaders\n\nOur products serve a wide range of industries including:\n🚜 Agriculture\n🏭 Industrial Equipment\n🚗 Automotive\n🏗️ Construction\n\nWe are committed to delivering forging excellence and building long-term customer trust through quality and innovation.\n\n📞 Contact: 9265772827\n\n#ShivamForge #ForgingIndustry #ForgedComponents #Manufacturing #Engineering #IndustrialProducts #AutomotiveParts #AgricultureEquipment #ConstructionIndustry #MadeInIndia #PrecisionEngineering #QualityFirst",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQH5Fk8DTWnWkA/feedshare-shrink_1280/B4DZ6nlib8JsAQ-/0/1780928096277?e=2147483647&v=beta&t=8JP3wuLbgeLlm6MsgGzdtOgiJ9PVJ5wFXky7qKfCMQ0",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQH5Fk8DTWnWkA/feedshare-shrink_1280/B4DZ6nlib8JsAQ-/0/1780928096277?e=2147483647&v=beta&t=8JP3wuLbgeLlm6MsgGzdtOgiJ9PVJ5wFXky7qKfCMQ0",
+      "date": "2026-06-08",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/shivamforge/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQH5Fk8DTWnWkA/feedshare-shrink_1280/B4DZ6nlib8JsAQ-/0/1780928096277?e=2147483647&v=beta&t=8JP3wuLbgeLlm6MsgGzdtOgiJ9PVJ5wFXky7qKfCMQ0",
+      "published_date": "2026-06-08",
+      "link": "https://www.linkedin.com/posts/shivamforge_shivamforge-forgingindustry-forgedcomponents-activity-7469753844999135232--tkj",
+      "content": "🔩 SHIVAM FORGE – Precision. Strength. Performance. 🔩\n\nAt Shivam Forge, we specialize in manufacturing high-quality forged components engineered for durability, accuracy, and superior performance.\n\n✅ Premium Quality Forgings\n✅ Precision Engineered Components\n✅ Reliable Industrial Solutions\n✅ Trusted by Industry Leaders\n\nOur products serve a wide range of industries including:\n🚜 Agriculture\n🏭 Industrial Equipment\n🚗 Automotive\n🏗️ Construction\n\nWe are committed to delivering forging excellence and building long-term customer trust through quality and innovation.\n\n📞 Contact: 9265772827\n\n#ShivamForge #ForgingIndustry #ForgedComponents #Manufacturing #Engineering #IndustrialProducts #AutomotiveParts #AgricultureEquipment #ConstructionIndustry #MadeInIndia #PrecisionEngineering #QualityFirst",
+      "timestamp": "2026-06-08",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQH5Fk8DTWnWkA/feedshare-shrink_1280/B4DZ6nlib8JsAQ-/0/1780928096277?e=2147483647&v=beta&t=8JP3wuLbgeLlm6MsgGzdtOgiJ9PVJ5wFXky7qKfCMQ0",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQH5Fk8DTWnWkA/feedshare-shrink_1280/B4DZ6nlib8JsAQ-/0/1780928096277?e=2147483647&v=beta&t=8JP3wuLbgeLlm6MsgGzdtOgiJ9PVJ5wFXky7qKfCMQ0",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/shivamforge_shivamforge-forgingindustry-forgedcomponents-activity-7469753844999135232--tkj",
+      "competitorName": "Shivam forge",
+      "activity_id": "7469753844999135232"
+    },
+    {
+      "id": "linkedin_1792481617801_gjy0h",
+      "company": "What Is Forging? Process, Benefits and Applications",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/steven-chan-forging_forgingmaterials-oemmanufacturing-industrialprocurement-activity-7424021565736153088-DvsH",
+      "caption": "Selecting forging materials isn’t just an engineering decision — it’s a lifecycle cost decision.\n\nIn heavy equipment projects, the wrong material doesn’t fail immediately.\nIt quietly increases wear, maintenance frequency, and operational risk.\n\nWe’ve seen many OEM teams focus on unit price first, only to discover later that material choice drives long-term reliability far more than the initial invoice.\n\nCarbon steel, alloy steel, stainless, aluminum, titanium — each family behaves very differently once forged and heat treated. The real question isn’t which is stronger, but:\n→ Which material matches the load, environment, and expected service life?\n\nWe recently put together a structured guide breaking down forging materials by performance, application, and lifecycle impact.\n\nIt’s written for engineers and procurement teams who care about predictable operation — not just specs on paper.\n\nFull guide here:\n👉 https://lnkd.in/gbbUXubu\n\nCurious how others approach material decisions in OEM projects — do you prioritize strength, cost, or lifecycle stability?\n\n#ForgingMaterials #OEMManufacturing #IndustrialProcurement\n#MechanicalEngineering #MaterialSelection\n#HeavyEquipment #LifecycleCost #ManufacturingEngineering",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQGzbdfe2ewNQQ/feedshare-shrink_1280/B56ZwdsRiSK8Ag-/0/1770024671621?e=2147483647&v=beta&t=PpzHK5ySAGP_X3TD2S2d7uQFV5B-c-TO5RElebgRHgg",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQGzbdfe2ewNQQ/feedshare-shrink_1280/B56ZwdsRiSK8Ag-/0/1770024671621?e=2147483647&v=beta&t=PpzHK5ySAGP_X3TD2S2d7uQFV5B-c-TO5RElebgRHgg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/in/steven-chan-forging/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQGzbdfe2ewNQQ/feedshare-shrink_1280/B56ZwdsRiSK8Ag-/0/1770024671621?e=2147483647&v=beta&t=PpzHK5ySAGP_X3TD2S2d7uQFV5B-c-TO5RElebgRHgg",
+      "published_date": "2026-10-20",
+      "link": "https://www.linkedin.com/posts/steven-chan-forging_forgingmaterials-oemmanufacturing-industrialprocurement-activity-7424021565736153088-DvsH",
+      "content": "Selecting forging materials isn’t just an engineering decision — it’s a lifecycle cost decision.\n\nIn heavy equipment projects, the wrong material doesn’t fail immediately.\nIt quietly increases wear, maintenance frequency, and operational risk.\n\nWe’ve seen many OEM teams focus on unit price first, only to discover later that material choice drives long-term reliability far more than the initial invoice.\n\nCarbon steel, alloy steel, stainless, aluminum, titanium — each family behaves very differently once forged and heat treated. The real question isn’t which is stronger, but:\n→ Which material matches the load, environment, and expected service life?\n\nWe recently put together a structured guide breaking down forging materials by performance, application, and lifecycle impact.\n\nIt’s written for engineers and procurement teams who care about predictable operation — not just specs on paper.\n\nFull guide here:\n👉 https://lnkd.in/gbbUXubu\n\nCurious how others approach material decisions in OEM projects — do you prioritize strength, cost, or lifecycle stability?\n\n#ForgingMaterials #OEMManufacturing #IndustrialProcurement\n#MechanicalEngineering #MaterialSelection\n#HeavyEquipment #LifecycleCost #ManufacturingEngineering",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQGzbdfe2ewNQQ/feedshare-shrink_1280/B56ZwdsRiSK8Ag-/0/1770024671621?e=2147483647&v=beta&t=PpzHK5ySAGP_X3TD2S2d7uQFV5B-c-TO5RElebgRHgg",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQGzbdfe2ewNQQ/feedshare-shrink_1280/B56ZwdsRiSK8Ag-/0/1770024671621?e=2147483647&v=beta&t=PpzHK5ySAGP_X3TD2S2d7uQFV5B-c-TO5RElebgRHgg",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/steven-chan-forging_forgingmaterials-oemmanufacturing-industrialprocurement-activity-7424021565736153088-DvsH",
+      "competitorName": "What Is Forging? Process, Benefits and Applications",
+      "activity_id": "7424021565736153088"
+    },
+    {
+      "id": "linkedin_1792481629800_welfi",
+      "company": "Kay Jay Forgings Limited (Corporate Office)",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/kayjayforgings_precision-durability-excellence-activity-7297934890535133184-jWKk",
+      "caption": "At Kay Jay Forgings, we believe that precision isn’t just a standard—it’s a commitment. Every part we craft is engineered with excellence, ensuring superior performance, durability, and reliability. \n.\nFor more information \nVisit us - www.kayjayforgings.com \n.\n#Precision #Durability #Excellence #ForgingExcellence #ManufacturingExcellence #KayJayForgings",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D5605AQG3Spi4kmdGFw/thumbnail-with-play-button-overlay-high/B56ZUd5C0FHsDM-/0/1739963262745?e=2147483647&v=beta&t=E1sCPEbn5Q9B8EsQWRKa3ODCAxJmiUBuTCF7kmhwAfQ",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQG3Spi4kmdGFw/thumbnail-with-play-button-overlay-high/B56ZUd5C0FHsDM-/0/1739963262745?e=2147483647&v=beta&t=E1sCPEbn5Q9B8EsQWRKa3ODCAxJmiUBuTCF7kmhwAfQ",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/kayjayforgings/",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQG3Spi4kmdGFw/thumbnail-with-play-button-overlay-high/B56ZUd5C0FHsDM-/0/1739963262745?e=2147483647&v=beta&t=E1sCPEbn5Q9B8EsQWRKa3ODCAxJmiUBuTCF7kmhwAfQ",
+      "published_date": "2026-10-20",
+      "link": "https://www.linkedin.com/posts/kayjayforgings_precision-durability-excellence-activity-7297934890535133184-jWKk",
+      "content": "At Kay Jay Forgings, we believe that precision isn’t just a standard—it’s a commitment. Every part we craft is engineered with excellence, ensuring superior performance, durability, and reliability. \n.\nFor more information \nVisit us - www.kayjayforgings.com \n.\n#Precision #Durability #Excellence #ForgingExcellence #ManufacturingExcellence #KayJayForgings",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D5605AQG3Spi4kmdGFw/thumbnail-with-play-button-overlay-high/B56ZUd5C0FHsDM-/0/1739963262745?e=2147483647&v=beta&t=E1sCPEbn5Q9B8EsQWRKa3ODCAxJmiUBuTCF7kmhwAfQ",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D5605AQG3Spi4kmdGFw/thumbnail-with-play-button-overlay-high/B56ZUd5C0FHsDM-/0/1739963262745?e=2147483647&v=beta&t=E1sCPEbn5Q9B8EsQWRKa3ODCAxJmiUBuTCF7kmhwAfQ",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/kayjayforgings_precision-durability-excellence-activity-7297934890535133184-jWKk",
+      "competitorName": "Kay Jay Forgings Limited (Corporate Office)",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQG3Spi4kmdGFw/mp4-720p-30fp-crf28/B56ZUd5C0FHsBk-/0/1739963263839?e=2147483647&v=beta&t=yZQeTlSBtPjlei__aiIZ77KN8gjhD8VrGsVO7uFTF_M",
+      "activity_id": "7297934890535133184"
+    },
+    {
+      "id": "li_1792481641310_wc6br",
+      "company": "Patriot Forge Corporation",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/patriot-forge-co%2E_we-will-not-forget-activity-7394007128832794624-0BhG",
+      "caption": "We will not forget.",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQEjvo7hXE2tKQ/feedshare-image-high-res/B56ZpzKTY9J4Ao-/0/1762868672619?e=2147483647&v=beta&t=XEswkJ0FntXKeAj9xOZmVxBYx-_KJf9zdaR7ySkKqec",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQEjvo7hXE2tKQ/feedshare-image-high-res/B56ZpzKTY9J4Ao-/0/1762868672619?e=2147483647&v=beta&t=XEswkJ0FntXKeAj9xOZmVxBYx-_KJf9zdaR7ySkKqec",
+      "date": "2025-11-11",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "http://www.linkedin.com/company/patriot-forge-co.?trk=top_nav_home",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQEjvo7hXE2tKQ/feedshare-image-high-res/B56ZpzKTY9J4Ao-/0/1762868672619?e=2147483647&v=beta&t=XEswkJ0FntXKeAj9xOZmVxBYx-_KJf9zdaR7ySkKqec",
+      "published_date": "2025-11-11",
+      "link": "https://www.linkedin.com/posts/patriot-forge-co%2E_we-will-not-forget-activity-7394007128832794624-0BhG",
+      "content": "We will not forget.",
+      "timestamp": "2025-11-11",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQEjvo7hXE2tKQ/feedshare-image-high-res/B56ZpzKTY9J4Ao-/0/1762868672619?e=2147483647&v=beta&t=XEswkJ0FntXKeAj9xOZmVxBYx-_KJf9zdaR7ySkKqec",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQEjvo7hXE2tKQ/feedshare-image-high-res/B56ZpzKTY9J4Ao-/0/1762868672619?e=2147483647&v=beta&t=XEswkJ0FntXKeAj9xOZmVxBYx-_KJf9zdaR7ySkKqec",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/patriot-forge-co%2E_we-will-not-forget-activity-7394007128832794624-0BhG",
+      "competitorName": "Patriot Forge Corporation",
+      "activity_id": "7394007128832794624"
+    },
+    {
+      "id": "li_1792481645609_pqr7o",
+      "company": "All Metals & Forge Group",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/all-metals-%26-forge_manufacturing-machineshops-forgings-activity-7513692855366950913-1ow-",
+      "caption": "Four warning signs in September manufacturing data.\n\nA full order book is good news. What counts is having the materials and capacity to deliver.\n\nSeptember’s ISM Manufacturing Report and the National Association of Manufacturers’ latest analysis highlight conditions that machine shops and OEMs should watch closely:\n\n1. New orders are accelerating.\nISM’s September New Orders Index rose to 55.3 from 53.7 in August. Growing demand makes early material planning increasingly important.\n\n2. Backlogs are building.\nThe Backlog of Orders Index climbed to 56.4 from 51.8. More unfinished work can put delivery commitments under pressure.\n\n3. Steel shortages are showing up.\nISM respondents reported steel and steel products in short supply. Confirming availability before committing to a production schedule can help prevent expensive surprises.\n\n4. Customer inventories remain low.\nAt 41.6, ISM’s Customers’ Inventories Index remained in “too low” territory. That supports potential replenishment demand and could leave less breathing room when customers need parts quickly.\n\nOur takeaway? Plan for bottlenecks before they reach your shop floor.\n\nAll Metals & Forge Group helps you stay ahead of the curve with:\n\nExpansive, readily available material stock to help reduce sourcing delays.\nNear-net-shape forgings and rough machining to 250 RMS or better, reducing the material removal your shop must handle.\nUltrasonic testing included at no additional cost to help verify forging integrity before you invest in further machining.\nFast delivery in 7–9 weeks on most orders to support your production planning.\n\nMore time making finished parts. Less time waiting to get started.\n\nHave a project coming up? Send your drawings and requirements to sales@steelforge.com or submit an RFQ at steelforge.com. Let’s keep your next job moving.\n\n#Manufacturing #MachineShops #Forgings #SupplyChain #AllMetalsAndForgeGroup",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQFhqj1hdwjWpA/feedshare-image-high-res/B56aEX_1TwIAAU-/0/1791403972098?e=2147483647&v=beta&t=RZY0J3QbEjdGfsxvCFCBuTMcfZGZuP8NsktXblfNA7Q",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQFhqj1hdwjWpA/feedshare-image-high-res/B56aEX_1TwIAAU-/0/1791403972098?e=2147483647&v=beta&t=RZY0J3QbEjdGfsxvCFCBuTMcfZGZuP8NsktXblfNA7Q",
+      "date": "2026-10-07",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/all-metals-&-forge/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQFhqj1hdwjWpA/feedshare-image-high-res/B56aEX_1TwIAAU-/0/1791403972098?e=2147483647&v=beta&t=RZY0J3QbEjdGfsxvCFCBuTMcfZGZuP8NsktXblfNA7Q",
+      "published_date": "2026-10-07",
+      "link": "https://www.linkedin.com/posts/all-metals-%26-forge_manufacturing-machineshops-forgings-activity-7513692855366950913-1ow-",
+      "content": "Four warning signs in September manufacturing data.\n\nA full order book is good news. What counts is having the materials and capacity to deliver.\n\nSeptember’s ISM Manufacturing Report and the National Association of Manufacturers’ latest analysis highlight conditions that machine shops and OEMs should watch closely:\n\n1. New orders are accelerating.\nISM’s September New Orders Index rose to 55.3 from 53.7 in August. Growing demand makes early material planning increasingly important.\n\n2. Backlogs are building.\nThe Backlog of Orders Index climbed to 56.4 from 51.8. More unfinished work can put delivery commitments under pressure.\n\n3. Steel shortages are showing up.\nISM respondents reported steel and steel products in short supply. Confirming availability before committing to a production schedule can help prevent expensive surprises.\n\n4. Customer inventories remain low.\nAt 41.6, ISM’s Customers’ Inventories Index remained in “too low” territory. That supports potential replenishment demand and could leave less breathing room when customers need parts quickly.\n\nOur takeaway? Plan for bottlenecks before they reach your shop floor.\n\nAll Metals & Forge Group helps you stay ahead of the curve with:\n\nExpansive, readily available material stock to help reduce sourcing delays.\nNear-net-shape forgings and rough machining to 250 RMS or better, reducing the material removal your shop must handle.\nUltrasonic testing included at no additional cost to help verify forging integrity before you invest in further machining.\nFast delivery in 7–9 weeks on most orders to support your production planning.\n\nMore time making finished parts. Less time waiting to get started.\n\nHave a project coming up? Send your drawings and requirements to sales@steelforge.com or submit an RFQ at steelforge.com. Let’s keep your next job moving.\n\n#Manufacturing #MachineShops #Forgings #SupplyChain #AllMetalsAndForgeGroup",
+      "timestamp": "2026-10-07",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQFhqj1hdwjWpA/feedshare-image-high-res/B56aEX_1TwIAAU-/0/1791403972098?e=2147483647&v=beta&t=RZY0J3QbEjdGfsxvCFCBuTMcfZGZuP8NsktXblfNA7Q",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQFhqj1hdwjWpA/feedshare-image-high-res/B56aEX_1TwIAAU-/0/1791403972098?e=2147483647&v=beta&t=RZY0J3QbEjdGfsxvCFCBuTMcfZGZuP8NsktXblfNA7Q",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/all-metals-%26-forge_manufacturing-machineshops-forgings-activity-7513692855366950913-1ow-",
+      "competitorName": "All Metals & Forge Group",
+      "activity_id": "7513692855366950913"
+    },
+    {
+      "id": "li_1792481655904_gaqz0",
+      "company": "Gibbs Gears Precision Engineers Ltd",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/gibbs-gears-precision-engineers-limited_gibbsgears-aerospacemanufacturing-pumpgears-activity-7514288731592454144-xLLS",
+      "caption": "Aerospace pump gears are one of our core areas of expertise at Gibbs Gears.\nClose tolerances, controlled tooth geometry and surface finish all influence internal leakage, flow ripple and volumetric efficiency. Our focus is on manufacturing precision gears that meet the demanding requirements of aerospace pump systems.\n#GibbsGears #AerospaceManufacturing #PumpGears #PrecisionEngineering #UKManufacturing",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQE7Lv5E90TufQ/feedshare-shrink_1280/B4EaEgdyD_LAAM-/0/1791546040882?e=2147483647&v=beta&t=mQY33Nt8dTZLeUAA3lug8Vldfmep5RK1M0JdAKFcPKQ",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQE7Lv5E90TufQ/feedshare-shrink_1280/B4EaEgdyD_LAAM-/0/1791546040882?e=2147483647&v=beta&t=mQY33Nt8dTZLeUAA3lug8Vldfmep5RK1M0JdAKFcPKQ",
+      "date": "2026-10-09",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/gibbs-gears-precision-engineers-limited",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQE7Lv5E90TufQ/feedshare-shrink_1280/B4EaEgdyD_LAAM-/0/1791546040882?e=2147483647&v=beta&t=mQY33Nt8dTZLeUAA3lug8Vldfmep5RK1M0JdAKFcPKQ",
+      "published_date": "2026-10-09",
+      "link": "https://www.linkedin.com/posts/gibbs-gears-precision-engineers-limited_gibbsgears-aerospacemanufacturing-pumpgears-activity-7514288731592454144-xLLS",
+      "content": "Aerospace pump gears are one of our core areas of expertise at Gibbs Gears.\nClose tolerances, controlled tooth geometry and surface finish all influence internal leakage, flow ripple and volumetric efficiency. Our focus is on manufacturing precision gears that meet the demanding requirements of aerospace pump systems.\n#GibbsGears #AerospaceManufacturing #PumpGears #PrecisionEngineering #UKManufacturing",
+      "timestamp": "2026-10-09",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQE7Lv5E90TufQ/feedshare-shrink_1280/B4EaEgdyD_LAAM-/0/1791546040882?e=2147483647&v=beta&t=mQY33Nt8dTZLeUAA3lug8Vldfmep5RK1M0JdAKFcPKQ",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQE7Lv5E90TufQ/feedshare-shrink_1280/B4EaEgdyD_LAAM-/0/1791546040882?e=2147483647&v=beta&t=mQY33Nt8dTZLeUAA3lug8Vldfmep5RK1M0JdAKFcPKQ",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/gibbs-gears-precision-engineers-limited_gibbsgears-aerospacemanufacturing-pumpgears-activity-7514288731592454144-xLLS",
+      "competitorName": "Gibbs Gears Precision Engineers Ltd",
+      "activity_id": "7514288731592454144"
+    },
+    {
+      "id": "li_1792481602308_ajwxt",
+      "company": "pentagonforge.co.in",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/pentagon-forge_pentagonforge-forging-precisionforging-activity-7503323926878392320-I2Mq",
+      "caption": "From Raw Metal to Finished Component, All Under One Roof.\n\nAt Pentagon Forge & Machine, manufacturing doesn't stop at forging.\n\nOur fully integrated process brings critical operations together in-house:\nCutting → Heating → Forging → Heat Treatment → Shot Blasting → Crack Detection / NDT → Machining → Finished Component\n\nThis integrated approach gives us greater control over quality, consistency, process flow, and precision at every stage.\n\nFrom raw material to the final component, every step is part of one connected manufacturing ecosystem.\nFully Integrated. Completely In-House.\n\n#PentagonForge #Forging #PrecisionForging #CNCMachining #Manufacturing #NDT #HeatTreatment #IndustrialManufacturing",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQH3TLdEpo-XVw/feedshare-image-high-res/B4DaBm50M7GYAU-/0/1788432827469?e=2147483647&v=beta&t=lhMmzHFt4cZQWBa6PToE6Y-u8Mq1m2kNw15YhqyCy5k",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQH3TLdEpo-XVw/feedshare-image-high-res/B4DaBm50M7GYAU-/0/1788432827469?e=2147483647&v=beta&t=lhMmzHFt4cZQWBa6PToE6Y-u8Mq1m2kNw15YhqyCy5k",
+      "date": "2026-09-09",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/pentagon-forge/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQH3TLdEpo-XVw/feedshare-image-high-res/B4DaBm50M7GYAU-/0/1788432827469?e=2147483647&v=beta&t=lhMmzHFt4cZQWBa6PToE6Y-u8Mq1m2kNw15YhqyCy5k",
+      "published_date": "2026-09-09",
+      "link": "https://www.linkedin.com/posts/pentagon-forge_pentagonforge-forging-precisionforging-activity-7503323926878392320-I2Mq",
+      "content": "From Raw Metal to Finished Component, All Under One Roof.\n\nAt Pentagon Forge & Machine, manufacturing doesn't stop at forging.\n\nOur fully integrated process brings critical operations together in-house:\nCutting → Heating → Forging → Heat Treatment → Shot Blasting → Crack Detection / NDT → Machining → Finished Component\n\nThis integrated approach gives us greater control over quality, consistency, process flow, and precision at every stage.\n\nFrom raw material to the final component, every step is part of one connected manufacturing ecosystem.\nFully Integrated. Completely In-House.\n\n#PentagonForge #Forging #PrecisionForging #CNCMachining #Manufacturing #NDT #HeatTreatment #IndustrialManufacturing",
+      "timestamp": "2026-09-09",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQH3TLdEpo-XVw/feedshare-image-high-res/B4DaBm50M7GYAU-/0/1788432827469?e=2147483647&v=beta&t=lhMmzHFt4cZQWBa6PToE6Y-u8Mq1m2kNw15YhqyCy5k",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQH3TLdEpo-XVw/feedshare-image-high-res/B4DaBm50M7GYAU-/0/1788432827469?e=2147483647&v=beta&t=lhMmzHFt4cZQWBa6PToE6Y-u8Mq1m2kNw15YhqyCy5k",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/pentagon-forge_pentagonforge-forging-precisionforging-activity-7503323926878392320-I2Mq",
+      "competitorName": "pentagonforge.co.in",
+      "activity_id": "7503323926878392320"
+    },
+    {
+      "id": "li_1792481596398_dybzq",
+      "company": "Shivam forge",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/shivamforge_shivamforge-forging-precisionforging-activity-7469075012142989313-mYZM",
+      "caption": "🔥 Precision Forged Components\n⚙️ High Strength | Durability | Reliability\n\n✅ Flanges\n✅ Yokes & Clamps\n✅ Precision Forgings\n✅ Plugs & Blocks\n\n📞 9265772827\n📧 info@shivamforge.com\n🌐 www.shivamforge.com\n\n#ShivamForge #Forging #PrecisionForging #CNCMachining #IndustrialParts #ForgedComponents #Engineering #Manufacturing #HydraulicParts #MetalForging #IndiaIndustry #RajkotBusiness",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQGNmaMzk9crzQ/feedshare-shrink_800/B4DZ6d8JOEGcAc-/0/1780766250143?e=2147483647&v=beta&t=Sm2vXIJbiMLZKYUTnxtfJLLmfcjMrZLn3YzxkIjZ0Iw",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQGNmaMzk9crzQ/feedshare-shrink_800/B4DZ6d8JOEGcAc-/0/1780766250143?e=2147483647&v=beta&t=Sm2vXIJbiMLZKYUTnxtfJLLmfcjMrZLn3YzxkIjZ0Iw",
+      "date": "2026-06-06",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/shivamforge/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQGNmaMzk9crzQ/feedshare-shrink_800/B4DZ6d8JOEGcAc-/0/1780766250143?e=2147483647&v=beta&t=Sm2vXIJbiMLZKYUTnxtfJLLmfcjMrZLn3YzxkIjZ0Iw",
+      "published_date": "2026-06-06",
+      "link": "https://www.linkedin.com/posts/shivamforge_shivamforge-forging-precisionforging-activity-7469075012142989313-mYZM",
+      "content": "🔥 Precision Forged Components\n⚙️ High Strength | Durability | Reliability\n\n✅ Flanges\n✅ Yokes & Clamps\n✅ Precision Forgings\n✅ Plugs & Blocks\n\n📞 9265772827\n📧 info@shivamforge.com\n🌐 www.shivamforge.com\n\n#ShivamForge #Forging #PrecisionForging #CNCMachining #IndustrialParts #ForgedComponents #Engineering #Manufacturing #HydraulicParts #MetalForging #IndiaIndustry #RajkotBusiness",
+      "timestamp": "2026-06-06",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQGNmaMzk9crzQ/feedshare-shrink_800/B4DZ6d8JOEGcAc-/0/1780766250143?e=2147483647&v=beta&t=Sm2vXIJbiMLZKYUTnxtfJLLmfcjMrZLn3YzxkIjZ0Iw",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQGNmaMzk9crzQ/feedshare-shrink_800/B4DZ6d8JOEGcAc-/0/1780766250143?e=2147483647&v=beta&t=Sm2vXIJbiMLZKYUTnxtfJLLmfcjMrZLn3YzxkIjZ0Iw",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/shivamforge_shivamforge-forging-precisionforging-activity-7469075012142989313-mYZM",
+      "competitorName": "Shivam forge",
+      "activity_id": "7469075012142989313"
+    },
+    {
+      "id": "linkedin_1792481629800_s9f9w",
+      "company": "Kay Jay Forgings Limited (Corporate Office)",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/kayjayforgings_didyouknow-forgingfacts-kayjayforgings-activity-7293935943214866432-_jbX",
+      "caption": "At Kay Jay Forgings, we use advanced techniques to ensure precision and durability in every product. 🚀\n.\nFor more information\nvisit us - www.kayjayforgings.com\n.\n#DidYouKnow #ForgingFacts #KayJayForgings #EngineeringExcellence #Manufacturing #MetalForging #HighHeatProcess",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQH7QAEOuAZCTA/feedshare-image-high-res/B56ZTlEFYDGoA0-/0/1739009842845?e=2147483647&v=beta&t=f-a2Ma8MmStyDeIMZQG_qKhPLuRd_X6b8n8HvyXS3fk",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQH7QAEOuAZCTA/feedshare-image-high-res/B56ZTlEFYDGoA0-/0/1739009842845?e=2147483647&v=beta&t=f-a2Ma8MmStyDeIMZQG_qKhPLuRd_X6b8n8HvyXS3fk",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/kayjayforgings/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQH7QAEOuAZCTA/feedshare-image-high-res/B56ZTlEFYDGoA0-/0/1739009842845?e=2147483647&v=beta&t=f-a2Ma8MmStyDeIMZQG_qKhPLuRd_X6b8n8HvyXS3fk",
+      "published_date": "2026-10-20",
+      "link": "https://www.linkedin.com/posts/kayjayforgings_didyouknow-forgingfacts-kayjayforgings-activity-7293935943214866432-_jbX",
+      "content": "At Kay Jay Forgings, we use advanced techniques to ensure precision and durability in every product. 🚀\n.\nFor more information\nvisit us - www.kayjayforgings.com\n.\n#DidYouKnow #ForgingFacts #KayJayForgings #EngineeringExcellence #Manufacturing #MetalForging #HighHeatProcess",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQH7QAEOuAZCTA/feedshare-image-high-res/B56ZTlEFYDGoA0-/0/1739009842845?e=2147483647&v=beta&t=f-a2Ma8MmStyDeIMZQG_qKhPLuRd_X6b8n8HvyXS3fk",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQH7QAEOuAZCTA/feedshare-image-high-res/B56ZTlEFYDGoA0-/0/1739009842845?e=2147483647&v=beta&t=f-a2Ma8MmStyDeIMZQG_qKhPLuRd_X6b8n8HvyXS3fk",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/kayjayforgings_didyouknow-forgingfacts-kayjayforgings-activity-7293935943214866432-_jbX",
+      "competitorName": "Kay Jay Forgings Limited (Corporate Office)",
+      "activity_id": "7293935943214866432"
+    },
+    {
+      "id": "li_1792481645609_k68ez",
+      "company": "All Metals & Forge Group",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/all-metals-%26-forge_spindle-off-downtime-why-idle-cnc-machines-activity-7512960580543082496-y7HK",
+      "caption": "There are few things more expensive in a machine shop than a silent spindle.\n\nThe operator is ready. The machine is available. The schedule is full.\nBut the material is late. The program is not approved. Inspection is holding the part. Or the forging needs more cleanup than expected before the real machining can even begin.\n\nThat is the problem with “spindle-off” downtime. The machine may be one of the most valuable assets in the building, but when it is waiting, it is not producing.\n\nIn our latest article, “Spindle-Off Downtime: Why Idle CNC Machines Cost More Than You Think,” we look at the hidden causes of lost machine capacity and why the condition of incoming material plays a bigger role than many shops realize.\n\nAll Metals & Forge Group helps machine shops start closer to the finish line by providing every forging:\n• Rough-machined to 250 RMS or better\n• Machined to within 3 MM of finished dimensions\n• Ultrasonically tested in accordance with ASTM A388/A388M\n\nLess unnecessary cleanup. Less uncertainty. More productive spindle time.\nBecause your best CNC equipment should be making precision parts, not spending hours removing excess stock that could have been taken care of upstream.\n\nRead the full article at: https://lnkd.in/grZ_uyU6\n\nHave a forged component coming up? Send your RFQ to sales@steelforge.com.\n\n#MachineShop #CNCMachining #Manufacturing #Machining #OpenDieForging #Forgings #ManufacturingEfficiency #CNC #Metalworking #OEM",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/sync/v2/D5627AQHsv0vSMLzIFA/articleshare-shrink_1280_800/B56aENlxgfHQAg-/0/1791229368923?e=2147483647&v=beta&t=oakyW64nCgOHSEXoVNHjbbEUewy3Bpelqovpovm7IO4",
+      "media_url": "https://media.licdn.com/dms/image/sync/v2/D5627AQHsv0vSMLzIFA/articleshare-shrink_1280_800/B56aENlxgfHQAg-/0/1791229368923?e=2147483647&v=beta&t=oakyW64nCgOHSEXoVNHjbbEUewy3Bpelqovpovm7IO4",
+      "date": "2026-10-05",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/all-metals-&-forge/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/sync/v2/D5627AQHsv0vSMLzIFA/articleshare-shrink_1280_800/B56aENlxgfHQAg-/0/1791229368923?e=2147483647&v=beta&t=oakyW64nCgOHSEXoVNHjbbEUewy3Bpelqovpovm7IO4",
+      "published_date": "2026-10-05",
+      "link": "https://www.linkedin.com/posts/all-metals-%26-forge_spindle-off-downtime-why-idle-cnc-machines-activity-7512960580543082496-y7HK",
+      "content": "There are few things more expensive in a machine shop than a silent spindle.\n\nThe operator is ready. The machine is available. The schedule is full.\nBut the material is late. The program is not approved. Inspection is holding the part. Or the forging needs more cleanup than expected before the real machining can even begin.\n\nThat is the problem with “spindle-off” downtime. The machine may be one of the most valuable assets in the building, but when it is waiting, it is not producing.\n\nIn our latest article, “Spindle-Off Downtime: Why Idle CNC Machines Cost More Than You Think,” we look at the hidden causes of lost machine capacity and why the condition of incoming material plays a bigger role than many shops realize.\n\nAll Metals & Forge Group helps machine shops start closer to the finish line by providing every forging:\n• Rough-machined to 250 RMS or better\n• Machined to within 3 MM of finished dimensions\n• Ultrasonically tested in accordance with ASTM A388/A388M\n\nLess unnecessary cleanup. Less uncertainty. More productive spindle time.\nBecause your best CNC equipment should be making precision parts, not spending hours removing excess stock that could have been taken care of upstream.\n\nRead the full article at: https://lnkd.in/grZ_uyU6\n\nHave a forged component coming up? Send your RFQ to sales@steelforge.com.\n\n#MachineShop #CNCMachining #Manufacturing #Machining #OpenDieForging #Forgings #ManufacturingEfficiency #CNC #Metalworking #OEM",
+      "timestamp": "2026-10-05",
+      "mediaUrl": "https://media.licdn.com/dms/image/sync/v2/D5627AQHsv0vSMLzIFA/articleshare-shrink_1280_800/B56aENlxgfHQAg-/0/1791229368923?e=2147483647&v=beta&t=oakyW64nCgOHSEXoVNHjbbEUewy3Bpelqovpovm7IO4",
+      "mediaUrls": "https://media.licdn.com/dms/image/sync/v2/D5627AQHsv0vSMLzIFA/articleshare-shrink_1280_800/B56aENlxgfHQAg-/0/1791229368923?e=2147483647&v=beta&t=oakyW64nCgOHSEXoVNHjbbEUewy3Bpelqovpovm7IO4",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/all-metals-%26-forge_spindle-off-downtime-why-idle-cnc-machines-activity-7512960580543082496-y7HK",
+      "competitorName": "All Metals & Forge Group",
+      "activity_id": "7512960580543082496"
+    },
+    {
+      "id": "li_1792481655904_ior8u",
+      "company": "Gibbs Gears Precision Engineers Ltd",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/gibbs-gears-precision-engineers-limited_gibbsgears-aerospacemanufacturing-aerospaceactuation-activity-7512931767205515264-63Gs",
+      "caption": "Precision worms & wheels for mission-critical aerospace applications.\nEnquiries@Gibbsgears.com\n\n#GibbsGears #AerospaceManufacturing #AerospaceActuation #PrecisionEngineering #WormGears #PowerTransmission #BritishManufacturing",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQEtt05clAGIxg/feedshare-image-high-res/B4EaENLob6H4AU-/0/1791222515716?e=2147483647&v=beta&t=sfQ9thMeIIcDcjSoDbLeyLBoWepW_gWYDMelG3MxRI4",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQEtt05clAGIxg/feedshare-image-high-res/B4EaENLob6H4AU-/0/1791222515716?e=2147483647&v=beta&t=sfQ9thMeIIcDcjSoDbLeyLBoWepW_gWYDMelG3MxRI4",
+      "date": "2026-10-05",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/gibbs-gears-precision-engineers-limited",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQEtt05clAGIxg/feedshare-image-high-res/B4EaENLob6H4AU-/0/1791222515716?e=2147483647&v=beta&t=sfQ9thMeIIcDcjSoDbLeyLBoWepW_gWYDMelG3MxRI4",
+      "published_date": "2026-10-05",
+      "link": "https://www.linkedin.com/posts/gibbs-gears-precision-engineers-limited_gibbsgears-aerospacemanufacturing-aerospaceactuation-activity-7512931767205515264-63Gs",
+      "content": "Precision worms & wheels for mission-critical aerospace applications.\nEnquiries@Gibbsgears.com\n\n#GibbsGears #AerospaceManufacturing #AerospaceActuation #PrecisionEngineering #WormGears #PowerTransmission #BritishManufacturing",
+      "timestamp": "2026-10-05",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQEtt05clAGIxg/feedshare-image-high-res/B4EaENLob6H4AU-/0/1791222515716?e=2147483647&v=beta&t=sfQ9thMeIIcDcjSoDbLeyLBoWepW_gWYDMelG3MxRI4",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQEtt05clAGIxg/feedshare-image-high-res/B4EaENLob6H4AU-/0/1791222515716?e=2147483647&v=beta&t=sfQ9thMeIIcDcjSoDbLeyLBoWepW_gWYDMelG3MxRI4",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/gibbs-gears-precision-engineers-limited_gibbsgears-aerospacemanufacturing-aerospaceactuation-activity-7512931767205515264-63Gs",
+      "competitorName": "Gibbs Gears Precision Engineers Ltd",
+      "activity_id": "7512931767205515264"
     }
   ],
   "seedCompetitorUrls": [
