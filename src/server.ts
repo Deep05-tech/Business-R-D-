@@ -778,7 +778,7 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
   const heartbeat = setInterval(() => {
     if (!response.writableEnded) {
       try {
-        response.write(`: keepalive\n\n`);
+        response.write(`: keepalive\n\ndata: ${JSON.stringify({ type: 'heartbeat' })}\n\n`);
         flushResponse();
       } catch (_) {}
     }
@@ -807,6 +807,12 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
 
   // Immediately clear any prior tombstone for this project
   await memoryStore.removeTombstone(finalUrl);
+
+  // Early-assign project to authenticated user so any polling/memory check succeeds
+  const user = (request as express.Request & { currentUser?: AuthUser }).currentUser;
+  if (user) {
+    await authStore.assignProject(user.username, finalUrl);
+  }
 
   try {
     let brochureText: string | undefined = undefined;

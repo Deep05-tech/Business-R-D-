@@ -55,6 +55,15 @@ export function getFallbackKey(): string {
 const GROQ_FAST_MODELS = ["openai/gpt-oss-20b", "openai/gpt-oss-120b", "qwen/qwen3.8-27b"];
 const GROQ_HEAVY_MODELS = ["openai/gpt-oss-120b", "openai/gpt-oss-20b", "qwen/qwen3.8-27b"];
 
+export function parseGroqWaitTimeSec(text: string): number {
+  if (!text) return 0;
+  const m = text.match(/try again in (?:(\d+)m\s*)?(?:([0-9.]+)s)?/i);
+  if (!m) return 0;
+  const minutes = m[1] ? parseInt(m[1], 10) : 0;
+  const seconds = m[2] ? parseFloat(m[2]) : 0;
+  return (minutes * 60) + seconds;
+}
+
 // Track per-model daily quota exhaustion to avoid hammering quota-exhausted models
 const modelExhaustedUntil: Record<string, number> = {};
 
@@ -99,7 +108,7 @@ function createResilientGroqFetch(preferredModels: string[]) {
       // If all candidate models are in a short rolling cooldown, wait for the nearest one
       if (!foundAvailable) {
         const minWait = Math.min(...preferredModels.map(m => Math.max(0, (modelExhaustedUntil[m] || 0) - Date.now())));
-        if (minWait > 0 && minWait <= 45000) {
+        if (minWait > 0 && minWait <= 60000) {
           logger.info(`[ResilientFetch] All Groq models in rolling cooldown. Waiting ${minWait + 500}ms for token window reset...`);
           await new Promise((resolve) => setTimeout(resolve, minWait + 500));
           continue;
@@ -133,12 +142,11 @@ function createResilientGroqFetch(preferredModels: string[]) {
         const errText = await res.text();
         const isOtpm = /Request too large|OTPM/i.test(errText);
         const isTpdQuota = /tokens per day|TPD|quota/i.test(errText);
-        const waitMatch = errText.match(/try again in ([0-9.]+)s/i);
-        const waitSec = waitMatch ? parseFloat(waitMatch[1]) : 0;
+        const waitSec = parseGroqWaitTimeSec(errText);
 
         logger.warn(
           `[ResilientFetch] Groq 429 on model ${activeModel} (Key ${keyIndex % keys.length + 1}/${keys.length}). ` +
-          `Reason: ${isOtpm ? "OTPM Limit" : isTpdQuota ? "TPD Quota Exhausted" : "Rate limit"}. Retrying with failover...`
+          `Reason: ${isOtpm ? "OTPM Limit" : isTpdQuota ? "TPD Quota Exhausted" : "Rate limit"}. Wait requested: ${waitSec}s. Retrying with failover...`
         );
 
         if (isTpdQuota) {
@@ -147,13 +155,14 @@ function createResilientGroqFetch(preferredModels: string[]) {
             modelExhaustedUntil[activeModel] = Date.now() + Math.ceil(waitSec * 1000) + 1000;
             modelIndex++;
           } else {
-            // Hard daily quota exhausted: latch disabled for 15 minutes and switch model immediately
-            modelExhaustedUntil[activeModel] = Date.now() + 15 * 60 * 1000;
+            // Hard daily quota or multi-minute wait: latch disabled up to waitSec or max 15 minutes
+            const latchMs = waitSec > 0 ? Math.min(Math.ceil(waitSec * 1000), 15 * 60 * 1000) : 15 * 60 * 1000;
+            modelExhaustedUntil[activeModel] = Date.now() + latchMs;
             modelIndex++;
           }
         } else if (isOtpm) {
           const jitter = Math.floor(Math.random() * 1500);
-          const waitMs = waitMatch ? Math.min(Math.ceil(parseFloat(waitMatch[1]) * 1000) + 500 + jitter, 15000) : 3000 + jitter;
+          const waitMs = waitSec > 0 ? Math.min(Math.ceil(waitSec * 1000) + 500 + jitter, 15000) : 3000 + jitter;
           logger.info(`[ResilientFetch] Cooling down ${waitMs}ms for OTPM window...`);
           await new Promise((resolve) => setTimeout(resolve, waitMs));
           if (bodyObj && bodyObj.max_tokens) {
@@ -164,6 +173,9 @@ function createResilientGroqFetch(preferredModels: string[]) {
             modelIndex++;
           }
         } else {
+          if (waitSec > 0 && waitSec <= 65) {
+            modelExhaustedUntil[activeModel] = Date.now() + Math.ceil(waitSec * 1000) + 1000;
+          }
           keyIndex++;
           if (keyIndex % keys.length === 0) {
             modelIndex++;

@@ -321,15 +321,29 @@ export class OrchestratorAgent {
     onProgress?.("Offerings extraction & Digital maturity");
     const [offerings, digital] = await Promise.all([
       (async () => {
-        let off = await this.agents.offerings.run(web.data, semantic.data);
+        let off: any;
+        try {
+          off = await this.agents.offerings.run(web.data, semantic.data);
+        } catch (e: any) {
+          logger.warn(`Offerings extraction fallback: ${e.message}`);
+          off = { agent: "offerings", version: "1", confidence: "low", data: { offerings: { products: [], services: [], valuePropositions: [] }, processes: { processes: [] } }, sources: [], warnings: [e.message] };
+        }
         if (off.data) {
-          off.data = await this.agents.aiContent.run(off.data);
+          try {
+            off.data = await this.agents.aiContent.run(off.data);
+          } catch (aiErr: any) {
+            logger.warn(`AI content enhancement fallback: ${aiErr.message}`);
+          }
         }
         return off;
       })(),
-      dag.requiredAgents.includes("digitalMaturity")
+      (dag.requiredAgents.includes("digitalMaturity")
         ? this.agents.digital.run(web.data, social.data)
         : Promise.resolve({ agent: "digital", sources: [], warnings: [], data: {} as unknown as DigitalMaturity } as AgentResult<DigitalMaturity>)
+      ).catch(e => {
+        logger.warn(`Digital maturity fallback: ${e.message}`);
+        return { agent: "digital", sources: [], warnings: [e.message], data: {} as unknown as DigitalMaturity } as AgentResult<DigitalMaturity>;
+      })
     ]);
 
     onProgress?.("Offerings Extracted", { offerings: offerings.data });
@@ -344,12 +358,20 @@ export class OrchestratorAgent {
     // ---------------------------------------------------------------------------
     onProgress?.("Audience and Brand analysis");
     const [audience, brand] = await Promise.all([
-      dag.requiredAgents.includes("audienceIntelligence")
+      (dag.requiredAgents.includes("audienceIntelligence")
         ? this.agents.audience.run(web.data, semantic.data, identity.data, input.customInstructions)
-        : Promise.resolve({ agent: "audienceIntelligence", version: "1", confidence: "low" as const, data: { buyerPersonas: [], geographies: [], targetIndustries: [] }, sources: [], warnings: [] } as AgentResult<AudienceIntelligence>),
-      dag.requiredAgents.includes("brandIntelligence")
+        : Promise.resolve({ agent: "audienceIntelligence", version: "1", confidence: "low" as const, data: { buyerPersonas: [], geographies: [], targetIndustries: [] }, sources: [], warnings: [] } as AgentResult<AudienceIntelligence>)
+      ).catch(e => {
+        logger.warn(`Audience agent fallback: ${e.message}`);
+        return { agent: "audienceIntelligence", version: "1", confidence: "low" as const, data: { buyerPersonas: ["Business Decision Makers", "Procurement Specialists"], geographies: [identity.data.location || "Global"], targetIndustries: [identity.data.industry || "Commercial"] }, sources: [], warnings: [e.message] } as AgentResult<AudienceIntelligence>;
+      }),
+      (dag.requiredAgents.includes("brandIntelligence")
         ? this.agents.brand.run(web.data, semantic.data, offerings.data.offerings, input.customInstructions)
-        : Promise.resolve({ agent: "brandIntelligence", version: "1", confidence: "low" as const, data: { tone: null, positioning: null, usps: [], messagingStyle: null }, sources: [], warnings: [] } as AgentResult<BrandIntelligence>),
+        : Promise.resolve({ agent: "brandIntelligence", version: "1", confidence: "low" as const, data: { tone: null, positioning: null, usps: [], messagingStyle: null }, sources: [], warnings: [] } as AgentResult<BrandIntelligence>)
+      ).catch(e => {
+        logger.warn(`Brand agent fallback: ${e.message}`);
+        return { agent: "brandIntelligence", version: "1", confidence: "low" as const, data: { tone: "Professional", positioning: `${identity.data.officialName || "Company"} provides solutions in ${identity.data.industry || "commercial sector"}.`, usps: [], messagingStyle: "Informative" }, sources: [], warnings: [e.message] } as AgentResult<BrandIntelligence>;
+      })
     ]);
 
     onProgress?.("Audience Analyzed", { audience: audience.data });
@@ -360,16 +382,35 @@ export class OrchestratorAgent {
     // ---------------------------------------------------------------------------
     onProgress?.("R&D Insights & Marketing Strategy");
     const [rd, marketingSales] = await Promise.all([
-      dag.requiredAgents.includes("rdInsight") && brand.data && digital.data
+      (dag.requiredAgents.includes("rdInsight") && brand.data && digital.data
         ? this.agents.rd.run(web.data, offerings.data.offerings, brand.data, digital.data)
-        : Promise.resolve({ agent: "rd", sources: [], warnings: [], data: { opportunities: [], gaps: [], improvements: [] } } as AgentResult<RdInsights>),
+        : Promise.resolve({ agent: "rd", sources: [], warnings: [], data: { opportunities: [], gaps: [], improvements: [] } } as AgentResult<RdInsights>)
+      ).catch(e => {
+        logger.warn(`R&D agent fallback: ${e.message}`);
+        return { agent: "rd", sources: [], warnings: [e.message], data: { opportunities: ["Digital process integration", "Operational automation"], gaps: ["Ecosystem visibility"], improvements: ["Expanded digital footprint"] } } as AgentResult<RdInsights>;
+      }),
       this.agents.marketingSales.run(
         identity.data,
         offerings.data.offerings,
         audience.data,
         input.brochureText,
         input.customInstructions
-      )
+      ).catch(e => {
+        logger.warn(`Marketing & Sales agent fallback: ${e.message}`);
+        return {
+          agent: "marketing-sales-agent",
+          version: "1.0.0",
+          confidence: "low" as const,
+          data: {
+            contentStrategy: { platforms: ["LinkedIn", "Instagram"], themes: ["Growth", "Case Studies", "Industry Insights"], postTypes: ["Image", "Carousel", "Video"] },
+            creativeConcepts: [],
+            competitors: [],
+            linkedinOutreach: []
+          },
+          sources: [],
+          warnings: [e.message]
+        } as AgentResult<MarketingSalesIntelligence>;
+      })
     ]);
 
     onProgress?.("R&D Insights Synthesized", { rdInsights: rd.data });

@@ -1402,103 +1402,129 @@ window.runIntelligence = async function() {
     const decoder = new TextDecoder();
     let buffer = "";
 
+    const processSSEChunk = (chunk) => {
+      const trimmed = (chunk || "").trim();
+      if (!trimmed || !trimmed.startsWith('data:')) return;
+      let data;
+      try {
+        data = JSON.parse(trimmed.replace(/^data:\s*/, ''));
+      } catch (jsonErr) {
+        console.debug("SSE JSON chunk parsing wait:", jsonErr);
+        return;
+      }
+
+      if (data.type === 'heartbeat') {
+        return;
+      }
+
+      if (data.type === 'error') {
+        streamError = data.error || 'Analysis failed';
+        throw new Error(streamError);
+      }
+
+      if (data.type === 'progress') {
+        if (statusEl) {
+          statusEl.innerText = data.step || data.message || 'Processing...';
+          statusEl.style.animation = 'none';
+          void statusEl.offsetWidth; // trigger reflow
+          statusEl.style.animation = 'pulse 1s ease';
+        }
+        if (data.partial) {
+          if (data.partial.businessIdentity) {
+            const id = data.partial.businessIdentity;
+            if (document.getElementById('edit-name')) document.getElementById('edit-name').value = id.officialName || '';
+            if (document.getElementById('edit-industry')) document.getElementById('edit-industry').value = id.industry || '';
+            if (document.getElementById('edit-subindustry')) document.getElementById('edit-subindustry').value = id.subIndustry || '';
+            if (document.getElementById('edit-location')) document.getElementById('edit-location').value = id.location || '';
+            if (document.getElementById('edit-vision')) document.getElementById('edit-vision').value = id.vision || '';
+            if (document.getElementById('edit-description')) document.getElementById('edit-description').value = id.description || '';
+          }
+          if (data.partial.offerings) {
+            const off = data.partial.offerings;
+            if (document.getElementById('edit-products') && off.products) {
+              document.getElementById('edit-products').value = off.products.map(p => typeof p === 'string' ? p : p.name).join(', ');
+            }
+            if (document.getElementById('edit-services') && off.services) {
+              document.getElementById('edit-services').value = off.services.map(s => typeof s === 'string' ? s : s.name).join(', ');
+            }
+          }
+          if (data.partial.audience) {
+            const aud = data.partial.audience;
+            if (document.getElementById('edit-audience') && aud.buyerPersonas) {
+              document.getElementById('edit-audience').value = aud.buyerPersonas.join(', ');
+            }
+          }
+        }
+      }
+
+      if (data.type === 'complete') {
+        hasCompleted = true;
+        window.isAnalyzingBusiness = false;
+        window.showSuccess("Business intelligence fully analyzed!");
+        
+        const finalUrl = (data.profile && data.profile.input && data.profile.input.websiteUrl) ? data.profile.input.websiteUrl : url;
+        const officialName = (data.profile && data.profile.businessIdentitySummary && data.profile.businessIdentitySummary.officialName) || finalUrl;
+
+        // Register in sidebar
+        window.addOrUpdateProjectInSidebar(finalUrl, officialName);
+        loadProjects(true);
+        const globalProj = document.getElementById('global-project');
+        if (globalProj) globalProj.value = finalUrl;
+        window.selectProject(finalUrl, false);
+        switchTab('details', 'Project Details & Review');
+      }
+    };
+
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
       buffer += decoder.decode(value, { stream: true });
       
-      let lines = buffer.split('\n\n');
+      let lines = buffer.split(/\r?\n\r?\n/);
       buffer = lines.pop(); // Keep incomplete chunk
       
       for (const line of lines) {
-        if (line.startsWith('data: ')) {
-          let data;
-          try {
-            data = JSON.parse(line.slice(6));
-          } catch (jsonErr) {
-            console.debug("SSE JSON chunk parsing wait:", jsonErr);
-            continue;
-          }
-
-          if (data.type === 'error') {
-            streamError = data.error || 'Analysis failed';
-            throw new Error(streamError);
-          }
-
-          if (data.type === 'progress') {
-            if (statusEl) {
-              statusEl.innerText = data.step || data.message || 'Processing...';
-              statusEl.style.animation = 'none';
-              void statusEl.offsetWidth; // trigger reflow
-              statusEl.style.animation = 'pulse 1s ease';
-            }
-            if (data.partial) {
-              if (data.partial.businessIdentity) {
-                const id = data.partial.businessIdentity;
-                if (document.getElementById('edit-name')) document.getElementById('edit-name').value = id.officialName || '';
-                if (document.getElementById('edit-industry')) document.getElementById('edit-industry').value = id.industry || '';
-                if (document.getElementById('edit-subindustry')) document.getElementById('edit-subindustry').value = id.subIndustry || '';
-                if (document.getElementById('edit-location')) document.getElementById('edit-location').value = id.location || '';
-                if (document.getElementById('edit-vision')) document.getElementById('edit-vision').value = id.vision || '';
-                if (document.getElementById('edit-description')) document.getElementById('edit-description').value = id.description || '';
-              }
-              if (data.partial.offerings) {
-                const off = data.partial.offerings;
-                if (document.getElementById('edit-products') && off.products) {
-                  document.getElementById('edit-products').value = off.products.map(p => typeof p === 'string' ? p : p.name).join(', ');
-                }
-                if (document.getElementById('edit-services') && off.services) {
-                  document.getElementById('edit-services').value = off.services.map(s => typeof s === 'string' ? s : s.name).join(', ');
-                }
-              }
-              if (data.partial.audience) {
-                const aud = data.partial.audience;
-                if (document.getElementById('edit-audience') && aud.buyerPersonas) {
-                  document.getElementById('edit-audience').value = aud.buyerPersonas.join(', ');
-                }
-              }
-            }
-          }
-
-          if (data.type === 'complete') {
-            hasCompleted = true;
-            window.isAnalyzingBusiness = false;
-            window.showSuccess("Business intelligence fully analyzed!");
-            
-            const finalUrl = (data.profile && data.profile.input && data.profile.input.websiteUrl) ? data.profile.input.websiteUrl : url;
-            const officialName = (data.profile && data.profile.businessIdentitySummary && data.profile.businessIdentitySummary.officialName) || finalUrl;
-
-            // Register in sidebar
-            window.addOrUpdateProjectInSidebar(finalUrl, officialName);
-            await loadProjects(true);
-            const globalProj = document.getElementById('global-project');
-            if (globalProj) globalProj.value = finalUrl;
-            window.selectProject(finalUrl, false);
-            switchTab('details', 'Project Details & Review');
-            return;
-          }
-        }
+        processSSEChunk(line);
+        if (hasCompleted) return;
       }
     }
 
+    // Process any remaining chunk left in buffer upon stream close
+    if (buffer && buffer.trim()) {
+      processSSEChunk(buffer);
+      if (hasCompleted) return;
+    }
+
     if (!hasCompleted) {
-      // Check if memory was saved on the server despite stream disconnection
-      try {
-        const checkRes = await fetch(`/api/memory?url=${encodeURIComponent(url)}`);
-        if (checkRes.ok) {
-          const memData = await checkRes.json();
-          if (memData && memData.memory) {
+      // If stream disconnected while analysis is running in background, poll for completion
+      if (statusEl) {
+        statusEl.innerText = "Finalizing business analysis on server...";
+      }
+
+      const pollStart = Date.now();
+      const normalizedTarget = url.toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/+$/, '');
+
+      while (Date.now() - pollStart < 60000) {
+        await new Promise(r => setTimeout(r, 3000));
+        try {
+          await loadProjects(true);
+          const projectSelect = document.getElementById('global-project');
+          const match = Array.from(projectSelect?.options || []).find(o => {
+            const norm = (o.value || '').toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/+$/, '');
+            return norm === normalizedTarget || norm.includes(normalizedTarget) || normalizedTarget.includes(norm);
+          });
+
+          if (match && match.value) {
+            hasCompleted = true;
             window.isAnalyzingBusiness = false;
-            const offName = memData.memory.businessIdentity?.officialName || url;
-            window.addOrUpdateProjectInSidebar(url, offName);
-            await loadProjects(true);
-            window.selectProject(url, false);
+            if (projectSelect) projectSelect.value = match.value;
+            window.selectProject(match.value, false);
             switchTab('details', 'Project Details & Review');
             window.showSuccess("Business intelligence analyzed and saved!");
             return;
           }
-        }
-      } catch (_) {}
+        } catch (_) {}
+      }
 
       throw new Error(streamError || "Analysis process ended unexpectedly without completion. Please check the URL and try again.");
     }
