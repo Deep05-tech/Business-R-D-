@@ -1496,7 +1496,6 @@ window.runIntelligence = async function() {
     }
 
     if (!hasCompleted) {
-      // If stream disconnected while analysis is running in background, poll for completion
       if (statusEl) {
         statusEl.innerText = "Finalizing business analysis on server...";
       }
@@ -1504,9 +1503,54 @@ window.runIntelligence = async function() {
       const pollStart = Date.now();
       const normalizedTarget = url.toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/+$/, '');
 
-      while (Date.now() - pollStart < 60000) {
-        await new Promise(r => setTimeout(r, 3000));
+      // Resilient long-polling for up to 6 minutes (360s) to handle deep intelligence & reverse proxy timeouts
+      while (Date.now() - pollStart < 360000) {
+        await new Promise(r => setTimeout(r, 2500));
         try {
+          // 1. Check live job status from server
+          const statusRes = await fetch(`/api/analyze-status?url=${encodeURIComponent(url)}`);
+          if (statusRes.ok) {
+            const statusData = await statusRes.json();
+            if (statusData.step && statusEl) {
+              const elapsed = statusData.elapsedSec ? ` [${statusData.elapsedSec}s]` : '';
+              statusEl.innerText = `${statusData.step}${elapsed}`;
+            }
+            if (statusData.partial) {
+              if (statusData.partial.businessIdentity) {
+                const id = statusData.partial.businessIdentity;
+                if (document.getElementById('edit-name') && id.officialName) document.getElementById('edit-name').value = id.officialName;
+                if (document.getElementById('edit-industry') && id.industry) document.getElementById('edit-industry').value = id.industry;
+                if (document.getElementById('edit-subindustry') && id.subIndustry) document.getElementById('edit-subindustry').value = id.subIndustry;
+                if (document.getElementById('edit-location') && id.location) document.getElementById('edit-location').value = id.location;
+              }
+              if (statusData.partial.offerings) {
+                const off = statusData.partial.offerings;
+                if (document.getElementById('edit-products') && off.products) {
+                  document.getElementById('edit-products').value = off.products.map(p => typeof p === 'string' ? p : p.name).join(', ');
+                }
+              }
+            }
+            if (statusData.completed) {
+              hasCompleted = true;
+              window.isAnalyzingBusiness = false;
+              const finalUrl = (statusData.profile && statusData.profile.input && statusData.profile.input.websiteUrl) ? statusData.profile.input.websiteUrl : url;
+              const officialName = (statusData.profile && statusData.profile.businessIdentitySummary && statusData.profile.businessIdentitySummary.officialName) || finalUrl;
+
+              window.addOrUpdateProjectInSidebar(finalUrl, officialName);
+              await loadProjects(true);
+              const globalProj = document.getElementById('global-project');
+              if (globalProj) globalProj.value = finalUrl;
+              window.selectProject(finalUrl, false);
+              switchTab('details', 'Project Details & Review');
+              window.showSuccess("Business intelligence fully analyzed and saved!");
+              return;
+            }
+            if (statusData.error) {
+              throw new Error(statusData.error);
+            }
+          }
+
+          // 2. Fallback check projects list in case project was saved directly
           await loadProjects(true);
           const projectSelect = document.getElementById('global-project');
           const match = Array.from(projectSelect?.options || []).find(o => {
@@ -1523,10 +1567,14 @@ window.runIntelligence = async function() {
             window.showSuccess("Business intelligence analyzed and saved!");
             return;
           }
-        } catch (_) {}
+        } catch (pollErr) {
+          if (pollErr.message && !pollErr.message.includes('Failed to fetch') && !pollErr.message.includes('NetworkError')) {
+            throw pollErr;
+          }
+        }
       }
 
-      throw new Error(streamError || "Analysis process ended unexpectedly without completion. Please check the URL and try again.");
+      throw new Error(streamError || "Analysis timed out after 6 minutes. Please check your server or connection.");
     }
   } catch (e) {
     console.error("Intelligence analysis error:", e);
@@ -1542,6 +1590,19 @@ window.runIntelligence = async function() {
 
     if (isNetworkErr) {
       try {
+        const finalStatus = await fetch(`/api/analyze-status?url=${encodeURIComponent(url)}`).then(r => r.json()).catch(() => null);
+        if (finalStatus && finalStatus.completed) {
+          hasCompleted = true;
+          window.isAnalyzingBusiness = false;
+          await loadProjects(true);
+          const projectSelect = document.getElementById('global-project');
+          if (projectSelect) projectSelect.value = url;
+          window.selectProject(url, false);
+          switchTab('details', 'Project Details & Review');
+          window.showSuccess("Analysis was saved successfully!");
+          return;
+        }
+
         await loadProjects();
         const projectSelect = document.getElementById('global-project');
         let domain = url;
@@ -1738,6 +1799,51 @@ window.findCompetitors = async function(force = false) {
       }
     }, 2000);
 
+    const processCompetitorSSEChunk = (line) => {
+      const trimmed = (line || "").trim();
+      if (!trimmed || !trimmed.startsWith('data:')) return;
+      try {
+        const jsonStr = trimmed.replace(/^data:\s*/, '');
+        const data = JSON.parse(jsonStr);
+        if (data.type === 'error') {
+          throw new Error(data.error || 'Competitor stream failed');
+        }
+        if (data.type === 'progress') {
+          const statusEl = document.getElementById('comp-agent-status');
+          if (statusEl && data.status) statusEl.innerText = data.status;
+        }
+        if (data.type === 'competitor' && data.competitor) {
+          liveCompetitors.push(data.competitor);
+          const statusEl = document.getElementById('comp-agent-status');
+          if (statusEl) {
+            const localCount = liveCompetitors.filter(c => c.type === 'local').length;
+            const regCount = liveCompetitors.filter(c => c.type === 'regional').length;
+            const globCount = liveCompetitors.filter(c => c.type === 'global').length;
+            statusEl.innerText = `Discovered ${liveCompetitors.length} competitors (${localCount} local, ${regCount} regional, ${globCount} global) — Latest: ${data.competitor.name}`;
+          }
+          const liveCardsContainer = document.getElementById('live-comp-cards');
+          if (liveCardsContainer) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = window.renderCompetitorCard(data.competitor);
+            if (tempDiv.firstElementChild) {
+              liveCardsContainer.prepend(tempDiv.firstElementChild);
+            }
+          }
+        }
+        if (data.type === 'complete') {
+          streamEndedNormally = true;
+          window.showSuccess("Competitors successfully extracted!");
+          const header = document.getElementById('live-comp-header');
+          if (header) header.remove();
+        }
+      } catch(err) {
+        console.error("Competitor SSE parse error", err);
+        if (line.includes('"type":"error"')) {
+          throw err;
+        }
+      }
+    };
+
     try {
       while (true) {
         const { done, value } = await reader.read();
@@ -1745,55 +1851,19 @@ window.findCompetitors = async function(force = false) {
         lastChunkTime = Date.now();
         buffer += decoder.decode(value, { stream: true });
         
-        let lines = buffer.split('\n\n');
+        let lines = buffer.split(/\r?\n\r?\n/);
         buffer = lines.pop(); // Keep incomplete chunk
         
         for (const line of lines) {
-          const trimmed = line.trim();
-          if (trimmed.startsWith('data: ')) {
-            try {
-              const data = JSON.parse(trimmed.slice(6).trim());
-              if (data.type === 'error') {
-                throw new Error(data.error || 'Competitor stream failed');
-              }
-              if (data.type === 'progress') {
-                const statusEl = document.getElementById('comp-agent-status');
-                if (statusEl && data.status) statusEl.innerText = data.status;
-              }
-              if (data.type === 'competitor' && data.competitor) {
-                liveCompetitors.push(data.competitor);
-                const statusEl = document.getElementById('comp-agent-status');
-                if (statusEl) {
-                  const localCount = liveCompetitors.filter(c => c.type === 'local').length;
-                  const regCount = liveCompetitors.filter(c => c.type === 'regional').length;
-                  const globCount = liveCompetitors.filter(c => c.type === 'global').length;
-                  statusEl.innerText = `Discovered ${liveCompetitors.length} competitors (${localCount} local, ${regCount} regional, ${globCount} global) — Latest: ${data.competitor.name}`;
-                }
-                const liveCardsContainer = document.getElementById('live-comp-cards');
-                if (liveCardsContainer) {
-                  const tempDiv = document.createElement('div');
-                  tempDiv.innerHTML = window.renderCompetitorCard(data.competitor);
-                  if (tempDiv.firstElementChild) {
-                    liveCardsContainer.prepend(tempDiv.firstElementChild);
-                  }
-                }
-              }
-              if (data.type === 'complete') {
-                streamEndedNormally = true;
-                window.showSuccess("Competitors successfully extracted!");
-                const header = document.getElementById('live-comp-header');
-                if (header) header.remove();
-                break;
-              }
-            } catch(err) {
-              console.error("Competitor SSE parse error", err);
-              if (line.includes('"type":"error"')) {
-                throw err;
-              }
-            }
-          }
+          processCompetitorSSEChunk(line);
+          if (streamEndedNormally) break;
         }
         if (streamEndedNormally) break;
+      }
+
+      // Flush trailing buffer
+      if (buffer && buffer.trim()) {
+        processCompetitorSSEChunk(buffer);
       }
     } finally {
       clearInterval(inactivityWatchdog);

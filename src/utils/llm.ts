@@ -105,12 +105,13 @@ function createResilientGroqFetch(preferredModels: string[]) {
         }
       }
 
-      // If all candidate models are in a short rolling cooldown, wait for the nearest one
+      // If all candidate models are in a rolling cooldown, wait for the nearest one
       if (!foundAvailable) {
         const minWait = Math.min(...preferredModels.map(m => Math.max(0, (modelExhaustedUntil[m] || 0) - Date.now())));
-        if (minWait > 0 && minWait <= 60000) {
-          logger.info(`[ResilientFetch] All Groq models in rolling cooldown. Waiting ${minWait + 500}ms for token window reset...`);
-          await new Promise((resolve) => setTimeout(resolve, minWait + 500));
+        if (minWait > 0) {
+          const sleepMs = Math.min(minWait + 500, 30000);
+          logger.info(`[ResilientFetch] All Groq models in rolling cooldown. Waiting ${sleepMs}ms for token window reset...`);
+          await new Promise((resolve) => setTimeout(resolve, sleepMs));
           continue;
         }
       }

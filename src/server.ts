@@ -316,7 +316,7 @@ app.get("/api/projects", async (req, res) => {
 
     const allProjectsList = onDisk.map(m => {
       const urlNorm = normalize(m.input.websiteUrl);
-      const isAssigned = assignedUrls.has(m.input.websiteUrl) || assignedNorms.has(urlNorm);
+      const isAssigned = isAdmin || assignedUrls.has(m.input.websiteUrl) || assignedNorms.has(urlNorm);
       return {
         id: Buffer.from(m.input.websiteUrl).toString('base64').replace(/=/g, ''),
         url: m.input.websiteUrl,
@@ -752,8 +752,68 @@ app.post("/business-intelligence", async (request, response) => {
 });
 
 // ---------------------------------------------------------------------------
-// Server-Sent Events (SSE) Progress endpoint
+// Server-Sent Events (SSE) Progress endpoint & Background Job Tracking
 // ---------------------------------------------------------------------------
+interface AnalysisJob {
+  url: string;
+  normUrl: string;
+  step: string;
+  status: "running" | "completed" | "failed";
+  partial?: any;
+  startTime: number;
+  updatedAt: number;
+  completed: boolean;
+  error?: string | null;
+  profile?: any;
+}
+const activeAnalysisJobs = new Map<string, AnalysisJob>();
+
+app.get("/api/analyze-status", async (req, res) => {
+  const rawUrl = String(req.query.url || "").trim();
+  if (!rawUrl) return res.status(400).json({ error: "Missing url parameter" });
+
+  const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+  const norm = normalize(rawUrl);
+
+  const job = activeAnalysisJobs.get(norm);
+  if (job) {
+    return res.json({
+      url: job.url,
+      running: job.status === "running",
+      completed: job.completed,
+      step: job.step,
+      partial: job.partial,
+      elapsedSec: Math.round((Date.now() - job.startTime) / 1000),
+      error: job.error,
+      profile: job.completed ? job.profile : undefined
+    });
+  }
+
+  // Check if it already finished and is in memoryStore / RAM
+  const memory = knowledgeIndex.get(rawUrl) || await memoryStore.loadBySite(rawUrl);
+  if (memory) {
+    return res.json({
+      url: rawUrl,
+      running: false,
+      completed: true,
+      step: "Analysis completed",
+      elapsedSec: 0,
+      profile: {
+        businessIdentitySummary: memory.businessIdentity,
+        structuredJsonMemoryObject: memory
+      }
+    });
+  }
+
+  return res.json({
+    url: rawUrl,
+    running: false,
+    completed: false,
+    step: "Not found",
+    elapsedSec: 0
+  });
+});
+
 app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, response) => {
   response.setHeader("Content-Type", "text/event-stream");
   response.setHeader("Cache-Control", "no-cache, no-transform");
@@ -804,6 +864,18 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
     url = `https://${url}`;
   }
   const finalUrl = url;
+  const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+  const normUrl = normalize(finalUrl);
+  const currentJob: AnalysisJob = {
+    url: finalUrl,
+    normUrl,
+    step: "Initializing analysis...",
+    status: "running",
+    startTime: Date.now(),
+    updatedAt: Date.now(),
+    completed: false
+  };
+  activeAnalysisJobs.set(normUrl, currentJob);
 
   // Immediately clear any prior tombstone for this project
   await memoryStore.removeTombstone(finalUrl);
@@ -902,6 +974,9 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
       
       try {
         const profile = await orchestrator.run(input, (stepName, partial) => {
+          currentJob.step = stepName;
+          if (partial) currentJob.partial = { ...(currentJob.partial || {}), ...partial };
+          currentJob.updatedAt = Date.now();
           if (!response.writableEnded) {
             response.write(`data: ${JSON.stringify({ type: 'progress', step: stepName, partial })}\n\n`);
             flushResponse();
@@ -918,6 +993,11 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
           }
         }
         knowledgeIndex.add(profile.structuredJsonMemoryObject);
+        currentJob.completed = true;
+        currentJob.status = "completed";
+        currentJob.step = "Business intelligence fully analyzed";
+        currentJob.profile = profile;
+        currentJob.updatedAt = Date.now();
 
         if (!response.writableEnded) {
           response.write(`data: ${JSON.stringify({ type: 'complete', profile })}\n\n`);
@@ -930,6 +1010,9 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
           logger.error(`v13 Orchestrator crashed (${err.message}). Triggering AUTOMATIC FAILOVER to v12-stable...`);
           const fallbackOrchestrator = new OrchestratorAgent(memoryStore);
           const fallbackProfile = await fallbackOrchestrator.run(input, (stepName, partial) => {
+            currentJob.step = `[FAILOVER] ${stepName}`;
+            if (partial) currentJob.partial = { ...(currentJob.partial || {}), ...partial };
+            currentJob.updatedAt = Date.now();
             if (!response.writableEnded) {
               response.write(`data: ${JSON.stringify({ type: 'progress', step: `[FAILOVER] ${stepName}`, partial })}\n\n`);
               flushResponse();
@@ -945,6 +1028,11 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
             }
           }
           knowledgeIndex.add(fallbackProfile.structuredJsonMemoryObject);
+          currentJob.completed = true;
+          currentJob.status = "completed";
+          currentJob.step = "Business intelligence fully analyzed";
+          currentJob.profile = fallbackProfile;
+          currentJob.updatedAt = Date.now();
 
           if (!response.writableEnded) {
             response.write(`data: ${JSON.stringify({ type: 'complete', profile: fallbackProfile })}\n\n`);
@@ -959,6 +1047,9 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
       throw e;
     }
   } catch (error: any) {
+    currentJob.status = "failed";
+    currentJob.error = error.message;
+    currentJob.updatedAt = Date.now();
     if (!response.writableEnded) {
       if (error instanceof ZodError) {
         response.write(`data: ${JSON.stringify({ type: 'error', error: "Invalid input." })}\n\n`);
@@ -1807,7 +1898,7 @@ app.get("/api/sites", async (request, response) => {
 
   let sites = onDisk.map(m => {
     const urlNorm = normalize(m.input.websiteUrl);
-    const isAssigned = assignedUrls.has(m.input.websiteUrl) || assignedNorms.has(urlNorm);
+    const isAssigned = isAdmin || assignedUrls.has(m.input.websiteUrl) || assignedNorms.has(urlNorm);
     return {
       url: m.input.websiteUrl,
       name: m.businessIdentity?.officialName || m.input.websiteUrl,
