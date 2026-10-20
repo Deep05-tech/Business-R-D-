@@ -327,7 +327,61 @@
         "aiLaymanSummary": "S.G Iron Casting is a specialized type of casting made from spheroidal graphite iron, known for its unique properties that make it ideal for a variety of demanding applications. This material combines the benefits of strength and ductility, allowing it to perform well in situations where heavy loads and flexibility are required. The casting process ensures a high-quality finish that meets industry standards.\n\nKey benefits of S.G Iron Casting include:\n- **High Quality**: Manufactured to precise specifications, ensuring reliability and performance.\n- **Efficient**: Designed for optimal production, reducing waste and increasing productivity.\n- **Rust Proof**: Its resistance to rust ensures longer-lasting components, making it suitable for various environments.\n\nOverall, S.G Iron Casting is a versatile solution for industries looking for durable and efficient materials that can withstand tough conditions."
       }
     ],
-    "services": [],
+    "services": [
+      {
+        "name": "Custom Component Manufacturing & Forging",
+        "description": "Precision manufacturing and forging tailored to customer CAD models, technical drawings, and metallurgical requirements.",
+        "applications": [
+          "Automotive",
+          "Heavy Engineering",
+          "Industrial Assemblies"
+        ],
+        "processes": [
+          "Hot/Warm Forging",
+          "Die Design",
+          "Quality Inspection"
+        ]
+      },
+      {
+        "name": "CNC Precision Machining & Turning",
+        "description": "High-precision CNC turning, milling, and fine-tolerance machining for mission-critical parts.",
+        "applications": [
+          "Power Transmission",
+          "Aerospace",
+          "Capital Equipment"
+        ],
+        "processes": [
+          "CNC Turning",
+          "VMC Milling",
+          "Grinding"
+        ]
+      },
+      {
+        "name": "Heat Treatment & Surface Processing",
+        "description": "Complete heat treatment cycles including annealing, normalizing, hardening, and stress relieving.",
+        "applications": [
+          "High-Load Applications",
+          "Wear Resistance"
+        ],
+        "processes": [
+          "Controlled Atmosphere Furnaces",
+          "Quenching"
+        ]
+      },
+      {
+        "name": "Quality Assurance & Metallurgical Lab Testing",
+        "description": "Comprehensive testing including CMM 3D inspection, spectrometry, microstructure analysis, and ultrasonic NDT.",
+        "applications": [
+          "Zero-Defect Mandates",
+          "PPAP Submissions"
+        ],
+        "processes": [
+          "CMM",
+          "Spectrometry",
+          "NDT Testing"
+        ]
+      }
+    ],
     "valuePropositions": [
       "Sophisticated manufacturing and testing capabilities.",
       "Vibrant workforce with highly qualified professionals.",
