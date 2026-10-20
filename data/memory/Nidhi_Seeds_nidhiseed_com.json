@@ -28478,95 +28478,1613 @@
   },
   "competitors": [
     {
-      "name": "Mahyco",
-      "url": "https://www.mahyco.com",
-      "type": "global",
-      "location": "Jalna, Maharashtra",
+      "name": "AgriBee Seeds Private Limited",
+      "url": "https://agribee.in/",
+      "type": "local",
+      "location": "G1486, D', Road, Kishan Gate Rd, GIDC, Metoda, Gujarat 360021, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: AgriBee Seeds offers wheat, hybrid maize, and fodder bajra seeds, overlapping the target’s product line.. 6 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Fodder Bajra Seeds, Seed Processing & Quality Conditioning]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.8 | Phone: 089800 89908",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://agribee.in/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://instagram.com/agribee.seeds/"
+        }
+      ],
       "socials": {
-        "facebook": "https://www.facebook.com/mahycogrow/",
-        "linkedin": "https://www.linkedin.com/company/mahyco",
-        "instagram": "https://www.instagram.com/explore/tags/Mahyco/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
-      }
+        "linkedin": "https://linkedin.com/company/agribee",
+        "instagram": "https://instagram.com/agribee.seeds/",
+        "facebook": "https://facebook.com/agribee.in",
+        "youtube": "https://youtube.com/@agribee"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
     },
     {
-      "name": "Nuziveedu Seeds",
-      "url": "https://www.nuziveeduseeds.com",
-      "type": "global",
-      "location": "Hyderabad, Telangana",
+      "name": "Bombay Super Hybrid Seeds Limited",
+      "url": "http://www.bombaysuperseeds.com/",
+      "type": "local",
+      "location": "9,10,11, Shreenathji Industrial Estate, Plot no. 8, near Kuvadva, GIDC National H, Kuvadva, Kuchiyadad, Gujarat 360023, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Bombay Super Seeds sells a wide range of agricultural seeds, including bajra, overlapping with Nidhi Seeds’ groundnut, wheat, hybrid maize, cumin, and fodder bajra offerings.. 6 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Fodder Bajra Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4.5 | Phone: 096389 62396",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.bombaysuperseeds.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.facebook.com/bombaysuperhybridseedslimited/"
+        }
+      ],
       "socials": {
-        "facebook": "https://www.facebook.com/search/top?q=Nuziveedu%20Seeds",
-        "linkedin": "https://www.linkedin.com/company/nuziveedu-seeds-limited/",
-        "instagram": "https://www.instagram.com/nuziveedu_seeds_limited/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
-      }
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/bombaysuper_seeds/",
+        "facebook": "https://www.facebook.com/bombaysuperhybridseedslimited/",
+        "youtube": "https://www.youtube.com/channel/UCgl2PgJLs10m0lARzMi9eTw"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
     },
     {
-      "name": "Kaveri Seed Company",
-      "url": "https://www.kaveriseeds.in",
-      "type": "global",
-      "location": "Hyderabad, Telangana",
+      "name": "Patel Agro Seeds",
+      "url": "http://www.patelagroseeds.com/",
+      "type": "local",
+      "location": "Bhutkhana Chowk, Royal Complex, Dhebar Rd, Millpara, Bhakti Nagar, Rajkot, Gujarat 360002, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Patel Agro Seeds sells agricultural seeds for farmers, overlapping product lines with Nidhi Seeds.. 6 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Seed Processing & Quality Conditioning, Germination & Genetic Purity Testing]. Rating: 4.7 | Phone: 098252 29766",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.patelagroseeds.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "http://patelagroseeds.com/"
+        }
+      ],
       "socials": {
-        "facebook": "https://www.facebook.com/search/top?q=Kaveri%20Seed%20Company",
-        "linkedin": "https://www.linkedin.com/search/results/all/?keywords=Kaveri%20Seed%20Company",
-        "instagram": "https://www.instagram.com/explore/tags/KaveriSeedCompany/",
-        "youtube": "https://www.youtube.com/@kaveriseedsofficial",
-        "twitter": null
-      }
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ]
     },
     {
-      "name": "Rasi Seeds",
-      "url": "https://www.rasiseeds.com",
-      "type": "global",
-      "location": "Attur, Tamil Nadu",
+      "name": "Narmade Seeds Private Limited",
+      "url": "https://narmadeseeds.com/",
+      "type": "local",
+      "location": "326, Khodal Chowk, 80 Feet Rd, Mavdi, Rajkot, Gujarat 360004, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: They produce wheat seeds and other seed varieties, overlapping with target's seed offerings.. 6 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Fodder Bajra Seeds, Seed Processing & Quality Conditioning]. Rating: 5 | Phone: 099795 61000",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://narmadeseeds.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://narmadeseeds.com/"
+        }
+      ],
       "socials": {
-        "facebook": "https://www.facebook.com/rasi-seeds-103349728666008",
-        "linkedin": "https://www.linkedin.com/search/results/all/?keywords=Rasi%20Seeds",
-        "instagram": "https://www.instagram.com/explore/tags/RasiSeeds/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
-      }
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
     },
     {
-      "name": "Advanta Seeds",
-      "url": "https://www.advantaseeds.com",
-      "type": "global",
-      "location": "Hyderabad, Telangana",
+      "name": "POKHRAAJ AGRITECH",
+      "url": "https://pokhraajagritech.com/",
+      "type": "local",
+      "location": "UMIYA INDUSTRIAL CORNER-3, 150 Feet Ring Rd, opp. FORTUNE HOTEL, Samrat Industrial Area, Rajkot, Gujarat 360004, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Pokhraaj AgriTech is an operating seed company offering certified organic seeds, making it a direct competitor in the agriculture seed market.. 6 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Seed Processing & Quality Conditioning, Germination & Genetic Purity Testing]. Rating: 4.8 | Phone: 088661 95888",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://pokhraajagritech.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://pokhraajagritech.com/"
+        }
+      ],
       "socials": {
-        "facebook": "https://www.facebook.com/advantaseeds/",
-        "linkedin": "https://www.linkedin.com/company/advantaseeds",
-        "instagram": "https://www.instagram.com/explore/tags/AdvantaSeeds/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
-      }
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ]
     },
     {
-      "name": "Syngenta",
-      "url": "https://www.syngenta.com",
-      "type": "global",
-      "location": "Basel, Switzerland",
+      "name": "Arul Traders - GROUNDNUT KERNELS/ Oil Mill",
+      "url": "http://www.arultraders.in/",
+      "type": "regional",
+      "location": "JMGC+X65, Bazaar St, Valudambattu, Tamil Nadu 607301, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: The candidate (Arul Traders) is a supplier of agricultural commodities (peanuts, cashew nuts, etc.) and oils, whereas the target (Nidhi Seeds) specializes in agricultural inputs, specifically seeds (groundnut, wheat, maize, cumin, fodder bajra). While they operate in the same broad agriculture sector, they serve different market needs: one sells raw produce/consumables, and the other sells planting materials. Therefore, they are not direct competitors.. 6 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Fodder Bajra Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified; Instagram verified. Rating: 5 | Phone: 098423 50830",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.arultraders.in/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.arultraders.in/peanuts-exporters-groundnuts-oil-cashewnuts"
+        }
+      ],
       "socials": {
-        "facebook": "https://www.facebook.com/syngenta/",
-        "linkedin": "https://www.linkedin.com/company/syngenta/",
-        "instagram": "https://www.instagram.com/syngenta/?hl=en",
-        "youtube": "https://www.youtube.com/@syngenta",
-        "twitter": null
-      }
+        "linkedin": null,
+        "instagram": "https://instagram.com/arultraders.in?igshid=OGQ5ZDc2ODk2ZA==",
+        "facebook": "https://www.facebook.com/arul.doss.1694",
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
     },
     {
-      "name": "UPL Limited",
-      "url": "https://www.upl-ltd.com",
-      "type": "global",
-      "location": "Mumbai, Maharashtra",
+      "name": "Shakti Vardhak Hybrid Seeds Pvt. Ltd.",
+      "url": "https://shaktivardhakhspl.com/",
+      "type": "regional",
+      "location": "Tilak Bazaar, Talaki Gate, Hisar, Haryana 125001, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: They produce hybrid seeds for field and fodder crops, overlapping Nidhi Seeds' offerings.. 6 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Fodder Bajra Seeds, Seed Processing & Quality Conditioning]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.4 | Phone: 080901 00540",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://shaktivardhakhspl.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://shaktivardhakhspl.com/crops/field-crops/bajra/"
+        }
+      ],
       "socials": {
-        "facebook": "https://www.facebook.com/uplglobal/?ref=bookmarks",
-        "linkedin": "https://www.linkedin.com/company/upl-ltd/",
-        "instagram": "https://www.instagram.com/upl_global/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
-      }
+        "linkedin": "https://www.linkedin.com/company/svhspl",
+        "instagram": "https://www.instagram.com/svhspl",
+        "facebook": "https://www.facebook.com/svhspl",
+        "youtube": "https://www.youtube.com/@svhspl"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Grow Tech Seeds India Pvt Ltd",
+      "url": "http://growtechseeds.com/",
+      "type": "regional",
+      "location": "Mile Stone, 4th, Sirsa Rd, near B D Cotton Mill, Hisar, Haryana 125011, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Grow Tech Seeds offers a range of high-quality seeds for various crops, including those targeted by Nidhi Seeds, making them a direct competitor.. 6 common products: [Groundnut Seeds, Wheat Seeds, Cumin Seeds, Fodder Bajra Seeds, Seed Processing & Quality Conditioning, Germination & Genetic Purity Testing]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4.9 | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://growtechseeds.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "mailto:info@growtechseeds.com"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/growtech_seeds/",
+        "facebook": "https://www.facebook.com/profile.php?id=61556012886613",
+        "youtube": "https://www.youtube.com/channel/UCzWS5ZT4CtNN6e-UxDFX26Q/"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ]
+    },
+    {
+      "name": "King's AgriSeeds",
+      "url": "https://kingsagriseeds.com/",
+      "type": "global",
+      "location": "43 Graybill Rd, Leola, PA 17540, USA",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: The candidate is a legitimate agricultural seed company, but it operates in the United States (Middle Atlantic and Northeastern regions) and specializes in forage seeds, cover crops, and industrial hemp. Nidhi Seeds is an Indian company specializing in field crops like groundnut, wheat, maize, and cumin. Due to the significant geographic separation and the difference in primary crop focus (forage/hemp vs. staple field crops), they do not compete in the same market.. 6 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Seed Processing & Quality Conditioning, Agronomic Advisory & Field Consulting]. Socials: Facebook verified; YouTube verified. Rating: 5 | Phone: (717) 687-6224",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://kingsagriseeds.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://kingsagriseeds.com/email-signup/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/KingsAgriseeds/",
+        "youtube": "https://www.youtube.com/channel/UCi9Q6GCPeX-1zgApMsDN-nA"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Agronomic Advisory & Field Consulting"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Agronomic Advisory & Field Consulting"
+      ]
+    },
+    {
+      "name": "G Vin Group",
+      "url": "http://www.gvingroup.com/",
+      "type": "local",
+      "location": "Rajpath Avenue, 306, 150 Feet Ring Rd, opp. Tapovan School, nr. Ambedkar Nagar, Ambedkar Nagar, Samrat Industrial Area, Rajkot, Gujarat 360004, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: They sell bio and micronutrient fertilizers, not seeds, so they are not a direct competitor.. 5 common products: [Wheat Seeds, Groundnut Seeds, Hybrid Maize Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.5 | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.gvingroup.com/"
+        },
+        {
+          "title": "Product: Wheat Seeds",
+          "url": "http://www.gvingroup.com/products/reserch-and-hybrid-seeds"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/gvin-group",
+        "instagram": "https://www.instagram.com/gvin.group/",
+        "facebook": "https://www.facebook.com/gvingroup",
+        "youtube": "https://www.youtube.com/channel/UCcgpB2NRBrgGPAjmhY6K7Yg"
+      },
+      "products": [
+        "Wheat Seeds",
+        "Groundnut Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Wheat Seeds",
+        "Groundnut Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Sahyog Seeds LLP",
+      "url": "https://www.sahyogseeds.com/",
+      "type": "local",
+      "location": "Plot No.-2 At, Ta, Mandan Kundla, Gondal, Gujarat 360330, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Sahyog Seeds is an operating seed company offering agricultural seeds, making it a direct competitor to Nidhi Seeds.. 5 common products: [Wheat Seeds, Groundnut Seeds, Cumin Seeds, Seed Processing & Quality Conditioning, Germination & Genetic Purity Testing]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.sahyogseeds.com/"
+        },
+        {
+          "title": "Product: Wheat Seeds",
+          "url": "https://www.facebook.com/p/Sahyog-Seeds-100093506256103/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://in.linkedin.com/company/sahyog-seeds-llp",
+        "instagram": "https://www.instagram.com/sahyogseeds/",
+        "facebook": "https://www.facebook.com/p/Sahyog-Seeds-100093506256103/",
+        "youtube": "https://www.youtube.com/@sahyogseeds"
+      },
+      "products": [
+        "Wheat Seeds",
+        "Groundnut Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ],
+      "commonProducts": [
+        "Wheat Seeds",
+        "Groundnut Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ]
+    },
+    {
+      "name": "Agro Harvest Organic & Chemical Seeds Supplier",
+      "url": "https://indigo-blinny-70.tiiny.site/",
+      "type": "local",
+      "location": "Ground Floor, RS no. 30, Shree Haridwar Park, plot no 28/B, Navagam Main Rd, near Nayara Pump, Navagam, Rajkot, Gujarat 360003, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Agro Harvest supplies organic and chemical seeds, overlapping with Nidhi Seeds’ seed offerings.. 5 common products: [Groundnut Seeds, Hybrid Maize Seeds, Cumin Seeds, Wheat Seeds, Seed Processing & Quality Conditioning]. Rating: 5 | Phone: 099366 65588",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://indigo-blinny-70.tiiny.site/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://indigo-blinny-70.tiiny.site/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Wheat Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Wheat Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Akshay Seeds Pvt ltd",
+      "url": "https://akshayseeds.com/",
+      "type": "regional",
+      "location": "Space Olympia” , Flat no B-304, Third Floor, ALtius (B-Wing, near Sutgirni Chowk, Gadia Vihar, Chhatrapati Sambhajinagar, Maharashtra 431009, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Akshay Seeds is a seed company operating in agriculture, offering hybrid vegetable seeds that overlap the seed market served by Nidhi Seeds.. 5 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4.7 | Phone: 0240 298 3061",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://akshayseeds.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://akshayseeds.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/akshayseeds_official2025/?hl=en",
+        "facebook": "https://www.facebook.com/profile.php?id=100057733416933",
+        "youtube": "https://www.youtube.com/@AkshaySeeds_Veg"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Western Agri Seeds Limited",
+      "url": "http://www.westernagriseeds.com/",
+      "type": "regional",
+      "location": "802/11, Western House, G I D C Engg Estate, Western Road, Sector 28 GIDC, Sector 28, Gandhinagar, Gujarat 382028, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: WesternAgriSeeds Ltd is an operating seed company in agriculture, offering seed products that directly compete with Nidhi Seeds' offerings.. 5 common products: [Groundnut Seeds, Wheat Seeds, Cumin Seeds, Fodder Bajra Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified; YouTube verified. Rating: 4.3 | Phone: 079 2321 2427",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.westernagriseeds.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://westernagriseeds.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/people/Western-agri-seeds/61558484566448/",
+        "youtube": "https://www.youtube.com/@WESTERNAGRISEEDSLIMITED"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "National Agro Industries",
+      "url": "https://www.nationalagro.com/",
+      "type": "regional",
+      "location": "1-A, Link Rd, Transport Nagar, Industrial Area- A, Ludhiana, Punjab 141003, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: National Agro sells farming equipment, not seeds, so it is adjacent to agriculture but does not compete with Nidhi Seeds' seed products.. 5 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.9 | Phone: 081461 01101",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.nationalagro.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.nationalagro.com/national-ground-nut-digger"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/national-agro-industries/",
+        "instagram": "https://www.instagram.com/nationalagroludhiana/",
+        "facebook": "https://www.facebook.com/nationalagro/",
+        "youtube": "https://www.youtube.com/user/nationalagriculture"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Ganga Organic Farms Trichy - Terrace Gardening - Nursery, Pots, Landscaping",
+      "url": "https://www.gangaorganicfarms.com/",
+      "type": "regional",
+      "location": "55/4, near Balaji nagar, R.K.Puram, Ashtalakshmi nagar, Pappakurichi Kattur, Tiruchirappalli, Tamil Nadu 620019, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Ganga Organic Farms sells organic seeds, overlapping Nidhi Seeds’ product lines in agriculture.. 5 common products: [Groundnut Seeds, Wheat Seeds, Cumin Seeds, Seed Processing & Quality Conditioning, Germination & Genetic Purity Testing]. Socials: Facebook verified; Instagram verified. Rating: 4.8 | Phone: 087549 99004",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.gangaorganicfarms.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.gangaorganicfarms.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/gangaorganicfarms/",
+        "facebook": "https://m.facebook.com/gangaorganicfarms",
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ]
+    },
+    {
+      "name": "SRINIDI TRADING",
+      "url": "https://sriniditrading.in/",
+      "type": "regional",
+      "location": "479, Main Road, Abinavam, Tamil Nadu 636115, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: They sell groundnut seeds, overlapping with Nidhi Seeds' offerings, making them a direct competitor in the seed market.. 5 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Socials: LinkedIn verified. Rating: 5 | Phone: 099948 23155",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://sriniditrading.in/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://sriniditrading.in/sesame-seed.html#sesame-seeds"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/cws/share?url=https://www.sriniditrading.in/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Adhunik Seeds",
+      "url": "http://www.shrikaragroproducer.co.in/",
+      "type": "regional",
+      "location": "Nanded road, Bhadgaon, Maharashtra 413531, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Shrikar Agro Producer supplies soybean and tomato seeds, which are different crops from Nidhi Seeds’ groundnut, wheat, maize, cumin, and bajra offerings, so they are not direct competitors.. 5 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Rating: 4.9 | Phone: 091751 35333",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.shrikaragroproducer.co.in/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.shrikaragroproducer.co.in/agro-seeds.htm"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Avani Seeds Ltd",
+      "url": "https://www.avaniseeds.com/",
+      "type": "regional",
+      "location": "307/DEV ARC COMPLEX , ISCONE CROSS ROAD SARKHEJ GANDHINAGAR HIGHWAY, Satellite Rd, Satellite, Ahmedabad, Gujarat 380015, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Avani Seeds supplies a diverse range of agricultural seeds, including those similar to Nidhi Seeds' offerings.. 5 common products: [Groundnut Seeds, Wheat Seeds, Cumin Seeds, Fodder Bajra Seeds, Seed Processing & Quality Conditioning]. Rating: 4 | Phone: 079 2692 3216",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.avaniseeds.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.avaniseeds.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Fodder Bajra Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Doctor Seeds Pvt. Ltd.",
+      "url": "http://www.doctorseedsindia.com/",
+      "type": "regional",
+      "location": "46, Sunder Nagar, Behind MBD New Polis Mall, Ferozepur Rd, Aman Park, Lalbagh, Ludhiana, Punjab 141012, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Doctor Seeds produces vegetable seeds, placing it in the same agriculture seed industry and competing for the seed market.. 5 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Rating: 4.4 | Phone: 011 2382 2399",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.doctorseedsindia.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "http://www.doctorseedsindia.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "NESeed",
+      "url": "https://www.neseed.com/",
+      "type": "global",
+      "location": "345 Nutmeg Rd S Ste B, South Windsor, CT 06074, USA",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: They are a commercial seed company offering a range of seeds for growers, overlapping with Nidhi Seeds' seed offerings.. 5 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified; Instagram verified. Rating: 4.6 | Phone: (800) 825-5477",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.neseed.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.neseed.com/collections/wildflower-seeds"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/neseedcompany/",
+        "facebook": "https://www.facebook.com/neseedco/",
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Nunhems Germany GmbH",
+      "url": "https://www.nunhems.com/de",
+      "type": "global",
+      "location": "Kirchenweinbergstraße 115, 71672 Marbach am Neckar, Germany",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: They develop and supply seeds, overlapping with Nidhi Seeds' seed offerings.. 5 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds, Agronomic Advisory & Field Consulting]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 4.5 | Phone: 07144 847311",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.nunhems.com/de"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.linkedin.com/showcase/basf-vegetable-seeds-business/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/showcase/basf-vegetable-seeds-business/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/nunhems",
+        "youtube": "http://www.youtube.com/user/NunhemsGlobal"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Agronomic Advisory & Field Consulting"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds",
+        "Agronomic Advisory & Field Consulting"
+      ]
+    },
+    {
+      "name": "Prabhudas Jamnadas & Co.",
+      "url": "http://www.pjagroseeds.com/",
+      "type": "local",
+      "location": "A - 63, Rajkot Marketing Yard, NEW, Rajkot - Morbi Hwy, Bedi, Rajkot, Gujarat 360003, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: PJ Agro Seeds sells agricultural seeds, directly competing with Nidhi Seeds.. 4 common products: [Groundnut Seeds, Wheat Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.8 | Phone: 095863 33339",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.pjagroseeds.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "http://www.pjagroseeds.com/product?category=seeds"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/101952166/admin/dashboard/",
+        "instagram": "https://www.instagram.com/pj_nd_co/?hl=en",
+        "facebook": "https://www.facebook.com/pjagroseeds/",
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Sahyog Agro Agency",
+      "url": "https://meradvcard.com/Sahyog-Agro-Agency",
+      "type": "local",
+      "location": "B-58, National Highway, near R.T.O, Old, Marketing Yard, Rajkot, Gujarat 360003, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Sahyog Agro Agency operates in the agriculture sector and likely supplies seeds, making it a direct competitor to Nidhi Seeds.. 4 common products: [Groundnut Seeds, Hybrid Maize Seeds, Wheat Seeds, Cumin Seeds]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 4.9 | Phone: 090999 84303",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://meradvcard.com/Sahyog-Agro-Agency"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://meradvcard.com/Sahyog-Agro-Agency"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/cws/share?url=https://meradvcard.com/Sahyog-Agro-Agency",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/share/g/Hex2f4HhqvLSHWMF/",
+        "youtube": "https://www.youtube.com/c/KhetiNiVat"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Hybrid Maize Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Hybrid Maize Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds"
+      ]
+    },
+    {
+      "name": "USA SEEDS RAJKOT",
+      "url": "https://www.usaseedslimited.com/",
+      "type": "local",
+      "location": "Shreenathji Industrial Estate, Plot No. 17, National Highway 8, b, Kuchiyadad, Gujarat 360023, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: They are an agricultural seed manufacturer offering groundnut and other seeds, directly overlapping with Nidhi Seeds' product range. 4 common products: [Groundnut Seeds, Wheat Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified; Instagram verified. Rating: 4.4 | Phone: 096879 65596",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.usaseedslimited.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.facebook.com/upsurgeseeds"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/upsurgeseedsof/",
+        "facebook": "https://www.facebook.com/upsurgeseeds",
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Dhaval Agri Exports Limited",
+      "url": "https://www.dhavalagri.com/",
+      "type": "local",
+      "location": "Rajkot - Morbi Hwy, New Marketing Yard, Bedi, Rajkot, Gujarat 360028, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Dhaval Agri exports sesame seeds, a similar agricultural seed product, making it a competitor in the seed market.. 4 common products: [Groundnut Seeds, Cumin Seeds, Wheat Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified. Rating: 4.2 | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.dhavalagri.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.dhavalagri.com/hulled-sesame-seeds.html"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/pages/Dhaval-Agri-Exporters/379640288854440",
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Cumin Seeds",
+        "Wheat Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Cumin Seeds",
+        "Wheat Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Airson Agri Commodity LLP – Groundnut Oil & Peanut Seed Manufacturer in Gujarat",
+      "url": "http://www.airsonagri.com/",
+      "type": "local",
+      "location": "BUS STAND, opp. HAMIRPAR, Hamirpar, Gujarat 363650, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: They manufacture groundnut oil, not seeds, so they are not direct competitors.. 4 common products: [Groundnut Seeds, Seed Processing & Quality Conditioning, Agronomic Advisory & Field Consulting, Germination & Genetic Purity Testing]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.8 | Phone: 070433 74021",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.airsonagri.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "http://www.airsonagri.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/airson-agri-commodity",
+        "instagram": "https://www.instagram.com/airson_agri_2023/",
+        "facebook": "https://www.facebook.com/people/Airson-Agri/61553105442828/?mibextid=ZbWKwL",
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Agronomic Advisory & Field Consulting",
+        "Germination & Genetic Purity Testing"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Agronomic Advisory & Field Consulting",
+        "Germination & Genetic Purity Testing"
+      ]
+    },
+    {
+      "name": "Star Agrotech",
+      "url": "http://www.staragrotech.com/",
+      "type": "local",
+      "location": "61, Gumansinhji Shopping Centre, Dhebar Rd, Krishna Pura, Lohana Para, Rajkot, Gujarat 360001, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Star Agrotech trades spices, pulses and other agri products but does not sell seed varieties, so it is not a direct competitor to Nidhi Seeds.. 4 common products: [Groundnut Seeds, Wheat Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified. Rating: 5 | Phone: 099137 39996",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.staragrotech.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "http://www.staragrotech.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/profile.php?id=100090820491509",
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Shree Bhagwati Enterprise",
+      "url": "http://shreebhagwatienterprise.com/",
+      "type": "regional",
+      "location": "Dolatpara, Plot No.219, GIDC 2, Junagadh, Gujarat 362037, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Shree Bhagwati Enterprise sells groundnut, wheat, and cumin seeds, directly competing with Nidhi Seeds.. 4 common products: [Groundnut Seeds, Wheat Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Socials: LinkedIn verified; Facebook verified. Rating: 4.5 | Phone: 099250 32602",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://shreebhagwatienterprise.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "http://shreebhagwatienterprise.com/product-MTU=/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/pub/chintan-kanabar/2b/661/a39",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/sbeindia/",
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Peterson Farms Seed",
+      "url": "https://www.petersonfarmsseed.com/",
+      "type": "global",
+      "location": "3104 164th Ave SE, Harwood, ND 58042, USA",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Both sell seed products in agriculture, overlapping wheat and other crops.. 4 common products: [Groundnut Seeds, Wheat Seeds, Seed Processing & Quality Conditioning, Germination & Genetic Purity Testing]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.7 | Phone: (701) 282-7476",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.petersonfarmsseed.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.petersonfarmsseed.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/peterson-farms-seed",
+        "instagram": "https://www.instagram.com/petersonfarmsseed/",
+        "facebook": "https://www.facebook.com/petersonfarmsseed/",
+        "youtube": "https://www.youtube.com/@PetersonFarmsSeed"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ]
+    },
+    {
+      "name": "Baker Creek Heirloom Seed Company",
+      "url": "https://www.rareseeds.com/",
+      "type": "global",
+      "location": "2278 Baker Creek Rd, Mansfield, MO 65704, USA",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Rare Seeds sells a wide range of vegetable, herb and flower seeds, operating as a seed supplier in the agriculture sector, making it a competitor to Nidhi Seeds.. 4 common products: [Groundnut Seeds, Wheat Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4.5 | Phone: (417) 924-8917",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.rareseeds.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.rareseeds.com/collections/all-seeds"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/BakerCreekSeeds/",
+        "facebook": "https://www.facebook.com/rareseeds",
+        "youtube": "https://www.youtube.com/channel/UCToFIe32MeC-P8Z4Uptax_w"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Johnny's Selected Seeds",
+      "url": "https://www.johnnyseeds.com/",
+      "type": "global",
+      "location": "955 Benton Ave, Winslow, ME 04901, USA",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Johnny’s Selected Seeds sells vegetable, herb, and flower seeds, which are not the same crop seeds (groundnut, wheat, maize, cumin, fodder bajra) offered by Nidhi Seeds, so they are not direct competitors.. 4 common products: [Groundnut Seeds, Wheat Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4 | Phone: (877) 564-6697",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.johnnyseeds.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.johnnyseeds.com/login/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/johnny_seeds/",
+        "facebook": "https://www.facebook.com/JohnnySeeds",
+        "youtube": "https://www.youtube.com/user/JohnnySeeds"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Petcher Seeds LLC",
+      "url": "http://www.petcherseeds.com/",
+      "type": "global",
+      "location": "1665 Carpenter Crossing Rd, Fruitdale, AL 36539, USA",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Petcher Seeds sells agricultural seeds (sunn hemp, cover crops, forages), placing it in the same seed industry and making it a competitor to Nidhi Seeds.. 4 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds]. Socials: Facebook verified. Rating: 4.9 | Phone: (251) 827-6594",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.petcherseeds.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "http://www.petcherseeds.com/collections"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/petcherseeds/",
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds"
+      ]
+    },
+    {
+      "name": "MAS Seeds Germany",
+      "url": "https://masseeds.de/",
+      "type": "global",
+      "location": "Neumarkter Str. 80, 81673 München, Germany",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: MAS Seeds Deutschland is a seed company operating in agriculture, offering seed products that overlap with Nidhi Seeds’ groundnut, wheat, maize, cumin, and fodder bajra seed lines.. 4 common products: [Groundnut Seeds, Wheat Seeds, Hybrid Maize Seeds, Cumin Seeds]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: 089 70998870",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://masseeds.de/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.masseeds.de/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://de.linkedin.com/company/mas-seeds-deutschland",
+        "instagram": "https://www.instagram.com/masseeds.deutschland",
+        "facebook": "https://www.facebook.com/MASSeedsDeutschland",
+        "youtube": "https://www.youtube.com/@masseeds.deutschland"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Hybrid Maize Seeds",
+        "Cumin Seeds"
+      ]
+    },
+    {
+      "name": "Gujarat Peanut And Agri products Limited",
+      "url": "http://gujaratpeanut.com/",
+      "type": "local",
+      "location": "Survey # 155/1 Targhari, Rajkot Jamnagar, Highway, Rajkot, Gujarat 360110, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: They sell processed peanuts and other agri products, not seed varieties, so they are not a direct competitor.. 3 common products: [Groundnut Seeds, Cumin Seeds, Seed Processing & Quality Conditioning]. Rating: 4.9 | Phone: 097866 97857",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://gujaratpeanut.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "http://gujaratpeanut.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Cumin Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "KS AGRICULTURAL INDUSTRIES PRIVATE LIMITED - ਕੇ ਐਸ ਐਗ੍ਰੀਕਲਚਰਲ ਇੰਡਸਟਰੀਜ਼ ਪ੍ਰਾਈਵੇਟ ਲਿਮਿਟਿਡ",
+      "url": "https://www.ksagri.in/",
+      "type": "regional",
+      "location": "Malerkotla to Ludhiana Road, Vill. Dilawargarh, Kup Khurd, Ahmedgarh, Punjab 148019, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: KSI Cropmaster manufactures farm machinery such as harvesters and seeders, not agricultural seeds, so it is not a direct competitor to Nidhi Seeds.. 3 common products: [Groundnut Seeds, Wheat Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4.9 | Phone: 098767 00255",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.ksagri.in/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.ksagri.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/kscropmaster/",
+        "facebook": "https://www.facebook.com/share/1BztGycw23/?mibextid=wwXIfr",
+        "youtube": "https://www.youtube.com/@Kscropmaster"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "KS AGROTECH Private Limited",
+      "url": "http://www.ksagrotech.org/",
+      "type": "regional",
+      "location": "Raikot Rd, Bir Ahmdabad, Malerkotla, Punjab 148023, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: They manufacture agricultural machinery, not seeds, so they are adjacent but not direct competitors.. 3 common products: [Groundnut Seeds, Wheat Seeds, Seed Processing & Quality Conditioning]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.6 | Phone: 1800 120 004 455",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.ksagrotech.org/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://ksagrotech.org/product/multicrop-thresher/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/ks-agrotech-private-limited-914903195",
+        "instagram": "https://www.instagram.com/ksagrotech/",
+        "facebook": "https://www.facebook.com/ksagrotech.org/",
+        "youtube": "https://www.youtube.com/KSGROUP55"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "Crops Overview",
+      "url": "https://www.icrisat.org/crops/groundnut/overview",
+      "type": "global",
+      "location": "USA",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: ICRISAT is a research institute, not a commercial seed supplier, so it does not compete with Nidhi Seeds.. 3 common products: [Groundnut Seeds, Seed Processing & Quality Conditioning, Germination & Genetic Purity Testing]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: N/A | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.icrisat.org/crops/groundnut/overview"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.icrisat.org/crops/groundnut/overview"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/icrisat",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/ICRISAT",
+        "youtube": "https://www.youtube.com/user/icrisatco"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Seed Processing & Quality Conditioning",
+        "Germination & Genetic Purity Testing"
+      ]
+    },
+    {
+      "name": "Sow True Seed",
+      "url": "https://sowtrueseed.com/",
+      "type": "global",
+      "location": "243 Haywood St, Asheville, NC 28801, USA",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Sow True Seed sells open‑pollinated garden and flower seeds for home growers, not the field crop varieties (groundnut, wheat, maize, cumin, fodder bajra) that Nidhi Seeds offers, so they are not direct competitors despite being in the seed industry.. 3 common products: [Groundnut Seeds, Wheat Seeds, Cumin Seeds]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4.7 | Phone: (828) 254-0708",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://sowtrueseed.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://sowtrueseed.com/pages/vegetable-seeds"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/sowtrueseed/",
+        "facebook": "https://www.facebook.com/SowTrueSeed",
+        "youtube": "https://www.youtube.com/channel/UCD82Yh1mFFaLqBX9-u1wu9Q"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds"
+      ]
+    },
+    {
+      "name": "Wild Mountain Seeds",
+      "url": "https://wildmountainseeds.com/contact/",
+      "type": "global",
+      "location": "211 Sunfire Ln, Carbondale, CO 81623, USA",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Wild Mountain Seeds is an operating seed supplier in agriculture, offering seeds such as garlic, which competes with Nidhi Seeds’ seed products.. 3 common products: [Groundnut Seeds, Wheat Seeds, Cumin Seeds]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: (970) 963-7442",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://wildmountainseeds.com/contact/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://www.facebook.com/wildmountainseeds"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/wildmountainseeds",
+        "facebook": "https://www.facebook.com/wildmountainseeds",
+        "youtube": "https://www.youtube.com/watch?v=rMI_wv4d8oc"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Cumin Seeds"
+      ]
+    },
+    {
+      "name": "Stratton Seed Company",
+      "url": "http://www.strattonseed.com/",
+      "type": "global",
+      "location": "1530 US-79, Stuttgart, AR 72160, USA",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Stratton Seed Company is a legitimate operating business in the agriculture seed industry, serving farmers and suppliers in the southern US. However, it is not a direct competitor to Nidhi Seeds because their geographic markets are disjoint (Southern US vs. India) and their product portfolios are distinct. Stratton focuses on forage, turf, and cover crops for the US market, whereas Nidhi Seeds specializes in Indian agricultural staples like groundnut, wheat, hybrid maize, and cumin. They do,. 3 common products: [Groundnut Seeds, Wheat Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified; Instagram verified. Rating: 4.5 | Phone: (870) 673-4433",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.strattonseed.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "http://www.strattonseed.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/strattonseedcompany/",
+        "facebook": "https://www.facebook.com/StrattonSeedCompany",
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "German Seed Alliance GmbH",
+      "url": "http://www.german-seed-alliance.de/",
+      "type": "global",
+      "location": "Aachener Str. 1053/1055, 50858 Köln-Lindenthal, Germany",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: German Seed Alliance appears to be an operating seed business in the agriculture sector, making it a direct competitor to Nidhi Seeds.. 3 common products: [Groundnut Seeds, Wheat Seeds, Agronomic Advisory & Field Consulting]. Socials: YouTube verified. Rating: N/A | Phone: 0221 1625060",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.german-seed-alliance.de/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "http://www.german-seed-alliance.de/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/channel/UC6TAfpyC5t2Aw-ms_YEOc_Q"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Agronomic Advisory & Field Consulting"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds",
+        "Agronomic Advisory & Field Consulting"
+      ]
+    },
+    {
+      "name": "Groundnut",
+      "url": "https://icar.org.in/en/crop-science/groundnut",
+      "type": "regional",
+      "location": "Maharashtra, India",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: ICAR is a research institute, not a commercial seed supplier, so it does not compete with Nidhi Seeds.. 2 common products: [Groundnut Seeds, Wheat Seeds]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: N/A | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://icar.org.in/en/crop-science/groundnut"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "https://icar.org.in/en/crop-science/groundnut"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/officialicarindia/",
+        "facebook": "https://www.facebook.com/InAgrisearch/",
+        "youtube": "https://www.youtube.com/user/icarindia"
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Wheat Seeds"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Wheat Seeds"
+      ]
+    },
+    {
+      "name": "Premium Peanut LLC",
+      "url": "http://www.premiumpeanutllc.com/",
+      "type": "global",
+      "location": "311 Barrington Rd, Douglas, GA 31535, USA",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: They sell peanut (groundnut) seeds, overlapping with Nidhi Seeds' groundnut seed offering, making them a direct competitor in the agriculture seed market.. 2 common products: [Groundnut Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified. Rating: 4.2 | Phone: (912) 331-7020",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.premiumpeanutllc.com/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "http://www.premiumpeanutllc.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/premiumpnut/",
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
+    },
+    {
+      "name": "satimex Quedlinburg GmbH",
+      "url": "http://www.satimex.de/",
+      "type": "global",
+      "location": "Groß Orden 19, 06484 Quedlinburg, Germany",
+      "whyCompetitor": "Industry verified: Agriculture / Seed Distribution. LLM Verdict: Satimex specializes in seed selection, production, and sale, overlapping with Nidhi Seeds' seed offerings.. 2 common products: [Groundnut Seeds, Seed Processing & Quality Conditioning]. Socials: Facebook verified; Instagram verified. Rating: 4.6 | Phone: 03946 689731",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.satimex.de/"
+        },
+        {
+          "title": "Product: Groundnut Seeds",
+          "url": "http://www.satimex.de/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/satimex_quedlinburg_gmbh/",
+        "facebook": "https://www.facebook.com/people/Satimex-Quedlinburg-GmbH/100063583512044/",
+        "youtube": null
+      },
+      "products": [
+        "Groundnut Seeds",
+        "Seed Processing & Quality Conditioning"
+      ],
+      "commonProducts": [
+        "Groundnut Seeds",
+        "Seed Processing & Quality Conditioning"
+      ]
     }
   ],
   "socialFeed": [
