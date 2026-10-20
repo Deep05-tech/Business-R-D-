@@ -44119,33 +44119,27 @@
       "socials": {
         "facebook": "https://www.facebook.com/search/top?q=synnova.in",
         "linkedin": "https://www.linkedin.com/company/synnova-gears-&-transmissions-pvt-ltd-/",
-        "instagram": "https://www.instagram.com/explore/tags/synnovain/",
+        "instagram": "https://www.instagram.com/synnovamacleod",
         "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
         "twitter": null
-      }
-    },
-    {
-      "name": "Progressive Gear Industries (Pvt) Ltd",
-      "url": "http://www.forgingmachining.com/",
-      "type": "regional",
-      "location": "300 L, SECTOR 53, EPIP, Sersa, Kundli, Sonipat, Haryana 131028, India",
-      "whyCompetitor": "Matches 9 offering(s): [Gears, Gear Blanks, Hydraulic Cylinder, Forged Crankshafts, Gear Manufacturing, Machining, IIoT-Enabled Machining...] | Rating: 4.9 | Phone: 080 4605 7891",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "http://www.forgingmachining.com/"
+      },
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
         },
-        {
-          "title": "Product: Gears",
-          "url": "http://www.forgingmachining.com/"
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 2
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
         }
-      ],
-      "socials": {
-        "facebook": "https://www.facebook.com/search/top?q=Progressive%20Gear%20Industries%20(Pvt)%20Ltd",
-        "linkedin": "https://www.linkedin.com/search/results/all/?keywords=Progressive%20Gear%20Industries%20(Pvt)%20Ltd",
-        "instagram": "https://www.instagram.com/explore/tags/ProgressiveGearIndustriesPvtLtd/",
-        "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
-        "twitter": null
       }
     },
     {
@@ -44166,10 +44160,28 @@
       ],
       "socials": {
         "facebook": "https://www.facebook.com/malkarindustries",
-        "linkedin": "https://www.linkedin.com/search/results/all/?keywords=Malkar%20Industries",
-        "instagram": "https://www.instagram.com/explore/tags/MalkarIndustries/",
+        "linkedin": "https://in.linkedin.com/company/malkarindia",
+        "instagram": "https://www.instagram.com/malkarindia",
         "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
         "twitter": null
+      },
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 2
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
       }
     },
     {
@@ -44191,9 +44203,27 @@
       "socials": {
         "facebook": "https://www.facebook.com/search/top?q=Gear%20Manufacturing%20Inc",
         "linkedin": "https://www.linkedin.com/company/gear-manufacturing-inc.",
-        "instagram": "https://www.instagram.com/explore/tags/GearManufacturingInc/",
+        "instagram": "https://www.instagram.com/forestcitygear",
         "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
         "twitter": null
+      },
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 1
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        }
       }
     },
     {
@@ -44214,277 +44244,399 @@
       ],
       "socials": {
         "facebook": "https://www.facebook.com/CBGearandMachine/",
-        "linkedin": "https://www.linkedin.com/search/results/all/?keywords=C-B%20Gear%20%26%20Machine%20Inc",
+        "linkedin": "https://www.linkedin.com/company/c-b-gear-machine-inc",
         "instagram": "https://www.instagram.com/explore/tags/CBGearMachineInc/",
         "youtube": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
         "twitter": null
+      },
+      "socialStatus": {
+        "YouTube": {
+          "status": "Success",
+          "count": 1
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 2
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
       }
+    },
+    {
+      "name": "pentagonforge.co.in",
+      "url": "https://pentagonforge.co.in/",
+      "type": "regional",
+      "location": "Maharashtra, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging and Machining. LLM Verdict: Heuristic industry match. 9 common products: [Gears, Gear Blanks, Hydraulic Cylinder Components, Forged Crankshafts, Hydraulic Cylinder, Gear Manufacturing, Machining...]. Socials: LinkedIn verified. Rating: N/A | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://pentagonforge.co.in/"
+        },
+        {
+          "title": "Product: Gears",
+          "url": "https://pentagonforge.co.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/pentagon-forge/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Gears",
+        "Gear Blanks",
+        "Hydraulic Cylinder Components",
+        "Forged Crankshafts",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Machining",
+        "IIoT-Enabled Machining",
+        "Advanced Forging Solutions"
+      ]
     }
   ],
   "socialFeed": [
     {
-      "competitorName": "synnova.in",
+      "id": "youtube_1792472356917_m3ie1",
+      "company": "Malkar Industries",
       "platform": "YouTube",
-      "platformIcon": "▶️",
-      "content": "Synnova Gears &amp; Transmissions Pvt. Ltd.  I  Corporate Video I  Leading Gear and Shaft Manufacturer (Blue Planet Design Studio)",
-      "link": "https://www.youtube.com/watch?v=mSHl-q-cf9k",
-      "date": "2023-11-08",
-      "mediaUrl": "https://i.ytimg.com/vi/mSHl-q-cf9k/hqdefault.jpg",
-      "mediaType": "Video"
+      "post_url": "https://www.youtube.com/watch?v=Q3mvemZUxV8",
+      "caption": "RAPID F205 Form Knurling Tool Holder",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/Q3mvemZUxV8/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/Q3mvemZUxV8/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
+      "thumbnail_url": "https://i.ytimg.com/vi/Q3mvemZUxV8/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=Q3mvemZUxV8",
+      "content": "RAPID F205 Form Knurling Tool Holder",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/Q3mvemZUxV8/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/Q3mvemZUxV8/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=Q3mvemZUxV8",
+      "competitorName": "Malkar Industries"
     },
     {
-      "competitorName": "synnova.in",
+      "id": "youtube_1792472365565_lyv0w",
+      "company": "Gear Manufacturing Inc",
       "platform": "YouTube",
-      "platformIcon": "▶️",
-      "content": "Synnova Gears Transmission Pvt Ltd Free Hostel Facilities  (Tathagat)",
-      "link": "https://www.youtube.com/watch?v=FKNlQpUni-A",
-      "date": "2025-09-13",
-      "mediaUrl": "https://i.ytimg.com/vi/FKNlQpUni-A/hqdefault.jpg",
-      "mediaType": "Video"
+      "post_url": "https://www.youtube.com/watch?v=fJB_j4dO6CY",
+      "caption": "Leveling Up Precision Gear Manufacturing | American Precision Gear x Helios",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/fJB_j4dO6CY/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/fJB_j4dO6CY/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
+      "thumbnail_url": "https://i.ytimg.com/vi/fJB_j4dO6CY/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=fJB_j4dO6CY",
+      "content": "Leveling Up Precision Gear Manufacturing | American Precision Gear x Helios",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/fJB_j4dO6CY/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/fJB_j4dO6CY/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=fJB_j4dO6CY",
+      "competitorName": "Gear Manufacturing Inc"
     },
     {
-      "competitorName": "synnova.in",
+      "id": "youtube_1792472370832_1h1ie",
+      "company": "C-B Gear & Machine Inc",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=n-ps72gehB4",
+      "caption": "Our TOP 3 Superautomatic Espresso Machines of 2024! Seattle Coffee Gear's TOP 3 Series is BACK!",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/n-ps72gehB4/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/n-ps72gehB4/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
+      "thumbnail_url": "https://i.ytimg.com/vi/n-ps72gehB4/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=n-ps72gehB4",
+      "content": "Our TOP 3 Superautomatic Espresso Machines of 2024! Seattle Coffee Gear's TOP 3 Series is BACK!",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/n-ps72gehB4/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/n-ps72gehB4/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=n-ps72gehB4",
+      "competitorName": "C-B Gear & Machine Inc"
+    },
+    {
+      "id": "youtube_1792472357019_pfyl6",
+      "company": "Malkar Industries",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=PgAh9wBHrLs",
+      "caption": "RAPID I202 Internal Knurling Tool",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/PgAh9wBHrLs/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/PgAh9wBHrLs/hqdefault.jpg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=sjs_HSzWLEo",
+      "thumbnail_url": "https://i.ytimg.com/vi/PgAh9wBHrLs/hqdefault.jpg",
+      "published_date": "2026-10-20",
+      "link": "https://www.youtube.com/watch?v=PgAh9wBHrLs",
+      "content": "RAPID I202 Internal Knurling Tool",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://i.ytimg.com/vi/PgAh9wBHrLs/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/PgAh9wBHrLs/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=PgAh9wBHrLs",
+      "competitorName": "Malkar Industries"
+    },
+    {
+      "id": "facebook_1792472370236_ec1ab",
+      "company": "C-B Gear & Machine Inc",
+      "platform": "Facebook",
+      "post_url": "https://www.facebook.com/CBGearandMachine/posts/1694021696060470",
+      "caption": "C-B Gear and Machine is a custom gear manufacturer ... Since 1952, we've been turning ski building gears and gearboxes made to work",
+      "media_type": "Video",
+      "thumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/813836946_1817802339385649_5435992356016413890_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=c26028&_nc_ohc=M4sNQksidZMQ7kNvwFqcugm&_nc_oc=AdqlVglPn1G7qV0yP99oaHmCatq5PCZnau3Hm-xEZj7XwHNs5Tn2L3zm4Do-5eEf5Nc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=2l-AXQC4OmxrsUUymu344g&_nc_ss=7020f&oh=00_AQOC2yrjKA5fHaBUNoFBBBC8i6FNfLQHFv_XeA4ektTVeQ&oe=6ADCDDB7",
+      "media_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/813836946_1817802339385649_5435992356016413890_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=c26028&_nc_ohc=M4sNQksidZMQ7kNvwFqcugm&_nc_oc=AdqlVglPn1G7qV0yP99oaHmCatq5PCZnau3Hm-xEZj7XwHNs5Tn2L3zm4Do-5eEf5Nc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=2l-AXQC4OmxrsUUymu344g&_nc_ss=7020f&oh=00_AQOC2yrjKA5fHaBUNoFBBBC8i6FNfLQHFv_XeA4ektTVeQ&oe=6ADCDDB7",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.facebook.com/CBGearandMachine/",
+      "thumbnail_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/813836946_1817802339385649_5435992356016413890_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=c26028&_nc_ohc=M4sNQksidZMQ7kNvwFqcugm&_nc_oc=AdqlVglPn1G7qV0yP99oaHmCatq5PCZnau3Hm-xEZj7XwHNs5Tn2L3zm4Do-5eEf5Nc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=2l-AXQC4OmxrsUUymu344g&_nc_ss=7020f&oh=00_AQOC2yrjKA5fHaBUNoFBBBC8i6FNfLQHFv_XeA4ektTVeQ&oe=6ADCDDB7",
+      "published_date": "2026-10-20",
+      "link": "https://www.facebook.com/CBGearandMachine/posts/1694021696060470",
+      "content": "C-B Gear and Machine is a custom gear manufacturer ... Since 1952, we've been turning ski building gears and gearboxes made to work",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/813836946_1817802339385649_5435992356016413890_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=c26028&_nc_ohc=M4sNQksidZMQ7kNvwFqcugm&_nc_oc=AdqlVglPn1G7qV0yP99oaHmCatq5PCZnau3Hm-xEZj7XwHNs5Tn2L3zm4Do-5eEf5Nc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=2l-AXQC4OmxrsUUymu344g&_nc_ss=7020f&oh=00_AQOC2yrjKA5fHaBUNoFBBBC8i6FNfLQHFv_XeA4ektTVeQ&oe=6ADCDDB7",
+      "mediaUrls": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/813836946_1817802339385649_5435992356016413890_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=106&ccb=1-7&_nc_sid=c26028&_nc_ohc=M4sNQksidZMQ7kNvwFqcugm&_nc_oc=AdqlVglPn1G7qV0yP99oaHmCatq5PCZnau3Hm-xEZj7XwHNs5Tn2L3zm4Do-5eEf5Nc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=2l-AXQC4OmxrsUUymu344g&_nc_ss=7020f&oh=00_AQOC2yrjKA5fHaBUNoFBBBC8i6FNfLQHFv_XeA4ektTVeQ&oe=6ADCDDB7",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.facebook.com/CBGearandMachine/posts/1694021696060470",
+      "competitorName": "C-B Gear & Machine Inc",
+      "video_url": "https://video-sea5-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQOvxHlmFYcLWQGiu6ws6od4YQr74QgW8IqgQipc504cPsPWWd15fq9GgLCzx-sc7k8TGFG9pwsIhD9YcB-8KAKnWwEd2-CPzUybXUtMQNjbvQ.mp4?_nc_cat=108&_nc_sid=9ca052&_nc_ht=video-sea5-1.xx.fbcdn.net&_nc_ohc=8IuVXhqiissQ7kNvwH949wh&efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfaDI2NC1iYXNpYy1nZW4yXzM2MHAiLCJ2aWRlb19pZCI6MjI4MDY5NzA0Mjc1MDg2MCwib2lsX3VybGdlbl9hcHBfaWQiOjAsImNsaWVudF9uYW1lIjoidW5rbm93biIsInhwdl9hc3NldF9pZCI6MTA4NjY3OTgwMDM5NTYzNywiYXNzZXRfYWdlX2RheXMiOjMzLCJ2aV91c2VjYXNlX2lkIjoxMDEyMiwiZHVyYXRpb25fcyI6MjA3LCJiaXRyYXRlIjo1MzQ2MiwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&_nc_gid=ySTtONZ7cCTOy0pbw4KG6w&_nc_ss=7020f&_nc_zt=28&oh=00_AQM2JLnvagHOOWbaLvP9MHM-bFPqV6OmnLY1f3zgaIafVg&oe=6ADCC9EC"
+    },
+    {
+      "id": "facebook_1792472370236_1fxpq",
+      "company": "C-B Gear & Machine Inc",
+      "platform": "Facebook",
+      "post_url": "https://www.facebook.com/CBGearandMachine/videos/1429879672410559",
+      "caption": "C-B Gear & Machine, a company specializing in custom gear manufacturing. creating precision gearboxes … reverse engineering, and metalworking.",
+      "media_type": "Video",
+      "thumbnail": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/806984486_1094028080182818_1213771918732059430_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=c26028&_nc_ohc=1nRjMVf1UY4Q7kNvwGRzaB7&_nc_oc=Adry2IVHaGxRCECYEOLDVw7xj-d8NJGoNqdwT9OqDZYL4-STTh8NOyS2b-FaXE9sHEc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=JqDgHNr8EH9orkL5_WFyvQ&_nc_ss=7020f&oh=00_AQOB0On2ltyu5i1qMO7HlV2ZqRnsnUlsDf0Kl_tVoD-npw&oe=6ADCD7C4",
+      "media_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/806984486_1094028080182818_1213771918732059430_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=c26028&_nc_ohc=1nRjMVf1UY4Q7kNvwGRzaB7&_nc_oc=Adry2IVHaGxRCECYEOLDVw7xj-d8NJGoNqdwT9OqDZYL4-STTh8NOyS2b-FaXE9sHEc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=JqDgHNr8EH9orkL5_WFyvQ&_nc_ss=7020f&oh=00_AQOB0On2ltyu5i1qMO7HlV2ZqRnsnUlsDf0Kl_tVoD-npw&oe=6ADCD7C4",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.facebook.com/CBGearandMachine/",
+      "thumbnail_url": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/806984486_1094028080182818_1213771918732059430_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=c26028&_nc_ohc=1nRjMVf1UY4Q7kNvwGRzaB7&_nc_oc=Adry2IVHaGxRCECYEOLDVw7xj-d8NJGoNqdwT9OqDZYL4-STTh8NOyS2b-FaXE9sHEc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=JqDgHNr8EH9orkL5_WFyvQ&_nc_ss=7020f&oh=00_AQOB0On2ltyu5i1qMO7HlV2ZqRnsnUlsDf0Kl_tVoD-npw&oe=6ADCD7C4",
+      "published_date": "2026-10-20",
+      "link": "https://www.facebook.com/CBGearandMachine/videos/1429879672410559",
+      "content": "C-B Gear & Machine, a company specializing in custom gear manufacturing. creating precision gearboxes … reverse engineering, and metalworking.",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/806984486_1094028080182818_1213771918732059430_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=c26028&_nc_ohc=1nRjMVf1UY4Q7kNvwGRzaB7&_nc_oc=Adry2IVHaGxRCECYEOLDVw7xj-d8NJGoNqdwT9OqDZYL4-STTh8NOyS2b-FaXE9sHEc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=JqDgHNr8EH9orkL5_WFyvQ&_nc_ss=7020f&oh=00_AQOB0On2ltyu5i1qMO7HlV2ZqRnsnUlsDf0Kl_tVoD-npw&oe=6ADCD7C4",
+      "mediaUrls": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/806984486_1094028080182818_1213771918732059430_n.jpg?stp=dst-jpg_s1000x1200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=c26028&_nc_ohc=1nRjMVf1UY4Q7kNvwGRzaB7&_nc_oc=Adry2IVHaGxRCECYEOLDVw7xj-d8NJGoNqdwT9OqDZYL4-STTh8NOyS2b-FaXE9sHEc&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&_nc_gid=JqDgHNr8EH9orkL5_WFyvQ&_nc_ss=7020f&oh=00_AQOB0On2ltyu5i1qMO7HlV2ZqRnsnUlsDf0Kl_tVoD-npw&oe=6ADCD7C4",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.facebook.com/CBGearandMachine/videos/1429879672410559",
+      "competitorName": "C-B Gear & Machine Inc",
+      "video_url": "https://video-sea5-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQPhGK48_ZQNCXZQ2bSl4ROtcY86P2LYQpNyeCDTiy98KSLxtybHxaEW9hm8nexq99R1bB_PQ3wWy3O4UpTYxQ78I_m98XL3b83R_Ede285ZPg.mp4?_nc_cat=108&_nc_sid=9ca052&_nc_ht=video-sea5-1.xx.fbcdn.net&_nc_ohc=dNjzZ9WH2oYQ7kNvwHfJ9HJ&efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfaDI2NC1iYXNpYy1nZW4yXzM2MHAiLCJ2aWRlb19pZCI6MTQyOTg3OTY3MjQxMDU1OSwib2lsX3VybGdlbl9hcHBfaWQiOjAsImNsaWVudF9uYW1lIjoidW5rbm93biIsInhwdl9hc3NldF9pZCI6MzEwNTY1NTM2OTc3MDkyNywiYXNzZXRfYWdlX2RheXMiOjM3LCJ2aV91c2VjYXNlX2lkIjoxMjM3MywiZHVyYXRpb25fcyI6MjQyLCJiaXRyYXRlIjo0OTIxNCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&_nc_gid=nmek0MwzkqkGoCeg3QbWkg&_nc_ss=7020f&_nc_zt=28&oh=00_AQOPPrDjH3EzrbT0ycg9yvjDDMPJm1t1vD_c6aBIpI8s3g&oe=6ADCB100",
+      "fb_video_id": "1429879672410559"
+    },
+    {
+      "id": "li_1792472351722_72948",
+      "company": "synnova.in",
       "platform": "LinkedIn",
-      "platformIcon": "🟦",
-      "content": "synnova.in Official LinkedIn Post: Key milestones, industrial machinery upgrades, and corporate updates.",
-      "link": "https://www.linkedin.com/company/synnovain/",
-      "date": "2026-08-18",
-      "mediaUrl": null,
-      "mediaType": "Post",
-      "post_url": "https://www.linkedin.com/company/synnovain/",
-      "postUrl": "https://www.linkedin.com/company/synnovain/"
-    },
-    {
-      "competitorName": "Instagram",
-      "platform": "Instagram",
-      "platformIcon": "📸",
-      "content": "synnova.in Official Instagram Feature: High-precision quality inspection and manufacturing operations.",
-      "link": "https://www.instagram.com/instagram/",
-      "date": "2026-08-14",
-      "mediaUrl": null,
-      "mediaType": "Post",
-      "post_url": "https://www.instagram.com/instagram/",
-      "postUrl": "https://www.instagram.com/instagram/"
-    },
-    {
+      "post_url": "https://www.linkedin.com/posts/synnova-gears-%26-transmissions-pvt-ltd-_happy-ganesh-chaturthi-may-lord-ganesha-activity-7505134244587966466-vDvM",
+      "caption": "🙏Happy Ganesh Chaturthi!💐💐\nMay Lord Ganesha bless us with success, prosperity, happiness, and new beginnings.Warm wishes to all on this auspicious occasion!\n— Synnova Gears & Transmissions Pvt. Ltd.",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQEHVhTo3gLT5w/feedshare-shrink_800/B4DaCeX0wGKAAc-/0/1789363440992?e=2147483647&v=beta&t=VT6qQGjOf7RVcVG_k60F_Jk3w1a81-RqZStWNOCXkWQ",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQEHVhTo3gLT5w/feedshare-shrink_800/B4DaCeX0wGKAAc-/0/1789363440992?e=2147483647&v=beta&t=VT6qQGjOf7RVcVG_k60F_Jk3w1a81-RqZStWNOCXkWQ",
+      "date": "2026-09-14",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/synnova-gears-&-transmissions-pvt-ltd-/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQEHVhTo3gLT5w/feedshare-shrink_800/B4DaCeX0wGKAAc-/0/1789363440992?e=2147483647&v=beta&t=VT6qQGjOf7RVcVG_k60F_Jk3w1a81-RqZStWNOCXkWQ",
+      "published_date": "2026-09-14",
+      "link": "https://www.linkedin.com/posts/synnova-gears-%26-transmissions-pvt-ltd-_happy-ganesh-chaturthi-may-lord-ganesha-activity-7505134244587966466-vDvM",
+      "content": "🙏Happy Ganesh Chaturthi!💐💐\nMay Lord Ganesha bless us with success, prosperity, happiness, and new beginnings.Warm wishes to all on this auspicious occasion!\n— Synnova Gears & Transmissions Pvt. Ltd.",
+      "timestamp": "2026-09-14",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQEHVhTo3gLT5w/feedshare-shrink_800/B4DaCeX0wGKAAc-/0/1789363440992?e=2147483647&v=beta&t=VT6qQGjOf7RVcVG_k60F_Jk3w1a81-RqZStWNOCXkWQ",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQEHVhTo3gLT5w/feedshare-shrink_800/B4DaCeX0wGKAAc-/0/1789363440992?e=2147483647&v=beta&t=VT6qQGjOf7RVcVG_k60F_Jk3w1a81-RqZStWNOCXkWQ",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/synnova-gears-%26-transmissions-pvt-ltd-_happy-ganesh-chaturthi-may-lord-ganesha-activity-7505134244587966466-vDvM",
       "competitorName": "synnova.in",
-      "platform": "News & Press",
-      "platformIcon": "📰",
-      "content": "synnova.in Industrial News Release: New product line launch and manufacturing milestone announcement.",
-      "link": "https://www.madeinalabama.com",
-      "date": "2026-08-10",
-      "mediaUrl": null,
-      "mediaType": "Article"
+      "activity_id": "7505134244587966466"
     },
     {
-      "competitorName": "Progressive Gear Industries (Pvt) Ltd",
-      "platform": "YouTube",
-      "platformIcon": "▶️",
-      "content": "Forged by Progressive Gears Industries (P) Ltd, New Delhi (IndiaMARTSuppliers)",
-      "link": "https://www.youtube.com/watch?v=CDRC1IQibNc",
-      "date": "2011-10-31",
-      "mediaUrl": "https://i.ytimg.com/vi/CDRC1IQibNc/hqdefault.jpg",
-      "mediaType": "Video"
-    },
-    {
-      "competitorName": "Progressive Gear Industries (Pvt) Ltd",
-      "platform": "YouTube",
-      "platformIcon": "▶️",
-      "content": "Forgings of Gears (Progressive Gear Industries)",
-      "link": "https://www.youtube.com/watch?v=96lljoMFJfU",
-      "date": "2018-01-29",
-      "mediaUrl": "https://i.ytimg.com/vi/96lljoMFJfU/hqdefault.jpg",
-      "mediaType": "Video"
-    },
-    {
-      "competitorName": "Progressive Gear Industries (Pvt) Ltd",
+      "id": "li_1792472356720_6tmo1",
+      "company": "Malkar Industries",
       "platform": "LinkedIn",
-      "platformIcon": "🟦",
-      "content": "Progressive Gear Industries (Pvt) Ltd Official LinkedIn Post: Key milestones, industrial machinery upgrades, and corporate updates.",
-      "link": "https://www.linkedin.com/company/progressivegearindustriespvtltd/",
-      "date": "2026-08-18",
-      "mediaUrl": null,
-      "mediaType": "Post",
-      "post_url": "https://www.linkedin.com/company/progressivegearindustriespvtltd/",
-      "postUrl": "https://www.linkedin.com/company/progressivegearindustriespvtltd/"
-    },
-    {
-      "competitorName": "Instagram",
-      "platform": "Instagram",
-      "platformIcon": "📸",
-      "content": "Progressive Gear Industries (Pvt) Ltd Official Instagram Feature: High-precision quality inspection and manufacturing operations.",
-      "link": "https://www.instagram.com/instagram/",
-      "date": "2026-08-14",
-      "mediaUrl": null,
-      "mediaType": "Post",
-      "post_url": "https://www.instagram.com/instagram/",
-      "postUrl": "https://www.instagram.com/instagram/"
-    },
-    {
-      "competitorName": "Progressive Gear Industries (Pvt) Ltd",
-      "platform": "News & Press",
-      "platformIcon": "📰",
-      "content": "Progressive Gear Industries (Pvt) Ltd Industrial News Release: New product line launch and manufacturing milestone announcement.",
-      "link": "https://www.madeinalabama.com",
-      "date": "2026-08-10",
-      "mediaUrl": null,
-      "mediaType": "Article"
-    },
-    {
+      "post_url": "https://www.linkedin.com/posts/malkarindia_automationexpo2026-engineering-industrialsolutions-activity-7486302526494121984-8F4k",
+      "caption": "It's Day 3, and we're still going strong! 🔧\nA big thank you to everyone who has stopped by our booth so far. Your interest and valuable discussions have made this event truly worthwhile.\nHaven't visited us yet? There's still time—come explore our precision engineering solutions and connect with our team.\n#AutomationExpo2026 #Engineering #IndustrialSolutions #PrecisionTools #Manufacturing #MalkarIndustries",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQF9bJqwO_q_CA/feedshare-image-high-res/B4EZ.SweniJIAU-/0/1784873610001?e=2147483647&v=beta&t=16bjge2CGWyIvBJMeFhajo3GLOFy-k0dQlLTIrLuEEM",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQF9bJqwO_q_CA/feedshare-image-high-res/B4EZ.SweniJIAU-/0/1784873610001?e=2147483647&v=beta&t=16bjge2CGWyIvBJMeFhajo3GLOFy-k0dQlLTIrLuEEM",
+      "date": "2026-07-24",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://in.linkedin.com/company/malkarindia",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQF9bJqwO_q_CA/feedshare-image-high-res/B4EZ.SweniJIAU-/0/1784873610001?e=2147483647&v=beta&t=16bjge2CGWyIvBJMeFhajo3GLOFy-k0dQlLTIrLuEEM",
+      "published_date": "2026-07-24",
+      "link": "https://www.linkedin.com/posts/malkarindia_automationexpo2026-engineering-industrialsolutions-activity-7486302526494121984-8F4k",
+      "content": "It's Day 3, and we're still going strong! 🔧\nA big thank you to everyone who has stopped by our booth so far. Your interest and valuable discussions have made this event truly worthwhile.\nHaven't visited us yet? There's still time—come explore our precision engineering solutions and connect with our team.\n#AutomationExpo2026 #Engineering #IndustrialSolutions #PrecisionTools #Manufacturing #MalkarIndustries",
+      "timestamp": "2026-07-24",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQF9bJqwO_q_CA/feedshare-image-high-res/B4EZ.SweniJIAU-/0/1784873610001?e=2147483647&v=beta&t=16bjge2CGWyIvBJMeFhajo3GLOFy-k0dQlLTIrLuEEM",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQF9bJqwO_q_CA/feedshare-image-high-res/B4EZ.SweniJIAU-/0/1784873610001?e=2147483647&v=beta&t=16bjge2CGWyIvBJMeFhajo3GLOFy-k0dQlLTIrLuEEM",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/malkarindia_automationexpo2026-engineering-industrialsolutions-activity-7486302526494121984-8F4k",
       "competitorName": "Malkar Industries",
-      "platform": "YouTube",
-      "platformIcon": "▶️",
-      "content": "Rapid Form Knurling Tool Holder F101 (Malkar Industries)",
-      "link": "https://www.youtube.com/watch?v=qriYATS-o10",
-      "date": "2021-05-12",
-      "mediaUrl": "https://i.ytimg.com/vi/qriYATS-o10/hqdefault.jpg",
-      "mediaType": "Video"
+      "activity_id": "7486302526494121984"
     },
     {
+      "id": "li_1792472351722_gsgxx",
+      "company": "synnova.in",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/synnova-gears-%26-transmissions-pvt-ltd-_we-are-proud-to-share-that-tmtl-has-recognized-activity-7484837589447933952-rtzI",
+      "caption": "We are proud to share that TMTL has recognized Synnova Gears for our outstanding efforts in successfully delivering Deutz engine gears with a \"First Time Right\" approach and ensuring on-time delivery.\n\nThis achievement reflects our team's commitment to quality, precision, and customer satisfaction. We are also excited that this recognition has opened the opportunity for us to supply gears directly to Deutz Germany 🇩🇪.\n\nCongratulations to the entire Synnova Gears team on this significant milestone. Together, we look forward to achieving many more successes. Synnova Gears & Transmissions Pvt. Ltd.",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQG0peuAOT1Bag/feedshare-shrink_800/B4DZ998H_lHgAk-/0/1784524341454?e=2147483647&v=beta&t=3g-424mgWHn09K6KduDV0_iOrzIYoq1_xaCCs_9x0xc",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQG0peuAOT1Bag/feedshare-shrink_800/B4DZ998H_lHgAk-/0/1784524341454?e=2147483647&v=beta&t=3g-424mgWHn09K6KduDV0_iOrzIYoq1_xaCCs_9x0xc",
+      "date": "2026-07-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/synnova-gears-&-transmissions-pvt-ltd-/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQG0peuAOT1Bag/feedshare-shrink_800/B4DZ998H_lHgAk-/0/1784524341454?e=2147483647&v=beta&t=3g-424mgWHn09K6KduDV0_iOrzIYoq1_xaCCs_9x0xc",
+      "published_date": "2026-07-20",
+      "link": "https://www.linkedin.com/posts/synnova-gears-%26-transmissions-pvt-ltd-_we-are-proud-to-share-that-tmtl-has-recognized-activity-7484837589447933952-rtzI",
+      "content": "We are proud to share that TMTL has recognized Synnova Gears for our outstanding efforts in successfully delivering Deutz engine gears with a \"First Time Right\" approach and ensuring on-time delivery.\n\nThis achievement reflects our team's commitment to quality, precision, and customer satisfaction. We are also excited that this recognition has opened the opportunity for us to supply gears directly to Deutz Germany 🇩🇪.\n\nCongratulations to the entire Synnova Gears team on this significant milestone. Together, we look forward to achieving many more successes. Synnova Gears & Transmissions Pvt. Ltd.",
+      "timestamp": "2026-07-20",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQG0peuAOT1Bag/feedshare-shrink_800/B4DZ998H_lHgAk-/0/1784524341454?e=2147483647&v=beta&t=3g-424mgWHn09K6KduDV0_iOrzIYoq1_xaCCs_9x0xc",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQG0peuAOT1Bag/feedshare-shrink_800/B4DZ998H_lHgAk-/0/1784524341454?e=2147483647&v=beta&t=3g-424mgWHn09K6KduDV0_iOrzIYoq1_xaCCs_9x0xc",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/synnova-gears-%26-transmissions-pvt-ltd-_we-are-proud-to-share-that-tmtl-has-recognized-activity-7484837589447933952-rtzI",
+      "competitorName": "synnova.in",
+      "activity_id": "7484837589447933952"
+    },
+    {
+      "id": "li_1792472356720_0hwsg",
+      "company": "Malkar Industries",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/malkarindia_amtex2026-amtex-manufacturing-activity-7483476557743898624-ijFX",
+      "caption": "🏭 Struggling to find a one-stop solution for your manufacturing needs? Visit Malkar Industries at AMTEX 2026 | Hall 12 | Stall D15.\n\n#AMTEX2026 #AMTEX #Manufacturing #IndustrialAutomation #MachineTools #PrecisionEngineering #Engineering #ManufacturingSolutions #MotionControl #LeadScrews #KnurlingTools #WormGear #SpurGear #HelicalGear #MadeInIndia #OEM #FactoryAutomation #IndustrialSolutions #B2BManufacturing #MalkarIndustries",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D10AQEGZVn8mNnQdg/image-shrink_1280/B4DZ9qmRyIGkAc-/0/1784199847460?e=2147483647&v=beta&t=qpGnqxEeaC3JqQFfsuqrbs_mjhctKJYqmnzy9GsNtdE",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D10AQEGZVn8mNnQdg/image-shrink_1280/B4DZ9qmRyIGkAc-/0/1784199847460?e=2147483647&v=beta&t=qpGnqxEeaC3JqQFfsuqrbs_mjhctKJYqmnzy9GsNtdE",
+      "date": "2026-07-16",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://in.linkedin.com/company/malkarindia",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D10AQEGZVn8mNnQdg/image-shrink_1280/B4DZ9qmRyIGkAc-/0/1784199847460?e=2147483647&v=beta&t=qpGnqxEeaC3JqQFfsuqrbs_mjhctKJYqmnzy9GsNtdE",
+      "published_date": "2026-07-16",
+      "link": "https://www.linkedin.com/posts/malkarindia_amtex2026-amtex-manufacturing-activity-7483476557743898624-ijFX",
+      "content": "🏭 Struggling to find a one-stop solution for your manufacturing needs? Visit Malkar Industries at AMTEX 2026 | Hall 12 | Stall D15.\n\n#AMTEX2026 #AMTEX #Manufacturing #IndustrialAutomation #MachineTools #PrecisionEngineering #Engineering #ManufacturingSolutions #MotionControl #LeadScrews #KnurlingTools #WormGear #SpurGear #HelicalGear #MadeInIndia #OEM #FactoryAutomation #IndustrialSolutions #B2BManufacturing #MalkarIndustries",
+      "timestamp": "2026-07-16",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D10AQEGZVn8mNnQdg/image-shrink_1280/B4DZ9qmRyIGkAc-/0/1784199847460?e=2147483647&v=beta&t=qpGnqxEeaC3JqQFfsuqrbs_mjhctKJYqmnzy9GsNtdE",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D10AQEGZVn8mNnQdg/image-shrink_1280/B4DZ9qmRyIGkAc-/0/1784199847460?e=2147483647&v=beta&t=qpGnqxEeaC3JqQFfsuqrbs_mjhctKJYqmnzy9GsNtdE",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/malkarindia_amtex2026-amtex-manufacturing-activity-7483476557743898624-ijFX",
       "competitorName": "Malkar Industries",
+      "activity_id": "7483476557743898624"
+    },
+    {
+      "id": "li_1792472356720_6za6w",
+      "company": "Malkar Industries",
       "platform": "LinkedIn",
-      "platformIcon": "🟦",
-      "content": "Malkar Industries Official LinkedIn Post: Key milestones, industrial machinery upgrades, and corporate updates.",
-      "link": "https://www.linkedin.com/company/malkarindustries/",
-      "date": "2026-08-18",
-      "mediaUrl": null,
-      "mediaType": "Post",
-      "post_url": "https://www.linkedin.com/company/malkarindustries/",
-      "postUrl": "https://www.linkedin.com/company/malkarindustries/"
-    },
-    {
-      "competitorName": "Instagram",
-      "platform": "Instagram",
-      "platformIcon": "📸",
-      "content": "Malkar Industries Official Instagram Feature: High-precision quality inspection and manufacturing operations.",
-      "link": "https://www.instagram.com/instagram/",
-      "date": "2026-08-14",
-      "mediaUrl": null,
-      "mediaType": "Post",
-      "post_url": "https://www.instagram.com/instagram/",
-      "postUrl": "https://www.instagram.com/instagram/"
-    },
-    {
+      "post_url": "https://www.linkedin.com/posts/malkarindia_automationexpo2026-automationexpo-industrialautomation-activity-7483475263205412864-Vtli",
+      "caption": "Looking for Better Motion, Better Precision & Better Productivity? Meet Malkar Industries at Automation Expo 2026 | Hall 02 | Stall N34.\n#AutomationExpo2026 #AutomationExpo #IndustrialAutomation #Manufacturing #Engineering #MachineTools #PrecisionEngineering #IndustrialSolutions #Productivity #MotionControl #Leadscrew #KnurlingTools #Gears #MadeInIndia #MalkarIndustries",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D10AQGt1hOkbrUCSg/image-shrink_1280/B4DZ9qlGbqJ4Ak-/0/1784199538699?e=2147483647&v=beta&t=keGmWXzMrPMMQBUXP-D5J93rssogHWQ4_4hrg5km-34",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D10AQGt1hOkbrUCSg/image-shrink_1280/B4DZ9qlGbqJ4Ak-/0/1784199538699?e=2147483647&v=beta&t=keGmWXzMrPMMQBUXP-D5J93rssogHWQ4_4hrg5km-34",
+      "date": "2026-07-16",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://in.linkedin.com/company/malkarindia",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D10AQGt1hOkbrUCSg/image-shrink_1280/B4DZ9qlGbqJ4Ak-/0/1784199538699?e=2147483647&v=beta&t=keGmWXzMrPMMQBUXP-D5J93rssogHWQ4_4hrg5km-34",
+      "published_date": "2026-07-16",
+      "link": "https://www.linkedin.com/posts/malkarindia_automationexpo2026-automationexpo-industrialautomation-activity-7483475263205412864-Vtli",
+      "content": "Looking for Better Motion, Better Precision & Better Productivity? Meet Malkar Industries at Automation Expo 2026 | Hall 02 | Stall N34.\n#AutomationExpo2026 #AutomationExpo #IndustrialAutomation #Manufacturing #Engineering #MachineTools #PrecisionEngineering #IndustrialSolutions #Productivity #MotionControl #Leadscrew #KnurlingTools #Gears #MadeInIndia #MalkarIndustries",
+      "timestamp": "2026-07-16",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D10AQGt1hOkbrUCSg/image-shrink_1280/B4DZ9qlGbqJ4Ak-/0/1784199538699?e=2147483647&v=beta&t=keGmWXzMrPMMQBUXP-D5J93rssogHWQ4_4hrg5km-34",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D10AQGt1hOkbrUCSg/image-shrink_1280/B4DZ9qlGbqJ4Ak-/0/1784199538699?e=2147483647&v=beta&t=keGmWXzMrPMMQBUXP-D5J93rssogHWQ4_4hrg5km-34",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/malkarindia_automationexpo2026-automationexpo-industrialautomation-activity-7483475263205412864-Vtli",
       "competitorName": "Malkar Industries",
-      "platform": "News & Press",
-      "platformIcon": "📰",
-      "content": "Malkar Industries Industrial News Release: New product line launch and manufacturing milestone announcement.",
-      "link": "https://www.madeinalabama.com",
-      "date": "2026-08-10",
-      "mediaUrl": null,
-      "mediaType": "Article"
-    },
-    {
-      "competitorName": "Gear Manufacturing Inc",
-      "platform": "YouTube",
-      "platformIcon": "▶️",
-      "content": "Gear Manufacturing - Rupkala Engineers Pvt Ltd (Rupkala Engineers Pvt Ltd)",
-      "link": "https://www.youtube.com/watch?v=2CFCkkAlqow",
-      "date": "2024-08-30",
-      "mediaUrl": "https://i.ytimg.com/vi/2CFCkkAlqow/hqdefault.jpg",
-      "mediaType": "Video"
-    },
-    {
-      "competitorName": "Gear Manufacturing Inc",
-      "platform": "YouTube",
-      "platformIcon": "▶️",
-      "content": "Innovation Gear Manufacturing Technology: Automated, Precise &amp; Industrial Efficient. (TechLifeHub)",
-      "link": "https://www.youtube.com/watch?v=cuy_a6ciK8s",
-      "date": "2025-08-02",
-      "mediaUrl": "https://i.ytimg.com/vi/cuy_a6ciK8s/hqdefault.jpg",
-      "mediaType": "Video"
-    },
-    {
-      "competitorName": "Gear Manufacturing Inc",
-      "platform": "LinkedIn",
-      "platformIcon": "🟦",
-      "content": "Gear Manufacturing Inc Official LinkedIn Post: Key milestones, industrial machinery upgrades, and corporate updates.",
-      "link": "https://www.linkedin.com/company/gearmanufacturinginc/",
-      "date": "2026-08-18",
-      "mediaUrl": null,
-      "mediaType": "Post",
-      "post_url": "https://www.linkedin.com/company/gearmanufacturinginc/",
-      "postUrl": "https://www.linkedin.com/company/gearmanufacturinginc/"
-    },
-    {
-      "competitorName": "Instagram",
-      "platform": "Instagram",
-      "platformIcon": "📸",
-      "content": "Gear Manufacturing Inc Official Instagram Feature: High-precision quality inspection and manufacturing operations.",
-      "link": "https://www.instagram.com/instagram/",
-      "date": "2026-08-14",
-      "mediaUrl": null,
-      "mediaType": "Post",
-      "post_url": "https://www.instagram.com/instagram/",
-      "postUrl": "https://www.instagram.com/instagram/"
-    },
-    {
-      "competitorName": "Gear Manufacturing Inc",
-      "platform": "News & Press",
-      "platformIcon": "📰",
-      "content": "Gear Manufacturing Inc Industrial News Release: New product line launch and manufacturing milestone announcement.",
-      "link": "https://www.madeinalabama.com",
-      "date": "2026-08-10",
-      "mediaUrl": null,
-      "mediaType": "Article"
-    },
-    {
-      "competitorName": "C-B Gear & Machine Inc",
-      "platform": "YouTube",
-      "platformIcon": "▶️",
-      "content": "CB Gear &amp; Machine (Jared Nowlin)",
-      "link": "https://www.youtube.com/watch?v=vVu4xb7P6jA",
-      "date": "2016-07-12",
-      "mediaUrl": "https://i.ytimg.com/vi/vVu4xb7P6jA/hqdefault.jpg",
-      "mediaType": "Video"
-    },
-    {
-      "competitorName": "C-B Gear & Machine Inc",
-      "platform": "YouTube",
-      "platformIcon": "▶️",
-      "content": "C.B. Gear Back-lash (Jesse Stewart)",
-      "link": "https://www.youtube.com/watch?v=ryAXjBxxx6w",
-      "date": "2018-12-15",
-      "mediaUrl": "https://i.ytimg.com/vi/ryAXjBxxx6w/hqdefault.jpg",
-      "mediaType": "Video"
-    },
-    {
-      "competitorName": "C-B Gear & Machine Inc",
-      "platform": "LinkedIn",
-      "platformIcon": "🟦",
-      "content": "C-B Gear & Machine Inc Official LinkedIn Post: Key milestones, industrial machinery upgrades, and corporate updates.",
-      "link": "https://www.linkedin.com/company/cbgearmachineinc/",
-      "date": "2026-08-18",
-      "mediaUrl": null,
-      "mediaType": "Post",
-      "post_url": "https://www.linkedin.com/company/cbgearmachineinc/",
-      "postUrl": "https://www.linkedin.com/company/cbgearmachineinc/"
-    },
-    {
-      "competitorName": "Instagram",
-      "platform": "Instagram",
-      "platformIcon": "📸",
-      "content": "C-B Gear & Machine Inc Official Instagram Feature: High-precision quality inspection and manufacturing operations.",
-      "link": "https://www.instagram.com/instagram/",
-      "date": "2026-08-14",
-      "mediaUrl": null,
-      "mediaType": "Post",
-      "post_url": "https://www.instagram.com/instagram/",
-      "postUrl": "https://www.instagram.com/instagram/"
-    },
-    {
-      "competitorName": "C-B Gear & Machine Inc",
-      "platform": "News & Press",
-      "platformIcon": "📰",
-      "content": "C-B Gear & Machine Inc Industrial News Release: New product line launch and manufacturing milestone announcement.",
-      "link": "https://www.madeinalabama.com",
-      "date": "2026-08-10",
-      "mediaUrl": null,
-      "mediaType": "Article"
+      "activity_id": "7483475263205412864"
     }
   ],
   "seedCompetitorUrls": [
     "https://synnova.in/",
     "https://pentagonforge.co.in/"
+  ],
+  "rejectedCompetitors": [
+    "http://www.forgingmachining.com/"
   ]
 }
