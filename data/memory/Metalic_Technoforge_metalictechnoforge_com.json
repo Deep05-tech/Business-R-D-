@@ -89437,6 +89437,80 @@
         "Machining Services",
         "Gear Manufacturing Services"
       ]
+    },
+    {
+      "name": "Aress High Duty Forgings Private Limited",
+      "url": "http://www.indiaforging.com/",
+      "type": "local",
+      "location": "Plot no E 27, MIDC Area, Malegaon, Maharashtra 422113, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Aress specializes in aluminum forgings, which are relevant to the manufacturing of components like rings and gears.. 7 common products: [Big Rings, Advanced Forging Solutions, IIoT-Enabled Machining, Gear Manufacturing, Forging Services, Machining Services, Gear Manufacturing Services]. Socials: LinkedIn verified; Facebook verified. Rating: 5 | Phone: 099121 11004",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.indiaforging.com/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "http://www.indiaforging.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/indiaforging/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Indiaforging-505851146528462/",
+        "youtube": null
+      },
+      "products": [
+        "Big Rings",
+        "Advanced Forging Solutions",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Advanced Forging Solutions",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ]
+    },
+    {
+      "name": "Gauges Bourdon India Pvt Ltd",
+      "url": "https://www.generalinstruments.co.in/",
+      "type": "local",
+      "location": "Plot No. 4,5,6, Jawahar Co-op Ind, Kamothe, Panvel, Maharashtra 410209, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: The candidate business specializes in instrumentation rather than manufacturing components like rings or gears.. 3 common products: [Big Rings, Ball Studs, Gear Manufacturing]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.6 | Phone: 022 2743 1903",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.generalinstruments.co.in/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "https://www.generalinstruments.co.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": "http://www.linkedin.com/company/general-instruments-consortium-india-pvt-ltd",
+        "instagram": "https://www.instagram.com/generalinstrumentsconsortium1/",
+        "facebook": "http://www.facebook.com/GeneralInstrumentsConsortium",
+        "youtube": "http://youtube.com/channel/UCDBD2EeBEKnTslYHrEMDQUg"
+      },
+      "products": [
+        "Big Rings",
+        "Ball Studs",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Ball Studs",
+        "Gear Manufacturing"
+      ]
     }
   ]
 }
