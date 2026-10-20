@@ -33,5 +33,19 @@
     "createdAt": "2026-10-20T05:12:41.918Z",
     "passwordHash": "3a830b6aad9092a92838eb9b1a8fbee2:6d7b67a5455e83402ffb5ac7aba52b5de136f16852a796c6b2d7e54d9183fe8054d2c934a6da9165f9eec8807b8c7dad6ef28ac24e922fb73794a5316b71d358",
     "assignedProjectUrls": []
+  },
+  {
+    "username": "Parth",
+    "role": "user",
+    "createdAt": "2026-10-20T05:12:42.541Z",
+    "passwordHash": "7a568695e551d7bf0ac4922fd017e329:08005350f04f9387e748acb9cbbe62ef9a9499300a11c436cf115324bf29a2db764f5c4fc7f9ea990375f36fa849df24126b4170b02f65a6b02b8fa6644f03bf",
+    "assignedProjectUrls": []
+  },
+  {
+    "username": "Shivam",
+    "role": "user",
+    "createdAt": "2026-10-20T05:12:43.235Z",
+    "passwordHash": "4adbdc17f0bc9ffe628fd8c7ef4beebd:395664cc362115d48d3a59c4fcaa48367a24176fcca7e3734c611ddcf310d501e8f4d624663cec854cb705aadccf9b44a3b8c930bcdcaffaaf1049a40858fe98",
+    "assignedProjectUrls": []
   }
 ]
