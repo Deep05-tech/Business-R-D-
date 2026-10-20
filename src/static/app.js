@@ -400,9 +400,50 @@ window.loadAdminProjects = async function() {
     if (count) count.textContent = projects.length;
     list.innerHTML = projects.length ? projects.map(project => `
       <article class="admin-project-row">
-        <div class="admin-project-icon">⚡</div>
-        <div class="admin-project-details"><strong>${window.escapeHtml(project.name)}</strong><span>${window.escapeHtml(project.industry || 'Business intelligence')} · ${project.competitorCount || 0} competitors · ${project.postCount || 0} posts</span>${project.assignedTo?.length ? `<div class="project-assignees">${project.assignedTo.map(username => `<span class="project-assignee">${window.escapeHtml(username)} <button type="button" onclick="window.unassignProject('${encodeURIComponent(username)}','${encodeURIComponent(project.url)}')" aria-label="Unassign ${window.escapeHtml(username)}">×</button></span>`).join('')}</div>` : '<span class="project-unassigned">Not assigned to a user</span>'}</div>
-        <div class="admin-project-actions"><div class="project-assignment-control"><select id="project-assignee-${project.id}" multiple aria-label="Assign ${window.escapeHtml(project.name)}" data-placeholder="Assign to users…">${assignableUsers.length ? assignableUsers.map(user => { const isAssigned = (project.assignedTo || []).includes(user.username); return `<option value="${window.escapeHtml(user.username)}" ${isAssigned ? 'data-assigned="true"' : ''}>${window.escapeHtml(user.username)}${isAssigned ? ' (Assigned)' : ''}</option>`; }).join('') : '<option value="" disabled>Create a dashboard user first</option>'}</select><button class="btn btn-secondary" type="button" ${assignableUsers.length ? '' : 'disabled'} onclick="window.assignProject('${encodeURIComponent(project.url)}','project-assignee-${project.id}')">Assign</button></div><button class="btn btn-secondary" type="button" onclick="window.openAdminProject('${encodeURIComponent(project.url)}')">Open</button><button class="admin-delete-user" type="button" onclick="window.deleteAdminProject('${encodeURIComponent(project.url)}')">Remove</button></div>
+        <div class="admin-project-main">
+          <div class="admin-project-icon">⚡</div>
+          <div class="admin-project-details">
+            <div class="admin-project-title-row">
+              <strong class="admin-project-name" title="${window.escapeHtml(project.name)}">${window.escapeHtml(project.name)}</strong>
+            </div>
+            <div class="admin-project-meta">
+              <span>${window.escapeHtml(project.industry || 'Business intelligence')}</span>
+              <span class="meta-dot">·</span>
+              <span>${project.competitorCount || 0} competitors</span>
+              <span class="meta-dot">·</span>
+              <span>${project.postCount || 0} posts</span>
+            </div>
+          </div>
+          <div class="admin-project-quick-actions">
+            <button class="btn btn-secondary admin-action-btn" type="button" onclick="window.openAdminProject('${encodeURIComponent(project.url)}')">Open</button>
+            <button class="admin-delete-user" type="button" onclick="window.deleteAdminProject('${encodeURIComponent(project.url)}')">Remove</button>
+          </div>
+        </div>
+
+        <div class="admin-project-footer">
+          <div class="admin-project-assignees">
+            ${project.assignedTo?.length ? `
+              <div class="project-assignees-list">
+                <span class="assignee-label">Assigned:</span>
+                ${project.assignedTo.map(username => `
+                  <span class="project-assignee">
+                    ${window.escapeHtml(username)}
+                    <button type="button" onclick="window.unassignProject('${encodeURIComponent(username)}','${encodeURIComponent(project.url)}')" aria-label="Unassign ${window.escapeHtml(username)}">×</button>
+                  </span>
+                `).join('')}
+              </div>
+            ` : '<span class="project-unassigned">Not assigned to a user</span>'}
+          </div>
+          <div class="project-assignment-control">
+            <select id="project-assignee-${project.id}" multiple aria-label="Assign ${window.escapeHtml(project.name)}" data-placeholder="Assign to users…">
+              ${assignableUsers.length ? assignableUsers.map(user => { 
+                const isAssigned = (project.assignedTo || []).includes(user.username); 
+                return `<option value="${window.escapeHtml(user.username)}" ${isAssigned ? 'data-assigned="true"' : ''}>${window.escapeHtml(user.username)}${isAssigned ? ' (Assigned)' : ''}</option>`; 
+              }).join('') : '<option value="" disabled>Create a dashboard user first</option>'}
+            </select>
+            <button class="btn btn-secondary admin-assign-btn" type="button" ${assignableUsers.length ? '' : 'disabled'} onclick="window.assignProject('${encodeURIComponent(project.url)}','project-assignee-${project.id}')">Assign</button>
+          </div>
+        </div>
       </article>`).join('') : '<div class="empty-state">No saved projects found.</div>';
     setTimeout(initializeCustomSelects, 0);
   } catch (error) {
