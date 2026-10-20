@@ -28918,5 +28918,42 @@
       "mediaUrl": null,
       "mediaType": "Article"
     }
-  ]
+  ],
+  "ownSocials": {
+    "linkedin": null,
+    "instagram": null,
+    "facebook": null,
+    "youtube": null,
+    "twitter": null
+  },
+  "ownSocialFeed": [],
+  "brandVoicePattern": {
+    "captionStyle": "Professional value-driven B2B narrative with structured highlights",
+    "tone": "Authoritative and trustworthy industry leader",
+    "formattingPreferences": [
+      "Structured bullet points with checkmark emojis (✅)",
+      "Clear technical specification callouts",
+      "Direct problem-to-solution narrative structure",
+      "Clean, professional spacing"
+    ],
+    "signatureHashtags": [
+      "#NidhiSeeds",
+      "#Agriculture",
+      "#DigitalTransformation",
+      "#Innovation",
+      "#B2B"
+    ],
+    "preferredCTAs": [
+      "Schedule a discovery consultation",
+      "Contact our solutions team"
+    ],
+    "frequentThemes": [
+      "Product Features & Architecture",
+      "Customer Case Studies",
+      "Industry Insights"
+    ],
+    "recentPostTopics": [],
+    "analyzedPostCount": 0,
+    "lastAnalyzedAt": "2026-10-20T06:10:20.876Z"
+  }
 }
