@@ -89511,6 +89511,98 @@
         "Ball Studs",
         "Gear Manufacturing"
       ]
+    },
+    {
+      "name": "Forgewell Limited",
+      "url": "http://www.forgewell.com/",
+      "type": "local",
+      "location": "phase 2, Plot 24, DLF Industrial Area, Sector 32, Faridabad, Haryana 121013, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Forgewell Limited manufactures forging parts, including gear blanks, which directly competes with Metalic Technoforge's offerings.. 9 common products: [Big Rings, Small Rings, Gear Blanks with Broaching, Gear Blanks, IIoT-Enabled Machining, Gear Manufacturing, Forging Services...]. Socials: LinkedIn verified; Facebook verified. Rating: 3.8 | Phone: 0129 487 1978",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.forgewell.com/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "http://www.forgewell.com/rolled-rings-gear-blanks.html"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/forgewell-limited/?originalSubdomain=in",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/forgewell/",
+        "youtube": null
+      },
+      "products": [
+        "Big Rings",
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gear Blanks",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gear Blanks",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ]
+    },
+    {
+      "name": "Vayudut Engineering",
+      "url": "http://vayudutengineering.com/",
+      "type": "local",
+      "location": "59, Yamuna Estate , Behind AMCO bank Vatva, Vinoba Bhave Nagar, Dibiyapur, Phase I, Vatva GIDC, Ahmedabad, Gujarat 382445, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Vayudut Engineering manufactures CNC turned and milled components, which are relevant to the manufacturing of industrial components like those offered by Metalic Technoforge.. 10 common products: [Small Rings, Gear Blanks with Broaching, Gears & Shafts, Gear Blanks, Advanced Forging Solutions, IIoT-Enabled Machining, Gear Manufacturing...]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 5 | Phone: 099240 31132",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://vayudutengineering.com/"
+        },
+        {
+          "title": "Product: Small Rings",
+          "url": "http://vayudutengineering.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/vayudut-engineering/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/VayudutEngineering/",
+        "youtube": "https://www.youtube.com/@vayudutengineering7992"
+      },
+      "products": [
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gears & Shafts",
+        "Gear Blanks",
+        "Advanced Forging Solutions",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ],
+      "commonProducts": [
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gears & Shafts",
+        "Gear Blanks",
+        "Advanced Forging Solutions",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ]
     }
   ]
 }
