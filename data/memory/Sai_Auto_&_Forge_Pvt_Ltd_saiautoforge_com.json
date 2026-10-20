@@ -54205,5 +54205,42 @@
       "postUrl": "https://www.linkedin.com/posts/forgewell-industries---india_from-raw-steel-to-industrial-excellence-activity-7417824601659027456-YGF_",
       "competitorName": "Forgewell Industries Private Limited"
     }
-  ]
+  ],
+  "ownSocials": {
+    "linkedin": null,
+    "instagram": null,
+    "facebook": null,
+    "youtube": null,
+    "twitter": null
+  },
+  "ownSocialFeed": [],
+  "brandVoicePattern": {
+    "captionStyle": "Medium-length storytelling with technical precision and structured bulleted specs",
+    "tone": "Authoritative industrial manufacturer, high metallurgical and engineering depth",
+    "formattingPreferences": [
+      "Structured bullet points with checkmark emojis (✅)",
+      "Clear technical specification callouts",
+      "Direct problem-to-solution narrative structure",
+      "Clean, professional spacing"
+    ],
+    "signatureHashtags": [
+      "#SaiAutoForgePvtLtd",
+      "#Manufacturing",
+      "#PrecisionEngineering",
+      "#QualityManufacturing",
+      "#B2B"
+    ],
+    "preferredCTAs": [
+      "Connect with our engineering team for technical drawing reviews",
+      "Request a custom batch manufacturing RFQ"
+    ],
+    "frequentThemes": [
+      "Machining & Tolerances",
+      "Quality Testing & ISO Standards",
+      "Facility & Infrastructure Capabilities"
+    ],
+    "recentPostTopics": [],
+    "analyzedPostCount": 0,
+    "lastAnalyzedAt": "2026-10-20T06:10:32.525Z"
+  }
 }
