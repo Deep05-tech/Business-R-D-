@@ -1704,9 +1704,9 @@ window.findCompetitors = async function(force = false) {
 
     let lastChunkTime = Date.now();
     const inactivityWatchdog = setInterval(() => {
-      // If 60 seconds pass without any chunk or heartbeat from the server, terminate reader
-      if (Date.now() - lastChunkTime > 60000) {
-        console.warn("Competitor stream inactivity watchdog fired (60s idle).");
+      // If 90 seconds pass without any chunk or heartbeat from the server, terminate reader
+      if (Date.now() - lastChunkTime > 90000) {
+        console.warn("Competitor stream inactivity watchdog fired (90s idle).");
         clearInterval(inactivityWatchdog);
         try { reader.cancel(); } catch (_) {}
       }
@@ -1723,9 +1723,10 @@ window.findCompetitors = async function(force = false) {
         buffer = lines.pop(); // Keep incomplete chunk
         
         for (const line of lines) {
-          if (line.startsWith('data: ')) {
+          const trimmed = line.trim();
+          if (trimmed.startsWith('data: ')) {
             try {
-              const data = JSON.parse(line.slice(6));
+              const data = JSON.parse(trimmed.slice(6).trim());
               if (data.type === 'error') {
                 throw new Error(data.error || 'Competitor stream failed');
               }
@@ -1773,15 +1774,20 @@ window.findCompetitors = async function(force = false) {
     }
   } catch (e) {
     console.error("Competitor discovery error:", e);
-    if (window.showToast) {
-      window.showToast("Error during discovery: " + e.message);
+    if (typeof window.showError === 'function') {
+      window.showError("Competitor discovery error: " + (e.message || "Connection interrupted."));
     }
   } finally {
     window._isFindingCompetitors = false;
     const header = document.getElementById('live-comp-header');
     if (header) header.remove();
+    // If live competitors were found, sync them into window.projectMemory so they are never lost
+    if (liveCompetitors.length > 0) {
+      if (!window.projectMemory) window.projectMemory = {};
+      window.projectMemory.competitors = liveCompetitors;
+    }
     // Always refresh UI so loading animation is replaced by final categorized list and buttons are restored
-    await loadCompetitorsUI(false);
+    await loadCompetitorsUI(false, liveCompetitors);
   }
 };
 
@@ -1809,7 +1815,7 @@ window.backfillCompetitorSocials = async function() {
   }
 };
 
-async function loadCompetitorsUI(isLivePartial = false) {
+async function loadCompetitorsUI(isLivePartial = false, fallbackCompetitors = null) {
   if (!window.activeProjectUrl) return;
   const list = document.getElementById('competitor-list');
   if (!window._isFindingCompetitors && !isLivePartial) {
@@ -1821,7 +1827,25 @@ async function loadCompetitorsUI(isLivePartial = false) {
     const res = await fetch(`/api/competitors?url=${encodeURIComponent(window.activeProjectUrl)}`);
     const data = await res.json();
     
-    if (!data.competitors || data.competitors.length === 0) {
+    let competitors = (res.ok && Array.isArray(data.competitors)) ? data.competitors : [];
+    
+    // If server returned 0 competitors (or returned 403/error), but we have streamed or cached competitors, use them!
+    if (competitors.length === 0 && Array.isArray(fallbackCompetitors) && fallbackCompetitors.length > 0) {
+      competitors = fallbackCompetitors;
+    } else if (competitors.length === 0 && Array.isArray(window.projectMemory?.competitors) && window.projectMemory.competitors.length > 0) {
+      competitors = window.projectMemory.competitors;
+    }
+
+    if (!res.ok && competitors.length === 0) {
+      const errMsg = data.error || `HTTP ${res.status} error loading competitors`;
+      list.innerHTML = `<div class="empty-state" style="color:var(--danger, #ef4444); border-color:rgba(239,68,68,0.2);">⚠️ ${errMsg}</div>`;
+      document.getElementById('btn-find-comp').style.display = 'inline-block';
+      document.getElementById('btn-regen-comp').style.display = 'none';
+      document.getElementById('btn-backfill-socials').style.display = 'none';
+      return;
+    }
+    
+    if (competitors.length === 0) {
       if (window._isFindingCompetitors || isLivePartial) {
         return;
       }
@@ -1836,9 +1860,9 @@ async function loadCompetitorsUI(isLivePartial = false) {
     document.getElementById('btn-regen-comp').style.display = 'inline-block';
     document.getElementById('btn-backfill-socials').style.display = 'inline-block';
     
-    const localComps = data.competitors.filter(c => c.type === 'local');
-    const regionalComps = data.competitors.filter(c => c.type === 'regional');
-    const globalComps = data.competitors.filter(c => c.type === 'global');
+    const localComps = competitors.filter(c => c.type === 'local');
+    const regionalComps = competitors.filter(c => c.type === 'regional');
+    const globalComps = competitors.filter(c => c.type === 'global');
     
     const renderCard = (c) => window.renderCompetitorCard(c);
     

@@ -1276,6 +1276,8 @@ app.post("/api/competitors-stream", async (request, response) => {
   request.socket.setTimeout(0);
   response.flushHeaders();
 
+  // Send initial 2KB comment padding so intermediate reverse proxies (Cloudflare, Nginx) flush immediately
+  response.write(`: ${' '.repeat(2048)}\n\n`);
   // Send immediate connected event so browser and reverse proxy know the stream is active
   response.write(`data: ${JSON.stringify({ type: 'progress', status: "Connected. Scanning competitor footprint..." })}\n\n`);
 
@@ -1301,6 +1303,14 @@ app.post("/api/competitors-stream", async (request, response) => {
     return;
   }
 
+  const user = (request as express.Request & { currentUser?: AuthUser }).currentUser;
+  if (!(await hasProjectAccess(user, websiteUrl))) {
+    clearInterval(heartbeat);
+    response.write(`data: ${JSON.stringify({ type: 'error', error: "Access denied. This project is not assigned to your account." })}\n\n`);
+    response.end();
+    return;
+  }
+
   let memory = knowledgeIndex.get(websiteUrl);
   if (!memory) {
     memory = await memoryStore.loadBySite(websiteUrl) ?? undefined;
@@ -1313,6 +1323,15 @@ app.post("/api/competitors-stream", async (request, response) => {
     return;
   }
 
+  let newlyFoundSinceLastSave = 0;
+  const saveThrottled = async () => {
+    try {
+      if (memory) await memoryStore.save(memory);
+    } catch (saveErr: any) {
+      logger.warn(`Progressive competitor persistence warning: ${saveErr.message}`);
+    }
+  };
+
   try {
     if (force) {
       memory.competitors = [];
@@ -1324,10 +1343,15 @@ app.post("/api/competitors-stream", async (request, response) => {
       (comp, statusMsg) => {
         if (!response.writableEnded) {
           if (comp) {
-            if (!memory.competitors) memory.competitors = [];
-            if (!memory.competitors.some((c: any) => c.url === comp.url)) {
-              memory.competitors.push(comp);
-              knowledgeIndex.add(memory);
+            if (!memory!.competitors) memory!.competitors = [];
+            if (!memory!.competitors.some((c: any) => c.url === comp.url)) {
+              memory!.competitors.push(comp);
+              knowledgeIndex.add(memory!);
+              newlyFoundSinceLastSave++;
+              if (newlyFoundSinceLastSave >= 4) {
+                newlyFoundSinceLastSave = 0;
+                saveThrottled().catch(() => {});
+              }
             }
             response.write(`data: ${JSON.stringify({ type: 'competitor', competitor: comp, status: statusMsg })}\n\n`);
           } else {
@@ -1365,6 +1389,14 @@ app.post("/api/competitors-stream", async (request, response) => {
     }
   } finally {
     clearInterval(heartbeat);
+    // Guarantee memory is saved even if connection dropped or stream errored
+    if (memory && Array.isArray(memory.competitors) && memory.competitors.length > 0) {
+      try {
+        await memoryStore.save(memory);
+      } catch (err: any) {
+        logger.warn(`Final competitor save warning: ${err.message}`);
+      }
+    }
     if (!response.writableEnded) {
       response.end();
     }

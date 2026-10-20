@@ -100,9 +100,9 @@ function createResilientGroqFetch(preferredModels: string[]) {
       let activeBody = init?.body;
       if (bodyObj) {
         bodyObj.model = activeModel;
-        // Qwen model enforces OTPM limit of 1000 tokens on Groq
-        if (activeModel.includes("qwen") && bodyObj.max_tokens && bodyObj.max_tokens > 500) {
-          bodyObj.max_tokens = 500;
+        // Qwen model enforces strict OTPM limit of 1000 tokens on Groq
+        if (activeModel.includes("qwen") && bodyObj.max_tokens && bodyObj.max_tokens > 250) {
+          bodyObj.max_tokens = 250;
         }
         activeBody = JSON.stringify(bodyObj);
       }
@@ -132,13 +132,18 @@ function createResilientGroqFetch(preferredModels: string[]) {
           modelExhaustedUntil[activeModel] = Date.now() + 15 * 60 * 1000;
           modelIndex++;
         } else if (isOtpm) {
-          // OTPM rate limit: extract wait seconds or default to 3s, then reduce token budget
+          // OTPM rate limit: extract wait seconds with random jitter to prevent concurrent thundering herd
           const waitMatch = errText.match(/try again in ([0-9.]+)s/i);
-          const waitMs = waitMatch ? Math.min(Math.ceil(parseFloat(waitMatch[1]) * 1000) + 500, 15000) : 3000;
+          const jitter = Math.floor(Math.random() * 1500);
+          const waitMs = waitMatch ? Math.min(Math.ceil(parseFloat(waitMatch[1]) * 1000) + 500 + jitter, 15000) : 3000 + jitter;
           logger.info(`[ResilientFetch] Cooling down ${waitMs}ms for OTPM window...`);
           await new Promise((resolve) => setTimeout(resolve, waitMs));
           if (bodyObj && bodyObj.max_tokens) {
-            bodyObj.max_tokens = Math.min(bodyObj.max_tokens, 450);
+            bodyObj.max_tokens = Math.min(bodyObj.max_tokens, 150);
+          }
+          keyIndex++;
+          if (keyIndex % keys.length === 0) {
+            modelIndex++;
           }
         } else {
           keyIndex++;

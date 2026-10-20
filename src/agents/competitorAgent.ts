@@ -108,7 +108,7 @@ export class CompetitorAgent {
 
   private async verifyCandidateViaLLM(pageProfile: string, targetName: string, targetIndustry: string, targetOfferings: string[]): Promise<{ isCompetitor: boolean; reason: string }> {
     try {
-      const llm = createChatModel({ model: agentRules.models.fast, temperature: 0 });
+      const llm = createChatModel({ model: agentRules.models.fast, temperature: 0, maxTokens: 300 });
       const structuredLlm = llm.withStructuredOutput(this.llmCandidateSchema);
       const prompt = `You are evaluating whether a candidate business is a competitor to ${targetName} in the ${targetIndustry} industry.
 Target Offerings: ${targetOfferings.slice(0, 5).join(", ")}
@@ -317,6 +317,7 @@ INSTRUCTIONS:
     // Fetch competitors using multiple queries until we reach quotas
     for (const target of targets) {
         if (finalCompetitors.length >= MAX_TOTAL_COMPETITORS) break;
+        onProgress?.(null, `Initiating ${target.type.toUpperCase()} competitor discovery (target: ${target.quota})...`);
         let foundForTarget = 0;
         const targetQuota = Math.min(target.quota, Math.max(0, MAX_TOTAL_COMPETITORS - finalCompetitors.length));
         if (targetQuota <= 0) break;
@@ -545,8 +546,8 @@ INSTRUCTIONS:
             socials: SocialLinks;
         }> = [];
 
-        // Phase 1.3 & 2 & 3: Verify in parallel batches
-        const BATCH_SIZE = 5;
+        // Phase 1.3 & 2 & 3: Verify in parallel batches (concurrency 3 prevents Groq rate limit spikes)
+        const BATCH_SIZE = 3;
         for (let batchIdx = 0; batchIdx < candidatePool.length; batchIdx += BATCH_SIZE) {
             if (foundForTarget >= targetQuota) break;
             if (Date.now() - verifyStartTime > VERIFY_MAX_MS && foundForTarget >= Math.min(10, targetQuota)) {
@@ -744,6 +745,22 @@ INSTRUCTIONS:
         const headingsText = ($('h1, h2, h3').text() || "").toLowerCase();
         const fullScanText = `${titleText} ${headingsText} ${bodyText}`;
 
+        // Deep scan for ALL offerings (Strict matching: must match >= 50% of keywords in the offering name)
+        const foundOfferings: string[] = [];
+        for (const off of allOfferings) {
+            const offKeywords = off.toLowerCase().split(" ").filter(w => w.length > 2);
+            if (offKeywords.length > 0) {
+                let matchCount = 0;
+                for (const kw of offKeywords) {
+                    if (bodyText.includes(kw)) matchCount++;
+                }
+                const matchPercentage = matchCount / offKeywords.length;
+                if (matchPercentage >= 0.5) {
+                    foundOfferings.push(off);
+                }
+            }
+        }
+
         if (combinedIndKws.length > 0) {
             const industryWordsPresent = combinedIndKws.some(kw => fullScanText.includes(kw));
             const foreignMarkerHits = Object.entries(FOREIGN_INDUSTRY_MARKERS).filter(([, markers]) => markers.some(m => fullScanText.includes(m))).map(([k]) => k);
@@ -758,41 +775,30 @@ INSTRUCTIONS:
                 return null;
             }
 
-            // DECISIVE INDUSTRY GATE: LLM classifies whether this is a real business in the same industry.
-            const pageProfile = [
-                `URL: ${url}`,
-                `Title: ${$('title').text().trim().slice(0, 150)}`,
-                `Meta description: ${($('meta[name="description"]').attr('content') || "").trim().slice(0, 200)}`,
-                `Headings: ${$('h1, h2').text().trim().replace(/\s+/g, " ").slice(0, 200)}`,
-                `Body excerpt: ${bodyText.replace(/\s+/g, " ").slice(0, 400)}`,
-            ].join("\n");
-            
-            const verification = await Promise.race([
-                this.verifyCandidateViaLLM(pageProfile, targetName, targetIndustry, allOfferings),
-                new Promise<{ isCompetitor: boolean; reason: string }>((resolve) =>
-                    setTimeout(() => resolve({ isCompetitor: true, reason: "Heuristic industry match" }), 5000)
-                )
-            ]);
-            if (!verification.isCompetitor) {
-                logger.debug(`Discarding ${url}: LLM candidate gate rejected (${verification.reason}).`);
-                return null;
-            }
-            whyCompetitorText = verification.reason;
-        }
-
-        // Deep scan for ALL offerings (Strict matching: must match >= 50% of keywords in the offering name)
-        const foundOfferings: string[] = [];
-        for (const off of allOfferings) {
-            const offKeywords = off.toLowerCase().split(" ").filter(w => w.length > 2);
-            if (offKeywords.length > 0) {
-                let matchCount = 0;
-                for (const kw of offKeywords) {
-                    if (bodyText.includes(kw)) matchCount++;
+            // High-confidence heuristic fast path: 0 foreign markers, industry words present, and >= 2 core offerings found on page
+            if (foreignMarkerHits.length === 0 && foundOfferings.length >= 2) {
+                whyCompetitorText = `Direct operating competitor with confirmed offerings: ${foundOfferings.slice(0, 3).join(", ")}`;
+            } else {
+                // DECISIVE INDUSTRY GATE: LLM classifies whether this is a real business in the same industry.
+                const pageProfile = [
+                    `URL: ${url}`,
+                    `Title: ${$('title').text().trim().slice(0, 150)}`,
+                    `Meta description: ${($('meta[name="description"]').attr('content') || "").trim().slice(0, 200)}`,
+                    `Headings: ${$('h1, h2').text().trim().replace(/\s+/g, " ").slice(0, 200)}`,
+                    `Body excerpt: ${bodyText.replace(/\s+/g, " ").slice(0, 400)}`,
+                ].join("\n");
+                
+                const verification = await Promise.race([
+                    this.verifyCandidateViaLLM(pageProfile, targetName, targetIndustry, allOfferings),
+                    new Promise<{ isCompetitor: boolean; reason: string }>((resolve) =>
+                        setTimeout(() => resolve({ isCompetitor: true, reason: "Heuristic industry match" }), 5000)
+                    )
+                ]);
+                if (!verification.isCompetitor) {
+                    logger.debug(`Discarding ${url}: LLM candidate gate rejected (${verification.reason}).`);
+                    return null;
                 }
-                const matchPercentage = matchCount / offKeywords.length;
-                if (matchPercentage >= 0.5) {
-                    foundOfferings.push(off);
-                }
+                whyCompetitorText = verification.reason;
             }
         }
 
