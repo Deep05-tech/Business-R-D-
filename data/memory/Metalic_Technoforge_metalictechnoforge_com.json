@@ -89347,6 +89347,96 @@
         "Machining Services",
         "Gear Manufacturing Services"
       ]
+    },
+    {
+      "name": "Master Rings",
+      "url": "http://www.masterringforge.com/",
+      "type": "local",
+      "location": "22°13'48. 70°40'56., 3, Street Number 3, Race Course, Shaw Nagar, Rajkot, Gujarat 360021, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Master Ring Forge manufactures ring gears and related components, which are similar to Metalic Technoforge's offerings.. 9 common products: [Big Rings, Small Rings, Gear Blanks with Broaching, Coupling Assemblies, Gear Blanks, Advanced Forging Solutions, Gear Manufacturing...]. Socials: LinkedIn verified; YouTube verified. Rating: 4.7 | Phone: 099742 24058",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.masterringforge.com/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "https://www.linkedin.com/company/master-rings/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/master-rings/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/channel/UCyuSmmWl-Uahr9DutcTED5A"
+      },
+      "products": [
+        "Big Rings",
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Coupling Assemblies",
+        "Gear Blanks",
+        "Advanced Forging Solutions",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Gear Manufacturing Services"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Coupling Assemblies",
+        "Gear Blanks",
+        "Advanced Forging Solutions",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Gear Manufacturing Services"
+      ]
+    },
+    {
+      "name": "Forgewell Industries Private Limited",
+      "url": "https://forgewellindustries.com/",
+      "type": "local",
+      "location": "Gat.No1559, Plot No.B-11, near IIFA weigh Bridge, Vitthal Nagar, Shelarvasti, Industrial Estate, Chikhali, Pimpri-Chinchwad, Maharashtra 411062, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Forgewell Industries manufactures forged components, which are similar to the offerings of Metalic Technoforge.. 9 common products: [Big Rings, Small Rings, Gears & Shafts, Advanced Forging Solutions, IIoT-Enabled Machining, Gear Manufacturing, Forging Services...]. Socials: LinkedIn verified; Instagram verified; YouTube verified. Rating: 4.4 | Phone: 099708 02028",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://forgewellindustries.com/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "https://forgewellindustries.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/forgewell-industries---india/",
+        "instagram": "https://www.instagram.com/forgewell.pvt?igsh=cWIyY2oxMGptbjJo",
+        "facebook": null,
+        "youtube": "https://youtube.com/@forgewellindustriespvtltd?si=xvJBYAjaFRc6rz06"
+      },
+      "products": [
+        "Big Rings",
+        "Small Rings",
+        "Gears & Shafts",
+        "Advanced Forging Solutions",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Small Rings",
+        "Gears & Shafts",
+        "Advanced Forging Solutions",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ]
     }
   ]
 }
