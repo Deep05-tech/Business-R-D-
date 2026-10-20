@@ -2784,34 +2784,48 @@ async function loadFeedUI() {
       }
     };
 
-    const platformMeta = {
+    window.platformMeta = {
       'YouTube': { icon: '▶️', color: '#ff0000', badgeBg: '#cc0000', bg: 'linear-gradient(135deg, #2b0606, #120303)' },
       'Facebook': { icon: '📘', color: '#1877f2', badgeBg: '#1877f2', bg: 'linear-gradient(135deg, #0f2b5c, #071633)' },
       'Instagram': { icon: '📸', color: '#e1306c', badgeBg: '#d62976', bg: 'linear-gradient(135deg, #3d0d2b, #1f0516)' },
-      'LinkedIn': { icon: '💼', color: '#0a66c2', badgeBg: '#0a66c2', bg: 'linear-gradient(135deg, #092747, #031224)' }
+      'LinkedIn': { icon: '💼', color: '#0a66c2', badgeBg: '#0a66c2', bg: 'linear-gradient(135deg, #092747, #031224)' },
+      'Twitter': { icon: '🐦', color: '#1da1f2', badgeBg: '#1da1f2', bg: 'linear-gradient(135deg, #082136, #03101c)' },
+      'X': { icon: '𝕏', color: '#000000', badgeBg: '#1e293b', bg: 'linear-gradient(135deg, #1e293b, #0f172a)' },
+      'News & Press': { icon: '📰', color: '#64748b', badgeBg: '#475569', bg: 'linear-gradient(135deg, #1e293b, #0f172a)' }
     };
+    const platformMeta = window.platformMeta;
 
     // Inject lightbox modal once
+    window.closeFeedModal = function() {
+      const lb = document.getElementById('media-lightbox');
+      const content = document.getElementById('media-lightbox-content');
+      if (lb) lb.style.display = 'none';
+      if (content) content.innerHTML = '';
+    };
+
     if (!document.getElementById('media-lightbox')) {
       document.body.insertAdjacentHTML('beforeend', `
-        <div id="media-lightbox" onclick="if(event.target === this) this.style.display='none'" class="media-lightbox" style="display:none;">
-          <button class="media-lightbox-close" type="button" aria-label="Close post preview" onclick="document.getElementById('media-lightbox').style.display='none'">&times;</button>
+        <div id="media-lightbox" onclick="if(event.target === this) window.closeFeedModal()" class="media-lightbox" style="display:none;">
+          <button class="media-lightbox-close" type="button" aria-label="Close post preview" onclick="window.closeFeedModal()">&times;</button>
           <div id="media-lightbox-content" style="width: 100%; height: 100%; display:flex; justify-content:center; align-items:center; padding: 40px;"></div>
         </div>
       `);
       
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-          const lb = document.getElementById('media-lightbox');
-          if (lb && lb.style.display === 'flex') lb.style.display = 'none';
+          window.closeFeedModal();
         }
       });
     }
 
     // Modal popup function using index lookup
-    window.openFeedItemModal = function(globalIndex, mode) {
-      const post = window.allFeedPosts ? window.allFeedPosts[globalIndex] : null;
-      if (!post) return;
+    window.openFeedItemModal = function(globalIndex, mode, customPosts) {
+      const postsArray = customPosts || window.allFeedPosts;
+      const post = postsArray ? postsArray[globalIndex] : null;
+      if (!post) {
+        console.warn('Feed post not found for index:', globalIndex);
+        return;
+      }
 
       const lb = document.getElementById('media-lightbox');
       const content = document.getElementById('media-lightbox-content');
@@ -2819,7 +2833,7 @@ async function loadFeedUI() {
 
       const compName = post.company || post.competitorName || 'Competitor';
       const platform = post.platform || post._detectedPlatform || 'Social Feed';
-      const meta = platformMeta[platform] || platformMeta['LinkedIn'];
+      const meta = (window.platformMeta && window.platformMeta[platform]) || (window.platformMeta && window.platformMeta['LinkedIn']) || { icon: '🌐', color: '#3b82f6', badgeBg: '#3b82f6', bg: 'linear-gradient(135deg, #1e293b, #0f172a)' };
       const postLink = (post.post_url || post.link || post.postUrl || '').trim();
       const rawText = (post.caption || post.content || '').trim();
       const displayDate = post.date || post.published_date || post.timestamp || 'Recent';
@@ -2846,7 +2860,8 @@ async function loadFeedUI() {
         (firstMediaUrl && firstMediaUrl.match(/\.(mp4|webm|ogg)(\?|$)/i) && !firstMediaUrl.includes('thumbnail'))
       );
 
-      const isIgReel = platform === 'Instagram' && (postLink.includes('/reel/') || post.media_type === 'Video' || post.mediaType === 'Video');
+      const isIgReel = (platform === 'Instagram' || post._detectedPlatform === 'Instagram') && (postLink.includes('/reel/') || post.media_type === 'Video' || post.mediaType === 'Video');
+      const isIgPost = (platform === 'Instagram' || post._detectedPlatform === 'Instagram');
       const isFbVid = (platform === 'Facebook' || post._detectedPlatform === 'Facebook') &&
                       (Boolean(post.video_url) || Boolean(post.fb_video_id) || post.media_type === 'Video' || post.mediaType === 'Video' || /\/(?:videos|reel|watch)\b/i.test(postLink));
       const isLiVid = (platform === 'LinkedIn' || post._detectedPlatform === 'LinkedIn') &&
@@ -2865,17 +2880,8 @@ async function loadFeedUI() {
               allowfullscreen></iframe>
           </div>`;
       } else if (isIgReel) {
-        // Issue 1: Instagram Reel inline playable dashboard preview
-        if (activeMode === 'video' && post.video_url) {
-          let videoSrc = window.getSocialMediaProxyUrl(post.video_url);
-          leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
-              <video src="${videoSrc}" controls autoplay preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;"></video>
-              <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
-                <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;">Switch to IG Player ↗</button>
-              </div>
-            </div>`;
-        } else if (igShortcode) {
+        // Instagram Reel inline playable dashboard preview
+        if (activeMode === 'embed' && igShortcode) {
           leftMediaHtml = `
             <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
               <iframe src="https://www.instagram.com/reel/${igShortcode}/embed/" 
@@ -2891,32 +2897,47 @@ async function loadFeedUI() {
         } else if (post.video_url) {
           let videoSrc = window.getSocialMediaProxyUrl(post.video_url);
           leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #000; display:flex; align-items:center; justify-content:center; position:relative;">
+            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
               <video src="${videoSrc}" controls autoplay preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;"></video>
+              ${igShortcode ? `
+                <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
+                  <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;">Switch to IG Player ↗</button>
+                </div>` : ''}
             </div>`;
         } else if (firstMediaUrl) {
           let imgSrc = window.getSocialMediaProxyUrl(firstMediaUrl);
           leftMediaHtml = `
             <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px; box-sizing: border-box;">
               <div style="position: absolute; top: 16px; left: 16px; background: ${meta.badgeBg || '#e1306c'}; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">📹 REEL</div>
-              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 12px;" />
-              ${postLink ? `<a href="${postLink}" target="_blank" style="position: absolute; bottom: 20px; background: #e1306c; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 12px; text-decoration: none;">Play Reel on Instagram ↗</a>` : ''}
+              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);" onerror="this.onerror=null; this.src='${firstMediaUrl}';" />
+              <div style="position: absolute; bottom: 16px; display: flex; gap: 8px; z-index: 10;">
+                ${igShortcode ? `<button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.75); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 8px 14px; border-radius: 6px; font-weight: 700; font-size: 12px; cursor: pointer;">Play in IG Player ↗</button>` : ''}
+                ${postLink ? `<a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: #e1306c; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Open on Instagram ↗</a>` : ''}
+              </div>
+            </div>`;
+        } else if (igShortcode) {
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
+              <iframe src="https://www.instagram.com/reel/${igShortcode}/embed/" 
+                style="width: 100%; height: 100%; border: 0; background: #000; border-radius: 8px;" 
+                frameborder="0" scrolling="no" allowtransparency="true" 
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
+                allowfullscreen></iframe>
+            </div>`;
+        } else {
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: ${meta.bg}; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 36px; box-sizing: border-box;">
+              <div style="width: 76px; height: 76px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 18px;">
+                📹
+              </div>
+              <h3 style="font-size: 1.35rem; font-weight: 700; color: #ffffff; margin: 0 0 6px 0;">${window.escapeHtml(compName)}</h3>
+              <p style="font-size: 0.9rem; color: rgba(255,255,255,0.75); margin: 0 0 20px 0;">Instagram Reel</p>
+              ${postLink ? `<a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: ${meta.badgeBg || '#e1306c'}; color: white; padding: 11px 24px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">Play on Instagram ↗</a>` : ''}
             </div>`;
         }
       } else if (isIgPost) {
-        // Issue 4: Instagram Post Sizing (zoom fix)
-        // Render Instagram's responsive embed to preserve full uncropped 4:5 aspect ratio and carousel slides
-        if (activeMode === 'clean' && firstMediaUrl) {
-          let imgSrc = window.getSocialMediaProxyUrl(firstMediaUrl);
-          leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px; box-sizing: border-box;">
-              <div style="position: absolute; top: 16px; left: 16px; background: ${meta.badgeBg || '#e1306c'}; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">📸 INSTAGRAM</div>
-              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 12px;" onerror="this.onerror=null; this.src='${firstMediaUrl}';" />
-              <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
-                <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;">Switch to Full Post View ↗</button>
-              </div>
-            </div>`;
-        } else {
+        // Instagram Post Preview (Clean high-resolution photo with optional embed toggle)
+        if (activeMode === 'embed' && igShortcode) {
           leftMediaHtml = `
             <div style="width: 100%; height: 100%; background: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
               <iframe src="https://www.instagram.com/p/${igShortcode}/embed/" 
@@ -2926,8 +2947,40 @@ async function loadFeedUI() {
                 allowfullscreen></iframe>
               ${firstMediaUrl ? `
                 <div style="position: absolute; bottom: 8px; left: 8px; z-index: 10;">
-                  <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'clean')" style="background: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;">Clean Image View 🖼️</button>
+                  <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'image')" style="background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer;">Clean Image View 🖼️</button>
                 </div>` : ''}
+            </div>`;
+        } else if (firstMediaUrl) {
+          let imgSrc = window.getSocialMediaProxyUrl(firstMediaUrl);
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px; box-sizing: border-box;">
+              <div style="position: absolute; top: 16px; left: 16px; background: ${meta.badgeBg || '#e1306c'}; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">📸 INSTAGRAM</div>
+              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);" onerror="this.onerror=null; this.src='${firstMediaUrl}';" />
+              ${igShortcode ? `
+                <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
+                  <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer;">Switch to IG Embed ↗</button>
+                </div>` : ''}
+            </div>`;
+        } else if (igShortcode) {
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+              <iframe src="https://www.instagram.com/p/${igShortcode}/embed/" 
+                style="width: 100%; height: 100%; border: 0; background: #fff;" 
+                frameborder="0" scrolling="no" allowtransparency="true" 
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
+                allowfullscreen></iframe>
+            </div>`;
+        } else {
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: ${meta.bg}; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 36px; box-sizing: border-box;">
+              <div style="width: 76px; height: 76px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 18px;">
+                ${meta.icon}
+              </div>
+              <h3 style="font-size: 1.35rem; font-weight: 700; color: #ffffff; margin: 0 0 6px 0;">${window.escapeHtml(compName)}</h3>
+              <p style="font-size: 0.9rem; color: rgba(255,255,255,0.75); margin: 0 0 20px 0;">Official Instagram Post</p>
+              ${postLink ? `<a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: ${meta.badgeBg || '#e1306c'}; color: white; padding: 11px 24px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px;">
+                <span>View on Instagram</span> ↗
+              </a>` : ''}
             </div>`;
         }
       } else if (isLiVid) {
@@ -2967,6 +3020,48 @@ async function loadFeedUI() {
           leftMediaHtml = `
             <div style="width: 100%; height: 100%; background: #000; display:flex; align-items:center; justify-content:center; position:relative;">
               <video src="${videoSrc}" controls autoplay preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;"></video>
+            </div>`;
+        } else {
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: ${meta.bg}; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 36px; box-sizing: border-box;">
+              <div style="width: 76px; height: 76px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 18px;">
+                ${meta.icon}
+              </div>
+              <h3 style="font-size: 1.35rem; font-weight: 700; color: #ffffff; margin: 0 0 6px 0;">${window.escapeHtml(compName)}</h3>
+              <p style="font-size: 0.9rem; color: rgba(255,255,255,0.75); margin: 0 0 20px 0;">Official LinkedIn Video</p>
+              ${postLink ? `<a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: ${meta.badgeBg || '#0a66c2'}; color: white; padding: 11px 24px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">View on LinkedIn ↗</a>` : ''}
+            </div>`;
+        }
+      } else if (platform === 'LinkedIn' || post._detectedPlatform === 'LinkedIn') {
+        // LinkedIn Regular Post (Photo, Carousel, or Article Update)
+        if (firstMediaUrl) {
+          let imgSrc = window.getSocialMediaProxyUrl(firstMediaUrl);
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px; box-sizing: border-box;">
+              <div style="position: absolute; top: 16px; left: 16px; background: ${meta.badgeBg || '#0a66c2'}; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">💼 LINKEDIN</div>
+              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);" onerror="this.onerror=null; this.src='${firstMediaUrl}';" />
+              ${postLink ? `
+                <div style="position: absolute; bottom: 12px; right: 12px; z-index: 10;">
+                  <a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 5px 12px; font-size: 11px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">View on LinkedIn ↗</a>
+                </div>` : ''}
+            </div>`;
+        } else if (liActivityId) {
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
+              <iframe src="/api/linkedin-embed-player?id=${liActivityId}" 
+                style="width: 100%; height: 100%; border: 0; background: #000; border-radius: 8px;" 
+                frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" 
+                allowfullscreen></iframe>
+            </div>`;
+        } else {
+          leftMediaHtml = `
+            <div style="width: 100%; height: 100%; background: ${meta.bg}; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 36px; box-sizing: border-box;">
+              <div style="width: 76px; height: 76px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 18px;">
+                💼
+              </div>
+              <h3 style="font-size: 1.35rem; font-weight: 700; color: #ffffff; margin: 0 0 6px 0;">${window.escapeHtml(compName)}</h3>
+              <p style="font-size: 0.9rem; color: rgba(255,255,255,0.75); margin: 0 0 20px 0;">Official LinkedIn Update</p>
+              ${postLink ? `<a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: ${meta.badgeBg || '#0a66c2'}; color: white; padding: 11px 24px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">View on LinkedIn ↗</a>` : ''}
             </div>`;
         }
       } else if (isFbVid) {
@@ -3455,6 +3550,7 @@ async function loadOwnFeedUI() {
       'LinkedIn': { icon: '💼', color: '#0a66c2', badgeBg: '#0a66c2' }
     };
 
+    window.allOwnFeedPosts = feed;
     let postHtml = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">';
     
     feed.forEach((post, idx) => {
@@ -3475,7 +3571,7 @@ async function loadOwnFeedUI() {
            </div>`;
 
       postHtml += `
-        <div style="background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        <div onclick="window.openFeedItemModal(${idx}, 'default', window.allOwnFeedPosts)" style="background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255,255,255,0.08)'">
           ${mediaPreview}
           <div style="padding: 14px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
             <div>
