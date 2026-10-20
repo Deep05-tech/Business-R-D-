@@ -1402,7 +1402,7 @@ window.runIntelligence = async function() {
     const decoder = new TextDecoder();
     let buffer = "";
 
-    const processSSEChunk = (chunk) => {
+    const processSSEChunk = async (chunk) => {
       const trimmed = (chunk || "").trim();
       if (!trimmed || !trimmed.startsWith('data:')) return;
       let data;
@@ -1467,7 +1467,7 @@ window.runIntelligence = async function() {
 
         // Register in sidebar
         window.addOrUpdateProjectInSidebar(finalUrl, officialName);
-        loadProjects(true);
+        await loadProjects(true);
         const globalProj = document.getElementById('global-project');
         if (globalProj) globalProj.value = finalUrl;
         window.selectProject(finalUrl, false);
@@ -1484,14 +1484,14 @@ window.runIntelligence = async function() {
       buffer = lines.pop(); // Keep incomplete chunk
       
       for (const line of lines) {
-        processSSEChunk(line);
+        await processSSEChunk(line);
         if (hasCompleted) return;
       }
     }
 
     // Process any remaining chunk left in buffer upon stream close
     if (buffer && buffer.trim()) {
-      processSSEChunk(buffer);
+      await processSSEChunk(buffer);
       if (hasCompleted) return;
     }
 
