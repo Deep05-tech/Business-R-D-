@@ -238,6 +238,30 @@ app.delete("/api/admin/users/:username/projects", requireAuth, requireAdmin, asy
   } catch (error: any) { return res.status(400).json({ error: error.message }); }
 });
 
+app.put("/api/admin/projects/assignments", requireAuth, requireAdmin, async (req, res) => {
+  try {
+    const projectUrl = String(req.body?.projectUrl || "").trim();
+    const rawUsernames = req.body?.usernames;
+    const usernames: string[] = Array.isArray(rawUsernames)
+      ? rawUsernames.map((u: any) => String(u).trim()).filter(Boolean)
+      : (req.body?.username ? [String(req.body.username).trim()] : []);
+
+    if (!projectUrl || !(await memoryStore.loadBySite(projectUrl))) {
+      return res.status(404).json({ error: "Project not found." });
+    }
+    if (usernames.length === 0) {
+      return res.status(400).json({ error: "At least one username is required." });
+    }
+
+    for (const username of usernames) {
+      await authStore.assignProject(username, projectUrl);
+    }
+    return res.json({ success: true, count: usernames.length });
+  } catch (error: any) {
+    return res.status(400).json({ error: error.message });
+  }
+});
+
 // All application data and actions require an authenticated session. Auth
 // endpoints above and static assets stay public so users can reach the login page.
 app.use("/api", (req, res, next) => {

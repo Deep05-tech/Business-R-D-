@@ -402,26 +402,56 @@ window.loadAdminProjects = async function() {
       <article class="admin-project-row">
         <div class="admin-project-icon">⚡</div>
         <div class="admin-project-details"><strong>${window.escapeHtml(project.name)}</strong><span>${window.escapeHtml(project.industry || 'Business intelligence')} · ${project.competitorCount || 0} competitors · ${project.postCount || 0} posts</span>${project.assignedTo?.length ? `<div class="project-assignees">${project.assignedTo.map(username => `<span class="project-assignee">${window.escapeHtml(username)} <button type="button" onclick="window.unassignProject('${encodeURIComponent(username)}','${encodeURIComponent(project.url)}')" aria-label="Unassign ${window.escapeHtml(username)}">×</button></span>`).join('')}</div>` : '<span class="project-unassigned">Not assigned to a user</span>'}</div>
-        <div class="admin-project-actions"><div class="project-assignment-control"><select id="project-assignee-${project.id}" aria-label="Assign ${window.escapeHtml(project.name)}">${assignableUsers.length ? `<option value="">Assign to user…</option>${assignableUsers.map(user => `<option value="${window.escapeHtml(user.username)}">${window.escapeHtml(user.username)}</option>`).join('')}` : '<option value="">Create a dashboard user first</option>'}</select><button class="btn btn-secondary" type="button" ${assignableUsers.length ? '' : 'disabled'} onclick="window.assignProject('${encodeURIComponent(project.url)}','project-assignee-${project.id}')">Assign</button></div><button class="btn btn-secondary" type="button" onclick="window.openAdminProject('${encodeURIComponent(project.url)}')">Open</button><button class="admin-delete-user" type="button" onclick="window.deleteAdminProject('${encodeURIComponent(project.url)}')">Remove</button></div>
+        <div class="admin-project-actions"><div class="project-assignment-control"><select id="project-assignee-${project.id}" multiple aria-label="Assign ${window.escapeHtml(project.name)}" data-placeholder="Assign to users…">${assignableUsers.length ? assignableUsers.map(user => { const isAssigned = (project.assignedTo || []).includes(user.username); return `<option value="${window.escapeHtml(user.username)}" ${isAssigned ? 'data-assigned="true"' : ''}>${window.escapeHtml(user.username)}${isAssigned ? ' (Assigned)' : ''}</option>`; }).join('') : '<option value="" disabled>Create a dashboard user first</option>'}</select><button class="btn btn-secondary" type="button" ${assignableUsers.length ? '' : 'disabled'} onclick="window.assignProject('${encodeURIComponent(project.url)}','project-assignee-${project.id}')">Assign</button></div><button class="btn btn-secondary" type="button" onclick="window.openAdminProject('${encodeURIComponent(project.url)}')">Open</button><button class="admin-delete-user" type="button" onclick="window.deleteAdminProject('${encodeURIComponent(project.url)}')">Remove</button></div>
       </article>`).join('') : '<div class="empty-state">No saved projects found.</div>';
+    setTimeout(initializeCustomSelects, 0);
   } catch (error) {
     list.innerHTML = `<div class="empty-state">${window.escapeHtml(error.message || 'Unable to load projects.')}</div>`;
   }
 };
 
 window.assignProject = async function(encodedUrl, selectId) {
-  const username = document.getElementById(selectId)?.value;
-  if (!username) return window.showSuccess('Select a dashboard user first.');
+  const select = document.getElementById(selectId);
+  if (!select) return;
+  const projectUrl = decodeURIComponent(encodedUrl);
+  let usernames = [];
+  if (select.multiple) {
+    usernames = Array.from(select.selectedOptions).map(o => o.value).filter(Boolean);
+  } else if (select.value) {
+    usernames = [select.value];
+  }
+
+  if (usernames.length === 0) {
+    return window.showSuccess('Select at least one user from the dropdown first.');
+  }
+
   try {
-    const response = await fetch(`/api/admin/users/${encodeURIComponent(username)}/projects`, {
-      method: 'PUT', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ projectUrl: decodeURIComponent(encodedUrl) })
+    const response = await fetch('/api/admin/projects/assignments', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ projectUrl, usernames })
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'Unable to assign project.');
-    window.showSuccess(`Project assigned to ${username}.`);
+    window.showSuccess(usernames.length === 1 
+      ? `Project assigned to ${usernames[0]}.` 
+      : `Project assigned to ${usernames.length} users (${usernames.join(', ')}).`);
     await window.loadAdminProjects();
-  } catch (error) { window.showSuccess(error.message || 'Unable to assign project.'); }
+  } catch (error) {
+    try {
+      for (const username of usernames) {
+        await fetch(`/api/admin/users/${encodeURIComponent(username)}/projects`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ projectUrl })
+        });
+      }
+      window.showSuccess(`Project assigned to ${usernames.join(', ')}.`);
+      await window.loadAdminProjects();
+    } catch (fallbackError) {
+      window.showSuccess(error.message || 'Unable to assign project.');
+    }
+  }
 };
 
 window.unassignProject = async function(encodedUsername, encodedUrl) {
@@ -529,9 +559,10 @@ function initializeCustomSelects() {
     if (select.nextElementSibling && select.nextElementSibling.classList.contains('custom-select-wrapper')) return;
     
     select.classList.add('replaced');
+    const isMultiple = Boolean(select.multiple);
     
     const wrapper = document.createElement('div');
-    wrapper.className = 'custom-select-wrapper';
+    wrapper.className = 'custom-select-wrapper' + (isMultiple ? ' custom-select-multiple' : '');
     
     const trigger = document.createElement('div');
     trigger.className = 'custom-select-trigger';
@@ -554,7 +585,8 @@ function initializeCustomSelects() {
       const options = optionsContainer.querySelectorAll('.custom-option');
       let visibleCount = 0;
       options.forEach(opt => {
-        const match = !filterText || (opt.textContent || '').toLowerCase().includes(filterText);
+        const text = opt.querySelector('.custom-option-label')?.textContent || opt.textContent || '';
+        const match = !filterText || text.toLowerCase().includes(filterText);
         opt.style.display = match ? '' : 'none';
         if (match) visibleCount++;
       });
@@ -572,33 +604,91 @@ function initializeCustomSelects() {
     const updateOptions = () => {
        optionsContainer.innerHTML = '';
        filterText = '';
+       
+       let selectedText = '';
        let activeVal = select.value || window.activeProjectUrl;
-       let selectedOpt = Array.from(select.options).find(o => o.value === activeVal) ||
-         (select.options.length > 0 && select.selectedIndex >= 0 ? select.options[select.selectedIndex] : null);
-       let selectedText = selectedOpt ? selectedOpt.text : 'Select...';
-       trigger.innerHTML = `<span>${selectedText}</span> <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+       if (isMultiple) {
+         const selectedOpts = Array.from(select.selectedOptions).filter(o => o.value);
+         if (selectedOpts.length === 0) {
+           selectedText = select.getAttribute('data-placeholder') || 'Assign to users…';
+         } else if (selectedOpts.length === 1) {
+           selectedText = selectedOpts[0].text.replace(/\s*\(Assigned\)$/i, '');
+         } else {
+           selectedText = `${selectedOpts.length} users selected`;
+         }
+       } else {
+         let selectedOpt = Array.from(select.options).find(o => o.value === activeVal) ||
+           (select.options.length > 0 && select.selectedIndex >= 0 ? select.options[select.selectedIndex] : null);
+         selectedText = selectedOpt ? selectedOpt.text : 'Select...';
+       }
+       trigger.innerHTML = `<span>${window.escapeHtml(selectedText)}</span> <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
 
        const total = optionCount();
        if (total > SEARCH_THRESHOLD) {
          optionsContainer.appendChild(searchInput);
        }
 
+       if (isMultiple && total > 1) {
+         const multiActions = document.createElement('div');
+         multiActions.className = 'custom-select-multi-actions';
+         multiActions.innerHTML = `
+           <button type="button" class="custom-select-action-btn multi-select-all">Select All</button>
+           <button type="button" class="custom-select-action-btn multi-clear-all">Clear All</button>
+         `;
+         multiActions.querySelector('.multi-select-all').addEventListener('click', (e) => {
+           e.stopPropagation();
+           Array.from(select.options).forEach(opt => {
+             if (opt.value && opt.style.display !== 'none') opt.selected = true;
+           });
+           select.dispatchEvent(new Event('change', { bubbles: true }));
+           updateOptions();
+         });
+         multiActions.querySelector('.multi-clear-all').addEventListener('click', (e) => {
+           e.stopPropagation();
+           Array.from(select.options).forEach(opt => opt.selected = false);
+           select.dispatchEvent(new Event('change', { bubbles: true }));
+           updateOptions();
+         });
+         optionsContainer.appendChild(multiActions);
+       }
+
        Array.from(select.options).forEach(opt => {
           if (opt.style.display === 'none') return;
+          if (isMultiple && !opt.value) return;
+          
           const optionDiv = document.createElement('div');
-          optionDiv.className = 'custom-option';
-          if (opt.value === activeVal || opt.selected) optionDiv.classList.add('selected');
-          optionDiv.textContent = opt.text;
-          optionDiv.addEventListener('click', (e) => {
-             e.stopPropagation();
-             select.value = opt.value;
-             if (select.id === 'global-project' || select.id === 'project-select') {
-               window.selectProject(opt.value, true);
-             }
-             select.dispatchEvent(new Event('change', { bubbles: true }));
-             wrapper.classList.remove('open');
-             updateOptions();
-          });
+          
+          if (isMultiple) {
+            optionDiv.className = 'custom-option multi-option' + (opt.selected ? ' selected' : '');
+            const isAssigned = opt.getAttribute('data-assigned') === 'true';
+            optionDiv.innerHTML = `
+              <input type="checkbox" class="custom-option-checkbox" ${opt.selected ? 'checked' : ''} />
+              <span class="custom-option-label">${window.escapeHtml(opt.text.replace(/\s*\(Assigned\)$/i, ''))}</span>
+              ${isAssigned ? '<span class="custom-option-assigned-badge">Assigned</span>' : ''}
+            `;
+            optionDiv.addEventListener('click', (e) => {
+               e.stopPropagation();
+               opt.selected = !opt.selected;
+               select.dispatchEvent(new Event('change', { bubbles: true }));
+               updateOptions();
+            });
+          } else {
+            optionDiv.className = 'custom-option';
+            if (opt.value === activeVal || opt.selected) optionDiv.classList.add('selected');
+            optionDiv.textContent = opt.text;
+            optionDiv.addEventListener('click', (e) => {
+               e.stopPropagation();
+               select.value = opt.value;
+               if (select.id === 'global-project' || select.id === 'project-select') {
+                 window.selectProject(opt.value, true);
+               }
+               select.dispatchEvent(new Event('change', { bubbles: true }));
+               wrapper.classList.remove('open');
+               const row = wrapper.closest('.admin-project-row');
+               if (row) row.classList.remove('dropdown-open');
+               updateOptions();
+            });
+          }
           optionsContainer.appendChild(optionDiv);
        });
 
@@ -618,17 +708,23 @@ function initializeCustomSelects() {
       if (!wrapper.classList.contains('open')) return;
       const rect = wrapper.getBoundingClientRect();
       const spaceBelow = window.innerHeight - rect.bottom;
-      const height = Math.min(250, optionsContainer.scrollHeight || 250);
+      const height = Math.min(260, optionsContainer.scrollHeight || 260);
       if (spaceBelow < height + 8) wrapper.classList.add('open-up');
     };
 
     trigger.addEventListener('click', (e) => {
        e.stopPropagation();
+       const willOpen = !wrapper.classList.contains('open');
        document.querySelectorAll('.custom-select-wrapper').forEach(w => {
           if (w !== wrapper) w.classList.remove('open');
        });
-       wrapper.classList.toggle('open');
-       if (wrapper.classList.contains('open')) {
+       document.querySelectorAll('.admin-project-row.dropdown-open').forEach(r => r.classList.remove('dropdown-open'));
+
+       wrapper.classList.toggle('open', willOpen);
+       const row = wrapper.closest('.admin-project-row');
+       if (row) row.classList.toggle('dropdown-open', willOpen);
+
+       if (willOpen) {
          setTimeout(() => { searchInput.value = ''; filterText = ''; applyFilter(); }, 0);
          positionDropdown();
        }
@@ -640,7 +736,12 @@ function initializeCustomSelects() {
     
     select.addEventListener('change', () => updateOptions());
     select.addEventListener('optionsUpdated', () => updateOptions());
-    select.addEventListener('focus', () => { wrapper.classList.add('open'); positionDropdown(); });
+    select.addEventListener('focus', () => {
+      wrapper.classList.add('open');
+      const row = wrapper.closest('.admin-project-row');
+      if (row) row.classList.add('dropdown-open');
+      positionDropdown();
+    });
     
     const observer = new MutationObserver(() => {
       updateOptions();
@@ -654,6 +755,7 @@ function initializeCustomSelects() {
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.custom-select-wrapper')) {
        document.querySelectorAll('.custom-select-wrapper').forEach(w => w.classList.remove('open'));
+       document.querySelectorAll('.admin-project-row.dropdown-open').forEach(r => r.classList.remove('dropdown-open'));
     }
   });
 }
