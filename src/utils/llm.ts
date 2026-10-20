@@ -85,12 +85,24 @@ function createResilientGroqFetch(preferredModels: string[]) {
 
       // Find next model that is not currently quota-exhausted
       let activeModel = preferredModels[modelIndex % preferredModels.length];
+      let foundAvailable = false;
       for (let i = 0; i < preferredModels.length; i++) {
         const candidate = preferredModels[(modelIndex + i) % preferredModels.length];
         if ((modelExhaustedUntil[candidate] || 0) < Date.now()) {
           activeModel = candidate;
           modelIndex = (modelIndex + i) % preferredModels.length;
+          foundAvailable = true;
           break;
+        }
+      }
+
+      // If all candidate models are in a short rolling cooldown, wait for the nearest one
+      if (!foundAvailable) {
+        const minWait = Math.min(...preferredModels.map(m => Math.max(0, (modelExhaustedUntil[m] || 0) - Date.now())));
+        if (minWait > 0 && minWait <= 45000) {
+          logger.info(`[ResilientFetch] All Groq models in rolling cooldown. Waiting ${minWait + 500}ms for token window reset...`);
+          await new Promise((resolve) => setTimeout(resolve, minWait + 500));
+          continue;
         }
       }
 
@@ -121,6 +133,8 @@ function createResilientGroqFetch(preferredModels: string[]) {
         const errText = await res.text();
         const isOtpm = /Request too large|OTPM/i.test(errText);
         const isTpdQuota = /tokens per day|TPD|quota/i.test(errText);
+        const waitMatch = errText.match(/try again in ([0-9.]+)s/i);
+        const waitSec = waitMatch ? parseFloat(waitMatch[1]) : 0;
 
         logger.warn(
           `[ResilientFetch] Groq 429 on model ${activeModel} (Key ${keyIndex % keys.length + 1}/${keys.length}). ` +
@@ -128,12 +142,16 @@ function createResilientGroqFetch(preferredModels: string[]) {
         );
 
         if (isTpdQuota) {
-          // Model-specific daily quota exhausted: latch disabled for 15 minutes and switch model immediately
-          modelExhaustedUntil[activeModel] = Date.now() + 15 * 60 * 1000;
-          modelIndex++;
+          if (waitSec > 0 && waitSec <= 65) {
+            // Rolling token-per-minute window: cooldown only for the requested window + 1s jitter
+            modelExhaustedUntil[activeModel] = Date.now() + Math.ceil(waitSec * 1000) + 1000;
+            modelIndex++;
+          } else {
+            // Hard daily quota exhausted: latch disabled for 15 minutes and switch model immediately
+            modelExhaustedUntil[activeModel] = Date.now() + 15 * 60 * 1000;
+            modelIndex++;
+          }
         } else if (isOtpm) {
-          // OTPM rate limit: extract wait seconds with random jitter to prevent concurrent thundering herd
-          const waitMatch = errText.match(/try again in ([0-9.]+)s/i);
           const jitter = Math.floor(Math.random() * 1500);
           const waitMs = waitMatch ? Math.min(Math.ceil(parseFloat(waitMatch[1]) * 1000) + 500 + jitter, 15000) : 3000 + jitter;
           logger.info(`[ResilientFetch] Cooling down ${waitMs}ms for OTPM window...`);

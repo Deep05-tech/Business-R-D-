@@ -1348,7 +1348,7 @@ app.post("/api/competitors-stream", async (request, response) => {
               memory!.competitors.push(comp);
               knowledgeIndex.add(memory!);
               newlyFoundSinceLastSave++;
-              if (newlyFoundSinceLastSave >= 4) {
+              if (newlyFoundSinceLastSave >= 2) {
                 newlyFoundSinceLastSave = 0;
                 saveThrottled().catch(() => {});
               }

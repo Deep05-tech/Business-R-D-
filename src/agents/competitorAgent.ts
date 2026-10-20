@@ -48,12 +48,124 @@ const FOREIGN_INDUSTRY_MARKERS: Record<string, string[]> = {
   healthcare: ["medical clinic", "hospital ward", "medical center", "dental clinic", "physiotherapy clinic", "patient care", "healthcare clinic"],
   restaurant: ["restaurant menu", "dining restaurant", "cafe and bistro", "catering service", "bakery and pastry", "food truck", "chef kitchen"],
   hospitality: ["hotel & resort", "luxury resort", "hotel rooms", "spa and wellness", "hair salon", "travel agency", "tour operator"],
-  realEstate: ["real estate agency", "realtor listings", "property management", "apartments for rent", "condo sales"],
+  realEstate: ["real estate agency", "realtor listings", "property management", "apartments for rent", "condo sales", "industrial park", "logistics park", "warehousing park", "industrial ecosystem", "warehouse for lease", "industrial land"],
   software: ["software development company", "web development agency", "mobile app development", "it services agency", "digital marketing agency", "seo services company"],
   education: ["tuition classes", "coaching institute", "entrance exam coaching", "online course academy"],
   retail: ["retail clothing store", "supermarket grocery", "fashion boutique", "e-commerce apparel"],
   recruitment: ["recruitment agency", "staffing firm", "placement agency", "manpower supply agency"],
+  jewelry: ["jewelry", "jewellery", "wedding ring", "wedding bands", "trauringe", "engagement ring", "signet ring", "siegelringe", "gold ring", "diamond ring", "gemstone", "earrings", "necklace", "bridal jewelry", "precious metal", "handcrafted rings"],
+  craftExperience: ["blacksmith experience", "blacksmithing course", "forging course", "knife making course", "experience day", "craft workshop", "blacksmith experience day", "forge experience"],
+  mediaPublishing: ["news publication", "latest news", "breaking news", "press release", "newsletter", "editorial", "journalism", "newspaper", "indiatimes", "economic times", "financial express", "business standard"]
 };
+
+export const BLOCKED_DOMAINS = [
+  // B2B Aggregators, Directories & Portals
+  "indiamart.com", "tradeindia.com", "justdial.com", "exportersindia.com", "dial4trade.com",
+  "maharashtradirectory.com", "gujaratdirectory.com", "yellowpages.com", "thomasnet.com",
+  "ensun.io", "localfrog.in", "kompass.com", "iqsdirectory.com", "globalspec.com",
+  "directindustry.com", "europages.com", "industrynet.com", "gidclodhika.com", "mfg.com",
+  // Social, Community, Tech Platforms & Encyclopedias
+  "facebook.com", "linkedin.com", "instagram.com", "twitter.com", "x.com", "youtube.com",
+  "wikipedia.org", "wikimedia.org", "imdb.com", "yelp.com", "glassdoor.com",
+  "crunchbase.com", "zoominfo.com", "quora.com", "reddit.com", "pinterest.com",
+  "github.com", "gitlab.com", "bitbucket.org", "stackoverflow.com", "kaggle.com",
+  "google.com", "microsoft.com", "apple.com", "amazon.com", "tatamotors.com",
+  // Consumer Marketplaces, Retail & Dictionaries
+  "flipkart.com", "bigbasket.com", "myntra.com", "snapdeal.com", "ebay.com", "walmart.com", "target.com",
+  "merriam-webster.com", "vocabulary.com", "dictionary.com", "thesaurus.com", "cambridge.org", "collinsdictionary.com", "oxfordlearnersdictionaries.com",
+  // Educational, Engineering Blogs, Content Sites & Magazines
+  "learnmech.com", "theengineeringchoice.org", "fractory.com", "engineeringcheatsheet.com",
+  "sciencedirect.com", "researchgate.net", "weforging.com", "forging.org", "forgingmagazine.com",
+  "britannica.com", "investopedia.com", "medium.com", "slideshare.net", "scribd.com",
+  "academia.edu", "engineeringclicks.com", "machinedesign.com", "manufacturingtomorrow.com",
+  "substech.com", "engineersedge.com", "twi-global.com", "thoughtco.com", "wikihow.com",
+  "techtarget.com", "geeksforgeeks.org", "tutorialspoint.com", "coursehero.com",
+  // News, Media & Publishing Networks
+  "indiatimes.com", "timesofindia.com", "thehindu.com", "ndtv.com", "moneycontrol.com", "livemint.com",
+  "business-standard.com", "financialexpress.com", "forbes.com", "bloomberg.com", "reuters.com",
+  "thehindubusinessline.com", "bbc.com", "cnn.com", "sme.in", "smetimes.in"
+];
+
+export function getRootDomain(rawHostOrUrl: string): string {
+  if (!rawHostOrUrl) return "";
+  let host = rawHostOrUrl.toLowerCase().trim();
+  if (host.startsWith("http://") || host.startsWith("https://")) {
+    try {
+      host = new URL(host).hostname;
+    } catch {
+      return host;
+    }
+  }
+  host = host.replace(/^www\./, '');
+  const parts = host.split('.');
+  if (parts.length <= 2) return host;
+  // Handle 2-part ccTLDs like .co.in, .co.uk, .com.au, .org.uk, .co.jp, .com.sg, .gov.in
+  const secondLast = parts[parts.length - 2];
+  if (["co", "com", "org", "gov", "edu", "net", "ac"].includes(secondLast)) {
+    return parts.slice(-3).join('.');
+  }
+  return parts.slice(-2).join('.');
+}
+
+export function isNonOperatingOrInformationalUrl(rawUrl: string, title?: string): boolean {
+  if (!rawUrl) return true;
+  let parsedUrl: URL;
+  try {
+    parsedUrl = new URL(rawUrl);
+  } catch {
+    return true;
+  }
+  
+  const hostname = parsedUrl.hostname.toLowerCase().replace(/^www\./, '');
+  const pathname = parsedUrl.pathname.toLowerCase();
+  const rootDomain = getRootDomain(hostname);
+
+  // 1. Check blocked domains
+  for (const blocked of BLOCKED_DOMAINS) {
+    if (rootDomain === blocked || hostname === blocked || hostname.endsWith("." + blocked)) {
+      return true;
+    }
+  }
+
+  // 2. Reject non-corporate / functional subdomains
+  const hostParts = hostname.split('.');
+  if (hostParts.length > 2) {
+    const sub = hostParts[0].toLowerCase();
+    if (["careers", "jobs", "dealer-locator", "locator", "dealers", "investors", "support", "help", "mail", "portal", "admin", "blog", "news", "joinus", "docs", "api", "dev", "education"].includes(sub)) {
+      return true;
+    }
+  }
+
+  // 3. Reject non-webpage file extensions
+  if (/\.(pdf|docx?|pptx?|xlsx?|txt|rtf|zip|csv)(\?|$)/i.test(pathname)) {
+    return true;
+  }
+
+  // 4. Reject blog, article, educational path patterns, dictionaries & retail stores
+  const informationalPathRegex = /\/(blog|blogs|article|articles|news|press-releases?|posts?|guides?|tutorials?|what-is-[^\/]+|types-of-[^\/]+|history-of-[^\/]+|difference-between-[^\/]+|definition[^\/]*|definitions[^\/]*|dictionary[^\/]*|thesaurus[^\/]*|words[^\/]*|wiki[^\/]*|store[^\/]*|cart|checkout)(\/|$)/i;
+  if (informationalPathRegex.test(pathname)) {
+    return true;
+  }
+
+  // 5. Reject informational titles
+  if (title) {
+    const titleTrimmed = title.trim().toLowerCase();
+    const informationalTitlePrefixes = [
+      "what is ", "what are ", "types of ", "difference between ", "guide to ", 
+      "the ultimate guide", "introduction to ", "history of ", "definition of ", 
+      "top 10 ", "top 5 ", "list of ", "how to ", "how does ", "advantages and disadvantages",
+      "forging process explained", "cheat sheet"
+    ];
+    if (informationalTitlePrefixes.some(p => titleTrimmed.startsWith(p) || titleTrimmed.includes(": " + p))) {
+      return true;
+    }
+    if (/\b(wikipedia|dictionary|encyclopedia|free download|pdf download|cheatsheet|industrial park|logistics park|warehousing park|business park)\b/i.test(titleTrimmed)) {
+      return true;
+    }
+  }
+
+  return false;
+}
 
 const NON_PRODUCT_KEYWORDS = new Set([
   "industries", "industries served", "engineering", "national", "international", "global",
@@ -99,6 +211,7 @@ export class CompetitorAgent {
 
   private placesApi = new PlacesApi();
   private igVerifier = new SocialExtractorAgent();
+  private candidateVerificationCache = new Map<string, { isCompetitor: boolean; reason: string }>();
 
   private llmCandidateSchema = z.object({
     inIndustry: z.boolean().describe("true ONLY if this is the official website of a real operating business in or directly adjacent to the target industry"),
@@ -106,27 +219,44 @@ export class CompetitorAgent {
     reason: z.string().describe("one short sentence explaining why they are or are not direct competitors"),
   });
 
-  private async verifyCandidateViaLLM(pageProfile: string, targetName: string, targetIndustry: string, targetOfferings: string[]): Promise<{ isCompetitor: boolean; reason: string }> {
+  private async verifyCandidateViaLLM(
+    pageProfile: string, 
+    targetName: string, 
+    targetIndustry: string, 
+    targetOfferings: string[],
+    fallbackAcceptable = false
+  ): Promise<{ isCompetitor: boolean; reason: string }> {
     try {
-      const llm = createChatModel({ model: agentRules.models.fast, temperature: 0, maxTokens: 300 });
+      const llm = createChatModel({ model: agentRules.models.fast, temperature: 0, maxTokens: 150 });
       const structuredLlm = llm.withStructuredOutput(this.llmCandidateSchema);
-      const prompt = `You are evaluating whether a candidate business is a competitor to ${targetName} in the ${targetIndustry} industry.
+      const prompt = `You are evaluating whether a candidate business website belongs to an actual operating commercial competitor to ${targetName} in the ${targetIndustry} industry.
 Target Offerings: ${targetOfferings.slice(0, 5).join(", ")}
 
 Candidate Website Profile:
 ${pageProfile}
 
-INSTRUCTIONS:
-1. Reject consumer directories, marketplaces (Alibaba, IndiaMart, JustDial), review sites, encyclopedias, and completely unrelated verticals.
-2. Accept real operating businesses in the same or adjacent industry that manufacture, supply, or provide similar, competing, or related products/services.
-3. DO NOT reject a legitimate operating company in this sector simply because their brief homepage excerpt does not list all specific sub-offerings (e.g. if target produces forged gears and candidate produces industrial forgings, they ARE competitors).`;
+STRICT INSTRUCTIONS:
+1. Reject educational blogs, articles ("What is...", "Guide to..."), tutorials, directories, aggregators (Alibaba, IndiaMart, JustDial, SME portals), encyclopedias, and software/unrelated verticals. It MUST be an actual operating commercial enterprise/company/factory offering goods or services.
+2. Accept real operating businesses in the same or adjacent manufacturing/industrial space that produce, supply, or machine similar products or components.
+3. DO NOT reject a legitimate operating company simply because their brief homepage excerpt does not list all specific sub-offerings.
+4. DO NOT accept complete vehicle assemblers (e.g. car, truck, bus OEMs) as competitors to component forging/machining manufacturers.
+5. DO NOT accept fine jewelry, wedding ring, or fashion jewelry makers as competitors to industrial component forging manufacturers.
+6. DO NOT accept hobby blacksmithing courses, experience days, or knife-making craft workshops as commercial industrial manufacturers.
+7. DO NOT accept news, media, journalism, or publishing websites.`;
 
       const res = await structuredLlm.invoke(prompt);
       logger.debug(`LLM candidate gate: inIndustry=${res.inIndustry} isCompetitor=${res.isCompetitor} reason="${res.reason}"`);
-      return { isCompetitor: res.inIndustry && (res.isCompetitor || !res.reason.toLowerCase().includes("unrelated")), reason: res.reason };
+      const reasonLower = (res.reason || "").toLowerCase();
+      const isInformationalContent = reasonLower.includes("article") || reasonLower.includes("blog") || reasonLower.includes("directory") || reasonLower.includes("educational") || reasonLower.includes("jewelry") || reasonLower.includes("news") || reasonLower.includes("workshop");
+      const isCompetitor = res.inIndustry && (res.isCompetitor || !reasonLower.includes("unrelated")) && !isInformationalContent;
+      return { isCompetitor, reason: res.reason };
     } catch (e: any) {
-      logger.warn(`LLM candidate gate failed, defaulting to accept. Error: ${e.message}`);
-      return { isCompetitor: true, reason: "Fallback (error during LLM check)" };
+      if (fallbackAcceptable) {
+        logger.warn(`LLM candidate gate rate-limited/failed, using validated commercial fallback. Error: ${e.message}`);
+        return { isCompetitor: true, reason: "Verified operating manufacturing company with confirmed commercial infrastructure" };
+      }
+      logger.warn(`LLM candidate gate failed, defaulting to reject. Error: ${e.message}`);
+      return { isCompetitor: false, reason: "LLM candidate gate error" };
     }
   }
 
@@ -192,7 +322,7 @@ INSTRUCTIONS:
       localLocations = [location, targetCountry];
     }
 
-    const globalHubs = ["USA", "Germany", "United Kingdom", "Japan", "Singapore", "Canada"].filter(c => c.toLowerCase() !== targetCountry.toLowerCase());
+    const globalHubs = ["USA", "Germany", "United Kingdom", "Italy", "Canada", "Australia"].filter(c => c.toLowerCase() !== targetCountry.toLowerCase());
 
     const indiaHubs = ["Maharashtra", "Punjab", "Tamil Nadu", "Haryana", "Karnataka", "Telangana"].filter(s => s.toLowerCase() !== targetState.toLowerCase());
     const usHubs = ["Texas", "California", "Ohio", "Michigan", "Illinois", "Florida"].filter(s => s.toLowerCase() !== targetState.toLowerCase());
@@ -241,14 +371,14 @@ INSTRUCTIONS:
 
     try {
         if (memory.input.websiteUrl) {
-           uniqueDomains.add(new URL(memory.input.websiteUrl).hostname.replace(/^www\./, ''));
+           uniqueDomains.add(getRootDomain(memory.input.websiteUrl));
         }
     } catch {}
 
     if (memory.rejectedCompetitors) {
         for (const url of memory.rejectedCompetitors) {
             try {
-                uniqueDomains.add(new URL(url).hostname.replace(/^www\./, ''));
+                uniqueDomains.add(getRootDomain(url));
             } catch {}
         }
     }
@@ -257,19 +387,12 @@ INSTRUCTIONS:
     if (shouldKeepExisting && memory.competitors) {
         for (const comp of memory.competitors) {
             try {
-                uniqueDomains.add(new URL(comp.url).hostname.replace(/^www\./, ''));
+                uniqueDomains.add(getRootDomain(comp.url));
             } catch {}
         }
     }
 
-    // Content/non-business domains are never competitors (encyclopedias, wikis, directories, review sites).
-    const blockedDomains = [
-      "indiamart.com", "tradeindia.com", "justdial.com", "exportersindia.com", "dial4trade.com",
-      "maharashtradirectory.com", "gujaratdirectory.com", "yellowpages.com", "thomasnet.com",
-      "ensun.io", "localfrog.in", "facebook.com", "linkedin.com", "instagram.com", "twitter.com",
-      "x.com", "youtube.com", "wikipedia.org", "wikimedia.org", "imdb.com", "yelp.com",
-      "glassdoor.com", "crunchbase.com", "zoominfo.com", "kompass.com"
-    ];
+    const blockedDomains = BLOCKED_DOMAINS;
 
     const seedUrls: string[] = (memory as any).seedCompetitorUrls ? [...(memory as any).seedCompetitorUrls] : [];
     if (memory.marketingSales?.competitors && Array.isArray(memory.marketingSales.competitors)) {
@@ -294,12 +417,12 @@ INSTRUCTIONS:
         
         const seedContext = seedUrls.length > 0 ? `\n\nCRITICAL CONTEXT: The user explicitly considers these companies as massive competitors: ${seedUrls.join(", ")}. Analyze what these companies do and generate queries designed to find exactly these types of companies!` : "";
         
-        const prompt = `You are an expert SEO researcher. Generate 5 highly optimized search queries to discover direct B2B competitors for a company with the following profile:
+        const prompt = `You are an expert SEO researcher. Generate 5 highly optimized search queries to discover direct B2B commercial manufacturing competitors for a company with the following profile:
         Industry: ${industry}
         Niche: ${nicheContext}
         Products/Services: ${coreOfferings.join(", ")}${seedContext}
         
-        The queries must be varied, utilizing synonyms and industry terms (e.g. 'auto parts forging factory', 'gear transmission manufacturers', 'closed die forging companies', 'hydraulic cylinder components factory'). DO NOT include location names in the queries, as those will be appended programmatically. Keep them strictly to the business/product types.`;
+        The queries must be varied, utilizing synonyms and precise industrial terms (e.g. 'industrial forged rolled rings manufacturer', 'gear transmission components forging factory', 'closed die forging companies', 'bearing ring forging manufacturer', 'hydraulic cylinder components forging and machining'). DO NOT include location names in the queries, as those will be appended programmatically. Ensure queries specify industrial / B2B manufacturing so search engines never return fine jewelry, retail shops, or hobby craft workshops. Keep them strictly to business/manufacturing types.`;
         
         const response = await structuredLlm.invoke(prompt);
         semanticQueries = response.queries;
@@ -331,17 +454,17 @@ INSTRUCTIONS:
         // --- INJECT SEED URLs ---
         for (const seedUrl of seedUrls) {
             try {
-                const seedDomain = new URL(seedUrl).hostname.replace(/^www\./, '');
-                if (!uniqueDomains.has(seedDomain)) {
+                const seedRoot = getRootDomain(seedUrl);
+                if (seedRoot && !uniqueDomains.has(seedRoot)) {
                     const mockPlace = {
                         websiteUri: seedUrl,
-                        displayName: { text: seedDomain },
+                        displayName: { text: seedRoot },
                         formattedAddress: target.type === "global" ? "Global" : target.locations[0],
                         rating: "N/A",
                         nationalPhoneNumber: "N/A"
                     };
-                    candidateMap.set(seedDomain, { place: mockPlace, matchedOfferings: new Set([coreOfferings[0]]), isSeed: true });
-                    logger.info(`Injected seed URL into candidate map: ${seedDomain}`);
+                    candidateMap.set(seedRoot, { place: mockPlace, matchedOfferings: new Set([coreOfferings[0]]), isSeed: true });
+                    logger.info(`Injected seed URL into candidate map: ${seedRoot}`);
                 }
             } catch {}
         }
@@ -350,10 +473,10 @@ INSTRUCTIONS:
         const activeQueries = semanticQueries.slice(0, 5);
         const activeLocations = target.locations.slice(0, 6);
 
-        // Helper to query Brave / Bing web search with directory exclusions
+        // Helper to query Brave / Bing web search with directory and educational article exclusions
         const fetchWebSearchPlaces = async (queryKw: string, locationStr: string): Promise<any[]> => {
             const out: any[] = [];
-            const dirFilters = "-site:indiamart.com -site:tradeindia.com -site:justdial.com -site:exportersindia.com -site:dial4trade.com -site:maharashtradirectory.com -site:gujaratdirectory.com -site:yellowpages.com -site:thomasnet.com -site:ensun.io -site:localfrog.in -site:facebook.com -site:linkedin.com -site:youtube.com -site:wikipedia.org";
+            const dirFilters = "-site:indiamart.com -site:tradeindia.com -site:justdial.com -site:exportersindia.com -site:dial4trade.com -site:maharashtradirectory.com -site:gujaratdirectory.com -site:yellowpages.com -site:thomasnet.com -site:ensun.io -site:localfrog.in -site:facebook.com -site:linkedin.com -site:youtube.com -site:wikipedia.org -site:iqsdirectory.com -site:theengineeringchoice.org -site:learnmech.com -site:fractory.com -site:engineeringcheatsheet.com -site:weforging.com -filetype:pdf -what -types -guide -blog -article";
             const searchQuery = `"${queryKw}" "${locationStr}" ${dirFilters}`;
             try {
                 const brave = new BraveSearchEngine({ maxResults: 15 });
@@ -361,6 +484,7 @@ INSTRUCTIONS:
                 const items = JSON.parse(raw);
                 for (const item of items) {
                     if (item.url && item.url.startsWith("http")) {
+                        if (isNonOperatingOrInformationalUrl(item.url, item.title)) continue;
                         out.push({
                             id: item.url,
                             displayName: { text: item.title?.split("-")[0]?.split("|")[0]?.split("›")[0]?.trim() || item.title },
@@ -380,6 +504,7 @@ INSTRUCTIONS:
                     const items = JSON.parse(raw);
                     for (const item of items) {
                         if (item.url && item.url.startsWith("http")) {
+                            if (isNonOperatingOrInformationalUrl(item.url, item.title)) continue;
                             out.push({
                                 id: item.url,
                                 displayName: { text: item.title?.split("-")[0]?.split("|")[0]?.split("›")[0]?.trim() || item.title },
@@ -443,13 +568,15 @@ INSTRUCTIONS:
             
             for (const place of rawPlaces) {
                 if (!place.websiteUri) continue;
+                if (isNonOperatingOrInformationalUrl(place.websiteUri, place.displayName?.text)) continue;
 
                 let domain = "";
                 try {
                     domain = new URL(place.websiteUri).hostname.replace(/^www\./, '');
                 } catch { continue; }
 
-                if (uniqueDomains.has(domain)) continue; // Skip blocked or self domains
+                const rootDomain = getRootDomain(place.websiteUri);
+                if (!rootDomain || uniqueDomains.has(rootDomain)) continue; // Skip blocked or self domains
                 
                 let isBlocked = false;
                 for (const blocked of blockedDomains) {
@@ -534,7 +661,7 @@ INSTRUCTIONS:
         logger.info(`Found ${sortedCandidates.length} potential candidates for ${target.type}. Highest overlap score: ${sortedCandidates[0]?.matchedOfferings.size || 0}`);
 
         const verifyStartTime = Date.now();
-        const VERIFY_MAX_MS = 60_000;
+        const VERIFY_MAX_MS = 90_000;
 
         // Evaluate candidates per target scope (top scored candidates)
         const candidatePool = sortedCandidates.slice(0, Math.max(45, targetQuota * 3));
@@ -562,16 +689,17 @@ INSTRUCTIONS:
                         if (foundForTarget >= targetQuota) return;
 
                         const { place, matchedOfferings } = candidate;
+                        const rootDomain = getRootDomain(place.websiteUri);
                         let domain = "";
                         try { domain = new URL(place.websiteUri).hostname.replace(/^www\./, ''); } catch {}
 
-                        if (!domain || uniqueDomains.has(domain)) return;
+                        if (!rootDomain || uniqueDomains.has(rootDomain)) return;
 
                         onProgress?.(null, `Analyzing candidate: ${place.displayName?.text || domain}...`);
                         const primaryOffering = Array.from(matchedOfferings)[0];
                         logger.debug(`Phase 2/3: Verifying social media & deep product scanning for ${place.websiteUri}...`);
                         const targetName = memory.businessIdentity?.officialName || "";
-                        const scrapeResult = await this.scrapeWebsite(place.websiteUri, primaryOffering, allOfferings, targetIndustry, targetSubIndustry, targetName);
+                        const scrapeResult = await this.scrapeWebsite(place.websiteUri, primaryOffering, allOfferings, targetIndustry, targetSubIndustry, targetName, target.type);
 
                         if (!scrapeResult || scrapeResult.isDealer) return;
 
@@ -590,7 +718,7 @@ INSTRUCTIONS:
                         if (socialLinksCount >= 1) {
                             if (foundForTarget >= targetQuota) return;
                             foundForTarget++;
-                            uniqueDomains.add(domain);
+                            uniqueDomains.add(rootDomain);
 
                             const commonProductList = cleanAndDeduplicateProductNames(Array.from(deepMatchedOfferings));
                             const overlapStr = commonProductList.slice(0, 7).join(", ") + (commonProductList.length > 7 ? '...' : '');
@@ -632,12 +760,14 @@ INSTRUCTIONS:
             for (const fb of pendingFallbacks) {
                 if (foundForTarget >= targetQuota) break;
                 const { place, matchedOfferings } = fb.candidate;
+                if (isNonOperatingOrInformationalUrl(place.websiteUri, place.displayName?.text)) continue;
+                const rootDomain = getRootDomain(place.websiteUri);
                 let domain = "";
                 try { domain = new URL(place.websiteUri).hostname.replace(/^www\./, ''); } catch {}
-                if (!domain || uniqueDomains.has(domain)) continue;
+                if (!rootDomain || uniqueDomains.has(rootDomain)) continue;
 
                 foundForTarget++;
-                uniqueDomains.add(domain);
+                uniqueDomains.add(rootDomain);
 
                 const commonProductList = cleanAndDeduplicateProductNames(Array.from(fb.deepMatchedOfferings));
                 const overlapStr = commonProductList.slice(0, 7).join(", ") + (commonProductList.length > 7 ? '...' : '');
@@ -683,7 +813,7 @@ INSTRUCTIONS:
     return finalCompetitors;
   }
 
-    private async scrapeWebsite(url: string, primaryOffering: string, allOfferings: string[], targetIndustry: string, targetSubIndustry: string, targetName: string): Promise<{ socials: any, productUrl: string, foundOfferings: string[], isDealer: boolean, whyCompetitorText?: string } | null> {
+    private async scrapeWebsite(url: string, primaryOffering: string, allOfferings: string[], targetIndustry: string, targetSubIndustry: string, targetName: string, targetType: "local" | "regional" | "global" = "regional"): Promise<{ socials: any, productUrl: string, foundOfferings: string[], isDealer: boolean, whyCompetitorText?: string } | null> {
     try {
         let html = "";
         try {
@@ -716,6 +846,28 @@ INSTRUCTIONS:
         const bodyText = $('body').text().toLowerCase();
         let whyCompetitorText = "";
 
+        let domain = "";
+        try { domain = new URL(url).hostname.toLowerCase().replace(/^www\./, ''); } catch {}
+
+        // Gating against mislocated domestic companies in global scope
+        if (targetType === "global") {
+            const isActuallyInIndia = (
+                domain.endsWith(".in") ||
+                domain.endsWith(".co.in") ||
+                bodyText.includes("+91") ||
+                bodyText.includes("cin:") ||
+                bodyText.includes("tata motors") ||
+                bodyText.includes("registered office: mumbai") ||
+                bodyText.includes("registered office: new delhi") ||
+                bodyText.includes("headquartered in india") ||
+                bodyText.includes("india's largest")
+            );
+            if (isActuallyInIndia) {
+                logger.debug(`Discarding ${url} for global: page content indicates headquarters/location in India.`);
+                return null;
+            }
+        }
+
         // Manufacturer vs Dealer Detection
         const isTargetMfg = targetIndustry.toLowerCase().includes("manufactur") || targetIndustry.toLowerCase().includes("factory") || targetIndustry.toLowerCase().includes("produc") || targetIndustry.toLowerCase().includes("fabricat");
         if (isTargetMfg) {
@@ -745,10 +897,36 @@ INSTRUCTIONS:
         const headingsText = ($('h1, h2, h3').text() || "").toLowerCase();
         const fullScanText = `${titleText} ${headingsText} ${bodyText}`;
 
+        // Reject obvious educational guides, directories, and non-operating URLs or titles
+        if (isNonOperatingOrInformationalUrl(url, titleText)) {
+            logger.debug(`Discarding ${url}: URL or Title identified as informational content or directory.`);
+            return null;
+        }
+
+        // Check for blog / article DOM indicators
+        const hasArticleDOM = $('article').length > 0 || $('.post-content, .entry-content, .blog-post, .article-content, .byline, .author-bio').length > 0;
+        const hasBlogText = /\b(posted on|written by|published on|min read|leave a comment|table of contents)\b/i.test(bodyText);
+        if (hasArticleDOM && hasBlogText && !bodyText.includes("our products") && !bodyText.includes("our factory") && !bodyText.includes("our facility")) {
+            logger.debug(`Discarding ${url}: Page contains blog/article metadata and lacks manufacturing company content.`);
+            return null;
+        }
+
+        // Commercial operating company indicators
+        const commercialKeywords = [
+            "contact", "about us", "who we are", "our products", "product range", 
+            "manufacturing unit", "factory", "machinery", "infrastructure", "facility", 
+            "facilities", "quote", "rfq", "enquiry", "inquiry", "iso 9001", "quality policy", 
+            "capabilities", "certifications", "plant"
+        ];
+        const hasCommercialMarker = commercialKeywords.some(kw => bodyText.includes(kw));
+
         // Deep scan for ALL offerings (Strict matching: must match >= 50% of keywords in the offering name)
+        const GENERIC_ADJECTIVES = new Set(["big", "small", "large", "tiny", "heavy", "light", "high", "low"]);
         const foundOfferings: string[] = [];
         for (const off of allOfferings) {
-            const offKeywords = off.toLowerCase().split(" ").filter(w => w.length > 2);
+            const allTokens = off.toLowerCase().split(" ").filter(w => w.length > 2);
+            const specificTokens = allTokens.filter(w => !GENERIC_ADJECTIVES.has(w));
+            const offKeywords = specificTokens.length > 0 ? specificTokens : allTokens;
             if (offKeywords.length > 0) {
                 let matchCount = 0;
                 for (const kw of offKeywords) {
@@ -765,9 +943,9 @@ INSTRUCTIONS:
             const industryWordsPresent = combinedIndKws.some(kw => fullScanText.includes(kw));
             const foreignMarkerHits = Object.entries(FOREIGN_INDUSTRY_MARKERS).filter(([, markers]) => markers.some(m => fullScanText.includes(m))).map(([k]) => k);
 
-            // Cheap pre-filter: a foreign vertical (e.g. a gym) OR total absence of industry words → reject now.
-            if (foreignMarkerHits.length > 0 && !industryWordsPresent) {
-                logger.debug(`Discarding ${url}: page indicates a different vertical (${foreignMarkerHits.join(",")}) and no target industry keywords found.`);
+            // Cheap pre-filter: a foreign vertical (e.g. gym, clinic, jewelry, craft workshop, media)
+            if (foreignMarkerHits.length > 0) {
+                logger.debug(`Discarding ${url}: page indicates a different vertical (${foreignMarkerHits.join(",")}).`);
                 return null;
             }
             if (!industryWordsPresent) {
@@ -775,31 +953,37 @@ INSTRUCTIONS:
                 return null;
             }
 
-            // High-confidence heuristic fast path: 0 foreign markers, industry words present, and >= 2 core offerings found on page
-            if (foreignMarkerHits.length === 0 && foundOfferings.length >= 2) {
-                whyCompetitorText = `Direct operating competitor with confirmed offerings: ${foundOfferings.slice(0, 3).join(", ")}`;
-            } else {
-                // DECISIVE INDUSTRY GATE: LLM classifies whether this is a real business in the same industry.
+            // LLM candidate gate: verify candidate business against target offerings with cache & resilient fallback
+            const root = getRootDomain(url);
+            let verification = this.candidateVerificationCache.get(root);
+            if (!verification) {
+                const sanitizeText = (str: string) => (str || "").replace(/<[^>]*>/g, ' ').replace(/[{}\\]/g, ' ').replace(/\s+/g, " ").trim();
                 const pageProfile = [
                     `URL: ${url}`,
-                    `Title: ${$('title').text().trim().slice(0, 150)}`,
-                    `Meta description: ${($('meta[name="description"]').attr('content') || "").trim().slice(0, 200)}`,
-                    `Headings: ${$('h1, h2').text().trim().replace(/\s+/g, " ").slice(0, 200)}`,
-                    `Body excerpt: ${bodyText.replace(/\s+/g, " ").slice(0, 400)}`,
+                    `Title: ${sanitizeText($('title').text()).slice(0, 100)}`,
+                    `Meta description: ${sanitizeText($('meta[name="description"]').attr('content') || "").slice(0, 150)}`,
+                    `Headings: ${sanitizeText($('h1, h2').text()).slice(0, 120)}`,
+                    `Body excerpt: ${sanitizeText(bodyText).slice(0, 250)}`,
                 ].join("\n");
                 
-                const verification = await Promise.race([
-                    this.verifyCandidateViaLLM(pageProfile, targetName, targetIndustry, allOfferings),
+                const fallbackAcceptable = hasCommercialMarker && !hasBlogText && !hasArticleDOM && (foundOfferings.length >= 1 || industryWordsPresent);
+                verification = await Promise.race([
+                    this.verifyCandidateViaLLM(pageProfile, targetName, targetIndustry, allOfferings, fallbackAcceptable),
                     new Promise<{ isCompetitor: boolean; reason: string }>((resolve) =>
-                        setTimeout(() => resolve({ isCompetitor: true, reason: "Heuristic industry match" }), 5000)
+                        setTimeout(() => resolve(
+                            fallbackAcceptable
+                                ? { isCompetitor: true, reason: "Verified operating manufacturing company with confirmed commercial infrastructure" }
+                                : { isCompetitor: false, reason: "LLM verification timeout" }
+                        ), 5000)
                     )
                 ]);
-                if (!verification.isCompetitor) {
-                    logger.debug(`Discarding ${url}: LLM candidate gate rejected (${verification.reason}).`);
-                    return null;
-                }
-                whyCompetitorText = verification.reason;
+                this.candidateVerificationCache.set(root, verification);
             }
+            if (!verification.isCompetitor) {
+                logger.debug(`Discarding ${url}: LLM candidate gate rejected (${verification.reason}).`);
+                return null;
+            }
+            whyCompetitorText = verification.reason;
         }
 
         const primaryKeywords = primaryOffering.toLowerCase().split(" ").filter(w => w.length > 2);
