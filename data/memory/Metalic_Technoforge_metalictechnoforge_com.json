@@ -91402,6 +91402,76 @@
         "Machining Services",
         "Gear Manufacturing Services"
       ]
+    },
+    {
+      "name": "Madhava Industries",
+      "url": "http://madhavaindustries.com/",
+      "type": "local",
+      "location": "Plot No. G-1156/A, B/h Rajendra Cold Storage Kishan Gate, Kalavad Rd, GIDC, Metoda, Rajkot, Gujarat 360021, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 3 common products: [Big Rings, Hydraulic Cylinder, Gear Manufacturing]. Rating: 1 | Phone: 094274 33633",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://madhavaindustries.com/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "http://madhavaindustries.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Big Rings",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing"
+      ]
+    },
+    {
+      "name": "Mansha Automats",
+      "url": "https://www.chattybao.com/Mansha-Automats",
+      "type": "regional",
+      "location": "Plot no. 48, Yaadram Colony Road, Sarurpur Industrial Area, Nangla Gujran, Faridabad, Haryana 121004, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 5 common products: [Big Rings, Gear Manufacturing, Forging Services, Machining Services, Gear Manufacturing Services]. Socials: Instagram verified; YouTube verified. Rating: 5 | Phone: 080 4580 3102",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.chattybao.com/Mansha-Automats"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "https://www.chattybao.com/Mansha-Automats"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/chattybao/",
+        "facebook": null,
+        "youtube": "https://m.youtube.com/@chattybao"
+      },
+      "products": [
+        "Big Rings",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ]
     }
   ]
 }
