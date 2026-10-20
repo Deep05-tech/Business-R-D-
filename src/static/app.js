@@ -1,5 +1,6 @@
 window.activeProjectUrl = null;
 window.currentUser = null;
+window.isAnalyzingBusiness = false;
 
 // Keep existing dashboard calls unchanged while attaching the session to every
 // protected same-origin request.
@@ -1051,7 +1052,7 @@ window.loadProjects = async function(isSilent = false) {
     // CRITICAL FIX: If currentVal is NOT in sites returned by the server,
     // the project was DELETED or UNASSIGNED. DO NOT add it back to siteMap!
     let activeSiteUrl = currentVal;
-    if (currentVal && !siteMap.has(currentVal)) {
+    if (!window.isAnalyzingBusiness && currentVal && !siteMap.has(currentVal)) {
       activeSiteUrl = null;
       window.activeProjectUrl = null;
       localStorage.removeItem('activeProjectUrl');
@@ -1095,11 +1096,11 @@ window.loadProjects = async function(isSilent = false) {
       if (!isSilent && window.activeProjectUrl !== activeSiteUrl) {
         window.selectProject(activeSiteUrl, false);
       }
-    } else if (sites.length > 0 && !activeSiteUrl) {
+    } else if (!window.isAnalyzingBusiness && sites.length > 0 && !activeSiteUrl) {
       const firstUrl = sites[0].url;
       select.value = firstUrl;
       if (!isSilent) window.selectProject(firstUrl, false);
-    } else if (sites.length === 0) {
+    } else if (!window.isAnalyzingBusiness && sites.length === 0) {
       select.value = "";
       window.selectProject(null, false);
     }
@@ -1155,14 +1156,18 @@ let _liveSyncInterval = null;
 function startLiveSync() {
   if (_liveSyncInterval) clearInterval(_liveSyncInterval);
   _liveSyncInterval = setInterval(async () => {
+    // If business intelligence analysis is running, do not interfere with active project or sync memory
+    if (window.isAnalyzingBusiness) return;
+
     // Keep sidebar projects dropdown synced live
     await window.loadProjects(true);
 
-    if (!window.activeProjectUrl) return;
+    if (!window.activeProjectUrl || window.isAnalyzingBusiness) return;
     try {
       const res = await fetch(`/api/memory?url=${encodeURIComponent(window.activeProjectUrl)}`);
       if (!res.ok) {
         if (res.status === 404 || res.status === 403) {
+          if (window.isAnalyzingBusiness) return;
           // Project was deleted or unassigned! Clean up state immediately
           window.activeProjectUrl = null;
           localStorage.removeItem('activeProjectUrl');
@@ -1358,15 +1363,26 @@ window.deleteProjectDetails = async function() {
 // ---- Run Intelligence ----
 window.runIntelligence = async function() {
   const form = document.getElementById('business-form');
-  const url = document.getElementById('website-url').value;
+  const urlInput = document.getElementById('website-url');
+  let url = urlInput ? urlInput.value.trim() : '';
   if (!url) return;
 
-  // Immediately register and select new project in sidebar dropdown
-  window.addOrUpdateProjectInSidebar(url, url);
+  if (!/^https?:\/\//i.test(url)) {
+    url = 'https://' + url;
+    if (urlInput) urlInput.value = url;
+  }
 
+  window.isAnalyzingBusiness = true;
   document.getElementById('loading-overlay').style.display = 'flex';
-  
+  const statusEl = document.getElementById('agent-status');
+  if (statusEl) statusEl.innerText = 'Connecting to AI intelligence engine...';
+
   const formData = new FormData(form);
+  formData.set('websiteUrl', url);
+
+  let hasCompleted = false;
+  let streamError = null;
+
   try {
     const res = await fetch('/api/analyze-stream', {
       method: 'POST',
@@ -1396,68 +1412,95 @@ window.runIntelligence = async function() {
       
       for (const line of lines) {
         if (line.startsWith('data: ')) {
+          let data;
           try {
-            const data = JSON.parse(line.slice(6));
-            if (data.type === 'error') {
-              throw new Error(data.error || 'Analysis failed');
+            data = JSON.parse(line.slice(6));
+          } catch (jsonErr) {
+            console.debug("SSE JSON chunk parsing wait:", jsonErr);
+            continue;
+          }
+
+          if (data.type === 'error') {
+            streamError = data.error || 'Analysis failed';
+            throw new Error(streamError);
+          }
+
+          if (data.type === 'progress') {
+            if (statusEl) {
+              statusEl.innerText = data.step || data.message || 'Processing...';
+              statusEl.style.animation = 'none';
+              void statusEl.offsetWidth; // trigger reflow
+              statusEl.style.animation = 'pulse 1s ease';
             }
-            if (data.type === 'progress') {
-              const statusEl = document.getElementById('agent-status');
-              if (statusEl) {
-                statusEl.innerText = data.step || data.message || 'Processing...';
-                // Trigger a quick pulse animation to show it updated
-                statusEl.style.animation = 'none';
-                void statusEl.offsetWidth; // trigger reflow
-                statusEl.style.animation = 'pulse 1s ease';
+            if (data.partial) {
+              if (data.partial.businessIdentity) {
+                const id = data.partial.businessIdentity;
+                if (document.getElementById('edit-name')) document.getElementById('edit-name').value = id.officialName || '';
+                if (document.getElementById('edit-industry')) document.getElementById('edit-industry').value = id.industry || '';
+                if (document.getElementById('edit-subindustry')) document.getElementById('edit-subindustry').value = id.subIndustry || '';
+                if (document.getElementById('edit-location')) document.getElementById('edit-location').value = id.location || '';
+                if (document.getElementById('edit-vision')) document.getElementById('edit-vision').value = id.vision || '';
+                if (document.getElementById('edit-description')) document.getElementById('edit-description').value = id.description || '';
               }
-              if (data.partial) {
-                if (data.partial.businessIdentity) {
-                  const id = data.partial.businessIdentity;
-                  if (id.officialName) {
-                    window.addOrUpdateProjectInSidebar(url, id.officialName);
-                  }
-                  if (document.getElementById('edit-name')) document.getElementById('edit-name').value = id.officialName || '';
-                  if (document.getElementById('edit-industry')) document.getElementById('edit-industry').value = id.industry || '';
-                  if (document.getElementById('edit-subindustry')) document.getElementById('edit-subindustry').value = id.subIndustry || '';
-                  if (document.getElementById('edit-location')) document.getElementById('edit-location').value = id.location || '';
-                  if (document.getElementById('edit-vision')) document.getElementById('edit-vision').value = id.vision || '';
-                  if (document.getElementById('edit-description')) document.getElementById('edit-description').value = id.description || '';
+              if (data.partial.offerings) {
+                const off = data.partial.offerings;
+                if (document.getElementById('edit-products') && off.products) {
+                  document.getElementById('edit-products').value = off.products.map(p => typeof p === 'string' ? p : p.name).join(', ');
                 }
-                if (data.partial.offerings) {
-                  const off = data.partial.offerings;
-                  if (document.getElementById('edit-products') && off.products) {
-                    document.getElementById('edit-products').value = off.products.map(p => typeof p === 'string' ? p : p.name).join(', ');
-                  }
-                  if (document.getElementById('edit-services') && off.services) {
-                    document.getElementById('edit-services').value = off.services.map(s => typeof s === 'string' ? s : s.name).join(', ');
-                  }
-                }
-                if (data.partial.audience) {
-                  const aud = data.partial.audience;
-                  if (document.getElementById('edit-audience') && aud.buyerPersonas) {
-                    document.getElementById('edit-audience').value = aud.buyerPersonas.join(', ');
-                  }
+                if (document.getElementById('edit-services') && off.services) {
+                  document.getElementById('edit-services').value = off.services.map(s => typeof s === 'string' ? s : s.name).join(', ');
                 }
               }
+              if (data.partial.audience) {
+                const aud = data.partial.audience;
+                if (document.getElementById('edit-audience') && aud.buyerPersonas) {
+                  document.getElementById('edit-audience').value = aud.buyerPersonas.join(', ');
+                }
+              }
             }
-            if (data.type === 'complete') {
-              window.showSuccess("Business intelligence fully analyzed!");
-              
-              // The backend normalizes the URL (e.g. adding https://). We must use the normalized one.
-              const finalUrl = (data.profile && data.profile.input && data.profile.input.websiteUrl) ? data.profile.input.websiteUrl : url;
-              
-              // Reload projects and select the new one
-              await loadProjects();
-              document.getElementById('global-project').value = finalUrl;
-              window.selectProject(finalUrl, false);
-              switchTab('details', 'Project Details & Review');
-              return;
-            }
-          } catch(err) {
-            console.error("SSE parse error", err);
+          }
+
+          if (data.type === 'complete') {
+            hasCompleted = true;
+            window.isAnalyzingBusiness = false;
+            window.showSuccess("Business intelligence fully analyzed!");
+            
+            const finalUrl = (data.profile && data.profile.input && data.profile.input.websiteUrl) ? data.profile.input.websiteUrl : url;
+            const officialName = (data.profile && data.profile.businessIdentitySummary && data.profile.businessIdentitySummary.officialName) || finalUrl;
+
+            // Register in sidebar
+            window.addOrUpdateProjectInSidebar(finalUrl, officialName);
+            await loadProjects(true);
+            const globalProj = document.getElementById('global-project');
+            if (globalProj) globalProj.value = finalUrl;
+            window.selectProject(finalUrl, false);
+            switchTab('details', 'Project Details & Review');
+            return;
           }
         }
       }
+    }
+
+    if (!hasCompleted) {
+      // Check if memory was saved on the server despite stream disconnection
+      try {
+        const checkRes = await fetch(`/api/memory?url=${encodeURIComponent(url)}`);
+        if (checkRes.ok) {
+          const memData = await checkRes.json();
+          if (memData && memData.memory) {
+            window.isAnalyzingBusiness = false;
+            const offName = memData.memory.businessIdentity?.officialName || url;
+            window.addOrUpdateProjectInSidebar(url, offName);
+            await loadProjects(true);
+            window.selectProject(url, false);
+            switchTab('details', 'Project Details & Review');
+            window.showSuccess("Business intelligence analyzed and saved!");
+            return;
+          }
+        }
+      } catch (_) {}
+
+      throw new Error(streamError || "Analysis process ended unexpectedly without completion. Please check the URL and try again.");
     }
   } catch (e) {
     console.error("Intelligence analysis error:", e);
@@ -1466,6 +1509,8 @@ window.runIntelligence = async function() {
     const isNetworkErr = e.message && (
       e.message.toLowerCase().includes('network') ||
       e.message.toLowerCase().includes('failed to fetch') ||
+      e.message.toLowerCase().includes('closed') ||
+      e.message.toLowerCase().includes('unexpectedly') ||
       e.name === 'TypeError'
     );
 
@@ -1477,6 +1522,7 @@ window.runIntelligence = async function() {
         try { domain = new URL(url).hostname; } catch (_) {}
         const match = Array.from(projectSelect.options).find(o => o.value === url || o.value.includes(domain));
         if (match) {
+          window.isAnalyzingBusiness = false;
           projectSelect.value = match.value;
           window.selectProject(match.value, false);
           switchTab('details', 'Project Details & Review');
@@ -1492,6 +1538,7 @@ window.runIntelligence = async function() {
       alert("Analysis error: " + (e.message || "Connection interrupted. Please try again."));
     }
   } finally {
+    window.isAnalyzingBusiness = false;
     document.getElementById('loading-overlay').style.display = 'none';
   }
 };

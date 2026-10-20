@@ -116,6 +116,12 @@ export class MemoryStore {
         changed = true;
       }
     }
+    const lower = (urlOrDomain || "").toLowerCase().trim();
+    const norm = this.normalizeKey(lower);
+    if (this.tombstones.has(norm)) {
+      this.tombstones.delete(norm);
+      changed = true;
+    }
     if (changed) {
       await this.saveTombstones();
     }
@@ -126,12 +132,15 @@ export class MemoryStore {
     const lower = val.toLowerCase().trim();
     const norm = this.normalizeKey(lower);
     if (this.tombstones.has(norm)) return true;
-    for (const token of this.tombstones) {
-      if (!token || token.length < 3) continue;
-      if (lower === token || norm === token || lower.includes(token) || norm.includes(token) || token.includes(norm)) {
-        return true;
-      }
+    let host = "";
+    try {
+      const p = new URL(lower.startsWith("http") ? lower : `https://${lower}`);
+      host = p.hostname.toLowerCase().replace(/^www\./, "");
+    } catch {
+      host = norm.split("/")[0].split(":")[0];
     }
+    const slug = host.replace(/[\.-]/g, "_");
+    if (this.tombstones.has(host) || this.tombstones.has(slug)) return true;
     return false;
   }
 

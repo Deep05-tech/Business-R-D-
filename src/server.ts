@@ -722,7 +722,17 @@ app.get("/health", (_request, response) => {
 app.post("/business-intelligence", async (request, response) => {
   try {
     const input = parseBusinessInput(request.body);
+    await memoryStore.removeTombstone(input.websiteUrl);
     const profile = await orchestrator.run(input);
+    const user = (request as express.Request & { currentUser?: AuthUser }).currentUser;
+    if (user) {
+      await authStore.assignProject(user.username, input.websiteUrl);
+      const profileUrl = profile?.structuredJsonMemoryObject?.input?.websiteUrl;
+      if (profileUrl && profileUrl !== input.websiteUrl) {
+        await authStore.assignProject(user.username, profileUrl);
+      }
+    }
+    knowledgeIndex.add(profile.structuredJsonMemoryObject);
     response.json(profile);
   } catch (error) {
     if (error instanceof ZodError) {
@@ -754,33 +764,49 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
     (response as any).flushHeaders();
   }
 
+  const flushResponse = () => {
+    if (typeof (response as any).flush === "function") {
+      (response as any).flush();
+    }
+  };
+
   // Send immediate connected event so browser and reverse proxy know the stream is active
   response.write(`data: ${JSON.stringify({ type: 'progress', step: "Initializing analysis..." })}\n\n`);
+  flushResponse();
 
-  // Periodic heartbeat every 8 seconds prevents reverse proxy (Render/Cloudflare) timeouts
+  // Periodic heartbeat every 5 seconds prevents reverse proxy (Render/Cloudflare) timeouts
   const heartbeat = setInterval(() => {
     if (!response.writableEnded) {
       try {
         response.write(`: keepalive\n\n`);
+        flushResponse();
       } catch (_) {}
     }
-  }, 8000);
+  }, 5000);
 
   request.on("close", () => {
     clearInterval(heartbeat);
   });
 
-  const url = request.body.websiteUrl as string;
+  let url = (request.body.websiteUrl as string || "").trim();
   const socialUrls = (request.body.socialUrls as string || "").split(",").map(s => s.trim()).filter(Boolean);
   const customInstructions = request.body.customInstructions as string | undefined;
   
   if (!url) {
     clearInterval(heartbeat);
     response.write(`data: ${JSON.stringify({ type: 'error', error: "Website URL is required" })}\n\n`);
+    flushResponse();
     response.end();
     return;
   }
+
+  if (!/^https?:\/\//i.test(url)) {
+    url = `https://${url}`;
+  }
   const finalUrl = url;
+
+  // Immediately clear any prior tombstone for this project
+  await memoryStore.removeTombstone(finalUrl);
 
   try {
     let brochureText: string | undefined = undefined;
@@ -872,11 +898,24 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
         const profile = await orchestrator.run(input, (stepName, partial) => {
           if (!response.writableEnded) {
             response.write(`data: ${JSON.stringify({ type: 'progress', step: stepName, partial })}\n\n`);
+            flushResponse();
           }
         });
         
+        // Auto-assign newly analyzed project to authenticated user
+        const user = (request as express.Request & { currentUser?: AuthUser }).currentUser;
+        if (user) {
+          await authStore.assignProject(user.username, finalUrl);
+          const profileUrl = profile?.structuredJsonMemoryObject?.input?.websiteUrl;
+          if (profileUrl && profileUrl !== finalUrl) {
+            await authStore.assignProject(user.username, profileUrl);
+          }
+        }
+        knowledgeIndex.add(profile.structuredJsonMemoryObject);
+
         if (!response.writableEnded) {
           response.write(`data: ${JSON.stringify({ type: 'complete', profile })}\n\n`);
+          flushResponse();
         }
         logger.success(`✅ Pipeline execution completed successfully for ${finalUrl}`);
       } catch (err: any) {
@@ -887,10 +926,23 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
           const fallbackProfile = await fallbackOrchestrator.run(input, (stepName, partial) => {
             if (!response.writableEnded) {
               response.write(`data: ${JSON.stringify({ type: 'progress', step: `[FAILOVER] ${stepName}`, partial })}\n\n`);
+              flushResponse();
             }
           });
+
+          const user = (request as express.Request & { currentUser?: AuthUser }).currentUser;
+          if (user) {
+            await authStore.assignProject(user.username, finalUrl);
+            const fallbackUrl = fallbackProfile?.structuredJsonMemoryObject?.input?.websiteUrl;
+            if (fallbackUrl && fallbackUrl !== finalUrl) {
+              await authStore.assignProject(user.username, fallbackUrl);
+            }
+          }
+          knowledgeIndex.add(fallbackProfile.structuredJsonMemoryObject);
+
           if (!response.writableEnded) {
             response.write(`data: ${JSON.stringify({ type: 'complete', profile: fallbackProfile })}\n\n`);
+            flushResponse();
           }
           logger.success(`✅ Pipeline fallback execution completed successfully for ${finalUrl}`);
         } else {
@@ -910,6 +962,7 @@ app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, r
         logger.error("Business intelligence stream failed:", error);
         response.write(`data: ${JSON.stringify({ type: 'error', error: error.message || "Business intelligence run failed." })}\n\n`);
       }
+      flushResponse();
     }
   } finally {
     clearInterval(heartbeat);
