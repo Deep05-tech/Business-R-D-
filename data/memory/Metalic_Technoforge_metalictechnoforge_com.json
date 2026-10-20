@@ -91708,6 +91708,88 @@
         "Big Rings",
         "Forging Services"
       ]
+    },
+    {
+      "name": "Georgsmarienhütte Gmbh",
+      "url": "http://www.gmh.de/",
+      "type": "global",
+      "location": "Neue Hüttenstraße 1, 49124 Georgsmarienhütte, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 4 common products: [Big Rings, Gear Blanks, Forging Services, Machining Services]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 3.1 | Phone: 05401 390",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.gmh.de/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "http://www.gmh.de/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/27152148",
+        "instagram": "https://www.instagram.com/gmhgruppe/",
+        "facebook": "https://www.facebook.com/GMHGruppe",
+        "youtube": "https://www.youtube.com/user/GMHuetteGmbH"
+      },
+      "products": [
+        "Big Rings",
+        "Gear Blanks",
+        "Forging Services",
+        "Machining Services"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Gear Blanks",
+        "Forging Services",
+        "Machining Services"
+      ]
+    },
+    {
+      "name": "Zollern GmbH & Co. KG",
+      "url": "http://www.zollern.com/",
+      "type": "global",
+      "location": "Hitzkofer Str. 1, 72517 Sigmaringendorf-Laucherthal, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 10 common products: [Big Rings, Small Rings, Gear Blanks with Broaching, Gear Blanks, Hydraulic Cylinder, Advanced Forging Solutions, Gear Manufacturing...]. Socials: LinkedIn verified; Instagram verified; YouTube verified. Rating: 4.4 | Phone: 07571 700",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.zollern.com/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "http://www.zollern.com/en/products/forged-parts/forged-parts/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://de.linkedin.com/company/zollern-gmbh-&-co-kg",
+        "instagram": "https://www.instagram.com/zollern_gmbh/",
+        "facebook": null,
+        "youtube": "https://www.youtube.com/channel/UCW_tYV7MZphmP9SzhemhHSw?view_as=subscriber"
+      },
+      "products": [
+        "Big Rings",
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gear Blanks",
+        "Hydraulic Cylinder",
+        "Advanced Forging Solutions",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gear Blanks",
+        "Hydraulic Cylinder",
+        "Advanced Forging Solutions",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ]
     }
   ]
 }
