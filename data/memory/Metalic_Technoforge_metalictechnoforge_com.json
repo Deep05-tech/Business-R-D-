@@ -91220,6 +91220,98 @@
         "Machining Services",
         "Gear Manufacturing Services"
       ]
+    },
+    {
+      "name": "Anvil Techno Forge",
+      "url": "https://www.anviltechnoforge.co.in/",
+      "type": "local",
+      "location": "Sarvey No. 251, Captain Gate, Anupam Plasto Street, Plot no. 04, Shapar, Veraval, Gujarat 360026, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 9 common products: [Small Rings, Gear Blanks with Broaching, Gear Blanks, Advanced Forging Solutions, IIoT-Enabled Machining, Gear Manufacturing, Forging Services...]. Socials: Facebook verified; Instagram verified. Rating: 5 | Phone: 099980 22557",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.anviltechnoforge.co.in/"
+        },
+        {
+          "title": "Product: Small Rings",
+          "url": "https://www.anviltechnoforge.co.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/anvil_techno_forge",
+        "facebook": "https://www.facebook.com/people/Anvil-Techno-Froge/61550111096502/",
+        "youtube": null
+      },
+      "products": [
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gear Blanks",
+        "Advanced Forging Solutions",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ],
+      "commonProducts": [
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gear Blanks",
+        "Advanced Forging Solutions",
+        "IIoT-Enabled Machining",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ]
+    },
+    {
+      "name": "Unique Forgings (India) Pvt Ltd",
+      "url": "http://www.uniqueforgings.in/",
+      "type": "local",
+      "location": "No. 601, G. I. D. C. Estate, Phase-IV, Sardar Nagar Society, Vithal Udyognagar, Vitthal, Vitthal Udyognagar INA, Anand, Gujarat 388120, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 10 common products: [Small Rings, Gear Blanks with Broaching, Gears, Gears & Shafts, Gear Blanks, Hydraulic Cylinder, Gear Manufacturing...]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4 | Phone: 02692 235 220",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.uniqueforgings.in/"
+        },
+        {
+          "title": "Product: Small Rings",
+          "url": "http://www.uniqueforgings.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/unique-forgings-india-pvt-ltd",
+        "instagram": "https://www.instagram.com/uniqueforgingsindiapvtltd/",
+        "facebook": "https://www.facebook.com/UniqueForgingsIndiaPvtLtd",
+        "youtube": "https://www.youtube.com/channel/UCtQcmyqqHWh4-ixzM4AknBw"
+      },
+      "products": [
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gears",
+        "Gears & Shafts",
+        "Gear Blanks",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ],
+      "commonProducts": [
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gears",
+        "Gears & Shafts",
+        "Gear Blanks",
+        "Hydraulic Cylinder",
+        "Gear Manufacturing",
+        "Forging Services",
+        "Machining Services",
+        "Gear Manufacturing Services"
+      ]
     }
   ]
 }
