@@ -431,7 +431,13 @@
     ]
   },
   "audience": {
-    "buyerPersonas": [],
+    "buyerPersonas": [
+      "Procurement Managers",
+      "VP of Supply Chain",
+      "Plant Operations Directors",
+      "Chief Mechanical Engineers",
+      "Tier-1 OEM Sourcing Leads"
+    ],
     "geographies": [
       "United States",
       "USA",
