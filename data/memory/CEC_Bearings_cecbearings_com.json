@@ -193,7 +193,61 @@
         "aiLaymanSummary": "A ball bearing is a small, round device that helps parts move smoothly by reducing friction. It’s commonly used in many everyday applications, from cars and industrial machinery to household appliances. By allowing parts to rotate freely, ball bearings ensure that machines operate more efficiently and last longer.\n\nKey benefits of using ball bearings include:\n- **Low friction**: This means less energy is wasted, leading to better performance.\n- **Versatile**: They can be used in numerous settings, making them suitable for various industries.\n- **Durable**: Ball bearings are built to withstand wear and tear, ensuring reliability over time. \n\nOverall, ball bearings play a crucial role in enhancing the functionality and longevity of many mechanical systems."
       }
     ],
-    "services": [],
+    "services": [
+      {
+        "name": "Custom Component Manufacturing & Forging",
+        "description": "Precision manufacturing and forging tailored to customer CAD models, technical drawings, and metallurgical requirements.",
+        "applications": [
+          "Automotive",
+          "Heavy Engineering",
+          "Industrial Assemblies"
+        ],
+        "processes": [
+          "Hot/Warm Forging",
+          "Die Design",
+          "Quality Inspection"
+        ]
+      },
+      {
+        "name": "CNC Precision Machining & Turning",
+        "description": "High-precision CNC turning, milling, and fine-tolerance machining for mission-critical parts.",
+        "applications": [
+          "Power Transmission",
+          "Aerospace",
+          "Capital Equipment"
+        ],
+        "processes": [
+          "CNC Turning",
+          "VMC Milling",
+          "Grinding"
+        ]
+      },
+      {
+        "name": "Heat Treatment & Surface Processing",
+        "description": "Complete heat treatment cycles including annealing, normalizing, hardening, and stress relieving.",
+        "applications": [
+          "High-Load Applications",
+          "Wear Resistance"
+        ],
+        "processes": [
+          "Controlled Atmosphere Furnaces",
+          "Quenching"
+        ]
+      },
+      {
+        "name": "Quality Assurance & Metallurgical Lab Testing",
+        "description": "Comprehensive testing including CMM 3D inspection, spectrometry, microstructure analysis, and ultrasonic NDT.",
+        "applications": [
+          "Zero-Defect Mandates",
+          "PPAP Submissions"
+        ],
+        "processes": [
+          "CMM",
+          "Spectrometry",
+          "NDT Testing"
+        ]
+      }
+    ],
     "valuePropositions": [
       "Short lead time",
       "In-house laboratory for quality control",
