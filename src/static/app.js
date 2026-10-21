@@ -8,9 +8,12 @@ const nativeFetch = window.fetch.bind(window);
 window.fetch = function(resource, options = {}) {
   const url = typeof resource === 'string' ? resource : resource?.url || '';
   const isProtectedPath = /^\/(?:api(?!\/auth(?:\/|$))|memory|business-intelligence)/.test(url);
-  const token = localStorage.getItem('dashboardToken');
+  const token = localStorage.getItem('dashboardToken') || localStorage.getItem('adminToken');
   if (!isProtectedPath || !token) return nativeFetch(resource, options);
   const headers = new Headers(options.headers || (typeof resource !== 'string' ? resource.headers : undefined));
+  if (!headers.has('Authorization')) {
+    headers.set('Authorization', `Bearer ${token}`);
+  }
   return nativeFetch(resource, { ...options, headers });
 };
 
@@ -249,6 +252,9 @@ window.handleAdminLogin = async function(event) {
         if (typeof window.loadProjects === 'function') await window.loadProjects();
         if (data.user.role !== 'admin' && typeof window.renderProjectsDirectoryUI === 'function') await window.renderProjectsDirectoryUI();
         await window.showRoleHome();
+        if (data.user.role !== 'admin' && window.activeProjectUrl && typeof loadProjectDetails === 'function') {
+          loadProjectDetails();
+        }
       } catch (postLoginErr) {
         console.warn('[LOGIN] Post-login UI load warning:', postLoginErr);
       }
@@ -993,6 +999,7 @@ window.addEventListener('resize', () => {
 });
 
 const TAB_TITLES = {
+  'projects': 'Projects Directory',
   'analyse': 'New Analysis',
   'details': 'Project Details & Review',
   'competitors': 'Competitor Intelligence',
@@ -1003,12 +1010,25 @@ const TAB_TITLES = {
 
 window.restoreActiveTab = function() {
   const hash = window.location.hash ? window.location.hash.replace('#', '') : null;
-  const savedTab = hash || localStorage.getItem('activeTab') || 'analyse';
-  const savedTitle = localStorage.getItem('activeTabTitle') || TAB_TITLES[savedTab] || 'New Analysis';
+  let savedTab = hash || localStorage.getItem('activeTab');
+
+  // If the user has an active project and tab is 'analyse' or unset,
+  // immediately show their project data rather than leaving them on an empty form.
+  if (window.activeProjectUrl && (!savedTab || savedTab === 'analyse')) {
+    savedTab = 'details';
+  } else if (!savedTab) {
+    savedTab = 'analyse';
+  }
+
+  const savedTitle = TAB_TITLES[savedTab] || localStorage.getItem('activeTabTitle') || 'New Analysis';
 
   const navEl = document.getElementById('nav-' + savedTab);
   if (!navEl || (savedTab !== 'analyse' && navEl.classList.contains('disabled'))) {
-    window.switchTab('analyse', 'New Analysis');
+    if (window.activeProjectUrl) {
+      window.switchTab('details', TAB_TITLES['details']);
+    } else {
+      window.switchTab('analyse', 'New Analysis');
+    }
   } else {
     window.switchTab(savedTab, savedTitle);
   }
@@ -1099,6 +1119,13 @@ window.loadProjects = async function(isSilent = false) {
       localStorage.removeItem('activeProjectUrl');
     }
 
+    // Default to the first available project if none is active
+    if (!window.isAnalyzingBusiness && !activeSiteUrl && sites.length > 0) {
+      activeSiteUrl = sites[0].url;
+      window.activeProjectUrl = activeSiteUrl;
+      localStorage.setItem('activeProjectUrl', activeSiteUrl);
+    }
+
     const existingOptions = Array.from(select.options).filter(o => o.value !== "");
     const isSameList = existingOptions.length === siteMap.size &&
       existingOptions.every(o => siteMap.has(o.value) && siteMap.get(o.value) === o.text);
@@ -1130,19 +1157,15 @@ window.loadProjects = async function(isSilent = false) {
     } else {
       if (select.value !== (activeSiteUrl || "")) {
         select.value = activeSiteUrl || "";
+        select.dispatchEvent(new CustomEvent('optionsUpdated'));
       }
     }
 
     if (activeSiteUrl && siteMap.has(activeSiteUrl)) {
-      if (!isSilent && window.activeProjectUrl !== activeSiteUrl) {
-        window.selectProject(activeSiteUrl, false);
-      }
-    } else if (!window.isAnalyzingBusiness && sites.length > 0 && !activeSiteUrl) {
-      const firstUrl = sites[0].url;
-      select.value = firstUrl;
-      if (!isSilent) window.selectProject(firstUrl, false);
+      window.selectProject(activeSiteUrl, false);
     } else if (!window.isAnalyzingBusiness && sites.length === 0) {
       select.value = "";
+      select.dispatchEvent(new CustomEvent('optionsUpdated'));
       window.selectProject(null, false);
     }
   } catch (err) {
@@ -1186,8 +1209,14 @@ window.selectProject = function(url, autoSwitchTab = false) {
     switchTab('details', 'Project Details & Review');
   } else {
     const activeTab = localStorage.getItem('activeTab');
-    if (activeTab === 'smm' && window.loadSmmUI) {
+    if (!activeTab || activeTab === 'details') {
+      if (typeof loadProjectDetails === 'function') loadProjectDetails();
+    } else if (activeTab === 'smm' && window.loadSmmUI) {
       window.loadSmmUI();
+    } else if (activeTab === 'competitors' && typeof window.loadCompetitorsUI === 'function') {
+      window.loadCompetitorsUI();
+    } else if (activeTab === 'social-feed' && typeof window.loadFeedUI === 'function') {
+      window.loadFeedUI();
     }
   }
 };
