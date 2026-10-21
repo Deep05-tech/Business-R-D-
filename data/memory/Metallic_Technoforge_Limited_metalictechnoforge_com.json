@@ -55366,6 +55366,78 @@
         "Advanced Forging Solutions",
         "Forged Transmission Gears"
       ]
+    },
+    {
+      "name": "A.V. Steel Forgings Pvt. Ltd.",
+      "url": "https://avsf.co.in/",
+      "type": "local",
+      "location": "Savli GIDC Estate, Plot No. 25, Savli GIDC Rd, Manjusar, Zumkal, Gujarat 391776, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: The candidate website belongs to a manufacturer that produces industrial components, which are similar to the offerings of Metallic Technoforge Limited.. 7 common products: [Big Rings, Small Rings, Gear Blanks with Broaching, High-Strength Closed-Die Forged Components, Gear Blanks, Closed-Die Forged Components, IIoT-Enabled Machining Excellence]. Socials: LinkedIn verified. Rating: 4.1 | Phone: 02667 264 743",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://avsf.co.in/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "https://avsf.co.in/capabilities-rings-flanges-manufracturer.aspx"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://in.linkedin.com/company/a.-v.-steel-forgings-pvt.-ltd.",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Big Rings",
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "High-Strength Closed-Die Forged Components",
+        "Gear Blanks",
+        "Closed-Die Forged Components",
+        "IIoT-Enabled Machining Excellence"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "High-Strength Closed-Die Forged Components",
+        "Gear Blanks",
+        "Closed-Die Forged Components",
+        "IIoT-Enabled Machining Excellence"
+      ]
+    },
+    {
+      "name": "Gujarat Victory Forgings Ltd",
+      "url": "http://www.gvfpl.com/",
+      "type": "local",
+      "location": "Lamdapura Rd, Lamdapura, Gujarat 391775, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: GVFPL specializes in copper and brass products, which are not direct competitors to the forging of big rings, small rings, ball studs, and gears.. 2 common products: [Big Rings, Advanced Forging Solutions]. Socials: LinkedIn verified. Rating: 5 | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.gvfpl.com/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "http://www.gvfpl.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/rahul-agarwal-5b23b034/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Big Rings",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Advanced Forging Solutions"
+      ]
     }
   ]
 }
