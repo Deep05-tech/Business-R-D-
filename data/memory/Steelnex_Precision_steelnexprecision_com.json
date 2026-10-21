@@ -924,7 +924,782 @@
       "inferred": false
     }
   ],
-  "socialFeed": [],
+  "socialFeed": [
+    {
+      "id": "yt_PGZ77vX8eUk",
+      "company": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=PGZ77vX8eUk",
+      "caption": "United Forge Industries Corporate Video",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/PGZ77vX8eUk/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/PGZ77vX8eUk/hqdefault.jpg",
+      "date": "2026-10-21",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=PGZ77vX8eUk",
+      "thumbnail_url": "https://i.ytimg.com/vi/PGZ77vX8eUk/hqdefault.jpg",
+      "published_date": "2026-10-21",
+      "link": "https://www.youtube.com/watch?v=PGZ77vX8eUk",
+      "content": "United Forge Industries Corporate Video",
+      "timestamp": "2026-10-21",
+      "mediaUrl": "https://i.ytimg.com/vi/PGZ77vX8eUk/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/PGZ77vX8eUk/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=PGZ77vX8eUk",
+      "competitorName": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)"
+    },
+    {
+      "id": "youtube_1792571810653_bxx2b",
+      "company": "Metalix Ferrocast",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=6Fk_Ow78it0",
+      "caption": "Corporate Video- Mahadev Ferro Cast",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/6Fk_Ow78it0/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/6Fk_Ow78it0/hqdefault.jpg",
+      "date": "2026-10-21",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/playlist?list=PL6NoQ9pQ2-yv7-kpBx_ZTbk2ml0f5w2qZ",
+      "thumbnail_url": "https://i.ytimg.com/vi/6Fk_Ow78it0/hqdefault.jpg",
+      "published_date": "2026-10-21",
+      "link": "https://www.youtube.com/watch?v=6Fk_Ow78it0",
+      "content": "Corporate Video- Mahadev Ferro Cast",
+      "timestamp": "2026-10-21",
+      "mediaUrl": "https://i.ytimg.com/vi/6Fk_Ow78it0/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/6Fk_Ow78it0/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=6Fk_Ow78it0",
+      "competitorName": "Metalix Ferrocast"
+    },
+    {
+      "id": "yt_HF48LbnM-gU",
+      "company": "Carbotech Metacast",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=HF48LbnM-gU",
+      "caption": "CARBOTECH INNOVATIVE",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/HF48LbnM-gU/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/HF48LbnM-gU/hqdefault.jpg",
+      "date": "2026-10-21",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=HF48LbnM-gU",
+      "thumbnail_url": "https://i.ytimg.com/vi/HF48LbnM-gU/hqdefault.jpg",
+      "published_date": "2026-10-21",
+      "link": "https://www.youtube.com/watch?v=HF48LbnM-gU",
+      "content": "CARBOTECH INNOVATIVE",
+      "timestamp": "2026-10-21",
+      "mediaUrl": "https://i.ytimg.com/vi/HF48LbnM-gU/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/HF48LbnM-gU/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=HF48LbnM-gU",
+      "competitorName": "Carbotech Metacast"
+    },
+    {
+      "id": "yt_FvOgPNovcR0",
+      "company": "Shreeniwas Casttech Industries- gravity die casting/Shell Core Casting/aluminum die casting/cnc vmc machining work in Chakan",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=FvOgPNovcR0",
+      "caption": "A356 aluminum alloy die casting factory manufacturer, gravity casting parts supplier",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/FvOgPNovcR0/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/FvOgPNovcR0/hqdefault.jpg",
+      "date": "2026-10-21",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=FvOgPNovcR0",
+      "thumbnail_url": "https://i.ytimg.com/vi/FvOgPNovcR0/hqdefault.jpg",
+      "published_date": "2026-10-21",
+      "link": "https://www.youtube.com/watch?v=FvOgPNovcR0",
+      "content": "A356 aluminum alloy die casting factory manufacturer, gravity casting parts supplier",
+      "timestamp": "2026-10-21",
+      "mediaUrl": "https://i.ytimg.com/vi/FvOgPNovcR0/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/FvOgPNovcR0/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=FvOgPNovcR0",
+      "competitorName": "Shreeniwas Casttech Industries- gravity die casting/Shell Core Casting/aluminum die casting/cnc vmc machining work in Chakan"
+    },
+    {
+      "id": "yt_V6vluNmQ0yg",
+      "company": "JS Auto Cast Foundry India Pvt Ltd",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=V6vluNmQ0yg",
+      "caption": "Glimpses of Onam Celebrations 2026 at JS Auto Cast",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/V6vluNmQ0yg/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/V6vluNmQ0yg/hqdefault.jpg",
+      "date": "2026-10-21",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@JSAutoCastFoundryIndia",
+      "thumbnail_url": "https://i.ytimg.com/vi/V6vluNmQ0yg/hqdefault.jpg",
+      "published_date": "2026-10-21",
+      "link": "https://www.youtube.com/watch?v=V6vluNmQ0yg",
+      "content": "Glimpses of Onam Celebrations 2026 at JS Auto Cast",
+      "timestamp": "2026-10-21",
+      "mediaUrl": "https://i.ytimg.com/vi/V6vluNmQ0yg/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/V6vluNmQ0yg/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=V6vluNmQ0yg",
+      "competitorName": "JS Auto Cast Foundry India Pvt Ltd"
+    },
+    {
+      "id": "youtube_1792571812052_dnyxx",
+      "company": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=DYyh_vPoQs0",
+      "caption": "RGK Group of Industries Product gallery Casting and Forging",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/DYyh_vPoQs0/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/DYyh_vPoQs0/hqdefault.jpg",
+      "date": "2026-10-21",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/watch?v=PGZ77vX8eUk",
+      "thumbnail_url": "https://i.ytimg.com/vi/DYyh_vPoQs0/hqdefault.jpg",
+      "published_date": "2026-10-21",
+      "link": "https://www.youtube.com/watch?v=DYyh_vPoQs0",
+      "content": "RGK Group of Industries Product gallery Casting and Forging",
+      "timestamp": "2026-10-21",
+      "mediaUrl": "https://i.ytimg.com/vi/DYyh_vPoQs0/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/DYyh_vPoQs0/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=DYyh_vPoQs0",
+      "competitorName": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)"
+    },
+    {
+      "id": "youtube_1792571810751_itqv4",
+      "company": "Metalix Ferrocast",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=Z2tMYZVvxHE",
+      "caption": "Gokul Ferrocast Differential Housing Machining Line",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/Z2tMYZVvxHE/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/Z2tMYZVvxHE/hqdefault.jpg",
+      "date": "2026-10-21",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/playlist?list=PL6NoQ9pQ2-yv7-kpBx_ZTbk2ml0f5w2qZ",
+      "thumbnail_url": "https://i.ytimg.com/vi/Z2tMYZVvxHE/hqdefault.jpg",
+      "published_date": "2026-10-21",
+      "link": "https://www.youtube.com/watch?v=Z2tMYZVvxHE",
+      "content": "Gokul Ferrocast Differential Housing Machining Line",
+      "timestamp": "2026-10-21",
+      "mediaUrl": "https://i.ytimg.com/vi/Z2tMYZVvxHE/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/Z2tMYZVvxHE/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=Z2tMYZVvxHE",
+      "competitorName": "Metalix Ferrocast"
+    },
+    {
+      "id": "yt_ueHFv0sl4TA",
+      "company": "JS Auto Cast Foundry India Pvt Ltd",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=ueHFv0sl4TA",
+      "caption": "JS Auto Cast R&R Program | Celebrating Quality, Commitment & Excellence",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/ueHFv0sl4TA/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/ueHFv0sl4TA/hqdefault.jpg",
+      "date": "2026-10-21",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@JSAutoCastFoundryIndia",
+      "thumbnail_url": "https://i.ytimg.com/vi/ueHFv0sl4TA/hqdefault.jpg",
+      "published_date": "2026-10-21",
+      "link": "https://www.youtube.com/watch?v=ueHFv0sl4TA",
+      "content": "JS Auto Cast R&R Program | Celebrating Quality, Commitment & Excellence",
+      "timestamp": "2026-10-21",
+      "mediaUrl": "https://i.ytimg.com/vi/ueHFv0sl4TA/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/ueHFv0sl4TA/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=ueHFv0sl4TA",
+      "competitorName": "JS Auto Cast Foundry India Pvt Ltd"
+    },
+    {
+      "id": "yt_r2-F_9E3Qes",
+      "company": "JS Auto Cast Foundry India Pvt Ltd",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=r2-F_9E3Qes",
+      "caption": "JS Auto Cast Corporate Video",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/r2-F_9E3Qes/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/r2-F_9E3Qes/hqdefault.jpg",
+      "date": "2026-10-21",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@JSAutoCastFoundryIndia",
+      "thumbnail_url": "https://i.ytimg.com/vi/r2-F_9E3Qes/hqdefault.jpg",
+      "published_date": "2026-10-21",
+      "link": "https://www.youtube.com/watch?v=r2-F_9E3Qes",
+      "content": "JS Auto Cast Corporate Video",
+      "timestamp": "2026-10-21",
+      "mediaUrl": "https://i.ytimg.com/vi/r2-F_9E3Qes/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/r2-F_9E3Qes/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=r2-F_9E3Qes",
+      "competitorName": "JS Auto Cast Foundry India Pvt Ltd"
+    },
+    {
+      "id": "instagram_1792571810250_vmko3",
+      "company": "Gaurav Industries",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/DG3Z5Slylv0",
+      "caption": "𝐖𝐞'𝐫𝐞 𝐇𝐢𝐫𝐢𝐧𝐠! 🚀\n\nLooking for a sales professional to join Gaurav Industry and drive growth in the HDPE Pipe Industry!\n\n🔹 Position:\n\nSales Manager / Sales Executive\n\n📍 Location:\n\nRemote + Onsite– Jaipur / Hindaun City\n\n💰 Salary:\n\n₹25,000 per month (In-hand) + Incentives based on performance\n\n🛠 Experience:\n\nAny industry \n\n⏳ Job Type:  full time\n\n🎯 Required Skills:\n\nSales techniques, strong communication, and negotiation skills\n\n📜 Preferred Qualifications:\n\nOpen to all – Experience matters more than degrees!\n\n📩 How to Apply?\n\n📞 Contact: 9166192426\n📧 Email: mailgauravdagur@gmail.com\".",
+      "media_type": "Image",
+      "thumbnail": "https://scontent-sea5-1.cdninstagram.com/v/t51.75761-15/482782908_17930101110009285_5045513298086400375_n.webp?stp=c112.0.339.338a_dst-jpg_e35_s640x640_tt6&_nc_cat=107&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=oQnd0RW6OvwQ7kNvwGLVAIy&_nc_oc=Adp4jL8Tsi3HPxOZx9iEIJMpkqIowhG9YimqmSkYxtMlgk7tOiuIeuJMthSqwNam_BU&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=Be_NPaJzhNWTHSCjCHsumg&_nc_ss=7060f&oh=00_AQNg9hSyxmIOfYrQIJhrQcjiC7Rj2pb71tJJ1yJAPKxILA&oe=6ADE671D",
+      "media_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.75761-15/482782908_17930101110009285_5045513298086400375_n.webp?stp=c112.0.339.338a_dst-jpg_e35_s640x640_tt6&_nc_cat=107&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=oQnd0RW6OvwQ7kNvwGLVAIy&_nc_oc=Adp4jL8Tsi3HPxOZx9iEIJMpkqIowhG9YimqmSkYxtMlgk7tOiuIeuJMthSqwNam_BU&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=Be_NPaJzhNWTHSCjCHsumg&_nc_ss=7060f&oh=00_AQNg9hSyxmIOfYrQIJhrQcjiC7Rj2pb71tJJ1yJAPKxILA&oe=6ADE671D",
+      "date": "2025-03-06",
+      "engagement": {
+        "likes": "12",
+        "comments": "2"
+      },
+      "profile_url": "https://www.instagram.com/gaurav_pipe_industries",
+      "thumbnail_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.75761-15/482782908_17930101110009285_5045513298086400375_n.webp?stp=c112.0.339.338a_dst-jpg_e35_s640x640_tt6&_nc_cat=107&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=oQnd0RW6OvwQ7kNvwGLVAIy&_nc_oc=Adp4jL8Tsi3HPxOZx9iEIJMpkqIowhG9YimqmSkYxtMlgk7tOiuIeuJMthSqwNam_BU&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=Be_NPaJzhNWTHSCjCHsumg&_nc_ss=7060f&oh=00_AQNg9hSyxmIOfYrQIJhrQcjiC7Rj2pb71tJJ1yJAPKxILA&oe=6ADE671D",
+      "published_date": "2025-03-06",
+      "link": "https://www.instagram.com/p/DG3Z5Slylv0",
+      "content": "𝐖𝐞'𝐫𝐞 𝐇𝐢𝐫𝐢𝐧𝐠! 🚀\n\nLooking for a sales professional to join Gaurav Industry and drive growth in the HDPE Pipe Industry!\n\n🔹 Position:\n\nSales Manager / Sales Executive\n\n📍 Location:\n\nRemote + Onsite– Jaipur / Hindaun City\n\n💰 Salary:\n\n₹25,000 per month (In-hand) + Incentives based on performance\n\n🛠 Experience:\n\nAny industry \n\n⏳ Job Type:  full time\n\n🎯 Required Skills:\n\nSales techniques, strong communication, and negotiation skills\n\n📜 Preferred Qualifications:\n\nOpen to all – Experience matters more than degrees!\n\n📩 How to Apply?\n\n📞 Contact: 9166192426\n📧 Email: mailgauravdagur@gmail.com\".",
+      "timestamp": "2025-03-06",
+      "mediaUrl": "https://scontent-sea5-1.cdninstagram.com/v/t51.75761-15/482782908_17930101110009285_5045513298086400375_n.webp?stp=c112.0.339.338a_dst-jpg_e35_s640x640_tt6&_nc_cat=107&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=oQnd0RW6OvwQ7kNvwGLVAIy&_nc_oc=Adp4jL8Tsi3HPxOZx9iEIJMpkqIowhG9YimqmSkYxtMlgk7tOiuIeuJMthSqwNam_BU&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=Be_NPaJzhNWTHSCjCHsumg&_nc_ss=7060f&oh=00_AQNg9hSyxmIOfYrQIJhrQcjiC7Rj2pb71tJJ1yJAPKxILA&oe=6ADE671D",
+      "mediaUrls": "https://scontent-sea5-1.cdninstagram.com/v/t51.75761-15/482782908_17930101110009285_5045513298086400375_n.webp?stp=c112.0.339.338a_dst-jpg_e35_s640x640_tt6&_nc_cat=107&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=oQnd0RW6OvwQ7kNvwGLVAIy&_nc_oc=Adp4jL8Tsi3HPxOZx9iEIJMpkqIowhG9YimqmSkYxtMlgk7tOiuIeuJMthSqwNam_BU&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=Be_NPaJzhNWTHSCjCHsumg&_nc_ss=7060f&oh=00_AQNg9hSyxmIOfYrQIJhrQcjiC7Rj2pb71tJJ1yJAPKxILA&oe=6ADE671D",
+      "mediaType": "Image",
+      "likes": "12",
+      "comments": "2",
+      "postUrl": "https://www.instagram.com/p/DG3Z5Slylv0",
+      "competitorName": "Gaurav Industries",
+      "shortcode": "DG3Z5Slylv0"
+    },
+    {
+      "id": "instagram_1792571811949_tr3pl",
+      "company": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/DWd0IMmiDRA",
+      "caption": "We are excited to launch Director Talks🎙️ — a new video series where the visionary leaders of RGK Group of Industries share their insights, experiences, and perspectives.\n\nThrough this series, our directors will discuss:\n• Leadership & business vision\n• Industry insights & growth strategies\n• Innovation and future opportunities\n• Values that drive RGK forward\nThis initiative aims to bring you closer to the minds shaping our organization and inspire meaningful conversations.\nStay tuned as we begin this journey with our leadership team.\n\n #DirectorTalks #RGKGroup #Leadership #BusinessInsights #Innovation #CorporateLeadership #RGK #VideoSeries\".",
+      "media_type": "Image",
+      "thumbnail": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/659502844_18066908258398331_4794714918247564082_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=9ZocgbR-T94Q7kNvwFZ-OIK&_nc_oc=AdqtsWyApjJUQUfh5pi0ZBi8ToFR2a6ctm_fTRPlyaLNsDA0dvJ84WbwUJiRpm02V7A&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=tbsUWQPBFbnpEp-DZAXgVQ&_nc_ss=7060f&oh=00_AQMvZc0VrVIoPvhhfdqQkw7fopMY8_RY6ubYCkT2y78jYg&oe=6ADE4457",
+      "media_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/659502844_18066908258398331_4794714918247564082_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=9ZocgbR-T94Q7kNvwFZ-OIK&_nc_oc=AdqtsWyApjJUQUfh5pi0ZBi8ToFR2a6ctm_fTRPlyaLNsDA0dvJ84WbwUJiRpm02V7A&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=tbsUWQPBFbnpEp-DZAXgVQ&_nc_ss=7060f&oh=00_AQMvZc0VrVIoPvhhfdqQkw7fopMY8_RY6ubYCkT2y78jYg&oe=6ADE4457",
+      "date": "2026-03-29",
+      "engagement": {
+        "likes": "54",
+        "comments": "0"
+      },
+      "profile_url": null,
+      "thumbnail_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/659502844_18066908258398331_4794714918247564082_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=9ZocgbR-T94Q7kNvwFZ-OIK&_nc_oc=AdqtsWyApjJUQUfh5pi0ZBi8ToFR2a6ctm_fTRPlyaLNsDA0dvJ84WbwUJiRpm02V7A&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=tbsUWQPBFbnpEp-DZAXgVQ&_nc_ss=7060f&oh=00_AQMvZc0VrVIoPvhhfdqQkw7fopMY8_RY6ubYCkT2y78jYg&oe=6ADE4457",
+      "published_date": "2026-03-29",
+      "link": "https://www.instagram.com/p/DWd0IMmiDRA",
+      "content": "We are excited to launch Director Talks🎙️ — a new video series where the visionary leaders of RGK Group of Industries share their insights, experiences, and perspectives.\n\nThrough this series, our directors will discuss:\n• Leadership & business vision\n• Industry insights & growth strategies\n• Innovation and future opportunities\n• Values that drive RGK forward\nThis initiative aims to bring you closer to the minds shaping our organization and inspire meaningful conversations.\nStay tuned as we begin this journey with our leadership team.\n\n #DirectorTalks #RGKGroup #Leadership #BusinessInsights #Innovation #CorporateLeadership #RGK #VideoSeries\".",
+      "timestamp": "2026-03-29",
+      "mediaUrl": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/659502844_18066908258398331_4794714918247564082_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=9ZocgbR-T94Q7kNvwFZ-OIK&_nc_oc=AdqtsWyApjJUQUfh5pi0ZBi8ToFR2a6ctm_fTRPlyaLNsDA0dvJ84WbwUJiRpm02V7A&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=tbsUWQPBFbnpEp-DZAXgVQ&_nc_ss=7060f&oh=00_AQMvZc0VrVIoPvhhfdqQkw7fopMY8_RY6ubYCkT2y78jYg&oe=6ADE4457",
+      "mediaUrls": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/659502844_18066908258398331_4794714918247564082_n.jpg?stp=c288.0.864.864a_dst-jpg_e35_s640x640_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=9ZocgbR-T94Q7kNvwFZ-OIK&_nc_oc=AdqtsWyApjJUQUfh5pi0ZBi8ToFR2a6ctm_fTRPlyaLNsDA0dvJ84WbwUJiRpm02V7A&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=tbsUWQPBFbnpEp-DZAXgVQ&_nc_ss=7060f&oh=00_AQMvZc0VrVIoPvhhfdqQkw7fopMY8_RY6ubYCkT2y78jYg&oe=6ADE4457",
+      "mediaType": "Image",
+      "likes": "54",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/DWd0IMmiDRA",
+      "competitorName": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
+      "shortcode": "DWd0IMmiDRA"
+    },
+    {
+      "id": "instagram_1792571826803_cfxde",
+      "company": "Carbotech Metacast",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/DdUaaGOCZIf",
+      "caption": "📚 Scholarly or popular—know the difference!\n\nScholarly sources are written by experts, cite research, and are peer reviewed. Popular sources are written for a general audience and focus on news, opinions, or current events.\n\n#ConnLibrary #ResearchHelp #InformationLiteracy\".",
+      "media_type": "Image",
+      "thumbnail": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/812281416_17955738291256412_2687519594127587982_n.jpg?stp=c216.0.648.648a_dst-jpg_e35_s640x640_tt6&_nc_cat=109&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=3HEhM0WHcx8Q7kNvwEGuVBd&_nc_oc=AdpKNRIqM2h9HD6FCF0IjZQFKvjH2P2tDFnAfD-MkGibDJJYKc2aGV2RSb6J2rvy6_M&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=ruzD3ipLeWthSt8emjs9jA&_nc_ss=7060f&oh=00_AQPBTiCfsEdyBx1Li2X3cB-bwSGydfCnEu9T08PTVHJFRA&oe=6ADE5404",
+      "media_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/812281416_17955738291256412_2687519594127587982_n.jpg?stp=c216.0.648.648a_dst-jpg_e35_s640x640_tt6&_nc_cat=109&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=3HEhM0WHcx8Q7kNvwEGuVBd&_nc_oc=AdpKNRIqM2h9HD6FCF0IjZQFKvjH2P2tDFnAfD-MkGibDJJYKc2aGV2RSb6J2rvy6_M&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=ruzD3ipLeWthSt8emjs9jA&_nc_ss=7060f&oh=00_AQPBTiCfsEdyBx1Li2X3cB-bwSGydfCnEu9T08PTVHJFRA&oe=6ADE5404",
+      "date": "2026-09-15",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/popular/official-profile",
+      "thumbnail_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/812281416_17955738291256412_2687519594127587982_n.jpg?stp=c216.0.648.648a_dst-jpg_e35_s640x640_tt6&_nc_cat=109&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=3HEhM0WHcx8Q7kNvwEGuVBd&_nc_oc=AdpKNRIqM2h9HD6FCF0IjZQFKvjH2P2tDFnAfD-MkGibDJJYKc2aGV2RSb6J2rvy6_M&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=ruzD3ipLeWthSt8emjs9jA&_nc_ss=7060f&oh=00_AQPBTiCfsEdyBx1Li2X3cB-bwSGydfCnEu9T08PTVHJFRA&oe=6ADE5404",
+      "published_date": "2026-09-15",
+      "link": "https://www.instagram.com/p/DdUaaGOCZIf",
+      "content": "📚 Scholarly or popular—know the difference!\n\nScholarly sources are written by experts, cite research, and are peer reviewed. Popular sources are written for a general audience and focus on news, opinions, or current events.\n\n#ConnLibrary #ResearchHelp #InformationLiteracy\".",
+      "timestamp": "2026-09-15",
+      "mediaUrl": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/812281416_17955738291256412_2687519594127587982_n.jpg?stp=c216.0.648.648a_dst-jpg_e35_s640x640_tt6&_nc_cat=109&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=3HEhM0WHcx8Q7kNvwEGuVBd&_nc_oc=AdpKNRIqM2h9HD6FCF0IjZQFKvjH2P2tDFnAfD-MkGibDJJYKc2aGV2RSb6J2rvy6_M&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=ruzD3ipLeWthSt8emjs9jA&_nc_ss=7060f&oh=00_AQPBTiCfsEdyBx1Li2X3cB-bwSGydfCnEu9T08PTVHJFRA&oe=6ADE5404",
+      "mediaUrls": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/812281416_17955738291256412_2687519594127587982_n.jpg?stp=c216.0.648.648a_dst-jpg_e35_s640x640_tt6&_nc_cat=109&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=3HEhM0WHcx8Q7kNvwEGuVBd&_nc_oc=AdpKNRIqM2h9HD6FCF0IjZQFKvjH2P2tDFnAfD-MkGibDJJYKc2aGV2RSb6J2rvy6_M&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=ruzD3ipLeWthSt8emjs9jA&_nc_ss=7060f&oh=00_AQPBTiCfsEdyBx1Li2X3cB-bwSGydfCnEu9T08PTVHJFRA&oe=6ADE5404",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/DdUaaGOCZIf",
+      "competitorName": "Carbotech Metacast",
+      "shortcode": "DdUaaGOCZIf"
+    },
+    {
+      "id": "instagram_1792571810250_y86xo",
+      "company": "Gaurav Industries",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/DB0jRqIND-5?hl=am-et",
+      "caption": "Gaurav pipe industries \nStock of (ISI)Sprinkle pipe - 2.5 and 3 inch\nStock of (ISI) H.D.P.E pipe 1 to 6 inch \nContact number - 9413182426\nSecond contact number - 9413192426\nAddress - Front Punjab National Bank, Riico industrial area (Hindaun City) district - Karauli.(Rajasthan)\".",
+      "media_type": "Image",
+      "thumbnail": "https://scontent-sea5-1.cdninstagram.com/v/t51.75761-15/465147449_17914487148009285_8406579906368302970_n.webp?stp=c216.0.648.648a_dst-jpg_e35_s640x640_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=bvvFB2okQ20Q7kNvwEZSCMC&_nc_oc=AdrdgtzYCcMxbkjKGC4KUGzTeXdKp9XFWDCSniuEbwkMir3psQ-TD2ufOUW6A2t83ss&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=uxP--W40bHErnvrv5gCxog&_nc_ss=7060f&oh=00_AQMDeXe73n6HmSwCSHwWrZroQpsfVbX9Rhn5VqOFcwSp8A&oe=6ADE4C6A",
+      "media_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.75761-15/465147449_17914487148009285_8406579906368302970_n.webp?stp=c216.0.648.648a_dst-jpg_e35_s640x640_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=bvvFB2okQ20Q7kNvwEZSCMC&_nc_oc=AdrdgtzYCcMxbkjKGC4KUGzTeXdKp9XFWDCSniuEbwkMir3psQ-TD2ufOUW6A2t83ss&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=uxP--W40bHErnvrv5gCxog&_nc_ss=7060f&oh=00_AQMDeXe73n6HmSwCSHwWrZroQpsfVbX9Rhn5VqOFcwSp8A&oe=6ADE4C6A",
+      "date": "2024-11-01",
+      "engagement": {
+        "likes": "14",
+        "comments": "1"
+      },
+      "profile_url": "https://www.instagram.com/gaurav_pipe_industries",
+      "thumbnail_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.75761-15/465147449_17914487148009285_8406579906368302970_n.webp?stp=c216.0.648.648a_dst-jpg_e35_s640x640_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=bvvFB2okQ20Q7kNvwEZSCMC&_nc_oc=AdrdgtzYCcMxbkjKGC4KUGzTeXdKp9XFWDCSniuEbwkMir3psQ-TD2ufOUW6A2t83ss&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=uxP--W40bHErnvrv5gCxog&_nc_ss=7060f&oh=00_AQMDeXe73n6HmSwCSHwWrZroQpsfVbX9Rhn5VqOFcwSp8A&oe=6ADE4C6A",
+      "published_date": "2024-11-01",
+      "link": "https://www.instagram.com/p/DB0jRqIND-5?hl=am-et",
+      "content": "Gaurav pipe industries \nStock of (ISI)Sprinkle pipe - 2.5 and 3 inch\nStock of (ISI) H.D.P.E pipe 1 to 6 inch \nContact number - 9413182426\nSecond contact number - 9413192426\nAddress - Front Punjab National Bank, Riico industrial area (Hindaun City) district - Karauli.(Rajasthan)\".",
+      "timestamp": "2024-11-01",
+      "mediaUrl": "https://scontent-sea5-1.cdninstagram.com/v/t51.75761-15/465147449_17914487148009285_8406579906368302970_n.webp?stp=c216.0.648.648a_dst-jpg_e35_s640x640_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=bvvFB2okQ20Q7kNvwEZSCMC&_nc_oc=AdrdgtzYCcMxbkjKGC4KUGzTeXdKp9XFWDCSniuEbwkMir3psQ-TD2ufOUW6A2t83ss&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=uxP--W40bHErnvrv5gCxog&_nc_ss=7060f&oh=00_AQMDeXe73n6HmSwCSHwWrZroQpsfVbX9Rhn5VqOFcwSp8A&oe=6ADE4C6A",
+      "mediaUrls": "https://scontent-sea5-1.cdninstagram.com/v/t51.75761-15/465147449_17914487148009285_8406579906368302970_n.webp?stp=c216.0.648.648a_dst-jpg_e35_s640x640_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=bvvFB2okQ20Q7kNvwEZSCMC&_nc_oc=AdrdgtzYCcMxbkjKGC4KUGzTeXdKp9XFWDCSniuEbwkMir3psQ-TD2ufOUW6A2t83ss&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=uxP--W40bHErnvrv5gCxog&_nc_ss=7060f&oh=00_AQMDeXe73n6HmSwCSHwWrZroQpsfVbX9Rhn5VqOFcwSp8A&oe=6ADE4C6A",
+      "mediaType": "Image",
+      "likes": "14",
+      "comments": "1",
+      "postUrl": "https://www.instagram.com/p/DB0jRqIND-5?hl=am-et",
+      "competitorName": "Gaurav Industries",
+      "shortcode": "DB0jRqIND-5"
+    },
+    {
+      "id": "instagram_1792571826803_2tyxn",
+      "company": "Carbotech Metacast",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/reel/DcTXXViudbP",
+      "caption": "Idc what’s trendy or popular, I will always love an original audio day in my life vlog 🙂‍↔️ what’re you currently reading?! 👀 Anything I need to add to my TBR? 📖\".",
+      "media_type": "Video",
+      "thumbnail": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/778123851_18069980858722029_8956831162529135016_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=duJ05jpsE9gQ7kNvwFtwWkZ&_nc_oc=Adol7kR0amR75mWg5yGbfAHHePzQBbl1MeqAnE8su0dOkxEnKvgruU9gnDOOogCJOsA&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=_5eGh9yaDZQVBQqMtRiVWA&_nc_ss=7060f&oh=00_AQNS9fmF-AXDSyw-FczRcrw7Tx5pFaZGaigKLm5cqflYkQ&oe=6ADE57E8",
+      "media_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/778123851_18069980858722029_8956831162529135016_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=duJ05jpsE9gQ7kNvwFtwWkZ&_nc_oc=Adol7kR0amR75mWg5yGbfAHHePzQBbl1MeqAnE8su0dOkxEnKvgruU9gnDOOogCJOsA&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=_5eGh9yaDZQVBQqMtRiVWA&_nc_ss=7060f&oh=00_AQNS9fmF-AXDSyw-FczRcrw7Tx5pFaZGaigKLm5cqflYkQ&oe=6ADE57E8",
+      "date": "2026-08-21",
+      "engagement": {
+        "likes": "438",
+        "comments": "18"
+      },
+      "profile_url": "https://www.instagram.com/popular/official-profile",
+      "thumbnail_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/778123851_18069980858722029_8956831162529135016_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=duJ05jpsE9gQ7kNvwFtwWkZ&_nc_oc=Adol7kR0amR75mWg5yGbfAHHePzQBbl1MeqAnE8su0dOkxEnKvgruU9gnDOOogCJOsA&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=_5eGh9yaDZQVBQqMtRiVWA&_nc_ss=7060f&oh=00_AQNS9fmF-AXDSyw-FczRcrw7Tx5pFaZGaigKLm5cqflYkQ&oe=6ADE57E8",
+      "published_date": "2026-08-21",
+      "link": "https://www.instagram.com/reel/DcTXXViudbP",
+      "content": "Idc what’s trendy or popular, I will always love an original audio day in my life vlog 🙂‍↔️ what’re you currently reading?! 👀 Anything I need to add to my TBR? 📖\".",
+      "timestamp": "2026-08-21",
+      "mediaUrl": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/778123851_18069980858722029_8956831162529135016_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=duJ05jpsE9gQ7kNvwFtwWkZ&_nc_oc=Adol7kR0amR75mWg5yGbfAHHePzQBbl1MeqAnE8su0dOkxEnKvgruU9gnDOOogCJOsA&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=_5eGh9yaDZQVBQqMtRiVWA&_nc_ss=7060f&oh=00_AQNS9fmF-AXDSyw-FczRcrw7Tx5pFaZGaigKLm5cqflYkQ&oe=6ADE57E8",
+      "mediaUrls": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/778123851_18069980858722029_8956831162529135016_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=duJ05jpsE9gQ7kNvwFtwWkZ&_nc_oc=Adol7kR0amR75mWg5yGbfAHHePzQBbl1MeqAnE8su0dOkxEnKvgruU9gnDOOogCJOsA&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=_5eGh9yaDZQVBQqMtRiVWA&_nc_ss=7060f&oh=00_AQNS9fmF-AXDSyw-FczRcrw7Tx5pFaZGaigKLm5cqflYkQ&oe=6ADE57E8",
+      "mediaType": "Video",
+      "likes": "438",
+      "comments": "18",
+      "postUrl": "https://www.instagram.com/reel/DcTXXViudbP",
+      "competitorName": "Carbotech Metacast",
+      "shortcode": "DcTXXViudbP"
+    },
+    {
+      "id": "instagram_1792571810250_m1in3",
+      "company": "Gaurav Industries",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/reel/CvzhUqwN2q4",
+      "caption": "Gaurav Pipes industries | #shorts #viral\n#manufacturing #industrialarea\n#meil #hdpe \n#infrastructure\n #shorts \nMaking of HDPE Pipes |\n #shorts\n#hdpepipe\n#ISIceritificate\n#trendingvideo\n#gaurav\n#shortsvideo\n#hdpepipe\n#yt\n#fbvideo\n#reels\n#youtubevideo\".",
+      "media_type": "Video",
+      "thumbnail": "https://scontent-sea5-1.cdninstagram.com/v/t51.71878-15/497638966_4146679278881598_6926956942183163657_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=l3ttCDmP5TEQ7kNvwGEEpu3&_nc_oc=Adp8ousHovPbI8u83mT5qZQJ4UfTqov-6TeNpbapJiv9k2RgI-Vws6zdzt6kt5eAN0k&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=mKfK1p96YyaL5LbAG4P18A&_nc_ss=7060f&oh=00_AQPwuwuoNthL8IXL-QjmGzh6jnAohbMTneVCOP4V8fVU_w&oe=6ADE583C",
+      "media_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.71878-15/497638966_4146679278881598_6926956942183163657_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=l3ttCDmP5TEQ7kNvwGEEpu3&_nc_oc=Adp8ousHovPbI8u83mT5qZQJ4UfTqov-6TeNpbapJiv9k2RgI-Vws6zdzt6kt5eAN0k&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=mKfK1p96YyaL5LbAG4P18A&_nc_ss=7060f&oh=00_AQPwuwuoNthL8IXL-QjmGzh6jnAohbMTneVCOP4V8fVU_w&oe=6ADE583C",
+      "date": "2023-08-11",
+      "engagement": {
+        "likes": "15",
+        "comments": "2"
+      },
+      "profile_url": "https://www.instagram.com/gaurav_pipe_industries",
+      "thumbnail_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.71878-15/497638966_4146679278881598_6926956942183163657_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=l3ttCDmP5TEQ7kNvwGEEpu3&_nc_oc=Adp8ousHovPbI8u83mT5qZQJ4UfTqov-6TeNpbapJiv9k2RgI-Vws6zdzt6kt5eAN0k&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=mKfK1p96YyaL5LbAG4P18A&_nc_ss=7060f&oh=00_AQPwuwuoNthL8IXL-QjmGzh6jnAohbMTneVCOP4V8fVU_w&oe=6ADE583C",
+      "published_date": "2023-08-11",
+      "link": "https://www.instagram.com/reel/CvzhUqwN2q4",
+      "content": "Gaurav Pipes industries | #shorts #viral\n#manufacturing #industrialarea\n#meil #hdpe \n#infrastructure\n #shorts \nMaking of HDPE Pipes |\n #shorts\n#hdpepipe\n#ISIceritificate\n#trendingvideo\n#gaurav\n#shortsvideo\n#hdpepipe\n#yt\n#fbvideo\n#reels\n#youtubevideo\".",
+      "timestamp": "2023-08-11",
+      "mediaUrl": "https://scontent-sea5-1.cdninstagram.com/v/t51.71878-15/497638966_4146679278881598_6926956942183163657_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=l3ttCDmP5TEQ7kNvwGEEpu3&_nc_oc=Adp8ousHovPbI8u83mT5qZQJ4UfTqov-6TeNpbapJiv9k2RgI-Vws6zdzt6kt5eAN0k&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=mKfK1p96YyaL5LbAG4P18A&_nc_ss=7060f&oh=00_AQPwuwuoNthL8IXL-QjmGzh6jnAohbMTneVCOP4V8fVU_w&oe=6ADE583C",
+      "mediaUrls": "https://scontent-sea5-1.cdninstagram.com/v/t51.71878-15/497638966_4146679278881598_6926956942183163657_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=l3ttCDmP5TEQ7kNvwGEEpu3&_nc_oc=Adp8ousHovPbI8u83mT5qZQJ4UfTqov-6TeNpbapJiv9k2RgI-Vws6zdzt6kt5eAN0k&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=mKfK1p96YyaL5LbAG4P18A&_nc_ss=7060f&oh=00_AQPwuwuoNthL8IXL-QjmGzh6jnAohbMTneVCOP4V8fVU_w&oe=6ADE583C",
+      "mediaType": "Video",
+      "likes": "15",
+      "comments": "2",
+      "postUrl": "https://www.instagram.com/reel/CvzhUqwN2q4",
+      "competitorName": "Gaurav Industries",
+      "shortcode": "CvzhUqwN2q4"
+    },
+    {
+      "id": "instagram_1792571826803_2aok4",
+      "company": "Carbotech Metacast",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/reel/C_gNrLIv-PE",
+      "caption": "Unpopular or Popular? 🏐\nEvery beach athlete needs a top spin serve.\n\nVote below!\".",
+      "media_type": "Video",
+      "thumbnail": "https://scontent-sea5-1.cdninstagram.com/v/t51.71878-15/497328205_1077980507544508_1127188070042732060_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=108&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=FPxCAN3uGPcQ7kNvwGC43jR&_nc_oc=AdouiYcmhm6YXjGkeRLX48N25mEdWR2HXS-RNUtlPChVI0XCmUULjcISB1uEHF1SeK0&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=67CSaiXiTmojzNcCa5y6IQ&_nc_ss=7060f&oh=00_AQObhBe6nDMcyG7ZrmmEmJ3XLaZ37G2G28oWTIbnOFpJuQ&oe=6ADE557C",
+      "media_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.71878-15/497328205_1077980507544508_1127188070042732060_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=108&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=FPxCAN3uGPcQ7kNvwGC43jR&_nc_oc=AdouiYcmhm6YXjGkeRLX48N25mEdWR2HXS-RNUtlPChVI0XCmUULjcISB1uEHF1SeK0&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=67CSaiXiTmojzNcCa5y6IQ&_nc_ss=7060f&oh=00_AQObhBe6nDMcyG7ZrmmEmJ3XLaZ37G2G28oWTIbnOFpJuQ&oe=6ADE557C",
+      "date": "2024-09-04",
+      "engagement": {
+        "likes": "300",
+        "comments": "4"
+      },
+      "profile_url": "https://www.instagram.com/popular/official-profile",
+      "thumbnail_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.71878-15/497328205_1077980507544508_1127188070042732060_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=108&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=FPxCAN3uGPcQ7kNvwGC43jR&_nc_oc=AdouiYcmhm6YXjGkeRLX48N25mEdWR2HXS-RNUtlPChVI0XCmUULjcISB1uEHF1SeK0&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=67CSaiXiTmojzNcCa5y6IQ&_nc_ss=7060f&oh=00_AQObhBe6nDMcyG7ZrmmEmJ3XLaZ37G2G28oWTIbnOFpJuQ&oe=6ADE557C",
+      "published_date": "2024-09-04",
+      "link": "https://www.instagram.com/reel/C_gNrLIv-PE",
+      "content": "Unpopular or Popular? 🏐\nEvery beach athlete needs a top spin serve.\n\nVote below!\".",
+      "timestamp": "2024-09-04",
+      "mediaUrl": "https://scontent-sea5-1.cdninstagram.com/v/t51.71878-15/497328205_1077980507544508_1127188070042732060_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=108&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=FPxCAN3uGPcQ7kNvwGC43jR&_nc_oc=AdouiYcmhm6YXjGkeRLX48N25mEdWR2HXS-RNUtlPChVI0XCmUULjcISB1uEHF1SeK0&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=67CSaiXiTmojzNcCa5y6IQ&_nc_ss=7060f&oh=00_AQObhBe6nDMcyG7ZrmmEmJ3XLaZ37G2G28oWTIbnOFpJuQ&oe=6ADE557C",
+      "mediaUrls": "https://scontent-sea5-1.cdninstagram.com/v/t51.71878-15/497328205_1077980507544508_1127188070042732060_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=108&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=FPxCAN3uGPcQ7kNvwGC43jR&_nc_oc=AdouiYcmhm6YXjGkeRLX48N25mEdWR2HXS-RNUtlPChVI0XCmUULjcISB1uEHF1SeK0&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_gid=67CSaiXiTmojzNcCa5y6IQ&_nc_ss=7060f&oh=00_AQObhBe6nDMcyG7ZrmmEmJ3XLaZ37G2G28oWTIbnOFpJuQ&oe=6ADE557C",
+      "mediaType": "Video",
+      "likes": "300",
+      "comments": "4",
+      "postUrl": "https://www.instagram.com/reel/C_gNrLIv-PE",
+      "competitorName": "Carbotech Metacast",
+      "shortcode": "C_gNrLIv-PE"
+    },
+    {
+      "id": "li_1792571806961_vd8k3",
+      "company": "Gaurav Industries",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/www%2Egaurav-industries%2Ecom_today-we-honor-the-legacy-of-our-freedom-activity-7494247975679000579-vre6",
+      "caption": "Today we honor the legacy of our freedom fighters and celebrate the spirit of a resilient, ambitious, and unstoppable nation. \nIndependence gave us the freedom to dream big. Today, Indian entrepreneurs, engineers, and creators are turning those dreams into global benchmarks.\nOn India’s 80th Independence Day, taking a moment to express deepest gratitude to the brave men and women of the Indian Army who stand guard in the toughest conditions so the rest of the nation can thrive.\nFreedom is maintained through commitment and courage. Let’s bring that same spirit of dedication to our work every day.\nWishing everyone a very Happy Independence Day! 🌟",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQFh9jCqp7HQqA/feedshare-image-high-res/B4DaADq0erHQAU-/0/1786767952131?e=2147483647&v=beta&t=wRTpX1GMxgHKlTMDpulRY8lkwnDJfC_ErRzIEsXbRtg",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQFh9jCqp7HQqA/feedshare-image-high-res/B4DaADq0erHQAU-/0/1786767952131?e=2147483647&v=beta&t=wRTpX1GMxgHKlTMDpulRY8lkwnDJfC_ErRzIEsXbRtg",
+      "date": "2026-08-15",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/www.gaurav-industries.com/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQFh9jCqp7HQqA/feedshare-image-high-res/B4DaADq0erHQAU-/0/1786767952131?e=2147483647&v=beta&t=wRTpX1GMxgHKlTMDpulRY8lkwnDJfC_ErRzIEsXbRtg",
+      "published_date": "2026-08-15",
+      "link": "https://www.linkedin.com/posts/www%2Egaurav-industries%2Ecom_today-we-honor-the-legacy-of-our-freedom-activity-7494247975679000579-vre6",
+      "content": "Today we honor the legacy of our freedom fighters and celebrate the spirit of a resilient, ambitious, and unstoppable nation. \nIndependence gave us the freedom to dream big. Today, Indian entrepreneurs, engineers, and creators are turning those dreams into global benchmarks.\nOn India’s 80th Independence Day, taking a moment to express deepest gratitude to the brave men and women of the Indian Army who stand guard in the toughest conditions so the rest of the nation can thrive.\nFreedom is maintained through commitment and courage. Let’s bring that same spirit of dedication to our work every day.\nWishing everyone a very Happy Independence Day! 🌟",
+      "timestamp": "2026-08-15",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQFh9jCqp7HQqA/feedshare-image-high-res/B4DaADq0erHQAU-/0/1786767952131?e=2147483647&v=beta&t=wRTpX1GMxgHKlTMDpulRY8lkwnDJfC_ErRzIEsXbRtg",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQFh9jCqp7HQqA/feedshare-image-high-res/B4DaADq0erHQAU-/0/1786767952131?e=2147483647&v=beta&t=wRTpX1GMxgHKlTMDpulRY8lkwnDJfC_ErRzIEsXbRtg",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/www%2Egaurav-industries%2Ecom_today-we-honor-the-legacy-of-our-freedom-activity-7494247975679000579-vre6",
+      "competitorName": "Gaurav Industries",
+      "activity_id": "7494247975679000579"
+    },
+    {
+      "id": "li_1792571811849_60ej9",
+      "company": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/rgk-group_happynavratri-rgkgroupofindustries-navratri2026-activity-7515032392307347456-UQlI",
+      "caption": "🌺 Happy Navratri from RGK Group of Industries! 🌺\n\nMay the divine blessings of Maa Durga bring strength, prosperity, happiness, and success to everyone.\n\nAs we celebrate the nine auspicious nights of Navratri, may this festival inspire us with positivity, courage, and the determination to achieve new milestones together.\n\nWishing everyone a joyful, prosperous, and blessed Navratri! 🙏✨\n\nRGK Group of Industries\nStrength. Innovation. Growth.\n\n#HappyNavratri #RGKGroupOfIndustries #Navratri2026 #FestivalOfStrength #Prosperity #TogetherWeGrow",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQEo3l3QwX4h9Q/feedshare-shrink_800/B4DaErCIusI0Ac-/0/1791723343213?e=2147483647&v=beta&t=euvpy5V1EQ7iKXIVDPL5e3_wjVRrZBRa7fAEk4Fmpp4",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQEo3l3QwX4h9Q/feedshare-shrink_800/B4DaErCIusI0Ac-/0/1791723343213?e=2147483647&v=beta&t=euvpy5V1EQ7iKXIVDPL5e3_wjVRrZBRa7fAEk4Fmpp4",
+      "date": "2026-10-11",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/r-g-k-group-of-industries",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQEo3l3QwX4h9Q/feedshare-shrink_800/B4DaErCIusI0Ac-/0/1791723343213?e=2147483647&v=beta&t=euvpy5V1EQ7iKXIVDPL5e3_wjVRrZBRa7fAEk4Fmpp4",
+      "published_date": "2026-10-11",
+      "link": "https://www.linkedin.com/posts/rgk-group_happynavratri-rgkgroupofindustries-navratri2026-activity-7515032392307347456-UQlI",
+      "content": "🌺 Happy Navratri from RGK Group of Industries! 🌺\n\nMay the divine blessings of Maa Durga bring strength, prosperity, happiness, and success to everyone.\n\nAs we celebrate the nine auspicious nights of Navratri, may this festival inspire us with positivity, courage, and the determination to achieve new milestones together.\n\nWishing everyone a joyful, prosperous, and blessed Navratri! 🙏✨\n\nRGK Group of Industries\nStrength. Innovation. Growth.\n\n#HappyNavratri #RGKGroupOfIndustries #Navratri2026 #FestivalOfStrength #Prosperity #TogetherWeGrow",
+      "timestamp": "2026-10-11",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQEo3l3QwX4h9Q/feedshare-shrink_800/B4DaErCIusI0Ac-/0/1791723343213?e=2147483647&v=beta&t=euvpy5V1EQ7iKXIVDPL5e3_wjVRrZBRa7fAEk4Fmpp4",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQEo3l3QwX4h9Q/feedshare-shrink_800/B4DaErCIusI0Ac-/0/1791723343213?e=2147483647&v=beta&t=euvpy5V1EQ7iKXIVDPL5e3_wjVRrZBRa7fAEk4Fmpp4",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/rgk-group_happynavratri-rgkgroupofindustries-navratri2026-activity-7515032392307347456-UQlI",
+      "competitorName": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
+      "activity_id": "7515032392307347456"
+    },
+    {
+      "id": "li_1792571840750_wx7so",
+      "company": "JS Auto Cast Foundry India Pvt Ltd",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/js-auto-cast-foundry-india-pvt-ltd-_adicasting-austemperedductileiron-adi-activity-7518203640998748160-yYHV",
+      "caption": "When components need to handle high loads without compromising on performance, material selection matters. \n\n𝐀𝐮𝐬𝐭𝐞𝐦𝐩𝐞𝐫𝐞𝐝 𝐃𝐮𝐜𝐭𝐢𝐥𝐞 𝐈𝐫𝐨𝐧 (𝐀𝐃𝐈) combines the inherent toughness of ductile iron with a specialised heat-treatment process to achieve a strong, wear-resistant material with excellent mechanical properties.\n\nTo know more - https://lnkd.in/g3W_Jt2Z\n\n#ADICasting #AustemperedDuctileIron #ADI #DuctileIron #HeatTreatment #IndustrialManufacturing #EngineeringExcellence #BharatForge #JSAutocast",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQHT2QHeQw9Yvw/feedshare-shrink_800/B56aFYGX.cHQAc-/0/1792479428848?e=2147483647&v=beta&t=qZ9RpLohn9PQUsc_5hynLagRwJuykZ99DL6bahi-Tdg",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQHT2QHeQw9Yvw/feedshare-shrink_800/B56aFYGX.cHQAc-/0/1792479428848?e=2147483647&v=beta&t=qZ9RpLohn9PQUsc_5hynLagRwJuykZ99DL6bahi-Tdg",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/js-auto-cast-foundry-india-pvt-ltd-/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQHT2QHeQw9Yvw/feedshare-shrink_800/B56aFYGX.cHQAc-/0/1792479428848?e=2147483647&v=beta&t=qZ9RpLohn9PQUsc_5hynLagRwJuykZ99DL6bahi-Tdg",
+      "published_date": "2026-10-20",
+      "link": "https://www.linkedin.com/posts/js-auto-cast-foundry-india-pvt-ltd-_adicasting-austemperedductileiron-adi-activity-7518203640998748160-yYHV",
+      "content": "When components need to handle high loads without compromising on performance, material selection matters. \n\n𝐀𝐮𝐬𝐭𝐞𝐦𝐩𝐞𝐫𝐞𝐝 𝐃𝐮𝐜𝐭𝐢𝐥𝐞 𝐈𝐫𝐨𝐧 (𝐀𝐃𝐈) combines the inherent toughness of ductile iron with a specialised heat-treatment process to achieve a strong, wear-resistant material with excellent mechanical properties.\n\nTo know more - https://lnkd.in/g3W_Jt2Z\n\n#ADICasting #AustemperedDuctileIron #ADI #DuctileIron #HeatTreatment #IndustrialManufacturing #EngineeringExcellence #BharatForge #JSAutocast",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQHT2QHeQw9Yvw/feedshare-shrink_800/B56aFYGX.cHQAc-/0/1792479428848?e=2147483647&v=beta&t=qZ9RpLohn9PQUsc_5hynLagRwJuykZ99DL6bahi-Tdg",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQHT2QHeQw9Yvw/feedshare-shrink_800/B56aFYGX.cHQAc-/0/1792479428848?e=2147483647&v=beta&t=qZ9RpLohn9PQUsc_5hynLagRwJuykZ99DL6bahi-Tdg",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/js-auto-cast-foundry-india-pvt-ltd-_adicasting-austemperedductileiron-adi-activity-7518203640998748160-yYHV",
+      "competitorName": "JS Auto Cast Foundry India Pvt Ltd",
+      "activity_id": "7518203640998748160"
+    },
+    {
+      "id": "li_1792571850953_2iwsv",
+      "company": "Acme Foundry Inc",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/acme-foundry-inc%2E_grayironcastings-complexcastings-coredcastings-activity-7513666261583585280-eTSu",
+      "caption": "Gray iron looks simple on a drawing. In the melt, it is a carefully balanced iron-carbon-silicon alloy whose flake graphite decides how a part fills, machines, damps vibration, and carries load.\n\nAcme Foundry has manufactured gray iron castings since 1905. More than technical expertise in materials science, we bring 120+ years of real-world foundry practice to every project.\n\nBut when you’re manufacturing the huge range of complex cast products that we work with, you need to understand the science of the material as well as how it behaves in the mold, how it responds to machining…not to mention how it will perform in the end application.\n\nOn that note, we put together a series of gray iron material charts, describing how chemistry, class, and material properties fit together. We hope they’re of value for developing or understanding your products.\n\nhttps://lnkd.in/gN4Z7kTT\n\nGray iron looks simple on a drawing. In the melt, it is a carefully balanced iron-carbon-silicon alloy whose flake graphite decides how a part fills, machines, damps vibration, and carries load.\n\nAcme Foundry has manufactured gray iron castings since 1905. More than technical expertise in materials science, we bring 120+ years of real-world foundry practice to every project.\n\nBut when you’re manufacturing the huge range of complex cast products that we work with, you need to understand the science of the material as well as how it behaves in the mold, how it responds to machining…not to mention how it will perform in the end application.\n\nOn that note, we put together a series of gray iron material charts, describing how chemistry, class, and material properties fit together. We hope they’re of value for developing or understanding your products.\n\nhttps://lnkd.in/gN4Z7kTT\n\n#GrayIronCastings #ComplexCastings #CoredCastings #FoundryEngineering #CustomCastings #OEMManufacturing #IndustrialManufacturing #CastingDesign #PrecisionManufacturing #MadeInUSA",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQHUdmaNFSZBJg/feedshare-image-high-res/B56aEXnpmnHkAY-/0/1791397633032?e=2147483647&v=beta&t=lT4hOFjcXkCWfXk9IzyNMF_wSy52sj1rcXtjyXObHYk",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQHUdmaNFSZBJg/feedshare-image-high-res/B56aEXnpmnHkAY-/0/1791397633032?e=2147483647&v=beta&t=lT4hOFjcXkCWfXk9IzyNMF_wSy52sj1rcXtjyXObHYk",
+      "date": "2026-10-07",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/acme-foundry-inc./",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQHUdmaNFSZBJg/feedshare-image-high-res/B56aEXnpmnHkAY-/0/1791397633032?e=2147483647&v=beta&t=lT4hOFjcXkCWfXk9IzyNMF_wSy52sj1rcXtjyXObHYk",
+      "published_date": "2026-10-07",
+      "link": "https://www.linkedin.com/posts/acme-foundry-inc%2E_grayironcastings-complexcastings-coredcastings-activity-7513666261583585280-eTSu",
+      "content": "Gray iron looks simple on a drawing. In the melt, it is a carefully balanced iron-carbon-silicon alloy whose flake graphite decides how a part fills, machines, damps vibration, and carries load.\n\nAcme Foundry has manufactured gray iron castings since 1905. More than technical expertise in materials science, we bring 120+ years of real-world foundry practice to every project.\n\nBut when you’re manufacturing the huge range of complex cast products that we work with, you need to understand the science of the material as well as how it behaves in the mold, how it responds to machining…not to mention how it will perform in the end application.\n\nOn that note, we put together a series of gray iron material charts, describing how chemistry, class, and material properties fit together. We hope they’re of value for developing or understanding your products.\n\nhttps://lnkd.in/gN4Z7kTT\n\nGray iron looks simple on a drawing. In the melt, it is a carefully balanced iron-carbon-silicon alloy whose flake graphite decides how a part fills, machines, damps vibration, and carries load.\n\nAcme Foundry has manufactured gray iron castings since 1905. More than technical expertise in materials science, we bring 120+ years of real-world foundry practice to every project.\n\nBut when you’re manufacturing the huge range of complex cast products that we work with, you need to understand the science of the material as well as how it behaves in the mold, how it responds to machining…not to mention how it will perform in the end application.\n\nOn that note, we put together a series of gray iron material charts, describing how chemistry, class, and material properties fit together. We hope they’re of value for developing or understanding your products.\n\nhttps://lnkd.in/gN4Z7kTT\n\n#GrayIronCastings #ComplexCastings #CoredCastings #FoundryEngineering #CustomCastings #OEMManufacturing #IndustrialManufacturing #CastingDesign #PrecisionManufacturing #MadeInUSA",
+      "timestamp": "2026-10-07",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQHUdmaNFSZBJg/feedshare-image-high-res/B56aEXnpmnHkAY-/0/1791397633032?e=2147483647&v=beta&t=lT4hOFjcXkCWfXk9IzyNMF_wSy52sj1rcXtjyXObHYk",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQHUdmaNFSZBJg/feedshare-image-high-res/B56aEXnpmnHkAY-/0/1791397633032?e=2147483647&v=beta&t=lT4hOFjcXkCWfXk9IzyNMF_wSy52sj1rcXtjyXObHYk",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/acme-foundry-inc%2E_grayironcastings-complexcastings-coredcastings-activity-7513666261583585280-eTSu",
+      "competitorName": "Acme Foundry Inc",
+      "activity_id": "7513666261583585280"
+    },
+    {
+      "id": "li_1792571806961_f8n43",
+      "company": "Gaurav Industries",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/www%2Egaurav-industries%2Ecom_cleared-packed-and-shipped-on-board-activity-7452241064108662786--ish",
+      "caption": "Cleared, packed, and shipped on board!",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQGxmZKoHALtew/feedshare-image-high-res/B56Z2utwjXH4AU-/0/1776752724510?e=2147483647&v=beta&t=Rc1lxECudD09ZQUVdLrsFJ0zyCaQlOjIlE72UFrMxtw",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQGxmZKoHALtew/feedshare-image-high-res/B56Z2utwjXH4AU-/0/1776752724510?e=2147483647&v=beta&t=Rc1lxECudD09ZQUVdLrsFJ0zyCaQlOjIlE72UFrMxtw",
+      "date": "2026-04-21",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/www.gaurav-industries.com/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQGxmZKoHALtew/feedshare-image-high-res/B56Z2utwjXH4AU-/0/1776752724510?e=2147483647&v=beta&t=Rc1lxECudD09ZQUVdLrsFJ0zyCaQlOjIlE72UFrMxtw",
+      "published_date": "2026-04-21",
+      "link": "https://www.linkedin.com/posts/www%2Egaurav-industries%2Ecom_cleared-packed-and-shipped-on-board-activity-7452241064108662786--ish",
+      "content": "Cleared, packed, and shipped on board!",
+      "timestamp": "2026-04-21",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQGxmZKoHALtew/feedshare-image-high-res/B56Z2utwjXH4AU-/0/1776752724510?e=2147483647&v=beta&t=Rc1lxECudD09ZQUVdLrsFJ0zyCaQlOjIlE72UFrMxtw",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQGxmZKoHALtew/feedshare-image-high-res/B56Z2utwjXH4AU-/0/1776752724510?e=2147483647&v=beta&t=Rc1lxECudD09ZQUVdLrsFJ0zyCaQlOjIlE72UFrMxtw",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/www%2Egaurav-industries%2Ecom_cleared-packed-and-shipped-on-board-activity-7452241064108662786--ish",
+      "competitorName": "Gaurav Industries",
+      "activity_id": "7452241064108662786"
+    },
+    {
+      "id": "li_1792571811850_8o38b",
+      "company": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/rgk-group_ganeshchaturthi-ganpatibappamorya-rgkgroupofindustries-activity-7505224789356298240-sb90",
+      "caption": "✨ Ganpati Bappa Morya! 🙏\nMay Lord Ganesha bless us with wisdom, prosperity, success, and new beginnings.\nMay His divine blessings guide our people, strengthen our partnerships, and lead us towards greater progress and prosperity.\nWishing everyone a joyful and blessed Ganesh Chaturthi! 🌺🪔\nRGK Group of Industries\nTogether Towards a Brighter Tomorrow.\n#GaneshChaturthi #GanpatiBappaMorya #RGKGroupOfIndustries #FestiveGreetings #NewBeginnings #Prosperity #Success #TogetherTowardsABrighterTomorrow",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQGpHqMHk3eWkg/feedshare-shrink_800/B4DaCfqLNtKMAg-/0/1789385028758?e=2147483647&v=beta&t=2P5heocYFBg4dU0LVZEUvsG_QRj0Omwz7W9bMC2F7hA",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQGpHqMHk3eWkg/feedshare-shrink_800/B4DaCfqLNtKMAg-/0/1789385028758?e=2147483647&v=beta&t=2P5heocYFBg4dU0LVZEUvsG_QRj0Omwz7W9bMC2F7hA",
+      "date": "2026-09-14",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/r-g-k-group-of-industries",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQGpHqMHk3eWkg/feedshare-shrink_800/B4DaCfqLNtKMAg-/0/1789385028758?e=2147483647&v=beta&t=2P5heocYFBg4dU0LVZEUvsG_QRj0Omwz7W9bMC2F7hA",
+      "published_date": "2026-09-14",
+      "link": "https://www.linkedin.com/posts/rgk-group_ganeshchaturthi-ganpatibappamorya-rgkgroupofindustries-activity-7505224789356298240-sb90",
+      "content": "✨ Ganpati Bappa Morya! 🙏\nMay Lord Ganesha bless us with wisdom, prosperity, success, and new beginnings.\nMay His divine blessings guide our people, strengthen our partnerships, and lead us towards greater progress and prosperity.\nWishing everyone a joyful and blessed Ganesh Chaturthi! 🌺🪔\nRGK Group of Industries\nTogether Towards a Brighter Tomorrow.\n#GaneshChaturthi #GanpatiBappaMorya #RGKGroupOfIndustries #FestiveGreetings #NewBeginnings #Prosperity #Success #TogetherTowardsABrighterTomorrow",
+      "timestamp": "2026-09-14",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQGpHqMHk3eWkg/feedshare-shrink_800/B4DaCfqLNtKMAg-/0/1789385028758?e=2147483647&v=beta&t=2P5heocYFBg4dU0LVZEUvsG_QRj0Omwz7W9bMC2F7hA",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQGpHqMHk3eWkg/feedshare-shrink_800/B4DaCfqLNtKMAg-/0/1789385028758?e=2147483647&v=beta&t=2P5heocYFBg4dU0LVZEUvsG_QRj0Omwz7W9bMC2F7hA",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/rgk-group_ganeshchaturthi-ganpatibappamorya-rgkgroupofindustries-activity-7505224789356298240-sb90",
+      "competitorName": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
+      "activity_id": "7505224789356298240"
+    },
+    {
+      "id": "li_1792571840750_20gky",
+      "company": "JS Auto Cast Foundry India Pvt Ltd",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/js-auto-cast-foundry-india-pvt-ltd-_ayudhapooja-ayudhapooja2026-happyayudhapooja-activity-7517743832185061376-irET",
+      "caption": "May this Ayudha Pooja inspire us to raise standards, embrace opportunities, and achieve greater milestones together.\n\nWishing you a successful and prosperous Ayudha Pooja!\n\n#AyudhaPooja #AyudhaPooja2026 #HappyAyudhaPooja #BharatForge #JSAutocast",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQGaugZfZGh0nw/feedshare-shrink_800/B4EaFEI131KoAc-/0/1792144531293?e=2147483647&v=beta&t=Tt0zgyfw2So9flAMG8ffBDtJicvAn6wm3tB3v9ImbWI",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQGaugZfZGh0nw/feedshare-shrink_800/B4EaFEI131KoAc-/0/1792144531293?e=2147483647&v=beta&t=Tt0zgyfw2So9flAMG8ffBDtJicvAn6wm3tB3v9ImbWI",
+      "date": "2026-10-19",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/js-auto-cast-foundry-india-pvt-ltd-/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQGaugZfZGh0nw/feedshare-shrink_800/B4EaFEI131KoAc-/0/1792144531293?e=2147483647&v=beta&t=Tt0zgyfw2So9flAMG8ffBDtJicvAn6wm3tB3v9ImbWI",
+      "published_date": "2026-10-19",
+      "link": "https://www.linkedin.com/posts/js-auto-cast-foundry-india-pvt-ltd-_ayudhapooja-ayudhapooja2026-happyayudhapooja-activity-7517743832185061376-irET",
+      "content": "May this Ayudha Pooja inspire us to raise standards, embrace opportunities, and achieve greater milestones together.\n\nWishing you a successful and prosperous Ayudha Pooja!\n\n#AyudhaPooja #AyudhaPooja2026 #HappyAyudhaPooja #BharatForge #JSAutocast",
+      "timestamp": "2026-10-19",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQGaugZfZGh0nw/feedshare-shrink_800/B4EaFEI131KoAc-/0/1792144531293?e=2147483647&v=beta&t=Tt0zgyfw2So9flAMG8ffBDtJicvAn6wm3tB3v9ImbWI",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQGaugZfZGh0nw/feedshare-shrink_800/B4EaFEI131KoAc-/0/1792144531293?e=2147483647&v=beta&t=Tt0zgyfw2So9flAMG8ffBDtJicvAn6wm3tB3v9ImbWI",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/js-auto-cast-foundry-india-pvt-ltd-_ayudhapooja-ayudhapooja2026-happyayudhapooja-activity-7517743832185061376-irET",
+      "competitorName": "JS Auto Cast Foundry India Pvt Ltd",
+      "activity_id": "7517743832185061376"
+    },
+    {
+      "id": "li_1792571850953_fzkvp",
+      "company": "Acme Foundry Inc",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/acme-foundry-inc%2E_cncmachining-grayironcastings-machinedcastings-activity-7513301861840388097-LvS4",
+      "caption": "At Acme Foundry, we've been keeping our finger on the pulse of the American casting industry since 1905. Needless to say, we’ve seen a lot of ups and downs along the way.\n\nBetween supply chain disruptions, shortages, tariffs, and all of the other market forces our customers are no doubt familiar with, more and more U.S. companies have been reshoring their foundry work over the last several years.\n\nThat's even more true for machined castings and other, similarly complex requirements: those are the products that demand precision, leaving even less room for error or delay. At the same time, adding a third-party machine shop into the mix tends to complicate the program further.\n\nWith our integrated CNC machining division and 120+ years of casting experience, these are the exact types of projects Acme Foundry excels at. Of course, we also manufacture simpler casting designs, small and large. Basically, as long as it’s cast gray iron, Acme can most likely take it on.\n\nOur latest blog has more of our take on the current trends, and the state of the industry as we head into 2027.\nhttps://lnkd.in/gB6tmQgD\n #CNCmachining #GrayIronCastings #MachinedCastings #TurnkeyManufacturing #SingleSourceManufacturing #OEMSupplier #ContractManufacturing #PrecisionMachining #IndustrialCastings #MadeInUSA",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQELME3PM0AUzQ/feedshare-shrink_800/B56aEScOkdHAAc-/0/1791310752697?e=2147483647&v=beta&t=3-0d4yf10nSWDyU22hRKrSJ1gRC4hRoH7NbNskpJJnM",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQELME3PM0AUzQ/feedshare-shrink_800/B56aEScOkdHAAc-/0/1791310752697?e=2147483647&v=beta&t=3-0d4yf10nSWDyU22hRKrSJ1gRC4hRoH7NbNskpJJnM",
+      "date": "2026-10-06",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/acme-foundry-inc./",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQELME3PM0AUzQ/feedshare-shrink_800/B56aEScOkdHAAc-/0/1791310752697?e=2147483647&v=beta&t=3-0d4yf10nSWDyU22hRKrSJ1gRC4hRoH7NbNskpJJnM",
+      "published_date": "2026-10-06",
+      "link": "https://www.linkedin.com/posts/acme-foundry-inc%2E_cncmachining-grayironcastings-machinedcastings-activity-7513301861840388097-LvS4",
+      "content": "At Acme Foundry, we've been keeping our finger on the pulse of the American casting industry since 1905. Needless to say, we’ve seen a lot of ups and downs along the way.\n\nBetween supply chain disruptions, shortages, tariffs, and all of the other market forces our customers are no doubt familiar with, more and more U.S. companies have been reshoring their foundry work over the last several years.\n\nThat's even more true for machined castings and other, similarly complex requirements: those are the products that demand precision, leaving even less room for error or delay. At the same time, adding a third-party machine shop into the mix tends to complicate the program further.\n\nWith our integrated CNC machining division and 120+ years of casting experience, these are the exact types of projects Acme Foundry excels at. Of course, we also manufacture simpler casting designs, small and large. Basically, as long as it’s cast gray iron, Acme can most likely take it on.\n\nOur latest blog has more of our take on the current trends, and the state of the industry as we head into 2027.\nhttps://lnkd.in/gB6tmQgD\n #CNCmachining #GrayIronCastings #MachinedCastings #TurnkeyManufacturing #SingleSourceManufacturing #OEMSupplier #ContractManufacturing #PrecisionMachining #IndustrialCastings #MadeInUSA",
+      "timestamp": "2026-10-06",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQELME3PM0AUzQ/feedshare-shrink_800/B56aEScOkdHAAc-/0/1791310752697?e=2147483647&v=beta&t=3-0d4yf10nSWDyU22hRKrSJ1gRC4hRoH7NbNskpJJnM",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQELME3PM0AUzQ/feedshare-shrink_800/B56aEScOkdHAAc-/0/1791310752697?e=2147483647&v=beta&t=3-0d4yf10nSWDyU22hRKrSJ1gRC4hRoH7NbNskpJJnM",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/acme-foundry-inc%2E_cncmachining-grayironcastings-machinedcastings-activity-7513301861840388097-LvS4",
+      "competitorName": "Acme Foundry Inc",
+      "activity_id": "7513301861840388097"
+    },
+    {
+      "id": "li_1792571806962_ysmhu",
+      "company": "Gaurav Industries",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/www%2Egaurav-industries%2Ecom_when-the-margin-for-error-is-zero-precision-activity-7436737584468369408-UyJH",
+      "caption": "When the margin for error is zero, precision is the only language we speak.\nWe deliver tolerances as tight as  +/- 0.005mm, because in high-stakes engineering, \"close enough\" is never enough.\nHere are some of our ultra precision components that we are producing from titanium grade.",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQF6-INciH4VlQ/feedshare-shrink_800/B56ZzSZbJkHAAg-/0/1773056406465?e=2147483647&v=beta&t=lY8hqLDXJ-1LAbA-I6D-wCBtc3Vv8hO6ZeNaI927FAU",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQF6-INciH4VlQ/feedshare-shrink_800/B56ZzSZbJkHAAg-/0/1773056406465?e=2147483647&v=beta&t=lY8hqLDXJ-1LAbA-I6D-wCBtc3Vv8hO6ZeNaI927FAU",
+      "date": "2026-03-09",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/www.gaurav-industries.com/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQF6-INciH4VlQ/feedshare-shrink_800/B56ZzSZbJkHAAg-/0/1773056406465?e=2147483647&v=beta&t=lY8hqLDXJ-1LAbA-I6D-wCBtc3Vv8hO6ZeNaI927FAU",
+      "published_date": "2026-03-09",
+      "link": "https://www.linkedin.com/posts/www%2Egaurav-industries%2Ecom_when-the-margin-for-error-is-zero-precision-activity-7436737584468369408-UyJH",
+      "content": "When the margin for error is zero, precision is the only language we speak.\nWe deliver tolerances as tight as  +/- 0.005mm, because in high-stakes engineering, \"close enough\" is never enough.\nHere are some of our ultra precision components that we are producing from titanium grade.",
+      "timestamp": "2026-03-09",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQF6-INciH4VlQ/feedshare-shrink_800/B56ZzSZbJkHAAg-/0/1773056406465?e=2147483647&v=beta&t=lY8hqLDXJ-1LAbA-I6D-wCBtc3Vv8hO6ZeNaI927FAU",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQF6-INciH4VlQ/feedshare-shrink_800/B56ZzSZbJkHAAg-/0/1773056406465?e=2147483647&v=beta&t=lY8hqLDXJ-1LAbA-I6D-wCBtc3Vv8hO6ZeNaI927FAU",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/www%2Egaurav-industries%2Ecom_when-the-margin-for-error-is-zero-precision-activity-7436737584468369408-UyJH",
+      "competitorName": "Gaurav Industries",
+      "activity_id": "7436737584468369408"
+    },
+    {
+      "id": "li_1792571811850_8mybc",
+      "company": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/rgk-group_warm-wishes-from-rgk-group-of-industries-activity-7499034825459294208-elGj",
+      "caption": "🌸 Warm wishes from RGK Group of Industries on the auspicious occasion of Raksha Bandhan! 🪢❤️\n\nMay this beautiful festival of love and togetherness strengthen the bonds of care, trust, and support that connect us. 🤝✨\nMay every bond bring *strength, happiness, prosperity, and countless beautiful moments* into your life. 🌟💐\n\n🎉 Wishing you and your loved ones a very Happy Raksha Bandhan! 🥰🎊\n\n— RGK Group of Industries 🏭❤️",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQH7rnITRVHGfQ/feedshare-image-high-res/B4DaBHsb9qJIAU-/0/1787909226592?e=2147483647&v=beta&t=MaXXzmth9H9vUVqeODxZ6gaWGvPLHhKXhivACLSzsJU",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQH7rnITRVHGfQ/feedshare-image-high-res/B4DaBHsb9qJIAU-/0/1787909226592?e=2147483647&v=beta&t=MaXXzmth9H9vUVqeODxZ6gaWGvPLHhKXhivACLSzsJU",
+      "date": "2026-08-28",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/r-g-k-group-of-industries",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQH7rnITRVHGfQ/feedshare-image-high-res/B4DaBHsb9qJIAU-/0/1787909226592?e=2147483647&v=beta&t=MaXXzmth9H9vUVqeODxZ6gaWGvPLHhKXhivACLSzsJU",
+      "published_date": "2026-08-28",
+      "link": "https://www.linkedin.com/posts/rgk-group_warm-wishes-from-rgk-group-of-industries-activity-7499034825459294208-elGj",
+      "content": "🌸 Warm wishes from RGK Group of Industries on the auspicious occasion of Raksha Bandhan! 🪢❤️\n\nMay this beautiful festival of love and togetherness strengthen the bonds of care, trust, and support that connect us. 🤝✨\nMay every bond bring *strength, happiness, prosperity, and countless beautiful moments* into your life. 🌟💐\n\n🎉 Wishing you and your loved ones a very Happy Raksha Bandhan! 🥰🎊\n\n— RGK Group of Industries 🏭❤️",
+      "timestamp": "2026-08-28",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQH7rnITRVHGfQ/feedshare-image-high-res/B4DaBHsb9qJIAU-/0/1787909226592?e=2147483647&v=beta&t=MaXXzmth9H9vUVqeODxZ6gaWGvPLHhKXhivACLSzsJU",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQH7rnITRVHGfQ/feedshare-image-high-res/B4DaBHsb9qJIAU-/0/1787909226592?e=2147483647&v=beta&t=MaXXzmth9H9vUVqeODxZ6gaWGvPLHhKXhivACLSzsJU",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/rgk-group_warm-wishes-from-rgk-group-of-industries-activity-7499034825459294208-elGj",
+      "competitorName": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
+      "activity_id": "7499034825459294208"
+    },
+    {
+      "id": "li_1792571850953_1tbh5",
+      "company": "Acme Foundry Inc",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/acme-foundry-inc%2E_precisionmanufacturing-metalcasting-engineeringsolutions-activity-7493713005352808448-AxOv",
+      "caption": "Gray cast iron has a reputation for being dependable, practical, and everywhere. It is the material behind countless engine blocks, pump housings, brake components, and machine bases. But some of its most impressive work happens in places most people would never think to look.\n\nAt Acme Foundry, we know gray iron is more than a traditional casting material. Its combination of compressive strength, castability, thermal stability, wear resistance, and vibration damping makes it a smart choice for specialized products across demanding industries.\n\nOur latest blog lays out five surprisingly advanced applications that show just how versatile gray cast iron still remains, even amongst all of the more advanced materials developed in the 21st century.\nhttps://lnkd.in/gp23_2Yf\n\n #PrecisionManufacturing #MetalCasting #EngineeringSolutions #CNCmachining #IndustrialEngineering #ManufacturingTechnology",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQGKhao7dULlKA/feedshare-shrink_800/B56Z_xjbB4HIAc-/0/1786464023307?e=2147483647&v=beta&t=j9Yq7zXCBloVAlI2GHWyDYgKBqqcdidfPFTQpCRAsJs",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQGKhao7dULlKA/feedshare-shrink_800/B56Z_xjbB4HIAc-/0/1786464023307?e=2147483647&v=beta&t=j9Yq7zXCBloVAlI2GHWyDYgKBqqcdidfPFTQpCRAsJs",
+      "date": "2026-08-13",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/acme-foundry-inc./",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQGKhao7dULlKA/feedshare-shrink_800/B56Z_xjbB4HIAc-/0/1786464023307?e=2147483647&v=beta&t=j9Yq7zXCBloVAlI2GHWyDYgKBqqcdidfPFTQpCRAsJs",
+      "published_date": "2026-08-13",
+      "link": "https://www.linkedin.com/posts/acme-foundry-inc%2E_precisionmanufacturing-metalcasting-engineeringsolutions-activity-7493713005352808448-AxOv",
+      "content": "Gray cast iron has a reputation for being dependable, practical, and everywhere. It is the material behind countless engine blocks, pump housings, brake components, and machine bases. But some of its most impressive work happens in places most people would never think to look.\n\nAt Acme Foundry, we know gray iron is more than a traditional casting material. Its combination of compressive strength, castability, thermal stability, wear resistance, and vibration damping makes it a smart choice for specialized products across demanding industries.\n\nOur latest blog lays out five surprisingly advanced applications that show just how versatile gray cast iron still remains, even amongst all of the more advanced materials developed in the 21st century.\nhttps://lnkd.in/gp23_2Yf\n\n #PrecisionManufacturing #MetalCasting #EngineeringSolutions #CNCmachining #IndustrialEngineering #ManufacturingTechnology",
+      "timestamp": "2026-08-13",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQGKhao7dULlKA/feedshare-shrink_800/B56Z_xjbB4HIAc-/0/1786464023307?e=2147483647&v=beta&t=j9Yq7zXCBloVAlI2GHWyDYgKBqqcdidfPFTQpCRAsJs",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQGKhao7dULlKA/feedshare-shrink_800/B56Z_xjbB4HIAc-/0/1786464023307?e=2147483647&v=beta&t=j9Yq7zXCBloVAlI2GHWyDYgKBqqcdidfPFTQpCRAsJs",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/acme-foundry-inc%2E_precisionmanufacturing-metalcasting-engineeringsolutions-activity-7493713005352808448-AxOv",
+      "competitorName": "Acme Foundry Inc",
+      "activity_id": "7493713005352808448"
+    }
+  ],
   "ownSocials": {
     "linkedin": null,
     "instagram": null,
@@ -81221,8 +81996,8 @@
       ],
       "socials": {
         "linkedin": "https://www.linkedin.com/company/www.gaurav-industries.com/",
-        "instagram": null,
-        "facebook": null,
+        "instagram": "https://www.instagram.com/gaurav_pipe_industries",
+        "facebook": "https://www.facebook.com/industriesgaurav/photos",
         "youtube": "https://youtube.com/@gauravindustries-y2e?si=5XrBrizlGpqQDD6M"
       },
       "products": [
@@ -81268,7 +82043,25 @@
         "Heavy‑Duty CNC Machining",
         "Stainless Steel Fabrication",
         "Quality Assurance & Inspection"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
@@ -81289,8 +82082,8 @@
       "socials": {
         "linkedin": "https://www.linkedin.com/company/r-g-k-group-of-industries",
         "instagram": null,
-        "facebook": null,
-        "youtube": null
+        "facebook": "https://www.facebook.com/groups/427986938292635/posts/937652513992739",
+        "youtube": "https://www.youtube.com/watch?v=PGZ77vX8eUk"
       },
       "products": [
         "Ductile Iron (SG Iron) Castings",
@@ -81331,7 +82124,25 @@
         "Heavy‑Duty CNC Machining",
         "Stainless Steel Fabrication",
         "Secure Packaging & Delivery"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 2
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 1
+        }
+      }
     },
     {
       "name": "Metalix Ferrocast",
@@ -81353,7 +82164,7 @@
         "linkedin": "https://www.linkedin.com/company/metalix-ferrocast/",
         "instagram": null,
         "facebook": "https://www.facebook.com/profile.php?id=61570021600141",
-        "youtube": null
+        "youtube": "https://www.youtube.com/playlist?list=PL6NoQ9pQ2-yv7-kpBx_ZTbk2ml0f5w2qZ"
       },
       "products": [
         "Grey Cast Iron Castings",
@@ -81386,7 +82197,25 @@
         "Steel Casting",
         "CNC Machining",
         "Precision Casting & Molding"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 2
+        }
+      }
     },
     {
       "name": "Carbotech Metacast",
@@ -81406,9 +82235,9 @@
       ],
       "socials": {
         "linkedin": "https://in.linkedin.com/company/carbotech-metacast",
-        "instagram": null,
+        "instagram": "https://www.instagram.com/popular/official-profile",
         "facebook": "https://www.facebook.com/CarbotechMetacast/",
-        "youtube": null
+        "youtube": "https://www.youtube.com/watch?v=HF48LbnM-gU"
       },
       "products": [
         "Ductile Iron (SG Iron) Castings",
@@ -81441,7 +82270,25 @@
         "Ductile Iron Casting",
         "Steel Casting",
         "CNC Machining"
-      ]
+      ],
+      "socialStatus": {
+        "YouTube": {
+          "status": "Success",
+          "count": 1
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "LUMINOUS TECHNOCAST PVT. LTD.",
@@ -81990,7 +82837,7 @@
         "linkedin": "https://www.linkedin.com/in/shivaji-wavhal-b06b33133",
         "instagram": "https://www.instagram.com/shreeniwas_casttech_industries/",
         "facebook": "https://m.facebook.com/p/Shreeniwas-Casttech-Industries-100071761362059/",
-        "youtube": null
+        "youtube": "https://www.youtube.com/watch?v=FvOgPNovcR0"
       },
       "products": [
         "Grey Cast Iron Castings",
@@ -82031,7 +82878,25 @@
         "Heavy‑Duty CNC Machining",
         "Quality Assurance & Inspection",
         "Material Traceability & Documentation"
-      ]
+      ],
+      "socialStatus": {
+        "YouTube": {
+          "status": "Success",
+          "count": 1
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "M/s. Ved Industries.",
@@ -82051,7 +82916,7 @@
       ],
       "socials": {
         "linkedin": "https://www.linkedin.com/company/ved-industries-india",
-        "instagram": null,
+        "instagram": "https://www.instagram.com/popular/ved-industries",
         "facebook": "https://www.facebook.com/Ved-Industries-101434005387592",
         "youtube": "https://www.youtube.com/channel/UCqYYYP1RsVQQycp-gCP9ksQ"
       },
@@ -82090,7 +82955,25 @@
         "Steel Casting",
         "CNC Machining",
         "Stainless Steel Fabrication"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Samarth Foundry Services Pvt. Ltd.",
@@ -82149,7 +83032,25 @@
         "CNC Machining",
         "Precision Casting & Molding",
         "Quality Assurance & Inspection"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "JS Auto Cast Foundry India Pvt Ltd",
@@ -82208,7 +83109,25 @@
         "CNC Machining",
         "Precision Casting & Molding",
         "Secure Packaging & Delivery"
-      ]
+      ],
+      "socialStatus": {
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 2
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Ghatge Patil Industries Limited",
@@ -82826,7 +83745,25 @@
         "Quality Assurance & Inspection",
         "Material Traceability & Documentation",
         "Secure Packaging & Delivery"
-      ]
+      ],
+      "socialStatus": {
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "U.S. Casting Company",
@@ -82848,7 +83785,7 @@
         "linkedin": null,
         "instagram": null,
         "facebook": null,
-        "youtube": null
+        "youtube": "https://www.youtube.com/%27)%3B"
       },
       "products": [
         "Grey Cast Iron Castings",
@@ -82897,7 +83834,27 @@
         "Stainless Steel Fabrication",
         "Quality Assurance & Inspection",
         "Material Traceability & Documentation"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        }
+      },
+      "isDeadAccount": true,
+      "isInactiveSocial": true
     },
     {
       "name": "Acme Foundry Inc",
@@ -82958,7 +83915,25 @@
         "Precision Casting & Molding",
         "Heavy‑Duty CNC Machining",
         "Quality Assurance & Inspection"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Decatur Foundry",
@@ -83009,7 +83984,25 @@
         "CNC Machining",
         "Precision Casting & Molding",
         "Quality Assurance & Inspection"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "West Coast Foundry",
@@ -83412,6 +84405,59 @@
       ],
       "commonProducts": [
         "Grey Cast Iron Castings"
+      ]
+    },
+    {
+      "name": "S. S. Alloy Castings",
+      "url": "https://www.swanandeshaacpl.in/",
+      "type": "regional",
+      "location": "Shed No. 1 to 5, Gut No, 1582, Dehu - Alandi Rd, Vitthal Nagar, Chikhali, Pune, Pimpri-Chinchwad, Maharashtra 411062, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting & Machining. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 13 common products: [Grey Cast Iron Castings, Ductile Iron (SG Iron) Castings, Steel Casting Components, Graded Grey Cast Iron (C.I.) Castings, Cast & Machined Components, Casting & Forging, Chemical Process & Surface Treatment...]. Socials: LinkedIn verified. Rating: 5 | Phone: 097669 15182",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.swanandeshaacpl.in/"
+        },
+        {
+          "title": "Product: Grey Cast Iron Castings",
+          "url": "https://www.swanandeshaacpl.in/ci-and-mild-steel-casting.html"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/cws/share?url=https://www.swanandeshaacpl.in/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Grey Cast Iron Castings",
+        "Ductile Iron (SG Iron) Castings",
+        "Steel Casting Components",
+        "Graded Grey Cast Iron (C.I.) Castings",
+        "Cast & Machined Components",
+        "Casting & Forging",
+        "Chemical Process & Surface Treatment",
+        "Product Development",
+        "Precision-Engineered Casting and Machined Components",
+        "Surface Finishing",
+        "Ductile Iron Casting",
+        "Steel Casting",
+        "Stainless Steel Fabrication"
+      ],
+      "commonProducts": [
+        "Grey Cast Iron Castings",
+        "Ductile Iron (SG Iron) Castings",
+        "Steel Casting Components",
+        "Graded Grey Cast Iron (C.I.) Castings",
+        "Cast & Machined Components",
+        "Casting & Forging",
+        "Chemical Process & Surface Treatment",
+        "Product Development",
+        "Precision-Engineered Casting and Machined Components",
+        "Surface Finishing",
+        "Ductile Iron Casting",
+        "Steel Casting",
+        "Stainless Steel Fabrication"
       ]
     }
   ]
