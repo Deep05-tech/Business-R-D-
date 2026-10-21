@@ -78,7 +78,7 @@ export class CronAgent {
 
     const isValidProfileUrl = (url?: string | null, platform?: string): boolean => {
       if (!url || typeof url !== 'string') return false;
-      const lower = url.toLowerCase();
+      const lower = url.toLowerCase().trim();
       if (lower.includes('/sharer') || lower.includes('/share?') || lower.includes('/cws/share') || lower.includes('/intent') || lower.includes('indiamart.com')) return false;
 
       try {
@@ -89,18 +89,24 @@ export class CronAgent {
         if (platform === 'Instagram') {
           if (!lower.includes('instagram.com/')) return false;
           const handle = segments[0].toLowerCase();
-          const invalidHandles = new Set(['p', 'reel', 'reels', 'tv', 'explore', 'direct', 'accounts', 'stories', 'wix', 'share', 'sharer']);
-          return !invalidHandles.has(handle);
+          const invalidHandles = new Set(['p', 'reel', 'reels', 'tv', 'explore', 'direct', 'accounts', 'stories', 'wix', 'share', 'sharer', 'popular', 'tags', 'locations', 'login', 'about']);
+          return !invalidHandles.has(handle) && segments.length <= 2;
         }
         if (platform === 'LinkedIn') {
           if (!lower.includes('linkedin.com/')) return false;
           return lower.includes('linkedin.com/company/') || lower.includes('linkedin.com/in/');
         }
         if (platform === 'Facebook') {
-          return lower.includes('facebook.com/');
+          if (!lower.includes('facebook.com/')) return false;
+          if (lower.includes('/groups/') || lower.includes('/sharer') || lower.includes('/share?') || lower.includes('/dialog/') || lower.includes('/login')) return false;
+          const handle = segments[0].toLowerCase();
+          const invalidHandles = new Set(['groups', 'sharer', 'share', 'login', 'policies', 'dialog', 'events', 'photo', 'photos', 'video', 'videos', 'story', 'permalink', 'help']);
+          return !invalidHandles.has(handle);
         }
         if (platform === 'YouTube') {
-          return (lower.includes('youtube.com/') || lower.includes('youtu.be/')) && !lower.includes('/results?');
+          if (!lower.includes('youtube.com/') && !lower.includes('youtu.be/')) return false;
+          if (lower.includes('/results?') || lower.includes('%27') || lower.includes(';') || lower.includes(')')) return false;
+          return true;
         }
         return true;
       } catch {
@@ -110,6 +116,8 @@ export class CronAgent {
 
     const competitorResults = await Promise.all(targetCompetitors.map(comp => competitorLimit(async () => {
       const cleanName = comp.name
+        .replace(/^m\/s\.?\s+/i, '')
+        .split(/[-–—|(/]/)[0]
         .replace(/\b(pvt\.?\s*ltd\.?|private\s+limited|ltd\.?|limited|inc\.?|incorporated|llc|corp\.?|corporation|co\.?|gmbh)\b/gi, '')
         .replace(/[^\w\s]/g, ' ')
         .replace(/\s+/g, ' ')
@@ -181,7 +189,7 @@ export class CronAgent {
       const MAX_POSTS_PER_COMP = 3;
 
       const [ytPosts, igPosts, fbPosts, liPosts] = await Promise.all([
-        socialExtractor.extractPosts("YouTube", ytUrl, comp.name, MAX_POSTS_PER_COMP, { preferHttp: true }).then(posts => {
+        socialExtractor.extractPosts("YouTube", ytUrl, cleanName, MAX_POSTS_PER_COMP, { preferHttp: true }).then(posts => {
           platformStatuses.YouTube = { status: posts.length > 0 ? "Success" : "No posts found", count: posts.length };
           return posts;
         }).catch(e => {
@@ -189,7 +197,7 @@ export class CronAgent {
           platformStatuses.YouTube = { status: "Failed", reason: e.message || "Extraction timeout", count: 0 };
           return [];
         }),
-        socialExtractor.extractPosts("Instagram", igUrl, comp.name, MAX_POSTS_PER_COMP, { preferHttp: true }).then(posts => {
+        socialExtractor.extractPosts("Instagram", igUrl, cleanName, MAX_POSTS_PER_COMP, { preferHttp: true }).then(posts => {
           platformStatuses.Instagram = { status: posts.length > 0 ? "Success" : "No posts found", count: posts.length };
           return posts;
         }).catch(e => {
@@ -197,7 +205,7 @@ export class CronAgent {
           platformStatuses.Instagram = { status: "Failed", reason: e.message || "Extraction timeout", count: 0 };
           return [];
         }),
-        socialExtractor.extractPosts("Facebook", fbUrl, comp.name, MAX_POSTS_PER_COMP, { preferHttp: true }).then(posts => {
+        socialExtractor.extractPosts("Facebook", fbUrl, cleanName, MAX_POSTS_PER_COMP, { preferHttp: true }).then(posts => {
           platformStatuses.Facebook = { status: posts.length > 0 ? "Success" : "No posts found", count: posts.length };
           return posts;
         }).catch(e => {
@@ -205,7 +213,7 @@ export class CronAgent {
           platformStatuses.Facebook = { status: "Failed", reason: e.message || "Extraction timeout", count: 0 };
           return [];
         }),
-        socialExtractor.extractPosts("LinkedIn", liUrl, comp.name, MAX_POSTS_PER_COMP, { preferHttp: true }).then(posts => {
+        socialExtractor.extractPosts("LinkedIn", liUrl, cleanName, MAX_POSTS_PER_COMP, { preferHttp: true }).then(posts => {
           platformStatuses.LinkedIn = { status: posts.length > 0 ? "Success" : "No posts found", count: posts.length };
           return posts;
         }).catch(e => {

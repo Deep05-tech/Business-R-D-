@@ -3777,6 +3777,36 @@ async function loadFeedUI() {
       }
     });
 
+    window.selectedCompPlat = window.selectedCompPlat || 'All';
+    window.filterCompetitorFeed = function(selectedPlat) {
+      window.selectedCompPlat = selectedPlat;
+      const btns = document.querySelectorAll('.comp-feed-filter-btn');
+      btns.forEach(b => {
+        if (b.getAttribute('data-platform') === selectedPlat) {
+          b.className = 'btn btn-primary comp-feed-filter-btn';
+        } else {
+          b.className = 'btn btn-secondary comp-feed-filter-btn';
+        }
+      });
+      const sections = document.querySelectorAll('.comp-feed-platform-section');
+      sections.forEach(s => {
+        const p = s.getAttribute('data-platform');
+        s.style.display = (selectedPlat === 'All' || p === selectedPlat) ? 'block' : 'none';
+      });
+    };
+
+    const totalValidPosts = ytPosts.length + igPosts.length + fbPosts.length + liPosts.length;
+    let filterBarHtml = `
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; align-items: center;">
+        <span style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px;">Filter Platform:</span>
+        <button type="button" class="btn ${window.selectedCompPlat === 'All' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="All" onclick="window.filterCompetitorFeed('All')">🌐 All (${totalValidPosts})</button>
+        ${ytPosts.length > 0 ? `<button type="button" class="btn ${window.selectedCompPlat === 'YouTube' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="YouTube" onclick="window.filterCompetitorFeed('YouTube')">▶️ YouTube (${ytPosts.length})</button>` : ''}
+        ${igPosts.length > 0 ? `<button type="button" class="btn ${window.selectedCompPlat === 'Instagram' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="Instagram" onclick="window.filterCompetitorFeed('Instagram')">📸 Instagram (${igPosts.length})</button>` : ''}
+        ${fbPosts.length > 0 ? `<button type="button" class="btn ${window.selectedCompPlat === 'Facebook' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="Facebook" onclick="window.filterCompetitorFeed('Facebook')">📘 Facebook (${fbPosts.length})</button>` : ''}
+        ${liPosts.length > 0 ? `<button type="button" class="btn ${window.selectedCompPlat === 'LinkedIn' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="LinkedIn" onclick="window.filterCompetitorFeed('LinkedIn')">💼 LinkedIn (${liPosts.length})</button>` : ''}
+      </div>
+    `;
+
     let html = `
       <style>
         .social-section-header { display: flex; align-items: center; gap: 10px; font-size: 1.25rem; font-weight: 700; color: #ffffff; margin: 24px 0 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px; }
@@ -3786,6 +3816,7 @@ async function loadFeedUI() {
         .social-horizontal-row::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
       </style>
       <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        ${filterBarHtml}
     `;
 
     const renderCard = (post) => {
@@ -3871,7 +3902,7 @@ async function loadFeedUI() {
     // Render 4 Distinct Sections (YouTube, Instagram, Facebook, LinkedIn)
     if (ytPosts.length > 0) {
       html += `
-        <div>
+        <div class="comp-feed-platform-section" data-platform="YouTube" style="display: ${(window.selectedCompPlat === 'All' || window.selectedCompPlat === 'YouTube') ? 'block' : 'none'};">
           <div class="social-section-header">
             <div class="social-section-icon" style="background: rgba(255, 0, 0, 0.15); color: #ff0000;">▶️</div>
             <span>YouTube</span>
@@ -3886,7 +3917,7 @@ async function loadFeedUI() {
 
     if (igPosts.length > 0) {
       html += `
-        <div>
+        <div class="comp-feed-platform-section" data-platform="Instagram" style="display: ${(window.selectedCompPlat === 'All' || window.selectedCompPlat === 'Instagram') ? 'block' : 'none'};">
           <div class="social-section-header">
             <div class="social-section-icon" style="background: rgba(225, 48, 108, 0.15); color: #e1306c;">📸</div>
             <span>Instagram</span>
@@ -3901,7 +3932,7 @@ async function loadFeedUI() {
 
     if (fbPosts.length > 0) {
       html += `
-        <div>
+        <div class="comp-feed-platform-section" data-platform="Facebook" style="display: ${(window.selectedCompPlat === 'All' || window.selectedCompPlat === 'Facebook') ? 'block' : 'none'};">
           <div class="social-section-header">
             <div class="social-section-icon" style="background: rgba(24, 119, 242, 0.15); color: #1877f2;">📘</div>
             <span>Facebook</span>
@@ -3916,7 +3947,7 @@ async function loadFeedUI() {
 
     if (liPosts.length > 0) {
       html += `
-        <div>
+        <div class="comp-feed-platform-section" data-platform="LinkedIn" style="display: ${(window.selectedCompPlat === 'All' || window.selectedCompPlat === 'LinkedIn') ? 'block' : 'none'};">
           <div class="social-section-header">
             <div class="social-section-icon" style="background: rgba(10, 102, 194, 0.15); color: #0a66c2;">💼</div>
             <span>LinkedIn</span>

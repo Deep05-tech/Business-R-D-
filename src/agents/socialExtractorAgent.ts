@@ -349,12 +349,13 @@ export class SocialExtractorAgent {
 
         if (profileUrl) {
             const targetHandleMatch = profileUrl.match(/(?:instagram\.com|facebook\.com|linkedin\.com\/(?:company|in)|youtube\.com\/@|\/channel\/)\/([a-zA-Z0-9._-]+)/i);
-            if (targetHandleMatch && targetHandleMatch[1]) {
+            const INVALID_TARGET_HANDLES = new Set(['pages', 'people', 'groups', 'p', 'reel', 'reels', 'watch', 'videos', 'popular', 'share', 'sharer', 'login', 'about', 'explore', 'stories', 'direct', 'tags']);
+            if (targetHandleMatch && targetHandleMatch[1] && !INVALID_TARGET_HANDLES.has(targetHandleMatch[1].toLowerCase())) {
                 const targetHandle = targetHandleMatch[1].toLowerCase().replace(/[-_.]/g, '');
                 const candHandleMatch = lowerUrl.match(/(?:instagram\.com|facebook\.com|linkedin\.com\/(?:company|in|posts)|youtube\.com\/@|\/channel\/)\/([a-zA-Z0-9._-]+)/i);
                 if (candHandleMatch && candHandleMatch[1]) {
                     const candHandle = candHandleMatch[1].toLowerCase().replace(/[-_.]/g, '');
-                    const ROUTE_KEYWORDS = new Set(['p', 'reel', 'reels', 'share', 'posts', 'videos', 'watch', 'photo', 'photos', 'permalink', 'story']);
+                    const ROUTE_KEYWORDS = new Set(['p', 'reel', 'reels', 'share', 'posts', 'videos', 'watch', 'photo', 'photos', 'permalink', 'story', 'popular', 'groups']);
                     if (!ROUTE_KEYWORDS.has(candHandle) && targetHandle.length >= 4 && !candHandle.includes(targetHandle) && !targetHandle.includes(candHandle)) {
                         return null;
                     }
@@ -567,44 +568,46 @@ export class SocialExtractorAgent {
 
         if (platform === "Instagram") {
             try {
-                const res = await axios.get(profileUrl, {
-                    headers: {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-                        'Accept-Language': 'en-US,en;q=0.9',
-                        'Sec-Ch-Ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
-                        'Sec-Ch-Ua-Mobile': '?0',
-                        'Sec-Ch-Ua-Platform': '"Windows"',
-                        'Sec-Fetch-Dest': 'document',
-                        'Sec-Fetch-Mode': 'navigate',
-                        'Sec-Fetch-Site': 'none',
-                        'Sec-Fetch-User': '?1',
-                        'Upgrade-Insecure-Requests': '1'
-                    },
-                    timeout: 8000
-                });
-                const html = res.data || "";
-                const matches = html.match(/\/(?:p|reel)\/([A-Za-z0-9_-]{5,25})\/?/g) || [];
-                const seenShortcodes = new Set<string>();
-                for (const m of matches) {
-                    const scMatch = m.match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/);
-                    if (scMatch && scMatch[1] && !seenShortcodes.has(scMatch[1])) {
-                        seenShortcodes.add(scMatch[1]);
-                        const isReel = m.includes('/reel/');
-                        const postLink = `https://www.instagram.com/${isReel ? 'reel' : 'p'}/${scMatch[1]}/`;
-                        posts.push({
-                            id: `ig_${scMatch[1]}`,
-                            company: cleanCompName,
-                            platform: "Instagram",
-                            post_url: postLink,
-                            caption: `${cleanCompName} on Instagram: Official ${isReel ? 'Reel' : 'Post'}.`,
-                            media_type: isReel ? "Video" : "Text",
-                            thumbnail: "",
-                            media_url: postLink,
-                            date: new Date().toISOString().split('T')[0],
-                            engagement: { likes: 0, comments: 0 }
-                        });
-                        if (posts.length >= maxPosts) break;
+                if (profileUrl && profileUrl.startsWith("http")) {
+                    const res = await axios.get(profileUrl, {
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                            'Accept-Language': 'en-US,en;q=0.9',
+                            'Sec-Ch-Ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
+                            'Sec-Ch-Ua-Mobile': '?0',
+                            'Sec-Ch-Ua-Platform': '"Windows"',
+                            'Sec-Fetch-Dest': 'document',
+                            'Sec-Fetch-Mode': 'navigate',
+                            'Sec-Fetch-Site': 'none',
+                            'Sec-Fetch-User': '?1',
+                            'Upgrade-Insecure-Requests': '1'
+                        },
+                        timeout: 8000
+                    });
+                    const html = res.data || "";
+                    const matches = html.match(/\/(?:p|reel)\/([A-Za-z0-9_-]{5,25})\/?/g) || [];
+                    const seenShortcodes = new Set<string>();
+                    for (const m of matches) {
+                        const scMatch = m.match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/);
+                        if (scMatch && scMatch[1] && !seenShortcodes.has(scMatch[1])) {
+                            seenShortcodes.add(scMatch[1]);
+                            const isReel = m.includes('/reel/');
+                            const postLink = `https://www.instagram.com/${isReel ? 'reel' : 'p'}/${scMatch[1]}/`;
+                            posts.push({
+                                id: `ig_${scMatch[1]}`,
+                                company: cleanCompName,
+                                platform: "Instagram",
+                                post_url: postLink,
+                                caption: `${cleanCompName} on Instagram: Official ${isReel ? 'Reel' : 'Post'}.`,
+                                media_type: isReel ? "Video" : "Text",
+                                thumbnail: "",
+                                media_url: postLink,
+                                date: new Date().toISOString().split('T')[0],
+                                engagement: { likes: 0, comments: 0 }
+                            });
+                            if (posts.length >= maxPosts) break;
+                        }
                     }
                 }
             } catch (e: any) {
@@ -614,13 +617,14 @@ export class SocialExtractorAgent {
 
         if (platform === "LinkedIn") {
             try {
-                const res = await axios.get(profileUrl, {
-                    headers: {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-                    },
-                    timeout: 10000
-                });
+                if (profileUrl && profileUrl.startsWith("http")) {
+                    const res = await axios.get(profileUrl, {
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                        },
+                        timeout: 10000
+                    });
                 const $ = cheerio.load(res.data);
                 $('script[type="application/ld+json"]').each((_, el) => {
                     try {
@@ -650,6 +654,7 @@ export class SocialExtractorAgent {
                         });
                     } catch {}
                 });
+                }
             } catch (e: any) {
                 console.log(`[SocialExtractorAgent] LinkedIn HTTP extraction failed: ${e.message}`);
             }
@@ -729,6 +734,8 @@ export class SocialExtractorAgent {
         if ((posts.length < maxPosts || hasOnlyGenericPosts) && cleanCompName) {
             try {
                 const searchBrand = cleanCompName
+                    .replace(/^m\/s\.?\s+/i, '')
+                    .split(/[-–—|(/]/)[0]
                     .replace(/\b(pvt\.?\s*ltd\.?|private\s+limited|ltd\.?|limited|inc\.?|incorporated|llc|corp\.?|corporation|co\.?|gmbh)\b/gi, '')
                     .replace(/[^\w\s]/g, ' ')
                     .replace(/\s+/g, ' ')
@@ -736,23 +743,8 @@ export class SocialExtractorAgent {
 
                 let results: any[] = [];
 
-                // 1. Try Tavily Search API if configured (fast, accurate, direct social media results)
-                // 1. For Facebook, FreeSearchEngine directly finds rich post/video/reel permalinks
-                if (platform === "Facebook") {
-                    try {
-                        const ddg = new FreeSearchEngine({ maxResults: 15 });
-                        const rawDDG = await ddg.invoke({ query: `"${searchBrand}" site:facebook.com` });
-                        const ddgResults = JSON.parse(rawDDG || "[]");
-                        if (Array.isArray(ddgResults) && ddgResults.length > 0) {
-                            results.push(...ddgResults);
-                        }
-                    } catch (e: any) {
-                        console.log(`[SocialExtractorAgent] DDG search for Facebook failed: ${e.message}`);
-                    }
-                }
-
-                // 2. Try Tavily Search API if configured (especially strong for Instagram & LinkedIn)
-                if ((!results || results.length === 0) && process.env.TAVILY_API_KEY) {
+                // 1. Try Tavily Search API first if configured (fast, direct social media results)
+                if (process.env.TAVILY_API_KEY) {
                     try {
                         const targetDomains: Record<string, string[]> = {
                             "Instagram": ["instagram.com"],
@@ -761,17 +753,17 @@ export class SocialExtractorAgent {
                             "YouTube": ["youtube.com"]
                         };
                         const handleMatch = profileUrl ? profileUrl.match(/(?:facebook\.com|instagram\.com|linkedin\.com\/(?:company|in)|youtube\.com\/@|\/channel\/)\/([a-zA-Z0-9._-]+)/i) : null;
-                        const handle = handleMatch && !['pages', 'people', 'groups', 'p', 'reel', 'watch', 'videos'].includes(handleMatch[1].toLowerCase()) ? handleMatch[1] : '';
+                        const handle = handleMatch && !['pages', 'people', 'groups', 'p', 'reel', 'reels', 'watch', 'videos', 'popular', 'share', 'sharer', 'login'].includes(handleMatch[1].toLowerCase()) ? handleMatch[1] : '';
 
                         let tavilyQuery = "";
                         if (platform === "Instagram") {
-                            tavilyQuery = handle ? `site:instagram.com/p/ OR site:instagram.com/reel/ "${handle}"` : `site:instagram.com/p/ OR site:instagram.com/reel/ "${searchBrand}"`;
+                            tavilyQuery = handle ? `"${handle}"` : `"${searchBrand}"`;
                         } else if (platform === "Facebook") {
-                            tavilyQuery = handle ? `site:facebook.com "${handle}"` : `site:facebook.com "${searchBrand}"`;
+                            tavilyQuery = handle ? `"${handle}"` : `"${searchBrand}"`;
                         } else if (platform === "LinkedIn") {
-                            tavilyQuery = handle ? `site:linkedin.com/posts/ "${handle}"` : `site:linkedin.com/posts/ "${searchBrand}"`;
+                            tavilyQuery = handle ? `"${handle}"` : `"${searchBrand}"`;
                         } else if (platform === "YouTube") {
-                            tavilyQuery = handle ? `site:youtube.com/watch "${handle}"` : `site:youtube.com/watch "${searchBrand}"`;
+                            tavilyQuery = handle ? `"${handle}"` : `"${searchBrand}"`;
                         }
 
                         const tavilyRes = await axios.post("https://api.tavily.com/search", {
@@ -779,7 +771,7 @@ export class SocialExtractorAgent {
                             query: tavilyQuery,
                             search_depth: "basic",
                             include_domains: targetDomains[platform] || [],
-                            max_results: maxPosts * 2
+                            max_results: maxPosts * 3
                         }, { timeout: 8000 });
 
                         if (tavilyRes.data && Array.isArray(tavilyRes.data.results)) {
@@ -796,7 +788,7 @@ export class SocialExtractorAgent {
                     }
                 }
 
-                // 3. Fallback to FreeSearchEngine (DuckDuckGo) if needed
+                // 2. Fallback to FreeSearchEngine (DuckDuckGo) if needed
                 if (!results || results.length === 0) {
                     let query = "";
                     if (platform === "Instagram") {
@@ -813,15 +805,21 @@ export class SocialExtractorAgent {
                         try {
                             const ddg = new FreeSearchEngine({ maxResults: 15 });
                             const rawDDG = await ddg.invoke({ query });
-                            results = JSON.parse(rawDDG || "[]");
+                            const ddgResults = JSON.parse(rawDDG || "[]");
+                            if (Array.isArray(ddgResults) && ddgResults.length > 0) {
+                                results.push(...ddgResults);
+                            }
                         } catch {}
 
-                        // 4. Fallback to BingRssSearchEngine if DDG returned no results
+                        // 3. Fallback to BingRssSearchEngine if DDG returned no results
                         if (!results || results.length === 0) {
                             try {
                                 const bing = new BingRssSearchEngine({ maxResults: 15 });
                                 const rawBing = await bing.invoke({ query });
-                                results = JSON.parse(rawBing || "[]");
+                                const bingResults = JSON.parse(rawBing || "[]");
+                                if (Array.isArray(bingResults) && bingResults.length > 0) {
+                                    results.push(...bingResults);
+                                }
                             } catch {}
                         }
                     }
@@ -895,11 +893,12 @@ export class SocialExtractorAgent {
             }
         }
 
-        const slice = uniquePosts.slice(0, maxPosts);
+        const candidateSlice = uniquePosts.slice(0, maxPosts * 2);
         const enriched = await Promise.all(
-            slice.map(p => this.enrichPostDetails(p, platform))
+            candidateSlice.map(p => this.enrichPostDetails(p, platform))
         );
-        return enriched.filter(p => !p._invalidAuthor && Boolean(p.thumbnail || p.platform === 'YouTube' || p._ytId));
+        const validEnriched = enriched.filter(p => !p._invalidAuthor && Boolean(p.thumbnail || p.platform === 'YouTube' || p._ytId));
+        return validEnriched.slice(0, maxPosts);
     }
 
     public static cleanSocialCaption(text: string, platform?: string): string {
