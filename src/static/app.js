@@ -3596,7 +3596,7 @@ async function loadFeedUI() {
                 <span>▶ Watch Video on Facebook</span> ↗
               </a>
             </div>`;
-          setTimeout(() => { if (window.resolveFbVideo) window.resolveFbVideo(${globalIndex}); }, 50);
+          setTimeout(() => { if (window.resolveFbVideo) window.resolveFbVideo(globalIndex); }, 50);
         } else {
           leftMediaHtml = `
             <div style="width: 100%; height: 100%; background: ${meta.bg}; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 36px; box-sizing: border-box;">
