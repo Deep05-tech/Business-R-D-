@@ -55213,5 +55213,103 @@
         ]
       }
     ]
-  }
+  },
+  "competitors": [
+    {
+      "name": "SHIVYA FORGE-Forged Flanges, Fittings, Components, Forged Rings, Bearing Rings Manufacturer in India",
+      "url": "http://www.shivyaforge.com/",
+      "type": "local",
+      "location": "Hanspura, Vasant Vihar 2, Nava Naroda, Ahmedabad, Gujarat 382330, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 11 common products: [Big Rings, Small Rings, Gear Blanks with Broaching, Gears, Precision Forged & Machined Components (Portfolio), High-Strength Closed-Die Forged Components, Gear Blanks...]. Socials: Facebook verified. Rating: N/A | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.shivyaforge.com/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "http://www.shivyaforge.com/forged-rings.html"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/shivyaforge/",
+        "youtube": null
+      },
+      "products": [
+        "Big Rings",
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gears",
+        "Precision Forged & Machined Components (Portfolio)",
+        "High-Strength Closed-Die Forged Components",
+        "Gear Blanks",
+        "Precision Gears",
+        "Closed-Die Forged Components",
+        "Advanced Forging Solutions",
+        "Forged Transmission Gears"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gears",
+        "Precision Forged & Machined Components (Portfolio)",
+        "High-Strength Closed-Die Forged Components",
+        "Gear Blanks",
+        "Precision Gears",
+        "Closed-Die Forged Components",
+        "Advanced Forging Solutions",
+        "Forged Transmission Gears"
+      ]
+    },
+    {
+      "name": "Unique Forgings (India) Pvt Ltd",
+      "url": "http://www.uniqueforgings.in/",
+      "type": "local",
+      "location": "No. 601, G. I. D. C. Estate, Phase-IV, Sardar Nagar Society, Vithal Udyognagar, Vitthal, Vitthal Udyognagar INA, Anand, Gujarat 388120, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 10 common products: [Big Rings, Small Rings, Gear Blanks with Broaching, Gears, High-Strength Closed-Die Forged Components, Gear Blanks, Precision Gears...]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4 | Phone: 02692 235 220",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.uniqueforgings.in/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "http://www.uniqueforgings.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/unique-forgings-india-pvt-ltd",
+        "instagram": "https://www.instagram.com/uniqueforgingsindiapvtltd/",
+        "facebook": "https://www.facebook.com/UniqueForgingsIndiaPvtLtd",
+        "youtube": "https://www.youtube.com/channel/UCtQcmyqqHWh4-ixzM4AknBw"
+      },
+      "products": [
+        "Big Rings",
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gears",
+        "High-Strength Closed-Die Forged Components",
+        "Gear Blanks",
+        "Precision Gears",
+        "Closed-Die Forged Components",
+        "Forged Transmission Gears",
+        "Hydraulic Cylinder End Caps"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Small Rings",
+        "Gear Blanks with Broaching",
+        "Gears",
+        "High-Strength Closed-Die Forged Components",
+        "Gear Blanks",
+        "Precision Gears",
+        "Closed-Die Forged Components",
+        "Forged Transmission Gears",
+        "Hydraulic Cylinder End Caps"
+      ]
+    }
+  ]
 }
