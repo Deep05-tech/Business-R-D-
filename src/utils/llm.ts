@@ -163,24 +163,23 @@ function createResilientGroqFetch(preferredModels: string[]) {
           }
         } else if (isOtpm) {
           const jitter = Math.floor(Math.random() * 1500);
-          const waitMs = waitSec > 0 ? Math.min(Math.ceil(waitSec * 1000) + 500 + jitter, 15000) : 3000 + jitter;
+          const waitMs = waitSec > 0 ? Math.min(Math.ceil(waitSec * 1000) + 1000 + jitter, 20000) : 4000 + jitter;
           logger.info(`[ResilientFetch] Cooling down ${waitMs}ms for OTPM window...`);
           await new Promise((resolve) => setTimeout(resolve, waitMs));
-          if (bodyObj && bodyObj.max_tokens) {
-            bodyObj.max_tokens = Math.min(bodyObj.max_tokens, 150);
-          }
           keyIndex++;
           if (keyIndex % keys.length === 0) {
             modelIndex++;
           }
         } else {
+          const sleepMs = waitSec > 0 ? Math.min(Math.ceil(waitSec * 1000) + 1000, 20000) : 2500;
           if (waitSec > 0 && waitSec <= 65) {
-            modelExhaustedUntil[activeModel] = Date.now() + Math.ceil(waitSec * 1000) + 1000;
+            modelExhaustedUntil[activeModel] = Date.now() + sleepMs;
           }
+          logger.info(`[ResilientFetch] Rate limit hit. Cooling down ${sleepMs}ms for reset...`);
+          await new Promise((resolve) => setTimeout(resolve, sleepMs));
           keyIndex++;
           if (keyIndex % keys.length === 0) {
             modelIndex++;
-            await new Promise((resolve) => setTimeout(resolve, 1000));
           }
         }
       } catch (networkErr: any) {

@@ -2806,9 +2806,13 @@ window.renderSmmResults = function(postsData, type) {
       html += '<div id="smm-idea-cards" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:15px; margin-top: 10px;">';
       
       parsedPosts.forEach((post, idx) => {
+         const angleBadge = post.angle ? `<span style="display:inline-block; font-size:0.75em; padding:2px 8px; border-radius:12px; background:rgba(77,171,247,0.15); color:var(--primary-color); border:1px solid rgba(77,171,247,0.3); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">${post.angle}</span>` : '';
          html += `
-         <div class="idea-card" data-idx="${idx}" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; cursor:pointer; transition: 0.2s; display: flex; flex-direction: column;">
-           <strong style="margin-bottom: 8px; color: var(--text-light); font-size: 1.1em;">Option ${idx + 1}</strong>
+         <div class="idea-card" data-idx="${idx}" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; cursor:pointer; transition: 0.2s; display: flex; flex-direction: column; gap: 8px;">
+           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+             <strong style="color: var(--text-light); font-size: 1.05em;">Option ${idx + 1}</strong>
+             ${angleBadge}
+           </div>
            <span style="font-size: 0.9em; line-height: 1.4; color: var(--text-muted);">${post.visualIdea}</span>
          </div>`;
       });
@@ -2835,7 +2839,10 @@ window.renderSmmResults = function(postsData, type) {
            } else {
              detailsDiv.innerHTML = `
                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:15px;">
-                 <h3 style="margin:0; color:var(--text-light); flex:1;">${p.heading || 'No Heading'}</h3>
+                 <div>
+                   ${p.angle ? `<div style="display:inline-block; font-size:0.8em; font-weight:700; color:var(--primary-color); background:rgba(77,171,247,0.15); border:1px solid rgba(77,171,247,0.3); padding:2px 10px; border-radius:12px; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">Angle: ${p.angle}</div>` : ''}
+                   <h3 style="margin:0; color:var(--text-light); flex:1;">${p.heading || 'No Heading'}</h3>
+                 </div>
                  <button class="btn btn-secondary edit-btn" style="padding:4px 10px; font-size:12px; margin-left:10px;">Edit Content</button>
                </div>
                <div class="editable-content">
@@ -2892,6 +2899,10 @@ window.renderSmmResults = function(postsData, type) {
            }
         });
       });
+
+      if (cards.length > 0) {
+        cards[0].click();
+      }
     } else {
       let rawHtml = '';
       if (type === 'video_edited') {
