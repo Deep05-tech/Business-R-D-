@@ -55604,6 +55604,80 @@
         "Advanced Forging Solutions",
         "Forged Transmission Gears"
       ]
+    },
+    {
+      "name": "Varad Forge Pvt. Ltd.",
+      "url": "http://www.varadforge.com/",
+      "type": "local",
+      "location": "E - 80/5, Ranjangaon MIDC, Karegaon, Shirur, Pune, Karegaon, Maharashtra 412220, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Varad Forge Pvt. Ltd. operates in the forging industry and offers products that are similar to those of Metallic Technoforge Limited.. 4 common products: [Big Rings, Gear Blanks with Broaching, Gear Blanks, Hydraulic Cylinder End Caps]. Socials: Facebook verified. Rating: 5 | Phone: 099229 19567",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.varadforge.com/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "http://www.varadforge.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Varad-Forge-Pvt-Ltd-1823441611258985/",
+        "youtube": null
+      },
+      "products": [
+        "Big Rings",
+        "Gear Blanks with Broaching",
+        "Gear Blanks",
+        "Hydraulic Cylinder End Caps"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Gear Blanks with Broaching",
+        "Gear Blanks",
+        "Hydraulic Cylinder End Caps"
+      ]
+    },
+    {
+      "name": "Aress High Duty Forgings Private Limited",
+      "url": "http://www.indiaforging.com/",
+      "type": "local",
+      "location": "Plot no E 27, MIDC Area, Malegaon, Maharashtra 422113, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Forging & Machining. LLM Verdict: Aress specializes in aluminum forgings, which are relevant to the manufacturing of components like rings and gears.. 6 common products: [Big Rings, Precision Forged & Machined Components (Portfolio), High-Strength Closed-Die Forged Components, Precision Gears, Closed-Die Forged Components, Advanced Forging Solutions]. Socials: LinkedIn verified; Facebook verified. Rating: 5 | Phone: 099121 11004",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.indiaforging.com/"
+        },
+        {
+          "title": "Product: Big Rings",
+          "url": "http://www.indiaforging.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/indiaforging/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Indiaforging-505851146528462/",
+        "youtube": null
+      },
+      "products": [
+        "Big Rings",
+        "Precision Forged & Machined Components (Portfolio)",
+        "High-Strength Closed-Die Forged Components",
+        "Precision Gears",
+        "Closed-Die Forged Components",
+        "Advanced Forging Solutions"
+      ],
+      "commonProducts": [
+        "Big Rings",
+        "Precision Forged & Machined Components (Portfolio)",
+        "High-Strength Closed-Die Forged Components",
+        "Precision Gears",
+        "Closed-Die Forged Components",
+        "Advanced Forging Solutions"
+      ]
     }
   ]
 }
