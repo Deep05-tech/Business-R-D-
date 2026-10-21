@@ -1125,7 +1125,11 @@ export class SocialExtractorAgent {
                 }
             } else if (!post.thumbnail || post.thumbnail.includes('favicon') || isAeroOrPlaceholder) {
                 if (platform === 'Facebook') {
-                    const fbIdMatch = postUrl.match(/(?:fbid=|\/photos\/[^\/]+\/|\/posts\/[^\/]+\/|story_fbid=|\/photo\/?\?fbid=|\/videos\/[^\/]+\/|media_id=)(\d{10,25})/);
+                    if (postUrl.includes('/videos/') || postUrl.includes('/reel/') || postUrl.includes('/watch')) {
+                        post.media_type = "Video";
+                        post.mediaType = "Video";
+                    }
+                    const fbIdMatch = postUrl.match(/(?:fbid=|\/photos\/[^\/]+\/|\/photo\/?\?fbid=|\bmedia_id=)(\d{10,25})/);
                     if (fbIdMatch && fbIdMatch[1]) {
                         const fbThumb = `https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${fbIdMatch[1]}`;
                         post.thumbnail = fbThumb;

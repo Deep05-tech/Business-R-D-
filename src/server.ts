@@ -543,21 +543,16 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
         let ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
         let referer = '';
 
-        if (lowerTarget.includes('lookaside.fbsbx.com')) {
-            ua = 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)';
-            referer = '';
-        } else if (lowerTarget.includes('facebook.com/')) {
+        if (lowerTarget.includes('lookaside.fbsbx.com') || lowerTarget.includes('facebook.com') || lowerTarget.includes('fbcdn') || lowerTarget.includes('fbsbx')) {
             ua = 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)';
             referer = '';
         } else if (lowerTarget.includes('instagram') || lowerTarget.includes('cdninstagram')) {
             ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
             referer = '';
-        } else if (lowerTarget.includes('fbcdn')) {
-            referer = '';
         } else if (lowerTarget.includes('linkedin') || lowerTarget.includes('licdn')) {
             referer = 'https://www.linkedin.com/';
         } else {
-            referer = 'https://www.google.com/';
+            referer = '';
         }
 
         const isVideoReq = lowerTarget.match(/\.(mp4|webm|ogg)(\?|$)/i) || lowerTarget.includes('/playlist/vid/') || lowerTarget.includes('video.licdn.com');
