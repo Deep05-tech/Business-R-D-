@@ -11,8 +11,49 @@ window.fetch = function(resource, options = {}) {
   const token = localStorage.getItem('dashboardToken');
   if (!isProtectedPath || !token) return nativeFetch(resource, options);
   const headers = new Headers(options.headers || (typeof resource !== 'string' ? resource.headers : undefined));
-  headers.set('Authorization', `Bearer ${token}`);
   return nativeFetch(resource, { ...options, headers });
+};
+
+// Safe JSON parser that intercepts HTML/error pages and proxy timeouts,
+// preventing 'Unexpected token <' exceptions.
+window.safeParseResponse = async function(res) {
+  if (!res) throw new Error("No response received from server");
+  const contentType = res.headers.get('content-type') || '';
+  const isJson = contentType.includes('application/json');
+
+  if (!isJson) {
+    const rawText = await res.text().catch(() => "");
+    if (!res.ok) {
+      if (res.status === 504 || res.status === 524) {
+        throw new Error(`Server gateway timeout (${res.status}). The operation is continuing in the background.`);
+      }
+      if (res.status === 502) {
+        throw new Error(`Server temporarily unavailable (502). The service is processing requests.`);
+      }
+      if (res.status === 401 || res.status === 403) {
+        throw new Error(`Authentication or permission error (${res.status}). Please verify you are logged in.`);
+      }
+      throw new Error(`Server returned HTTP ${res.status}`);
+    }
+    try {
+      return JSON.parse(rawText);
+    } catch (_) {
+      throw new Error("Unexpected non-JSON response from server");
+    }
+  }
+
+  let data;
+  try {
+    data = await res.json();
+  } catch (err) {
+    throw new Error("Invalid JSON response from server");
+  }
+
+  if (!res.ok) {
+    throw new Error(data && data.error ? data.error : `Request failed with status ${res.status}`);
+  }
+
+  return data;
 };
 
 window.applyCurrentUser = function(user) {
@@ -2905,25 +2946,125 @@ window.generateSEO = async function() {
 };
 
 // ---- CRON FEED ----
-window.triggerCron = async function() {
-  if (!window.activeProjectUrl) return;
-  const list = document.getElementById('feed-list');
-  list.innerHTML = '<div class="spinner" style="margin: 20px auto;"></div><div style="text-align:center">Running deep social crawl across competitors. This can take several minutes...</div>';
-  
-  try {
-    const res = await fetch(`/api/cron/run?url=${encodeURIComponent(window.activeProjectUrl)}`, { method: 'POST' });
-    const data = await res.json();
-    if (data.error) throw new Error(data.error);
-    
-    window.showSuccess("Tracker completed successfully!");
-    // Display a clear success message for 1.5 seconds before rendering the final feed
-    list.innerHTML = '<div style="text-align:center; padding: 40px; color: #4ade80; font-size: 1.2rem; font-weight: 500;">✅ Tracker completed successfully! Loading dashboard...</div>';
-    
-    setTimeout(() => {
+let _trackerPollInterval = null;
+
+window.renderTrackerRunningCard = function(list, progressText = "Crawling competitor social media across YouTube, Instagram, Facebook, and LinkedIn...", startTime = Date.now()) {
+  if (!list) return;
+  const elapsedSeconds = Math.max(0, Math.floor((Date.now() - startTime) / 1000));
+  list.innerHTML = `
+    <div style="background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 40px 24px; text-align: center; max-width: 600px; margin: 30px auto;">
+      <div class="spinner" style="width: 44px; height: 44px; border-width: 3.5px; border-top-color: var(--primary); margin: 0 auto 20px auto;"></div>
+      <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0 0 10px 0; color: #ffffff;">Competitor Social Tracker in Progress</h3>
+      <p id="tracker-progress-msg" style="color: var(--text-muted); font-size: 14px; margin: 0 0 16px 0; line-height: 1.5;">${(window.escapeHtml || (s => s))(progressText)}</p>
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(99, 102, 241, 0.25); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #818cf8;">
+        <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #818cf8;"></span>
+        <span id="tracker-elapsed-text">Elapsed: ${elapsedSeconds}s</span>
+      </div>
+      <p style="margin: 20px 0 0 0; font-size: 12px; color: var(--text-muted);">
+        Running in background. The feed will automatically refresh once verified posts are indexed.
+      </p>
+    </div>
+  `;
+};
+
+window.pollTrackerStatus = function(projectUrl, startTime = Date.now()) {
+  if (_trackerPollInterval) clearInterval(_trackerPollInterval);
+
+  const btn = document.getElementById('btn-cron');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" style="width:12px;height:12px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:6px;"></span> Tracker Running...';
+  }
+
+  const poll = async () => {
+    // If user changed projects, stop polling
+    if (!window.activeProjectUrl || window.activeProjectUrl !== projectUrl) {
+      if (_trackerPollInterval) clearInterval(_trackerPollInterval);
+      if (btn) { btn.disabled = false; btn.innerText = 'Run Competitor Tracker Now'; }
+      return;
+    }
+
+    const elapsedEl = document.getElementById('tracker-elapsed-text');
+    const msgEl = document.getElementById('tracker-progress-msg');
+    const elapsedSeconds = Math.max(0, Math.floor((Date.now() - startTime) / 1000));
+    if (elapsedEl) elapsedEl.textContent = `Elapsed: ${elapsedSeconds}s`;
+
+    try {
+      const res = await fetch(`/api/cron/status?url=${encodeURIComponent(projectUrl)}`);
+      const status = await window.safeParseResponse(res);
+
+      if (status.running) {
+        if (msgEl && status.progress) {
+          msgEl.textContent = status.progress;
+        }
+        return; // continue polling
+      }
+
+      // Tracker completed
+      if (_trackerPollInterval) {
+        clearInterval(_trackerPollInterval);
+        _trackerPollInterval = null;
+      }
+      if (btn) {
+        btn.disabled = false;
+        btn.innerText = 'Run Competitor Tracker Now';
+      }
+
+      if (status.error) {
+        window.showError && window.showError(`Tracker error: ${status.error}`);
+      } else {
+        window.showSuccess && window.showSuccess(`Competitor tracker completed! Updated feed.`);
+      }
+
+      const list = document.getElementById('feed-list');
+      if (list) {
+        list.innerHTML = '<div style="text-align:center; padding: 40px; color: #4ade80; font-size: 1.2rem; font-weight: 500;">✅ Tracker completed successfully! Loading dashboard...</div>';
+      }
+
+      setTimeout(() => {
         loadFeedUI();
-    }, 1500);
+      }, 1200);
+    } catch (e) {
+      console.warn('Tracker status poll warning:', e.message);
+    }
+  };
+
+  _trackerPollInterval = setInterval(poll, 2500);
+  poll();
+};
+
+window.triggerCron = async function() {
+  if (!window.activeProjectUrl) {
+    window.showError && window.showError("Please select an active project first.");
+    return;
+  }
+  const currentUrl = window.activeProjectUrl;
+  const list = document.getElementById('feed-list');
+  const btn = document.getElementById('btn-cron');
+  
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" style="width:12px;height:12px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:6px;"></span> Starting Tracker...';
+  }
+
+  const startTime = Date.now();
+  if (list) {
+    window.renderTrackerRunningCard(list, "Initializing background social crawler across competitors...", startTime);
+  }
+
+  try {
+    const res = await fetch(`/api/cron/run?url=${encodeURIComponent(currentUrl)}`, { method: 'POST' });
+    await window.safeParseResponse(res);
+
+    window.pollTrackerStatus(currentUrl, startTime);
   } catch (e) {
-    list.innerHTML = `<div class="empty-state" style="color:red">Error: ${e.message}</div>`;
+    if (btn) {
+      btn.disabled = false;
+      btn.innerText = 'Run Competitor Tracker Now';
+    }
+    if (list) {
+      list.innerHTML = `<div class="empty-state" style="color:red">Failed to start tracker: ${window.escapeHtml(e.message)}</div>`;
+    }
   }
 };
 
@@ -2933,15 +3074,23 @@ async function loadFeedUI() {
     return loadOwnFeedUI();
   }
   const list = document.getElementById('feed-list');
+  if (!list) return;
   
   try {
     const res = await fetch(`/api/social-feed?url=${encodeURIComponent(window.activeProjectUrl)}`);
-    const data = await res.json();
+    const data = await window.safeParseResponse(res);
     
+    // If tracker is actively running in background, show progress and poll
+    if (data.trackerRunning) {
+      window.renderTrackerRunningCard(list, "Crawling competitor social media across YouTube, Instagram, Facebook, and LinkedIn...");
+      window.pollTrackerStatus(window.activeProjectUrl);
+      return;
+    }
+
     const feed = data.feed || [];
     
     if (feed.length === 0) {
-      list.innerHTML = '<div class="empty-state">No recent competitor posts found yet. Click "Run Daily Tracker Now" above to trigger a social crawl.</div>';
+      list.innerHTML = '<div class="empty-state">No recent competitor posts found yet. Click "Run Competitor Tracker Now" above to trigger a social crawl.</div>';
       return;
     }
     
@@ -3718,8 +3867,7 @@ window.refreshOwnSocials = async function() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ websiteUrl: window.activeProjectUrl })
     });
-    const data = await res.json();
-    if (data.error) throw new Error(data.error);
+    const data = await window.safeParseResponse(res);
 
     if (window.projectMemory) {
       window.projectMemory.ownSocials = data.socials;
@@ -3750,8 +3898,7 @@ async function loadOwnFeedUI() {
 
   try {
     const res = await fetch(`/api/own-social-feed?url=${encodeURIComponent(window.activeProjectUrl)}`);
-    const data = await res.json();
-    if (data.error) throw new Error(data.error);
+    const data = await window.safeParseResponse(res);
 
     const pattern = data.pattern;
     const feed = data.feed || [];

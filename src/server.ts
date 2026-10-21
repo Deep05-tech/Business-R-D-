@@ -128,19 +128,56 @@ const port = Number(process.env.PORT ?? 3000);
 
 // A second click (or a reconnecting browser) must not start another set of
 // Chrome sessions for the same project while its tracker is already running.
+interface TrackerRunStatus {
+  running: boolean;
+  startTime: number;
+  completedAt?: number;
+  progress: string;
+  error?: string;
+  postsCount?: number;
+}
+const activeTrackerStatus = new Map<string, TrackerRunStatus>();
+const normalizeTrackerKey = (u: string) => (u || '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/+$/, '');
+
 const activeTrackerRuns = new Map<string, Promise<void>>();
 const runTrackerOnce = async (site: any): Promise<void> => {
-  const key = String(site.input?.websiteUrl || '').trim().toLowerCase();
+  const rawUrl = String(site.input?.websiteUrl || '').trim();
+  const key = normalizeTrackerKey(rawUrl);
   const current = activeTrackerRuns.get(key);
   if (current) {
-    logger.info(`Daily tracker already running for ${site.input.websiteUrl}; joining the active run.`);
+    logger.info(`Daily tracker already running for ${rawUrl}; joining the active run.`);
     return current;
   }
 
+  activeTrackerStatus.set(key, {
+    running: true,
+    startTime: Date.now(),
+    progress: "Scanning competitor social platforms...",
+  });
+
   const run = (async () => {
-    await cronAgent.run(site, memoryStore);
-    knowledgeIndex.add(site);
+    try {
+      const posts = await cronAgent.run(site, memoryStore);
+      knowledgeIndex.add(site);
+      activeTrackerStatus.set(key, {
+        running: false,
+        startTime: Date.now(),
+        completedAt: Date.now(),
+        progress: `Completed crawl. Extracted ${posts?.length || 0} posts.`,
+        postsCount: posts?.length || 0
+      });
+    } catch (err: any) {
+      activeTrackerStatus.set(key, {
+        running: false,
+        startTime: Date.now(),
+        completedAt: Date.now(),
+        progress: `Failed: ${err.message}`,
+        error: err.message
+      });
+      throw err;
+    }
   })();
+
   activeTrackerRuns.set(key, run);
   try {
     await run;
@@ -1711,24 +1748,94 @@ app.post("/api/seo", async (request, response) => {
 // Social Feed (Cron) endpoints
 // ---------------------------------------------------------------------------
 
-app.post("/api/cron/run", async (request, response) => {
+app.all("/api/cron/run", async (request, response) => {
   try {
-    const url = request.query.url as string;
-    
-    if (url) {
-      const site = await memoryStore.loadBySite(url);
-      if (!site) return response.status(404).json({ error: "Memory not found for this site." });
-      await runTrackerOnce(site);
-    } else {
-      // Fallback for legacy calls (runs for all)
-      const sites = await memoryStore.loadAll();
-      for (const site of sites) {
-        await runTrackerOnce(site);
-      }
+    const url = (request.query.url || request.body?.url) as string;
+    const user = (request as express.Request & { currentUser?: AuthUser }).currentUser;
+    if (url && !(await hasProjectAccess(user, url))) {
+      return response.status(403).json({ error: "Access denied. This project is not assigned to your account." });
     }
-    response.json({ status: "ok" });
+
+    let site: any = null;
+    if (url) {
+      site = await memoryStore.loadBySite(url);
+      if (!site) {
+        const allMemories = await memoryStore.loadAll();
+        site = allMemories.find(m => {
+          const u = normalizeTrackerKey(m.input?.websiteUrl || "");
+          const target = normalizeTrackerKey(url);
+          return u === target || (target.length > 4 && (u.includes(target) || target.includes(u)));
+        }) || null;
+      }
+      if (!site) return response.status(404).json({ error: "Memory not found for this site." });
+    }
+
+    const runAsync = async () => {
+      try {
+        if (site) {
+          await runTrackerOnce(site);
+        } else {
+          const sites = await memoryStore.loadAll();
+          for (const s of sites) {
+            await runTrackerOnce(s);
+          }
+        }
+      } catch (err: any) {
+        logger.error(`Error in background cron run: ${err.message}`);
+      }
+    };
+
+    // If wait query param is explicitly 'true' (for CLI/tests), wait for completion; otherwise return immediately
+    if (request.query.wait === "true") {
+      await runAsync();
+      return response.json({ status: "ok", message: "Tracker completed." });
+    } else {
+      // Run in background so HTTP response is returned immediately and never times out on reverse proxies
+      runAsync();
+      return response.json({
+        status: "started",
+        running: true,
+        message: "Competitor tracker started successfully in background."
+      });
+    }
   } catch (e: any) {
     response.status(500).json({ error: e.message });
+  }
+});
+
+app.get(["/api/cron/status", "/api/tracker/status"], async (request, response) => {
+  try {
+    const url = request.query.url as string;
+    if (!url) return response.status(400).json({ error: "Missing url parameter" });
+    const user = (request as express.Request & { currentUser?: AuthUser }).currentUser;
+    if (!(await hasProjectAccess(user, url))) {
+      return response.status(403).json({ error: "Access denied. This project is not assigned to your account." });
+    }
+
+    const key = normalizeTrackerKey(url);
+    const status = activeTrackerStatus.get(key);
+    const isRunning = activeTrackerRuns.has(key);
+
+    let memory = await memoryStore.loadBySite(url);
+    if (!memory) {
+      const allMemories = await memoryStore.loadAll();
+      memory = allMemories.find(m => {
+        const u = normalizeTrackerKey(m.input?.websiteUrl || "");
+        return u === key || (key.length > 4 && (u.includes(key) || key.includes(u)));
+      }) || null;
+    }
+
+    const feed = ((memory as any)?.socialFeed || []) as any[];
+
+    return response.json({
+      running: isRunning || status?.running === true,
+      progress: status?.progress || (isRunning ? "Crawling competitor social platforms..." : "Idle"),
+      feedCount: feed.length,
+      error: status?.error,
+      completedAt: status?.completedAt
+    });
+  } catch (e: any) {
+    return response.status(500).json({ error: e.message });
   }
 });
 
@@ -1833,7 +1940,10 @@ app.get("/api/social-feed", async (request, response) => {
       });
     }
 
-    response.json({ feed: filteredFeed });
+    const trackerKey = normalizeTrackerKey(url || memory.input?.websiteUrl || "");
+    const isTrackerRunning = activeTrackerRuns.has(trackerKey) || activeTrackerStatus.get(trackerKey)?.running === true;
+
+    response.json({ feed: filteredFeed, trackerRunning: isTrackerRunning });
   } catch (e: any) {
     response.status(500).json({ error: e.message });
   }
@@ -1963,6 +2073,23 @@ app.get("/api/sites", async (request, response) => {
   }
 
   response.json(sites);
+});
+
+// ---------------------------------------------------------------------------
+// Catch-all 404 for API routes & Global Error Handler (Guarantees JSON, never HTML)
+// ---------------------------------------------------------------------------
+
+app.all("/api/*", (req, res) => {
+  return res.status(404).json({ error: `API route not found: ${req.method} ${req.originalUrl}` });
+});
+
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  logger.error(`Unhandled request error on ${req.method} ${req.originalUrl}: ${err.message}`);
+  if (res.headersSent) return next(err);
+  if (req.path.startsWith("/api") || req.path.startsWith("/memory") || req.path.startsWith("/business-intelligence")) {
+    return res.status(500).json({ error: err.message || "Internal server error" });
+  }
+  next(err);
 });
 
 // ---------------------------------------------------------------------------
