@@ -3220,6 +3220,65 @@ async function loadFeedUI() {
       }
     };
 
+    window.renderFbVideoFallback = function(container, post) {
+      if (!container) return;
+      const thumb = post.thumbnail || post.media_url || (post.media_urls && post.media_urls[0]) || '';
+      const proxiedThumb = thumb ? window.getSocialMediaProxyUrl(thumb) : '';
+      const pLink = (post.link || post.post_url || post.postUrl || '').trim();
+      const compName = post.company || post.competitorName || post.competitor_name || 'Competitor';
+      container.innerHTML = `
+        <div style="width: 100%; height: 100%; background: #040814; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 24px; box-sizing: border-box; text-align: center;">
+          ${proxiedThumb ? `
+            <div style="position: relative; width: 100%; max-width: 480px; max-height: 60%; aspect-ratio: 16/9; margin-bottom: 20px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 24px rgba(0,0,0,0.6);">
+              <img src="${proxiedThumb}" referrerpolicy="no-referrer" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none';" />
+              ${pLink ? `<a href="${pLink}" target="_blank" rel="noopener noreferrer" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 56px; height: 56px; background: rgba(24, 119, 242, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; box-shadow: 0 4px 16px rgba(0,0,0,0.6); transition: transform 0.2s;" onmouseover="this.style.transform='translate(-50%, -50%) scale(1.1)'" onmouseout="this.style.transform='translate(-50%, -50%) scale(1)'">▶</a>` : ''}
+            </div>` : `
+            <div style="width: 76px; height: 76px; border-radius: 50%; background: rgba(24, 119, 242, 0.2); border: 2px solid rgba(24, 119, 242, 0.5); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 18px; color: #1877f2;">
+              📹
+            </div>`}
+          <div style="position: absolute; top: 16px; left: 16px; background: #1877f2; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">📹 FACEBOOK VIDEO</div>
+          <h4 style="font-size: 1.15rem; font-weight: 700; color: #ffffff; margin: 0 0 8px 0;">${window.escapeHtml(compName)}</h4>
+          <p style="font-size: 0.88rem; color: #94a3b8; margin: 0 0 20px 0; max-width: 360px;">To watch this official video, view it directly on Facebook.</p>
+          ${pLink ? `
+            <a href="${pLink}" target="_blank" rel="noopener noreferrer" style="background: #1877f2; color: #ffffff; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.92rem; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(24, 119, 242, 0.4); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+              <span>▶ Watch Video on Facebook</span> ↗
+            </a>` : ''}
+        </div>`;
+    };
+
+    window.handleFbVideoError = function(videoEl, idx) {
+      if (!videoEl || !videoEl.parentElement) return;
+      const post = window.allFeedPosts && window.allFeedPosts[idx];
+      if (!post) return;
+      window.renderFbVideoFallback(videoEl.parentElement, post);
+    };
+
+    window.resolveFbVideo = async function(idx) {
+      const post = window.allFeedPosts && window.allFeedPosts[idx];
+      if (!post) return;
+      const pLink = (post.link || post.post_url || post.postUrl || '').trim();
+      if (!pLink) return;
+      const container = document.getElementById('fb-video-container-' + idx);
+      if (!container) return;
+
+      try {
+        const res = await fetch('/api/social-video-url?url=' + encodeURIComponent(pLink));
+        const data = await res.json();
+        if (data.success && data.videoUrl) {
+          post.video_url = data.videoUrl;
+          const videoSrc = window.getSocialMediaProxyUrl(data.videoUrl);
+          container.innerHTML = `
+            <video src="${videoSrc}" controls autoplay preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;" onerror="window.handleFbVideoError(this, ${idx});"></video>
+            <div style="position: absolute; top: 16px; left: 16px; background: #1877f2; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">📹 FACEBOOK VIDEO</div>
+            <div style="position: absolute; bottom: 12px; right: 12px; z-index: 10;">
+              <a href="${pLink}" target="_blank" rel="noopener noreferrer" style="background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 5px 12px; font-size: 11px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Watch on Facebook ↗</a>
+            </div>`;
+        }
+      } catch (e) {
+        // Fallback remains active
+      }
+    };
+
     window.platformMeta = {
       'YouTube': { icon: '▶️', color: '#ff0000', badgeBg: '#cc0000', bg: 'linear-gradient(135deg, #2b0606, #120303)' },
       'Facebook': { icon: '📘', color: '#1877f2', badgeBg: '#1877f2', bg: 'linear-gradient(135deg, #0f2b5c, #071633)' },
@@ -3345,7 +3404,7 @@ async function loadFeedUI() {
           leftMediaHtml = `
             <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px; box-sizing: border-box;">
               <div style="position: absolute; top: 16px; left: 16px; background: ${meta.badgeBg || '#e1306c'}; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">📹 REEL</div>
-              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);" onerror="this.onerror=null; this.src='${firstMediaUrl}';" />
+              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 90% !important; max-height: 85% !important; width: auto !important; height: auto !important; object-fit: contain !important; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);" onerror="this.onerror=null; this.src='${firstMediaUrl}';" />
               <div style="position: absolute; bottom: 16px; display: flex; gap: 8px; z-index: 10;">
                 ${igShortcode ? `<button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.75); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 8px 14px; border-radius: 6px; font-weight: 700; font-size: 12px; cursor: pointer;">Play in IG Player ↗</button>` : ''}
                 ${postLink ? `<a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: #e1306c; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Open on Instagram ↗</a>` : ''}
@@ -3353,9 +3412,9 @@ async function loadFeedUI() {
             </div>`;
         } else if (igShortcode) {
           leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
+            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; padding: 12px; box-sizing: border-box;">
               <iframe src="https://www.instagram.com/reel/${igShortcode}/embed/" 
-                style="width: 100%; height: 100%; border: 0; background: #000; border-radius: 8px;" 
+                style="width: 100%; max-width: 480px; height: 90%; max-height: 650px; border: 0; background: #000; border-radius: 12px; margin: auto;" 
                 frameborder="0" scrolling="no" allowtransparency="true" 
                 allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
                 allowfullscreen></iframe>
@@ -3375,9 +3434,9 @@ async function loadFeedUI() {
         // Instagram Post Preview (Clean high-resolution photo with optional embed toggle)
         if (activeMode === 'embed' && igShortcode) {
           leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+            <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 12px; box-sizing: border-box;">
               <iframe src="https://www.instagram.com/p/${igShortcode}/embed/" 
-                style="width: 100%; height: 100%; border: 0; background: #fff;" 
+                style="width: 100%; max-width: 480px; height: 90%; max-height: 650px; border: 0; background: #fff; border-radius: 12px; margin: auto;" 
                 frameborder="0" scrolling="no" allowtransparency="true" 
                 allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
                 allowfullscreen></iframe>
@@ -3391,7 +3450,7 @@ async function loadFeedUI() {
           leftMediaHtml = `
             <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px; box-sizing: border-box;">
               <div style="position: absolute; top: 16px; left: 16px; background: ${meta.badgeBg || '#e1306c'}; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">📸 INSTAGRAM</div>
-              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);" onerror="this.onerror=null; this.src='${firstMediaUrl}';" />
+              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 90% !important; max-height: 85% !important; width: auto !important; height: auto !important; object-fit: contain !important; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);" onerror="this.onerror=null; this.src='${firstMediaUrl}';" />
               ${igShortcode ? `
                 <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
                   <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer;">Switch to IG Embed ↗</button>
@@ -3399,9 +3458,9 @@ async function loadFeedUI() {
             </div>`;
         } else if (igShortcode) {
           leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+            <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 12px; box-sizing: border-box;">
               <iframe src="https://www.instagram.com/p/${igShortcode}/embed/" 
-                style="width: 100%; height: 100%; border: 0; background: #fff;" 
+                style="width: 100%; max-width: 480px; height: 90%; max-height: 650px; border: 0; background: #fff; border-radius: 12px; margin: auto;" 
                 frameborder="0" scrolling="no" allowtransparency="true" 
                 allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
                 allowfullscreen></iframe>
@@ -3501,37 +3560,51 @@ async function loadFeedUI() {
             </div>`;
         }
       } else if (isFbVid) {
-        // Facebook video player: Official responsive embed player (100% playable directly in dashboard)
+        // Facebook video player: Prioritize direct MP4 video playback in HTML5 player
         let fbVidId = post.fb_video_id || post.video_id || '';
         if (!fbVidId && postLink) {
           const m = postLink.match(/(?:\/videos\/(?:[^\/]+\/)?|\/reel\/|\/watch\/?\?v=)(\d+)/) || postLink.match(/(\d{10,20})/);
           if (m) fbVidId = m[1];
         }
 
-        const canonicalFbUrl = fbVidId ? `https://www.facebook.com/watch/?v=${fbVidId}` : postLink;
-        const fbEmbedSrc = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(canonicalFbUrl)}&show_text=false&width=500`;
-
-        if (activeMode === 'video' && post.video_url) {
+        if (post.video_url) {
           let videoSrc = window.getSocialMediaProxyUrl(post.video_url);
           leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
-              <video src="${videoSrc}" controls preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;" onerror="window.openFeedItemModal(${globalIndex}, 'embed');"></video>
-              <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
-                <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;">Facebook Player ↗</button>
-              </div>
+            <div id="fb-video-container-${globalIndex}" style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
+              <video src="${videoSrc}" controls autoplay preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;" onerror="window.handleFbVideoError(this, ${globalIndex});"></video>
+              <div style="position: absolute; top: 16px; left: 16px; background: #1877f2; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">📹 FACEBOOK VIDEO</div>
+              ${postLink ? `
+                <div style="position: absolute; bottom: 12px; right: 12px; z-index: 10;">
+                  <a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 5px 12px; font-size: 11px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Watch on Facebook ↗</a>
+                </div>` : ''}
             </div>`;
+        } else if (postLink) {
+          let thumb = post.thumbnail || post.media_url || firstMediaUrl || '';
+          let proxiedThumb = thumb ? window.getSocialMediaProxyUrl(thumb) : '';
+          leftMediaHtml = `
+            <div id="fb-video-container-${globalIndex}" style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; padding: 20px; box-sizing: border-box;">
+              ${proxiedThumb ? `
+                <div style="position: relative; width: 100%; max-width: 520px; max-height: 65%; aspect-ratio: 16/9; margin-bottom: 20px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 24px rgba(0,0,0,0.6);">
+                  <img src="${proxiedThumb}" referrerpolicy="no-referrer" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none';" />
+                  <a href="${postLink}" target="_blank" rel="noopener noreferrer" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 56px; height: 56px; background: rgba(24, 119, 242, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; box-shadow: 0 4px 16px rgba(0,0,0,0.6); transition: transform 0.2s;" onmouseover="this.style.transform='translate(-50%, -50%) scale(1.1)'" onmouseout="this.style.transform='translate(-50%, -50%) scale(1)'">▶</a>
+                </div>` : `
+                <div style="width: 76px; height: 76px; border-radius: 50%; background: rgba(24, 119, 242, 0.2); border: 2px solid rgba(24, 119, 242, 0.5); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 18px; color: #1877f2;">📹</div>`}
+              <div style="position: absolute; top: 16px; left: 16px; background: #1877f2; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">📹 FACEBOOK VIDEO</div>
+              <h4 style="font-size: 1.15rem; font-weight: 700; color: #ffffff; margin: 0 0 8px 0; text-align: center;">${window.escapeHtml(compName)}</h4>
+              <p style="font-size: 0.88rem; color: #94a3b8; margin: 0 0 20px 0; max-width: 360px; text-align: center;">Official Facebook Video</p>
+              <a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: #1877f2; color: #ffffff; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.92rem; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(24, 119, 242, 0.4); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                <span>▶ Watch Video on Facebook</span> ↗
+              </a>
+            </div>`;
+          setTimeout(() => { if (window.resolveFbVideo) window.resolveFbVideo(${globalIndex}); }, 50);
         } else {
           leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
-              <iframe src="${fbEmbedSrc}" 
-                style="width: 100%; height: 100%; min-height: 420px; border: 0; background: #000; border-radius: 8px;" 
-                frameborder="0" scrolling="no"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
-                allowfullscreen></iframe>
-              ${post.video_url ? `
-                <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
-                  <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'video')" style="background: rgba(0,0,0,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;">Direct MP4 Player ▶</button>
-                </div>` : ''}
+            <div style="width: 100%; height: 100%; background: ${meta.bg}; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 36px; box-sizing: border-box;">
+              <div style="width: 76px; height: 76px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 18px;">
+                📹
+              </div>
+              <h3 style="font-size: 1.35rem; font-weight: 700; color: #ffffff; margin: 0 0 6px 0;">${window.escapeHtml(compName)}</h3>
+              <p style="font-size: 0.9rem; color: rgba(255,255,255,0.75); margin: 0 0 20px 0;">Official Facebook Video</p>
             </div>`;
         }
       } else if (isRealDirectVideo) {
@@ -3704,6 +3777,7 @@ async function loadFeedUI() {
       const pLink = post.post_url || post.link || '';
       const isIgReelCard = (platform === 'Instagram' || post._detectedPlatform === 'Instagram') &&
                            (pLink.includes('/reel/') || post.media_type === 'Video' || post.mediaType === 'Video');
+      const isInstagramCard = (platform === 'Instagram' || post._detectedPlatform === 'Instagram');
       const isLiVidCard = (platform === 'LinkedIn' || post._detectedPlatform === 'LinkedIn') &&
                           (Boolean(post.video_url) || post.media_type === 'Video' || post.mediaType === 'Video' || (firstMediaUrl && (firstMediaUrl.includes('/playlist/vid/') || firstMediaUrl.includes('video.licdn.com') || firstMediaUrl.includes('thumbnail-with-play-button'))));
       const isFacebookVideoCard = (platform === 'Facebook' || post._detectedPlatform === 'Facebook') &&
@@ -3722,9 +3796,12 @@ async function loadFeedUI() {
         let playBtn = (isIgReelCard || isLiVidCard || isFacebookVideoCard) ? `<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(0,0,0,0.6);border:2px solid rgba(255,255,255,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>` : '';
         let badgeHtml = badgeText ? `<div style="position:absolute; top:10px; right:10px; background:${meta.badgeBg}; color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none;">${badgeText}</div>` : '';
 
+        const fitStyle = isInstagramCard ? 'object-fit: contain !important; background: #080d1a !important;' : 'object-fit: cover;';
+        const imgClass = isInstagramCard ? 'feed-card-thumb-contain' : '';
+
         cardThumbHtml = `
           <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
-            <img src="${proxiedThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };" />
+            <img src="${proxiedThumb}" class="${imgClass}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; ${fitStyle} object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };" />
             ${badgeHtml}
             ${playBtn}
           </div>`;
@@ -3736,7 +3813,7 @@ async function loadFeedUI() {
       }
 
       return `
-        <div class="feed-card-item" onclick="window.openFeedItemModal(${post._globalIndex})" style="min-width: 270px; max-width: 280px; flex-shrink: 0; padding: 14px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; height: 380px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)'">
+        <div class="feed-card-item" data-platform="${platform}" onclick="window.openFeedItemModal(${post._globalIndex})" style="min-width: 270px; max-width: 280px; flex-shrink: 0; padding: 14px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; height: 380px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)'">
           <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 6px;">
             <span style="font-size: 0.8rem; font-weight: 700; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px;">${window.escapeHtml(compName)}</span>
             <div style="display: flex; align-items: center; gap: 6px;">

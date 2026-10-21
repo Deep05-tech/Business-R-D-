@@ -776,6 +776,11 @@ body.dark-theme textarea::-webkit-scrollbar-thumb, body.dark-theme .custom-selec
   object-position: center !important;
   display: block !important;
 }
+.feed-card-item[data-platform="Instagram"] img,
+.feed-card-item img.feed-card-thumb-contain {
+  object-fit: contain !important;
+  background: #080d1a !important;
+}
 .feed-card-item:hover {
   transform: translateY(-4px) !important;
   border-color: var(--primary) !important;

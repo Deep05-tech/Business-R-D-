@@ -335,7 +335,7 @@ app.delete("/api/admin/projects", requireAuth, requireAdmin, async (req, res) =>
 app.use("/api", (req, res, next) => {
   // Browser media elements cannot attach Authorization headers. These routes
   // expose only the already-validated remote asset proxy, not workspace data.
-  if (req.path === "/proxy-media" || req.path === "/proxy-video" || req.path === "/linkedin-embed-player" || req.path === "/facebook-embed-player" || req.path === "/instagram-embed") return next();
+  if (req.path === "/proxy-media" || req.path === "/proxy-video" || req.path === "/linkedin-embed-player" || req.path === "/facebook-embed-player" || req.path === "/instagram-embed" || req.path === "/social-video-url") return next();
   return requireAuth(req, res, next);
 });
 app.use("/memory", requireAuth);
@@ -720,7 +720,7 @@ app.get('/api/facebook-embed-player', (req, res) => {
 
     if (!vidId && !postUrl) return res.status(400).send('Facebook Video ID or URL required');
 
-    const canonicalUrl = vidId ? `https://www.facebook.com/watch/?v=${vidId}` : postUrl;
+    const canonicalUrl = postUrl || (vidId ? `https://www.facebook.com/watch/?v=${vidId}` : '');
     const pluginUrl = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(canonicalUrl)}&show_text=false&width=500`;
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
