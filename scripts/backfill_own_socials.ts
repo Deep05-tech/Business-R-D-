@@ -26,8 +26,13 @@ async function main() {
 
     let modified = false;
 
-    // 1. Check if ownSocials or brandVoicePattern is missing
-    if (!mem.ownSocials || !mem.brandVoicePattern || !mem.ownSocialFeed) {
+    // 1. Check if ownSocials or brandVoicePattern is missing, or if configured platforms have no posts
+    const hasIg = Boolean(mem.ownSocials?.instagram);
+    const hasFb = Boolean(mem.ownSocials?.facebook);
+    const currentPlatforms = new Set((mem.ownSocialFeed || []).map((p: any) => p.platform));
+    const missingConfiguredPlatform = (hasIg && !currentPlatforms.has("Instagram")) || (hasFb && !currentPlatforms.has("Facebook"));
+
+    if (!mem.ownSocials || !mem.brandVoicePattern || !mem.ownSocialFeed || missingConfiguredPlatform) {
       const result = await projectSocialAgent.run(
         companyName,
         mem.input.websiteUrl,

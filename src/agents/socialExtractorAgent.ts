@@ -737,7 +737,22 @@ export class SocialExtractorAgent {
                 let results: any[] = [];
 
                 // 1. Try Tavily Search API if configured (fast, accurate, direct social media results)
-                if (process.env.TAVILY_API_KEY) {
+                // 1. For Facebook, FreeSearchEngine directly finds rich post/video/reel permalinks
+                if (platform === "Facebook") {
+                    try {
+                        const ddg = new FreeSearchEngine({ maxResults: 15 });
+                        const rawDDG = await ddg.invoke({ query: `"${searchBrand}" site:facebook.com` });
+                        const ddgResults = JSON.parse(rawDDG || "[]");
+                        if (Array.isArray(ddgResults) && ddgResults.length > 0) {
+                            results.push(...ddgResults);
+                        }
+                    } catch (e: any) {
+                        console.log(`[SocialExtractorAgent] DDG search for Facebook failed: ${e.message}`);
+                    }
+                }
+
+                // 2. Try Tavily Search API if configured (especially strong for Instagram & LinkedIn)
+                if ((!results || results.length === 0) && process.env.TAVILY_API_KEY) {
                     try {
                         const targetDomains: Record<string, string[]> = {
                             "Instagram": ["instagram.com"],
@@ -781,7 +796,7 @@ export class SocialExtractorAgent {
                     }
                 }
 
-                // 2. Fallback to FreeSearchEngine (DuckDuckGo) if needed
+                // 3. Fallback to FreeSearchEngine (DuckDuckGo) if needed
                 if (!results || results.length === 0) {
                     let query = "";
                     if (platform === "Instagram") {
@@ -801,7 +816,7 @@ export class SocialExtractorAgent {
                             results = JSON.parse(rawDDG || "[]");
                         } catch {}
 
-                        // 3. Fallback to BingRssSearchEngine if DDG returned no results
+                        // 4. Fallback to BingRssSearchEngine if DDG returned no results
                         if (!results || results.length === 0) {
                             try {
                                 const bing = new BingRssSearchEngine({ maxResults: 15 });

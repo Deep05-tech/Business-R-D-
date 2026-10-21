@@ -3366,7 +3366,7 @@ async function loadFeedUI() {
       const content = document.getElementById('media-lightbox-content');
       if (!lb || !content) return;
 
-      const compName = post.company || post.competitorName || 'Competitor';
+      const compName = post.company || post.competitorName || (window.projectMemory && window.projectMemory.businessIdentity && window.projectMemory.businessIdentity.officialName) || 'Company Post';
       const platform = post.platform || post._detectedPlatform || 'Social Feed';
       const meta = (window.platformMeta && window.platformMeta[platform]) || (window.platformMeta && window.platformMeta['LinkedIn']) || { icon: '🌐', color: '#3b82f6', badgeBg: '#3b82f6', bg: 'linear-gradient(135deg, #1e293b, #0f172a)' };
       const postLink = (post.post_url || post.link || post.postUrl || '').trim();
@@ -4102,7 +4102,52 @@ async function loadOwnFeedUI() {
     };
 
     window.allOwnFeedPosts = feed;
-    let postHtml = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">';
+
+    const platCounts = { All: feed.length };
+    feed.forEach(p => {
+      const plat = p.platform || 'Social';
+      platCounts[plat] = (platCounts[plat] || 0) + 1;
+    });
+
+    window.filterOwnFeed = function(selectedPlat) {
+      window.selectedOwnPlat = selectedPlat;
+      const btns = document.querySelectorAll('.own-feed-filter-btn');
+      btns.forEach(b => {
+        if (b.getAttribute('data-platform') === selectedPlat) {
+          b.className = 'btn btn-primary own-feed-filter-btn';
+        } else {
+          b.className = 'btn btn-secondary own-feed-filter-btn';
+        }
+      });
+      const cards = document.querySelectorAll('.own-feed-card-item');
+      cards.forEach(c => {
+        const p = c.getAttribute('data-platform');
+        c.style.display = (selectedPlat === 'All' || p === selectedPlat) ? 'flex' : 'none';
+      });
+    };
+
+    const orderedPlats = ['LinkedIn', 'Instagram', 'Facebook', 'YouTube'];
+    let filterBarHtml = `
+      <div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
+        <button class="btn btn-primary own-feed-filter-btn" data-platform="All" onclick="window.filterOwnFeed('All')" style="padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 8px;">
+          🌐 All Platforms (${feed.length})
+        </button>
+    `;
+
+    orderedPlats.forEach(pKey => {
+      const cnt = platCounts[pKey] || 0;
+      if (cnt > 0) {
+        const pMeta = platformMeta[pKey] || { icon: '🌐' };
+        filterBarHtml += `
+          <button class="btn btn-secondary own-feed-filter-btn" data-platform="${pKey}" onclick="window.filterOwnFeed('${pKey}')" style="padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 8px;">
+            ${pMeta.icon} ${pKey} (${cnt})
+          </button>
+        `;
+      }
+    });
+    filterBarHtml += '</div>';
+
+    let postHtml = filterBarHtml + '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">';
     
     feed.forEach((post, idx) => {
       const plat = post.platform || 'Social';
@@ -4122,7 +4167,7 @@ async function loadOwnFeedUI() {
            </div>`;
 
       postHtml += `
-        <div onclick="window.openFeedItemModal(${idx}, 'default', window.allOwnFeedPosts)" style="background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255,255,255,0.08)'">
+        <div class="own-feed-card-item" data-platform="${plat}" onclick="window.openFeedItemModal(${idx}, 'default', window.allOwnFeedPosts)" style="background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255,255,255,0.08)'">
           ${mediaPreview}
           <div style="padding: 14px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
             <div>
