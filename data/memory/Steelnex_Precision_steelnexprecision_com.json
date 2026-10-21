@@ -1094,7 +1094,7 @@
       "competitorName": "JS Auto Cast Foundry India Pvt Ltd"
     },
     {
-      "id": "li_1792572184300_jbytk",
+      "id": "li_1792574377899_9c1uj",
       "company": "Gaurav Industries",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/www%2Egaurav-industries%2Ecom_today-we-honor-the-legacy-of-our-freedom-activity-7494247975679000579-vre6",
@@ -1123,7 +1123,7 @@
       "activity_id": "7494247975679000579"
     },
     {
-      "id": "li_1792572190197_ama1i",
+      "id": "li_1792574382504_2pncx",
       "company": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/rgk-group_happynavratri-rgkgroupofindustries-navratri2026-activity-7515032392307347456-UQlI",
@@ -1152,7 +1152,7 @@
       "activity_id": "7515032392307347456"
     },
     {
-      "id": "li_1792572223911_v2y0m",
+      "id": "li_1792574445896_m1nbe",
       "company": "JS Auto Cast Foundry India Pvt Ltd",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/js-auto-cast-foundry-india-pvt-ltd-_adicasting-austemperedductileiron-adi-activity-7518203640998748160-yYHV",
@@ -1181,7 +1181,7 @@
       "activity_id": "7518203640998748160"
     },
     {
-      "id": "li_1792572249098_fbkuo",
+      "id": "li_1792574483895_8oeg9",
       "company": "Acme Foundry Inc",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/acme-foundry-inc%2E_grayironcastings-complexcastings-coredcastings-activity-7513666261583585280-eTSu",
@@ -1210,7 +1210,7 @@
       "activity_id": "7513666261583585280"
     },
     {
-      "id": "li_1792572184300_t9dd3",
+      "id": "li_1792574377899_34n6i",
       "company": "Gaurav Industries",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/www%2Egaurav-industries%2Ecom_when-the-margin-for-error-is-zero-precision-activity-7436737584468369408-UyJH",
@@ -1239,7 +1239,7 @@
       "activity_id": "7436737584468369408"
     },
     {
-      "id": "li_1792572190198_45jx1",
+      "id": "li_1792574382504_dbm08",
       "company": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/rgk-group_ganeshchaturthi-ganpatibappamorya-rgkgroupofindustries-activity-7505224789356298240-sb90",
@@ -1268,7 +1268,7 @@
       "activity_id": "7505224789356298240"
     },
     {
-      "id": "li_1792572223911_04xv5",
+      "id": "li_1792574445896_e4p4b",
       "company": "JS Auto Cast Foundry India Pvt Ltd",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/js-auto-cast-foundry-india-pvt-ltd-_ayudhapooja-ayudhapooja2026-happyayudhapooja-activity-7517743832185061376-irET",
@@ -1297,7 +1297,7 @@
       "activity_id": "7517743832185061376"
     },
     {
-      "id": "li_1792572249098_dol3g",
+      "id": "li_1792574483895_1pthr",
       "company": "Acme Foundry Inc",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/acme-foundry-inc%2E_cncmachining-grayironcastings-machinedcastings-activity-7513301861840388097-LvS4",
@@ -1326,7 +1326,7 @@
       "activity_id": "7513301861840388097"
     },
     {
-      "id": "li_1792572190198_txkxq",
+      "id": "li_1792574382504_vg42h",
       "company": "KOTECHA STEEL FORGE AND CAST INDUSTRIES PVT. LTD. (RGK Group of Industries)",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/rgk-group_warm-wishes-from-rgk-group-of-industries-activity-7499034825459294208-elGj",
@@ -1355,7 +1355,7 @@
       "activity_id": "7499034825459294208"
     },
     {
-      "id": "li_1792572249098_14m1r",
+      "id": "li_1792574483895_o5ual",
       "company": "Acme Foundry Inc",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/acme-foundry-inc%2E_precisionmanufacturing-metalcasting-engineeringsolutions-activity-7493713005352808448-AxOv",
@@ -81733,15 +81733,15 @@
           "status": "Success",
           "count": 2
         },
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
         "Instagram": {
           "status": "No posts found",
           "count": 0
         },
         "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         }
@@ -81818,11 +81818,11 @@
           "status": "Success",
           "count": 1
         },
-        "Facebook": {
+        "Instagram": {
           "status": "No posts found",
           "count": 0
         },
-        "Instagram": {
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         }
@@ -81883,11 +81883,7 @@
         "Precision Casting & Molding"
       ],
       "socialStatus": {
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "LinkedIn": {
+        "Instagram": {
           "status": "No posts found",
           "count": 0
         },
@@ -81895,7 +81891,11 @@
           "status": "No posts found",
           "count": 0
         },
-        "Instagram": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         }
@@ -81960,11 +81960,11 @@
           "status": "Success",
           "count": 1
         },
-        "Instagram": {
+        "LinkedIn": {
           "status": "No posts found",
           "count": 0
         },
-        "LinkedIn": {
+        "Instagram": {
           "status": "No posts found",
           "count": 0
         },
@@ -82568,15 +82568,15 @@
           "status": "Success",
           "count": 1
         },
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
         "Instagram": {
           "status": "No posts found",
           "count": 0
         },
         "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         }
@@ -82641,10 +82641,6 @@
         "Stainless Steel Fabrication"
       ],
       "socialStatus": {
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
         "YouTube": {
           "status": "No posts found",
           "count": 0
@@ -82654,6 +82650,10 @@
           "count": 0
         },
         "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         }
@@ -82718,11 +82718,11 @@
         "Quality Assurance & Inspection"
       ],
       "socialStatus": {
-        "YouTube": {
+        "Instagram": {
           "status": "No posts found",
           "count": 0
         },
-        "Facebook": {
+        "YouTube": {
           "status": "No posts found",
           "count": 0
         },
@@ -82730,7 +82730,7 @@
           "status": "No posts found",
           "count": 0
         },
-        "Instagram": {
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         }
@@ -82803,11 +82803,11 @@
           "status": "Success",
           "count": 2
         },
-        "Facebook": {
+        "Instagram": {
           "status": "No posts found",
           "count": 0
         },
-        "Instagram": {
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         }
@@ -83431,19 +83431,19 @@
         "Secure Packaging & Delivery"
       ],
       "socialStatus": {
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
         "YouTube": {
           "status": "No posts found",
           "count": 0
         },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
         "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         }
@@ -83528,13 +83528,13 @@
           "status": "No posts found",
           "count": 0
         },
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
         "YouTube": {
           "status": "Success",
           "count": 3
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
         }
       },
       "isDeadAccount": true,
@@ -83670,6 +83670,10 @@
         "Quality Assurance & Inspection"
       ],
       "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
         "LinkedIn": {
           "status": "No posts found",
           "count": 0
@@ -83679,10 +83683,6 @@
           "count": 0
         },
         "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Instagram": {
           "status": "No posts found",
           "count": 0
         }
@@ -84270,6 +84270,69 @@
         "Precision Casting & Molding",
         "Heavy‑Duty CNC Machining",
         "Stainless Steel Fabrication"
+      ]
+    },
+    {
+      "name": "Belgaum Ferrocast India Private Limited",
+      "url": "http://www.bfplindia.com/",
+      "type": "regional",
+      "location": "Udyambag, No. 680/2, BEMCIEL, R.S, Plot No. 7A & 8A, Angol, Belagavi, Karnataka 590008, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting & Machining. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 18 common products: [Grey Cast Iron Castings, Ductile Iron (SG Iron) Castings, Steel Casting Components, Graded Grey Cast Iron (C.I.) Castings, Cast & Machined Components, Casting & Forging, Machining...]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 3.8 | Phone: 0831 244 0665",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.bfplindia.com/"
+        },
+        {
+          "title": "Product: Grey Cast Iron Castings",
+          "url": "https://www.linkedin.com/company/belgaum-ferrocast-india-pvt-ltd/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/belgaum-ferrocast-india-pvt-ltd/",
+        "instagram": "https://www.instagram.com/belgaumferrocastindia/",
+        "facebook": "https://www.facebook.com/BFPLIndia",
+        "youtube": null
+      },
+      "products": [
+        "Grey Cast Iron Castings",
+        "Ductile Iron (SG Iron) Castings",
+        "Steel Casting Components",
+        "Graded Grey Cast Iron (C.I.) Castings",
+        "Cast & Machined Components",
+        "Casting & Forging",
+        "Machining",
+        "Product Development",
+        "OEM Manufacturing",
+        "Precision-Engineered Casting and Machined Components",
+        "CNC Machining & Turning",
+        "Automated Production & IIoT Monitoring",
+        "Ductile Iron Casting",
+        "Steel Casting",
+        "CNC Machining",
+        "Precision Casting & Molding",
+        "Heavy‑Duty CNC Machining",
+        "Quality Assurance & Inspection"
+      ],
+      "commonProducts": [
+        "Grey Cast Iron Castings",
+        "Ductile Iron (SG Iron) Castings",
+        "Steel Casting Components",
+        "Graded Grey Cast Iron (C.I.) Castings",
+        "Cast & Machined Components",
+        "Casting & Forging",
+        "Machining",
+        "Product Development",
+        "OEM Manufacturing",
+        "Precision-Engineered Casting and Machined Components",
+        "CNC Machining & Turning",
+        "Automated Production & IIoT Monitoring",
+        "Ductile Iron Casting",
+        "Steel Casting",
+        "CNC Machining",
+        "Precision Casting & Molding",
+        "Heavy‑Duty CNC Machining",
+        "Quality Assurance & Inspection"
       ]
     }
   ]
