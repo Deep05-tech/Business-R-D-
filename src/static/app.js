@@ -1183,6 +1183,18 @@ function startLiveSync() {
       const newMem = data.memory;
       const oldMem = window.projectMemory;
       
+      // Preserve any richer competitor footprint already discovered in this session
+      if (Array.isArray(oldMem?.competitors) && oldMem.competitors.length > (newMem.competitors?.length || 0)) {
+        const compMap = new Map();
+        for (const c of oldMem.competitors) {
+          if (c?.url) compMap.set(c.url.toLowerCase(), c);
+        }
+        for (const c of (newMem.competitors || [])) {
+          if (c?.url) compMap.set(c.url.toLowerCase(), c);
+        }
+        newMem.competitors = Array.from(compMap.values());
+      }
+
       const compCountChanged = (newMem.competitors?.length || 0) !== (oldMem?.competitors?.length || 0);
       const feedCountChanged = (newMem.socialFeed?.length || 0) !== (oldMem?.socialFeed?.length || 0);
       
@@ -1814,11 +1826,17 @@ window.findCompetitors = async function(force = false) {
         }
         if (data.type === 'competitor' && data.competitor) {
           liveCompetitors.push(data.competitor);
+          if (!window.projectMemory) window.projectMemory = {};
+          if (!Array.isArray(window.projectMemory.competitors)) window.projectMemory.competitors = [];
+          if (!window.projectMemory.competitors.some(c => c.url === data.competitor.url)) {
+            window.projectMemory.competitors.push(data.competitor);
+          }
           const statusEl = document.getElementById('comp-agent-status');
           if (statusEl) {
-            const localCount = liveCompetitors.filter(c => c.type === 'local').length;
-            const regCount = liveCompetitors.filter(c => c.type === 'regional').length;
-            const globCount = liveCompetitors.filter(c => c.type === 'global').length;
+            const norm = (t) => (t || '').toLowerCase().trim();
+            const localCount = liveCompetitors.filter(c => norm(c.type) === 'local').length;
+            const regCount = liveCompetitors.filter(c => norm(c.type) === 'regional').length;
+            const globCount = liveCompetitors.filter(c => norm(c.type) === 'global').length;
             statusEl.innerText = `Discovered ${liveCompetitors.length} competitors (${localCount} local, ${regCount} regional, ${globCount} global) — Latest: ${data.competitor.name}`;
           }
           const liveCardsContainer = document.getElementById('live-comp-cards');
@@ -1880,7 +1898,14 @@ window.findCompetitors = async function(force = false) {
     // If live competitors were found, sync them into window.projectMemory so they are never lost
     if (liveCompetitors.length > 0) {
       if (!window.projectMemory) window.projectMemory = {};
-      window.projectMemory.competitors = liveCompetitors;
+      const compMap = new Map();
+      for (const c of (window.projectMemory.competitors || [])) {
+        if (c?.url) compMap.set(c.url.toLowerCase(), c);
+      }
+      for (const c of liveCompetitors) {
+        if (c?.url) compMap.set(c.url.toLowerCase(), c);
+      }
+      window.projectMemory.competitors = Array.from(compMap.values());
     }
     // Always refresh UI so loading animation is replaced by final categorized list and buttons are restored
     await loadCompetitorsUI(false, liveCompetitors);
@@ -1923,13 +1948,56 @@ async function loadCompetitorsUI(isLivePartial = false, fallbackCompetitors = nu
     const res = await fetch(`/api/competitors?url=${encodeURIComponent(window.activeProjectUrl)}`);
     const data = await res.json();
     
-    let competitors = (res.ok && Array.isArray(data.competitors)) ? data.competitors : [];
+    const serverComps = (res.ok && Array.isArray(data.competitors)) ? data.competitors : [];
     
-    // If server returned 0 competitors (or returned 403/error), but we have streamed or cached competitors, use them!
-    if (competitors.length === 0 && Array.isArray(fallbackCompetitors) && fallbackCompetitors.length > 0) {
-      competitors = fallbackCompetitors;
-    } else if (competitors.length === 0 && Array.isArray(window.projectMemory?.competitors) && window.projectMemory.competitors.length > 0) {
-      competitors = window.projectMemory.competitors;
+    // Build resilient union across all sources so discovered competitors are NEVER lost or collapsed
+    const compMap = new Map();
+    const getCompKey = (c) => {
+      if (!c || !c.url) return '';
+      try {
+        const u = c.url.startsWith('http') ? c.url : 'https://' + c.url;
+        const h = new URL(u).hostname.toLowerCase().replace(/^www\./, '');
+        return h;
+      } catch {
+        return (c.url || '').toLowerCase().trim();
+      }
+    };
+
+    // 1. Existing memory
+    if (Array.isArray(window.projectMemory?.competitors)) {
+      for (const c of window.projectMemory.competitors) {
+        const k = getCompKey(c);
+        if (k) compMap.set(k, c);
+      }
+    }
+
+    // 2. Streamed / fallback competitors
+    if (Array.isArray(fallbackCompetitors)) {
+      for (const c of fallbackCompetitors) {
+        const k = getCompKey(c);
+        if (k) compMap.set(k, c);
+      }
+    }
+
+    // 3. Server competitors
+    for (const c of serverComps) {
+      const k = getCompKey(c);
+      if (k) compMap.set(k, c);
+    }
+
+    let competitors = Array.from(compMap.values());
+    if (competitors.length > 0) {
+      if (!window.projectMemory) window.projectMemory = {};
+      window.projectMemory.competitors = competitors;
+    }
+
+    // If client has more competitors than the server returned, sync them to server
+    if (competitors.length > serverComps.length && res.ok && window.activeProjectUrl) {
+      fetch('/api/memory', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ websiteUrl: window.activeProjectUrl, updates: { competitors } })
+      }).catch(err => console.debug("Client-side competitor sync warning:", err));
     }
 
     if (!res.ok && competitors.length === 0) {
@@ -1956,9 +2024,11 @@ async function loadCompetitorsUI(isLivePartial = false, fallbackCompetitors = nu
     document.getElementById('btn-regen-comp').style.display = 'inline-block';
     document.getElementById('btn-backfill-socials').style.display = 'inline-block';
     
-    const localComps = competitors.filter(c => c.type === 'local');
-    const regionalComps = competitors.filter(c => c.type === 'regional');
-    const globalComps = competitors.filter(c => c.type === 'global');
+    const norm = (t) => (t || '').toLowerCase().trim();
+    const localComps = competitors.filter(c => norm(c.type) === 'local');
+    const regionalComps = competitors.filter(c => norm(c.type) === 'regional');
+    const globalComps = competitors.filter(c => norm(c.type) === 'global');
+    const otherComps = competitors.filter(c => !['local', 'regional', 'global'].includes(norm(c.type)));
     
     const renderCard = (c) => window.renderCompetitorCard(c);
     
@@ -1974,6 +2044,10 @@ async function loadCompetitorsUI(isLivePartial = false, fallbackCompetitors = nu
     if (globalComps.length > 0) {
       html += `<div style="grid-column: 1 / -1; margin-top:20px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px; display:flex; align-items:center; gap:8px;">🌐 Global Leaders <span class="badge" style="background:rgba(99,102,241,0.15); color:var(--primary); font-size:12px; font-weight:700; padding:2px 8px; border-radius:12px;">${globalComps.length}</span></h3></div>`;
       html += globalComps.map(renderCard).join('');
+    }
+    if (otherComps.length > 0) {
+      html += `<div style="grid-column: 1 / -1; margin-top:20px; margin-bottom:5px;"><h3 style="color:var(--text); font-weight:600; border-bottom:1px solid var(--border); padding-bottom:5px; display:flex; align-items:center; gap:8px;">🏢 Industry Competitors <span class="badge" style="background:rgba(99,102,241,0.15); color:var(--primary); font-size:12px; font-weight:700; padding:2px 8px; border-radius:12px;">${otherComps.length}</span></h3></div>`;
+      html += otherComps.map(renderCard).join('');
     }
     
     if (window._isFindingCompetitors || isLivePartial) {

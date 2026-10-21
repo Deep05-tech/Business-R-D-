@@ -229,24 +229,36 @@ export class CronAgent {
     if (staleCompetitors.length > 0) {
       const staleUrls = new Set(staleCompetitors.map(competitor => competitor.url));
       staleUrls.forEach(url => retiredCompetitorUrls.add(url));
-      const activeCompetitors = targetCompetitors.filter(competitor => !staleUrls.has(competitor.url));
       const staleNames = staleCompetitors.map(competitor => competitor.name).join(", ");
-      logger.info(`Retiring ${staleCompetitors.length} inactive competitor(s) with no post in six months: ${staleNames}. Searching for replacements.`);
+      logger.info(`Flagging ${staleCompetitors.length} competitor(s) with no recent social activity: ${staleNames}.`);
 
-      // Do not rediscover an account that was just retired. The discovery agent
-      // already validates product overlap, industry fit and recent social activity.
-      memory.competitors = activeCompetitors;
-      memory.rejectedCompetitors = [...new Set([...(memory.rejectedCompetitors || []), ...staleCompetitors.map(competitor => competitor.url)])];
+      // In B2B manufacturing, lack of recent social posts does not disqualify an operating competitor.
+      // Flag inactive social accounts so the UI displays the DEAD ACCOUNT badge without destroying
+      // the user's mapped competitors in memory.competitors.
+      for (const comp of (memory.competitors || [])) {
+        if (staleUrls.has(comp.url)) {
+          (comp as any).isDeadAccount = true;
+          (comp as any).isInactiveSocial = true;
+        }
+      }
+
+      // Optionally attempt to discover fresh active replacement competitors to expand the tracking list
       try {
         const replacements = await new CompetitorAgent().run(memory, "regional", undefined, staleCompetitors.length);
         const selected = replacements.slice(0, staleCompetitors.length);
-        memory.competitors = [...activeCompetitors, ...selected];
-        logger.info(`Added ${selected.length}/${staleCompetitors.length} replacement competitor(s) after retiring inactive accounts.`);
+        if (selected.length > 0) {
+          const compMap = new Map<string, any>();
+          for (const c of (memory.competitors || [])) {
+            if (c?.url) compMap.set(c.url.toLowerCase(), c);
+          }
+          for (const c of selected) {
+            if (c?.url) compMap.set(c.url.toLowerCase(), c);
+          }
+          memory.competitors = Array.from(compMap.values());
+          logger.info(`Added ${selected.length} fresh replacement competitor(s) to tracking footprint.`);
+        }
       } catch (error: any) {
-        // Preserve active competitors and continue saving the refreshed feed if
-        // discovery is temporarily unavailable.
-        memory.competitors = activeCompetitors;
-        logger.warn(`Could not find replacement competitors: ${error.message}`);
+        logger.warn(`Could not fetch replacement competitors: ${error.message}`);
       }
     }
 

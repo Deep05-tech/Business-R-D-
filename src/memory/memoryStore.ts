@@ -165,7 +165,7 @@ export class MemoryStore {
   // Persistence (MongoDB + Local Filesystem Dual-Layer)
   // ---------------------------------------------------------------------------
 
-  async save(memory: StructuredMemory): Promise<string> {
+  async save(memory: StructuredMemory, options?: { skipGitHubSync?: boolean }): Promise<string> {
     // If this website was previously tombstoned/deleted, clear the tombstone
     await this.removeTombstone(memory.input.websiteUrl);
 
@@ -214,7 +214,9 @@ export class MemoryStore {
             const parsedEf = JSON.parse(rawEf);
             if (this.normalizeKey(parsedEf.input?.websiteUrl || "") === targetNorm) {
               await unlink(join(this.directory, ef)).catch(() => {});
-              await this.deleteFromGitHub(ef).catch(() => {});
+              if (!options?.skipGitHubSync) {
+                await this.deleteFromGitHub(ef).catch(() => {});
+              }
               logger.info(`Cleaned up superseded file ${ef} for ${memory.input.websiteUrl}`);
             }
           } catch {}
@@ -226,11 +228,13 @@ export class MemoryStore {
     await writeFile(filePath, jsonContent, "utf8");
     logger.success(`Saved local memory for ${memory.input.websiteUrl} to ${filePath}`);
 
-    // 3. GitHub Cloud Persistence: Auto-commit directly into GitHub data/memory/
-    try {
-      await this.syncToGitHub(targetFileName, jsonContent);
-    } catch (err: any) {
-      logger.warn(`GitHub synchronization warning: ${err.message}`);
+    // 3. GitHub Cloud Persistence: Auto-commit directly into GitHub data/memory/ (skipped on throttled progress saves)
+    if (!options?.skipGitHubSync) {
+      try {
+        await this.syncToGitHub(targetFileName, jsonContent);
+      } catch (err: any) {
+        logger.warn(`GitHub synchronization warning: ${err.message}`);
+      }
     }
 
     return filePath;

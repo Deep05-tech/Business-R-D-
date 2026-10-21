@@ -90,10 +90,12 @@ export class KnowledgeIndex {
   private normalizeUrl(url: string): string {
     if (!url || typeof url !== 'string') return "";
     try {
-      const parsed = new URL(url);
-      return `${parsed.hostname}${parsed.pathname.replace(/\/$/, "")}`;
+      const parsed = new URL(url.startsWith("http") ? url : `https://${url}`);
+      const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
+      const pathname = parsed.pathname.replace(/\/$/, "");
+      return `${host}${pathname}`;
     } catch {
-      return url.toLowerCase().trim();
+      return url.toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
     }
   }
 

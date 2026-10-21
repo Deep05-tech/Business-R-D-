@@ -23,7 +23,7 @@ import { MemoryStore } from "./memory/memoryStore.js";
 import { OrchestratorAgent } from "./orchestrator.js";
 import { QueryMemoryAgent } from "./agents/queryMemoryAgent.js";
 import { SmmAgent } from "./agents/smmAgent.js";
-import { CompetitorAgent } from "./agents/competitorAgent.js";
+import { CompetitorAgent, getRootDomain } from "./agents/competitorAgent.js";
 import type { CompetitorProfile } from "./types.js";
 import { CompetitiveAnalysisAgent } from "./agents/competitiveAnalysisAgent.js";
 import { SeoAgent } from "./agents/seoAgent.js";
@@ -1351,9 +1351,16 @@ app.post("/api/competitors", async (request, response) => {
     const competitorAgentToUse = competitorAgent;
     const competitors = await (competitorAgentToUse as any).run(memory, scope || "all");
     
-    // Overwrite the existing competitor list with the brand new fresh scrape.
-    // (Deleted competitors are already permanently skipped because they are in rejectedCompetitors)
-    memory.competitors = competitors;
+    // Merge newly discovered competitors with existing competitors without dropping any
+    const compMap = new Map<string, any>();
+    for (const c of (memory.competitors || [])) {
+      if (c && c.url) compMap.set(getRootDomain(c.url) || c.url.toLowerCase(), c);
+    }
+    for (const c of (competitors || [])) {
+      if (c && c.url) compMap.set(getRootDomain(c.url) || c.url.toLowerCase(), c);
+    }
+    memory.competitors = Array.from(compMap.values());
+    knowledgeIndex.add(memory);
     await memoryStore.save(memory);
     
     logger.success(`✅ Successfully extracted ${competitors.length} competitors for ${websiteUrl}`);
@@ -1423,7 +1430,7 @@ app.post("/api/competitors-stream", async (request, response) => {
   let newlyFoundSinceLastSave = 0;
   const saveThrottled = async () => {
     try {
-      if (memory) await memoryStore.save(memory);
+      if (memory) await memoryStore.save(memory, { skipGitHubSync: true });
     } catch (saveErr: any) {
       logger.warn(`Progressive competitor persistence warning: ${saveErr.message}`);
     }
@@ -1438,18 +1445,20 @@ app.post("/api/competitors-stream", async (request, response) => {
       memory, 
       scope || "all", 
       (comp, statusMsg) => {
+        if (comp) {
+          if (!memory!.competitors) memory!.competitors = [];
+          if (!memory!.competitors.some((c: any) => c.url === comp.url)) {
+            memory!.competitors.push(comp);
+            knowledgeIndex.add(memory!);
+            newlyFoundSinceLastSave++;
+            if (newlyFoundSinceLastSave >= 2) {
+              newlyFoundSinceLastSave = 0;
+              saveThrottled().catch(() => {});
+            }
+          }
+        }
         if (!response.writableEnded) {
           if (comp) {
-            if (!memory!.competitors) memory!.competitors = [];
-            if (!memory!.competitors.some((c: any) => c.url === comp.url)) {
-              memory!.competitors.push(comp);
-              knowledgeIndex.add(memory!);
-              newlyFoundSinceLastSave++;
-              if (newlyFoundSinceLastSave >= 2) {
-                newlyFoundSinceLastSave = 0;
-                saveThrottled().catch(() => {});
-              }
-            }
             response.write(`data: ${JSON.stringify({ type: 'competitor', competitor: comp, status: statusMsg })}\n\n`);
           } else {
             response.write(`data: ${JSON.stringify({ type: 'progress', status: statusMsg })}\n\n`);
@@ -1463,7 +1472,23 @@ app.post("/api/competitors-stream", async (request, response) => {
       Boolean(force)
     );
 
-    memory.competitors = competitors;
+    // Merge newly discovered competitors with existing competitors without dropping any
+    const existingComps = force ? [] : (memory.competitors || []);
+    const compMap = new Map<string, any>();
+    for (const c of existingComps) {
+      if (c && c.url) {
+        const key = getRootDomain(c.url) || c.url.toLowerCase();
+        compMap.set(key, c);
+      }
+    }
+    for (const c of (competitors || [])) {
+      if (c && c.url) {
+        const key = getRootDomain(c.url) || c.url.toLowerCase();
+        compMap.set(key, c);
+      }
+    }
+    const finalCompetitors = Array.from(compMap.values());
+    memory.competitors = finalCompetitors;
     knowledgeIndex.add(memory);
 
     // Persist to MongoDB, disk, and GitHub before concluding stream
@@ -1475,7 +1500,7 @@ app.post("/api/competitors-stream", async (request, response) => {
 
     // Immediately notify the client and close the SSE stream so the dashboard loading finishes
     if (!response.writableEnded) {
-      response.write(`data: ${JSON.stringify({ type: 'complete', competitors })}\n\n`);
+      response.write(`data: ${JSON.stringify({ type: 'complete', competitors: finalCompetitors })}\n\n`);
       response.end();
     }
   } catch (err: any) {
