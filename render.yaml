@@ -10,3 +10,9 @@ services:
         value: 3000
       - key: NODE_ENV
         value: production
+      - key: TAVILY_API_KEY
+        value: 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
+      - key: YOUTUBE_API_KEY
+        value: AIzaSyDKst8RQO8dxpRjxGDB19N1G50-pDq40iQ
+      - key: GITHUB_TOKEN
+        sync: false

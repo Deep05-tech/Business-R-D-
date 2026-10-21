@@ -3756,9 +3756,13 @@ async function loadFeedUI() {
       let ytVidId = window.getYouTubeId(post.link || '') || window.getYouTubeId(post.mediaUrl || '') || window.getYouTubeId(rawContent);
       let firstMediaUrl = window.extractSingleMediaUrl(post);
 
-      // Strictly require a valid media URL or YouTube ID so 100% of displayed cards have authentic thumbnails
+      // Require valid media or valid social post link so all 4 platforms are consistently represented
       if (!firstMediaUrl && !ytVidId) {
-        return;
+        if (pLinkLower.includes('instagram.com') || pLinkLower.includes('facebook.com') || pLinkLower.includes('linkedin.com') || pLinkLower.includes('youtube.com') || post.link) {
+          firstMediaUrl = post.thumbnail || post.media_url || post.link;
+        } else {
+          return;
+        }
       }
 
       post._globalIndex = window.allFeedPosts.length;
@@ -3875,6 +3879,15 @@ async function loadFeedUI() {
             <img src="${proxiedThumb}" class="${imgClass}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; ${fitStyle} object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };" />
             ${badgeHtml}
             ${playBtn}
+          </div>`;
+      }
+
+      if (!cardThumbHtml) {
+        cardThumbHtml = `
+          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: ${meta.bg}; flex-shrink: 0; position: relative; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div style="width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.16);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:6px;">${meta.icon}</div>
+            <span style="font-size:12px;font-weight:700;color:#ffffff;letter-spacing:0.02em;">${platform}</span>
+            <span style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.78);margin-top:2px;">Preview Post ↗</span>
           </div>`;
       }
 

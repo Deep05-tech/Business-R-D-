@@ -29,7 +29,9 @@ RUN npm run build
 # Default environment variables
 ENV NODE_ENV=production \
     PORT=3000 \
-    CRAWL_MAX_PAGES=12
+    CRAWL_MAX_PAGES=12 \
+    TAVILY_API_KEY=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 \
+    YOUTUBE_API_KEY=AIzaSyDKst8RQO8dxpRjxGDB19N1G50-pDq40iQ
 
 EXPOSE 3000
 

@@ -123,12 +123,13 @@ export class CronAgent {
         .replace(/\s+/g, ' ')
         .trim() || comp.name.trim();
 
+      const tavilyKey = process.env.TAVILY_API_KEY || "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";
       const searchSocialUrl = async (platform: string, searchSite: string): Promise<string | null> => {
-        if (process.env.TAVILY_API_KEY) {
+        if (tavilyKey) {
           try {
             const domain = searchSite.split('/')[0];
             const tavilyRes = await axios.post("https://api.tavily.com/search", {
-              api_key: process.env.TAVILY_API_KEY,
+              api_key: tavilyKey,
               query: `${cleanName} ${platform.toLowerCase()} official profile`,
               search_depth: "basic",
               include_domains: [domain],
@@ -319,14 +320,51 @@ export class CronAgent {
 
       const updatedFeed = balancedFeed.length > 0 ? balancedFeed : competitorResults.flatMap(r => r.posts);
 
-      (memory as any).socialFeed = updatedFeed;
+      // Merge freshly crawled posts with any previously saved verified posts
+      // so temporary timeouts or single-platform rate limits never wipe out historical verified posts
+      const existingFeed: FeedPost[] = Array.isArray((memory as any).socialFeed) ? (memory as any).socialFeed : [];
+      const mergedMap = new Map<string, FeedPost>();
+
+      const normalizePostKey = (p: any): string => {
+        const plat = String(p.platform || p._detectedPlatform || '').trim().toLowerCase();
+        const rawUrl = String(p.post_url || p.link || p.postUrl || '').trim().toLowerCase();
+        const ytMatch = rawUrl.match(/(?:v=|\/vi\/|shorts\/)([\w-]{11})/);
+        if (ytMatch && ytMatch[1]) {
+          return `youtube_${ytMatch[1]}`;
+        }
+        const cleanUrl = rawUrl
+          .replace(/([?&])(?:utm_[^&]+|fbclid=[^&]+|igsh=[^&]+|si=[^&]+|__cft__[^&]+|__tn__[^&]+)/gi, '$1')
+          .replace(/[?&]$/, '')
+          .replace(/\/+$/, '');
+        const id = String(p.id || '').trim().toLowerCase();
+        return `${plat}_${cleanUrl || id}`;
+      };
+
+      // Add fresh crawled posts first
+      for (const p of updatedFeed) {
+        const k = normalizePostKey(p);
+        if (k && !mergedMap.has(k)) {
+          mergedMap.set(k, p);
+        }
+      }
+
+      // Preserve previously verified posts that were not re-scraped in this run
+      for (const p of existingFeed) {
+        const k = normalizePostKey(p);
+        if (k && !mergedMap.has(k)) {
+          mergedMap.set(k, p);
+        }
+      }
+
+      const mergedFeed = Array.from(mergedMap.values());
+      (memory as any).socialFeed = mergedFeed;
 
       // Update memory store
       knowledgeIndex.add(memory);
       await memoryStore.save(memory);
 
-      logger.info(`✅ Successfully completed Daily Competitor Social Tracker for ${memory.input.websiteUrl}. Extracted ${updatedFeed.length} verified posts across competitors.`);
-      return updatedFeed;
+      logger.info(`✅ Successfully completed Daily Competitor Social Tracker for ${memory.input.websiteUrl}. Feed now contains ${mergedFeed.length} verified posts across competitors.`);
+      return mergedFeed;
     } catch (e: any) {
       logger.error(`Cron agent save failed: ${e.message}`);
       throw e;

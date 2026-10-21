@@ -744,7 +744,8 @@ export class SocialExtractorAgent {
                 let results: any[] = [];
 
                 // 1. Try Tavily Search API first if configured (fast, direct social media results)
-                if (process.env.TAVILY_API_KEY) {
+                const tavilyKey = process.env.TAVILY_API_KEY || "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";
+                if (tavilyKey) {
                     try {
                         const targetDomains: Record<string, string[]> = {
                             "Instagram": ["instagram.com"],
@@ -767,7 +768,7 @@ export class SocialExtractorAgent {
                         }
 
                         const tavilyRes = await axios.post("https://api.tavily.com/search", {
-                            api_key: process.env.TAVILY_API_KEY,
+                            api_key: tavilyKey,
                             query: tavilyQuery,
                             search_depth: "basic",
                             include_domains: targetDomains[platform] || [],
@@ -897,7 +898,9 @@ export class SocialExtractorAgent {
         const enriched = await Promise.all(
             candidateSlice.map(p => this.enrichPostDetails(p, platform))
         );
-        const validEnriched = enriched.filter(p => !p._invalidAuthor && Boolean(p.thumbnail || p.platform === 'YouTube' || p._ytId));
+        const validEnriched = enriched.filter(p => !p._invalidAuthor && Boolean(
+            p.thumbnail || p.platform === 'YouTube' || p.platform === 'Instagram' || p.platform === 'Facebook' || p._ytId
+        ));
         return validEnriched.slice(0, maxPosts);
     }
 
@@ -1055,6 +1058,29 @@ export class SocialExtractorAgent {
                 if (!post.media_type || post.media_type === "Text") {
                     post.media_type = (postUrl.includes('/reel/') || postUrl.includes('/videos/') || postUrl.includes('/watch')) ? "Video" : "Image";
                     post.mediaType = post.media_type;
+                }
+            } else if (!post.thumbnail) {
+                if (platform === 'Facebook') {
+                    const fbIdMatch = postUrl.match(/(?:fbid=|\/photos\/[^\/]+\/|\/posts\/[^\/]+\/|story_fbid=|\/photo\/?\?fbid=|\/videos\/[^\/]+\/|media_id=)(\d{10,25})/);
+                    if (fbIdMatch && fbIdMatch[1]) {
+                        const fbThumb = `https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${fbIdMatch[1]}`;
+                        post.thumbnail = fbThumb;
+                        post.thumbnail_url = fbThumb;
+                        post.media_url = fbThumb;
+                        post.mediaUrl = fbThumb;
+                        post.mediaUrls = fbThumb;
+                    }
+                } else if (platform === 'Instagram') {
+                    const scMatch = postUrl.match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/);
+                    if (scMatch && scMatch[1]) {
+                        post.shortcode = scMatch[1];
+                        const igThumb = `https://www.instagram.com/p/${scMatch[1]}/media/?size=l`;
+                        post.thumbnail = igThumb;
+                        post.thumbnail_url = igThumb;
+                        post.media_url = igThumb;
+                        post.mediaUrl = igThumb;
+                        post.mediaUrls = igThumb;
+                    }
                 }
             }
 

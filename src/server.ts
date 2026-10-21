@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import axios from "axios";
 import * as cheerio from "cheerio";
@@ -7,6 +8,14 @@ import { createRequire } from "node:module";
 import { ZodError } from "zod";
 import multer from "multer";
 import { QcFailureError } from "./errors.js";
+
+// Ensure essential fallback keys are present for cloud deployments
+if (!process.env.TAVILY_API_KEY) {
+  process.env.TAVILY_API_KEY = "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";
+}
+if (!process.env.YOUTUBE_API_KEY) {
+  process.env.YOUTUBE_API_KEY = "AIzaSyDKst8RQO8dxpRjxGDB19N1G50-pDq40iQ";
+}
 
 const require = createRequire(import.meta.url);
 const { PDFParse } = require("pdf-parse");
