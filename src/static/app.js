@@ -2025,10 +2025,22 @@ async function loadCompetitorsUI(isLivePartial = false, fallbackCompetitors = nu
     document.getElementById('btn-backfill-socials').style.display = 'inline-block';
     
     const norm = (t) => (t || '').toLowerCase().trim();
-    const localComps = competitors.filter(c => norm(c.type) === 'local');
-    const regionalComps = competitors.filter(c => norm(c.type) === 'regional');
-    const globalComps = competitors.filter(c => norm(c.type) === 'global');
-    const otherComps = competitors.filter(c => !['local', 'regional', 'global'].includes(norm(c.type)));
+    const sortByOverlap = (a, b) => {
+      const countA = (a.commonProducts?.length || a.products?.length || 0);
+      const countB = (b.commonProducts?.length || b.products?.length || 0);
+      return countB - countA;
+    };
+    const MAX_PER_CATEGORY = 15;
+    const localComps = competitors.filter(c => norm(c.type) === 'local').sort(sortByOverlap).slice(0, MAX_PER_CATEGORY);
+    const regionalComps = competitors.filter(c => norm(c.type) === 'regional').sort(sortByOverlap).slice(0, MAX_PER_CATEGORY);
+    const globalComps = competitors.filter(c => norm(c.type) === 'global').sort(sortByOverlap).slice(0, MAX_PER_CATEGORY);
+    const otherComps = competitors.filter(c => !['local', 'regional', 'global'].includes(norm(c.type))).sort(sortByOverlap).slice(0, MAX_PER_CATEGORY);
+    
+    // Keep projectMemory aligned with the capped 15 per category set
+    const cappedCompetitors = [...localComps, ...regionalComps, ...globalComps, ...otherComps];
+    if (window.projectMemory) {
+      window.projectMemory.competitors = cappedCompetitors;
+    }
     
     const renderCard = (c) => window.renderCompetitorCard(c);
     

@@ -798,19 +798,27 @@ STRICT INSTRUCTIONS:
     }
 
     // Sort final competitors by maximum common product overlap (descending)
-    finalCompetitors.sort((a, b) => {
+    const norm = (t: string) => (t || '').toLowerCase().trim();
+    const byOverlap = (a: CompetitorProfile, b: CompetitorProfile) => {
         const countA = a.commonProducts?.length || a.products?.length || 0;
         const countB = b.commonProducts?.length || b.products?.length || 0;
         return countB - countA;
-    });
+    };
 
-    if (finalCompetitors.length === 0) {
+    const MAX_PER_CATEGORY = 15;
+    const local = finalCompetitors.filter(c => norm(c.type) === 'local').sort(byOverlap).slice(0, MAX_PER_CATEGORY);
+    const regional = finalCompetitors.filter(c => norm(c.type) === 'regional').sort(byOverlap).slice(0, MAX_PER_CATEGORY);
+    const global = finalCompetitors.filter(c => norm(c.type) === 'global').sort(byOverlap).slice(0, MAX_PER_CATEGORY);
+    const other = finalCompetitors.filter(c => !['local', 'regional', 'global'].includes(norm(c.type))).sort(byOverlap).slice(0, MAX_PER_CATEGORY);
+    const cappedCompetitors = [...local, ...regional, ...global, ...other];
+
+    if (cappedCompetitors.length === 0) {
         logger.warn("Google Places API returned 0 valid competitors with websites and social media links.");
     } else {
-        logger.success(`Google Places API successfully processed ${finalCompetitors.length} unique competitors sorted by max product overlap.`);
+        logger.success(`Google Places API successfully processed ${cappedCompetitors.length} unique competitors (max ${MAX_PER_CATEGORY} per category) sorted by max product overlap.`);
     }
 
-    return finalCompetitors;
+    return cappedCompetitors;
   }
 
     private async scrapeWebsite(url: string, primaryOffering: string, allOfferings: string[], targetIndustry: string, targetSubIndustry: string, targetName: string, targetType: "local" | "regional" | "global" = "regional"): Promise<{ socials: any, productUrl: string, foundOfferings: string[], isDealer: boolean, whyCompetitorText?: string } | null> {

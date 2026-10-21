@@ -1324,7 +1324,16 @@ app.get("/api/competitors", async (request, response) => {
     const memory = knowledgeIndex.get(url) || await memoryStore.loadBySite(url);
     if (!memory) return response.status(404).json({ error: "Memory not found" });
 
-    response.json({ competitors: memory.competitors || [] });
+    const norm = (t: string) => (t || '').toLowerCase().trim();
+    const byOverlap = (a: any, b: any) => ((b.commonProducts?.length || b.products?.length || 0) - (a.commonProducts?.length || a.products?.length || 0));
+    const all = memory.competitors || [];
+    const local = all.filter((c: any) => norm(c.type) === 'local').sort(byOverlap).slice(0, 15);
+    const regional = all.filter((c: any) => norm(c.type) === 'regional').sort(byOverlap).slice(0, 15);
+    const global = all.filter((c: any) => norm(c.type) === 'global').sort(byOverlap).slice(0, 15);
+    const other = all.filter((c: any) => !['local', 'regional', 'global'].includes(norm(c.type))).sort(byOverlap).slice(0, 15);
+    const cappedCompetitors = [...local, ...regional, ...global, ...other];
+
+    response.json({ competitors: cappedCompetitors });
   } catch (e: any) {
     response.status(500).json({ error: e.message });
   }
@@ -1359,7 +1368,15 @@ app.post("/api/competitors", async (request, response) => {
     for (const c of (competitors || [])) {
       if (c && c.url) compMap.set(getRootDomain(c.url) || c.url.toLowerCase(), c);
     }
-    memory.competitors = Array.from(compMap.values());
+    const norm = (t: string) => (t || '').toLowerCase().trim();
+    const byOverlap = (a: any, b: any) => ((b.commonProducts?.length || b.products?.length || 0) - (a.commonProducts?.length || a.products?.length || 0));
+    const mergedAll = Array.from(compMap.values());
+    const local = mergedAll.filter((c: any) => norm(c.type) === 'local').sort(byOverlap).slice(0, 15);
+    const regional = mergedAll.filter((c: any) => norm(c.type) === 'regional').sort(byOverlap).slice(0, 15);
+    const global = mergedAll.filter((c: any) => norm(c.type) === 'global').sort(byOverlap).slice(0, 15);
+    const other = mergedAll.filter((c: any) => !['local', 'regional', 'global'].includes(norm(c.type))).sort(byOverlap).slice(0, 15);
+    const cappedCompetitors = [...local, ...regional, ...global, ...other];
+    memory.competitors = cappedCompetitors;
     knowledgeIndex.add(memory);
     await memoryStore.save(memory);
     
@@ -1487,7 +1504,14 @@ app.post("/api/competitors-stream", async (request, response) => {
         compMap.set(key, c);
       }
     }
-    const finalCompetitors = Array.from(compMap.values());
+    const norm = (t: string) => (t || '').toLowerCase().trim();
+    const byOverlap = (a: any, b: any) => ((b.commonProducts?.length || b.products?.length || 0) - (a.commonProducts?.length || a.products?.length || 0));
+    const mergedAll = Array.from(compMap.values());
+    const local = mergedAll.filter((c: any) => norm(c.type) === 'local').sort(byOverlap).slice(0, 15);
+    const regional = mergedAll.filter((c: any) => norm(c.type) === 'regional').sort(byOverlap).slice(0, 15);
+    const global = mergedAll.filter((c: any) => norm(c.type) === 'global').sort(byOverlap).slice(0, 15);
+    const other = mergedAll.filter((c: any) => !['local', 'regional', 'global'].includes(norm(c.type))).sort(byOverlap).slice(0, 15);
+    const finalCompetitors = [...local, ...regional, ...global, ...other];
     memory.competitors = finalCompetitors;
     knowledgeIndex.add(memory);
 
