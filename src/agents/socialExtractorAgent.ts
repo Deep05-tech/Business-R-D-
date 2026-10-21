@@ -908,14 +908,20 @@ export class SocialExtractorAgent {
         if (!text) return '';
         let s = String(text).trim();
 
-        // Strip common Instagram headers & login noise
-        s = s.replace(/^.*?\bon (?:Instagram|Facebook):\s*["“]?/is, '');
-        s = s.replace(/^[\d,kK]+\s*likes,\s*[\d,kK]+\s*comments\s*-\s*[^\s:]+(?:\s+on\s+[A-Za-z]+\s+\d{1,2},\s*\d{4})?:\s*["“]?/is, '');
+        // 1. Strip Instagram login page texts and redirects
+        s = s.replace(/Welcome back to Instagram[\s\S]*?(?:around the world\.?|world\.?|$)/gis, '');
+        s = s.replace(/Sign in to check out what your friends[\s\S]*?(?:around the world\.?|world\.?|$)/gis, '');
+        s = s.replace(/Log in to see photos and videos from friends[\s\S]*?(?:around the world\.?|world\.?|$)/gis, '');
         s = s.replace(/Log In Sign Up.*?Never miss a post from.*?Sign up/gis, '');
         s = s.replace(/Log In Sign Up.*?Sign up for Instagram/gis, '');
         s = s.replace(/Start the conversation\.\s*\d*\s*Log in to like or comment\./gis, '');
         s = s.replace(/Log in to like or comment\./gis, '');
         s = s.replace(/## No comments yet\.\s*Start the conversation\./gis, '');
+        s = s.replace(/See more posts from [^\n.]+/gis, '');
+        s = s.replace(/Don't have an account\? Sign up/gis, '');
+
+        // 2. Strip Facebook accessibility / photo description boilerplates
+        s = s.replace(/No photo description available\.?/gis, '');
         s = s.replace(/May be an image of.*$/gis, '');
         s = s.replace(/May be a graphic of.*$/gis, '');
         s = s.replace(/Photo by .*? on .*?\./gis, '');
@@ -926,6 +932,18 @@ export class SocialExtractorAgent {
         s = s.replace(/^Title:\s*.*?\s*-\s*/is, '');
         s = s.replace(/^[A-Za-z]{3}\s+\d{1,2},\s*\d{4}\s*·\s*/is, '');
         s = s.replace(/\.\.\.\s*From\s*$/is, '');
+
+        // Strip common Instagram headers
+        s = s.replace(/^.*?\bon (?:Instagram|Facebook):\s*["“]?/is, '');
+        s = s.replace(/^[\d,kK]+\s*likes,\s*[\d,kK]+\s*comments\s*-\s*[^\s:]+(?:\s+on\s+[A-Za-z]+\s+\d{1,2},\s*\d{4})?:\s*["“]?/is, '');
+
+        if (s.toLowerCase().includes('welcome back to instagram') ||
+            s.toLowerCase().includes('sign in to check out') ||
+            s.toLowerCase().includes('no photo description available') ||
+            s.toLowerCase() === 'around the world.' ||
+            s.toLowerCase() === 'around the world') {
+            s = '';
+        }
 
         if (s.startsWith('"') || s.startsWith('“')) s = s.slice(1);
         if (s.endsWith('"') || s.endsWith('”')) s = s.slice(0, -1);
@@ -957,6 +975,14 @@ export class SocialExtractorAgent {
             return post;
         }
 
+        // Always parse shortcode for Instagram posts
+        if (platform === 'Instagram') {
+            const scMatch = postUrl.match(/\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/);
+            if (scMatch && scMatch[1]) {
+                post.shortcode = scMatch[1];
+            }
+        }
+
         try {
             const headers = (platform === 'Instagram' || platform === 'Facebook') ? {
                 'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
@@ -969,12 +995,39 @@ export class SocialExtractorAgent {
             };
 
             const res = await axios.get(postUrl, { headers, timeout: 6000 }).catch(() => null);
-            if (!res || !res.data) return post;
+            if (!res || !res.data) {
+                // If direct scrape timed out or failed, ensure fallback thumbnail for Instagram
+                if (platform === 'Instagram' && post.shortcode && !post.thumbnail) {
+                    const igThumb = `https://www.instagram.com/p/${post.shortcode}/media/?size=l`;
+                    post.thumbnail = igThumb;
+                    post.thumbnail_url = igThumb;
+                    post.media_url = igThumb;
+                    post.mediaUrl = igThumb;
+                    post.mediaUrls = igThumb;
+                }
+                return post;
+            }
 
             const $ = cheerio.load(res.data);
-            const ogTitle = $("meta[property=\"og:title\"]").attr("content") || $("meta[name=\"twitter:title\"]").attr("content") || "";
-            const ogDesc = $("meta[property=\"og:description\"]").attr("content") || $("meta[name=\"description\"]").attr("content") || $("meta[name=\"twitter:description\"]").attr("content") || "";
+            let ogTitle = $("meta[property=\"og:title\"]").attr("content") || $("meta[name=\"twitter:title\"]").attr("content") || "";
+            let ogDesc = $("meta[property=\"og:description\"]").attr("content") || $("meta[name=\"description\"]").attr("content") || $("meta[name=\"twitter:description\"]").attr("content") || "";
             const ogImg = $("meta[property=\"og:image\"]").attr("content") || $("meta[name=\"og:image\"]").attr("content") || $("meta[name=\"twitter:image\"]").attr("content") || "";
+
+            // Ignore login page / generic boilerplate in ogTitle and ogDesc
+            const isBoilerplateText = (txt: string) => {
+                if (!txt) return true;
+                const lower = txt.toLowerCase();
+                return lower.includes('welcome back to instagram') ||
+                       lower.includes('sign in to check out') ||
+                       lower.includes('log in to see photos') ||
+                       lower.includes('no photo description available') ||
+                       lower.includes('may be an image of') ||
+                       lower === 'instagram' ||
+                       lower === 'facebook';
+            };
+
+            if (isBoilerplateText(ogTitle)) ogTitle = "";
+            if (isBoilerplateText(ogDesc)) ogDesc = "";
 
             let extractedCaption = "";
 
@@ -1029,14 +1082,24 @@ export class SocialExtractorAgent {
                 if (!cap) return true;
                 return cap.includes('Log In') || cap.includes('Sign Up') || cap.includes('profile picture') ||
                        cap.includes('Start the conversation') || cap.includes('Never miss a post') ||
+                       cap.includes('Welcome back to Instagram') || cap.includes('Sign in to check out') ||
+                       cap.includes('No photo description available') ||
                        cap.includes('May be an image') || cap.includes('Photo by ') || cap.includes('Video by ');
             };
 
-            if (extractedCaption && (hasBoilerplate(post.caption) || extractedCaption.length > (post.caption ? post.caption.length : 0))) {
+            const compName = post.company || post.competitorName || 'Competitor';
+
+            if (extractedCaption && !hasBoilerplate(extractedCaption) && (hasBoilerplate(post.caption) || extractedCaption.length > (post.caption ? post.caption.length : 0))) {
                 post.caption = extractedCaption;
                 post.content = extractedCaption;
             } else if (post.caption) {
                 post.caption = SocialExtractorAgent.cleanSocialCaption(post.caption, platform);
+                if (hasBoilerplate(post.caption) || !post.caption) {
+                    post.caption = platform === 'Instagram' ? `${compName} - Instagram ${postUrl.includes('/reel/') ? 'Reel' : 'Post'}` : (platform === 'Facebook' ? `${compName} - Facebook Update` : `${compName} - ${platform}`);
+                }
+                post.content = post.caption;
+            } else {
+                post.caption = platform === 'Instagram' ? `${compName} - Instagram ${postUrl.includes('/reel/') ? 'Reel' : 'Post'}` : (platform === 'Facebook' ? `${compName} - Facebook Update` : `${compName} - ${platform}`);
                 post.content = post.caption;
             }
 
@@ -1045,6 +1108,7 @@ export class SocialExtractorAgent {
                 ogImg.includes("profile_pic") ||
                 ogImg.includes("profile_photo") ||
                 ogImg.includes("avatar") ||
+                ogImg.includes("favicon") ||
                 ogImg.includes("static.licdn.com") ||
                 ogImg.includes("aero-v1") ||
                 ogImg.includes("c45fy346jw096z9pbphyyhdz7");
@@ -1059,7 +1123,7 @@ export class SocialExtractorAgent {
                     post.media_type = (postUrl.includes('/reel/') || postUrl.includes('/videos/') || postUrl.includes('/watch')) ? "Video" : "Image";
                     post.mediaType = post.media_type;
                 }
-            } else if (!post.thumbnail) {
+            } else if (!post.thumbnail || post.thumbnail.includes('favicon') || isAeroOrPlaceholder) {
                 if (platform === 'Facebook') {
                     const fbIdMatch = postUrl.match(/(?:fbid=|\/photos\/[^\/]+\/|\/posts\/[^\/]+\/|story_fbid=|\/photo\/?\?fbid=|\/videos\/[^\/]+\/|media_id=)(\d{10,25})/);
                     if (fbIdMatch && fbIdMatch[1]) {
@@ -1071,10 +1135,10 @@ export class SocialExtractorAgent {
                         post.mediaUrls = fbThumb;
                     }
                 } else if (platform === 'Instagram') {
-                    const scMatch = postUrl.match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/);
-                    if (scMatch && scMatch[1]) {
-                        post.shortcode = scMatch[1];
-                        const igThumb = `https://www.instagram.com/p/${scMatch[1]}/media/?size=l`;
+                    const scMatch = post.shortcode || (postUrl.match(/\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/) || [])[1];
+                    if (scMatch) {
+                        post.shortcode = scMatch;
+                        const igThumb = `https://www.instagram.com/p/${scMatch}/media/?size=l`;
                         post.thumbnail = igThumb;
                         post.thumbnail_url = igThumb;
                         post.media_url = igThumb;

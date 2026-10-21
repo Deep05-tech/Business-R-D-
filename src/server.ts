@@ -517,6 +517,12 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
             targetUrl = `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
         }
 
+        // 2. If targetUrl is an Instagram post/reel URL, resolve directly via Meta's media endpoint
+        const igMatch = targetUrl.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i);
+        if (igMatch && igMatch[1] && !targetUrl.toLowerCase().includes('/media/')) {
+            targetUrl = `https://www.instagram.com/p/${igMatch[1]}/media/?size=l`;
+        }
+
         const lowerTarget = targetUrl.toLowerCase();
         const isDirectMedia = lowerTarget.includes('.jpg') || lowerTarget.includes('.jpeg') ||
                               lowerTarget.includes('.png') || lowerTarget.includes('.webp') ||
@@ -525,6 +531,7 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
                               lowerTarget.includes('fbsbx') || lowerTarget.includes('licdn') ||
                               lowerTarget.includes('cdninstagram') || lowerTarget.includes('img.youtube.com') ||
                               lowerTarget.includes('googleusercontent') || lowerTarget.includes('lookaside') ||
+                              lowerTarget.includes('/media/?size=') || lowerTarget.includes('/media/') ||
                               lowerTarget.includes('ytimg') || lowerTarget.includes('unsplash.com');
 
         // If targetUrl is an HTML webpage rather than a direct image/media file, immediately serve the fast SVG placeholder
@@ -543,6 +550,7 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
             ua = 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)';
             referer = '';
         } else if (lowerTarget.includes('instagram') || lowerTarget.includes('cdninstagram')) {
+            ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
             referer = '';
         } else if (lowerTarget.includes('fbcdn')) {
             referer = '';
@@ -569,15 +577,13 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
             responseType: 'stream',
             headers: headers,
             timeout: 10000,
+            maxRedirects: 5,
             validateStatus: (status) => status >= 200 && status < 400
         });
 
         const contentType = String(response.headers['content-type'] || '').toLowerCase();
         if (contentType.includes('text/html') && !isVideoReq) {
-            logger.warn(`[Proxy-Media] Target URL ${targetUrl} returned HTML content-type instead of image, redirecting.`);
-            if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) {
-                return res.redirect(302, rawUrl);
-            }
+            logger.warn(`[Proxy-Media] Target URL ${targetUrl} returned HTML content-type instead of image.`);
             return sendPlatformSvgPlaceholder(res, rawUrl);
         }
 
@@ -601,8 +607,28 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
         response.data.pipe(res);
     } catch (error: any) {
         logger.warn(`[Proxy-Media] Direct stream failed for ${rawUrl}: ${error.message}`);
-        if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) {
-            return res.redirect(302, rawUrl);
+        // If an Instagram direct stream failed, try resolving via shortcode /media/?size=l
+        const scMatch = rawUrl.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i);
+        if (scMatch && scMatch[1] && !rawUrl.toLowerCase().includes('/media/')) {
+            try {
+                const igMediaRes = await axios({
+                    method: 'GET',
+                    url: `https://www.instagram.com/p/${scMatch[1]}/media/?size=l`,
+                    responseType: 'stream',
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+                        'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8'
+                    },
+                    timeout: 8000,
+                    maxRedirects: 5,
+                    validateStatus: (status) => status >= 200 && status < 400
+                });
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+                res.setHeader('Cache-Control', 'public, max-age=86400');
+                if (igMediaRes.headers['content-type']) res.setHeader('Content-Type', String(igMediaRes.headers['content-type']));
+                return igMediaRes.data.pipe(res);
+            } catch (igErr) {}
         }
         return sendPlatformSvgPlaceholder(res, rawUrl);
     }

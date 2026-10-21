@@ -3175,6 +3175,7 @@ async function loadFeedUI() {
           // Exclude static placeholders, small icons, profile pics, and LinkedIn aero-v1 static assets
           if (lower.includes('static.licdn.com') || lower.includes('aero-v1') || lower.includes('c45fy346jw096z9pbphyyhdz7') ||
               lower.includes('rsrc.php') || lower.includes('/images/icons/') || lower.includes('/static/images/') ||
+              lower.includes('favicon') ||
               lower.includes('p100x100') || lower.includes('p200x200') || lower.includes('p50x50') ||
               lower.includes('p36x36') || lower.includes('p75x75') || lower.includes('p160x160') ||
               lower.includes('p320x320') || lower.includes('s100x100') || lower.includes('s200x200') ||
@@ -3185,14 +3186,14 @@ async function loadFeedUI() {
             continue;
           }
 
-          // Exclude HTML webpage/profile links
+          // Exclude HTML webpage/profile links (but ALLOW /media/ endpoints)
           try {
             const parsed = new URL(trimmed);
             const host = parsed.hostname.toLowerCase();
             const path = parsed.pathname.toLowerCase();
 
             if (
-              ((host === 'instagram.com' || host === 'www.instagram.com') && (path.includes('/p/') || path.includes('/reel/') || path.includes('/stories/') || path.split('/').filter(Boolean).length <= 1)) ||
+              ((host === 'instagram.com' || host === 'www.instagram.com') && !path.includes('/media/') && (path.includes('/p/') || path.includes('/reel/') || path.includes('/stories/') || path.split('/').filter(Boolean).length <= 1)) ||
               ((host === 'facebook.com' || host === 'www.facebook.com' || host === 'm.facebook.com' || host === 'web.facebook.com') && (path.includes('/posts/') || path.includes('/photos/') || path.includes('/videos/') || path.includes('story.php') || path.includes('permalink.php') || path.split('/').filter(Boolean).length <= 1)) ||
               ((host === 'linkedin.com' || host === 'www.linkedin.com') && (path.includes('/posts/') || path.includes('/feed/update/') || path.includes('/in/') || path.includes('/company/'))) ||
               (host === 'youtube.com' || host === 'www.youtube.com' || host === 'youtu.be')
@@ -3203,9 +3204,9 @@ async function loadFeedUI() {
             continue;
           }
 
-          // Accept media CDN domains or files with image/video extensions
+          // Accept media CDN domains, /media/ endpoints, or files with image/video extensions
           if (lower.includes('cdninstagram') || lower.includes('fbcdn') || lower.includes('fbsbx') ||
-              lower.includes('lookaside') ||
+              lower.includes('lookaside') || lower.includes('/media/?size=') || lower.includes('/media/') ||
               lower.includes('media.licdn.com') || lower.includes('dms.licdn.com') || lower.includes('licdn.com/dms') ||
               lower.includes('ytimg') || lower.includes('googleusercontent.com') || lower.includes('unsplash.com') ||
               lower.match(/\.(jpeg|jpg|png|gif|webp|svg|mp4)(\?|$)/i)) {
@@ -3213,6 +3214,14 @@ async function loadFeedUI() {
           }
         }
       }
+
+      // If no valid media thumbnail was found, but it is an Instagram post with a shortcode:
+      const pUrl = (post.post_url || post.link || post.postUrl || '').trim();
+      const sc = post.shortcode || (pUrl.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i) || [])[1];
+      if (sc && (post.platform === 'Instagram' || post._detectedPlatform === 'Instagram' || pUrl.includes('instagram.com'))) {
+        return `https://www.instagram.com/p/${sc}/media/?size=l`;
+      }
+
       return null;
     };
 
@@ -3225,7 +3234,7 @@ async function loadFeedUI() {
         const host = parsed.hostname.toLowerCase();
         const path = parsed.pathname.toLowerCase();
         if (
-          ((host === 'instagram.com' || host === 'www.instagram.com') && (path.includes('/p/') || path.includes('/reel/'))) ||
+          ((host === 'instagram.com' || host === 'www.instagram.com') && !path.includes('/media/') && (path.includes('/p/') || path.includes('/reel/'))) ||
           ((host === 'facebook.com' || host === 'www.facebook.com' || host === 'm.facebook.com') && (path.includes('/posts/') || path.includes('/videos/'))) ||
           ((host === 'linkedin.com' || host === 'www.linkedin.com') && (path.includes('/posts/') || path.includes('/feed/update/')))
         ) {
@@ -3235,6 +3244,7 @@ async function loadFeedUI() {
         return false;
       }
       return lower.includes('fbcdn') || lower.includes('fbsbx') || lower.includes('lookaside') || lower.includes('cdninstagram') ||
+             lower.includes('/media/?size=') || lower.includes('/media/') ||
              lower.includes('media.licdn.com') || lower.includes('dms.licdn.com') || lower.includes('licdn.com/dms') ||
              lower.includes('ytimg') || lower.includes('googleusercontent') || !!lower.match(/\.(jpeg|jpg|png|gif|webp|svg)(\?|$)/i) || lower.includes('unsplash');
     };
@@ -3370,7 +3380,20 @@ async function loadFeedUI() {
       const platform = post.platform || post._detectedPlatform || 'Social Feed';
       const meta = (window.platformMeta && window.platformMeta[platform]) || (window.platformMeta && window.platformMeta['LinkedIn']) || { icon: '🌐', color: '#3b82f6', badgeBg: '#3b82f6', bg: 'linear-gradient(135deg, #1e293b, #0f172a)' };
       const postLink = (post.post_url || post.link || post.postUrl || '').trim();
-      const rawText = (post.caption || post.content || '').trim();
+      let rawText = (post.caption || post.content || '').trim();
+      const isBoilerplateModal = !rawText ||
+        rawText === 'No caption' || rawText === 'No caption.' ||
+        rawText.includes('Welcome back to Instagram') ||
+        rawText.includes('Sign in to check out') ||
+        rawText.includes('Log in to see photos') ||
+        rawText.includes('No photo description available') ||
+        rawText.includes('May be an image of') ||
+        rawText.toLowerCase() === 'instagram' ||
+        rawText.toLowerCase() === 'facebook';
+
+      if (isBoilerplateModal) {
+        rawText = platform === 'Facebook' ? `${compName} - Official Facebook Post` : (platform === 'Instagram' ? `${compName} - Official Instagram Post` : `${compName} - Official ${platform} Post`);
+      }
       const displayDate = post.date || post.published_date || post.timestamp || 'Recent';
 
       const firstMediaUrl = post._mediaResolved || window.extractSingleMediaUrl(post);
@@ -3379,7 +3402,7 @@ async function loadFeedUI() {
       // Extract shortcode for Instagram
       let igShortcode = post.shortcode || '';
       if (!igShortcode && postLink) {
-        const m = postLink.match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/);
+        const m = postLink.match(/\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i);
         if (m) igShortcode = m[1];
       }
 
@@ -3444,7 +3467,7 @@ async function loadFeedUI() {
           leftMediaHtml = `
             <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px; box-sizing: border-box;">
               <div style="position: absolute; top: 16px; left: 16px; background: ${meta.badgeBg || '#e1306c'}; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">📹 REEL</div>
-              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 90% !important; max-height: 85% !important; width: auto !important; height: auto !important; object-fit: contain !important; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);" onerror="this.onerror=null; this.src='${firstMediaUrl}';" />
+              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 90% !important; max-height: 85% !important; width: auto !important; height: auto !important; object-fit: contain !important; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);" onerror="this.onerror=null; ${igShortcode ? `this.parentElement.innerHTML = '<iframe src=\\'https://www.instagram.com/reel/${igShortcode}/embed/\\' style=\\'width:100%;max-width:480px;height:90%;max-height:650px;border:0;border-radius:12px;margin:auto;\\' frameborder=\\'0\\' scrolling=\\'no\\' allowtransparency=\\'true\\' allowfullscreen></iframe>';` : `this.src='${firstMediaUrl}';`}" />
               <div style="position: absolute; bottom: 16px; display: flex; gap: 8px; z-index: 10;">
                 ${igShortcode ? `<button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.75); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 8px 14px; border-radius: 6px; font-weight: 700; font-size: 12px; cursor: pointer;">Play in IG Player ↗</button>` : ''}
                 ${postLink ? `<a href="${postLink}" target="_blank" rel="noopener noreferrer" style="background: #e1306c; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Open on Instagram ↗</a>` : ''}
@@ -3490,7 +3513,7 @@ async function loadFeedUI() {
           leftMediaHtml = `
             <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px; box-sizing: border-box;">
               <div style="position: absolute; top: 16px; left: 16px; background: ${meta.badgeBg || '#e1306c'}; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">📸 INSTAGRAM</div>
-              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 90% !important; max-height: 85% !important; width: auto !important; height: auto !important; object-fit: contain !important; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);" onerror="this.onerror=null; this.src='${firstMediaUrl}';" />
+              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 90% !important; max-height: 85% !important; width: auto !important; height: auto !important; object-fit: contain !important; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);" onerror="this.onerror=null; ${igShortcode ? `this.parentElement.innerHTML = '<iframe src=\\'https://www.instagram.com/p/${igShortcode}/embed/\\' style=\\'width:100%;max-width:480px;height:90%;max-height:650px;border:0;border-radius:12px;margin:auto;background:#fff;\\' frameborder=\\'0\\' scrolling=\\'no\\' allowtransparency=\\'true\\' allowfullscreen></iframe>';` : `this.src='${firstMediaUrl}';`}" />
               ${igShortcode ? `
                 <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
                   <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer;">Switch to IG Embed ↗</button>
@@ -3874,9 +3897,12 @@ async function loadFeedUI() {
         const fitStyle = isInstagramCard ? 'object-fit: contain !important; background: #080d1a !important;' : 'object-fit: cover;';
         const imgClass = isInstagramCard ? 'feed-card-thumb-contain' : '';
 
+        const igSc = post.shortcode || (pLink.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i) || [])[1];
+        const igFallbackSrc = igSc ? `/api/proxy-media?url=${encodeURIComponent('https://www.instagram.com/p/' + igSc + '/media/?size=l')}` : '';
+
         cardThumbHtml = `
           <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
-            <img src="${proxiedThumb}" class="${imgClass}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; ${fitStyle} object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.src='${firstMediaUrl}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };" />
+            <img src="${proxiedThumb}" class="${imgClass}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; ${fitStyle} object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; ${igFallbackSrc ? `this.src='${igFallbackSrc}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };` : `window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');`}" />
             ${badgeHtml}
             ${playBtn}
           </div>`;
@@ -3892,8 +3918,18 @@ async function loadFeedUI() {
       }
 
       let displayContent = (post.caption || post.content || '').trim();
-      if (!displayContent || displayContent === 'No caption' || displayContent === 'No caption.') {
-        displayContent = platform === 'Facebook' ? 'Public Competitor Update' : `${compName} - ${platform}`;
+      const isBoilerplate = !displayContent ||
+        displayContent === 'No caption' || displayContent === 'No caption.' ||
+        displayContent.includes('Welcome back to Instagram') ||
+        displayContent.includes('Sign in to check out') ||
+        displayContent.includes('Log in to see photos') ||
+        displayContent.includes('No photo description available') ||
+        displayContent.includes('May be an image of') ||
+        displayContent.toLowerCase() === 'instagram' ||
+        displayContent.toLowerCase() === 'facebook';
+
+      if (isBoilerplate) {
+        displayContent = platform === 'Facebook' ? `${compName} - Facebook Update` : (platform === 'Instagram' ? `${compName} - Instagram ${isIgReelCard ? 'Reel' : 'Post'}` : `${compName} - ${platform}`);
       }
 
       return `
