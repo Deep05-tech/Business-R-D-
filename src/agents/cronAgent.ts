@@ -5,6 +5,7 @@ import { MemoryStore } from "../memory/memoryStore.js";
 import { knowledgeIndex } from "../memory/knowledgeIndex.js";
 import { BingRssSearchEngine } from "../utils/bingRssSearchEngine.js";
 import { CompetitorAgent } from "./competitorAgent.js";
+import { isAuthenticCompetitorProfile } from "../utils/socialVerificationUtils.js";
 import axios from "axios";
 import pLimit from "p-limit";
 
@@ -76,10 +77,15 @@ export class CronAgent {
       return dates.every((date): date is Date => date !== null) && dates.every(date => date < sixMonthsAgo);
     };
 
-    const isValidProfileUrl = (url?: string | null, platform?: string): boolean => {
-      if (!url || typeof url !== 'string') return false;
+    const isValidProfileUrl = (url?: string | null, platform?: string, competitorName?: string, pageTitle?: string): boolean => {
+      if (!url || typeof url !== 'string' || !platform) return false;
       const lower = url.toLowerCase().trim();
       if (lower.includes('/sharer') || lower.includes('/share?') || lower.includes('/cws/share') || lower.includes('/intent') || lower.includes('indiamart.com')) return false;
+
+      // If competitorName is provided, strictly enforce authenticity
+      if (competitorName) {
+        return isAuthenticCompetitorProfile(url, platform, competitorName, pageTitle);
+      }
 
       try {
         const parsed = new URL(url.startsWith('http') ? url : `https://${url}`);
@@ -138,7 +144,7 @@ export class CronAgent {
             if (tavilyRes.data && Array.isArray(tavilyRes.data.results)) {
               for (const r of tavilyRes.data.results) {
                 const u = (r.url || "").trim();
-                if (isValidProfileUrl(u, platform)) return u;
+                if (isValidProfileUrl(u, platform, comp.name, r.title)) return u;
               }
             }
           } catch {}
@@ -150,7 +156,7 @@ export class CronAgent {
           const results = JSON.parse(raw || "[]");
           for (const r of results) {
             const url = (r.url || "").trim();
-            if (isValidProfileUrl(url, platform)) {
+            if (isValidProfileUrl(url, platform, comp.name, r.title)) {
               return url;
             }
           }
@@ -159,31 +165,31 @@ export class CronAgent {
       };
 
       let ytUrl = (comp as any).socials?.youtube;
-      if (!ytUrl || !isValidProfileUrl(ytUrl, 'YouTube')) {
+      if (!isValidProfileUrl(ytUrl, 'YouTube', comp.name)) {
         ytUrl = await searchSocialUrl('YouTube', 'youtube.com');
       }
 
       let igUrl = (comp as any).socials?.instagram;
-      if (!igUrl || !isValidProfileUrl(igUrl, 'Instagram')) {
+      if (!isValidProfileUrl(igUrl, 'Instagram', comp.name)) {
         igUrl = await searchSocialUrl('Instagram', 'instagram.com');
       }
 
       let fbUrl = (comp as any).socials?.facebook;
-      if (!fbUrl || !isValidProfileUrl(fbUrl, 'Facebook')) {
+      if (!isValidProfileUrl(fbUrl, 'Facebook', comp.name)) {
         fbUrl = await searchSocialUrl('Facebook', 'facebook.com');
       }
 
       let liUrl = (comp as any).socials?.linkedin;
-      if (!liUrl || !isValidProfileUrl(liUrl, 'LinkedIn')) {
+      if (!isValidProfileUrl(liUrl, 'LinkedIn', comp.name)) {
         liUrl = await searchSocialUrl('LinkedIn', 'linkedin.com/company');
       }
 
-      // Update socials object on competitor
+      // Update socials object on competitor (null if no authentic account exists)
       if (!comp.socials) comp.socials = { linkedin: null, instagram: null, facebook: null, youtube: null };
-      if (isValidProfileUrl(ytUrl, 'YouTube')) comp.socials.youtube = ytUrl;
-      if (isValidProfileUrl(igUrl, 'Instagram')) comp.socials.instagram = igUrl;
-      if (isValidProfileUrl(fbUrl, 'Facebook')) comp.socials.facebook = fbUrl;
-      if (isValidProfileUrl(liUrl, 'LinkedIn')) comp.socials.linkedin = liUrl;
+      comp.socials.youtube = isValidProfileUrl(ytUrl, 'YouTube', comp.name) ? ytUrl : null;
+      comp.socials.instagram = isValidProfileUrl(igUrl, 'Instagram', comp.name) ? igUrl : null;
+      comp.socials.facebook = isValidProfileUrl(fbUrl, 'Facebook', comp.name) ? fbUrl : null;
+      comp.socials.linkedin = isValidProfileUrl(liUrl, 'LinkedIn', comp.name) ? liUrl : null;
 
       // Extract latest 3 posts per competitor per platform for multi-competitor representation
       const platformStatuses: Record<string, { status: string; reason?: string; count: number }> = {};

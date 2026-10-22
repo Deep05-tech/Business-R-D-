@@ -13,6 +13,7 @@ import * as cheerio from "cheerio";
 import { SocialExtractorAgent } from "./socialExtractorAgent.js";
 import { WebTool } from "../tools/webTool.js";
 import { agentRules } from "../config/agentRules.js";
+import { isAuthenticCompetitorProfile } from "../utils/socialVerificationUtils.js";
 
 const logger = createLogger("CompetitorAgent");
 
@@ -1118,32 +1119,13 @@ STRICT INSTRUCTIONS:
   }
 
   private isSocialHandleMatchingCompany(companyName: string, socialUrl: string): boolean {
-    if (!socialUrl) return true;
-    const urlLower = socialUrl.toLowerCase();
-    
-    const stopWords = new Set(["pvt", "ltd", "inc", "co", "gmbh", "private", "limited", "corp", "corporation", "company", "india", "europe", "usa", "uk", "and", "the", "official"]);
-    const foreignTokens = ["gym", "fitness", "training", "workout", "vlog", "vlogs", "prep", "coaching", "gandhi", "sharma", "singh", "unacademy", "byjus"];
-    
-    const coreTokens = companyName.toLowerCase()
-      .replace(/[^\w\s]/g, " ")
-      .split(/\s+/)
-      .filter(t => t.length > 2 && !stopWords.has(t));
-      
-    if (coreTokens.length === 0) return true;
-
-    for (const ft of foreignTokens) {
-      if (urlLower.includes(ft) && !coreTokens.includes(ft)) {
-        return false;
-      }
-    }
-
-    let matchCount = 0;
-    for (const t of coreTokens) {
-      if (urlLower.includes(t)) matchCount++;
-    }
-
-    const reqMatches = coreTokens.length === 1 ? 1 : Math.min(2, coreTokens.length);
-    return matchCount >= reqMatches;
+    if (!socialUrl) return false;
+    let platform = "LinkedIn";
+    const low = socialUrl.toLowerCase();
+    if (low.includes("instagram.com")) platform = "Instagram";
+    else if (low.includes("facebook.com")) platform = "Facebook";
+    else if (low.includes("youtube.com") || low.includes("youtu.be")) platform = "YouTube";
+    return isAuthenticCompetitorProfile(socialUrl, platform, companyName);
   }
 
   private async extractSocialsFromPage(pageUrl: string, socials: SocialLinks): Promise<void> {

@@ -4,6 +4,7 @@ import { SocialExtractorAgent } from "./socialExtractorAgent.js";
 import { BingRssSearchEngine } from "../utils/bingRssSearchEngine.js";
 import { createChatModel } from "../utils/llm.js";
 import { createLogger } from "../utils/logger.js";
+import { isAuthenticCompetitorProfile } from "../utils/socialVerificationUtils.js";
 import type { BrandVoicePattern, PageSnapshot, SocialPost } from "../types.js";
 
 const logger = createLogger("ProjectSocialAgent");
@@ -21,7 +22,12 @@ export class ProjectSocialAgent {
   readonly version = "1.0.0";
   private readonly socialExtractor = new SocialExtractorAgent();
 
-  public isValidProfileUrl(url: string | null | undefined, platform: "LinkedIn" | "Instagram" | "Facebook" | "YouTube" | "Twitter"): boolean {
+  public isValidProfileUrl(
+    url: string | null | undefined,
+    platform: "LinkedIn" | "Instagram" | "Facebook" | "YouTube" | "Twitter",
+    companyName?: string,
+    pageTitle?: string
+  ): boolean {
     if (!url || typeof url !== "string") return false;
     const lower = url.toLowerCase().trim();
     if (
@@ -35,6 +41,10 @@ export class ProjectSocialAgent {
       lower.includes("wordpress.com")
     ) {
       return false;
+    }
+
+    if (companyName && platform !== "Twitter") {
+      return isAuthenticCompetitorProfile(url, platform, companyName, pageTitle);
     }
 
     try {
@@ -54,8 +64,8 @@ export class ProjectSocialAgent {
       }
       if (platform === "Facebook") {
         if (!lower.includes("facebook.com/")) return false;
-        const invalidSegments = new Set(["sharer", "share", "dialog", "login", "recover", "help"]);
-        return !invalidSegments.has(segments[0].toLowerCase());
+        const invalidSegments = new Set(["sharer", "share", "dialog", "login", "recover", "help", "groups"]);
+        return !invalidSegments.has(segments[0].toLowerCase()) && !lower.includes("/groups/");
       }
       if (platform === "YouTube") {
         return (lower.includes("youtube.com/") || lower.includes("youtu.be/")) && !lower.includes("/results?");
@@ -85,11 +95,11 @@ export class ProjectSocialAgent {
 
     // 1. Ingest existing socials if provided
     if (existingSocials && typeof existingSocials === "object") {
-      if (this.isValidProfileUrl(existingSocials.linkedin, "LinkedIn")) socials.linkedin = existingSocials.linkedin;
-      if (this.isValidProfileUrl(existingSocials.instagram, "Instagram")) socials.instagram = existingSocials.instagram;
-      if (this.isValidProfileUrl(existingSocials.facebook, "Facebook")) socials.facebook = existingSocials.facebook;
-      if (this.isValidProfileUrl(existingSocials.youtube, "YouTube")) socials.youtube = existingSocials.youtube;
-      if (this.isValidProfileUrl(existingSocials.twitter, "Twitter")) socials.twitter = existingSocials.twitter;
+      if (this.isValidProfileUrl(existingSocials.linkedin, "LinkedIn", companyName)) socials.linkedin = existingSocials.linkedin;
+      if (this.isValidProfileUrl(existingSocials.instagram, "Instagram", companyName)) socials.instagram = existingSocials.instagram;
+      if (this.isValidProfileUrl(existingSocials.facebook, "Facebook", companyName)) socials.facebook = existingSocials.facebook;
+      if (this.isValidProfileUrl(existingSocials.youtube, "YouTube", companyName)) socials.youtube = existingSocials.youtube;
+      if (this.isValidProfileUrl(existingSocials.twitter, "Twitter", companyName)) socials.twitter = existingSocials.twitter;
     }
 
     // Also support string array of social URLs (e.g. from BusinessInput.socialUrls)
@@ -97,11 +107,11 @@ export class ProjectSocialAgent {
       for (const u of existingSocials) {
         if (typeof u === "string") {
           const lower = u.toLowerCase();
-          if (lower.includes("linkedin.com") && !socials.linkedin && this.isValidProfileUrl(u, "LinkedIn")) socials.linkedin = u;
-          if (lower.includes("instagram.com") && !socials.instagram && this.isValidProfileUrl(u, "Instagram")) socials.instagram = u;
-          if (lower.includes("facebook.com") && !socials.facebook && this.isValidProfileUrl(u, "Facebook")) socials.facebook = u;
-          if ((lower.includes("youtube.com") || lower.includes("youtu.be")) && !socials.youtube && this.isValidProfileUrl(u, "YouTube")) socials.youtube = u;
-          if ((lower.includes("twitter.com") || lower.includes("x.com")) && !socials.twitter && this.isValidProfileUrl(u, "Twitter")) socials.twitter = u;
+          if (lower.includes("linkedin.com") && !socials.linkedin && this.isValidProfileUrl(u, "LinkedIn", companyName)) socials.linkedin = u;
+          if (lower.includes("instagram.com") && !socials.instagram && this.isValidProfileUrl(u, "Instagram", companyName)) socials.instagram = u;
+          if (lower.includes("facebook.com") && !socials.facebook && this.isValidProfileUrl(u, "Facebook", companyName)) socials.facebook = u;
+          if ((lower.includes("youtube.com") || lower.includes("youtu.be")) && !socials.youtube && this.isValidProfileUrl(u, "YouTube", companyName)) socials.youtube = u;
+          if ((lower.includes("twitter.com") || lower.includes("x.com")) && !socials.twitter && this.isValidProfileUrl(u, "Twitter", companyName)) socials.twitter = u;
         }
       }
     }
@@ -113,11 +123,11 @@ export class ProjectSocialAgent {
         for (const link of page.links) {
           const href = (link.href || "").trim();
           const lower = href.toLowerCase();
-          if (!socials.linkedin && lower.includes("linkedin.com") && this.isValidProfileUrl(href, "LinkedIn")) socials.linkedin = href;
-          if (!socials.instagram && lower.includes("instagram.com") && this.isValidProfileUrl(href, "Instagram")) socials.instagram = href;
-          if (!socials.facebook && lower.includes("facebook.com") && this.isValidProfileUrl(href, "Facebook")) socials.facebook = href;
-          if (!socials.youtube && (lower.includes("youtube.com") || lower.includes("youtu.be")) && this.isValidProfileUrl(href, "YouTube")) socials.youtube = href;
-          if (!socials.twitter && (lower.includes("twitter.com") || lower.includes("x.com")) && this.isValidProfileUrl(href, "Twitter")) socials.twitter = href;
+          if (!socials.linkedin && lower.includes("linkedin.com") && this.isValidProfileUrl(href, "LinkedIn", companyName)) socials.linkedin = href;
+          if (!socials.instagram && lower.includes("instagram.com") && this.isValidProfileUrl(href, "Instagram", companyName)) socials.instagram = href;
+          if (!socials.facebook && lower.includes("facebook.com") && this.isValidProfileUrl(href, "Facebook", companyName)) socials.facebook = href;
+          if (!socials.youtube && (lower.includes("youtube.com") || lower.includes("youtu.be")) && this.isValidProfileUrl(href, "YouTube", companyName)) socials.youtube = href;
+          if (!socials.twitter && (lower.includes("twitter.com") || lower.includes("x.com")) && this.isValidProfileUrl(href, "Twitter", companyName)) socials.twitter = href;
         }
 
         // Also check JSON-LD blocks on page if available
@@ -129,11 +139,11 @@ export class ProjectSocialAgent {
               for (const u of sameAs) {
                 if (typeof u === "string") {
                   const lower = u.toLowerCase();
-                  if (!socials.linkedin && lower.includes("linkedin.com") && this.isValidProfileUrl(u, "LinkedIn")) socials.linkedin = u;
-                  if (!socials.instagram && lower.includes("instagram.com") && this.isValidProfileUrl(u, "Instagram")) socials.instagram = u;
-                  if (!socials.facebook && lower.includes("facebook.com") && this.isValidProfileUrl(u, "Facebook")) socials.facebook = u;
-                  if (!socials.youtube && (lower.includes("youtube.com") || lower.includes("youtu.be")) && this.isValidProfileUrl(u, "YouTube")) socials.youtube = u;
-                  if (!socials.twitter && (lower.includes("twitter.com") || lower.includes("x.com")) && this.isValidProfileUrl(u, "Twitter")) socials.twitter = u;
+                  if (!socials.linkedin && lower.includes("linkedin.com") && this.isValidProfileUrl(u, "LinkedIn", companyName)) socials.linkedin = u;
+                  if (!socials.instagram && lower.includes("instagram.com") && this.isValidProfileUrl(u, "Instagram", companyName)) socials.instagram = u;
+                  if (!socials.facebook && lower.includes("facebook.com") && this.isValidProfileUrl(u, "Facebook", companyName)) socials.facebook = u;
+                  if (!socials.youtube && (lower.includes("youtube.com") || lower.includes("youtu.be")) && this.isValidProfileUrl(u, "YouTube", companyName)) socials.youtube = u;
+                  if (!socials.twitter && (lower.includes("twitter.com") || lower.includes("x.com")) && this.isValidProfileUrl(u, "Twitter", companyName)) socials.twitter = u;
                 }
               }
             } catch {}
@@ -157,7 +167,7 @@ export class ProjectSocialAgent {
         const results = JSON.parse(raw || "[]");
         for (const r of results) {
           const url = (r.url || "").trim();
-          if (this.isValidProfileUrl(url, platform)) {
+          if (this.isValidProfileUrl(url, platform, companyName, r.title)) {
             return url;
           }
         }

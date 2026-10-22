@@ -9,6 +9,7 @@ import { rm } from 'node:fs/promises';
 import pLimit from 'p-limit';
 import { BingRssSearchEngine } from '../utils/bingRssSearchEngine.js';
 import { FreeSearchEngine } from '../utils/freeSearchEngine.js';
+import { verifyPostAuthor, isAuthenticCompetitorProfile } from '../utils/socialVerificationUtils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -305,7 +306,7 @@ export class SocialExtractorAgent {
             post._ytId = ytMatch[1];
         }
 
-        if (lowerUrl.includes("news") || lowerUrl.includes("tavily") || lowerUrl.includes("indiamart") || lowerUrl.includes("google.com/search")) {
+        if (lowerUrl.includes("news") || lowerUrl.includes("tavily") || lowerUrl.includes("indiamart") || lowerUrl.includes("google.com/search") || lowerUrl.includes("/groups/") || lowerUrl.includes("castingcalls")) {
             return null;
         }
 
@@ -870,6 +871,8 @@ export class SocialExtractorAgent {
                             media_type: platform === "YouTube" || url.includes('/video') || url.includes('/reel') ? "Video" : (thumb ? "Image" : "Text"),
                             thumbnail: thumb,
                             media_url: med,
+                            profile_url: profileUrl,
+                            profileUrl: profileUrl,
                             date: new Date().toISOString().split('T')[0],
                             engagement: { likes: 0, comments: 0 }
                         });
@@ -1031,10 +1034,14 @@ export class SocialExtractorAgent {
 
             let extractedCaption = "";
 
+            let igAuthorHandle = "";
+            let igAuthorName = "";
+
             // 1. Instagram structured OpenGraph regex extraction
             if (platform === 'Instagram' && ogDesc) {
                 const igMatch = ogDesc.match(/^([\d,kK]+)\s*likes,\s*([\d,kK]+)\s*comments\s*-\s*([^\s:]+)(?:\s+on\s+([A-Za-z]+\s+\d{1,2},\s*\d{4}))?:\s*["“]([\s\S]*?)["”]?\s*$/);
                 if (igMatch) {
+                    igAuthorHandle = igMatch[3] || "";
                     post.engagement = {
                         likes: igMatch[1],
                         comments: igMatch[2]
@@ -1054,6 +1061,12 @@ export class SocialExtractorAgent {
                     if (igMatch[5]) {
                         extractedCaption = SocialExtractorAgent.cleanSocialCaption(igMatch[5], 'Instagram');
                     }
+                }
+            }
+            if (platform === 'Instagram' && ogTitle) {
+                const igTitleM = ogTitle.match(/^(.*?)\s+on Instagram:/i);
+                if (igTitleM && igTitleM[1]) {
+                    igAuthorName = igTitleM[1].trim();
                 }
             }
 
@@ -1078,6 +1091,50 @@ export class SocialExtractorAgent {
 
             extractedCaption = SocialExtractorAgent.cleanSocialCaption(extractedCaption, platform);
 
+            const compName = post.company || post.competitorName || 'Competitor';
+            const verifiedProfile = post.profile_url || post.profileUrl || null;
+
+            // Strict Post Authorship Verification
+            if (platform === 'Instagram' && (igAuthorHandle || igAuthorName)) {
+                const isAuthorValid = verifyPostAuthor('Instagram', {
+                    authorHandle: igAuthorHandle,
+                    authorName: igAuthorName,
+                    postUrl,
+                    ogTitle,
+                    ogDesc
+                }, compName, verifiedProfile);
+
+                if (!isAuthorValid) {
+                    console.log(`[SocialExtractorAgent] Instagram author mismatch: handle="${igAuthorHandle}", name="${igAuthorName}" does not match competitor "${compName}" for ${postUrl}. Discarding.`);
+                    post._invalidAuthor = true;
+                    return post;
+                }
+            } else if (platform === 'Facebook') {
+                const isAuthorValid = verifyPostAuthor('Facebook', {
+                    postUrl,
+                    ogTitle,
+                    ogDesc
+                }, compName, verifiedProfile);
+
+                if (!isAuthorValid) {
+                    console.log(`[SocialExtractorAgent] Facebook author mismatch: ogTitle="${ogTitle}" does not match competitor "${compName}" for ${postUrl}. Discarding.`);
+                    post._invalidAuthor = true;
+                    return post;
+                }
+            } else if (platform === 'LinkedIn') {
+                const isAuthorValid = verifyPostAuthor('LinkedIn', {
+                    postUrl,
+                    ogTitle,
+                    ogDesc
+                }, compName, verifiedProfile);
+
+                if (!isAuthorValid) {
+                    console.log(`[SocialExtractorAgent] LinkedIn author mismatch for competitor "${compName}" on ${postUrl}. Discarding.`);
+                    post._invalidAuthor = true;
+                    return post;
+                }
+            }
+
             const hasBoilerplate = (cap: string) => {
                 if (!cap) return true;
                 return cap.includes('Log In') || cap.includes('Sign Up') || cap.includes('profile picture') ||
@@ -1086,8 +1143,6 @@ export class SocialExtractorAgent {
                        cap.includes('No photo description available') ||
                        cap.includes('May be an image') || cap.includes('Photo by ') || cap.includes('Video by ');
             };
-
-            const compName = post.company || post.competitorName || 'Competitor';
 
             if (extractedCaption && !hasBoilerplate(extractedCaption) && (hasBoilerplate(post.caption) || extractedCaption.length > (post.caption ? post.caption.length : 0))) {
                 post.caption = extractedCaption;
