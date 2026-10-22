@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/styles.css?v=48">
+  <link rel="stylesheet" href="/static/styles.css?v=49">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
@@ -237,87 +237,90 @@
 
       <!-- TAB: DETAILS & REVIEW -->
       <div class="tab-panel" id="panel-details">
-        <div class="card fade-in" style="max-width: 1000px; margin: 0 auto; box-shadow: var(--shadow-lg);">
-          <div class="flex-between" style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px;">
+        <div class="card fade-in" style="max-width: 1120px; margin: 0 auto; box-shadow: var(--shadow-lg);">
+          <div class="flex-between" style="border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 16px;">
             <div>
-              <h2 style="margin-bottom: 4px;">Business Details & Core Memory</h2>
-              <p class="subtitle" style="margin: 0; font-size: 13px;">Review and correct the AI's extracted intelligence below. Saving will permanently update the memory for all future agents.</p>
+              <h2 style="margin-bottom: 3px; font-size: 1.15rem;">Business Details & Core Memory</h2>
+              <p class="subtitle" style="margin: 0; font-size: 12.5px;">Review and correct the AI's extracted intelligence below. Saving will permanently update the memory for all future agents.</p>
             </div>
-            <button class="btn btn-primary" onclick="window.saveProjectDetails()" id="btn-save-details" style="box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); font-weight: 600;">Save & Update Memory</button>
+            <button class="btn btn-primary" onclick="window.saveProjectDetails()" id="btn-save-details" style="box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); font-weight: 600; padding: 7px 16px;">Save & Update Memory</button>
           </div>
           
           <form id="details-form" onsubmit="event.preventDefault(); window.saveProjectDetails();">
-            <div class="form-group">
-              <label>Official Business Name</label>
-              <input id="edit-name" type="text" />
+            <div class="flex-row" style="margin-bottom: 10px;">
+              <div class="form-group flex-1" style="margin-bottom: 0;">
+                <label>Official Business Name</label>
+                <input id="edit-name" type="text" />
+              </div>
+              <div class="form-group flex-1" style="margin-bottom: 0;">
+                <label>Target Audience (Buyer Personas) <span class="muted">(Comma separated)</span></label>
+                <input id="edit-audience" type="text" placeholder="The AI did not identify a target audience. You can manually type one here..." />
+              </div>
             </div>
             
-            <div class="flex-row">
-              <div class="form-group flex-1">
+            <div class="flex-row" style="margin-bottom: 10px;">
+              <div class="form-group flex-1" style="margin-bottom: 0;">
                 <label>Industry</label>
                 <input id="edit-industry" type="text" />
               </div>
-              <div class="form-group flex-1">
+              <div class="form-group flex-1" style="margin-bottom: 0;">
                 <label>Sub-Industry / Niche</label>
                 <input type="text" id="edit-subindustry" placeholder="e.g. Agricultural Inputs">
               </div>
-              <div class="form-group flex-1">
+              <div class="form-group flex-1" style="margin-bottom: 0;">
                 <label>Headquarters Location</label>
                 <input type="text" id="edit-location" placeholder="e.g. Rajkot, Gujarat, India">
               </div>
             </div>
 
-            <div class="form-group">
-              <label>Business Vision / Mission</label>
-              <textarea id="edit-vision" rows="2" placeholder="e.g. To revolutionize the agricultural supply chain..."></textarea>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label>Business Vision / Mission</label>
+                <textarea id="edit-vision" rows="2" placeholder="e.g. To revolutionize the agricultural supply chain..."></textarea>
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label>Company Description</label>
+                <textarea id="edit-description" rows="2" placeholder="No description extracted. You can type one here..."></textarea>
+              </div>
             </div>
 
-            <div class="form-group">
-              <label>Company Description</label>
-              <textarea id="edit-description" rows="3" placeholder="No description extracted. You can type one here..."></textarea>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label>Core Products <span class="muted">(Comma separated)</span></label>
+                <textarea id="edit-products" rows="2" placeholder="No products extracted. You can type them here..."></textarea>
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label>Core Services <span class="muted">(Comma separated)</span></label>
+                <textarea id="edit-services" rows="2" placeholder="No services extracted. You can type them here..."></textarea>
+              </div>
             </div>
 
-            <div class="form-group">
-              <label>Core Products <span class="muted">(Comma separated)</span></label>
-              <textarea id="edit-products" rows="2" placeholder="No products extracted. You can type them here..."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label>Core Services <span class="muted">(Comma separated)</span></label>
-              <textarea id="edit-services" rows="2" placeholder="No services extracted. You can type them here..."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label>Target Audience (Buyer Personas) <span class="muted">(Comma separated)</span></label>
-              <textarea id="edit-audience" rows="2" placeholder="The AI did not identify a target audience. You can manually type one here..."></textarea>
-            </div>
-
-            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
-              <label style="font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); display: flex; align-items: center; gap: 6px; margin-bottom: 12px;">
+            <div style="padding-top: 10px; border-top: 1px solid var(--border);">
+              <label style="font-weight: 700; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
                 <span>🌐</span> Official Company Social Media Accounts
               </label>
-              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
                 <div class="form-group" style="margin-bottom: 0;">
-                  <label style="font-size: 11px; font-weight: 600; color: #0a66c2; margin-bottom: 4px;">💼 LinkedIn Company URL</label>
-                  <input type="url" id="edit-own-li" placeholder="https://linkedin.com/company/name">
+                  <label style="font-size: 10.5px; font-weight: 600; color: #0a66c2; margin-bottom: 3px;">💼 LinkedIn Company URL</label>
+                  <input type="url" id="edit-own-li" placeholder="https://linkedin.com/company/name" style="padding: 6px 10px; font-size: 12.5px;">
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
-                  <label style="font-size: 11px; font-weight: 600; color: #e1306c; margin-bottom: 4px;">📸 Instagram Profile URL</label>
-                  <input type="url" id="edit-own-ig" placeholder="https://instagram.com/handle">
+                  <label style="font-size: 10.5px; font-weight: 600; color: #e1306c; margin-bottom: 3px;">📸 Instagram Profile URL</label>
+                  <input type="url" id="edit-own-ig" placeholder="https://instagram.com/handle" style="padding: 6px 10px; font-size: 12.5px;">
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
-                  <label style="font-size: 11px; font-weight: 600; color: #ff0000; margin-bottom: 4px;">▶️ YouTube Channel URL</label>
-                  <input type="url" id="edit-own-yt" placeholder="https://youtube.com/@channel">
+                  <label style="font-size: 10.5px; font-weight: 600; color: #ff0000; margin-bottom: 3px;">▶️ YouTube Channel URL</label>
+                  <input type="url" id="edit-own-yt" placeholder="https://youtube.com/@channel" style="padding: 6px 10px; font-size: 12.5px;">
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
-                  <label style="font-size: 11px; font-weight: 600; color: #1877f2; margin-bottom: 4px;">📘 Facebook Page URL</label>
-                  <input type="url" id="edit-own-fb" placeholder="https://facebook.com/page">
+                  <label style="font-size: 10.5px; font-weight: 600; color: #1877f2; margin-bottom: 3px;">📘 Facebook Page URL</label>
+                  <input type="url" id="edit-own-fb" placeholder="https://facebook.com/page" style="padding: 6px 10px; font-size: 12.5px;">
                 </div>
               </div>
             </div>
           </form>
           
-          <div id="details-toast" style="display:none; margin-top: 15px; padding: 10px; background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid #22c55e; border-radius: 6px;">
+          <div id="details-toast" style="display:none; margin-top: 10px; padding: 8px; background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid #22c55e; border-radius: 6px; font-size: 12px;">
             ✅ Memory successfully updated!
           </div>
         </div>
@@ -346,51 +349,52 @@
             </div>
           </div>
 
-          <div style="margin-bottom: 32px; padding: 24px; background: var(--surface-hover); border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-              <h4 style="margin: 0; font-size: 0.95em; color: var(--text-color); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">➕ Manually Add Competitor & Social Accounts</h4>
-            </div>
+          <details id="add-competitor-details" style="margin-bottom: 18px; padding: 12px 18px; background: var(--surface-hover); border-radius: 12px; border: 1px solid var(--border);">
+            <summary style="cursor: pointer; font-weight: 700; font-size: 0.9em; color: var(--text-color); text-transform: uppercase; letter-spacing: 0.05em; user-select: none;">
+              ➕ Manually Add Competitor &amp; Social Accounts
+            </summary>
+            <div style="margin-top: 14px;">
+              <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px;">
+                <div class="form-group flex-1" style="margin-bottom: 0; min-width: 220px;">
+                  <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 4px;">Competitor Name *</label>
+                  <input type="text" id="add-comp-name" placeholder="e.g. Acme Corp">
+                </div>
+                <div class="form-group flex-1" style="margin-bottom: 0; min-width: 240px;">
+                  <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 4px;">Website URL *</label>
+                  <input type="url" id="add-comp-url" placeholder="https://acme.com">
+                </div>
+              </div>
 
-            <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
-              <div class="form-group flex-1" style="margin-bottom: 0; min-width: 240px;">
-                <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 4px;">Competitor Name *</label>
-                <input type="text" id="add-comp-name" placeholder="e.g. Acme Corp">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 14px;">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label style="font-size: 10.5px; font-weight: 600; color: #ff0000; margin-bottom: 3px; display: flex; align-items: center; gap: 4px;">▶️ YouTube URL</label>
+                  <input type="url" id="add-comp-yt" placeholder="https://youtube.com/@channel">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label style="font-size: 10.5px; font-weight: 600; color: #e1306c; margin-bottom: 3px; display: flex; align-items: center; gap: 4px;">📸 Instagram URL</label>
+                  <input type="url" id="add-comp-ig" placeholder="https://instagram.com/handle">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label style="font-size: 10.5px; font-weight: 600; color: #1877f2; margin-bottom: 3px; display: flex; align-items: center; gap: 4px;">📘 Facebook URL</label>
+                  <input type="url" id="add-comp-fb" placeholder="https://facebook.com/page">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label style="font-size: 10.5px; font-weight: 600; color: #0a66c2; margin-bottom: 3px; display: flex; align-items: center; gap: 4px;">💼 LinkedIn URL</label>
+                  <input type="url" id="add-comp-li" placeholder="https://linkedin.com/company/handle">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label style="font-size: 10.5px; font-weight: 600; color: #1da1f2; margin-bottom: 3px; display: flex; align-items: center; gap: 4px;">𝕏 Twitter URL</label>
+                  <input type="url" id="add-comp-tw" placeholder="https://x.com/handle">
+                </div>
               </div>
-              <div class="form-group flex-1" style="margin-bottom: 0; min-width: 280px;">
-                <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 4px;">Website URL *</label>
-                <input type="url" id="add-comp-url" placeholder="https://acme.com">
-              </div>
-            </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 20px;">
-              <div class="form-group" style="margin-bottom: 0;">
-                <label style="font-size: 11px; font-weight: 600; color: #ff0000; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">▶️ YouTube URL</label>
-                <input type="url" id="add-comp-yt" placeholder="https://youtube.com/@channel">
-              </div>
-              <div class="form-group" style="margin-bottom: 0;">
-                <label style="font-size: 11px; font-weight: 600; color: #e1306c; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">📸 Instagram URL</label>
-                <input type="url" id="add-comp-ig" placeholder="https://instagram.com/handle">
-              </div>
-              <div class="form-group" style="margin-bottom: 0;">
-                <label style="font-size: 11px; font-weight: 600; color: #1877f2; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">📘 Facebook URL</label>
-                <input type="url" id="add-comp-fb" placeholder="https://facebook.com/page">
-              </div>
-              <div class="form-group" style="margin-bottom: 0;">
-                <label style="font-size: 11px; font-weight: 600; color: #0a66c2; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">💼 LinkedIn URL</label>
-                <input type="url" id="add-comp-li" placeholder="https://linkedin.com/company/handle">
-              </div>
-              <div class="form-group" style="margin-bottom: 0;">
-                <label style="font-size: 11px; font-weight: 600; color: #1da1f2; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">𝕏 Twitter URL</label>
-                <input type="url" id="add-comp-tw" placeholder="https://x.com/handle">
+              <div style="display: flex; justify-content: flex-end;">
+                <button class="btn btn-primary" onclick="window.addManualCompetitor()" id="btn-add-comp" style="padding: 8px 20px; font-weight: 600; border-radius: 8px;">
+                  Save Competitor Profile
+                </button>
               </div>
             </div>
-
-            <div style="display: flex; justify-content: flex-end;">
-              <button class="btn btn-primary" onclick="window.addManualCompetitor()" id="btn-add-comp" style="padding: 12px 28px; font-weight: 600; border-radius: 10px;">
-                Save Competitor Profile
-              </button>
-            </div>
-          </div>
+          </details>
 
           <div id="competitor-list" class="competitor-grid">
             <div class="empty-state">Click "Find Competitors" to begin market research.</div>
@@ -464,8 +468,8 @@
           </div>
 
           <!-- Strategy: New Ideas -->
-          <div id="smm-new-options-container" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px;">
-            <div class="form-group">
+          <div id="smm-new-options-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+            <div class="form-group" style="margin-bottom: 0;">
               <label>Content Theme</label>
               <select id="smm-theme">
                 <option value="product">Product / Core Offerings (Features, Benefits & Specs)</option>
@@ -475,7 +479,7 @@
                 <option value="ugc">Authentic & Behind-the-Scenes (Operations, Craft & Team)</option>
               </select>
             </div>
-            <div class="form-group smm-suboption-container" id="smm-suboption-container">
+            <div class="form-group smm-suboption-container" id="smm-suboption-container" style="margin-bottom: 0;">
               <label id="smm-suboption-label">Target Offering / Topic</label>
               <select id="smm-suboption">
                 <option value="">Select...</option>
