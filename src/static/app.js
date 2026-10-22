@@ -1836,7 +1836,7 @@ window.findCompetitors = async function(force = false) {
       <h3 style="font-size: 1.3rem; margin-bottom: 12px; color: var(--text);">Live Scanning Competitor Footprint...</h3>
       <div id="comp-agent-status" style="color: var(--primary); font-size: 14px; font-weight: 600; background: rgba(99, 102, 241, 0.1); padding: 8px 24px; border-radius: 20px;">Initializing live search protocols...</div>
     </div>
-    <div id="live-comp-cards" style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 16px;"></div>
+    <div id="live-comp-cards" style="grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px;"></div>
   `;
   
   // Hide buttons while loading
@@ -1909,14 +1909,7 @@ window.findCompetitors = async function(force = false) {
             const globCount = liveCompetitors.filter(c => norm(c.type) === 'global').length;
             statusEl.innerText = `Discovered ${liveCompetitors.length} competitors (${localCount} local, ${regCount} regional, ${globCount} global) — Latest: ${data.competitor.name}`;
           }
-          const liveCardsContainer = document.getElementById('live-comp-cards');
-          if (liveCardsContainer) {
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = window.renderCompetitorCard(data.competitor);
-            if (tempDiv.firstElementChild) {
-              liveCardsContainer.prepend(tempDiv.firstElementChild);
-            }
-          }
+          loadCompetitorsUI(true, liveCompetitors);
         }
         if (data.type === 'complete') {
           streamEndedNormally = true;
@@ -1955,6 +1948,51 @@ window.findCompetitors = async function(force = false) {
       }
     } finally {
       clearInterval(inactivityWatchdog);
+    }
+
+    // If stream disconnected or closed prematurely without 'complete', seamlessly poll background engine until completed
+    if (!streamEndedNormally) {
+      const statusEl = document.getElementById('comp-agent-status');
+      if (statusEl) {
+        statusEl.innerText = "Synchronizing live discovery with background engine...";
+      }
+
+      const pollStart = Date.now();
+      while (Date.now() - pollStart < 360000) {
+        await new Promise(r => setTimeout(r, 2000));
+        try {
+          const statusRes = await fetch(`/api/competitor-status?url=${encodeURIComponent(window.activeProjectUrl)}`);
+          if (statusRes.ok) {
+            const statusData = await statusRes.json();
+            if (statusData.step && statusEl) {
+              const elapsed = statusData.elapsedSec ? ` [${statusData.elapsedSec}s]` : '';
+              statusEl.innerText = `${statusData.step}${elapsed}`;
+            }
+            if (Array.isArray(statusData.competitors) && statusData.competitors.length > 0) {
+              let newlyAdded = false;
+              for (const c of statusData.competitors) {
+                if (c?.url && !liveCompetitors.some(lc => lc.url === c.url)) {
+                  liveCompetitors.push(c);
+                  newlyAdded = true;
+                }
+              }
+              if (newlyAdded) {
+                await loadCompetitorsUI(true, liveCompetitors);
+              }
+            }
+            if (statusData.completed) {
+              streamEndedNormally = true;
+              window.showSuccess("Competitors successfully extracted!");
+              break;
+            }
+            if (statusData.error) {
+              throw new Error(statusData.error);
+            }
+          }
+        } catch (pollErr) {
+          console.debug("Competitor poll warning:", pollErr);
+        }
+      }
     }
   } catch (e) {
     console.error("Competitor discovery error:", e);

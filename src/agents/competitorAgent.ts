@@ -71,6 +71,7 @@ export const BLOCKED_DOMAINS = [
   "crunchbase.com", "zoominfo.com", "quora.com", "reddit.com", "pinterest.com",
   "github.com", "gitlab.com", "bitbucket.org", "stackoverflow.com", "kaggle.com",
   "google.com", "microsoft.com", "apple.com", "amazon.com", "tatamotors.com",
+  "cbinsights.com", "pitchbook.com", "tracxn.com", "mapquest.com", "dnb.com", "owler.com", "apollo.io",
   // Consumer Marketplaces, Retail & Dictionaries
   "flipkart.com", "bigbasket.com", "myntra.com", "snapdeal.com", "ebay.com", "walmart.com", "target.com",
   "merriam-webster.com", "vocabulary.com", "dictionary.com", "thesaurus.com", "cambridge.org", "collinsdictionary.com", "oxfordlearnersdictionaries.com",
@@ -126,6 +127,11 @@ export function isNonOperatingOrInformationalUrl(rawUrl: string, title?: string)
     if (rootDomain === blocked || hostname === blocked || hostname.endsWith("." + blocked)) {
       return true;
     }
+  }
+
+  // 1b. Reject government, military, judicial, and court portals
+  if (hostname.endsWith(".gov") || hostname.endsWith(".gov.in") || hostname.endsWith(".nic.in") || hostname.endsWith(".mil") || hostname.includes(".dcourts.gov.in") || hostname.endsWith(".state.in")) {
+    return true;
   }
 
   // 2. Reject non-corporate / functional subdomains
@@ -228,7 +234,7 @@ export class CompetitorAgent {
     fallbackAcceptable = false
   ): Promise<{ isCompetitor: boolean; reason: string }> {
     try {
-      const llm = createChatModel({ model: agentRules.models.fast, temperature: 0, maxTokens: 150 });
+      const llm = createChatModel({ model: agentRules.models.fast, temperature: 0, maxTokens: 350 });
       const structuredLlm = llm.withStructuredOutput(this.llmCandidateSchema);
       const prompt = `You are evaluating whether a candidate business website belongs to an actual operating commercial competitor to ${targetName} in the ${targetIndustry} industry.
 Target Offerings: ${targetOfferings.slice(0, 5).join(", ")}
@@ -316,17 +322,17 @@ STRICT INSTRUCTIONS:
     } else if (targetState) {
       localLocations = [`${targetState}, ${targetCountry}`, targetState];
     } else if (targetCountry.toLowerCase() === "india") {
-      localLocations = ["Gujarat, India", "Maharashtra, India", "Delhi, India"];
+      localLocations = ["Gujarat, India", "Delhi, India"];
     } else if (targetCountry.toLowerCase() === "usa" || targetCountry.toLowerCase() === "united states") {
-      localLocations = ["California, USA", "New York, USA", "Texas, USA"];
+      localLocations = ["California, USA", "Texas, USA"];
     } else {
       localLocations = [location, targetCountry];
     }
 
-    const globalHubs = ["USA", "Germany", "United Kingdom", "Italy", "Canada", "Australia"].filter(c => c.toLowerCase() !== targetCountry.toLowerCase());
+    const globalHubs = ["USA", "Germany", "United Kingdom", "Italy", "Canada", "Australia", "Japan"].filter(c => c.toLowerCase() !== targetCountry.toLowerCase());
 
     const indiaHubs = ["Maharashtra", "Punjab", "Tamil Nadu", "Haryana", "Karnataka", "Telangana"].filter(s => s.toLowerCase() !== targetState.toLowerCase());
-    const usHubs = ["Texas", "California", "Ohio", "Michigan", "Illinois", "Florida"].filter(s => s.toLowerCase() !== targetState.toLowerCase());
+    const usHubs = ["Ohio", "Michigan", "Illinois", "Florida", "Pennsylvania", "Indiana"].filter(s => s.toLowerCase() !== targetState.toLowerCase());
 
     let regionalHubs: string[] = [];
     if (targetCountry.toLowerCase() === "india") regionalHubs = indiaHubs;
@@ -474,34 +480,68 @@ STRICT INSTRUCTIONS:
         const activeQueries = semanticQueries.slice(0, 5);
         const activeLocations = target.locations.slice(0, 6);
 
-        // Helper to query Brave / Bing web search with directory and educational article exclusions
+        // Helper to query Tavily / Brave / Bing web search with robust filtering
         const fetchWebSearchPlaces = async (queryKw: string, locationStr: string): Promise<any[]> => {
             const out: any[] = [];
-            const dirFilters = "-site:indiamart.com -site:tradeindia.com -site:justdial.com -site:exportersindia.com -site:dial4trade.com -site:maharashtradirectory.com -site:gujaratdirectory.com -site:yellowpages.com -site:thomasnet.com -site:ensun.io -site:localfrog.in -site:facebook.com -site:linkedin.com -site:youtube.com -site:wikipedia.org -site:iqsdirectory.com -site:theengineeringchoice.org -site:learnmech.com -site:fractory.com -site:engineeringcheatsheet.com -site:weforging.com -filetype:pdf -what -types -guide -blog -article";
-            const searchQuery = `"${queryKw}" "${locationStr}" ${dirFilters}`;
-            try {
-                const brave = new BraveSearchEngine({ maxResults: 15 });
-                const raw = await brave.invoke({ query: searchQuery });
-                const items = JSON.parse(raw);
-                for (const item of items) {
-                    if (item.url && item.url.startsWith("http")) {
-                        if (isNonOperatingOrInformationalUrl(item.url, item.title)) continue;
-                        out.push({
-                            id: item.url,
-                            displayName: { text: item.title?.split("-")[0]?.split("|")[0]?.split("›")[0]?.trim() || item.title },
-                            websiteUri: item.url,
-                            formattedAddress: locationStr,
-                            rating: undefined,
-                            nationalPhoneNumber: undefined
-                        });
-                    }
-                }
-            } catch {}
+            const cleanQuery = `${queryKw} manufacturer ${locationStr}`.trim();
+            const tavilyKey = process.env.TAVILY_API_KEY || "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";
 
+            // 1. Tavily Search (primary, highly accurate for B2B industrial companies)
+            if (tavilyKey) {
+                try {
+                    const res = await axios.post("https://api.tavily.com/search", {
+                        api_key: tavilyKey,
+                        query: cleanQuery,
+                        search_depth: "basic",
+                        max_results: 15
+                    }, { timeout: 8000, signal: AbortSignal.timeout(8000) });
+
+                    const results = res.data?.results || [];
+                    for (const item of results) {
+                        if (item.url && item.url.startsWith("http")) {
+                            if (isNonOperatingOrInformationalUrl(item.url, item.title)) continue;
+                            out.push({
+                                id: item.url,
+                                displayName: { text: item.title?.split("-")[0]?.split("|")[0]?.split("›")[0]?.trim() || item.title },
+                                websiteUri: item.url,
+                                formattedAddress: locationStr,
+                                rating: undefined,
+                                nationalPhoneNumber: undefined
+                            });
+                        }
+                    }
+                } catch (tavErr: any) {
+                    logger.debug(`Tavily web search error: ${tavErr.message}`);
+                }
+            }
+
+            // 2. Brave Search fallback with clean query
+            if (out.length < 5) {
+                try {
+                    const brave = new BraveSearchEngine({ maxResults: 15 });
+                    const raw = await brave.invoke({ query: cleanQuery });
+                    const items = JSON.parse(raw);
+                    for (const item of items) {
+                        if (item.url && item.url.startsWith("http")) {
+                            if (isNonOperatingOrInformationalUrl(item.url, item.title)) continue;
+                            out.push({
+                                id: item.url,
+                                displayName: { text: item.title?.split("-")[0]?.split("|")[0]?.split("›")[0]?.trim() || item.title },
+                                websiteUri: item.url,
+                                formattedAddress: locationStr,
+                                rating: undefined,
+                                nationalPhoneNumber: undefined
+                            });
+                        }
+                    }
+                } catch {}
+            }
+
+            // 3. Bing RSS fallback with clean query
             if (out.length < 5) {
                 try {
                     const bing = new BingRssSearchEngine({ maxResults: 15 });
-                    const raw = await bing.invoke({ query: searchQuery });
+                    const raw = await bing.invoke({ query: cleanQuery });
                     const items = JSON.parse(raw);
                     for (const item of items) {
                         if (item.url && item.url.startsWith("http")) {

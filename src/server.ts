@@ -881,6 +881,76 @@ app.get("/api/analyze-status", async (req, res) => {
   });
 });
 
+interface CompetitorDiscoveryJob {
+  url: string;
+  scope: string;
+  status: "running" | "completed" | "failed";
+  step: string;
+  startTime: number;
+  updatedAt: number;
+  completed: boolean;
+  discoveredCount: number;
+  localCount: number;
+  regionalCount: number;
+  globalCount: number;
+  competitors: any[];
+  error?: string | null;
+}
+const activeCompetitorJobs = new Map<string, CompetitorDiscoveryJob>();
+
+app.get("/api/competitor-status", async (req, res) => {
+  const rawUrl = String(req.query.url || "").trim();
+  if (!rawUrl) return res.status(400).json({ error: "Missing url parameter" });
+
+  const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+  const norm = normalize(rawUrl);
+
+  const job = activeCompetitorJobs.get(norm);
+  if (job) {
+    return res.json({
+      url: job.url,
+      running: job.status === "running",
+      completed: job.completed,
+      step: job.step,
+      elapsedSec: Math.round((Date.now() - job.startTime) / 1000),
+      discoveredCount: job.discoveredCount,
+      localCount: job.localCount,
+      regionalCount: job.regionalCount,
+      globalCount: job.globalCount,
+      competitors: job.competitors,
+      error: job.error
+    });
+  }
+
+  // Fallback to checking memoryStore / RAM
+  const memory = knowledgeIndex.get(rawUrl) || await memoryStore.loadBySite(rawUrl);
+  if (memory && Array.isArray(memory.competitors) && memory.competitors.length > 0) {
+    const normType = (t: string) => (t || '').toLowerCase().trim();
+    return res.json({
+      url: rawUrl,
+      running: false,
+      completed: true,
+      step: "Competitor discovery completed",
+      elapsedSec: 0,
+      discoveredCount: memory.competitors.length,
+      localCount: memory.competitors.filter((c: any) => normType(c.type) === 'local').length,
+      regionalCount: memory.competitors.filter((c: any) => normType(c.type) === 'regional').length,
+      globalCount: memory.competitors.filter((c: any) => normType(c.type) === 'global').length,
+      competitors: memory.competitors
+    });
+  }
+
+  return res.json({
+    url: rawUrl,
+    running: false,
+    completed: false,
+    step: "Not running",
+    elapsedSec: 0,
+    discoveredCount: 0,
+    competitors: []
+  });
+});
+
 app.post("/api/analyze-stream", upload.single("brochureFile"), async (request, response) => {
   response.setHeader("Content-Type", "text/event-stream");
   response.setHeader("Cache-Control", "no-cache, no-transform");
@@ -1511,6 +1581,26 @@ app.post("/api/competitors-stream", async (request, response) => {
     return;
   }
 
+  const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
+  const normSite = normalize(websiteUrl);
+
+  const currentJob: CompetitorDiscoveryJob = {
+    url: websiteUrl,
+    scope: scope || "all",
+    status: "running",
+    step: "Connected. Scanning competitor footprint...",
+    startTime: Date.now(),
+    updatedAt: Date.now(),
+    completed: false,
+    discoveredCount: 0,
+    localCount: 0,
+    regionalCount: 0,
+    globalCount: 0,
+    competitors: [],
+    error: null
+  };
+  activeCompetitorJobs.set(normSite, currentJob);
+
   let newlyFoundSinceLastSave = 0;
   const saveThrottled = async () => {
     try {
@@ -1529,7 +1619,17 @@ app.post("/api/competitors-stream", async (request, response) => {
       memory, 
       scope || "all", 
       (comp, statusMsg) => {
+        currentJob.step = statusMsg;
+        currentJob.updatedAt = Date.now();
         if (comp) {
+          const normType = (t: string) => (t || '').toLowerCase().trim();
+          if (!currentJob.competitors.some((c: any) => c.url === comp.url)) {
+            currentJob.competitors.push(comp);
+            currentJob.discoveredCount = currentJob.competitors.length;
+            currentJob.localCount = currentJob.competitors.filter((c: any) => normType(c.type) === 'local').length;
+            currentJob.regionalCount = currentJob.competitors.filter((c: any) => normType(c.type) === 'regional').length;
+            currentJob.globalCount = currentJob.competitors.filter((c: any) => normType(c.type) === 'global').length;
+          }
           if (!memory!.competitors) memory!.competitors = [];
           if (!memory!.competitors.some((c: any) => c.url === comp.url)) {
             memory!.competitors.push(comp);
@@ -1582,6 +1682,16 @@ app.post("/api/competitors-stream", async (request, response) => {
     memory.competitors = finalCompetitors;
     knowledgeIndex.add(memory);
 
+    currentJob.completed = true;
+    currentJob.status = "completed";
+    currentJob.step = `Discovered ${finalCompetitors.length} competitors (${local.length} local, ${regional.length} regional, ${global.length} global)`;
+    currentJob.competitors = finalCompetitors;
+    currentJob.discoveredCount = finalCompetitors.length;
+    currentJob.localCount = local.length;
+    currentJob.regionalCount = regional.length;
+    currentJob.globalCount = global.length;
+    currentJob.updatedAt = Date.now();
+
     // Persist to MongoDB, disk, and GitHub before concluding stream
     try {
       await memoryStore.save(memory);
@@ -1596,6 +1706,9 @@ app.post("/api/competitors-stream", async (request, response) => {
     }
   } catch (err: any) {
     logger.error(`Competitor Stream error: ${err.message}`);
+    currentJob.status = "failed";
+    currentJob.error = err.message;
+    currentJob.updatedAt = Date.now();
     if (!response.writableEnded) {
       response.write(`data: ${JSON.stringify({ type: 'error', error: err.message })}\n\n`);
       response.end();
