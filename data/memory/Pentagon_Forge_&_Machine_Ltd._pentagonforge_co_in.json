@@ -68956,7 +68956,25 @@
         "CNC Machining",
         "Logistics & Export Support",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "Success",
+          "count": 1
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Sumangal Forgings Private Limited",
@@ -69113,7 +69131,25 @@
         "Heat Treatment",
         "CNC Machining",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 1
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Super Auto Industries, Forging components Manufacturers in Rajkot, CNC Components, Machined Components, Elevator Components",
@@ -69252,7 +69288,25 @@
         "Die Manufacturing & Inspection",
         "Heat Treatment",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 3
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 1
+        }
+      }
     },
     {
       "name": "SENDURA FORGE PVT LTD",
@@ -69600,7 +69654,7 @@
       "socials": {
         "linkedin": "https://www.linkedin.com/company/forgewell-industries---india/",
         "instagram": "https://www.instagram.com/forgewell.pvt?igsh=cWIyY2oxMGptbjJo",
-        "facebook": null,
+        "facebook": "https://www.facebook.com/forgewell",
         "youtube": "https://youtube.com/@forgewellindustriespvtltd?si=xvJBYAjaFRc6rz06"
       },
       "products": [
