@@ -743,7 +743,630 @@
       "inferred": true
     }
   ],
-  "socialFeed": [],
+  "socialFeed": [
+    {
+      "id": "post_1792653076281_yxgamj",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=qecqJdv2YfY",
+      "caption": "W.H.Tildesley Drop Forging Specialist - Heavy Duty Conrods Connecting Rods - L396",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/qecqJdv2YfY/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/qecqJdv2YfY/hqdefault.jpg",
+      "date": "2026-06-29",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://privacy.ca.gov/drop/",
+      "thumbnail_url": "https://i.ytimg.com/vi/qecqJdv2YfY/hqdefault.jpg",
+      "published_date": "2026-06-29",
+      "link": "https://www.youtube.com/watch?v=qecqJdv2YfY",
+      "content": "W.H.Tildesley Drop Forging Specialist - Heavy Duty Conrods Connecting Rods - L396",
+      "timestamp": "2026-06-29",
+      "mediaUrl": "https://i.ytimg.com/vi/qecqJdv2YfY/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/qecqJdv2YfY/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=qecqJdv2YfY",
+      "competitorName": ""
+    },
+    {
+      "id": "post_1792653073285_u6es2n",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=W8FrThv_3zY",
+      "caption": "Forging in America - 250 Years",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/W8FrThv_3zY/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/W8FrThv_3zY/hqdefault.jpg",
+      "date": "2026-07-27",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://en.m.wikipedia.org/wiki/Forging",
+      "thumbnail_url": "https://i.ytimg.com/vi/W8FrThv_3zY/hqdefault.jpg",
+      "published_date": "2026-07-27",
+      "link": "https://www.youtube.com/watch?v=W8FrThv_3zY",
+      "content": "Forging in America - 250 Years",
+      "timestamp": "2026-07-27",
+      "mediaUrl": "https://i.ytimg.com/vi/W8FrThv_3zY/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/W8FrThv_3zY/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=W8FrThv_3zY",
+      "competitorName": ""
+    },
+    {
+      "id": "post_1792653080208_vha7z0",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=jD3bB2JFghA",
+      "caption": "ARASH feat Helena - ONE DAY | BassForge Deep House 2026 Remix",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/jD3bB2JFghA/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/jD3bB2JFghA/hqdefault.jpg",
+      "date": "2026-10-21",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://en.wikipedia.org/wiki/Anvil",
+      "thumbnail_url": "https://i.ytimg.com/vi/jD3bB2JFghA/hqdefault.jpg",
+      "published_date": "2026-10-21",
+      "link": "https://www.youtube.com/watch?v=jD3bB2JFghA",
+      "content": "ARASH feat Helena - ONE DAY | BassForge Deep House 2026 Remix",
+      "timestamp": "2026-10-21",
+      "mediaUrl": "https://i.ytimg.com/vi/jD3bB2JFghA/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/jD3bB2JFghA/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=jD3bB2JFghA",
+      "competitorName": ""
+    },
+    {
+      "id": "yt_7FoupXBunCg",
+      "company": "Forgewell Industries",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=7FoupXBunCg",
+      "caption": "Forgewell Teaser | Forgewell industries",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/7FoupXBunCg/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/7FoupXBunCg/hqdefault.jpg",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://youtube.com/@forgewellindustriespvtltd?si=xvJBYAjaFRc6rz06",
+      "thumbnail_url": "https://i.ytimg.com/vi/7FoupXBunCg/hqdefault.jpg",
+      "published_date": "2026-10-22",
+      "link": "https://www.youtube.com/watch?v=7FoupXBunCg",
+      "content": "Forgewell Teaser | Forgewell industries",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://i.ytimg.com/vi/7FoupXBunCg/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/7FoupXBunCg/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=7FoupXBunCg",
+      "competitorName": "Forgewell Industries"
+    },
+    {
+      "id": "post_1792653135193_i0ysy0",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=eEqO-2_C13g",
+      "caption": "Viking quote ⚔️⚔️🛡️🛡️",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/eEqO-2_C13g/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/eEqO-2_C13g/hqdefault.jpg",
+      "date": "2021-09-29",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://www.vikingcruises.com/oceans/my-trip/my-viking-journey/index.html",
+      "thumbnail_url": "https://i.ytimg.com/vi/eEqO-2_C13g/hqdefault.jpg",
+      "published_date": "2021-09-29",
+      "link": "https://www.youtube.com/watch?v=eEqO-2_C13g",
+      "content": "Viking quote ⚔️⚔️🛡️🛡️",
+      "timestamp": "2021-09-29",
+      "mediaUrl": "https://i.ytimg.com/vi/eEqO-2_C13g/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/eEqO-2_C13g/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=eEqO-2_C13g",
+      "competitorName": ""
+    },
+    {
+      "id": "post_1792653134666_6ttiek",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=UmFBtynJX8I",
+      "caption": "Square Flange",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/UmFBtynJX8I/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/UmFBtynJX8I/hqdefault.jpg",
+      "date": "2026-10-21",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://www.merriam-webster.com/dictionary/custom",
+      "thumbnail_url": "https://i.ytimg.com/vi/UmFBtynJX8I/hqdefault.jpg",
+      "published_date": "2026-10-21",
+      "link": "https://www.youtube.com/watch?v=UmFBtynJX8I",
+      "content": "Square Flange",
+      "timestamp": "2026-10-21",
+      "mediaUrl": "https://i.ytimg.com/vi/UmFBtynJX8I/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/UmFBtynJX8I/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=UmFBtynJX8I",
+      "competitorName": ""
+    },
+    {
+      "id": "post_1792653076281_dat87g",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=JBl_tycfPE0",
+      "caption": "W.H.Tildesley Drop Forging Specialist - Automotive Aluminium Wishbones - L590",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/JBl_tycfPE0/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/JBl_tycfPE0/hqdefault.jpg",
+      "date": "2026-06-22",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://privacy.ca.gov/drop/",
+      "thumbnail_url": "https://i.ytimg.com/vi/JBl_tycfPE0/hqdefault.jpg",
+      "published_date": "2026-06-22",
+      "link": "https://www.youtube.com/watch?v=JBl_tycfPE0",
+      "content": "W.H.Tildesley Drop Forging Specialist - Automotive Aluminium Wishbones - L590",
+      "timestamp": "2026-06-22",
+      "mediaUrl": "https://i.ytimg.com/vi/JBl_tycfPE0/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/JBl_tycfPE0/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=JBl_tycfPE0",
+      "competitorName": ""
+    },
+    {
+      "id": "post_1792653073285_ymyc5x",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=A4vNU8fHlXc",
+      "caption": "FIERF 2026 Forging Competition",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/A4vNU8fHlXc/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/A4vNU8fHlXc/hqdefault.jpg",
+      "date": "2026-07-02",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://en.m.wikipedia.org/wiki/Forging",
+      "thumbnail_url": "https://i.ytimg.com/vi/A4vNU8fHlXc/hqdefault.jpg",
+      "published_date": "2026-07-02",
+      "link": "https://www.youtube.com/watch?v=A4vNU8fHlXc",
+      "content": "FIERF 2026 Forging Competition",
+      "timestamp": "2026-07-02",
+      "mediaUrl": "https://i.ytimg.com/vi/A4vNU8fHlXc/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/A4vNU8fHlXc/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=A4vNU8fHlXc",
+      "competitorName": ""
+    },
+    {
+      "id": "post_1792653080208_3f2haa",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=CorGkjQ7V4Q",
+      "caption": "Real Love - Massari (BassForge 2026 Remix) | Deep House",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/CorGkjQ7V4Q/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/CorGkjQ7V4Q/hqdefault.jpg",
+      "date": "2026-10-18",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://en.wikipedia.org/wiki/Anvil",
+      "thumbnail_url": "https://i.ytimg.com/vi/CorGkjQ7V4Q/hqdefault.jpg",
+      "published_date": "2026-10-18",
+      "link": "https://www.youtube.com/watch?v=CorGkjQ7V4Q",
+      "content": "Real Love - Massari (BassForge 2026 Remix) | Deep House",
+      "timestamp": "2026-10-18",
+      "mediaUrl": "https://i.ytimg.com/vi/CorGkjQ7V4Q/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/CorGkjQ7V4Q/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=CorGkjQ7V4Q",
+      "competitorName": ""
+    },
+    {
+      "id": "yt_7GEER1q4w_o",
+      "company": "Forgewell Industries",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=7GEER1q4w_o",
+      "caption": "Forgewell Industures  is Wishing you all Happy New Year",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/7GEER1q4w_o/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/7GEER1q4w_o/hqdefault.jpg",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://youtube.com/@forgewellindustriespvtltd?si=xvJBYAjaFRc6rz06",
+      "thumbnail_url": "https://i.ytimg.com/vi/7GEER1q4w_o/hqdefault.jpg",
+      "published_date": "2026-10-22",
+      "link": "https://www.youtube.com/watch?v=7GEER1q4w_o",
+      "content": "Forgewell Industures  is Wishing you all Happy New Year",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://i.ytimg.com/vi/7GEER1q4w_o/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/7GEER1q4w_o/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=7GEER1q4w_o",
+      "competitorName": "Forgewell Industries"
+    },
+    {
+      "id": "post_1792653135193_e2ziek",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=G5Uve6sHyww",
+      "caption": "VIKING THING (Episode 6)",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/G5Uve6sHyww/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/G5Uve6sHyww/hqdefault.jpg",
+      "date": "2021-08-11",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://www.vikingcruises.com/oceans/my-trip/my-viking-journey/index.html",
+      "thumbnail_url": "https://i.ytimg.com/vi/G5Uve6sHyww/hqdefault.jpg",
+      "published_date": "2021-08-11",
+      "link": "https://www.youtube.com/watch?v=G5Uve6sHyww",
+      "content": "VIKING THING (Episode 6)",
+      "timestamp": "2021-08-11",
+      "mediaUrl": "https://i.ytimg.com/vi/G5Uve6sHyww/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/G5Uve6sHyww/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=G5Uve6sHyww",
+      "competitorName": ""
+    },
+    {
+      "id": "post_1792653134666_qfctq4",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=1AP47rLNMkc",
+      "caption": "cylinder gland",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/1AP47rLNMkc/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/1AP47rLNMkc/hqdefault.jpg",
+      "date": "2026-10-19",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://www.merriam-webster.com/dictionary/custom",
+      "thumbnail_url": "https://i.ytimg.com/vi/1AP47rLNMkc/hqdefault.jpg",
+      "published_date": "2026-10-19",
+      "link": "https://www.youtube.com/watch?v=1AP47rLNMkc",
+      "content": "cylinder gland",
+      "timestamp": "2026-10-19",
+      "mediaUrl": "https://i.ytimg.com/vi/1AP47rLNMkc/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/1AP47rLNMkc/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=1AP47rLNMkc",
+      "competitorName": ""
+    },
+    {
+      "id": "post_1792653076281_1i0vi4",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=R8tMMqguGwQ",
+      "caption": "W.H.Tildesley Drop Forging Specialist - Forged Flange Blanks - L313",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/R8tMMqguGwQ/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/R8tMMqguGwQ/hqdefault.jpg",
+      "date": "2026-06-15",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://privacy.ca.gov/drop/",
+      "thumbnail_url": "https://i.ytimg.com/vi/R8tMMqguGwQ/hqdefault.jpg",
+      "published_date": "2026-06-15",
+      "link": "https://www.youtube.com/watch?v=R8tMMqguGwQ",
+      "content": "W.H.Tildesley Drop Forging Specialist - Forged Flange Blanks - L313",
+      "timestamp": "2026-06-15",
+      "mediaUrl": "https://i.ytimg.com/vi/R8tMMqguGwQ/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/R8tMMqguGwQ/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=R8tMMqguGwQ",
+      "competitorName": ""
+    },
+    {
+      "id": "post_1792653073285_czurrv",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=Udxvw-OPVBk",
+      "caption": "La Jolla Country Day School FIERF Forging Competition 2026",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/Udxvw-OPVBk/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/Udxvw-OPVBk/hqdefault.jpg",
+      "date": "2026-05-20",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://en.m.wikipedia.org/wiki/Forging",
+      "thumbnail_url": "https://i.ytimg.com/vi/Udxvw-OPVBk/hqdefault.jpg",
+      "published_date": "2026-05-20",
+      "link": "https://www.youtube.com/watch?v=Udxvw-OPVBk",
+      "content": "La Jolla Country Day School FIERF Forging Competition 2026",
+      "timestamp": "2026-05-20",
+      "mediaUrl": "https://i.ytimg.com/vi/Udxvw-OPVBk/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/Udxvw-OPVBk/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=Udxvw-OPVBk",
+      "competitorName": ""
+    },
+    {
+      "id": "post_1792653080208_c9l0dz",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=Y7UPsCIFPBU",
+      "caption": "Alan Walker & Ava Max - Alone (BassForge 2026 Remix) | Deep House",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/Y7UPsCIFPBU/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/Y7UPsCIFPBU/hqdefault.jpg",
+      "date": "2026-10-15",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://en.wikipedia.org/wiki/Anvil",
+      "thumbnail_url": "https://i.ytimg.com/vi/Y7UPsCIFPBU/hqdefault.jpg",
+      "published_date": "2026-10-15",
+      "link": "https://www.youtube.com/watch?v=Y7UPsCIFPBU",
+      "content": "Alan Walker & Ava Max - Alone (BassForge 2026 Remix) | Deep House",
+      "timestamp": "2026-10-15",
+      "mediaUrl": "https://i.ytimg.com/vi/Y7UPsCIFPBU/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/Y7UPsCIFPBU/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=Y7UPsCIFPBU",
+      "competitorName": ""
+    },
+    {
+      "id": "post_1792653135193_2qom1i",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=byLCDkv-pD0",
+      "caption": "VIKING THING (Episode 5)",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/byLCDkv-pD0/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/byLCDkv-pD0/hqdefault.jpg",
+      "date": "2021-06-28",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://www.vikingcruises.com/oceans/my-trip/my-viking-journey/index.html",
+      "thumbnail_url": "https://i.ytimg.com/vi/byLCDkv-pD0/hqdefault.jpg",
+      "published_date": "2021-06-28",
+      "link": "https://www.youtube.com/watch?v=byLCDkv-pD0",
+      "content": "VIKING THING (Episode 5)",
+      "timestamp": "2021-06-28",
+      "mediaUrl": "https://i.ytimg.com/vi/byLCDkv-pD0/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/byLCDkv-pD0/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=byLCDkv-pD0",
+      "competitorName": ""
+    },
+    {
+      "id": "post_1792653134666_6tuwiw",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=WyLSjIv9Ic4",
+      "caption": "flange machining from drawing按图纸加工法兰",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/WyLSjIv9Ic4/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/WyLSjIv9Ic4/hqdefault.jpg",
+      "date": "2026-10-16",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://www.merriam-webster.com/dictionary/custom",
+      "thumbnail_url": "https://i.ytimg.com/vi/WyLSjIv9Ic4/hqdefault.jpg",
+      "published_date": "2026-10-16",
+      "link": "https://www.youtube.com/watch?v=WyLSjIv9Ic4",
+      "content": "flange machining from drawing按图纸加工法兰",
+      "timestamp": "2026-10-16",
+      "mediaUrl": "https://i.ytimg.com/vi/WyLSjIv9Ic4/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/WyLSjIv9Ic4/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=WyLSjIv9Ic4",
+      "competitorName": ""
+    },
+    {
+      "id": "li_1792653106780_mfoah",
+      "company": "Forgewell Industries",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/forgewell-industries---india_welcome-to-forgewell-industries-pvt-ltd-activity-7429103632941420544-lFZj",
+      "caption": "Welcome to Forgewell Industries Pvt. Ltd.\nWe are an ISO 9001:2015 (TÜV NORD) certified open-die forging company, established in 2010.\nBacked by leadership with 40+ years of forging experience, we specialize in precision industrial forgings.\nOur products include Carbon, Alloy & Stainless Steel forgings manufactured to national & international standards.\nOperating from Chikhali & Chakan, Pune, we deliver strength, quality, and reliability to world.",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQFk4bORYlHVWg/feedshare-image-high-res/B4DZxl6YrsJUAU-/0/1771236330473?e=2147483647&v=beta&t=JaI70-IwN1zHU0Lnjf7Tg0TY0FMjcauITuCtOXa66YA",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQFk4bORYlHVWg/feedshare-image-high-res/B4DZxl6YrsJUAU-/0/1771236330473?e=2147483647&v=beta&t=JaI70-IwN1zHU0Lnjf7Tg0TY0FMjcauITuCtOXa66YA",
+      "date": "2026-02-16",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/forgewell-industries---india/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQFk4bORYlHVWg/feedshare-image-high-res/B4DZxl6YrsJUAU-/0/1771236330473?e=2147483647&v=beta&t=JaI70-IwN1zHU0Lnjf7Tg0TY0FMjcauITuCtOXa66YA",
+      "published_date": "2026-02-16",
+      "link": "https://www.linkedin.com/posts/forgewell-industries---india_welcome-to-forgewell-industries-pvt-ltd-activity-7429103632941420544-lFZj",
+      "content": "Welcome to Forgewell Industries Pvt. Ltd.\nWe are an ISO 9001:2015 (TÜV NORD) certified open-die forging company, established in 2010.\nBacked by leadership with 40+ years of forging experience, we specialize in precision industrial forgings.\nOur products include Carbon, Alloy & Stainless Steel forgings manufactured to national & international standards.\nOperating from Chikhali & Chakan, Pune, we deliver strength, quality, and reliability to world.",
+      "timestamp": "2026-02-16",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQFk4bORYlHVWg/feedshare-image-high-res/B4DZxl6YrsJUAU-/0/1771236330473?e=2147483647&v=beta&t=JaI70-IwN1zHU0Lnjf7Tg0TY0FMjcauITuCtOXa66YA",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQFk4bORYlHVWg/feedshare-image-high-res/B4DZxl6YrsJUAU-/0/1771236330473?e=2147483647&v=beta&t=JaI70-IwN1zHU0Lnjf7Tg0TY0FMjcauITuCtOXa66YA",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/forgewell-industries---india_welcome-to-forgewell-industries-pvt-ltd-activity-7429103632941420544-lFZj",
+      "competitorName": "Forgewell Industries",
+      "activity_id": "7429103632941420544"
+    },
+    {
+      "id": "li_1792653117785_7ayj1",
+      "company": "Viking Forge Capabilities",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/viking-forge-corporation_communityoutreach-activity-7488576355337658370-O30y",
+      "caption": "Viking Forge was happy to sponsor the Forging Industry Association's Forging the Future Summer Camp this year. One of Viking's engineers, Chris, spoke at the summer camp in Cleveland on Wednesday 7/28. Chris gave a presentation about metallurgy and then walked the participants through an activity that showed how hardening, annealing, and tempering are related to the crystalline structure of metal. Thanks for letting us share our knowledge, campers! Forging Industry Association #communityoutreach",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQHAtn-opiGAdw/feedshare-shrink_800/B56Z.zEf2IKwAc-/0/1785415731319?e=2147483647&v=beta&t=vVlwUjET-vYUgQwVODcAaHH3-kw_7-ozKruurhUXgNk",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQHAtn-opiGAdw/feedshare-shrink_800/B56Z.zEf2IKwAc-/0/1785415731319?e=2147483647&v=beta&t=vVlwUjET-vYUgQwVODcAaHH3-kw_7-ozKruurhUXgNk",
+      "date": "2026-07-30",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/viking-forge-corporation/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQHAtn-opiGAdw/feedshare-shrink_800/B56Z.zEf2IKwAc-/0/1785415731319?e=2147483647&v=beta&t=vVlwUjET-vYUgQwVODcAaHH3-kw_7-ozKruurhUXgNk",
+      "published_date": "2026-07-30",
+      "link": "https://www.linkedin.com/posts/viking-forge-corporation_communityoutreach-activity-7488576355337658370-O30y",
+      "content": "Viking Forge was happy to sponsor the Forging Industry Association's Forging the Future Summer Camp this year. One of Viking's engineers, Chris, spoke at the summer camp in Cleveland on Wednesday 7/28. Chris gave a presentation about metallurgy and then walked the participants through an activity that showed how hardening, annealing, and tempering are related to the crystalline structure of metal. Thanks for letting us share our knowledge, campers! Forging Industry Association #communityoutreach",
+      "timestamp": "2026-07-30",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQHAtn-opiGAdw/feedshare-shrink_800/B56Z.zEf2IKwAc-/0/1785415731319?e=2147483647&v=beta&t=vVlwUjET-vYUgQwVODcAaHH3-kw_7-ozKruurhUXgNk",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQHAtn-opiGAdw/feedshare-shrink_800/B56Z.zEf2IKwAc-/0/1785415731319?e=2147483647&v=beta&t=vVlwUjET-vYUgQwVODcAaHH3-kw_7-ozKruurhUXgNk",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/viking-forge-corporation_communityoutreach-activity-7488576355337658370-O30y",
+      "competitorName": "Viking Forge Capabilities",
+      "activity_id": "7488576355337658370"
+    },
+    {
+      "id": "li_1792653106780_1v2rq",
+      "company": "Forgewell Industries",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/forgewell-industries---india_forgewell-valveworksindia-industrialmanufacturing-activity-7425877482148519937-99ZU",
+      "caption": "Strengthening Partnerships in Precision Engineering\nWe were delighted to host the team from Valveworks India Pvt Ltd at our Forgewell Industries facility in Pune yesterday! 🤝\nProductive visits like these are the cornerstone of innovation and operational excellence. It was a pleasure showcasing our latest forging capabilities and discussing how we can continue to drive value together in the industry.\nLooking forward to a future of shared success and continued collaboration.\n#Forgewell #ValveworksIndia #IndustrialManufacturing #PuneBusiness #ForgingExcellence #Partnership #EngineeringFuture",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQF0E4QfSB-FRA/feedshare-shrink_1280/B4DZw4EOMmG4Ac-/0/1770467157131?e=2147483647&v=beta&t=4UM4h2LY1ZZ1zPgwOL65wN7k0bbYSo-8S5jq53rcohw",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQF0E4QfSB-FRA/feedshare-shrink_1280/B4DZw4EOMmG4Ac-/0/1770467157131?e=2147483647&v=beta&t=4UM4h2LY1ZZ1zPgwOL65wN7k0bbYSo-8S5jq53rcohw",
+      "date": "2026-02-07",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/forgewell-industries---india/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQF0E4QfSB-FRA/feedshare-shrink_1280/B4DZw4EOMmG4Ac-/0/1770467157131?e=2147483647&v=beta&t=4UM4h2LY1ZZ1zPgwOL65wN7k0bbYSo-8S5jq53rcohw",
+      "published_date": "2026-02-07",
+      "link": "https://www.linkedin.com/posts/forgewell-industries---india_forgewell-valveworksindia-industrialmanufacturing-activity-7425877482148519937-99ZU",
+      "content": "Strengthening Partnerships in Precision Engineering\nWe were delighted to host the team from Valveworks India Pvt Ltd at our Forgewell Industries facility in Pune yesterday! 🤝\nProductive visits like these are the cornerstone of innovation and operational excellence. It was a pleasure showcasing our latest forging capabilities and discussing how we can continue to drive value together in the industry.\nLooking forward to a future of shared success and continued collaboration.\n#Forgewell #ValveworksIndia #IndustrialManufacturing #PuneBusiness #ForgingExcellence #Partnership #EngineeringFuture",
+      "timestamp": "2026-02-07",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQF0E4QfSB-FRA/feedshare-shrink_1280/B4DZw4EOMmG4Ac-/0/1770467157131?e=2147483647&v=beta&t=4UM4h2LY1ZZ1zPgwOL65wN7k0bbYSo-8S5jq53rcohw",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQF0E4QfSB-FRA/feedshare-shrink_1280/B4DZw4EOMmG4Ac-/0/1770467157131?e=2147483647&v=beta&t=4UM4h2LY1ZZ1zPgwOL65wN7k0bbYSo-8S5jq53rcohw",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/forgewell-industries---india_forgewell-valveworksindia-industrialmanufacturing-activity-7425877482148519937-99ZU",
+      "competitorName": "Forgewell Industries",
+      "activity_id": "7425877482148519937"
+    },
+    {
+      "id": "li_1792653117785_koq2m",
+      "company": "Viking Forge Capabilities",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/viking-forge-corporation_vikingforge-forging-manufacturing-activity-7407092801898831872-UpAc",
+      "caption": "Across our factory floor, amid the hum of robotic arms and press lines, 2025 showcased the vital balance of human expertise and automated precision at Viking Forge. We thank every employee who turned challenges into results and strengthened the partnerships that keep our customers at the center of everything we do. As we step into 2026, we will continue to grow in operational excellence and innovation—technology that lightens the load, amplifies craftsmanship, and raises the bar for our customers. Wishing you and your loved ones a warm, safe, and happy holiday season.\n\n - The Viking Forge family\n\n #VikingForge #Forging #Manufacturing #Automation #Robotics #Innovation #OhioManufacturing #HappyHolidays",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQE9M-lBFulcYQ/feedshare-shrink_1280/B56ZstHpjGKEAs-/0/1765988539853?e=2147483647&v=beta&t=0RCaQMULyKY2LhpjQKHgVriTl2BJzJej1f-Gxsu5bVI",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQE9M-lBFulcYQ/feedshare-shrink_1280/B56ZstHpjGKEAs-/0/1765988539853?e=2147483647&v=beta&t=0RCaQMULyKY2LhpjQKHgVriTl2BJzJej1f-Gxsu5bVI",
+      "date": "2025-12-17",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/viking-forge-corporation/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQE9M-lBFulcYQ/feedshare-shrink_1280/B56ZstHpjGKEAs-/0/1765988539853?e=2147483647&v=beta&t=0RCaQMULyKY2LhpjQKHgVriTl2BJzJej1f-Gxsu5bVI",
+      "published_date": "2025-12-17",
+      "link": "https://www.linkedin.com/posts/viking-forge-corporation_vikingforge-forging-manufacturing-activity-7407092801898831872-UpAc",
+      "content": "Across our factory floor, amid the hum of robotic arms and press lines, 2025 showcased the vital balance of human expertise and automated precision at Viking Forge. We thank every employee who turned challenges into results and strengthened the partnerships that keep our customers at the center of everything we do. As we step into 2026, we will continue to grow in operational excellence and innovation—technology that lightens the load, amplifies craftsmanship, and raises the bar for our customers. Wishing you and your loved ones a warm, safe, and happy holiday season.\n\n - The Viking Forge family\n\n #VikingForge #Forging #Manufacturing #Automation #Robotics #Innovation #OhioManufacturing #HappyHolidays",
+      "timestamp": "2025-12-17",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQE9M-lBFulcYQ/feedshare-shrink_1280/B56ZstHpjGKEAs-/0/1765988539853?e=2147483647&v=beta&t=0RCaQMULyKY2LhpjQKHgVriTl2BJzJej1f-Gxsu5bVI",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQE9M-lBFulcYQ/feedshare-shrink_1280/B56ZstHpjGKEAs-/0/1765988539853?e=2147483647&v=beta&t=0RCaQMULyKY2LhpjQKHgVriTl2BJzJej1f-Gxsu5bVI",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/viking-forge-corporation_vikingforge-forging-manufacturing-activity-7407092801898831872-UpAc",
+      "competitorName": "Viking Forge Capabilities",
+      "activity_id": "7407092801898831872"
+    },
+    {
+      "id": "li_1792653106780_fspo2",
+      "company": "Forgewell Industries",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/forgewell-industries---india_from-raw-steel-to-industrial-excellence-activity-7417824601659027456-YGF_",
+      "caption": "From raw steel to industrial excellence. 🏗️ With over 15 years of experience, Forgewell Industries is where precision meets power. Our ISO 9001:2008 certified processes ensure that every forged solution we deliver is built to last and trusted by industry leaders worldwide.\nPartner with us for your next project. Get a quote today: 📍 Pune, India\n🌐 arc@forgewellindustries.com 📞 +91 9684030731",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D5605AQHggktClWkbng/thumbnail-with-play-button-overlay-high/B56ZvFoIR_GsDQ-/0/1768547194045?e=2147483647&v=beta&t=bMQbgzTu2hQjyhBIcbzft-H6Cq0iolMkkbJGhjLLBUA",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQHggktClWkbng/thumbnail-with-play-button-overlay-high/B56ZvFoIR_GsDQ-/0/1768547194045?e=2147483647&v=beta&t=bMQbgzTu2hQjyhBIcbzft-H6Cq0iolMkkbJGhjLLBUA",
+      "date": "2026-01-16",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/forgewell-industries---india/",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQHggktClWkbng/thumbnail-with-play-button-overlay-high/B56ZvFoIR_GsDQ-/0/1768547194045?e=2147483647&v=beta&t=bMQbgzTu2hQjyhBIcbzft-H6Cq0iolMkkbJGhjLLBUA",
+      "published_date": "2026-01-16",
+      "link": "https://www.linkedin.com/posts/forgewell-industries---india_from-raw-steel-to-industrial-excellence-activity-7417824601659027456-YGF_",
+      "content": "From raw steel to industrial excellence. 🏗️ With over 15 years of experience, Forgewell Industries is where precision meets power. Our ISO 9001:2008 certified processes ensure that every forged solution we deliver is built to last and trusted by industry leaders worldwide.\nPartner with us for your next project. Get a quote today: 📍 Pune, India\n🌐 arc@forgewellindustries.com 📞 +91 9684030731",
+      "timestamp": "2026-01-16",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D5605AQHggktClWkbng/thumbnail-with-play-button-overlay-high/B56ZvFoIR_GsDQ-/0/1768547194045?e=2147483647&v=beta&t=bMQbgzTu2hQjyhBIcbzft-H6Cq0iolMkkbJGhjLLBUA",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D5605AQHggktClWkbng/thumbnail-with-play-button-overlay-high/B56ZvFoIR_GsDQ-/0/1768547194045?e=2147483647&v=beta&t=bMQbgzTu2hQjyhBIcbzft-H6Cq0iolMkkbJGhjLLBUA",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/forgewell-industries---india_from-raw-steel-to-industrial-excellence-activity-7417824601659027456-YGF_",
+      "competitorName": "Forgewell Industries",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQHggktClWkbng/mp4-720p-30fp-crf28/B56ZvFoIR_GsCE-/0/1768547194046?e=2147483647&v=beta&t=JSvDket0_P6oQneC16ps0Gr4309ktsrKmlVEquKBZEo",
+      "activity_id": "7417824601659027456"
+    }
+  ],
   "ownSocials": {
     "linkedin": "https://www.linkedin.com/company/pentagon-forge/",
     "instagram": "https://www.instagram.com/pentagon_forge_and_machine_ltd/",
@@ -69093,10 +69716,10 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/shivamforge/",
-        "instagram": "https://www.instagram.com/shivam_forge_",
-        "facebook": "https://www.facebook.com/people/Shivam-Forge/61562313057709/",
-        "youtube": null
+        "linkedin": "https://privacy.ca.gov/drop/",
+        "instagram": "https://privacy.ca.gov/drop/",
+        "facebook": "https://privacy.ca.gov/drop/",
+        "youtube": "https://privacy.ca.gov/drop/"
       },
       "products": [
         "Drop Forgings",
@@ -69135,7 +69758,25 @@
         "CNC Machining",
         "Logistics & Export Support",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Forging Manufacturing Company in India – AS9100 Certified",
@@ -69154,10 +69795,10 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/in/sharma-technocast/",
-        "instagram": "https://www.instagram.com/stc_1012",
+        "linkedin": null,
+        "instagram": null,
         "facebook": null,
-        "youtube": "https://www.youtube.com/@Sharma-Technocast"
+        "youtube": null
       },
       "products": [
         "Drop Forgings",
@@ -69192,7 +69833,25 @@
         "Crack Detection & Hardness Inspection",
         "CNC Machining",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Dhaval Steel Forge",
@@ -69214,7 +69873,7 @@
         "linkedin": null,
         "instagram": null,
         "facebook": "https://www.facebook.com/Dhavalsteelforge#",
-        "youtube": "https://www.youtube.com/watch?v=SF4aHwxHtZ0"
+        "youtube": null
       },
       "products": [
         "Drop Forgings",
@@ -69247,7 +69906,25 @@
         "CNC Machining",
         "Logistics & Export Support",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "ANVIL TECHNO FORGE",
@@ -69302,7 +69979,25 @@
         "Heat Treatment",
         "CNC Machining",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Emerson Forge Pvt Ltd",
@@ -69946,7 +70641,25 @@
         "CNC Machining",
         "Logistics & Export Support",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "SIDDHI FORGE PRIVATE LIMITED",
@@ -69999,7 +70712,25 @@
         "CNC Machining",
         "Logistics & Export Support",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "KSC Forge Private Limited",
@@ -70018,9 +70749,9 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/in/karan-kapoor-32b8b2406/",
+        "linkedin": null,
         "instagram": "https://www.instagram.com/kscforgeprivate?igsh=NzVuYmh0cHUzNjZh",
-        "facebook": "https://www.facebook.com/share/1anaRq4rxY/",
+        "facebook": null,
         "youtube": null
       },
       "products": [
@@ -70050,7 +70781,25 @@
         "Crack Detection & Hardness Inspection",
         "Logistics & Export Support",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Forgewell Industries Private Limited",
@@ -70105,17 +70854,17 @@
           "status": "Success",
           "count": 3
         },
-        "Facebook": {
-          "status": "Success",
-          "count": 2
-        },
         "YouTube": {
           "status": "Success",
           "count": 2
         },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
         "Instagram": {
-          "status": "Success",
-          "count": 3
+          "status": "No posts found",
+          "count": 0
         }
       }
     },
@@ -70614,7 +71363,7 @@
         "linkedin": "https://www.linkedin.com/company/viking-forge-corporation/",
         "instagram": null,
         "facebook": "https://www.facebook.com/Viking-Forge-Corporation-357292587674055/",
-        "youtube": "https://www.youtube.com/channel/UCBkXDoS_GUAMU8NMxF3CeHg"
+        "youtube": null
       },
       "products": [
         "Drop Forgings",
@@ -70647,7 +71396,25 @@
         "Crack Detection & Hardness Inspection",
         "CNC Machining",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "Success",
+          "count": 2
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Custom Forged Parts",
@@ -70666,9 +71433,9 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/great-lakes-forge",
+        "linkedin": null,
         "instagram": null,
-        "facebook": "https://www.facebook.com/GLForge",
+        "facebook": null,
         "youtube": null
       },
       "products": [
@@ -70698,7 +71465,25 @@
         "Heat Treatment",
         "CNC Machining",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Forge Company, Forging Group USA, Industrial Forge, Steel & Metal Forge Companies, American Forging Factory & Suppliers",
@@ -70717,10 +71502,10 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/cornell-forge/",
+        "linkedin": null,
         "instagram": null,
-        "facebook": "https://www.facebook.com/cornellforge/",
-        "youtube": "https://www.youtube.com/channel/UCVnhNefVxxILAdXJzSMqg6Q"
+        "facebook": null,
+        "youtube": null
       },
       "products": [
         "Drop Forgings",
@@ -70749,7 +71534,25 @@
         "Heat Treatment",
         "Crack Detection & Hardness Inspection",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "CNC Forging Machining Services",
@@ -70768,10 +71571,10 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/traceamatic/",
+        "linkedin": null,
         "instagram": null,
-        "facebook": "https://www.facebook.com/traceamatic/",
-        "youtube": "https://www.youtube.com/@trace-a-matic"
+        "facebook": null,
+        "youtube": null
       },
       "products": [
         "Drop Forgings",
@@ -70800,7 +71603,27 @@
         "Heat Treatment",
         "CNC Machining",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      },
+      "isDeadAccount": true,
+      "isInactiveSocial": true
     },
     {
       "name": "Closed Die Forging Company",
@@ -71265,6 +72088,59 @@
         "Drop Forgings",
         "Forgings for Tractors & Farm Equipment",
         "Custom Forging"
+      ]
+    },
+    {
+      "name": "Birson Forgings",
+      "url": "http://birsonforgings.com/",
+      "type": "regional",
+      "location": "B-137/30 G.T. Road, Pawa, near Sahnewal, Airport, Khakat, Ludhiana, Punjab 141120, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Drop Forging & CNC Finished Forging. LLM Verdict: Birson Forgings makes forging presses, not forged components, so it is not a direct competitor to Pentagon Forge's forging products. 13 common products: [Drop Forgings, CNC Finished Forgings, Drop Forged Automotive Components, CNC Finished Automotive Components, Custom Forging, Engineering & Design Services, Die Manufacturing & Inspection...]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 5 | Phone: 098147 15935",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://birsonforgings.com/"
+        },
+        {
+          "title": "Product: Drop Forgings",
+          "url": "mailto:info@birsonforgings.com"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/34030628",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Birsonforgings/",
+        "youtube": "https://www.youtube.com/@BirsonForgingsPresses"
+      },
+      "products": [
+        "Drop Forgings",
+        "CNC Finished Forgings",
+        "Drop Forged Automotive Components",
+        "CNC Finished Automotive Components",
+        "Custom Forging",
+        "Engineering & Design Services",
+        "Die Manufacturing & Inspection",
+        "In‑House Raw Material Testing",
+        "Blank Cutting & Heating",
+        "Heat Treatment",
+        "Crack Detection & Hardness Inspection",
+        "Logistics & Export Support",
+        "Engineering & Design"
+      ],
+      "commonProducts": [
+        "Drop Forgings",
+        "CNC Finished Forgings",
+        "Drop Forged Automotive Components",
+        "CNC Finished Automotive Components",
+        "Custom Forging",
+        "Engineering & Design Services",
+        "Die Manufacturing & Inspection",
+        "In‑House Raw Material Testing",
+        "Blank Cutting & Heating",
+        "Heat Treatment",
+        "Crack Detection & Hardness Inspection",
+        "Logistics & Export Support",
+        "Engineering & Design"
       ]
     }
   ]
