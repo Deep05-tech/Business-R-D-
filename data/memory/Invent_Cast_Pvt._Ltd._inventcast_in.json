@@ -754,6 +754,384 @@
   ],
   "socialFeed": [
     {
+      "id": "ig_Category",
+      "company": "Gravity Cast",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/Category/",
+      "caption": "Gravity Cast on Instagram: Official Post.",
+      "media_type": "Image",
+      "thumbnail": "https://www.instagram.com/p/Category/media/?size=l",
+      "media_url": "https://www.instagram.com/p/Category/media/?size=l",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://en.m.wikipedia.org/wiki/Gravity",
+      "thumbnail_url": "https://www.instagram.com/p/Category/media/?size=l",
+      "published_date": "2026-10-22",
+      "link": "https://www.instagram.com/p/Category/",
+      "content": "Gravity Cast on Instagram: Official Post.",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://www.instagram.com/p/Category/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/Category/media/?size=l",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/Category/",
+      "competitorName": "Gravity Cast",
+      "shortcode": "Category"
+    },
+    {
+      "id": "ig_public-profile-join",
+      "company": "DeepakJaguar Investcast",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/public-profile-join/",
+      "caption": "DeepakJaguar Investcast on Instagram: Official Post.",
+      "media_type": "Image",
+      "thumbnail": "https://www.instagram.com/p/public-profile-join/media/?size=l",
+      "media_url": "https://www.instagram.com/p/public-profile-join/media/?size=l",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://es.linkedin.com/in/ignacio-matias-montorfano",
+      "thumbnail_url": "https://www.instagram.com/p/public-profile-join/media/?size=l",
+      "published_date": "2026-10-22",
+      "link": "https://www.instagram.com/p/public-profile-join/",
+      "content": "DeepakJaguar Investcast on Instagram: Official Post.",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://www.instagram.com/p/public-profile-join/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/public-profile-join/media/?size=l",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/public-profile-join/",
+      "competitorName": "DeepakJaguar Investcast",
+      "shortcode": "public-profile-join"
+    },
+    {
+      "id": "ig_cold-join",
+      "company": "DeepakJaguar Investcast",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/cold-join/",
+      "caption": "DeepakJaguar Investcast on Instagram: Official Post.",
+      "media_type": "Image",
+      "thumbnail": "https://www.instagram.com/p/cold-join/media/?size=l",
+      "media_url": "https://www.instagram.com/p/cold-join/media/?size=l",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://es.linkedin.com/in/ignacio-matias-montorfano",
+      "thumbnail_url": "https://www.instagram.com/p/cold-join/media/?size=l",
+      "published_date": "2026-10-22",
+      "link": "https://www.instagram.com/p/cold-join/",
+      "content": "DeepakJaguar Investcast on Instagram: Official Post.",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://www.instagram.com/p/cold-join/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/cold-join/media/?size=l",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/cold-join/",
+      "competitorName": "DeepakJaguar Investcast",
+      "shortcode": "cold-join"
+    },
+    {
+      "id": "fb_1792668700942_hr7i2",
+      "company": "Delta Technocast",
+      "platform": "Facebook",
+      "post_url": "https://www.facebook.com/permalink.php?story_fbid=pfbid029VJUQTsuW2uZNJKgAcvCiXHvHYFJ5nHMrPLmNkJKg2ANohPcCgGizMAH1WhYEapql&id=61564714912800",
+      "caption": "Delta Technocast on Facebook: Official Update.",
+      "media_type": "Text",
+      "thumbnail": "",
+      "media_url": "",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.facebook.com/people/Delta-Technocast-Pvt-Ltd/61564714912800/",
+      "thumbnail_url": "",
+      "published_date": "2026-10-22",
+      "link": "https://www.facebook.com/permalink.php?story_fbid=pfbid029VJUQTsuW2uZNJKgAcvCiXHvHYFJ5nHMrPLmNkJKg2ANohPcCgGizMAH1WhYEapql&id=61564714912800",
+      "content": "Delta Technocast on Facebook: Official Update.",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "",
+      "mediaUrls": "",
+      "mediaType": "Text",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.facebook.com/permalink.php?story_fbid=pfbid029VJUQTsuW2uZNJKgAcvCiXHvHYFJ5nHMrPLmNkJKg2ANohPcCgGizMAH1WhYEapql&id=61564714912800",
+      "competitorName": "Delta Technocast"
+    },
+    {
+      "id": "li_1792668695345_btrpq",
+      "company": "Gravity Cast",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-agriculturalmachinery-casting-activity-7479872080558129152-PThM",
+      "caption": "At Gravity Group, we are committed to delivering high-performance casting, forging, and precision machining components for the agricultural machinery industry.\n\nOur components are engineered to withstand demanding field conditions while ensuring exceptional durability, precision, and consistent performance. From raw material selection to final machining, every product is manufactured under stringent quality standards to meet the evolving requirements of global OEMs.\n\nWhether it's transmission parts, engine components, hydraulic system components, or custom-engineered solutions, Gravity Group is your trusted manufacturing partner for reliable, high-quality agricultural machinery components.\n\nTogether, let's build stronger, smarter, and more efficient agricultural equipment.\n\nFor more information, please visit: www.gravitycastindia.com\n\n#GravityGroup #AgriculturalMachinery #Casting #Forging #PrecisionMachining #EngineeringExcellence #OEM #Manufacturing #IndustrialComponents #CNCMachining #QualityManufacturing #Agriculture #MadeInIndia #HeavyEngineering #GlobalSupplyChain #Agritech #PrecisionEngineering",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGFyC3MFPluNg/thumbnail-with-play-button-overlay-high/B4DZ83X_FWIIC0-/0/1783340467913?e=2147483647&v=beta&t=41TMklMDRNBrsxTO9EksansUXBLwzVjhpDxVJ_qhv54",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGFyC3MFPluNg/thumbnail-with-play-button-overlay-high/B4DZ83X_FWIIC0-/0/1783340467913?e=2147483647&v=beta&t=41TMklMDRNBrsxTO9EksansUXBLwzVjhpDxVJ_qhv54",
+      "date": "2026-07-06",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/gravity-cast-pvt-ltd/",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGFyC3MFPluNg/thumbnail-with-play-button-overlay-high/B4DZ83X_FWIIC0-/0/1783340467913?e=2147483647&v=beta&t=41TMklMDRNBrsxTO9EksansUXBLwzVjhpDxVJ_qhv54",
+      "published_date": "2026-07-06",
+      "link": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-agriculturalmachinery-casting-activity-7479872080558129152-PThM",
+      "content": "At Gravity Group, we are committed to delivering high-performance casting, forging, and precision machining components for the agricultural machinery industry.\n\nOur components are engineered to withstand demanding field conditions while ensuring exceptional durability, precision, and consistent performance. From raw material selection to final machining, every product is manufactured under stringent quality standards to meet the evolving requirements of global OEMs.\n\nWhether it's transmission parts, engine components, hydraulic system components, or custom-engineered solutions, Gravity Group is your trusted manufacturing partner for reliable, high-quality agricultural machinery components.\n\nTogether, let's build stronger, smarter, and more efficient agricultural equipment.\n\nFor more information, please visit: www.gravitycastindia.com\n\n#GravityGroup #AgriculturalMachinery #Casting #Forging #PrecisionMachining #EngineeringExcellence #OEM #Manufacturing #IndustrialComponents #CNCMachining #QualityManufacturing #Agriculture #MadeInIndia #HeavyEngineering #GlobalSupplyChain #Agritech #PrecisionEngineering",
+      "timestamp": "2026-07-06",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGFyC3MFPluNg/thumbnail-with-play-button-overlay-high/B4DZ83X_FWIIC0-/0/1783340467913?e=2147483647&v=beta&t=41TMklMDRNBrsxTO9EksansUXBLwzVjhpDxVJ_qhv54",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGFyC3MFPluNg/thumbnail-with-play-button-overlay-high/B4DZ83X_FWIIC0-/0/1783340467913?e=2147483647&v=beta&t=41TMklMDRNBrsxTO9EksansUXBLwzVjhpDxVJ_qhv54",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-agriculturalmachinery-casting-activity-7479872080558129152-PThM",
+      "competitorName": "Gravity Cast",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGFyC3MFPluNg/mp4-720p-30fp-crf28/B4DZ83X_FWIIB8-/0/1783340467913?e=2147483647&v=beta&t=5VgM1vBnon1KQXdZMkAY2B1GEym1_pBi-mpEmZ9zgrA",
+      "activity_id": "7479872080558129152"
+    },
+    {
+      "id": "li_1792668702050_z2vjp",
+      "company": "SUPER QUALI CAST",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_superqualicast-sqcgroup-ecovadis-activity-7518986790213603328-i2Xb",
+      "caption": "At Super Quali Cast (SQC Group), we believe that excellence goes beyond manufacturing quality — it also means building a responsible, sustainable, and ethical business.\n\nWe are proud to announce that Super Quali Cast has been awarded the EcoVadis Bronze Medal, recognizing our commitment to sustainability and responsible business practices.\n\nThis achievement reflects our continuous efforts towards environmental responsibility, ethical business conduct, and sustainable growth.\n\nA sincere thank you to our entire team and stakeholders who contribute to our journey of continuous improvement.\n\nBuilding Quality. Embracing Sustainability. Creating a Better Future.\n\n#SuperQualiCast #SQCGroup #EcoVadis #BronzeMedal #Sustainability #ResponsibleBusiness #ContinuousImprovement #Investmentcastings #lostwaxcastings #Sustainablemanufacturing",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQHwF_-TsJLg0w/feedshare-shrink_1280/B4DaFjOpRpHYAQ-/0/1792666146165?e=2147483647&v=beta&t=XnCaJDD6W_TVAAXVo9zKNzPCo4RgVym4G5VR8IBvSd4",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQHwF_-TsJLg0w/feedshare-shrink_1280/B4DaFjOpRpHYAQ-/0/1792666146165?e=2147483647&v=beta&t=XnCaJDD6W_TVAAXVo9zKNzPCo4RgVym4G5VR8IBvSd4",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/super-quali-cast-india-pvt-ltd-/?viewAsMember=true",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQHwF_-TsJLg0w/feedshare-shrink_1280/B4DaFjOpRpHYAQ-/0/1792666146165?e=2147483647&v=beta&t=XnCaJDD6W_TVAAXVo9zKNzPCo4RgVym4G5VR8IBvSd4",
+      "published_date": "2026-10-22",
+      "link": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_superqualicast-sqcgroup-ecovadis-activity-7518986790213603328-i2Xb",
+      "content": "At Super Quali Cast (SQC Group), we believe that excellence goes beyond manufacturing quality — it also means building a responsible, sustainable, and ethical business.\n\nWe are proud to announce that Super Quali Cast has been awarded the EcoVadis Bronze Medal, recognizing our commitment to sustainability and responsible business practices.\n\nThis achievement reflects our continuous efforts towards environmental responsibility, ethical business conduct, and sustainable growth.\n\nA sincere thank you to our entire team and stakeholders who contribute to our journey of continuous improvement.\n\nBuilding Quality. Embracing Sustainability. Creating a Better Future.\n\n#SuperQualiCast #SQCGroup #EcoVadis #BronzeMedal #Sustainability #ResponsibleBusiness #ContinuousImprovement #Investmentcastings #lostwaxcastings #Sustainablemanufacturing",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQHwF_-TsJLg0w/feedshare-shrink_1280/B4DaFjOpRpHYAQ-/0/1792666146165?e=2147483647&v=beta&t=XnCaJDD6W_TVAAXVo9zKNzPCo4RgVym4G5VR8IBvSd4",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQHwF_-TsJLg0w/feedshare-shrink_1280/B4DaFjOpRpHYAQ-/0/1792666146165?e=2147483647&v=beta&t=XnCaJDD6W_TVAAXVo9zKNzPCo4RgVym4G5VR8IBvSd4",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_superqualicast-sqcgroup-ecovadis-activity-7518986790213603328-i2Xb",
+      "competitorName": "SUPER QUALI CAST",
+      "activity_id": "7518986790213603328"
+    },
+    {
+      "id": "li_1792668707243_qdhkn",
+      "company": "Trident Steels",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/trident-steels_happyvijayadashami-vijayadashamiwishes-activity-7518483509749993472-v3AM",
+      "caption": "🌸✨ Happy Vijayadashami! ✨🌸\n\nMay the victory of good over evil inspire us to embrace positivity, spread kindness, and move forward with courage and confidence. May this auspicious day bring happiness, prosperity, wisdom, and success to everyone.\n\nWishing you and your family a blessed and joyful Vijayadashami! 🙏🌼\n\nhttps://lnkd.in/g_z3Qmie\n\n#HappyVijayadashami #VijayadashamiWishes #HappyDussehra #FestivalWishes #JoyAndProsperity #VictoryOfGoodOverEvil",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQHkqYOQMobeyw/feedshare-shrink_1280/B56aFcE6TWH0AM-/0/1792546153916?e=2147483647&v=beta&t=OJmMiX5ChFuCvviop9aXZB5UER9QlGWtxcN6gQf73-U",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQHkqYOQMobeyw/feedshare-shrink_1280/B56aFcE6TWH0AM-/0/1792546153916?e=2147483647&v=beta&t=OJmMiX5ChFuCvviop9aXZB5UER9QlGWtxcN6gQf73-U",
+      "date": "2026-10-21",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/trident-steels/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQHkqYOQMobeyw/feedshare-shrink_1280/B56aFcE6TWH0AM-/0/1792546153916?e=2147483647&v=beta&t=OJmMiX5ChFuCvviop9aXZB5UER9QlGWtxcN6gQf73-U",
+      "published_date": "2026-10-21",
+      "link": "https://www.linkedin.com/posts/trident-steels_happyvijayadashami-vijayadashamiwishes-activity-7518483509749993472-v3AM",
+      "content": "🌸✨ Happy Vijayadashami! ✨🌸\n\nMay the victory of good over evil inspire us to embrace positivity, spread kindness, and move forward with courage and confidence. May this auspicious day bring happiness, prosperity, wisdom, and success to everyone.\n\nWishing you and your family a blessed and joyful Vijayadashami! 🙏🌼\n\nhttps://lnkd.in/g_z3Qmie\n\n#HappyVijayadashami #VijayadashamiWishes #HappyDussehra #FestivalWishes #JoyAndProsperity #VictoryOfGoodOverEvil",
+      "timestamp": "2026-10-21",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQHkqYOQMobeyw/feedshare-shrink_1280/B56aFcE6TWH0AM-/0/1792546153916?e=2147483647&v=beta&t=OJmMiX5ChFuCvviop9aXZB5UER9QlGWtxcN6gQf73-U",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQHkqYOQMobeyw/feedshare-shrink_1280/B56aFcE6TWH0AM-/0/1792546153916?e=2147483647&v=beta&t=OJmMiX5ChFuCvviop9aXZB5UER9QlGWtxcN6gQf73-U",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/trident-steels_happyvijayadashami-vijayadashamiwishes-activity-7518483509749993472-v3AM",
+      "competitorName": "Trident Steels",
+      "activity_id": "7518483509749993472"
+    },
+    {
+      "id": "li_1792668695345_l875j",
+      "company": "Gravity Cast",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-metal-plastic-activity-7466763705947607040-5oml",
+      "caption": "Supporting the evolving needs of the oil & gas industry, Gravity Group offers a strong supply capability across metal, plastic, and rubber components, making it a valuable potential partner for OEMs, EPCs, and industrial operators.\n\nFor more information visit us on https://lnkd.in/gSYvmF-z or contact us on marketing@gravitycastindia.com \n\n#GravityGroup #Metal #Plastic #Rubber #Casting #Forging #Machining #GravityCastPvtLtd #Oil&Gas #Refinery #Valve #Pump",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFZiohizhiIIQ/thumbnail-with-play-button-overlay-high/B4DZ59F_sFKUC0-/0/1780215188404?e=2147483647&v=beta&t=LB8xtx3uKQ-1tuKGzY2Sa8XkWJ-6T5-vXgcetpb0B5M",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFZiohizhiIIQ/thumbnail-with-play-button-overlay-high/B4DZ59F_sFKUC0-/0/1780215188404?e=2147483647&v=beta&t=LB8xtx3uKQ-1tuKGzY2Sa8XkWJ-6T5-vXgcetpb0B5M",
+      "date": "2026-05-31",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/gravity-cast-pvt-ltd/",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFZiohizhiIIQ/thumbnail-with-play-button-overlay-high/B4DZ59F_sFKUC0-/0/1780215188404?e=2147483647&v=beta&t=LB8xtx3uKQ-1tuKGzY2Sa8XkWJ-6T5-vXgcetpb0B5M",
+      "published_date": "2026-05-31",
+      "link": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-metal-plastic-activity-7466763705947607040-5oml",
+      "content": "Supporting the evolving needs of the oil & gas industry, Gravity Group offers a strong supply capability across metal, plastic, and rubber components, making it a valuable potential partner for OEMs, EPCs, and industrial operators.\n\nFor more information visit us on https://lnkd.in/gSYvmF-z or contact us on marketing@gravitycastindia.com \n\n#GravityGroup #Metal #Plastic #Rubber #Casting #Forging #Machining #GravityCastPvtLtd #Oil&Gas #Refinery #Valve #Pump",
+      "timestamp": "2026-05-31",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFZiohizhiIIQ/thumbnail-with-play-button-overlay-high/B4DZ59F_sFKUC0-/0/1780215188404?e=2147483647&v=beta&t=LB8xtx3uKQ-1tuKGzY2Sa8XkWJ-6T5-vXgcetpb0B5M",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFZiohizhiIIQ/thumbnail-with-play-button-overlay-high/B4DZ59F_sFKUC0-/0/1780215188404?e=2147483647&v=beta&t=LB8xtx3uKQ-1tuKGzY2Sa8XkWJ-6T5-vXgcetpb0B5M",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-metal-plastic-activity-7466763705947607040-5oml",
+      "competitorName": "Gravity Cast",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFZiohizhiIIQ/mp4-720p-30fp-crf28/B4DZ59F_sFKUB8-/0/1780215188404?e=2147483647&v=beta&t=_9FDjdUtwb37ixWYCtkFi0n1f02NYOmZH_EDEFoMxDk",
+      "activity_id": "7466763705947607040"
+    },
+    {
+      "id": "li_1792668702050_taftd",
+      "company": "SUPER QUALI CAST",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happydussehra-sqcgroup-victoryofgoodoverevil-activity-7518364114201583616-xlGt",
+      "caption": "✨ Happy Dussehra from SQC! 🏹\n\nMay the victory of good over evil inspire us to overcome challenges, embrace new opportunities, and achieve greater success together.\n\nWishing everyone happiness, prosperity, and positivity!\n\n#HappyDussehra #SQCGroup #VictoryOfGoodOverEvil",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQGJphAJPh4-cA/feedshare-shrink_1280/B4DaFaYUj.GYAM-/0/1792517687817?e=2147483647&v=beta&t=1kY6IToHTHK9Mlm1CybGvL9YDWflkOaXBtCpdaupm2I",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQGJphAJPh4-cA/feedshare-shrink_1280/B4DaFaYUj.GYAM-/0/1792517687817?e=2147483647&v=beta&t=1kY6IToHTHK9Mlm1CybGvL9YDWflkOaXBtCpdaupm2I",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/super-quali-cast-india-pvt-ltd-/?viewAsMember=true",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQGJphAJPh4-cA/feedshare-shrink_1280/B4DaFaYUj.GYAM-/0/1792517687817?e=2147483647&v=beta&t=1kY6IToHTHK9Mlm1CybGvL9YDWflkOaXBtCpdaupm2I",
+      "published_date": "2026-10-20",
+      "link": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happydussehra-sqcgroup-victoryofgoodoverevil-activity-7518364114201583616-xlGt",
+      "content": "✨ Happy Dussehra from SQC! 🏹\n\nMay the victory of good over evil inspire us to overcome challenges, embrace new opportunities, and achieve greater success together.\n\nWishing everyone happiness, prosperity, and positivity!\n\n#HappyDussehra #SQCGroup #VictoryOfGoodOverEvil",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQGJphAJPh4-cA/feedshare-shrink_1280/B4DaFaYUj.GYAM-/0/1792517687817?e=2147483647&v=beta&t=1kY6IToHTHK9Mlm1CybGvL9YDWflkOaXBtCpdaupm2I",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQGJphAJPh4-cA/feedshare-shrink_1280/B4DaFaYUj.GYAM-/0/1792517687817?e=2147483647&v=beta&t=1kY6IToHTHK9Mlm1CybGvL9YDWflkOaXBtCpdaupm2I",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happydussehra-sqcgroup-victoryofgoodoverevil-activity-7518364114201583616-xlGt",
+      "competitorName": "SUPER QUALI CAST",
+      "activity_id": "7518364114201583616"
+    },
+    {
+      "id": "li_1792668707243_ypcom",
+      "company": "Trident Steels",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/trident-steels_dussehrawishes-happyvijayadashami-victoryofgoodoverevil-activity-7518055463058305024-mqkD",
+      "caption": "🔥 Let courage defeat fear, truth overcome lies, and light conquer darkness.\n\nThis Dussehra, celebrate not just the victory of good over evil, but the goodness within us all.\n\nMay victory and prosperity always be yours. Happy Dussehra! 🙏\n\n#DussehraWishes #HappyVijayadashami #VictoryOfGoodOverEvil #StrengthAndCourage #PeaceAndProsperity #DussehraCelebration",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQGwtwerz4CY9w/feedshare-image-high-res/B56aFV_mueJEAY-/0/1792444099725?e=2147483647&v=beta&t=BG18PSbzz2WckQpm9W8X-UFQRLUm6FRqCIZI6smuG-s",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQGwtwerz4CY9w/feedshare-image-high-res/B56aFV_mueJEAY-/0/1792444099725?e=2147483647&v=beta&t=BG18PSbzz2WckQpm9W8X-UFQRLUm6FRqCIZI6smuG-s",
+      "date": "2026-10-19",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/trident-steels/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQGwtwerz4CY9w/feedshare-image-high-res/B56aFV_mueJEAY-/0/1792444099725?e=2147483647&v=beta&t=BG18PSbzz2WckQpm9W8X-UFQRLUm6FRqCIZI6smuG-s",
+      "published_date": "2026-10-19",
+      "link": "https://www.linkedin.com/posts/trident-steels_dussehrawishes-happyvijayadashami-victoryofgoodoverevil-activity-7518055463058305024-mqkD",
+      "content": "🔥 Let courage defeat fear, truth overcome lies, and light conquer darkness.\n\nThis Dussehra, celebrate not just the victory of good over evil, but the goodness within us all.\n\nMay victory and prosperity always be yours. Happy Dussehra! 🙏\n\n#DussehraWishes #HappyVijayadashami #VictoryOfGoodOverEvil #StrengthAndCourage #PeaceAndProsperity #DussehraCelebration",
+      "timestamp": "2026-10-19",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQGwtwerz4CY9w/feedshare-image-high-res/B56aFV_mueJEAY-/0/1792444099725?e=2147483647&v=beta&t=BG18PSbzz2WckQpm9W8X-UFQRLUm6FRqCIZI6smuG-s",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQGwtwerz4CY9w/feedshare-image-high-res/B56aFV_mueJEAY-/0/1792444099725?e=2147483647&v=beta&t=BG18PSbzz2WckQpm9W8X-UFQRLUm6FRqCIZI6smuG-s",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/trident-steels_dussehrawishes-happyvijayadashami-victoryofgoodoverevil-activity-7518055463058305024-mqkD",
+      "competitorName": "Trident Steels",
+      "activity_id": "7518055463058305024"
+    },
+    {
+      "id": "li_1792668695345_wfqmq",
+      "company": "Gravity Cast",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_cncmachining-vmc-precisionengineering-activity-7416436373819133952-6ZHV",
+      "caption": "At Gravity Group, we specialize in transforming bar stock and billet materials into high-precision components using advanced CNC and VMC machining capabilities.\n\nOur machining expertise supports a wide range of industries, including:\n \n Energy & Power\n Engineering & Industrial Equipment\n Construction, Mining & Heavy Machinery\n Transportation & Mobility\n\nWith robust process control, tight tolerances, and end-to-end manufacturing capabilities, we deliver components that meet demanding performance and quality requirements—from prototypes to high-volume production.\n\n 🔹 CNC Turning & Milling\n 🔹 VMC Multi-axis Machining\n 🔹 Complex Geometry & Tight Tolerance Parts\n 🔹 Ready-to-use Finished & Semi-finished Components\n\nGravity Group offers a single-window solution—from raw material to fully machined parts—helping customers optimize cost, quality, and delivery.\n\nLet’s connect to discuss your machining requirements on marketing@gravitycastindia.com or visit us on www.gravitycastindia.com\n\n#CNCmachining #VMC #PrecisionEngineering #BarStockMachining #BilletMachining #Energy #Construction #Transportation #ManufacturingExcellence #GravityGroup #Casting #Forging #Machining #GravityCastPvtLtd",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQHTsX-lO2PgCQ/feedshare-shrink_1280/B4DZux5lGeG8Ac-/0/1768216220267?e=2147483647&v=beta&t=50gd8A1B9QxJRsBMNWZUZLFtS_oDzxhqkMc4TnwQIGc",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQHTsX-lO2PgCQ/feedshare-shrink_1280/B4DZux5lGeG8Ac-/0/1768216220267?e=2147483647&v=beta&t=50gd8A1B9QxJRsBMNWZUZLFtS_oDzxhqkMc4TnwQIGc",
+      "date": "2026-01-12",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/gravity-cast-pvt-ltd/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQHTsX-lO2PgCQ/feedshare-shrink_1280/B4DZux5lGeG8Ac-/0/1768216220267?e=2147483647&v=beta&t=50gd8A1B9QxJRsBMNWZUZLFtS_oDzxhqkMc4TnwQIGc",
+      "published_date": "2026-01-12",
+      "link": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_cncmachining-vmc-precisionengineering-activity-7416436373819133952-6ZHV",
+      "content": "At Gravity Group, we specialize in transforming bar stock and billet materials into high-precision components using advanced CNC and VMC machining capabilities.\n\nOur machining expertise supports a wide range of industries, including:\n \n Energy & Power\n Engineering & Industrial Equipment\n Construction, Mining & Heavy Machinery\n Transportation & Mobility\n\nWith robust process control, tight tolerances, and end-to-end manufacturing capabilities, we deliver components that meet demanding performance and quality requirements—from prototypes to high-volume production.\n\n 🔹 CNC Turning & Milling\n 🔹 VMC Multi-axis Machining\n 🔹 Complex Geometry & Tight Tolerance Parts\n 🔹 Ready-to-use Finished & Semi-finished Components\n\nGravity Group offers a single-window solution—from raw material to fully machined parts—helping customers optimize cost, quality, and delivery.\n\nLet’s connect to discuss your machining requirements on marketing@gravitycastindia.com or visit us on www.gravitycastindia.com\n\n#CNCmachining #VMC #PrecisionEngineering #BarStockMachining #BilletMachining #Energy #Construction #Transportation #ManufacturingExcellence #GravityGroup #Casting #Forging #Machining #GravityCastPvtLtd",
+      "timestamp": "2026-01-12",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQHTsX-lO2PgCQ/feedshare-shrink_1280/B4DZux5lGeG8Ac-/0/1768216220267?e=2147483647&v=beta&t=50gd8A1B9QxJRsBMNWZUZLFtS_oDzxhqkMc4TnwQIGc",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQHTsX-lO2PgCQ/feedshare-shrink_1280/B4DZux5lGeG8Ac-/0/1768216220267?e=2147483647&v=beta&t=50gd8A1B9QxJRsBMNWZUZLFtS_oDzxhqkMc4TnwQIGc",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_cncmachining-vmc-precisionengineering-activity-7416436373819133952-6ZHV",
+      "competitorName": "Gravity Cast",
+      "activity_id": "7416436373819133952"
+    },
+    {
+      "id": "li_1792668702050_3nygb",
+      "company": "SUPER QUALI CAST",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happynavratri-navratri-sqcgroup-activity-7515014749223473152-4oVj",
+      "caption": "Happy Navratri from SQC Group! \n\nMay the divine blessings of Goddess Durga bring strength, prosperity, positivity, and success to everyone.\n\nAs we celebrate the triumph of good over evil, may these nine auspicious days inspire us to embrace new opportunities, overcome challenges, and move forward with renewed energy and determination.\n\nWishing everyone a joyful, blessed, and prosperous Navratri! 🙏✨\n\n#HappyNavratri #Navratri #SQCGroup #SuperQualiCast #FestiveGreetings #StrengthAndProsperity #investmentcastings",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQGXfflv2jUrXg/feedshare-shrink_1280/B4DaEqyF1wKMAM-/0/1791719136889?e=2147483647&v=beta&t=ITTBIdcc7AA-W7aTezy6EFlqUBs53WhzKMeTDYNxQ04",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQGXfflv2jUrXg/feedshare-shrink_1280/B4DaEqyF1wKMAM-/0/1791719136889?e=2147483647&v=beta&t=ITTBIdcc7AA-W7aTezy6EFlqUBs53WhzKMeTDYNxQ04",
+      "date": "2026-10-11",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/super-quali-cast-india-pvt-ltd-/?viewAsMember=true",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQGXfflv2jUrXg/feedshare-shrink_1280/B4DaEqyF1wKMAM-/0/1791719136889?e=2147483647&v=beta&t=ITTBIdcc7AA-W7aTezy6EFlqUBs53WhzKMeTDYNxQ04",
+      "published_date": "2026-10-11",
+      "link": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happynavratri-navratri-sqcgroup-activity-7515014749223473152-4oVj",
+      "content": "Happy Navratri from SQC Group! \n\nMay the divine blessings of Goddess Durga bring strength, prosperity, positivity, and success to everyone.\n\nAs we celebrate the triumph of good over evil, may these nine auspicious days inspire us to embrace new opportunities, overcome challenges, and move forward with renewed energy and determination.\n\nWishing everyone a joyful, blessed, and prosperous Navratri! 🙏✨\n\n#HappyNavratri #Navratri #SQCGroup #SuperQualiCast #FestiveGreetings #StrengthAndProsperity #investmentcastings",
+      "timestamp": "2026-10-11",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQGXfflv2jUrXg/feedshare-shrink_1280/B4DaEqyF1wKMAM-/0/1791719136889?e=2147483647&v=beta&t=ITTBIdcc7AA-W7aTezy6EFlqUBs53WhzKMeTDYNxQ04",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQGXfflv2jUrXg/feedshare-shrink_1280/B4DaEqyF1wKMAM-/0/1791719136889?e=2147483647&v=beta&t=ITTBIdcc7AA-W7aTezy6EFlqUBs53WhzKMeTDYNxQ04",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happynavratri-navratri-sqcgroup-activity-7515014749223473152-4oVj",
+      "competitorName": "SUPER QUALI CAST",
+      "activity_id": "7515014749223473152"
+    },
+    {
+      "id": "li_1792668707243_n1p26",
+      "company": "Trident Steels",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/trident-steels_gandhijayanti-investmentcastings-tridentsteels-activity-7511631716806033408-xHOG",
+      "caption": "May we always choose peace over conflict, kindness over hatred and truth over falsehood. \n\nHappy Gandhi Jayanti!\n\ninvestmentcastings.in/\n\n#GandhiJayanti #investmentcastings #tridentsteels",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQEn-zWYUJlzxw/feedshare-shrink_1280/B56aD6tPbaHAAM-/0/1790912559077?e=2147483647&v=beta&t=g5PSRDayjPzz7KU4Zrg7-W1R2sTtTFCQFk9gNfBAKiY",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQEn-zWYUJlzxw/feedshare-shrink_1280/B56aD6tPbaHAAM-/0/1790912559077?e=2147483647&v=beta&t=g5PSRDayjPzz7KU4Zrg7-W1R2sTtTFCQFk9gNfBAKiY",
+      "date": "2026-10-02",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/trident-steels/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQEn-zWYUJlzxw/feedshare-shrink_1280/B56aD6tPbaHAAM-/0/1790912559077?e=2147483647&v=beta&t=g5PSRDayjPzz7KU4Zrg7-W1R2sTtTFCQFk9gNfBAKiY",
+      "published_date": "2026-10-02",
+      "link": "https://www.linkedin.com/posts/trident-steels_gandhijayanti-investmentcastings-tridentsteels-activity-7511631716806033408-xHOG",
+      "content": "May we always choose peace over conflict, kindness over hatred and truth over falsehood. \n\nHappy Gandhi Jayanti!\n\ninvestmentcastings.in/\n\n#GandhiJayanti #investmentcastings #tridentsteels",
+      "timestamp": "2026-10-02",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQEn-zWYUJlzxw/feedshare-shrink_1280/B56aD6tPbaHAAM-/0/1790912559077?e=2147483647&v=beta&t=g5PSRDayjPzz7KU4Zrg7-W1R2sTtTFCQFk9gNfBAKiY",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQEn-zWYUJlzxw/feedshare-shrink_1280/B56aD6tPbaHAAM-/0/1790912559077?e=2147483647&v=beta&t=g5PSRDayjPzz7KU4Zrg7-W1R2sTtTFCQFk9gNfBAKiY",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/trident-steels_gandhijayanti-investmentcastings-tridentsteels-activity-7511631716806033408-xHOG",
+      "competitorName": "Trident Steels",
+      "activity_id": "7511631716806033408"
+    },
+    {
       "id": "yt_Sq8ggcaE6aE",
       "company": "Pahwa MetalTech",
       "platform": "YouTube",
@@ -838,65 +1216,6 @@
       "competitorName": "Pahwa MetalTech"
     },
     {
-      "id": "li_1792668508883_4c2rg",
-      "company": "Gravity Cast",
-      "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-agriculturalmachinery-casting-activity-7479872080558129152-PThM",
-      "caption": "At Gravity Group, we are committed to delivering high-performance casting, forging, and precision machining components for the agricultural machinery industry.\n\nOur components are engineered to withstand demanding field conditions while ensuring exceptional durability, precision, and consistent performance. From raw material selection to final machining, every product is manufactured under stringent quality standards to meet the evolving requirements of global OEMs.\n\nWhether it's transmission parts, engine components, hydraulic system components, or custom-engineered solutions, Gravity Group is your trusted manufacturing partner for reliable, high-quality agricultural machinery components.\n\nTogether, let's build stronger, smarter, and more efficient agricultural equipment.\n\nFor more information, please visit: www.gravitycastindia.com\n\n#GravityGroup #AgriculturalMachinery #Casting #Forging #PrecisionMachining #EngineeringExcellence #OEM #Manufacturing #IndustrialComponents #CNCMachining #QualityManufacturing #Agriculture #MadeInIndia #HeavyEngineering #GlobalSupplyChain #Agritech #PrecisionEngineering",
-      "media_type": "Video",
-      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGFyC3MFPluNg/thumbnail-with-play-button-overlay-high/B4DZ83X_FWIIC0-/0/1783340467913?e=2147483647&v=beta&t=41TMklMDRNBrsxTO9EksansUXBLwzVjhpDxVJ_qhv54",
-      "media_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGFyC3MFPluNg/thumbnail-with-play-button-overlay-high/B4DZ83X_FWIIC0-/0/1783340467913?e=2147483647&v=beta&t=41TMklMDRNBrsxTO9EksansUXBLwzVjhpDxVJ_qhv54",
-      "date": "2026-07-06",
-      "engagement": {
-        "likes": "0",
-        "comments": "0"
-      },
-      "profile_url": "https://www.linkedin.com/company/gravity-cast-pvt-ltd/",
-      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGFyC3MFPluNg/thumbnail-with-play-button-overlay-high/B4DZ83X_FWIIC0-/0/1783340467913?e=2147483647&v=beta&t=41TMklMDRNBrsxTO9EksansUXBLwzVjhpDxVJ_qhv54",
-      "published_date": "2026-07-06",
-      "link": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-agriculturalmachinery-casting-activity-7479872080558129152-PThM",
-      "content": "At Gravity Group, we are committed to delivering high-performance casting, forging, and precision machining components for the agricultural machinery industry.\n\nOur components are engineered to withstand demanding field conditions while ensuring exceptional durability, precision, and consistent performance. From raw material selection to final machining, every product is manufactured under stringent quality standards to meet the evolving requirements of global OEMs.\n\nWhether it's transmission parts, engine components, hydraulic system components, or custom-engineered solutions, Gravity Group is your trusted manufacturing partner for reliable, high-quality agricultural machinery components.\n\nTogether, let's build stronger, smarter, and more efficient agricultural equipment.\n\nFor more information, please visit: www.gravitycastindia.com\n\n#GravityGroup #AgriculturalMachinery #Casting #Forging #PrecisionMachining #EngineeringExcellence #OEM #Manufacturing #IndustrialComponents #CNCMachining #QualityManufacturing #Agriculture #MadeInIndia #HeavyEngineering #GlobalSupplyChain #Agritech #PrecisionEngineering",
-      "timestamp": "2026-07-06",
-      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGFyC3MFPluNg/thumbnail-with-play-button-overlay-high/B4DZ83X_FWIIC0-/0/1783340467913?e=2147483647&v=beta&t=41TMklMDRNBrsxTO9EksansUXBLwzVjhpDxVJ_qhv54",
-      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGFyC3MFPluNg/thumbnail-with-play-button-overlay-high/B4DZ83X_FWIIC0-/0/1783340467913?e=2147483647&v=beta&t=41TMklMDRNBrsxTO9EksansUXBLwzVjhpDxVJ_qhv54",
-      "mediaType": "Video",
-      "likes": "0",
-      "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-agriculturalmachinery-casting-activity-7479872080558129152-PThM",
-      "competitorName": "Gravity Cast",
-      "video_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGFyC3MFPluNg/mp4-720p-30fp-crf28/B4DZ83X_FWIIB8-/0/1783340467913?e=2147483647&v=beta&t=5VgM1vBnon1KQXdZMkAY2B1GEym1_pBi-mpEmZ9zgrA",
-      "activity_id": "7479872080558129152"
-    },
-    {
-      "id": "li_1792668517586_nlatk",
-      "company": "SUPER QUALI CAST",
-      "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_superqualicast-sqcgroup-ecovadis-activity-7518986790213603328-i2Xb",
-      "caption": "At Super Quali Cast (SQC Group), we believe that excellence goes beyond manufacturing quality — it also means building a responsible, sustainable, and ethical business.\n\nWe are proud to announce that Super Quali Cast has been awarded the EcoVadis Bronze Medal, recognizing our commitment to sustainability and responsible business practices.\n\nThis achievement reflects our continuous efforts towards environmental responsibility, ethical business conduct, and sustainable growth.\n\nA sincere thank you to our entire team and stakeholders who contribute to our journey of continuous improvement.\n\nBuilding Quality. Embracing Sustainability. Creating a Better Future.\n\n#SuperQualiCast #SQCGroup #EcoVadis #BronzeMedal #Sustainability #ResponsibleBusiness #ContinuousImprovement #Investmentcastings #lostwaxcastings #Sustainablemanufacturing",
-      "media_type": "Image",
-      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQHwF_-TsJLg0w/feedshare-shrink_1280/B4DaFjOpRpHYAQ-/0/1792666146165?e=2147483647&v=beta&t=XnCaJDD6W_TVAAXVo9zKNzPCo4RgVym4G5VR8IBvSd4",
-      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQHwF_-TsJLg0w/feedshare-shrink_1280/B4DaFjOpRpHYAQ-/0/1792666146165?e=2147483647&v=beta&t=XnCaJDD6W_TVAAXVo9zKNzPCo4RgVym4G5VR8IBvSd4",
-      "date": "2026-10-22",
-      "engagement": {
-        "likes": "0",
-        "comments": "0"
-      },
-      "profile_url": "https://www.linkedin.com/company/super-quali-cast-india-pvt-ltd-/?viewAsMember=true",
-      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQHwF_-TsJLg0w/feedshare-shrink_1280/B4DaFjOpRpHYAQ-/0/1792666146165?e=2147483647&v=beta&t=XnCaJDD6W_TVAAXVo9zKNzPCo4RgVym4G5VR8IBvSd4",
-      "published_date": "2026-10-22",
-      "link": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_superqualicast-sqcgroup-ecovadis-activity-7518986790213603328-i2Xb",
-      "content": "At Super Quali Cast (SQC Group), we believe that excellence goes beyond manufacturing quality — it also means building a responsible, sustainable, and ethical business.\n\nWe are proud to announce that Super Quali Cast has been awarded the EcoVadis Bronze Medal, recognizing our commitment to sustainability and responsible business practices.\n\nThis achievement reflects our continuous efforts towards environmental responsibility, ethical business conduct, and sustainable growth.\n\nA sincere thank you to our entire team and stakeholders who contribute to our journey of continuous improvement.\n\nBuilding Quality. Embracing Sustainability. Creating a Better Future.\n\n#SuperQualiCast #SQCGroup #EcoVadis #BronzeMedal #Sustainability #ResponsibleBusiness #ContinuousImprovement #Investmentcastings #lostwaxcastings #Sustainablemanufacturing",
-      "timestamp": "2026-10-22",
-      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQHwF_-TsJLg0w/feedshare-shrink_1280/B4DaFjOpRpHYAQ-/0/1792666146165?e=2147483647&v=beta&t=XnCaJDD6W_TVAAXVo9zKNzPCo4RgVym4G5VR8IBvSd4",
-      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQHwF_-TsJLg0w/feedshare-shrink_1280/B4DaFjOpRpHYAQ-/0/1792666146165?e=2147483647&v=beta&t=XnCaJDD6W_TVAAXVo9zKNzPCo4RgVym4G5VR8IBvSd4",
-      "mediaType": "Image",
-      "likes": "0",
-      "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_superqualicast-sqcgroup-ecovadis-activity-7518986790213603328-i2Xb",
-      "competitorName": "SUPER QUALI CAST",
-      "activity_id": "7518986790213603328"
-    },
-    {
       "id": "li_1792668519787_g2x7j",
       "company": "Pahwa MetalTech",
       "platform": "LinkedIn",
@@ -924,210 +1243,6 @@
       "postUrl": "https://www.linkedin.com/posts/pahwametaltech_mr-lalit-kumar-pahwa-delivers-valedictory-activity-7439935693235183616-jJk_",
       "competitorName": "Pahwa MetalTech",
       "activity_id": "7439935693235183616"
-    },
-    {
-      "id": "li_1792668524887_skc2a",
-      "company": "Trident Steels",
-      "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/trident-steels_happyvijayadashami-vijayadashamiwishes-activity-7518483509749993472-v3AM",
-      "caption": "🌸✨ Happy Vijayadashami! ✨🌸\n\nMay the victory of good over evil inspire us to embrace positivity, spread kindness, and move forward with courage and confidence. May this auspicious day bring happiness, prosperity, wisdom, and success to everyone.\n\nWishing you and your family a blessed and joyful Vijayadashami! 🙏🌼\n\nhttps://lnkd.in/g_z3Qmie\n\n#HappyVijayadashami #VijayadashamiWishes #HappyDussehra #FestivalWishes #JoyAndProsperity #VictoryOfGoodOverEvil",
-      "media_type": "Image",
-      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQHkqYOQMobeyw/feedshare-shrink_1280/B56aFcE6TWH0AM-/0/1792546153916?e=2147483647&v=beta&t=OJmMiX5ChFuCvviop9aXZB5UER9QlGWtxcN6gQf73-U",
-      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQHkqYOQMobeyw/feedshare-shrink_1280/B56aFcE6TWH0AM-/0/1792546153916?e=2147483647&v=beta&t=OJmMiX5ChFuCvviop9aXZB5UER9QlGWtxcN6gQf73-U",
-      "date": "2026-10-21",
-      "engagement": {
-        "likes": "0",
-        "comments": "0"
-      },
-      "profile_url": "https://www.linkedin.com/company/trident-steels/",
-      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQHkqYOQMobeyw/feedshare-shrink_1280/B56aFcE6TWH0AM-/0/1792546153916?e=2147483647&v=beta&t=OJmMiX5ChFuCvviop9aXZB5UER9QlGWtxcN6gQf73-U",
-      "published_date": "2026-10-21",
-      "link": "https://www.linkedin.com/posts/trident-steels_happyvijayadashami-vijayadashamiwishes-activity-7518483509749993472-v3AM",
-      "content": "🌸✨ Happy Vijayadashami! ✨🌸\n\nMay the victory of good over evil inspire us to embrace positivity, spread kindness, and move forward with courage and confidence. May this auspicious day bring happiness, prosperity, wisdom, and success to everyone.\n\nWishing you and your family a blessed and joyful Vijayadashami! 🙏🌼\n\nhttps://lnkd.in/g_z3Qmie\n\n#HappyVijayadashami #VijayadashamiWishes #HappyDussehra #FestivalWishes #JoyAndProsperity #VictoryOfGoodOverEvil",
-      "timestamp": "2026-10-21",
-      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQHkqYOQMobeyw/feedshare-shrink_1280/B56aFcE6TWH0AM-/0/1792546153916?e=2147483647&v=beta&t=OJmMiX5ChFuCvviop9aXZB5UER9QlGWtxcN6gQf73-U",
-      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQHkqYOQMobeyw/feedshare-shrink_1280/B56aFcE6TWH0AM-/0/1792546153916?e=2147483647&v=beta&t=OJmMiX5ChFuCvviop9aXZB5UER9QlGWtxcN6gQf73-U",
-      "mediaType": "Image",
-      "likes": "0",
-      "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/trident-steels_happyvijayadashami-vijayadashamiwishes-activity-7518483509749993472-v3AM",
-      "competitorName": "Trident Steels",
-      "activity_id": "7518483509749993472"
-    },
-    {
-      "id": "li_1792668508883_urrtc",
-      "company": "Gravity Cast",
-      "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-metal-plastic-activity-7466763705947607040-5oml",
-      "caption": "Supporting the evolving needs of the oil & gas industry, Gravity Group offers a strong supply capability across metal, plastic, and rubber components, making it a valuable potential partner for OEMs, EPCs, and industrial operators.\n\nFor more information visit us on https://lnkd.in/gSYvmF-z or contact us on marketing@gravitycastindia.com \n\n#GravityGroup #Metal #Plastic #Rubber #Casting #Forging #Machining #GravityCastPvtLtd #Oil&Gas #Refinery #Valve #Pump",
-      "media_type": "Video",
-      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFZiohizhiIIQ/thumbnail-with-play-button-overlay-high/B4DZ59F_sFKUC0-/0/1780215188404?e=2147483647&v=beta&t=LB8xtx3uKQ-1tuKGzY2Sa8XkWJ-6T5-vXgcetpb0B5M",
-      "media_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFZiohizhiIIQ/thumbnail-with-play-button-overlay-high/B4DZ59F_sFKUC0-/0/1780215188404?e=2147483647&v=beta&t=LB8xtx3uKQ-1tuKGzY2Sa8XkWJ-6T5-vXgcetpb0B5M",
-      "date": "2026-05-31",
-      "engagement": {
-        "likes": "0",
-        "comments": "0"
-      },
-      "profile_url": "https://www.linkedin.com/company/gravity-cast-pvt-ltd/",
-      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFZiohizhiIIQ/thumbnail-with-play-button-overlay-high/B4DZ59F_sFKUC0-/0/1780215188404?e=2147483647&v=beta&t=LB8xtx3uKQ-1tuKGzY2Sa8XkWJ-6T5-vXgcetpb0B5M",
-      "published_date": "2026-05-31",
-      "link": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-metal-plastic-activity-7466763705947607040-5oml",
-      "content": "Supporting the evolving needs of the oil & gas industry, Gravity Group offers a strong supply capability across metal, plastic, and rubber components, making it a valuable potential partner for OEMs, EPCs, and industrial operators.\n\nFor more information visit us on https://lnkd.in/gSYvmF-z or contact us on marketing@gravitycastindia.com \n\n#GravityGroup #Metal #Plastic #Rubber #Casting #Forging #Machining #GravityCastPvtLtd #Oil&Gas #Refinery #Valve #Pump",
-      "timestamp": "2026-05-31",
-      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFZiohizhiIIQ/thumbnail-with-play-button-overlay-high/B4DZ59F_sFKUC0-/0/1780215188404?e=2147483647&v=beta&t=LB8xtx3uKQ-1tuKGzY2Sa8XkWJ-6T5-vXgcetpb0B5M",
-      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFZiohizhiIIQ/thumbnail-with-play-button-overlay-high/B4DZ59F_sFKUC0-/0/1780215188404?e=2147483647&v=beta&t=LB8xtx3uKQ-1tuKGzY2Sa8XkWJ-6T5-vXgcetpb0B5M",
-      "mediaType": "Video",
-      "likes": "0",
-      "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-metal-plastic-activity-7466763705947607040-5oml",
-      "competitorName": "Gravity Cast",
-      "video_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFZiohizhiIIQ/mp4-720p-30fp-crf28/B4DZ59F_sFKUB8-/0/1780215188404?e=2147483647&v=beta&t=_9FDjdUtwb37ixWYCtkFi0n1f02NYOmZH_EDEFoMxDk",
-      "activity_id": "7466763705947607040"
-    },
-    {
-      "id": "li_1792668517586_zh2h5",
-      "company": "SUPER QUALI CAST",
-      "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happydussehra-sqcgroup-victoryofgoodoverevil-activity-7518364114201583616-xlGt",
-      "caption": "✨ Happy Dussehra from SQC! 🏹\n\nMay the victory of good over evil inspire us to overcome challenges, embrace new opportunities, and achieve greater success together.\n\nWishing everyone happiness, prosperity, and positivity!\n\n#HappyDussehra #SQCGroup #VictoryOfGoodOverEvil",
-      "media_type": "Image",
-      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQGJphAJPh4-cA/feedshare-shrink_1280/B4DaFaYUj.GYAM-/0/1792517687817?e=2147483647&v=beta&t=1kY6IToHTHK9Mlm1CybGvL9YDWflkOaXBtCpdaupm2I",
-      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQGJphAJPh4-cA/feedshare-shrink_1280/B4DaFaYUj.GYAM-/0/1792517687817?e=2147483647&v=beta&t=1kY6IToHTHK9Mlm1CybGvL9YDWflkOaXBtCpdaupm2I",
-      "date": "2026-10-20",
-      "engagement": {
-        "likes": "0",
-        "comments": "0"
-      },
-      "profile_url": "https://www.linkedin.com/company/super-quali-cast-india-pvt-ltd-/?viewAsMember=true",
-      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQGJphAJPh4-cA/feedshare-shrink_1280/B4DaFaYUj.GYAM-/0/1792517687817?e=2147483647&v=beta&t=1kY6IToHTHK9Mlm1CybGvL9YDWflkOaXBtCpdaupm2I",
-      "published_date": "2026-10-20",
-      "link": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happydussehra-sqcgroup-victoryofgoodoverevil-activity-7518364114201583616-xlGt",
-      "content": "✨ Happy Dussehra from SQC! 🏹\n\nMay the victory of good over evil inspire us to overcome challenges, embrace new opportunities, and achieve greater success together.\n\nWishing everyone happiness, prosperity, and positivity!\n\n#HappyDussehra #SQCGroup #VictoryOfGoodOverEvil",
-      "timestamp": "2026-10-20",
-      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQGJphAJPh4-cA/feedshare-shrink_1280/B4DaFaYUj.GYAM-/0/1792517687817?e=2147483647&v=beta&t=1kY6IToHTHK9Mlm1CybGvL9YDWflkOaXBtCpdaupm2I",
-      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQGJphAJPh4-cA/feedshare-shrink_1280/B4DaFaYUj.GYAM-/0/1792517687817?e=2147483647&v=beta&t=1kY6IToHTHK9Mlm1CybGvL9YDWflkOaXBtCpdaupm2I",
-      "mediaType": "Image",
-      "likes": "0",
-      "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happydussehra-sqcgroup-victoryofgoodoverevil-activity-7518364114201583616-xlGt",
-      "competitorName": "SUPER QUALI CAST",
-      "activity_id": "7518364114201583616"
-    },
-    {
-      "id": "li_1792668524887_pxpf0",
-      "company": "Trident Steels",
-      "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/trident-steels_dussehrawishes-happyvijayadashami-victoryofgoodoverevil-activity-7518055463058305024-mqkD",
-      "caption": "🔥 Let courage defeat fear, truth overcome lies, and light conquer darkness.\n\nThis Dussehra, celebrate not just the victory of good over evil, but the goodness within us all.\n\nMay victory and prosperity always be yours. Happy Dussehra! 🙏\n\n#DussehraWishes #HappyVijayadashami #VictoryOfGoodOverEvil #StrengthAndCourage #PeaceAndProsperity #DussehraCelebration",
-      "media_type": "Image",
-      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQGwtwerz4CY9w/feedshare-image-high-res/B56aFV_mueJEAY-/0/1792444099725?e=2147483647&v=beta&t=BG18PSbzz2WckQpm9W8X-UFQRLUm6FRqCIZI6smuG-s",
-      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQGwtwerz4CY9w/feedshare-image-high-res/B56aFV_mueJEAY-/0/1792444099725?e=2147483647&v=beta&t=BG18PSbzz2WckQpm9W8X-UFQRLUm6FRqCIZI6smuG-s",
-      "date": "2026-10-19",
-      "engagement": {
-        "likes": "0",
-        "comments": "0"
-      },
-      "profile_url": "https://www.linkedin.com/company/trident-steels/",
-      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQGwtwerz4CY9w/feedshare-image-high-res/B56aFV_mueJEAY-/0/1792444099725?e=2147483647&v=beta&t=BG18PSbzz2WckQpm9W8X-UFQRLUm6FRqCIZI6smuG-s",
-      "published_date": "2026-10-19",
-      "link": "https://www.linkedin.com/posts/trident-steels_dussehrawishes-happyvijayadashami-victoryofgoodoverevil-activity-7518055463058305024-mqkD",
-      "content": "🔥 Let courage defeat fear, truth overcome lies, and light conquer darkness.\n\nThis Dussehra, celebrate not just the victory of good over evil, but the goodness within us all.\n\nMay victory and prosperity always be yours. Happy Dussehra! 🙏\n\n#DussehraWishes #HappyVijayadashami #VictoryOfGoodOverEvil #StrengthAndCourage #PeaceAndProsperity #DussehraCelebration",
-      "timestamp": "2026-10-19",
-      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQGwtwerz4CY9w/feedshare-image-high-res/B56aFV_mueJEAY-/0/1792444099725?e=2147483647&v=beta&t=BG18PSbzz2WckQpm9W8X-UFQRLUm6FRqCIZI6smuG-s",
-      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQGwtwerz4CY9w/feedshare-image-high-res/B56aFV_mueJEAY-/0/1792444099725?e=2147483647&v=beta&t=BG18PSbzz2WckQpm9W8X-UFQRLUm6FRqCIZI6smuG-s",
-      "mediaType": "Image",
-      "likes": "0",
-      "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/trident-steels_dussehrawishes-happyvijayadashami-victoryofgoodoverevil-activity-7518055463058305024-mqkD",
-      "competitorName": "Trident Steels",
-      "activity_id": "7518055463058305024"
-    },
-    {
-      "id": "li_1792668508883_2msuq",
-      "company": "Gravity Cast",
-      "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_cncmachining-vmc-precisionengineering-activity-7416436373819133952-6ZHV",
-      "caption": "At Gravity Group, we specialize in transforming bar stock and billet materials into high-precision components using advanced CNC and VMC machining capabilities.\n\nOur machining expertise supports a wide range of industries, including:\n \n Energy & Power\n Engineering & Industrial Equipment\n Construction, Mining & Heavy Machinery\n Transportation & Mobility\n\nWith robust process control, tight tolerances, and end-to-end manufacturing capabilities, we deliver components that meet demanding performance and quality requirements—from prototypes to high-volume production.\n\n 🔹 CNC Turning & Milling\n 🔹 VMC Multi-axis Machining\n 🔹 Complex Geometry & Tight Tolerance Parts\n 🔹 Ready-to-use Finished & Semi-finished Components\n\nGravity Group offers a single-window solution—from raw material to fully machined parts—helping customers optimize cost, quality, and delivery.\n\nLet’s connect to discuss your machining requirements on marketing@gravitycastindia.com or visit us on www.gravitycastindia.com\n\n#CNCmachining #VMC #PrecisionEngineering #BarStockMachining #BilletMachining #Energy #Construction #Transportation #ManufacturingExcellence #GravityGroup #Casting #Forging #Machining #GravityCastPvtLtd",
-      "media_type": "Image",
-      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQHTsX-lO2PgCQ/feedshare-shrink_1280/B4DZux5lGeG8Ac-/0/1768216220267?e=2147483647&v=beta&t=50gd8A1B9QxJRsBMNWZUZLFtS_oDzxhqkMc4TnwQIGc",
-      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQHTsX-lO2PgCQ/feedshare-shrink_1280/B4DZux5lGeG8Ac-/0/1768216220267?e=2147483647&v=beta&t=50gd8A1B9QxJRsBMNWZUZLFtS_oDzxhqkMc4TnwQIGc",
-      "date": "2026-01-12",
-      "engagement": {
-        "likes": "0",
-        "comments": "0"
-      },
-      "profile_url": "https://www.linkedin.com/company/gravity-cast-pvt-ltd/",
-      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQHTsX-lO2PgCQ/feedshare-shrink_1280/B4DZux5lGeG8Ac-/0/1768216220267?e=2147483647&v=beta&t=50gd8A1B9QxJRsBMNWZUZLFtS_oDzxhqkMc4TnwQIGc",
-      "published_date": "2026-01-12",
-      "link": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_cncmachining-vmc-precisionengineering-activity-7416436373819133952-6ZHV",
-      "content": "At Gravity Group, we specialize in transforming bar stock and billet materials into high-precision components using advanced CNC and VMC machining capabilities.\n\nOur machining expertise supports a wide range of industries, including:\n \n Energy & Power\n Engineering & Industrial Equipment\n Construction, Mining & Heavy Machinery\n Transportation & Mobility\n\nWith robust process control, tight tolerances, and end-to-end manufacturing capabilities, we deliver components that meet demanding performance and quality requirements—from prototypes to high-volume production.\n\n 🔹 CNC Turning & Milling\n 🔹 VMC Multi-axis Machining\n 🔹 Complex Geometry & Tight Tolerance Parts\n 🔹 Ready-to-use Finished & Semi-finished Components\n\nGravity Group offers a single-window solution—from raw material to fully machined parts—helping customers optimize cost, quality, and delivery.\n\nLet’s connect to discuss your machining requirements on marketing@gravitycastindia.com or visit us on www.gravitycastindia.com\n\n#CNCmachining #VMC #PrecisionEngineering #BarStockMachining #BilletMachining #Energy #Construction #Transportation #ManufacturingExcellence #GravityGroup #Casting #Forging #Machining #GravityCastPvtLtd",
-      "timestamp": "2026-01-12",
-      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQHTsX-lO2PgCQ/feedshare-shrink_1280/B4DZux5lGeG8Ac-/0/1768216220267?e=2147483647&v=beta&t=50gd8A1B9QxJRsBMNWZUZLFtS_oDzxhqkMc4TnwQIGc",
-      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQHTsX-lO2PgCQ/feedshare-shrink_1280/B4DZux5lGeG8Ac-/0/1768216220267?e=2147483647&v=beta&t=50gd8A1B9QxJRsBMNWZUZLFtS_oDzxhqkMc4TnwQIGc",
-      "mediaType": "Image",
-      "likes": "0",
-      "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_cncmachining-vmc-precisionengineering-activity-7416436373819133952-6ZHV",
-      "competitorName": "Gravity Cast",
-      "activity_id": "7416436373819133952"
-    },
-    {
-      "id": "li_1792668517586_5s4ap",
-      "company": "SUPER QUALI CAST",
-      "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happynavratri-navratri-sqcgroup-activity-7515014749223473152-4oVj",
-      "caption": "Happy Navratri from SQC Group! \n\nMay the divine blessings of Goddess Durga bring strength, prosperity, positivity, and success to everyone.\n\nAs we celebrate the triumph of good over evil, may these nine auspicious days inspire us to embrace new opportunities, overcome challenges, and move forward with renewed energy and determination.\n\nWishing everyone a joyful, blessed, and prosperous Navratri! 🙏✨\n\n#HappyNavratri #Navratri #SQCGroup #SuperQualiCast #FestiveGreetings #StrengthAndProsperity #investmentcastings",
-      "media_type": "Image",
-      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQGXfflv2jUrXg/feedshare-shrink_1280/B4DaEqyF1wKMAM-/0/1791719136889?e=2147483647&v=beta&t=ITTBIdcc7AA-W7aTezy6EFlqUBs53WhzKMeTDYNxQ04",
-      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQGXfflv2jUrXg/feedshare-shrink_1280/B4DaEqyF1wKMAM-/0/1791719136889?e=2147483647&v=beta&t=ITTBIdcc7AA-W7aTezy6EFlqUBs53WhzKMeTDYNxQ04",
-      "date": "2026-10-11",
-      "engagement": {
-        "likes": "0",
-        "comments": "0"
-      },
-      "profile_url": "https://www.linkedin.com/company/super-quali-cast-india-pvt-ltd-/?viewAsMember=true",
-      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQGXfflv2jUrXg/feedshare-shrink_1280/B4DaEqyF1wKMAM-/0/1791719136889?e=2147483647&v=beta&t=ITTBIdcc7AA-W7aTezy6EFlqUBs53WhzKMeTDYNxQ04",
-      "published_date": "2026-10-11",
-      "link": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happynavratri-navratri-sqcgroup-activity-7515014749223473152-4oVj",
-      "content": "Happy Navratri from SQC Group! \n\nMay the divine blessings of Goddess Durga bring strength, prosperity, positivity, and success to everyone.\n\nAs we celebrate the triumph of good over evil, may these nine auspicious days inspire us to embrace new opportunities, overcome challenges, and move forward with renewed energy and determination.\n\nWishing everyone a joyful, blessed, and prosperous Navratri! 🙏✨\n\n#HappyNavratri #Navratri #SQCGroup #SuperQualiCast #FestiveGreetings #StrengthAndProsperity #investmentcastings",
-      "timestamp": "2026-10-11",
-      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQGXfflv2jUrXg/feedshare-shrink_1280/B4DaEqyF1wKMAM-/0/1791719136889?e=2147483647&v=beta&t=ITTBIdcc7AA-W7aTezy6EFlqUBs53WhzKMeTDYNxQ04",
-      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQGXfflv2jUrXg/feedshare-shrink_1280/B4DaEqyF1wKMAM-/0/1791719136889?e=2147483647&v=beta&t=ITTBIdcc7AA-W7aTezy6EFlqUBs53WhzKMeTDYNxQ04",
-      "mediaType": "Image",
-      "likes": "0",
-      "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happynavratri-navratri-sqcgroup-activity-7515014749223473152-4oVj",
-      "competitorName": "SUPER QUALI CAST",
-      "activity_id": "7515014749223473152"
-    },
-    {
-      "id": "li_1792668524887_95dub",
-      "company": "Trident Steels",
-      "platform": "LinkedIn",
-      "post_url": "https://www.linkedin.com/posts/trident-steels_gandhijayanti-investmentcastings-tridentsteels-activity-7511631716806033408-xHOG",
-      "caption": "May we always choose peace over conflict, kindness over hatred and truth over falsehood. \n\nHappy Gandhi Jayanti!\n\ninvestmentcastings.in/\n\n#GandhiJayanti #investmentcastings #tridentsteels",
-      "media_type": "Image",
-      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQEn-zWYUJlzxw/feedshare-shrink_1280/B56aD6tPbaHAAM-/0/1790912559077?e=2147483647&v=beta&t=g5PSRDayjPzz7KU4Zrg7-W1R2sTtTFCQFk9gNfBAKiY",
-      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQEn-zWYUJlzxw/feedshare-shrink_1280/B56aD6tPbaHAAM-/0/1790912559077?e=2147483647&v=beta&t=g5PSRDayjPzz7KU4Zrg7-W1R2sTtTFCQFk9gNfBAKiY",
-      "date": "2026-10-02",
-      "engagement": {
-        "likes": "0",
-        "comments": "0"
-      },
-      "profile_url": "https://www.linkedin.com/company/trident-steels/",
-      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQEn-zWYUJlzxw/feedshare-shrink_1280/B56aD6tPbaHAAM-/0/1790912559077?e=2147483647&v=beta&t=g5PSRDayjPzz7KU4Zrg7-W1R2sTtTFCQFk9gNfBAKiY",
-      "published_date": "2026-10-02",
-      "link": "https://www.linkedin.com/posts/trident-steels_gandhijayanti-investmentcastings-tridentsteels-activity-7511631716806033408-xHOG",
-      "content": "May we always choose peace over conflict, kindness over hatred and truth over falsehood. \n\nHappy Gandhi Jayanti!\n\ninvestmentcastings.in/\n\n#GandhiJayanti #investmentcastings #tridentsteels",
-      "timestamp": "2026-10-02",
-      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQEn-zWYUJlzxw/feedshare-shrink_1280/B56aD6tPbaHAAM-/0/1790912559077?e=2147483647&v=beta&t=g5PSRDayjPzz7KU4Zrg7-W1R2sTtTFCQFk9gNfBAKiY",
-      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQEn-zWYUJlzxw/feedshare-shrink_1280/B56aD6tPbaHAAM-/0/1790912559077?e=2147483647&v=beta&t=g5PSRDayjPzz7KU4Zrg7-W1R2sTtTFCQFk9gNfBAKiY",
-      "mediaType": "Image",
-      "likes": "0",
-      "comments": "0",
-      "postUrl": "https://www.linkedin.com/posts/trident-steels_gandhijayanti-investmentcastings-tridentsteels-activity-7511631716806033408-xHOG",
-      "competitorName": "Trident Steels",
-      "activity_id": "7511631716806033408"
     },
     {
       "id": "li_1792668442788_4aroa",
@@ -69348,17 +69463,17 @@
           "status": "No posts found",
           "count": 0
         },
-        "LinkedIn": {
-          "status": "No posts found",
-          "count": 0
-        },
         "YouTube": {
           "status": "No posts found",
           "count": 0
         },
-        "Facebook": {
+        "LinkedIn": {
           "status": "No posts found",
           "count": 0
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 1
         }
       }
     },
@@ -69399,11 +69514,11 @@
         "Sand Casting"
       ],
       "socialStatus": {
-        "LinkedIn": {
+        "Instagram": {
           "status": "No posts found",
           "count": 0
         },
-        "Instagram": {
+        "LinkedIn": {
           "status": "No posts found",
           "count": 0
         },
@@ -69454,10 +69569,6 @@
         "Sand Casting"
       ],
       "socialStatus": {
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
         "YouTube": {
           "status": "No posts found",
           "count": 0
@@ -69465,6 +69576,10 @@
         "Facebook": {
           "status": "No posts found",
           "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 1
         },
         "LinkedIn": {
           "status": "Success",
@@ -69511,11 +69626,11 @@
           "status": "No posts found",
           "count": 0
         },
-        "Facebook": {
+        "YouTube": {
           "status": "No posts found",
           "count": 0
         },
-        "YouTube": {
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         },
@@ -69944,8 +70059,8 @@
           "count": 0
         },
         "LinkedIn": {
-          "status": "Success",
-          "count": 1
+          "status": "No posts found",
+          "count": 0
         },
         "YouTube": {
           "status": "Success",
@@ -69990,15 +70105,15 @@
         "Sand Casting"
       ],
       "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
         "YouTube": {
           "status": "No posts found",
           "count": 0
         },
         "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Facebook": {
           "status": "No posts found",
           "count": 0
         },
@@ -70026,7 +70141,7 @@
       ],
       "socials": {
         "linkedin": null,
-        "instagram": null,
+        "instagram": "https://es.linkedin.com/in/ignacio-matias-montorfano",
         "facebook": "https://www.facebook.com/jaguarinvestcast",
         "youtube": null
       },
@@ -70051,13 +70166,13 @@
           "status": "No posts found",
           "count": 0
         },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
         "Facebook": {
           "status": "No posts found",
           "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 2
         }
       }
     },
@@ -70526,15 +70641,15 @@
         "Sand Casting"
       ],
       "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
         "Facebook": {
           "status": "No posts found",
           "count": 0
         },
         "LinkedIn": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Instagram": {
           "status": "No posts found",
           "count": 0
         },
@@ -70587,11 +70702,11 @@
           "status": "No posts found",
           "count": 0
         },
-        "Facebook": {
+        "YouTube": {
           "status": "No posts found",
           "count": 0
         },
-        "YouTube": {
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         }
@@ -70640,11 +70755,11 @@
           "status": "No posts found",
           "count": 0
         },
-        "Facebook": {
+        "LinkedIn": {
           "status": "No posts found",
           "count": 0
         },
-        "LinkedIn": {
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         }
@@ -70689,11 +70804,11 @@
           "status": "No posts found",
           "count": 0
         },
-        "Facebook": {
+        "LinkedIn": {
           "status": "No posts found",
           "count": 0
         },
-        "LinkedIn": {
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         },
@@ -71103,6 +71218,35 @@
       "commonProducts": [
         "Ball Valve Casting",
         "Machining Solutions"
+      ]
+    },
+    {
+      "name": "Mahavas Precision Controls Pvt. Ltd.",
+      "url": "http://www.precisioncontrolsindia.com/",
+      "type": "regional",
+      "location": "115/2/1, General Block, MIDC, Bhosari, Pune, Pimpri-Chinchwad, Maharashtra 411026, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Investment Casting. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 1 common products: [Ball Valve Casting]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.9 | Phone: 098220 53375",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.precisioncontrolsindia.com/"
+        },
+        {
+          "title": "Product: Ball Valve Casting",
+          "url": "http://www.precisioncontrolsindia.com/combined-pressure-reducing-cum-de-superheating-valves.html"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/27753044",
+        "instagram": "https://www.instagram.com/mahavasprecisioncontrols/",
+        "facebook": "https://www.facebook.com/mahavasprecisioncontrolspvtltd",
+        "youtube": "https://www.youtube.com/watch?v=oIlTwdk_xGs"
+      },
+      "products": [
+        "Ball Valve Casting"
+      ],
+      "commonProducts": [
+        "Ball Valve Casting"
       ]
     }
   ]
