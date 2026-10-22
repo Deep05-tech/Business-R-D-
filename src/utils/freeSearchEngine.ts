@@ -21,7 +21,7 @@ export class FreeSearchEngine {
     logger.info(`Searching free DDG HTML engine for: ${query}`);
     
     // Base delay to prevent rapid-fire blocks during loops
-    await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 2000));
+    await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 500));
     
     try {
       const htmlData = await this.httpsPost('html.duckduckgo.com', '/html/', `q=${encodeURIComponent(query)}`);
@@ -81,8 +81,8 @@ export class FreeSearchEngine {
         res.on('end', () => resolve(data));
       });
 
-      req.setTimeout(8000, () => {
-        req.destroy(new Error('FreeSearchEngine request timed out after 8s'));
+      req.setTimeout(6000, () => {
+        req.destroy(new Error('FreeSearchEngine request timed out after 6s'));
       });
 
       req.on('error', e => reject(e));

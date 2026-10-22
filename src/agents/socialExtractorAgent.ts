@@ -289,12 +289,12 @@ export class SocialExtractorAgent {
                                   lowerUrl.includes("story_fbid=") || 
                                   lowerUrl.includes("fbid=") || 
                                   lowerUrl.includes("pfbid") || 
-                                  Boolean(lowerUrl.match(/\/posts\/[a-z0-9_-]+/i)) ||
+                                  Boolean(lowerUrl.match(/\/posts\/[a-z0-9_:-]+/i)) ||
                                   Boolean(lowerUrl.match(/\/photos\/[a-z0-9_-]+/i)) ||
                                   Boolean(lowerUrl.match(/\/photo\/?\?/i)) ||
                                   Boolean(lowerUrl.match(/\/videos?\/[a-z0-9._-]+/i));
             if (!isFbSinglePost) return null;
-            cleanPostUrl = postUrl.split('&__cft__')[0].split('&__tn__')[0].split('#')[0].replace(/\/+$/, '');
+            cleanPostUrl = postUrl.split('&__cft__')[0].split('&__tn__')[0].split('#')[0].replace(/\/+$/, '').replace(/:(\d+)$/, '');
         }
         if (platform === "LinkedIn") {
             if (!lowerUrl.includes("linkedin.com/")) return null;
@@ -583,35 +583,35 @@ export class SocialExtractorAgent {
                             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
                             'Accept-Language': 'en-US,en;q=0.9',
-                            'Sec-Ch-Ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
-                            'Sec-Ch-Ua-Mobile': '?0',
-                            'Sec-Ch-Ua-Platform': '"Windows"',
                             'Sec-Fetch-Dest': 'document',
                             'Sec-Fetch-Mode': 'navigate',
                             'Sec-Fetch-Site': 'none',
                             'Sec-Fetch-User': '?1',
                             'Upgrade-Insecure-Requests': '1'
                         },
-                        timeout: 8000
+                        timeout: 10000,
+                        maxRedirects: 5
                     });
                     const html = res.data || "";
-                    const matches = html.match(/\/(?:p|reel)\/([A-Za-z0-9_-]{5,25})\/?/g) || [];
+                    const matches = html.match(/(?:[a-zA-Z0-9._-]+\/)?(?:p|reel|reels)\/([A-Za-z0-9_-]{8,30})\/?/g) || [];
                     const seenShortcodes = new Set<string>();
                     for (const m of matches) {
-                        const scMatch = m.match(/\/(?:p|reel)\/([A-Za-z0-9_-]+)/);
+                        const scMatch = m.match(/(?:p|reel|reels)\/([A-Za-z0-9_-]{8,30})/);
                         if (scMatch && scMatch[1] && !seenShortcodes.has(scMatch[1])) {
-                            seenShortcodes.add(scMatch[1]);
-                            const isReel = m.includes('/reel/');
-                            const postLink = `https://www.instagram.com/${isReel ? 'reel' : 'p'}/${scMatch[1]}/`;
+                            const code = scMatch[1];
+                            if (code === 'instagram' || code.includes('explore') || code.includes('stories') || code.includes('accounts')) continue;
+                            seenShortcodes.add(code);
+                            const isReel = m.includes('/reel/') || m.includes('/reels/');
+                            const postLink = `https://www.instagram.com/${isReel ? 'reel' : 'p'}/${code}/`;
                             posts.push({
-                                id: `ig_${scMatch[1]}`,
+                                id: `ig_${code}`,
                                 company: cleanCompName,
                                 platform: "Instagram",
                                 post_url: postLink,
                                 caption: `${cleanCompName} on Instagram: Official ${isReel ? 'Reel' : 'Post'}.`,
-                                media_type: isReel ? "Video" : "Text",
-                                thumbnail: "",
-                                media_url: postLink,
+                                media_type: isReel ? "Video" : "Image",
+                                thumbnail: `https://www.instagram.com/p/${code}/media/?size=l`,
+                                media_url: `https://www.instagram.com/p/${code}/media/?size=l`,
                                 date: new Date().toISOString().split('T')[0],
                                 engagement: { likes: 0, comments: 0 }
                             });
@@ -620,9 +620,104 @@ export class SocialExtractorAgent {
                     }
                 }
             } catch (e: any) {
-                // Direct profile scrape is an optional fast-path; proceed to search engine fallback on expected HTTP blocks
                 if (!e.message?.includes('403') && !e.message?.includes('404')) {
                     console.log(`[SocialExtractorAgent] Instagram direct HTML extraction notice: ${e.message}`);
+                }
+            }
+        }
+
+        if (platform === "Facebook") {
+            try {
+                if (profileUrl && profileUrl.startsWith("http")) {
+                    const res = await axios.get(profileUrl, {
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                            'Accept-Language': 'en-US,en;q=0.9',
+                            'Sec-Fetch-Dest': 'document',
+                            'Sec-Fetch-Mode': 'navigate',
+                            'Sec-Fetch-Site': 'none',
+                            'Sec-Fetch-User': '?1',
+                            'Upgrade-Insecure-Requests': '1'
+                        },
+                        timeout: 10000,
+                        maxRedirects: 5
+                    });
+                    const html = res.data || "";
+                    const seenUrls = new Set<string>();
+
+                    // 1. Look for permalink_url in JSON script blobs (e.g. reels, videos, posts)
+                    const permalinks = html.matchAll(/"permalink_url":"([^"]+)"/g);
+                    for (const m of permalinks) {
+                        const rawUrl = m[1].replace(/\\\//g, "/");
+                        if (!rawUrl.includes("/permalink.php") && !rawUrl.match(/\/(?:reel|videos|photos|posts)\/[0-9]+/)) continue;
+                        if (seenUrls.has(rawUrl)) continue;
+                        seenUrls.add(rawUrl);
+
+                        const matchIdx = m.index || 0;
+                        const window = html.substring(Math.max(0, matchIdx - 1500), Math.min(html.length, matchIdx + 1500));
+                        let caption = "";
+                        const textMatch = window.match(/"text":"([^"]{15,500})"/);
+                        if (textMatch) {
+                            caption = textMatch[1]
+                                .replace(/\\n/g, " ")
+                                .replace(/\\u([0-9a-fA-F]{4})/g, (_: string, c: string) => String.fromCharCode(parseInt(c, 16)))
+                                .trim();
+                        }
+                        if (!caption || caption.startsWith("See more") || caption.startsWith("Page ·") || caption.includes("Not yet rated")) {
+                            caption = `${cleanCompName} on Facebook: Official Update.`;
+                        }
+
+                        let mediaUrl = "";
+                        const imgMatch = window.match(/"image":\{"uri":"([^"]+)"/);
+                        if (imgMatch) {
+                            mediaUrl = imgMatch[1].replace(/\\\/|\//g, '/').replace(/\\u0026/g, '&');
+                        }
+
+                        const isVideo = rawUrl.includes("/reel/") || rawUrl.includes("/videos/");
+                        posts.push({
+                            id: `fb_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+                            company: cleanCompName,
+                            platform: "Facebook",
+                            post_url: rawUrl,
+                            caption: caption,
+                            media_type: isVideo ? "Video" : (mediaUrl ? "Image" : "Text"),
+                            thumbnail: mediaUrl,
+                            media_url: mediaUrl,
+                            date: new Date().toISOString().split("T")[0],
+                            engagement: { likes: 0, comments: 0 }
+                        });
+                        if (posts.length >= maxPosts) break;
+                    }
+
+                    // 2. Fallback: match post / reel / video URLs directly in page HTML
+                    if (posts.length < maxPosts) {
+                        const urlMatches = html.matchAll(/https?:\/\/(?:www|m)\.facebook\.com\/([a-zA-Z0-9._-]+)\/(?:posts|videos|photos|reel)\/([0-9]+)/g);
+                        for (const m of urlMatches) {
+                            const fullUrl = `https://www.facebook.com/${m[1]}/${m[0].includes('/reel/') ? 'reel' : (m[0].includes('/videos/') ? 'videos' : (m[0].includes('/photos/') ? 'photos' : 'posts'))}/${m[2]}/`;
+                            if (seenUrls.has(fullUrl)) continue;
+                            seenUrls.add(fullUrl);
+
+                            const isVideo = fullUrl.includes("/reel/") || fullUrl.includes("/videos/");
+                            posts.push({
+                                id: `fb_${m[2]}`,
+                                company: cleanCompName,
+                                platform: "Facebook",
+                                post_url: fullUrl,
+                                caption: `${cleanCompName} on Facebook: Official Post.`,
+                                media_type: isVideo ? "Video" : "Text",
+                                thumbnail: "",
+                                media_url: fullUrl,
+                                date: new Date().toISOString().split("T")[0],
+                                engagement: { likes: 0, comments: 0 }
+                            });
+                            if (posts.length >= maxPosts) break;
+                        }
+                    }
+                }
+            } catch (e: any) {
+                if (!e.message?.includes('403') && !e.message?.includes('404')) {
+                    console.log(`[SocialExtractorAgent] Facebook direct HTML extraction notice: ${e.message}`);
                 }
             }
         }
@@ -745,8 +840,7 @@ export class SocialExtractorAgent {
             }
         }
 
-        const hasOnlyGenericPosts = posts.length === 0 || posts.every(p => (p.caption || '').includes('on Instagram:') || (p.caption || '').includes('shared a new'));
-        if ((posts.length < maxPosts || hasOnlyGenericPosts) && cleanCompName) {
+        if (posts.length === 0 && cleanCompName) {
             try {
                 const searchBrand = cleanCompName
                     .replace(/^m\/s\.?\s+/i, '')
@@ -868,6 +962,9 @@ export class SocialExtractorAgent {
                     }
 
                     if (url) {
+                        const isDuplicate = posts.some(p => (p.post_url || p.link || '').toLowerCase() === url.toLowerCase());
+                        if (isDuplicate) continue;
+
                         let thumb = "";
                         let med = url;
                         let vidTitle = content;
@@ -885,11 +982,6 @@ export class SocialExtractorAgent {
                             } else {
                                 continue;
                             }
-                        }
-
-                        // If earlier we only had generic placeholder posts, replace them with rich search posts
-                        if (hasOnlyGenericPosts && posts.length > 0 && posts.every(p => (p.caption || '').includes('on Instagram:'))) {
-                            posts.length = 0;
                         }
 
                         posts.push({
