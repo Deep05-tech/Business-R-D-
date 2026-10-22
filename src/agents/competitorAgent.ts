@@ -14,6 +14,7 @@ import { SocialExtractorAgent } from "./socialExtractorAgent.js";
 import { WebTool } from "../tools/webTool.js";
 import { agentRules } from "../config/agentRules.js";
 import { isAuthenticCompetitorProfile } from "../utils/socialVerificationUtils.js";
+import { isTavilyAvailable, markTavilyQuotaExhausted } from "../utils/tavilyClient.js";
 
 const logger = createLogger("CompetitorAgent");
 
@@ -484,10 +485,10 @@ STRICT INSTRUCTIONS:
         const fetchWebSearchPlaces = async (queryKw: string, locationStr: string): Promise<any[]> => {
             const out: any[] = [];
             const cleanQuery = `${queryKw} manufacturer ${locationStr}`.trim();
-            const tavilyKey = process.env.TAVILY_API_KEY || "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";
 
             // 1. Tavily Search (primary, highly accurate for B2B industrial companies)
-            if (tavilyKey) {
+            if (isTavilyAvailable()) {
+                const tavilyKey = process.env.TAVILY_API_KEY;
                 try {
                     const res = await axios.post("https://api.tavily.com/search", {
                         api_key: tavilyKey,
@@ -511,7 +512,13 @@ STRICT INSTRUCTIONS:
                         }
                     }
                 } catch (tavErr: any) {
-                    logger.debug(`Tavily web search error: ${tavErr.message}`);
+                    const status = tavErr.response?.status;
+                    const errMsg = tavErr.response?.data?.detail?.error || tavErr.message || '';
+                    if (status === 432 || status === 429 || errMsg.includes('limit') || errMsg.includes('quota')) {
+                        markTavilyQuotaExhausted(errMsg);
+                    } else {
+                        logger.debug(`Tavily web search notice: ${tavErr.message}`);
+                    }
                 }
             }
 

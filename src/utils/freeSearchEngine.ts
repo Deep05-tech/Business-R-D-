@@ -50,12 +50,11 @@ export class FreeSearchEngine {
       
       return JSON.stringify(results);
     } catch (e: any) {
-      if (e.message.includes('403') && retries > 0) {
-        logger.warn(`Rate limit hit (403). Waiting ${6 - retries} seconds before retrying...`);
-        await new Promise(resolve => setTimeout(resolve, (4 - retries) * 5000));
-        return this.invoke({ query }, retries - 1);
+      if (e.message.includes('403')) {
+        logger.debug(`DDG HTML search blocked (403), falling back to alternative engines.`);
+      } else {
+        logger.debug(`Free search failed: ${e.message}`);
       }
-      logger.error(`Free search failed: ${e.message}`);
       return JSON.stringify([]);
     }
   }

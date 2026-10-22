@@ -4,6 +4,8 @@ import type { StructuredMemory, SocialPost } from "../types.js";
 import { MemoryStore } from "../memory/memoryStore.js";
 import { knowledgeIndex } from "../memory/knowledgeIndex.js";
 import { BingRssSearchEngine } from "../utils/bingRssSearchEngine.js";
+import { BraveSearchEngine } from "../utils/braveSearchEngine.js";
+import { isTavilyAvailable, markTavilyQuotaExhausted } from "../utils/tavilyClient.js";
 import { CompetitorAgent } from "./competitorAgent.js";
 import { isAuthenticCompetitorProfile } from "../utils/socialVerificationUtils.js";
 import axios from "axios";
@@ -23,8 +25,22 @@ export class CronAgent {
     logger.info(`Running Direct Social Media Account Scraper for ${memory.input.websiteUrl}...`);
 
     if (!memory.competitors || memory.competitors.length === 0) {
-      logger.warn(`No competitors found for ${memory.input.websiteUrl}. Skipping cron.`);
-      return [];
+      logger.info(`No competitors found in memory for ${memory.input.websiteUrl}. Automatically discovering competitors first...`);
+      try {
+        const discovered = await new CompetitorAgent().run(memory, "all", undefined, 15);
+        if (discovered && discovered.length > 0) {
+          memory.competitors = discovered;
+          knowledgeIndex.add(memory);
+          await memoryStore.save(memory);
+          logger.success(`Discovered ${discovered.length} competitors. Proceeding with competitor feed tracking...`);
+        } else {
+          logger.warn(`No competitors could be discovered for ${memory.input.websiteUrl}. Skipping feed crawl.`);
+          return [];
+        }
+      } catch (err: any) {
+        logger.warn(`Competitor auto-discovery failed: ${err.message}. Skipping feed crawl.`);
+        return [];
+      }
     }
 
     let allPosts: SocialPost[] = [];
@@ -129,9 +145,9 @@ export class CronAgent {
         .replace(/\s+/g, ' ')
         .trim() || comp.name.trim();
 
-      const tavilyKey = process.env.TAVILY_API_KEY || "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";
       const searchSocialUrl = async (platform: string, searchSite: string): Promise<string | null> => {
-        if (tavilyKey) {
+        if (isTavilyAvailable()) {
+          const tavilyKey = process.env.TAVILY_API_KEY;
           try {
             const domain = searchSite.split('/')[0];
             const tavilyRes = await axios.post("https://api.tavily.com/search", {
@@ -147,8 +163,29 @@ export class CronAgent {
                 if (isValidProfileUrl(u, platform, comp.name, r.title)) return u;
               }
             }
-          } catch {}
+          } catch (tavErr: any) {
+            const status = tavErr.response?.status;
+            const errMsg = tavErr.response?.data?.detail?.error || tavErr.message || '';
+            if (status === 432 || status === 429 || errMsg.includes('limit') || errMsg.includes('quota')) {
+              markTavilyQuotaExhausted(errMsg);
+            }
+          }
         }
+        // Fallback 1: Fast, keyless Brave Search Engine
+        try {
+          const engine = new BraveSearchEngine({ maxResults: 5 });
+          const query = `"${cleanName}" site:${searchSite}`;
+          const raw = await engine.invoke({ query });
+          const results = JSON.parse(raw || "[]");
+          for (const r of results) {
+            const url = (r.url || "").trim();
+            if (isValidProfileUrl(url, platform, comp.name, r.title)) {
+              return url;
+            }
+          }
+        } catch {}
+
+        // Fallback 2: Bing RSS Search Engine
         try {
           const engine = new BingRssSearchEngine({ maxResults: 5 });
           const query = `"${cleanName}" site:${searchSite}`;

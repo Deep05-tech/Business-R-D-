@@ -9,6 +9,8 @@ import { rm } from 'node:fs/promises';
 import pLimit from 'p-limit';
 import { BingRssSearchEngine } from '../utils/bingRssSearchEngine.js';
 import { FreeSearchEngine } from '../utils/freeSearchEngine.js';
+import { BraveSearchEngine } from '../utils/braveSearchEngine.js';
+import { isTavilyAvailable, markTavilyQuotaExhausted } from '../utils/tavilyClient.js';
 import { verifyPostAuthor, isAuthenticCompetitorProfile } from '../utils/socialVerificationUtils.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -93,13 +95,15 @@ export class SocialExtractorAgent {
         }
     }
 
-    public async extractYouTubeAPI(profileUrl: string, compName?: string): Promise<any> {
+    public async extractYouTubeAPI(profileUrl?: string | null, compName?: string): Promise<any> {
         const apiKey = process.env.YOUTUBE_API_KEY;
         if (!apiKey) return null;
+        if (!profileUrl && !compName) return null;
         try {
-            const handleMatch = profileUrl.match(/@([\w.-]+)/);
-            const channelMatch = profileUrl.match(/\/channel\/([\w-]+)/);
-            const userMatch = profileUrl.match(/\/user\/([\w-]+)/);
+            const cleanUrl = typeof profileUrl === 'string' ? profileUrl : '';
+            const handleMatch = cleanUrl ? cleanUrl.match(/@([\w.-]+)/) : null;
+            const channelMatch = cleanUrl ? cleanUrl.match(/\/channel\/([\w-]+)/) : null;
+            const userMatch = cleanUrl ? cleanUrl.match(/\/user\/([\w-]+)/) : null;
 
             let channelId = "";
             let uploadsPlaylistId = "";
@@ -468,13 +472,15 @@ export class SocialExtractorAgent {
         options: ExtractPostsOptions = {}
     ): Promise<any[]> {
         const isBrowserEnabled = process.env.ENABLE_BROWSER_SCRAPING === "true";
+        let httpAttempted = false;
 
         // Fast HTTP/Search route runs if requested or when headless browser is disabled
         if (options.preferHttp || !isBrowserEnabled) {
+            httpAttempted = true;
             try {
                 const httpPosts = await this.extractPostsHttp(platform, profileUrl, compName, maxPosts);
                 if (httpPosts.length > 0) {
-                    console.log(`[SocialExtractorAgent] Fast HTTP/API extraction succeeded for ${platform} (${profileUrl}): ${httpPosts.length} posts.`);
+                    console.log(`[SocialExtractorAgent] Fast HTTP/API extraction succeeded for ${platform} (${profileUrl || compName}): ${httpPosts.length} posts.`);
                     return httpPosts;
                 }
             } catch (e: any) {
@@ -528,15 +534,17 @@ export class SocialExtractorAgent {
             }
         }
 
-        // 2. Secondary Fallback: Fast HTTP / API / Search Extraction
-        try {
-            const httpPosts = await this.extractPostsHttp(platform, profileUrl, compName, maxPosts);
-            if (httpPosts && httpPosts.length > 0) {
-                console.log(`[SocialExtractorAgent] Fast HTTP/API extraction succeeded for ${platform} (${profileUrl}): ${httpPosts.length} posts.`);
-                return httpPosts;
+        // 2. Secondary Fallback: Fast HTTP / API / Search Extraction (only if not already executed)
+        if (!httpAttempted) {
+            try {
+                const httpPosts = await this.extractPostsHttp(platform, profileUrl, compName, maxPosts);
+                if (httpPosts && httpPosts.length > 0) {
+                    console.log(`[SocialExtractorAgent] Fast HTTP/API extraction succeeded for ${platform} (${profileUrl || compName}): ${httpPosts.length} posts.`);
+                    return httpPosts;
+                }
+            } catch (e: any) {
+                console.log(`[SocialExtractorAgent] Fast HTTP extraction attempt failed for ${platform}: ${e.message}`);
             }
-        } catch (e: any) {
-            console.log(`[SocialExtractorAgent] Fast HTTP extraction attempt failed for ${platform}: ${e.message}`);
         }
 
         if (platform === "YouTube") {
@@ -612,7 +620,10 @@ export class SocialExtractorAgent {
                     }
                 }
             } catch (e: any) {
-                console.log(`[SocialExtractorAgent] Instagram direct HTML extraction failed: ${e.message}`);
+                // Direct profile scrape is an optional fast-path; proceed to search engine fallback on expected HTTP blocks
+                if (!e.message?.includes('403') && !e.message?.includes('404')) {
+                    console.log(`[SocialExtractorAgent] Instagram direct HTML extraction notice: ${e.message}`);
+                }
             }
         }
 
@@ -657,7 +668,10 @@ export class SocialExtractorAgent {
                 });
                 }
             } catch (e: any) {
-                console.log(`[SocialExtractorAgent] LinkedIn HTTP extraction failed: ${e.message}`);
+                // Direct profile scrape is an optional fast-path; proceed to search engine fallback on expected HTTP blocks
+                if (!e.message?.includes('403') && !e.message?.includes('404')) {
+                    console.log(`[SocialExtractorAgent] LinkedIn HTTP extraction notice: ${e.message}`);
+                }
             }
         }
 
@@ -726,7 +740,7 @@ export class SocialExtractorAgent {
                         }
                     }
                 } catch (e: any) {
-                    console.log(`[SocialExtractorAgent] YouTube channel scrape error: ${e.message}`);
+                    // Channel direct scrape notice
                 }
             }
         }
@@ -744,9 +758,9 @@ export class SocialExtractorAgent {
 
                 let results: any[] = [];
 
-                // 1. Try Tavily Search API first if configured (fast, direct social media results)
-                const tavilyKey = process.env.TAVILY_API_KEY || "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";
-                if (tavilyKey) {
+                // 1. Try Tavily Search API first if available and within quota limits
+                if (isTavilyAvailable()) {
+                    const tavilyKey = process.env.TAVILY_API_KEY;
                     try {
                         const targetDomains: Record<string, string[]> = {
                             "Instagram": ["instagram.com"],
@@ -774,7 +788,7 @@ export class SocialExtractorAgent {
                             search_depth: "basic",
                             include_domains: targetDomains[platform] || [],
                             max_results: maxPosts * 3
-                        }, { timeout: 8000 });
+                        }, { timeout: 6000 });
 
                         if (tavilyRes.data && Array.isArray(tavilyRes.data.results)) {
                             for (const r of tavilyRes.data.results) {
@@ -786,11 +800,15 @@ export class SocialExtractorAgent {
                             }
                         }
                     } catch (tavErr: any) {
-                        console.log(`[SocialExtractorAgent] Tavily search fallback for ${platform}: ${tavErr.message}`);
+                        const status = tavErr.response?.status;
+                        const errMsg = tavErr.response?.data?.detail?.error || tavErr.message || '';
+                        if (status === 432 || status === 429 || errMsg.includes('limit') || errMsg.includes('quota')) {
+                            markTavilyQuotaExhausted(errMsg);
+                        }
                     }
                 }
 
-                // 2. Fallback to FreeSearchEngine (DuckDuckGo) if needed
+                // 2. Fallback to BraveSearchEngine (fast, keyless, reliable HTML search)
                 if (!results || results.length === 0) {
                     let query = "";
                     if (platform === "Instagram") {
@@ -805,22 +823,34 @@ export class SocialExtractorAgent {
 
                     if (query) {
                         try {
-                            const ddg = new FreeSearchEngine({ maxResults: 15 });
-                            const rawDDG = await ddg.invoke({ query });
-                            const ddgResults = JSON.parse(rawDDG || "[]");
-                            if (Array.isArray(ddgResults) && ddgResults.length > 0) {
-                                results.push(...ddgResults);
+                            const brave = new BraveSearchEngine({ maxResults: 15 });
+                            const rawBrave = await brave.invoke({ query });
+                            const braveResults = JSON.parse(rawBrave || "[]");
+                            if (Array.isArray(braveResults) && braveResults.length > 0) {
+                                results.push(...braveResults);
                             }
                         } catch {}
 
-                        // 3. Fallback to BingRssSearchEngine if DDG returned no results
+                        // 3. Fallback to BingRssSearchEngine if Brave had no results
                         if (!results || results.length === 0) {
                             try {
-                                const bing = new BingRssSearchEngine({ maxResults: 15 });
+                                const bing = new BingRssSearchEngine({ maxResults: 12 });
                                 const rawBing = await bing.invoke({ query });
                                 const bingResults = JSON.parse(rawBing || "[]");
                                 if (Array.isArray(bingResults) && bingResults.length > 0) {
                                     results.push(...bingResults);
+                                }
+                            } catch {}
+                        }
+
+                        // 4. Tertiary Fallback to FreeSearchEngine
+                        if (!results || results.length === 0) {
+                            try {
+                                const ddg = new FreeSearchEngine({ maxResults: 8 });
+                                const rawDDG = await ddg.invoke({ query });
+                                const ddgResults = JSON.parse(rawDDG || "[]");
+                                if (Array.isArray(ddgResults) && ddgResults.length > 0) {
+                                    results.push(...ddgResults);
                                 }
                             } catch {}
                         }
