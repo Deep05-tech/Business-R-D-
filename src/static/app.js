@@ -3809,13 +3809,13 @@ async function loadFeedUI() {
 
     let html = `
       <style>
-        .social-section-header { display: flex; align-items: center; gap: 10px; font-size: 1.25rem; font-weight: 700; color: #ffffff; margin: 24px 0 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px; }
-        .social-section-icon { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-        .social-horizontal-row { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 14px; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent; }
-        .social-horizontal-row::-webkit-scrollbar { height: 6px; }
+        .social-section-header { display: flex; align-items: center; gap: 8px; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 10px 0 6px 0; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 4px; }
+        .social-section-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+        .social-horizontal-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent; }
+        .social-horizontal-row::-webkit-scrollbar { height: 5px; }
         .social-horizontal-row::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
       </style>
-      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+      <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
         ${filterBarHtml}
     `;
 
@@ -3857,50 +3857,50 @@ async function loadFeedUI() {
       if (ytVidId) {
         const ytThumb = `https://img.youtube.com/vi/${ytVidId}/hqdefault.jpg`;
         cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
+          <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
             <img src="${ytThumb}" referrerpolicy="no-referrer" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
-            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:15px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
           </div>`;
       } else if (firstMediaUrl) {
         let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
         let badgeText = isIgReelCard ? '📹 REEL' : ((isLiVidCard || isFacebookVideoCard) ? '📹 VIDEO' : '');
-        let playBtn = (isIgReelCard || isLiVidCard || isFacebookVideoCard) ? `<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(0,0,0,0.6);border:2px solid rgba(255,255,255,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>` : '';
-        let badgeHtml = badgeText ? `<div style="position:absolute; top:10px; right:10px; background:${meta.badgeBg}; color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none;">${badgeText}</div>` : '';
+        let playBtn = (isIgReelCard || isLiVidCard || isFacebookVideoCard) ? `<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;background:rgba(0,0,0,0.6);border:2px solid rgba(255,255,255,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>` : '';
+        let badgeHtml = badgeText ? `<div style="position:absolute; top:6px; right:6px; background:${meta.badgeBg}; color:white; font-size:8.5px; font-weight:800; padding:2px 5px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none;">${badgeText}</div>` : '';
 
         const fitStyle = isInstagramCard ? 'object-fit: contain !important; background: #080d1a !important;' : 'object-fit: cover;';
         const imgClass = isInstagramCard ? 'feed-card-thumb-contain' : '';
 
         const igSc = post.shortcode || (pLink.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i) || [])[1];
         const igFallbackSrc = igSc ? `/api/proxy-media?url=${encodeURIComponent('https://www.instagram.com/p/' + igSc + '/media/?size=l')}` : '';
-        const fbIframeFallback = isFacebookVideoCard ? `this.parentElement.innerHTML = '<iframe src=\\'https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(pLink)}&show_text=false&width=280\\' style=\\'width:100%;height:100%;border:0;pointer-events:none;background:#000;border-radius:8px;\\' frameborder=\\'0\\' scrolling=\\'no\\'></iframe><div style=\\'position:absolute;top:10px;right:10px;background:#1877f2;color:white;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;pointer-events:none;\\'>📹 VIDEO</div>';` : `window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');`;
+        const fbIframeFallback = isFacebookVideoCard ? `this.parentElement.innerHTML = '<iframe src=\\'https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(pLink)}&show_text=false&width=280\\' style=\\'width:100%;height:100%;border:0;pointer-events:none;background:#000;border-radius:8px;\\' frameborder=\\'0\\' scrolling=\\'no\\'></iframe><div style=\\'position:absolute;top:6px;right:6px;background:#1877f2;color:white;font-size:8.5px;font-weight:800;padding:2px 5px;border-radius:4px;pointer-events:none;\\'>📹 VIDEO</div>';` : `window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');`;
 
         cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
+          <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
             <img src="${proxiedThumb}" class="${imgClass}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; ${fitStyle} object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; ${igFallbackSrc ? `this.src='${igFallbackSrc}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };` : fbIframeFallback}" />
             ${badgeHtml}
             ${playBtn}
           </div>`;
       } else if (isFacebookVideoCard && pLink) {
         cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #000; flex-shrink: 0; position: relative; padding: 0;">
+          <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #000; flex-shrink: 0; position: relative; padding: 0;">
             <iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(pLink)}&show_text=false&width=280" style="width: 100%; height: 100%; border: 0; pointer-events: none; border-radius: 8px; background: #000;" frameborder="0" scrolling="no"></iframe>
-            <div style="position:absolute; top:10px; right:10px; background:#1877f2; color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; pointer-events:none;">📹 VIDEO</div>
-            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:rgba(24,119,242,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
+            <div style="position:absolute; top:6px; right:6px; background:#1877f2; color:white; font-size:8.5px; font-weight:800; padding:2px 5px; border-radius:4px; text-transform:uppercase; pointer-events:none;">📹 VIDEO</div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;background:rgba(24,119,242,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:15px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
           </div>`;
       } else if (isIgReelCard && igSc) {
         cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #000; flex-shrink: 0; position: relative; padding: 0;">
+          <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #000; flex-shrink: 0; position: relative; padding: 0;">
             <iframe src="https://www.instagram.com/reel/${igSc}/embed/" style="width: 100%; height: 100%; border: 0; pointer-events: none; border-radius: 8px; background: #000;" frameborder="0" scrolling="no"></iframe>
-            <div style="position:absolute; top:10px; right:10px; background:#e1306c; color:white; font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; text-transform:uppercase; pointer-events:none;">📹 REEL</div>
+            <div style="position:absolute; top:6px; right:6px; background:#e1306c; color:white; font-size:8.5px; font-weight:800; padding:2px 5px; border-radius:4px; text-transform:uppercase; pointer-events:none;">📹 REEL</div>
           </div>`;
       }
 
       if (!cardThumbHtml) {
         cardThumbHtml = `
-          <div style="margin: 0 0 12px 0; width: 100%; height: 165px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: ${meta.bg}; flex-shrink: 0; position: relative; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <div style="width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.16);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:6px;">${meta.icon}</div>
-            <span style="font-size:12px;font-weight:700;color:#ffffff;letter-spacing:0.02em;">${platform}</span>
-            <span style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.78);margin-top:2px;">Preview Post ↗</span>
+          <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: ${meta.bg}; flex-shrink: 0; position: relative; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.16);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:4px;">${meta.icon}</div>
+            <span style="font-size:11px;font-weight:700;color:#ffffff;letter-spacing:0.02em;">${platform}</span>
+            <span style="font-size:10px;font-weight:500;color:rgba(255,255,255,0.78);margin-top:2px;">Preview Post ↗</span>
           </div>`;
       }
 
@@ -3920,17 +3920,17 @@ async function loadFeedUI() {
       }
 
       return `
-        <div class="feed-card-item" data-platform="${platform}" onclick="window.openFeedItemModal(${post._globalIndex})" style="min-width: 270px; max-width: 280px; flex-shrink: 0; padding: 14px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; height: 380px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)'">
-          <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 6px;">
-            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px;">${window.escapeHtml(compName)}</span>
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <span style="font-size: 0.72rem; color: var(--text-muted);">${window.escapeHtml(dateStr)}</span>
-              <span style="font-size: 0.62rem; font-weight: 800; padding: 2px 6px; border-radius: 3px; background: ${meta.badgeBg}; color: #ffffff; text-transform: uppercase;">${platform}</span>
+        <div class="feed-card-item" data-platform="${platform}" onclick="window.openFeedItemModal(${post._globalIndex})" style="min-width: 206px; max-width: 216px; width: 210px; flex-shrink: 0; padding: 8px 9px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; height: 295px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)'">
+          <div style="margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; gap: 4px;">
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 105px;">${window.escapeHtml(compName)}</span>
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <span style="font-size: 0.66rem; color: var(--text-muted);">${window.escapeHtml(dateStr)}</span>
+              <span style="font-size: 0.56rem; font-weight: 800; padding: 1px 4px; border-radius: 3px; background: ${meta.badgeBg}; color: #ffffff; text-transform: uppercase;">${platform}</span>
             </div>
           </div>
           ${cardThumbHtml}
-          <div style="white-space: pre-wrap; font-size: 0.82rem; line-height: 1.4; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; margin-bottom: 10px; flex: 1;">${window.escapeHtml(displayContent)}</div>
-          <span style="display: block; text-align: left; font-size: 11px; font-weight: 600; color: #3b82f6; margin-top: auto; padding-top: 6px;">Preview Post In Dashboard ↗</span>
+          <div style="white-space: pre-wrap; font-size: 0.74rem; line-height: 1.3; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; margin-bottom: 4px; flex: 1;">${window.escapeHtml(displayContent)}</div>
+          <span style="display: block; text-align: left; font-size: 9.5px; font-weight: 600; color: #3b82f6; margin-top: auto; padding-top: 2px;">Preview Post In Dashboard ↗</span>
         </div>
       `;
     };
@@ -4214,7 +4214,7 @@ async function loadOwnFeedUI() {
     });
     filterBarHtml += '</div>';
 
-    let postHtml = filterBarHtml + '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">';
+    let postHtml = filterBarHtml + '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 12px;">';
     
     feed.forEach((post, idx) => {
       const plat = post.platform || 'Social';
@@ -4225,27 +4225,27 @@ async function loadOwnFeedUI() {
       const thumb = post.thumbnail || post.thumbnail_url || post.media_url || '';
 
       const mediaPreview = thumb
-        ? `<div style="height: 150px; background: #0b1120; position: relative; overflow: hidden; border-radius: 8px 8px 0 0;">
+        ? `<div style="height: 125px; background: #0b1120; position: relative; overflow: hidden; border-radius: 8px 8px 0 0;">
              <img src="${window.getSocialMediaProxyUrl ? window.getSocialMediaProxyUrl(thumb) : thumb}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.parentElement.style.display='none';" />
-             <span style="position: absolute; top: 8px; left: 8px; background: ${meta.badgeBg}; color: white; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">${meta.icon} ${plat}</span>
+             <span style="position: absolute; top: 6px; left: 6px; background: ${meta.badgeBg}; color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">${meta.icon} ${plat}</span>
            </div>`
-        : `<div style="height: 48px; background: rgba(0,0,0,0.2); padding: 8px 12px; display: flex; align-items: center; border-radius: 8px 8px 0 0;">
-             <span style="background: ${meta.badgeBg}; color: white; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">${meta.icon} ${plat}</span>
+        : `<div style="height: 42px; background: rgba(0,0,0,0.2); padding: 6px 10px; display: flex; align-items: center; border-radius: 8px 8px 0 0;">
+             <span style="background: ${meta.badgeBg}; color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">${meta.icon} ${plat}</span>
            </div>`;
 
       postHtml += `
         <div class="own-feed-card-item" data-platform="${plat}" onclick="window.openFeedItemModal(${idx}, 'default', window.allOwnFeedPosts)" style="background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255,255,255,0.08)'">
           ${mediaPreview}
-          <div style="padding: 14px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="padding: 10px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
             <div>
-              <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">${window.escapeHtml(displayDate)}</div>
-              <div style="font-size: 13px; color: var(--text-color); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;">
+              <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">${window.escapeHtml(displayDate)}</div>
+              <div style="font-size: 12px; color: var(--text-color); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
                 ${window.escapeHtml(rawText || 'No caption text')}
               </div>
             </div>
             ${postLink && postLink !== '#' ? `
-              <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06);">
-                <a href="${postLink}" target="_blank" rel="noopener noreferrer" style="font-size: 12px; color: #60a5fa; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+              <div style="margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.06);">
+                <a href="${postLink}" target="_blank" rel="noopener noreferrer" style="font-size: 11px; color: #60a5fa; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
                   View on ${plat} ↗
                 </a>
               </div>

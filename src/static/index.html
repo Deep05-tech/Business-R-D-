@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/styles.css?v=49">
+  <link rel="stylesheet" href="/static/styles.css?v=50">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
@@ -563,29 +563,29 @@
       <div class="tab-panel" id="panel-social-feed">
         <div class="card fade-in">
           <!-- Toggle Sub-navigation -->
-          <div style="display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+          <div style="display: flex; gap: 8px; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
             <div style="display: flex; gap: 8px;">
-              <button id="feed-tab-competitors" class="btn btn-primary" onclick="window.switchSocialFeedView('competitors')" style="padding: 8px 18px; font-size: 13px; font-weight: 600; border-radius: 8px;">
+              <button id="feed-tab-competitors" class="btn btn-primary" onclick="window.switchSocialFeedView('competitors')" style="padding: 5px 12px; font-size: 12px; font-weight: 600; border-radius: 6px;">
                 🎯 Competitor Feeds
               </button>
-              <button id="feed-tab-own" class="btn btn-secondary" onclick="window.switchSocialFeedView('own')" style="padding: 8px 18px; font-size: 13px; font-weight: 600; border-radius: 8px;">
+              <button id="feed-tab-own" class="btn btn-secondary" onclick="window.switchSocialFeedView('own')" style="padding: 5px 12px; font-size: 12px; font-weight: 600; border-radius: 6px;">
                 🏢 Company Feed & Voice Pattern
               </button>
             </div>
             <div id="feed-actions-competitors">
-              <button class="btn btn-secondary" onclick="window.triggerCron()" id="btn-cron" style="font-size: 13px;">Run Competitor Tracker Now</button>
+              <button class="btn btn-secondary" onclick="window.triggerCron()" id="btn-cron" style="font-size: 11.5px; padding: 5px 12px;">Run Competitor Tracker Now</button>
             </div>
             <div id="feed-actions-own" style="display: none;">
-              <button class="btn btn-primary" onclick="window.refreshOwnSocials()" id="btn-refresh-own-socials" style="font-size: 13px; font-weight: 600;">🔄 Re-scan Company Socials</button>
+              <button class="btn btn-primary" onclick="window.refreshOwnSocials()" id="btn-refresh-own-socials" style="font-size: 11.5px; font-weight: 600; padding: 5px 12px;">🔄 Re-scan Company Socials</button>
             </div>
           </div>
 
           <!-- Sub-view 1: Competitor Feed -->
           <div id="view-competitors-feed">
-            <div class="flex-between" style="margin-bottom: 8px;">
-              <h2 style="margin: 0; font-size: 1.25rem;">Competitor Social Media Tracker</h2>
+            <div class="flex-between" style="margin-bottom: 2px;">
+              <h2 style="margin: 0; font-size: 1.1rem;">Competitor Social Media Tracker</h2>
             </div>
-            <p class="subtitle" style="margin-bottom: 20px;">A feed of recent social media posts, reels, and video scripts from your top market rivals.</p>
+            <p class="subtitle" style="margin-bottom: 8px; font-size: 11.5px;">A feed of recent social media posts, reels, and video scripts from your top market rivals.</p>
             <div id="feed-list">
               <div class="empty-state">Run the daily tracker to find recent competitor posts.</div>
             </div>
@@ -593,11 +593,11 @@
 
           <!-- Sub-view 2: Company Feed & Voice Pattern -->
           <div id="view-own-feed" style="display: none;">
-            <div id="brand-voice-pattern-container" style="margin-bottom: 24px;"></div>
-            <div class="flex-between" style="margin-bottom: 8px;">
-              <h2 style="margin: 0; font-size: 1.25rem;">Company's Live Social Media Footprint</h2>
+            <div id="brand-voice-pattern-container" style="margin-bottom: 16px;"></div>
+            <div class="flex-between" style="margin-bottom: 4px;">
+              <h2 style="margin: 0; font-size: 1.15rem;">Company's Live Social Media Footprint</h2>
             </div>
-            <p class="subtitle" style="margin-bottom: 20px;">Recent posts published on your official accounts. The SMM engine automatically references these to prevent duplicate content and align with your brand voice.</p>
+            <p class="subtitle" style="margin-bottom: 12px; font-size: 12px;">Recent posts published on your official accounts. The SMM engine automatically references these to prevent duplicate content and align with your brand voice.</p>
             <div id="own-feed-list">
               <div class="empty-state">Loading company feed...</div>
             </div>
@@ -614,7 +614,7 @@
   </main>
   </div>
 
-  <script src="/static/app.js?v=47"></script>
+  <script src="/static/app.js?v=48"></script>
 </body>
 
 </html>

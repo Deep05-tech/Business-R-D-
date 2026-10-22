@@ -997,10 +997,10 @@ body:not(.dark-theme) .form-group label {
 }
 
 @media (max-width: 1440px), (max-height: 850px) {
-  :root { --sidebar-width: 220px; }
-  .content-area { padding: 14px 18px 24px; }
-  .topbar { min-height: 48px; padding: 0 18px; }
-  .card { padding: 16px 18px; margin-bottom: 12px; }
+  :root { --sidebar-width: 210px; }
+  .content-area { padding: 12px 18px 20px; }
+  .topbar { min-height: 46px; padding: 0 16px; }
+  .card { padding: 14px 18px; margin-bottom: 10px; }
   .projects-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
   .card-new-analysis { margin: 8px auto; padding: 18px 22px; }
   .card-new-analysis .icon-badge { width: 38px; height: 38px; font-size: 18px; margin-bottom: 8px; }
@@ -1011,6 +1011,12 @@ body:not(.dark-theme) .form-group label {
   input[type="url"], input[type="text"], input[type="password"], input[type="number"], input[type="file"], textarea, select:not(.replaced) {
     padding: 7px 10px;
     font-size: 13px;
+  }
+  .feed-card-item {
+    min-width: 206px !important;
+    max-width: 216px !important;
+    width: 210px !important;
+    height: 295px !important;
   }
 }
 
