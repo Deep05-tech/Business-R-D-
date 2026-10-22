@@ -202,23 +202,31 @@ export class CronAgent {
       };
 
       let ytUrl = (comp as any).socials?.youtube;
-      if (!isValidProfileUrl(ytUrl, 'YouTube', comp.name)) {
+      if (ytUrl === undefined) {
         ytUrl = await searchSocialUrl('YouTube', 'youtube.com');
+      } else if (ytUrl && !isValidProfileUrl(ytUrl, 'YouTube', comp.name)) {
+        ytUrl = null;
       }
 
       let igUrl = (comp as any).socials?.instagram;
-      if (!isValidProfileUrl(igUrl, 'Instagram', comp.name)) {
+      if (igUrl === undefined) {
         igUrl = await searchSocialUrl('Instagram', 'instagram.com');
+      } else if (igUrl && !isValidProfileUrl(igUrl, 'Instagram', comp.name)) {
+        igUrl = null;
       }
 
       let fbUrl = (comp as any).socials?.facebook;
-      if (!isValidProfileUrl(fbUrl, 'Facebook', comp.name)) {
+      if (fbUrl === undefined) {
         fbUrl = await searchSocialUrl('Facebook', 'facebook.com');
+      } else if (fbUrl && !isValidProfileUrl(fbUrl, 'Facebook', comp.name)) {
+        fbUrl = null;
       }
 
       let liUrl = (comp as any).socials?.linkedin;
-      if (!isValidProfileUrl(liUrl, 'LinkedIn', comp.name)) {
+      if (liUrl === undefined) {
         liUrl = await searchSocialUrl('LinkedIn', 'linkedin.com/company');
+      } else if (liUrl && !isValidProfileUrl(liUrl, 'LinkedIn', comp.name)) {
+        liUrl = null;
       }
 
       // Update socials object on competitor (null if no authentic account exists)
@@ -319,7 +327,6 @@ export class CronAgent {
       const platformCompMap = new Map<string, Map<string, SocialPost[]>>();
 
       for (const res of competitorResults) {
-        if (retiredCompetitorUrls.has(res.competitor.url)) continue;
         for (const post of res.posts) {
           const plat = (post.platform || 'Other').trim();
           const compName = (post.company || post.competitorName || res.compName || 'Unknown').trim();

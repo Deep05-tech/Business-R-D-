@@ -2049,7 +2049,7 @@ app.get("/api/social-feed", async (request, response) => {
         (companyKey && targetOfficialName && (companyKey === targetOfficialName || (targetOfficialName.length >= 5 && companyKey.includes(targetOfficialName)) || (companyKey.length >= 5 && targetOfficialName.includes(companyKey)))) ||
         (targetDomain && targetDomain.length >= 4 && rawLinkLower.includes(targetDomain)) ||
         (targetDomainRoot && targetDomainRoot.length >= 4 && (companyKey === targetDomainRoot || rawLinkLower.includes(`/${targetDomainRoot}`))) ||
-        (targetPrimaryTokens.length > 0 && targetPrimaryTokens.some(tok => compPrimaryTokens.includes(tok) || (companyKey.length >= 3 && companyKey.split(/\s+/).includes(tok)))) ||
+        (targetPrimaryTokens.length > 0 && targetPrimaryTokens.every(tok => compPrimaryTokens.includes(tok) || (companyKey.length >= 3 && companyKey.split(/\s+/).includes(tok)))) ||
         targetHandles.some(h => h && h.length > 3 && (rawLinkLower.includes(`/${h}`) || rawLinkLower.includes(`@${h}`) || companyKey === h));
 
       if (isSelfPost) {

@@ -19,11 +19,12 @@ const LEGAL_STOPWORDS = new Set([
 ]);
 
 const GENERIC_INDUSTRY_WORDS = new Set([
-    'casting', 'castings', 'foundry', 'foundries', 'forge', 'forging', 'forgings',
+    'cast', 'casts', 'casting', 'castings', 'die', 'dies', 'foundry', 'foundries', 'forge', 'forging', 'forgings',
     'steel', 'steels', 'iron', 'metal', 'metals', 'alloy', 'alloys', 'precision',
     'industries', 'industry', 'industrial', 'engineering', 'engineers', 'services',
     'solutions', 'tech', 'techno', 'technology', 'enterprises', 'international',
     'global', 'products', 'components', 'manufacturing', 'mfg', 'machine', 'machining',
+    'stamping', 'stampings', 'extrusion', 'extrusions',
     'works', 'enterprise', 'commercial', 'corporate', 'official', 'india', 'usa',
     'germany', 'china', 'uk', 'europe'
 ]);
@@ -160,7 +161,14 @@ export function isAuthenticCompetitorProfile(
     if (!url || typeof url !== 'string' || !competitorName) return false;
     const lowerUrl = url.toLowerCase().trim();
 
-    // 1. Immediate disqualifiers
+    // 1. Strict platform domain validation
+    const platLower = (platform || '').toLowerCase();
+    if (platLower.includes('instagram') && !lowerUrl.includes('instagram.com/')) return false;
+    if (platLower.includes('facebook') && !lowerUrl.includes('facebook.com/')) return false;
+    if (platLower.includes('linkedin') && !lowerUrl.includes('linkedin.com/')) return false;
+    if (platLower.includes('youtube') && !lowerUrl.includes('youtube.com/') && !lowerUrl.includes('youtu.be/')) return false;
+
+    // 2. Immediate disqualifiers
     for (const bad of DISQUALIFIED_SUBSTRINGS) {
         if (lowerUrl.includes(bad)) return false;
     }
@@ -305,12 +313,17 @@ export function verifyPostAuthor(
                 return false;
             }
 
-            // For Facebook: check URL slug
+            // For Facebook: check URL slug or numerical page ID
             if (platform.toLowerCase().includes('facebook')) {
                 const urlHandle = extractProfileHandle(lowerUrl, 'Facebook');
                 if (urlHandle) {
                     const cleanUrlHandle = urlHandle.replace(/[^a-z0-9]/g, '');
                     if (cleanUrlHandle === cleanVerified) return true;
+                }
+                const profileIdMatch = effectiveProfileUrl.match(/(?:\/people\/[^\/]+\/|\/pages\/[^\/]+\/|\bprofile\.php\?id=|\/)(\d{10,25})/);
+                const postProfileIdMatch = lowerUrl.match(/(?:[?&]id=|\/posts\/|\/photos\/|\bset=a\.)(\d{10,25})/);
+                if (profileIdMatch && postProfileIdMatch && profileIdMatch[1] === postProfileIdMatch[1]) {
+                    return true;
                 }
             }
         }

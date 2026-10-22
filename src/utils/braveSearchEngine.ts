@@ -5,6 +5,9 @@ import { createLogger } from "./logger.js";
 
 const logger = createLogger("BraveSearchEngine");
 
+let braveCooldownUntil = 0;
+let lastBraveRequestTime = 0;
+
 export interface SearchResult {
   title: string;
   url: string;
@@ -25,6 +28,18 @@ export class BraveSearchEngine {
   }
 
   async invoke({ query }: { query: string }): Promise<string> {
+    if (Date.now() < braveCooldownUntil) {
+      return JSON.stringify([]);
+    }
+
+    // Rate-limiting throttle: enforce at least 600ms between calls
+    const now = Date.now();
+    const wait = Math.max(0, 600 - (now - lastBraveRequestTime));
+    lastBraveRequestTime = now + wait;
+    if (wait > 0) {
+      await new Promise(r => setTimeout(r, wait));
+    }
+
     try {
       const url = `https://search.brave.com/search?${new URLSearchParams({ q: query, source: "web" })}`;
       const html = await this.fetchHtml(url);
@@ -53,7 +68,12 @@ export class BraveSearchEngine {
 
       return JSON.stringify(results);
     } catch (e: any) {
-      logger.warn(`Brave search failed for "${query}": ${e.message}`);
+      if (e.message?.includes('429') || e.response?.status === 429) {
+        braveCooldownUntil = Date.now() + 60000;
+        logger.warn(`Brave rate-limited (429). Cooling down for 60s.`);
+      } else {
+        logger.warn(`Brave search failed for "${query}": ${e.message}`);
+      }
       return JSON.stringify([]);
     }
   }
