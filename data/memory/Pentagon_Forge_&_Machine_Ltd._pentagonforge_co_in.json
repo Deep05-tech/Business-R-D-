@@ -747,38 +747,437 @@
   "ownSocials": {
     "linkedin": "https://www.linkedin.com/company/pentagon-forge/",
     "instagram": "https://www.instagram.com/pentagon_forge_and_machine_ltd/",
+    "facebook": "https://en.wikipedia.org/wiki/The_Pentagon",
     "youtube": "https://www.youtube.com/@pentagonforge9869",
-    "facebook": "https://www.facebook.com/profile.php?id=61593946032761"
+    "twitter": null
   },
-  "ownSocialFeed": [],
+  "ownSocialFeed": [
+    {
+      "id": "youtube_1792652967664_s9lv8",
+      "company": "Pentagon Forge & Machine Ltd.",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=cW0o-BMNY4w",
+      "caption": "Kalaria Forge Group - Corporate Video",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/cW0o-BMNY4w/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/cW0o-BMNY4w/hqdefault.jpg",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@pentagonforge9869",
+      "thumbnail_url": "https://i.ytimg.com/vi/cW0o-BMNY4w/hqdefault.jpg",
+      "published_date": "2026-10-22",
+      "link": "https://www.youtube.com/watch?v=cW0o-BMNY4w",
+      "content": "Kalaria Forge Group - Corporate Video",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://i.ytimg.com/vi/cW0o-BMNY4w/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/cW0o-BMNY4w/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=cW0o-BMNY4w",
+      "competitorName": "Pentagon Forge & Machine Ltd."
+    },
+    {
+      "id": "youtube_1792652972160_fo2ec",
+      "company": "Pentagon Forge & Machine Ltd.",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=3mz9JnfXchc",
+      "caption": "Metalic Technoforge Pvt. Ltd",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/3mz9JnfXchc/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/3mz9JnfXchc/hqdefault.jpg",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@pentagonforge9869",
+      "thumbnail_url": "https://i.ytimg.com/vi/3mz9JnfXchc/hqdefault.jpg",
+      "published_date": "2026-10-22",
+      "link": "https://www.youtube.com/watch?v=3mz9JnfXchc",
+      "content": "Metalic Technoforge Pvt. Ltd",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://i.ytimg.com/vi/3mz9JnfXchc/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/3mz9JnfXchc/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=3mz9JnfXchc",
+      "competitorName": "Pentagon Forge & Machine Ltd."
+    },
+    {
+      "id": "youtube_1792652972876_sotwa",
+      "company": "Pentagon Forge & Machine Ltd.",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=0SyqGJ-ht94",
+      "caption": "Mod Forge Private Ltd  - Corporate Video",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/0SyqGJ-ht94/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/0SyqGJ-ht94/hqdefault.jpg",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@pentagonforge9869",
+      "thumbnail_url": "https://i.ytimg.com/vi/0SyqGJ-ht94/hqdefault.jpg",
+      "published_date": "2026-10-22",
+      "link": "https://www.youtube.com/watch?v=0SyqGJ-ht94",
+      "content": "Mod Forge Private Ltd  - Corporate Video",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://i.ytimg.com/vi/0SyqGJ-ht94/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/0SyqGJ-ht94/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=0SyqGJ-ht94",
+      "competitorName": "Pentagon Forge & Machine Ltd."
+    },
+    {
+      "id": "instagram_1792652967059_whvm8",
+      "company": "Pentagon Forge & Machine Ltd.",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/DeqWhO_iNIE",
+      "caption": "At Pentagon Forge & Machine Ltd., we manufacture 5 kg to 45 kg trunnions through controlled forging, heat treatment, precision machining, and",
+      "media_type": "Text",
+      "thumbnail": "https://www.instagram.com/p/DeqWhO_iNIE/media/?size=l",
+      "media_url": "https://www.instagram.com/p/DeqWhO_iNIE/media/?size=l",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/pentagon_forge_and_machine_ltd/",
+      "thumbnail_url": "https://www.instagram.com/p/DeqWhO_iNIE/media/?size=l",
+      "published_date": "2026-10-22",
+      "link": "https://www.instagram.com/p/DeqWhO_iNIE",
+      "content": "At Pentagon Forge & Machine Ltd., we manufacture 5 kg to 45 kg trunnions through controlled forging, heat treatment, precision machining, and",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://www.instagram.com/p/DeqWhO_iNIE/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/DeqWhO_iNIE/media/?size=l",
+      "mediaType": "Text",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/DeqWhO_iNIE",
+      "competitorName": "Pentagon Forge & Machine Ltd.",
+      "shortcode": "DeqWhO_iNIE"
+    },
+    {
+      "id": "instagram_1792652967059_6jc5d",
+      "company": "Pentagon Forge & Machine Ltd.",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/reel/DdX9hcBs9S4",
+      "caption": "At Pentagon Forge, Gantry Automation is helping us build a more consistent, efficient, and safer manufacturing process. ✅ Reduced manual",
+      "media_type": "Video",
+      "thumbnail": "https://www.instagram.com/p/DdX9hcBs9S4/media/?size=l",
+      "media_url": "https://www.instagram.com/p/DdX9hcBs9S4/media/?size=l",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/pentagon_forge_and_machine_ltd/",
+      "thumbnail_url": "https://www.instagram.com/p/DdX9hcBs9S4/media/?size=l",
+      "published_date": "2026-10-22",
+      "link": "https://www.instagram.com/reel/DdX9hcBs9S4",
+      "content": "At Pentagon Forge, Gantry Automation is helping us build a more consistent, efficient, and safer manufacturing process. ✅ Reduced manual",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://www.instagram.com/p/DdX9hcBs9S4/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/DdX9hcBs9S4/media/?size=l",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/reel/DdX9hcBs9S4",
+      "competitorName": "Pentagon Forge & Machine Ltd.",
+      "shortcode": "DdX9hcBs9S4"
+    },
+    {
+      "id": "instagram_1792652967059_6ghwt",
+      "company": "Pentagon Forge & Machine Ltd.",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/DeMT-9xME5F",
+      "caption": "At Pentagon Forge & Machine, we work as per customer drawings, specifications and application requirements. Precision-engineered alloy & non-",
+      "media_type": "Text",
+      "thumbnail": "https://www.instagram.com/p/DeMT-9xME5F/media/?size=l",
+      "media_url": "https://www.instagram.com/p/DeMT-9xME5F/media/?size=l",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/pentagon_forge_and_machine_ltd/",
+      "thumbnail_url": "https://www.instagram.com/p/DeMT-9xME5F/media/?size=l",
+      "published_date": "2026-10-22",
+      "link": "https://www.instagram.com/p/DeMT-9xME5F",
+      "content": "At Pentagon Forge & Machine, we work as per customer drawings, specifications and application requirements. Precision-engineered alloy & non-",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://www.instagram.com/p/DeMT-9xME5F/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/DeMT-9xME5F/media/?size=l",
+      "mediaType": "Text",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/DeMT-9xME5F",
+      "competitorName": "Pentagon Forge & Machine Ltd.",
+      "shortcode": "DeMT-9xME5F"
+    },
+    {
+      "id": "instagram_1792652967059_41503",
+      "company": "Pentagon Forge & Machine Ltd.",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/DdjDOzRMtED",
+      "caption": "We produce custom components for automotive, construction, railway, agriculture, oil & gas, mining, and heavy engineering industries.",
+      "media_type": "Text",
+      "thumbnail": "https://www.instagram.com/p/DdjDOzRMtED/media/?size=l",
+      "media_url": "https://www.instagram.com/p/DdjDOzRMtED/media/?size=l",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/pentagon_forge_and_machine_ltd/",
+      "thumbnail_url": "https://www.instagram.com/p/DdjDOzRMtED/media/?size=l",
+      "published_date": "2026-10-22",
+      "link": "https://www.instagram.com/p/DdjDOzRMtED",
+      "content": "We produce custom components for automotive, construction, railway, agriculture, oil & gas, mining, and heavy engineering industries.",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://www.instagram.com/p/DdjDOzRMtED/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/DdjDOzRMtED/media/?size=l",
+      "mediaType": "Text",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/DdjDOzRMtED",
+      "competitorName": "Pentagon Forge & Machine Ltd.",
+      "shortcode": "DdjDOzRMtED"
+    },
+    {
+      "id": "instagram_1792652967059_5c3aj",
+      "company": "Pentagon Forge & Machine Ltd.",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/DeMKDu6ARJS",
+      "caption": "Every forged component starts with the material specified by the customer. At Pentagon Forge & Machine, we work as per customer drawings,",
+      "media_type": "Text",
+      "thumbnail": "https://www.instagram.com/p/DeMKDu6ARJS/media/?size=l",
+      "media_url": "https://www.instagram.com/p/DeMKDu6ARJS/media/?size=l",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/pentagon_forge_and_machine_ltd/",
+      "thumbnail_url": "https://www.instagram.com/p/DeMKDu6ARJS/media/?size=l",
+      "published_date": "2026-10-22",
+      "link": "https://www.instagram.com/p/DeMKDu6ARJS",
+      "content": "Every forged component starts with the material specified by the customer. At Pentagon Forge & Machine, we work as per customer drawings,",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://www.instagram.com/p/DeMKDu6ARJS/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/DeMKDu6ARJS/media/?size=l",
+      "mediaType": "Text",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/DeMKDu6ARJS",
+      "competitorName": "Pentagon Forge & Machine Ltd.",
+      "shortcode": "DeMKDu6ARJS"
+    },
+    {
+      "id": "li_1792652964371_j5ubc",
+      "company": "Pentagon Forge & Machine Ltd.",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/pentagon-forge_pentagonforge-employeeengagement-teambuilding-activity-7518276401360367617-MOUb",
+      "caption": "Great teamwork starts with genuine connections.\n\nAt Pentagon Forge, our recent HR get-together brought everyone together for engaging activities, open conversations, and plenty of memorable moments.\n\nBeyond everyday responsibilities, it was a chance to connect, share experiences, and strengthen the bonds that make us one team.\n\nBecause a stronger workplace begins with people who grow together.\n\nPentagon Forge - Strong Teams. Stronger Together.\n\n#PentagonForge #EmployeeEngagement #TeamBuilding #WorkplaceCulture #HR #Team",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGUG62nJSc4xA/thumbnail-with-play-button-overlay-high/B4DaFZIf6VK0C0-/0/1792496771680?e=2147483647&v=beta&t=0FHnPJcCbfeF0tpvpO3KG_ED9s4dBQuhI6Dz-Z9x5rw",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGUG62nJSc4xA/thumbnail-with-play-button-overlay-high/B4DaFZIf6VK0C0-/0/1792496771680?e=2147483647&v=beta&t=0FHnPJcCbfeF0tpvpO3KG_ED9s4dBQuhI6Dz-Z9x5rw",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/pentagon-forge/",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGUG62nJSc4xA/thumbnail-with-play-button-overlay-high/B4DaFZIf6VK0C0-/0/1792496771680?e=2147483647&v=beta&t=0FHnPJcCbfeF0tpvpO3KG_ED9s4dBQuhI6Dz-Z9x5rw",
+      "published_date": "2026-10-20",
+      "link": "https://www.linkedin.com/posts/pentagon-forge_pentagonforge-employeeengagement-teambuilding-activity-7518276401360367617-MOUb",
+      "content": "Great teamwork starts with genuine connections.\n\nAt Pentagon Forge, our recent HR get-together brought everyone together for engaging activities, open conversations, and plenty of memorable moments.\n\nBeyond everyday responsibilities, it was a chance to connect, share experiences, and strengthen the bonds that make us one team.\n\nBecause a stronger workplace begins with people who grow together.\n\nPentagon Forge - Strong Teams. Stronger Together.\n\n#PentagonForge #EmployeeEngagement #TeamBuilding #WorkplaceCulture #HR #Team",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGUG62nJSc4xA/thumbnail-with-play-button-overlay-high/B4DaFZIf6VK0C0-/0/1792496771680?e=2147483647&v=beta&t=0FHnPJcCbfeF0tpvpO3KG_ED9s4dBQuhI6Dz-Z9x5rw",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGUG62nJSc4xA/thumbnail-with-play-button-overlay-high/B4DaFZIf6VK0C0-/0/1792496771680?e=2147483647&v=beta&t=0FHnPJcCbfeF0tpvpO3KG_ED9s4dBQuhI6Dz-Z9x5rw",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/pentagon-forge_pentagonforge-employeeengagement-teambuilding-activity-7518276401360367617-MOUb",
+      "competitorName": "Pentagon Forge & Machine Ltd.",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGUG62nJSc4xA/mp4-720p-30fp-crf28/B4DaFZIf6VK0B8-/0/1792496771680?e=2147483647&v=beta&t=W8clSmGXU70k3njwIMmrKJE7IAklEvHzedPVF9buJa0",
+      "activity_id": "7518276401360367617"
+    },
+    {
+      "id": "li_1792652964371_ngzxg",
+      "company": "Pentagon Forge & Machine Ltd.",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/pentagon-forge_metalforging-steelforging-precisionforging-activity-7513572559481757696-U7Ap",
+      "caption": "Material compliance is one of the foundations of a reliable forged component.\n\nAt Pentagon Forge & Machine, the material grade is defined by the customer based on drawing, application and performance requirements. Our role is to ensure that the specified material is sourced, verified and processed correctly throughout manufacturing.\n\nOur forging capabilities cover:\n\n* Low Carbon Steel\n* Medium Carbon Steel\n* Alloy Steel\n* Stainless Steel\n* Aluminium Alloys\n\nCommon grades include SAE 1018, SAE 1020, SAE1045 EN32B, S355, SAE 4140, SAE 4340, SS304/304L, SS316/316L, HE15 and HE30.\n\nRaw materials are sourced from OEM-approved Indian steel manufacturers, supporting consistency, traceability and dependable manufacturing quality.\n\nFrom raw material receipt to the finished forged component, every stage matters.\n\n#MetalForging #SteelForging #PrecisionForging #ForgingManufacturer #EngineeringComponents #AlloySteel #Manufacturing #PentagonForge",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQHZrfJPem-a3g/feedshare-shrink_800/B4EaEWSbYxGUAc-/0/1791375292415?e=2147483647&v=beta&t=ZyH-E0ifW4D3Vbj7VNkJcr65QHdtcvUIVhMbXz7b1-U",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQHZrfJPem-a3g/feedshare-shrink_800/B4EaEWSbYxGUAc-/0/1791375292415?e=2147483647&v=beta&t=ZyH-E0ifW4D3Vbj7VNkJcr65QHdtcvUIVhMbXz7b1-U",
+      "date": "2026-10-07",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/pentagon-forge/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQHZrfJPem-a3g/feedshare-shrink_800/B4EaEWSbYxGUAc-/0/1791375292415?e=2147483647&v=beta&t=ZyH-E0ifW4D3Vbj7VNkJcr65QHdtcvUIVhMbXz7b1-U",
+      "published_date": "2026-10-07",
+      "link": "https://www.linkedin.com/posts/pentagon-forge_metalforging-steelforging-precisionforging-activity-7513572559481757696-U7Ap",
+      "content": "Material compliance is one of the foundations of a reliable forged component.\n\nAt Pentagon Forge & Machine, the material grade is defined by the customer based on drawing, application and performance requirements. Our role is to ensure that the specified material is sourced, verified and processed correctly throughout manufacturing.\n\nOur forging capabilities cover:\n\n* Low Carbon Steel\n* Medium Carbon Steel\n* Alloy Steel\n* Stainless Steel\n* Aluminium Alloys\n\nCommon grades include SAE 1018, SAE 1020, SAE1045 EN32B, S355, SAE 4140, SAE 4340, SS304/304L, SS316/316L, HE15 and HE30.\n\nRaw materials are sourced from OEM-approved Indian steel manufacturers, supporting consistency, traceability and dependable manufacturing quality.\n\nFrom raw material receipt to the finished forged component, every stage matters.\n\n#MetalForging #SteelForging #PrecisionForging #ForgingManufacturer #EngineeringComponents #AlloySteel #Manufacturing #PentagonForge",
+      "timestamp": "2026-10-07",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQHZrfJPem-a3g/feedshare-shrink_800/B4EaEWSbYxGUAc-/0/1791375292415?e=2147483647&v=beta&t=ZyH-E0ifW4D3Vbj7VNkJcr65QHdtcvUIVhMbXz7b1-U",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQHZrfJPem-a3g/feedshare-shrink_800/B4EaEWSbYxGUAc-/0/1791375292415?e=2147483647&v=beta&t=ZyH-E0ifW4D3Vbj7VNkJcr65QHdtcvUIVhMbXz7b1-U",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/pentagon-forge_metalforging-steelforging-precisionforging-activity-7513572559481757696-U7Ap",
+      "competitorName": "Pentagon Forge & Machine Ltd.",
+      "activity_id": "7513572559481757696"
+    },
+    {
+      "id": "li_1792652964371_5o3nk",
+      "company": "Pentagon Forge & Machine Ltd.",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/pentagon-forge_pentagonforge-forging-precisionforging-activity-7503323926878392320-I2Mq",
+      "caption": "From Raw Metal to Finished Component, All Under One Roof.\n\nAt Pentagon Forge & Machine, manufacturing doesn't stop at forging.\n\nOur fully integrated process brings critical operations together in-house:\nCutting → Heating → Forging → Heat Treatment → Shot Blasting → Crack Detection / NDT → Machining → Finished Component\n\nThis integrated approach gives us greater control over quality, consistency, process flow, and precision at every stage.\n\nFrom raw material to the final component, every step is part of one connected manufacturing ecosystem.\nFully Integrated. Completely In-House.\n\n#PentagonForge #Forging #PrecisionForging #CNCMachining #Manufacturing #NDT #HeatTreatment #IndustrialManufacturing",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQH3TLdEpo-XVw/feedshare-image-high-res/B4DaBm50M7GYAU-/0/1788432827469?e=2147483647&v=beta&t=lhMmzHFt4cZQWBa6PToE6Y-u8Mq1m2kNw15YhqyCy5k",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQH3TLdEpo-XVw/feedshare-image-high-res/B4DaBm50M7GYAU-/0/1788432827469?e=2147483647&v=beta&t=lhMmzHFt4cZQWBa6PToE6Y-u8Mq1m2kNw15YhqyCy5k",
+      "date": "2026-09-09",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/pentagon-forge/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQH3TLdEpo-XVw/feedshare-image-high-res/B4DaBm50M7GYAU-/0/1788432827469?e=2147483647&v=beta&t=lhMmzHFt4cZQWBa6PToE6Y-u8Mq1m2kNw15YhqyCy5k",
+      "published_date": "2026-09-09",
+      "link": "https://www.linkedin.com/posts/pentagon-forge_pentagonforge-forging-precisionforging-activity-7503323926878392320-I2Mq",
+      "content": "From Raw Metal to Finished Component, All Under One Roof.\n\nAt Pentagon Forge & Machine, manufacturing doesn't stop at forging.\n\nOur fully integrated process brings critical operations together in-house:\nCutting → Heating → Forging → Heat Treatment → Shot Blasting → Crack Detection / NDT → Machining → Finished Component\n\nThis integrated approach gives us greater control over quality, consistency, process flow, and precision at every stage.\n\nFrom raw material to the final component, every step is part of one connected manufacturing ecosystem.\nFully Integrated. Completely In-House.\n\n#PentagonForge #Forging #PrecisionForging #CNCMachining #Manufacturing #NDT #HeatTreatment #IndustrialManufacturing",
+      "timestamp": "2026-09-09",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQH3TLdEpo-XVw/feedshare-image-high-res/B4DaBm50M7GYAU-/0/1788432827469?e=2147483647&v=beta&t=lhMmzHFt4cZQWBa6PToE6Y-u8Mq1m2kNw15YhqyCy5k",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQH3TLdEpo-XVw/feedshare-image-high-res/B4DaBm50M7GYAU-/0/1788432827469?e=2147483647&v=beta&t=lhMmzHFt4cZQWBa6PToE6Y-u8Mq1m2kNw15YhqyCy5k",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/pentagon-forge_pentagonforge-forging-precisionforging-activity-7503323926878392320-I2Mq",
+      "competitorName": "Pentagon Forge & Machine Ltd.",
+      "activity_id": "7503323926878392320"
+    },
+    {
+      "id": "li_1792652964371_muuj0",
+      "company": "Pentagon Forge & Machine Ltd.",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/pentagon-forge_pentagonforge-forging-manufacturing-activity-7498308733274599424-Izv5",
+      "caption": "Infrastructure is not just about size.\nIt is about the capability to deliver consistency at scale. \n\nAt Pentagon Forge & Machine Ltd., our manufacturing infrastructure is built to support the demanding requirements of global OEMs.\n\nWith:\n👉350,000+ sq.ft. manufacturing facility\n👉9 forging lines including presses, hammers & upsetters\n👉72 CNC machines for precision machining\n👉24,000+ tons annual forging capacity\n\nEvery number represents our commitment towards precision, reliability, and continuous improvement.\n\nFrom forging to machining, we engineer components that help global industries move forward.\n\nBuilt to manufacture. Engineered to perform. Trusted to deliver.\n\n#PentagonForge #Forging #Manufacturing #PrecisionEngineering #OEMPartner #MadeInIndia #KalariaForge #Machining #CNC",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQF3gdRbSS8W1g/feedshare-image-high-res/B4DaA9YD1BHcAU-/0/1787736112692?e=2147483647&v=beta&t=uG8OgBs-R82Q8kzY7D_Yjh2GoghJMgA1X5AanuooRiQ",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQF3gdRbSS8W1g/feedshare-image-high-res/B4DaA9YD1BHcAU-/0/1787736112692?e=2147483647&v=beta&t=uG8OgBs-R82Q8kzY7D_Yjh2GoghJMgA1X5AanuooRiQ",
+      "date": "2026-08-26",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/pentagon-forge/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQF3gdRbSS8W1g/feedshare-image-high-res/B4DaA9YD1BHcAU-/0/1787736112692?e=2147483647&v=beta&t=uG8OgBs-R82Q8kzY7D_Yjh2GoghJMgA1X5AanuooRiQ",
+      "published_date": "2026-08-26",
+      "link": "https://www.linkedin.com/posts/pentagon-forge_pentagonforge-forging-manufacturing-activity-7498308733274599424-Izv5",
+      "content": "Infrastructure is not just about size.\nIt is about the capability to deliver consistency at scale. \n\nAt Pentagon Forge & Machine Ltd., our manufacturing infrastructure is built to support the demanding requirements of global OEMs.\n\nWith:\n👉350,000+ sq.ft. manufacturing facility\n👉9 forging lines including presses, hammers & upsetters\n👉72 CNC machines for precision machining\n👉24,000+ tons annual forging capacity\n\nEvery number represents our commitment towards precision, reliability, and continuous improvement.\n\nFrom forging to machining, we engineer components that help global industries move forward.\n\nBuilt to manufacture. Engineered to perform. Trusted to deliver.\n\n#PentagonForge #Forging #Manufacturing #PrecisionEngineering #OEMPartner #MadeInIndia #KalariaForge #Machining #CNC",
+      "timestamp": "2026-08-26",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQF3gdRbSS8W1g/feedshare-image-high-res/B4DaA9YD1BHcAU-/0/1787736112692?e=2147483647&v=beta&t=uG8OgBs-R82Q8kzY7D_Yjh2GoghJMgA1X5AanuooRiQ",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQF3gdRbSS8W1g/feedshare-image-high-res/B4DaA9YD1BHcAU-/0/1787736112692?e=2147483647&v=beta&t=uG8OgBs-R82Q8kzY7D_Yjh2GoghJMgA1X5AanuooRiQ",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/pentagon-forge_pentagonforge-forging-manufacturing-activity-7498308733274599424-Izv5",
+      "competitorName": "Pentagon Forge & Machine Ltd.",
+      "activity_id": "7498308733274599424"
+    },
+    {
+      "id": "li_1792652964371_q9qfg",
+      "company": "Pentagon Forge & Machine Ltd.",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/pentagon-forge_forging-manufacturingexcellence-precisionengineering-activity-7495761505725009922-vKoE",
+      "caption": "Forged for Every Industry. Engineered for Every Challenge.\n\nFrom Automotive to Mining, Construction, Agriculture, Oil & Gas, Pole Line Transmission, and Industrial applications - Pentagon Forge & Machine delivers precision-engineered forging solutions built for performance, reliability, and durability.\n\nWith decades of forging expertise, advanced manufacturing capabilities, and a commitment to quality, we support global industries with components designed to perform under the toughest conditions.\n\nEvery forging represents our focus on:\n✔️ Strength\n✔️ Precision\n✔️ Consistent quality\n✔️ Custom engineering solutions\n\nBecause at Pentagon, we don't just manufacture components - we shape the strength behind critical applications.\n\nPentagon Forge & Machine Ltd.\nShaping The Strength.\n\n#Forging #ManufacturingExcellence #PrecisionEngineering #AutomotiveIndustry #MiningIndustry #HeavyEngineering #OEM #MadeInIndia",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQHwvN8CZBRa-Q/feedshare-image-high-res/B4DaAZLXx8KQAU-/0/1787128806814?e=2147483647&v=beta&t=lzBsn_Cge18CZ750GrZtpnDOHEzJDTa_tE2l39yZIz0",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQHwvN8CZBRa-Q/feedshare-image-high-res/B4DaAZLXx8KQAU-/0/1787128806814?e=2147483647&v=beta&t=lzBsn_Cge18CZ750GrZtpnDOHEzJDTa_tE2l39yZIz0",
+      "date": "2026-08-19",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/pentagon-forge/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQHwvN8CZBRa-Q/feedshare-image-high-res/B4DaAZLXx8KQAU-/0/1787128806814?e=2147483647&v=beta&t=lzBsn_Cge18CZ750GrZtpnDOHEzJDTa_tE2l39yZIz0",
+      "published_date": "2026-08-19",
+      "link": "https://www.linkedin.com/posts/pentagon-forge_forging-manufacturingexcellence-precisionengineering-activity-7495761505725009922-vKoE",
+      "content": "Forged for Every Industry. Engineered for Every Challenge.\n\nFrom Automotive to Mining, Construction, Agriculture, Oil & Gas, Pole Line Transmission, and Industrial applications - Pentagon Forge & Machine delivers precision-engineered forging solutions built for performance, reliability, and durability.\n\nWith decades of forging expertise, advanced manufacturing capabilities, and a commitment to quality, we support global industries with components designed to perform under the toughest conditions.\n\nEvery forging represents our focus on:\n✔️ Strength\n✔️ Precision\n✔️ Consistent quality\n✔️ Custom engineering solutions\n\nBecause at Pentagon, we don't just manufacture components - we shape the strength behind critical applications.\n\nPentagon Forge & Machine Ltd.\nShaping The Strength.\n\n#Forging #ManufacturingExcellence #PrecisionEngineering #AutomotiveIndustry #MiningIndustry #HeavyEngineering #OEM #MadeInIndia",
+      "timestamp": "2026-08-19",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQHwvN8CZBRa-Q/feedshare-image-high-res/B4DaAZLXx8KQAU-/0/1787128806814?e=2147483647&v=beta&t=lzBsn_Cge18CZ750GrZtpnDOHEzJDTa_tE2l39yZIz0",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQHwvN8CZBRa-Q/feedshare-image-high-res/B4DaAZLXx8KQAU-/0/1787128806814?e=2147483647&v=beta&t=lzBsn_Cge18CZ750GrZtpnDOHEzJDTa_tE2l39yZIz0",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/pentagon-forge_forging-manufacturingexcellence-precisionengineering-activity-7495761505725009922-vKoE",
+      "competitorName": "Pentagon Forge & Machine Ltd.",
+      "activity_id": "7495761505725009922"
+    }
+  ],
   "brandVoicePattern": {
-    "captionStyle": "Medium-length storytelling with technical precision and structured bulleted specs",
-    "tone": "Authoritative industrial manufacturer, high metallurgical and engineering depth",
+    "captionStyle": "Brief 1‑2 sentence statements often beginning with 'At Pentagon Forge...' followed by concise technical details; occasional bullet‑style lines with emojis; typically under 150 characters.",
+    "tone": "Authoritative industrial B2B, emphasizing precision engineering, reliability, and quality while showcasing collaborative partnerships.",
     "formattingPreferences": [
-      "Structured bullet points with checkmark emojis (✅)",
-      "Clear technical specification callouts",
-      "Direct problem-to-solution narrative structure",
-      "Clean, professional spacing"
+      "Consistent opening phrase 'At Pentagon Forge...'",
+      "Line breaks for visual separation",
+      "Emoji checkmarks (✅) and arrow symbols (👉) to highlight benefits",
+      "Capitalized headings or key phrases",
+      "Bullet‑style lists within the caption"
     ],
     "signatureHashtags": [
-      "#PentagonForgeMachineLtd",
-      "#Manufacturing",
+      "#PentagonForge",
+      "#ForgingSolutions",
       "#PrecisionEngineering",
-      "#QualityManufacturing",
-      "#B2B"
+      "#IndustrialManufacturing",
+      "#OEMPartner",
+      "#QualityAssurance",
+      "#HeavyIndustry"
     ],
     "preferredCTAs": [
-      "Connect with our engineering team for technical drawing reviews",
-      "Request a custom batch manufacturing RFQ"
+      "Contact us for a custom RFQ",
+      "Visit our website for more details",
+      "Connect with our sales team",
+      "Schedule a plant tour"
     ],
     "frequentThemes": [
-      "Machining & Tolerances",
-      "Quality Testing & ISO Standards",
-      "Facility & Infrastructure Capabilities"
+      "Integrated forging & machining process",
+      "Custom component solutions for multiple industries",
+      "Material compliance and quality assurance",
+      "Manufacturing infrastructure and capacity",
+      "Employee/HR culture and team building",
+      "Client showcase and partnership videos"
     ],
-    "recentPostTopics": [],
-    "analyzedPostCount": 0,
-    "lastAnalyzedAt": "2026-10-22T06:16:29.338Z"
+    "recentPostTopics": [
+      "Corporate video showcasing Kalaria Forge Group partnership",
+      "Corporate video showcasing Metalic Technoforge Pvt. Ltd partnership",
+      "Corporate video showcasing Mod Forge Private Ltd partnership",
+      "Production of 5‑45 kg trunnions with controlled forging, heat treatment, and precision machining",
+      "Gantry Automation implementation reduces manual work and boosts safety",
+      "Custom engineering per customer drawings and specifications",
+      "Custom component manufacturing for automotive, construction, railway, agriculture, oil & gas, mining, heavy engineering",
+      "Customer‑specified material sourcing and processing for forged components",
+      "HR team‑building event fostering genuine connections",
+      "Material grade compliance and verification per customer requirements",
+      "All‑under‑one‑roof integrated forging workflow from raw metal to finished component",
+      "350k+ sq.ft. facility with 9 forging lines supporting global OEMs",
+      "Broad industry coverage and engineered forging solutions for diverse sectors"
+    ],
+    "analyzedPostCount": 13,
+    "lastAnalyzedAt": "2026-10-22T07:09:36.714Z"
   },
   "vectorKnowledgeBase": {
     "facts": [
@@ -69027,7 +69426,25 @@
         "Heat Treatment",
         "CNC Machining",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 1
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "PRINCE FORGE INDUSTRIES",
@@ -69682,7 +70099,25 @@
         "Blank Cutting & Heating",
         "Heat Treatment",
         "CNC Machining"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 2
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 2
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "SSM Forge Pvt Ltd",
@@ -69898,7 +70333,7 @@
         "linkedin": "https://www.linkedin.com/in/hindustan-forging-900a12268/",
         "instagram": null,
         "facebook": null,
-        "youtube": "https://www.youtube.com/user/Wix"
+        "youtube": null
       },
       "products": [
         "Drop Forgings",
@@ -69919,7 +70354,25 @@
         "Engineering & Design Services",
         "Logistics & Export Support",
         "Engineering & Design"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 2
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 1
+        }
+      }
     },
     {
       "name": "Sunil Forging & Steel Industries Unit-1",
