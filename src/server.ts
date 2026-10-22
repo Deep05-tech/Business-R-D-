@@ -43,6 +43,7 @@ import { DiagnosticAgent } from "./agents/diagnosticAgent.js";
 import { TrendingTopicsAgent } from "./agents/trendingTopicsAgent.js";
 import { ProjectSocialAgent } from "./agents/projectSocialAgent.js";
 import { AuthStore, type AuthUser } from "./auth/authStore.js";
+import { extractDistinctiveBrandTokens } from "./utils/socialVerificationUtils.js";
 
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
@@ -158,9 +159,10 @@ const runTrackerOnce = async (site: any): Promise<void> => {
     return current;
   }
 
+  const runStartTime = Date.now();
   activeTrackerStatus.set(key, {
     running: true,
-    startTime: Date.now(),
+    startTime: runStartTime,
     progress: "Scanning competitor social platforms...",
   });
 
@@ -170,7 +172,7 @@ const runTrackerOnce = async (site: any): Promise<void> => {
       knowledgeIndex.add(site);
       activeTrackerStatus.set(key, {
         running: false,
-        startTime: Date.now(),
+        startTime: runStartTime,
         completedAt: Date.now(),
         progress: `Completed crawl. Extracted ${posts?.length || 0} posts.`,
         postsCount: posts?.length || 0
@@ -178,7 +180,7 @@ const runTrackerOnce = async (site: any): Promise<void> => {
     } catch (err: any) {
       activeTrackerStatus.set(key, {
         running: false,
-        startTime: Date.now(),
+        startTime: runStartTime,
         completedAt: Date.now(),
         progress: `Failed: ${err.message}`,
         error: err.message
@@ -1969,9 +1971,14 @@ app.get(["/api/cron/status", "/api/tracker/status"], async (request, response) =
     }
 
     const feed = ((memory as any)?.socialFeed || []) as any[];
+    const elapsedSec = (status?.startTime && (isRunning || status?.running === true))
+      ? Math.max(0, Math.floor((Date.now() - status.startTime) / 1000))
+      : 0;
 
     return response.json({
       running: isRunning || status?.running === true,
+      startTime: status?.startTime || null,
+      elapsedSec,
       progress: status?.progress || (isRunning ? "Crawling competitor social platforms..." : "Idle"),
       feedCount: feed.length,
       error: status?.error,
@@ -2013,10 +2020,9 @@ app.get("/api/social-feed", async (request, response) => {
       targetDomain = new URL(targetSiteUrl.startsWith("http") ? targetSiteUrl : `https://${targetSiteUrl}`).hostname.replace(/^www\./, "").toLowerCase();
     } catch {}
 
-    const targetTokens = [
-      ...targetOfficialName.split(/[\s,.-]+/).filter(w => w.length >= 4 && !['solutions', 'pvt', 'ltd', 'private', 'limited', 'company', 'inc', 'corp', 'industries', 'group', 'agency', 'works', 'tech'].includes(w)),
-      targetDomain.split('.')[0]
-    ].filter(Boolean);
+    const targetBrand = extractDistinctiveBrandTokens(targetOfficialName || targetDomain);
+    const targetPrimaryTokens = targetBrand.primaryTokens.filter(t => t.length >= 3);
+    const targetDomainRoot = targetDomain.split('.')[0]?.toLowerCase() || '';
 
     const targetHandles = (memory.input?.socialUrls || []).map(u => {
       try {
@@ -2035,12 +2041,16 @@ app.get("/api/social-feed", async (request, response) => {
       const platformStr = String(post.platform || "").toLowerCase();
       const companyKey = String(post.company || post.competitorName || "").trim().toLowerCase();
 
+      const compBrand = extractDistinctiveBrandTokens(companyKey);
+      const compPrimaryTokens = compBrand.primaryTokens.filter(t => t.length >= 3);
+
       // Strictly filter out posts belonging to the target project itself (this is the COMPETITOR Feed)
       const isSelfPost = 
-        (targetOfficialName && (companyKey === targetOfficialName || companyKey.includes(targetOfficialName) || targetOfficialName.includes(companyKey))) ||
-        (targetDomain && rawLinkLower.includes(targetDomain)) ||
-        targetTokens.some(tok => companyKey.includes(tok) && targetOfficialName.includes(tok)) ||
-        targetHandles.some(h => h && h.length > 3 && rawLinkLower.includes(h));
+        (companyKey && targetOfficialName && (companyKey === targetOfficialName || (targetOfficialName.length >= 5 && companyKey.includes(targetOfficialName)) || (companyKey.length >= 5 && targetOfficialName.includes(companyKey)))) ||
+        (targetDomain && targetDomain.length >= 4 && rawLinkLower.includes(targetDomain)) ||
+        (targetDomainRoot && targetDomainRoot.length >= 4 && (companyKey === targetDomainRoot || rawLinkLower.includes(`/${targetDomainRoot}`))) ||
+        (targetPrimaryTokens.length > 0 && targetPrimaryTokens.some(tok => compPrimaryTokens.includes(tok) || (companyKey.length >= 3 && companyKey.split(/\s+/).includes(tok)))) ||
+        targetHandles.some(h => h && h.length > 3 && (rawLinkLower.includes(`/${h}`) || rawLinkLower.includes(`@${h}`) || companyKey === h));
 
       if (isSelfPost) {
         continue;
@@ -2074,13 +2084,6 @@ app.get("/api/social-feed", async (request, response) => {
         post.link = rawLink;
         filteredFeed.push(post);
       }
-    }
-
-    // If the competitor feed is empty but competitors exist, trigger tracker once in the background
-    if (filteredFeed.length === 0 && memory.competitors && memory.competitors.length > 0) {
-      runTrackerOnce(memory).catch(err => {
-        logger.warn(`Auto-triggered social tracker error: ${err.message}`);
-      });
     }
 
     const trackerKey = normalizeTrackerKey(url || memory.input?.websiteUrl || "");

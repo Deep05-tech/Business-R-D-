@@ -1274,7 +1274,7 @@ function startLiveSync() {
       if (compCountChanged && activeTab === 'competitors' && !window._isFindingCompetitors) {
         loadCompetitorsUI();
       }
-      if (feedCountChanged && activeTab === 'social-feed') {
+      if (feedCountChanged && activeTab === 'social-feed' && !_trackerPollInterval) {
         loadFeedUI();
       }
     } catch (e) {
@@ -3057,19 +3057,25 @@ window.pollTrackerStatus = function(projectUrl, startTime = Date.now()) {
   const poll = async () => {
     // If user changed projects, stop polling
     if (!window.activeProjectUrl || window.activeProjectUrl !== projectUrl) {
-      if (_trackerPollInterval) clearInterval(_trackerPollInterval);
+      if (_trackerPollInterval) {
+        clearInterval(_trackerPollInterval);
+        _trackerPollInterval = null;
+      }
       if (btn) { btn.disabled = false; btn.innerText = 'Run Competitor Tracker Now'; }
       return;
     }
 
     const elapsedEl = document.getElementById('tracker-elapsed-text');
     const msgEl = document.getElementById('tracker-progress-msg');
-    const elapsedSeconds = Math.max(0, Math.floor((Date.now() - startTime) / 1000));
-    if (elapsedEl) elapsedEl.textContent = `Elapsed: ${elapsedSeconds}s`;
 
     try {
       const res = await fetch(`/api/cron/status?url=${encodeURIComponent(projectUrl)}`);
       const status = await window.safeParseResponse(res);
+
+      const elapsedSeconds = (typeof status.elapsedSec === 'number' && status.elapsedSec >= 0)
+        ? status.elapsedSec
+        : Math.max(0, Math.floor((Date.now() - startTime) / 1000));
+      if (elapsedEl) elapsedEl.textContent = `Elapsed: ${elapsedSeconds}s`;
 
       if (status.running) {
         if (msgEl && status.progress) {
@@ -3160,8 +3166,10 @@ async function loadFeedUI() {
     
     // If tracker is actively running in background, show progress and poll
     if (data.trackerRunning) {
-      window.renderTrackerRunningCard(list, "Crawling competitor social media across YouTube, Instagram, Facebook, and LinkedIn...");
-      window.pollTrackerStatus(window.activeProjectUrl);
+      if (!_trackerPollInterval) {
+        window.renderTrackerRunningCard(list, "Crawling competitor social media across YouTube, Instagram, Facebook, and LinkedIn...");
+        window.pollTrackerStatus(window.activeProjectUrl);
+      }
       return;
     }
 
