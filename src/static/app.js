@@ -689,17 +689,15 @@ window.renderProjectsDirectoryUI = async function() {
     const projects = data.allProjects || [];
     const isAdmin = window.currentUser?.role === 'admin';
     const assignedProjects = projects.filter(project => project.assigned);
-    const otherProjects = isAdmin ? projects.filter(project => !project.assigned) : [];
+    const otherProjects = projects.filter(project => !project.assigned);
     
-    // Hide the unassigned "Other Projects & Historical Analyses" section completely for regular users
+    // Both sections are visible to all users: Assigned projects on top, others in bottom
     if (allOtherSection) {
-      allOtherSection.style.display = isAdmin ? 'block' : 'none';
+      allOtherSection.style.display = otherProjects.length > 0 ? 'block' : 'none';
     }
     
-    if (assignedProjects.length === 0) {
-      yourGrid.innerHTML = isAdmin 
-        ? '<div class="empty-state">No active projects found. Click "Start New Analysis" above to analyze a website.</div>'
-        : '<div class="empty-state">No projects have been assigned to your account yet. Please contact your administrator.</div>';
+    if (projects.length === 0) {
+      yourGrid.innerHTML = '<div class="empty-state">No active projects found. Click "Start New Analysis" above to analyze a website.</div>';
       if (allGrid) allGrid.innerHTML = '<div class="empty-state">No historical projects found.</div>';
       if (yourCount) yourCount.textContent = '0';
       if (allCount) allCount.textContent = '0';
@@ -748,8 +746,8 @@ window.renderProjectsDirectoryUI = async function() {
       `;
       }).join('');
     };
-    yourGrid.innerHTML = renderProjectCards(assignedProjects, isAdmin ? 'No assigned projects found.' : 'No projects have been assigned to your account yet.');
-    if (allGrid && isAdmin) {
+    yourGrid.innerHTML = renderProjectCards(assignedProjects, 'No projects are currently assigned to your account. You can explore and work on any project below.');
+    if (allGrid) {
       allGrid.innerHTML = renderProjectCards(otherProjects, 'No other projects found.');
     }
   } catch(e) {

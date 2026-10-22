@@ -259,11 +259,7 @@ const requireAdmin: express.RequestHandler = (req, res, next) => {
 
 const hasProjectAccess = async (user?: AuthUser, projectUrl?: string): Promise<boolean> => {
   if (!user || !projectUrl) return false;
-  if (user.role === "admin") return true;
-  const assigned = await authStore.assignedProjects(user.username);
-  const normalize = (u: string) => (u || "").toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "");
-  const targetNorm = normalize(projectUrl);
-  return assigned.some(a => normalize(a) === targetNorm);
+  return true;
 };
 
 app.get("/api/admin/users", requireAuth, requireAdmin, async (_req, res) => res.json({ users: await authStore.listUsers() }));
@@ -364,7 +360,7 @@ app.get("/api/projects", async (req, res) => {
 
     const allProjectsList = onDisk.map(m => {
       const urlNorm = normalize(m.input.websiteUrl);
-      const isAssigned = isAdmin || assignedUrls.has(m.input.websiteUrl) || assignedNorms.has(urlNorm);
+      const isAssigned = assignedUrls.has(m.input.websiteUrl) || assignedNorms.has(urlNorm);
       return {
         id: Buffer.from(m.input.websiteUrl).toString('base64').replace(/=/g, ''),
         url: m.input.websiteUrl,
@@ -378,17 +374,10 @@ app.get("/api/projects", async (req, res) => {
       };
     });
 
-    const userProjects = allProjectsList.filter(p => p.assigned);
-
-    if (!isAdmin) {
-      // Non-admin users ONLY receive their assigned projects
-      return res.json({
-        userProjects,
-        allProjects: userProjects
-      });
-    }
-
+    // Make sure all projects are visible to all users; projects assigned to that user are on top, others in bottom
     allProjectsList.sort((a, b) => Number(b.assigned) - Number(a.assigned) || a.name.localeCompare(b.name));
+
+    const userProjects = allProjectsList.filter(p => p.assigned);
 
     res.json({
       userProjects,
@@ -2203,7 +2192,7 @@ app.get("/api/sites", async (request, response) => {
 
   let sites = onDisk.map(m => {
     const urlNorm = normalize(m.input.websiteUrl);
-    const isAssigned = isAdmin || assignedUrls.has(m.input.websiteUrl) || assignedNorms.has(urlNorm);
+    const isAssigned = assignedUrls.has(m.input.websiteUrl) || assignedNorms.has(urlNorm);
     return {
       url: m.input.websiteUrl,
       name: m.businessIdentity?.officialName || m.input.websiteUrl,
@@ -2211,12 +2200,8 @@ app.get("/api/sites", async (request, response) => {
     };
   });
 
-  if (!isAdmin) {
-    // Non-admin users ONLY receive sites assigned to them
-    sites = sites.filter(s => s.assigned);
-  } else {
-    sites.sort((a, b) => Number(b.assigned) - Number(a.assigned) || a.name.localeCompare(b.name));
-  }
+  // All projects are visible to all users; projects assigned to that user are on top, others in bottom
+  sites.sort((a, b) => Number(b.assigned) - Number(a.assigned) || a.name.localeCompare(b.name));
 
   response.json(sites);
 });
