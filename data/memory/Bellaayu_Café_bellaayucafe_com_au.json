@@ -542,7 +542,207 @@
       "inferred": true
     }
   ],
-  "socialFeed": [],
+  "socialFeed": [
+    {
+      "id": "yt_64dEFETfiC0",
+      "company": "Koffeeone",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=64dEFETfiC0",
+      "caption": "How to prepare a beef casserole in a slow cooker",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/64dEFETfiC0/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/64dEFETfiC0/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@Koffeeone",
+      "thumbnail_url": "https://i.ytimg.com/vi/64dEFETfiC0/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=64dEFETfiC0",
+      "content": "How to prepare a beef casserole in a slow cooker",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/64dEFETfiC0/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/64dEFETfiC0/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=64dEFETfiC0",
+      "competitorName": "Koffeeone"
+    },
+    {
+      "id": "yt_GHyilMpRv48",
+      "company": "Koffeeone",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=GHyilMpRv48",
+      "caption": "Keith Payne VC Diggers Day 2026",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/GHyilMpRv48/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/GHyilMpRv48/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@Koffeeone",
+      "thumbnail_url": "https://i.ytimg.com/vi/GHyilMpRv48/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=GHyilMpRv48",
+      "content": "Keith Payne VC Diggers Day 2026",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/GHyilMpRv48/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/GHyilMpRv48/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=GHyilMpRv48",
+      "competitorName": "Koffeeone"
+    },
+    {
+      "id": "yt_5VfFcPV2pZA",
+      "company": "Koffeeone",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=5VfFcPV2pZA",
+      "caption": "D8 Standard  Barista Menu   Sanremo Tutorials",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/5VfFcPV2pZA/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/5VfFcPV2pZA/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@Koffeeone",
+      "thumbnail_url": "https://i.ytimg.com/vi/5VfFcPV2pZA/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=5VfFcPV2pZA",
+      "content": "D8 Standard  Barista Menu   Sanremo Tutorials",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/5VfFcPV2pZA/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/5VfFcPV2pZA/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=5VfFcPV2pZA",
+      "competitorName": "Koffeeone"
+    },
+    {
+      "id": "ig_Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk",
+      "company": "Coffee Roasters Australia",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/",
+      "caption": "Official Post.",
+      "media_type": "Image",
+      "thumbnail": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "media_url": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/coffeeroastersaustralia/",
+      "thumbnail_url": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "published_date": "2026-10-23",
+      "link": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/",
+      "content": "Official Post.",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/",
+      "competitorName": "Coffee Roasters Australia",
+      "shortcode": "Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk"
+    },
+    {
+      "id": "ig_qTfXdjJ4Bd96T5YuJheHlVPXSqTQm",
+      "company": "Coffee Roasters Australia",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/",
+      "caption": "Official Post.",
+      "media_type": "Image",
+      "thumbnail": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "media_url": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/coffeeroastersaustralia/",
+      "thumbnail_url": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "published_date": "2026-10-23",
+      "link": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/",
+      "content": "Official Post.",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/",
+      "competitorName": "Coffee Roasters Australia",
+      "shortcode": "qTfXdjJ4Bd96T5YuJheHlVPXSqTQm"
+    },
+    {
+      "id": "ig_kj4GsFGO0rtFy48yejAHxDPIKbkA",
+      "company": "Coffee Roasters Australia",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/",
+      "caption": "Official Post.",
+      "media_type": "Image",
+      "thumbnail": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "media_url": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/coffeeroastersaustralia/",
+      "thumbnail_url": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "published_date": "2026-10-23",
+      "link": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/",
+      "content": "Official Post.",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/",
+      "competitorName": "Coffee Roasters Australia",
+      "shortcode": "kj4GsFGO0rtFy48yejAHxDPIKbkA"
+    },
+    {
+      "id": "fb_1792740003315_gby8f",
+      "company": "Protech Espresso",
+      "platform": "Facebook",
+      "post_url": "https://www.facebook.com/permalink.php?story_fbid=pfbid0uAS2u38k9TMxkgAcz2JTGaN19aXxXU99NS7r7HwsFXp6fRaV9YqDQjyciprnFH19l&id=100054213562914",
+      "caption": "We are closed today Wednesday,  22 December 2020 and we will reopen on Monday, 6 January 2021 at 10am  From the team at Protech Espresso",
+      "media_type": "Text",
+      "thumbnail": "",
+      "media_url": "",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.facebook.com/people/Protech-Espresso/100054213562914/",
+      "thumbnail_url": "",
+      "published_date": "2026-10-23",
+      "link": "https://www.facebook.com/permalink.php?story_fbid=pfbid0uAS2u38k9TMxkgAcz2JTGaN19aXxXU99NS7r7HwsFXp6fRaV9YqDQjyciprnFH19l&id=100054213562914",
+      "content": "We are closed today Wednesday,  22 December 2020 and we will reopen on Monday, 6 January 2021 at 10am  From the team at Protech Espresso",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "",
+      "mediaUrls": "",
+      "mediaType": "Text",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.facebook.com/permalink.php?story_fbid=pfbid0uAS2u38k9TMxkgAcz2JTGaN19aXxXU99NS7r7HwsFXp6fRaV9YqDQjyciprnFH19l&id=100054213562914",
+      "competitorName": "Protech Espresso"
+    }
+  ],
   "ownSocials": {
     "linkedin": null,
     "instagram": null,
@@ -31476,7 +31676,25 @@
         "Café Services",
         "Custom Enterprise Solutions & Consulting",
         "Technical Support & Lifecycle Maintenance"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Pacific Commercial Services",
@@ -31509,7 +31727,25 @@
         "Custom Enterprise Solutions & Consulting",
         "Café Services",
         "Technical Support & Lifecycle Maintenance"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Commercial Kitchen Equipment Brisbane (Qld) | Cookon",
@@ -31528,10 +31764,10 @@
         }
       ],
       "socials": {
-        "linkedin": "https://au.linkedin.com/company/cookon-catering-equipment-pty-ltd",
-        "instagram": "https://www.instagram.com/cookonkaybee/?hl=en",
-        "facebook": "https://www.facebook.com/CookonKayBee/",
-        "youtube": "https://www.youtube.com/channel/UC0WXCASiGWGQQpeOEHd-PIQ/videos"
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
       },
       "products": [
         "Custom Enterprise Solutions & Consulting",
@@ -31542,7 +31778,25 @@
         "Custom Enterprise Solutions & Consulting",
         "Café Services",
         "Technical Support & Lifecycle Maintenance"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Essential Coffee",
@@ -31561,10 +31815,10 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/654912/",
+        "linkedin": null,
         "instagram": "https://www.instagram.com/essentialcoffee_/?hl=en",
         "facebook": "https://www.facebook.com/essentialcoffeegroup/",
-        "youtube": "https://www.youtube.com/channel/UCZSNrfDpIYfOdWvT_z2MZFA"
+        "youtube": null
       },
       "products": [
         "Café Services",
@@ -31573,7 +31827,25 @@
       "commonProducts": [
         "Café Services",
         "Custom Enterprise Solutions & Consulting"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "In Season Catering & Events Gold Coast",
@@ -31604,7 +31876,25 @@
       "commonProducts": [
         "Custom Enterprise Solutions & Consulting",
         "Café Services"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Design Choice Hospitality | Commercial Kitchen Equipment, Catering & Restaurant Supplies",
@@ -31654,7 +31944,7 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/67824373",
+        "linkedin": null,
         "instagram": "https://www.instagram.com/coffeemachinespecialist/",
         "facebook": "https://www.facebook.com/coffeemachinespecialist",
         "youtube": null
@@ -31664,7 +31954,25 @@
       ],
       "commonProducts": [
         "Café Services"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Protech Espresso",
@@ -31693,7 +32001,25 @@
       ],
       "commonProducts": [
         "Café Services"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 1
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Koffeeone | Commercial Coffee Machines For Rent & Sale",
@@ -31712,8 +32038,8 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/998567/admin/",
-        "instagram": "https://www.instagram.com/reel/DDokvbqqxLY/",
+        "linkedin": null,
+        "instagram": null,
         "facebook": "https://www.facebook.com/Koffeeone",
         "youtube": "https://www.youtube.com/@Koffeeone"
       },
@@ -31726,7 +32052,25 @@
         "Café Services",
         "Custom Enterprise Solutions & Consulting",
         "Technical Support & Lifecycle Maintenance"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Xtracted Espresso Solutions Melbourne",
@@ -31759,7 +32103,25 @@
         "Café Services",
         "Custom Enterprise Solutions & Consulting",
         "Technical Support & Lifecycle Maintenance"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Austmont",
@@ -31781,7 +32143,7 @@
         "linkedin": "https://www.linkedin.com/in/austmont-australia-4280b2168/",
         "instagram": "https://www.instagram.com/austmont_aus/",
         "facebook": "https://www.facebook.com/austmont/",
-        "youtube": "https://www.youtube.com/channel/UC9QcGp-tjlT-H58DELzv3Fg"
+        "youtube": null
       },
       "products": [
         "Café Services",
@@ -31792,7 +32154,25 @@
         "Café Services",
         "Custom Enterprise Solutions & Consulting",
         "Technical Support & Lifecycle Maintenance"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Commercial Kitchen Victoria",
@@ -31811,10 +32191,10 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/ckvictoria",
+        "linkedin": null,
         "instagram": "https://www.instagram.com/commercialkitchenvictoria/",
         "facebook": "https://www.facebook.com/commercialkitchenvictoria",
-        "youtube": "https://www.youtube.com/channel/UCWcUJENZV3bcrx3BXNPubZA"
+        "youtube": null
       },
       "products": [
         "Custom Enterprise Solutions & Consulting",
@@ -31825,7 +32205,25 @@
         "Custom Enterprise Solutions & Consulting",
         "Café Services",
         "Technical Support & Lifecycle Maintenance"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Kitchen Equipment Australia",
@@ -31856,7 +32254,25 @@
       "commonProducts": [
         "Custom Enterprise Solutions & Consulting",
         "Technical Support & Lifecycle Maintenance"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Coffee Machine Warehouse",
