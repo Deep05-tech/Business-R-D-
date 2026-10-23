@@ -40938,5 +40938,479 @@
         ]
       }
     ]
-  }
+  },
+  "competitors": [
+    {
+      "name": "Kathmandu Momo",
+      "url": "http://www.kathmandumomo.com.au/",
+      "type": "local",
+      "location": "6 Orchid Ave, Surfers Paradise QLD 4217, Australia",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: It is a Nepali restaurant offering similar dishes such as momo and chowmein, directly competing with Rai's Sekuwa Corner.. 6 common products: [Authentic Nepali BBQ (Sekuwa), Traditional Momo, Nepali Thukpa, Chowmein, Catering Services, Family-Friendly Menu & Catering Services]. Rating: 4.6 | Phone: (07) 5646 9701",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.kathmandumomo.com.au/"
+        },
+        {
+          "title": "Product: Authentic Nepali BBQ (Sekuwa)",
+          "url": "http://www.kathmandumomo.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Traditional Momo",
+        "Nepali Thukpa",
+        "Chowmein",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ],
+      "commonProducts": [
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Traditional Momo",
+        "Nepali Thukpa",
+        "Chowmein",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ]
+    },
+    {
+      "name": "Indus Indian &Nepalese Restaurant Gold coast",
+      "url": "https://indusrestaurant.com.au/",
+      "type": "local",
+      "location": "18 Cypress Ave, Surfers Paradise QLD 4217, Australia",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: Indus Indian & Nepalese Restaurant offers Nepali cuisine including Momo, Thukpa, and BBQ, directly competing with Rai's Sekuwa Corner.. 5 common products: [Authentic Nepali BBQ (Sekuwa), Traditional Momo, Nepali Thukpa, Catering Services, Family-Friendly Menu & Catering Services]. Rating: 4.6 | Phone: (07) 5593 3112",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://indusrestaurant.com.au/"
+        },
+        {
+          "title": "Product: Authentic Nepali BBQ (Sekuwa)",
+          "url": "https://indusrestaurant.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Traditional Momo",
+        "Nepali Thukpa",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ],
+      "commonProducts": [
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Traditional Momo",
+        "Nepali Thukpa",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ]
+    },
+    {
+      "name": "Super Butcher Southport",
+      "url": "http://www.superbutcher.com.au/",
+      "type": "local",
+      "location": "Shop 10/201 Ferry Rd, Southport QLD 4215, Australia",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 4 common products: [Authentic Nepali BBQ (Sekuwa), Traditional Momo, Catering Services, Family-Friendly Menu & Catering Services]. Socials: Facebook verified; Instagram verified. Rating: 4.8 | Phone: 0418 798 037",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.superbutcher.com.au/"
+        },
+        {
+          "title": "Product: Authentic Nepali BBQ (Sekuwa)",
+          "url": "http://www.superbutcher.com.au/collections/bbq-rubs-sauce"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/superbutcheraus/?hl=en",
+        "facebook": "https://www.facebook.com/SuperButcherAustralia/",
+        "youtube": null
+      },
+      "products": [
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Traditional Momo",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ],
+      "commonProducts": [
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Traditional Momo",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ]
+    },
+    {
+      "name": "Korean BBQ Buffet Gold Coast",
+      "url": "http://www.koreanbbqbuffetgc.com/",
+      "type": "local",
+      "location": "36 Davenport St, Southport QLD 4215, Australia",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 3 common products: [Authentic Nepali BBQ (Sekuwa), Catering Services, Family-Friendly Menu & Catering Services]. Rating: 4.4 | Phone: 0402 427 240",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.koreanbbqbuffetgc.com/"
+        },
+        {
+          "title": "Product: Authentic Nepali BBQ (Sekuwa)",
+          "url": "https://www.koreanbbqbuffetgc.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ],
+      "commonProducts": [
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ]
+    },
+    {
+      "name": "Momoko Southport",
+      "url": "https://momokosouthport.com/",
+      "type": "local",
+      "location": "Shop 8/158 Marine Parade, Southport QLD 4215, Australia",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: It serves Japanese cuisine, not Nepali BBQ or Momo, so it is not a direct competitor.. 1 common products: [Traditional Momo]. Socials: Facebook verified; Instagram verified. Rating: 4.7 | Phone: 0494 091 680",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://momokosouthport.com/"
+        },
+        {
+          "title": "Product: Traditional Momo",
+          "url": "https://www.facebook.com/momokosouthport"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/momokosouthport",
+        "facebook": "https://www.facebook.com/momokosouthport",
+        "youtube": null
+      },
+      "products": [
+        "Traditional Momo"
+      ],
+      "commonProducts": [
+        "Traditional Momo"
+      ]
+    },
+    {
+      "name": "Momo Eats",
+      "url": "http://momoeats.com.au/",
+      "type": "regional",
+      "location": "71 Prince Edward Park Rd, Woronora NSW 2232, Australia",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: They serve Nepali momo, directly competing for that menu item.. 3 common products: [Traditional Momo, Authentic Nepali BBQ (Sekuwa), Nepali Thukpa]. Socials: Facebook verified; Instagram verified. Rating: 5 | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://momoeats.com.au/"
+        },
+        {
+          "title": "Product: Traditional Momo",
+          "url": "https://momoeats.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/momoeats_australia/",
+        "facebook": "https://www.facebook.com/momoeatsaustralia/",
+        "youtube": null
+      },
+      "products": [
+        "Traditional Momo",
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Nepali Thukpa"
+      ],
+      "commonProducts": [
+        "Traditional Momo",
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Nepali Thukpa"
+      ]
+    },
+    {
+      "name": "Momo Express",
+      "url": "http://momoexpress.com.au/",
+      "type": "regional",
+      "location": "105 King St, Randwick NSW 2031, Australia",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: Momo Express is a Nepali restaurant that serves momo, a core offering of Rai's Sekuwa Corner, making it a direct competitor in the hospitality space.. 2 common products: [Traditional Momo, Nepali Thukpa]. Rating: N/A | Phone: 0493 321 592",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://momoexpress.com.au/"
+        },
+        {
+          "title": "Product: Traditional Momo",
+          "url": "http://momoexpress.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Traditional Momo",
+        "Nepali Thukpa"
+      ],
+      "commonProducts": [
+        "Traditional Momo",
+        "Nepali Thukpa"
+      ]
+    },
+    {
+      "name": "Taste of Himalayan",
+      "url": "https://tasteofhimalayan.uk/",
+      "type": "global",
+      "location": "33 High St, Blackheath, Rowley Regis B65 0DR, UK",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: Taste of Himalayan is an operating Nepalese restaurant offering similar dishes such as momo and BBQ, making it a direct competitor.. 5 common products: [Traditional Momo, Authentic Nepali BBQ (Sekuwa), Nepali Thukpa, Chowmein, Nepali & Australian Drinks]. Rating: 4.6 | Phone: 0121 820 5134",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://tasteofhimalayan.uk/"
+        },
+        {
+          "title": "Product: Traditional Momo",
+          "url": "https://tasteofhimalayan.uk/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Traditional Momo",
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Nepali Thukpa",
+        "Chowmein",
+        "Nepali & Australian Drinks"
+      ],
+      "commonProducts": [
+        "Traditional Momo",
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Nepali Thukpa",
+        "Chowmein",
+        "Nepali & Australian Drinks"
+      ]
+    },
+    {
+      "name": "Momo Factory",
+      "url": "https://momofactory.ca/",
+      "type": "global",
+      "location": "1143 Davie St, Vancouver, BC V6E 1N2, Canada",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: Momo Factory offers Nepali cuisine, including momo, which directly competes with Rai's Sekuwa Corner’s Nepali menu.. 5 common products: [Traditional Momo, Authentic Nepali BBQ (Sekuwa), Nepali Thukpa, Catering Services, Family-Friendly Menu & Catering Services]. Rating: 4.5 | Phone: (604) 559-9238",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://momofactory.ca/"
+        },
+        {
+          "title": "Product: Traditional Momo",
+          "url": "https://momofactory.ca/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Traditional Momo",
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Nepali Thukpa",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ],
+      "commonProducts": [
+        "Traditional Momo",
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Nepali Thukpa",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ]
+    },
+    {
+      "name": "Momo Factory (Chicago)",
+      "url": "http://momofactoryusa.com/",
+      "type": "global",
+      "location": "860 N Orleans St, Chicago, IL 60610, USA",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: Both serve Nepali cuisine, including momos, making them direct competitors.. 3 common products: [Traditional Momo, Catering Services, Family-Friendly Menu & Catering Services]. Socials: Facebook verified; Instagram verified. Rating: 4.6 | Phone: (872) 342-2031",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://momofactoryusa.com/"
+        },
+        {
+          "title": "Product: Traditional Momo",
+          "url": "https://order.online/store/momo-factory-chicago-779821/?hideModal=true&pickup=true"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/momofactory3202",
+        "facebook": "https://www.facebook.com/104722724208310",
+        "youtube": null
+      },
+      "products": [
+        "Traditional Momo",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ],
+      "commonProducts": [
+        "Traditional Momo",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ]
+    },
+    {
+      "name": "MoMo Time",
+      "url": "https://momotime.ca/",
+      "type": "global",
+      "location": "6790 Davand Dr #18, Mississauga, ON L5T 2G5, Canada",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 3 common products: [Traditional Momo, Authentic Nepali BBQ (Sekuwa), Nepali Thukpa]. Rating: 5 | Phone: (289) 384-1234",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://momotime.ca/"
+        },
+        {
+          "title": "Product: Traditional Momo",
+          "url": "https://momotime.ca/#"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Traditional Momo",
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Nepali Thukpa"
+      ],
+      "commonProducts": [
+        "Traditional Momo",
+        "Authentic Nepali BBQ (Sekuwa)",
+        "Nepali Thukpa"
+      ]
+    },
+    {
+      "name": "Bartush Schnitzius Foods Company",
+      "url": "http://www.bartushfoods.com/",
+      "type": "global",
+      "location": "East, 425 E Jones St, Lewisville, TX 75057, USA",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 3 common products: [Nepali Thukpa, Catering Services, Family-Friendly Menu & Catering Services]. Rating: 4.6 | Phone: (972) 219-1270",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.bartushfoods.com/"
+        },
+        {
+          "title": "Product: Nepali Thukpa",
+          "url": "http://www.bartushfoods.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Nepali Thukpa",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ],
+      "commonProducts": [
+        "Nepali Thukpa",
+        "Catering Services",
+        "Family-Friendly Menu & Catering Services"
+      ]
+    },
+    {
+      "name": "Yak and Yeti Momo Factory",
+      "url": "http://yakandyetimomofactory.com/",
+      "type": "global",
+      "location": "76 Westwinds Crescent NE #1105, Calgary, AB T3J 2E7, Canada",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: They are a Nepali street food business offering Momo, directly competing with Rai's Sekuwa Corner's Momo offerings.. 2 common products: [Traditional Momo, Nepali Thukpa]. Socials: Facebook verified. Rating: 4.9 | Phone: (866) 616-2681",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://yakandyetimomofactory.com/"
+        },
+        {
+          "title": "Product: Traditional Momo",
+          "url": "https://yakandyetimomofactory.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/profile.php?id=61580770830468",
+        "youtube": null
+      },
+      "products": [
+        "Traditional Momo",
+        "Nepali Thukpa"
+      ],
+      "commonProducts": [
+        "Traditional Momo",
+        "Nepali Thukpa"
+      ]
+    },
+    {
+      "name": "Montpak International",
+      "url": "http://www.montpak.ca/",
+      "type": "global",
+      "location": "5730 Pl. Maurice-Cullen, Laval, QC H7C 2V1, Canada",
+      "whyCompetitor": "Industry verified: Hospitality / Ethnic restaurant. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 2 common products: [Nepali Thukpa, Catering Services]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 3.7 | Phone: (450) 665-9524",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.montpak.ca/"
+        },
+        {
+          "title": "Product: Nepali Thukpa",
+          "url": "http://www.montpak.ca/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/montpak-international-inc-/",
+        "instagram": "https://www.instagram.com/famille_fontaine/",
+        "facebook": "https://www.facebook.com/MontpakInternational/",
+        "youtube": null
+      },
+      "products": [
+        "Nepali Thukpa",
+        "Catering Services"
+      ],
+      "commonProducts": [
+        "Nepali Thukpa",
+        "Catering Services"
+      ]
+    }
+  ]
 }
