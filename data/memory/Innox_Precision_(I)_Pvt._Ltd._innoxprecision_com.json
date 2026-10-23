@@ -787,7 +787,698 @@
       "inferred": true
     }
   ],
-  "socialFeed": [],
+  "socialFeed": [
+    {
+      "id": "post_1792730067360_pxzgqe",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=QzYpzQ9mJJs",
+      "caption": "Automechanika Jakarta 2026.",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/QzYpzQ9mJJs/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/QzYpzQ9mJJs/hqdefault.jpg",
+      "date": "2026-09-23",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://www.youtube.com/@aecoengineering",
+      "thumbnail_url": "https://i.ytimg.com/vi/QzYpzQ9mJJs/hqdefault.jpg",
+      "published_date": "2026-09-23",
+      "link": "https://www.youtube.com/watch?v=QzYpzQ9mJJs",
+      "content": "Automechanika Jakarta 2026.",
+      "timestamp": "2026-09-23",
+      "mediaUrl": "https://i.ytimg.com/vi/QzYpzQ9mJJs/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/QzYpzQ9mJJs/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=QzYpzQ9mJJs",
+      "competitorName": ""
+    },
+    {
+      "id": "yt_bXKDEnfkNTQ",
+      "company": "Prasanna Engineers Having Wire cutting machine 750 mm height Manufactruer Mining Tools Equipment Rebar Coupler Manufactruer",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=bXKDEnfkNTQ",
+      "caption": "Pookie Dad Pookie Vlog",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/bXKDEnfkNTQ/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/bXKDEnfkNTQ/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@prasanna2.0",
+      "thumbnail_url": "https://i.ytimg.com/vi/bXKDEnfkNTQ/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=bXKDEnfkNTQ",
+      "content": "Pookie Dad Pookie Vlog",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/bXKDEnfkNTQ/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/bXKDEnfkNTQ/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=bXKDEnfkNTQ",
+      "competitorName": "Prasanna Engineers Having Wire cutting machine 750 mm height Manufactruer Mining Tools Equipment Rebar Coupler Manufactruer"
+    },
+    {
+      "id": "post_1792730067360_a8etyn",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=0Fw_VreLd8o",
+      "caption": "AECO’s Next Big Milestone… Revealed Soon! #AECOArrow #automechanika2026",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/0Fw_VreLd8o/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/0Fw_VreLd8o/hqdefault.jpg",
+      "date": "2026-09-03",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://www.youtube.com/@aecoengineering",
+      "thumbnail_url": "https://i.ytimg.com/vi/0Fw_VreLd8o/hqdefault.jpg",
+      "published_date": "2026-09-03",
+      "link": "https://www.youtube.com/watch?v=0Fw_VreLd8o",
+      "content": "AECO’s Next Big Milestone… Revealed Soon! #AECOArrow #automechanika2026",
+      "timestamp": "2026-09-03",
+      "mediaUrl": "https://i.ytimg.com/vi/0Fw_VreLd8o/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/0Fw_VreLd8o/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=0Fw_VreLd8o",
+      "competitorName": ""
+    },
+    {
+      "id": "yt_IfkgfMUY1FM",
+      "company": "Prasanna Engineers Having Wire cutting machine 750 mm height Manufactruer Mining Tools Equipment Rebar Coupler Manufactruer",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=IfkgfMUY1FM",
+      "caption": "Silver Wedding Anniversary Celebration",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/IfkgfMUY1FM/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/IfkgfMUY1FM/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@prasanna2.0",
+      "thumbnail_url": "https://i.ytimg.com/vi/IfkgfMUY1FM/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=IfkgfMUY1FM",
+      "content": "Silver Wedding Anniversary Celebration",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/IfkgfMUY1FM/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/IfkgfMUY1FM/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=IfkgfMUY1FM",
+      "competitorName": "Prasanna Engineers Having Wire cutting machine 750 mm height Manufactruer Mining Tools Equipment Rebar Coupler Manufactruer"
+    },
+    {
+      "id": "post_1792730067360_4vtd5p",
+      "company": "",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=amwhV_dbiSM",
+      "caption": "AECO Piston & Ring Compatibility Highlight",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/amwhV_dbiSM/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/amwhV_dbiSM/hqdefault.jpg",
+      "date": "2026-03-28",
+      "engagement": {
+        "likes": "Hidden",
+        "comments": "Hidden"
+      },
+      "profile_url": "https://www.youtube.com/@aecoengineering",
+      "thumbnail_url": "https://i.ytimg.com/vi/amwhV_dbiSM/hqdefault.jpg",
+      "published_date": "2026-03-28",
+      "link": "https://www.youtube.com/watch?v=amwhV_dbiSM",
+      "content": "AECO Piston & Ring Compatibility Highlight",
+      "timestamp": "2026-03-28",
+      "mediaUrl": "https://i.ytimg.com/vi/amwhV_dbiSM/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/amwhV_dbiSM/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "Hidden",
+      "comments": "Hidden",
+      "postUrl": "https://www.youtube.com/watch?v=amwhV_dbiSM",
+      "competitorName": ""
+    },
+    {
+      "id": "yt_Mbukf_PV-9g",
+      "company": "Prasanna Engineers Having Wire cutting machine 750 mm height Manufactruer Mining Tools Equipment Rebar Coupler Manufactruer",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=Mbukf_PV-9g",
+      "caption": "Beautiful Laprak, The Art of Filmmaking",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/Mbukf_PV-9g/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/Mbukf_PV-9g/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@prasanna2.0",
+      "thumbnail_url": "https://i.ytimg.com/vi/Mbukf_PV-9g/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=Mbukf_PV-9g",
+      "content": "Beautiful Laprak, The Art of Filmmaking",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/Mbukf_PV-9g/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/Mbukf_PV-9g/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=Mbukf_PV-9g",
+      "competitorName": "Prasanna Engineers Having Wire cutting machine 750 mm height Manufactruer Mining Tools Equipment Rebar Coupler Manufactruer"
+    },
+    {
+      "id": "fb_1792730065756_ltk5v",
+      "company": "Delta Technocast",
+      "platform": "Facebook",
+      "post_url": "https://www.facebook.com/permalink.php?story_fbid=pfbid05ThkvegLqAp5FrRdcKheqVECcdRSQRCRk5iLCZ7D7NkT2QmwjXHCksvGc5Rk1GLrl&id=61564714912800",
+      "caption": "Official Update.",
+      "media_type": "Text",
+      "thumbnail": "",
+      "media_url": "",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.facebook.com/people/Delta-Technocast-Pvt-Ltd/61564714912800/",
+      "thumbnail_url": "",
+      "published_date": "2026-10-23",
+      "link": "https://www.facebook.com/permalink.php?story_fbid=pfbid05ThkvegLqAp5FrRdcKheqVECcdRSQRCRk5iLCZ7D7NkT2QmwjXHCksvGc5Rk1GLrl&id=61564714912800",
+      "content": "Official Update.",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "",
+      "mediaUrls": "",
+      "mediaType": "Text",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.facebook.com/permalink.php?story_fbid=pfbid05ThkvegLqAp5FrRdcKheqVECcdRSQRCRk5iLCZ7D7NkT2QmwjXHCksvGc5Rk1GLrl&id=61564714912800",
+      "competitorName": "Delta Technocast"
+    },
+    {
+      "id": "fb_1792730081659_d47un",
+      "company": "MechKonnect Industrial Solutions",
+      "platform": "Facebook",
+      "post_url": "https://www.facebook.com/permalink.php?story_fbid=pfbid0hnhDNinDs16ustddxQckVBp28HhPVas2bbETBe8a6bgLbcSCswZHxrBkZkeG6rE1l&id=100089281849632",
+      "caption": "Official Update.",
+      "media_type": "Text",
+      "thumbnail": "",
+      "media_url": "",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.facebook.com/people/MechKonnect/100089281849632/",
+      "thumbnail_url": "",
+      "published_date": "2026-10-23",
+      "link": "https://www.facebook.com/permalink.php?story_fbid=pfbid0hnhDNinDs16ustddxQckVBp28HhPVas2bbETBe8a6bgLbcSCswZHxrBkZkeG6rE1l&id=100089281849632",
+      "content": "Official Update.",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "",
+      "mediaUrls": "",
+      "mediaType": "Text",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.facebook.com/permalink.php?story_fbid=pfbid0hnhDNinDs16ustddxQckVBp28HhPVas2bbETBe8a6bgLbcSCswZHxrBkZkeG6rE1l&id=100089281849632",
+      "competitorName": "MechKonnect Industrial Solutions"
+    },
+    {
+      "id": "li_1792730059454_tpn4o",
+      "company": "AECO ENGINEERING LLP FACTORY",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/aecoproducts_aecoengineering-arrowengineparts-engineparts-activity-7518831023099621376-FkX0",
+      "caption": "Every journey depends on what drives you forward. With AECO Engineering’s ARROW Engine Parts, power, reliability, and quality come together to keep engines moving.\nBuilt on a legacy dating back to 1953, we are committed to delivering dependable \nengine parts to customers across the globe.\n\nGear up for the journey ahead with AECO.\n🌐 www.aecoproducts.com\n📧 sales1@aecoproducts.com\n📞 +91 70459 63530\n\n#AECOEngineering #ARROWEngineParts #EngineParts #AutomotiveAftermarket #EngineComponents #QualityThatDrives #syria #yemen #iraq #saudi #Egypt #morocco\n\nCylinder Liner Manufacturer, Cylinder Liner Exporter, Engine Parts Manufacturer in India, Automotive Engine Components, Replacement Engine Parts, Heavy-Duty Engine Parts, Automotive Aftermarket Supplier, Global Auto Parts Exporter",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQERPoFUfnVxWA/feedshare-image-high-res/B4DaFeXioaGYAc-/0/1792584592357?e=2147483647&v=beta&t=0hYx5HO0cFe_rmXwWpL9a6s_L3o_EhYApd_AtImzDgw",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQERPoFUfnVxWA/feedshare-image-high-res/B4DaFeXioaGYAc-/0/1792584592357?e=2147483647&v=beta&t=0hYx5HO0cFe_rmXwWpL9a6s_L3o_EhYApd_AtImzDgw",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/aecoproducts/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQERPoFUfnVxWA/feedshare-image-high-res/B4DaFeXioaGYAc-/0/1792584592357?e=2147483647&v=beta&t=0hYx5HO0cFe_rmXwWpL9a6s_L3o_EhYApd_AtImzDgw",
+      "published_date": "2026-10-22",
+      "link": "https://www.linkedin.com/posts/aecoproducts_aecoengineering-arrowengineparts-engineparts-activity-7518831023099621376-FkX0",
+      "content": "Every journey depends on what drives you forward. With AECO Engineering’s ARROW Engine Parts, power, reliability, and quality come together to keep engines moving.\nBuilt on a legacy dating back to 1953, we are committed to delivering dependable \nengine parts to customers across the globe.\n\nGear up for the journey ahead with AECO.\n🌐 www.aecoproducts.com\n📧 sales1@aecoproducts.com\n📞 +91 70459 63530\n\n#AECOEngineering #ARROWEngineParts #EngineParts #AutomotiveAftermarket #EngineComponents #QualityThatDrives #syria #yemen #iraq #saudi #Egypt #morocco\n\nCylinder Liner Manufacturer, Cylinder Liner Exporter, Engine Parts Manufacturer in India, Automotive Engine Components, Replacement Engine Parts, Heavy-Duty Engine Parts, Automotive Aftermarket Supplier, Global Auto Parts Exporter",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQERPoFUfnVxWA/feedshare-image-high-res/B4DaFeXioaGYAc-/0/1792584592357?e=2147483647&v=beta&t=0hYx5HO0cFe_rmXwWpL9a6s_L3o_EhYApd_AtImzDgw",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQERPoFUfnVxWA/feedshare-image-high-res/B4DaFeXioaGYAc-/0/1792584592357?e=2147483647&v=beta&t=0hYx5HO0cFe_rmXwWpL9a6s_L3o_EhYApd_AtImzDgw",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/aecoproducts_aecoengineering-arrowengineparts-engineparts-activity-7518831023099621376-FkX0",
+      "competitorName": "AECO ENGINEERING LLP FACTORY",
+      "activity_id": "7518831023099621376"
+    },
+    {
+      "id": "li_1792730057658_8z1kh",
+      "company": "KRYPTON Engineering",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/krypton-engineering_precisionmachining-vmcmachining-precisionengineering-activity-7509201858385788928-5xcW",
+      "caption": "Precision Inside #02\n\nMachine Accuracy vs. Machining Accuracy\n\n\n#PrecisionMachining\n#VMCMachining \n#PrecisionEngineering \n#DieMould\n#Machineshop \n#Machining \n#QualityControl \n#Engineering \n#RajkotEngineering \n#VMCMachining \n#Kryptonengineering\n#Rajkot hashtag\n#PrecisionInside",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQEPeOwCZ93NTQ/feedshare-shrink_800/B4DaDYLTKkIkAc-/0/1790333236437?e=2147483647&v=beta&t=Pee8nv2I4dF3tjaU6p5G-9-7owp73DIlFvsbTrtMknk",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQEPeOwCZ93NTQ/feedshare-shrink_800/B4DaDYLTKkIkAc-/0/1790333236437?e=2147483647&v=beta&t=Pee8nv2I4dF3tjaU6p5G-9-7owp73DIlFvsbTrtMknk",
+      "date": "2026-09-25",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/krypton-engineering/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQEPeOwCZ93NTQ/feedshare-shrink_800/B4DaDYLTKkIkAc-/0/1790333236437?e=2147483647&v=beta&t=Pee8nv2I4dF3tjaU6p5G-9-7owp73DIlFvsbTrtMknk",
+      "published_date": "2026-09-25",
+      "link": "https://www.linkedin.com/posts/krypton-engineering_precisionmachining-vmcmachining-precisionengineering-activity-7509201858385788928-5xcW",
+      "content": "Precision Inside #02\n\nMachine Accuracy vs. Machining Accuracy\n\n\n#PrecisionMachining\n#VMCMachining \n#PrecisionEngineering \n#DieMould\n#Machineshop \n#Machining \n#QualityControl \n#Engineering \n#RajkotEngineering \n#VMCMachining \n#Kryptonengineering\n#Rajkot hashtag\n#PrecisionInside",
+      "timestamp": "2026-09-25",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQEPeOwCZ93NTQ/feedshare-shrink_800/B4DaDYLTKkIkAc-/0/1790333236437?e=2147483647&v=beta&t=Pee8nv2I4dF3tjaU6p5G-9-7owp73DIlFvsbTrtMknk",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQEPeOwCZ93NTQ/feedshare-shrink_800/B4DaDYLTKkIkAc-/0/1790333236437?e=2147483647&v=beta&t=Pee8nv2I4dF3tjaU6p5G-9-7owp73DIlFvsbTrtMknk",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/krypton-engineering_precisionmachining-vmcmachining-precisionengineering-activity-7509201858385788928-5xcW",
+      "competitorName": "KRYPTON Engineering",
+      "activity_id": "7509201858385788928"
+    },
+    {
+      "id": "li_1792730067151_u3ri4",
+      "company": "Various Machining Solutions LLP",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/variousmachining_hiring-nxprogrammer-siemensnx-activity-7481995085467959296-jEZD",
+      "caption": "🚀 We’re Hiring: NX CAD/CAM Programmer\n\nWe are looking for a skilled NX CAD/CAM Programmer with hands-on experience in Siemens NX CAM for VMC & HMC machining.\n\n📍 Location: Lothada, Rajkot, Gujarat\n💼 Experience: 2–3 Years\n💰 Salary: ₹35,000–₹50,000 per month\n🎓 Qualification: Diploma in Mechanical Engineering\n\n📞 Contact: 9825014128\n📧 Email: hr@vmsl.co.in\n\nInterested candidates can share their updated resume. Please share this opportunity with relevant candidates in your network.\n\n#Hiring #NXProgrammer #SiemensNX #NXCAM #CADCAM #CNCProgramming #VMC #HMC #MechanicalEngineering #RajkotJobs #GujaratJobs #ManufacturingJobs #JobOpening #HiringNow",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQElAs3jJDWLeQ/feedshare-shrink_800/B4DZ9Vi4fwKYAc-/0/1783846635755?e=2147483647&v=beta&t=TkSYIaqQW1ICCKxSZyNSVDpC9bV85gQlBXl0aNK22zo",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQElAs3jJDWLeQ/feedshare-shrink_800/B4DZ9Vi4fwKYAc-/0/1783846635755?e=2147483647&v=beta&t=TkSYIaqQW1ICCKxSZyNSVDpC9bV85gQlBXl0aNK22zo",
+      "date": "2026-07-12",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://in.linkedin.com/company/variousmachining",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQElAs3jJDWLeQ/feedshare-shrink_800/B4DZ9Vi4fwKYAc-/0/1783846635755?e=2147483647&v=beta&t=TkSYIaqQW1ICCKxSZyNSVDpC9bV85gQlBXl0aNK22zo",
+      "published_date": "2026-07-12",
+      "link": "https://www.linkedin.com/posts/variousmachining_hiring-nxprogrammer-siemensnx-activity-7481995085467959296-jEZD",
+      "content": "🚀 We’re Hiring: NX CAD/CAM Programmer\n\nWe are looking for a skilled NX CAD/CAM Programmer with hands-on experience in Siemens NX CAM for VMC & HMC machining.\n\n📍 Location: Lothada, Rajkot, Gujarat\n💼 Experience: 2–3 Years\n💰 Salary: ₹35,000–₹50,000 per month\n🎓 Qualification: Diploma in Mechanical Engineering\n\n📞 Contact: 9825014128\n📧 Email: hr@vmsl.co.in\n\nInterested candidates can share their updated resume. Please share this opportunity with relevant candidates in your network.\n\n#Hiring #NXProgrammer #SiemensNX #NXCAM #CADCAM #CNCProgramming #VMC #HMC #MechanicalEngineering #RajkotJobs #GujaratJobs #ManufacturingJobs #JobOpening #HiringNow",
+      "timestamp": "2026-07-12",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQElAs3jJDWLeQ/feedshare-shrink_800/B4DZ9Vi4fwKYAc-/0/1783846635755?e=2147483647&v=beta&t=TkSYIaqQW1ICCKxSZyNSVDpC9bV85gQlBXl0aNK22zo",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQElAs3jJDWLeQ/feedshare-shrink_800/B4DZ9Vi4fwKYAc-/0/1783846635755?e=2147483647&v=beta&t=TkSYIaqQW1ICCKxSZyNSVDpC9bV85gQlBXl0aNK22zo",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/variousmachining_hiring-nxprogrammer-siemensnx-activity-7481995085467959296-jEZD",
+      "competitorName": "Various Machining Solutions LLP",
+      "activity_id": "7481995085467959296"
+    },
+    {
+      "id": "li_1792730071762_m8196",
+      "company": "ABRIGOR MEGACORP",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/abrigor-megacorp_abrigormegacorp-brandidentity-newlogo-activity-7487443720787685376-EApZ",
+      "caption": "We are thrilled to reveal the new official logo for Abrigor Megacorp Pvt. Ltd.!\nAs we continue to expand our manufacturing capabilities and strengthen our position in precision engineering, our visual identity is evolving alongside us. This new logo reflects our forward-looking vision, modern technology standards, and relentless focus on quality and innovation.\nA huge thank you to our valued clients, partners, and dedicated team for being a part of our journey. Here’s to the next chapter of growth and precision manufacturing! 🚀\n#AbrigorMegacorp #BrandIdentity #NewLogo #PrecisionEngineering #CNCMachining #ManufacturingExcellence #MakeInIndia",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D5605AQEuHpZdp9mr8w/thumbnail-with-play-button-overlay-high/B56Z.i.XkzJgC0-/0/1785145688495?e=2147483647&v=beta&t=OJcuEKWPYi1dp2P2bgEo1nm8PPDF_jyFCNUEzVaAttQ",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQEuHpZdp9mr8w/thumbnail-with-play-button-overlay-high/B56Z.i.XkzJgC0-/0/1785145688495?e=2147483647&v=beta&t=OJcuEKWPYi1dp2P2bgEo1nm8PPDF_jyFCNUEzVaAttQ",
+      "date": "2026-07-27",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/abrigor-megacorp/",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQEuHpZdp9mr8w/thumbnail-with-play-button-overlay-high/B56Z.i.XkzJgC0-/0/1785145688495?e=2147483647&v=beta&t=OJcuEKWPYi1dp2P2bgEo1nm8PPDF_jyFCNUEzVaAttQ",
+      "published_date": "2026-07-27",
+      "link": "https://www.linkedin.com/posts/abrigor-megacorp_abrigormegacorp-brandidentity-newlogo-activity-7487443720787685376-EApZ",
+      "content": "We are thrilled to reveal the new official logo for Abrigor Megacorp Pvt. Ltd.!\nAs we continue to expand our manufacturing capabilities and strengthen our position in precision engineering, our visual identity is evolving alongside us. This new logo reflects our forward-looking vision, modern technology standards, and relentless focus on quality and innovation.\nA huge thank you to our valued clients, partners, and dedicated team for being a part of our journey. Here’s to the next chapter of growth and precision manufacturing! 🚀\n#AbrigorMegacorp #BrandIdentity #NewLogo #PrecisionEngineering #CNCMachining #ManufacturingExcellence #MakeInIndia",
+      "timestamp": "2026-07-27",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D5605AQEuHpZdp9mr8w/thumbnail-with-play-button-overlay-high/B56Z.i.XkzJgC0-/0/1785145688495?e=2147483647&v=beta&t=OJcuEKWPYi1dp2P2bgEo1nm8PPDF_jyFCNUEzVaAttQ",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D5605AQEuHpZdp9mr8w/thumbnail-with-play-button-overlay-high/B56Z.i.XkzJgC0-/0/1785145688495?e=2147483647&v=beta&t=OJcuEKWPYi1dp2P2bgEo1nm8PPDF_jyFCNUEzVaAttQ",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/abrigor-megacorp_abrigormegacorp-brandidentity-newlogo-activity-7487443720787685376-EApZ",
+      "competitorName": "ABRIGOR MEGACORP",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQEuHpZdp9mr8w/mp4-720p-30fp-crf28/B56Z.i.XkzJgB8-/0/1785145688496?e=2147483647&v=beta&t=58E1eb5lpS9UmZmAza4wN6pfbpLc0vtxL6xOYfW0pDs",
+      "activity_id": "7487443720787685376"
+    },
+    {
+      "id": "li_1792730075153_pt08w",
+      "company": "BridgeTech Structural Solutions",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/bridgetech-structural-solutions_join-bridgetech-structural-solutions-pvt-activity-7490658430362439680-ISmh",
+      "caption": "🚧 Join BRIDGETECH Structural Solutions Pvt. Ltd. in Strengthening India's Bridges – We're Hiring Senior Site Engineers!",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQGCEIWFJG0PHw/feedshare-image-high-res/B56Z_QqJirJoAc-/0/1785912138207?e=2147483647&v=beta&t=TrNK3b3PvOF6ZBl9ABSOU_bcY7qudfIAh8i4iBoSIbQ",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQGCEIWFJG0PHw/feedshare-image-high-res/B56Z_QqJirJoAc-/0/1785912138207?e=2147483647&v=beta&t=TrNK3b3PvOF6ZBl9ABSOU_bcY7qudfIAh8i4iBoSIbQ",
+      "date": "2026-08-05",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/bridgetech-structural-solutions",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQGCEIWFJG0PHw/feedshare-image-high-res/B56Z_QqJirJoAc-/0/1785912138207?e=2147483647&v=beta&t=TrNK3b3PvOF6ZBl9ABSOU_bcY7qudfIAh8i4iBoSIbQ",
+      "published_date": "2026-08-05",
+      "link": "https://www.linkedin.com/posts/bridgetech-structural-solutions_join-bridgetech-structural-solutions-pvt-activity-7490658430362439680-ISmh",
+      "content": "🚧 Join BRIDGETECH Structural Solutions Pvt. Ltd. in Strengthening India's Bridges – We're Hiring Senior Site Engineers!",
+      "timestamp": "2026-08-05",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQGCEIWFJG0PHw/feedshare-image-high-res/B56Z_QqJirJoAc-/0/1785912138207?e=2147483647&v=beta&t=TrNK3b3PvOF6ZBl9ABSOU_bcY7qudfIAh8i4iBoSIbQ",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQGCEIWFJG0PHw/feedshare-image-high-res/B56Z_QqJirJoAc-/0/1785912138207?e=2147483647&v=beta&t=TrNK3b3PvOF6ZBl9ABSOU_bcY7qudfIAh8i4iBoSIbQ",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/bridgetech-structural-solutions_join-bridgetech-structural-solutions-pvt-activity-7490658430362439680-ISmh",
+      "competitorName": "BridgeTech Structural Solutions",
+      "activity_id": "7490658430362439680"
+    },
+    {
+      "id": "li_1792730077255_2koze",
+      "company": "MechKonnect Industrial Solutions",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/mechkonnect_sheetmetal-sheetmetalfabrication-dfm-activity-7506244394593918976-r6L7",
+      "caption": "🔧 SHEET METAL FABRICATION: Small Design Choices. Big Manufacturing Impact.\n\nA part can look perfect on CAD and still become expensive—or difficult—to manufacture.\n\nIn sheet metal fabrication, a few design decisions made before production can make a significant difference in:\n✅ Manufacturing cost\n✅ Production time\n✅ Part quality\n✅ Bending accuracy\n✅ Overall lead time\n\nHere are some simple Do’s & Don’ts every designer and engineer should keep in mind:\n\n✔️ DO\n• Consider the material thickness while selecting bend radius\n• Maintain adequate distance between holes and edges\n• Provide sufficient flange length for bending\n• Use fillets instead of unnecessary sharp internal corners\n• Standardize holes, slots and other features wherever possible\n\n❌ DON’T\n• Design bends with unnecessarily small radii\n• Place holes too close to bend lines or edges\n• Make flanges unnecessarily narrow or tall\n• Add complex features that don't serve a functional purpose\n• Ignore manufacturability until the production stage\n\n💡 The best design isn't just one that works.\nIt's one that can be manufactured efficiently, repeatedly and economically.\n\nAt MechKonnect, we work with engineering teams to take parts from drawing → manufacturability → fabrication → finished component, through our manufacturing network and engineering expertise.\n\n📩 Have a sheet metal component you're working on? Let's discuss how to make it production-ready.\n\n#SheetMetal #SheetMetalFabrication #DFM #DesignForManufacturing #Manufacturing #Engineering #MechanicalEngineering #LaserCutting #CNC #Fabrication #MakeInIndia #ManufacturingIndia #MechKonnect\nThe accompanying graphic is designed as a saveable engineering reference, so it can work better on LinkedIn than a purely promotional creative.",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQEo0oU8py2Kcg/feedshare-shrink_800/B4EaCuJgDPGgAc-/0/1789628121675?e=2147483647&v=beta&t=frdR1J2r5X9FAlwLHZgfWorKTFFBYrvQPjUFQC9KEvE",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQEo0oU8py2Kcg/feedshare-shrink_800/B4EaCuJgDPGgAc-/0/1789628121675?e=2147483647&v=beta&t=frdR1J2r5X9FAlwLHZgfWorKTFFBYrvQPjUFQC9KEvE",
+      "date": "2026-09-17",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/mechkonnect/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQEo0oU8py2Kcg/feedshare-shrink_800/B4EaCuJgDPGgAc-/0/1789628121675?e=2147483647&v=beta&t=frdR1J2r5X9FAlwLHZgfWorKTFFBYrvQPjUFQC9KEvE",
+      "published_date": "2026-09-17",
+      "link": "https://www.linkedin.com/posts/mechkonnect_sheetmetal-sheetmetalfabrication-dfm-activity-7506244394593918976-r6L7",
+      "content": "🔧 SHEET METAL FABRICATION: Small Design Choices. Big Manufacturing Impact.\n\nA part can look perfect on CAD and still become expensive—or difficult—to manufacture.\n\nIn sheet metal fabrication, a few design decisions made before production can make a significant difference in:\n✅ Manufacturing cost\n✅ Production time\n✅ Part quality\n✅ Bending accuracy\n✅ Overall lead time\n\nHere are some simple Do’s & Don’ts every designer and engineer should keep in mind:\n\n✔️ DO\n• Consider the material thickness while selecting bend radius\n• Maintain adequate distance between holes and edges\n• Provide sufficient flange length for bending\n• Use fillets instead of unnecessary sharp internal corners\n• Standardize holes, slots and other features wherever possible\n\n❌ DON’T\n• Design bends with unnecessarily small radii\n• Place holes too close to bend lines or edges\n• Make flanges unnecessarily narrow or tall\n• Add complex features that don't serve a functional purpose\n• Ignore manufacturability until the production stage\n\n💡 The best design isn't just one that works.\nIt's one that can be manufactured efficiently, repeatedly and economically.\n\nAt MechKonnect, we work with engineering teams to take parts from drawing → manufacturability → fabrication → finished component, through our manufacturing network and engineering expertise.\n\n📩 Have a sheet metal component you're working on? Let's discuss how to make it production-ready.\n\n#SheetMetal #SheetMetalFabrication #DFM #DesignForManufacturing #Manufacturing #Engineering #MechanicalEngineering #LaserCutting #CNC #Fabrication #MakeInIndia #ManufacturingIndia #MechKonnect\nThe accompanying graphic is designed as a saveable engineering reference, so it can work better on LinkedIn than a purely promotional creative.",
+      "timestamp": "2026-09-17",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQEo0oU8py2Kcg/feedshare-shrink_800/B4EaCuJgDPGgAc-/0/1789628121675?e=2147483647&v=beta&t=frdR1J2r5X9FAlwLHZgfWorKTFFBYrvQPjUFQC9KEvE",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQEo0oU8py2Kcg/feedshare-shrink_800/B4EaCuJgDPGgAc-/0/1789628121675?e=2147483647&v=beta&t=frdR1J2r5X9FAlwLHZgfWorKTFFBYrvQPjUFQC9KEvE",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/mechkonnect_sheetmetal-sheetmetalfabrication-dfm-activity-7506244394593918976-r6L7",
+      "competitorName": "MechKonnect Industrial Solutions",
+      "activity_id": "7506244394593918976"
+    },
+    {
+      "id": "li_1792730059454_n5yyo",
+      "company": "AECO ENGINEERING LLP FACTORY",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/aecoproducts_aeco-aecoarrow-cylinderliners-activity-7515673576759549953-JALa",
+      "caption": "Meet AECO Arrow Cylinder Liners engineered for demanding engine applications, manufactured with precision, and designed to\n deliver dependable performance over the long run. Because the true strength of an engine lies in the components you can’t always see. \n\nTrusted across global markets. Looking for a reliable engine parts partner? Connect with AECO Arrow today.\n🌐 www.aecoproducts.com\n📧 sales1@aecoproducts.com\n📞 +91 70459 63530\n\n#AECO #AECOArrow #CylinderLiners #EngineParts #EngineComponents #AutomotiveParts #AutomotiveAftermarket #EnginePerformance #AutoPartsExporter #GlobalAutomotive #HeavyDutyEngines #syria #yemen #iraq #saudi #Egypt #morocco \n\nCylinder Liner Manufacturer, Cylinder Liner Exporter, Engine Parts Manufacturer in India, Automotive Engine Components, Replacement Engine Parts, Heavy-Duty Engine Parts, Automotive Aftermarket Supplier, Global Auto Parts Exporter",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQHRuhVSXu-FHA/feedshare-image-high-res/B4DaE0JSkrHcAU-/0/1791876213355?e=2147483647&v=beta&t=8sPkeVPaxT4HJYfS0HUnMaMqUjWdkDPda1RPLdPoSvM",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQHRuhVSXu-FHA/feedshare-image-high-res/B4DaE0JSkrHcAU-/0/1791876213355?e=2147483647&v=beta&t=8sPkeVPaxT4HJYfS0HUnMaMqUjWdkDPda1RPLdPoSvM",
+      "date": "2026-10-13",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/aecoproducts/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQHRuhVSXu-FHA/feedshare-image-high-res/B4DaE0JSkrHcAU-/0/1791876213355?e=2147483647&v=beta&t=8sPkeVPaxT4HJYfS0HUnMaMqUjWdkDPda1RPLdPoSvM",
+      "published_date": "2026-10-13",
+      "link": "https://www.linkedin.com/posts/aecoproducts_aeco-aecoarrow-cylinderliners-activity-7515673576759549953-JALa",
+      "content": "Meet AECO Arrow Cylinder Liners engineered for demanding engine applications, manufactured with precision, and designed to\n deliver dependable performance over the long run. Because the true strength of an engine lies in the components you can’t always see. \n\nTrusted across global markets. Looking for a reliable engine parts partner? Connect with AECO Arrow today.\n🌐 www.aecoproducts.com\n📧 sales1@aecoproducts.com\n📞 +91 70459 63530\n\n#AECO #AECOArrow #CylinderLiners #EngineParts #EngineComponents #AutomotiveParts #AutomotiveAftermarket #EnginePerformance #AutoPartsExporter #GlobalAutomotive #HeavyDutyEngines #syria #yemen #iraq #saudi #Egypt #morocco \n\nCylinder Liner Manufacturer, Cylinder Liner Exporter, Engine Parts Manufacturer in India, Automotive Engine Components, Replacement Engine Parts, Heavy-Duty Engine Parts, Automotive Aftermarket Supplier, Global Auto Parts Exporter",
+      "timestamp": "2026-10-13",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQHRuhVSXu-FHA/feedshare-image-high-res/B4DaE0JSkrHcAU-/0/1791876213355?e=2147483647&v=beta&t=8sPkeVPaxT4HJYfS0HUnMaMqUjWdkDPda1RPLdPoSvM",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQHRuhVSXu-FHA/feedshare-image-high-res/B4DaE0JSkrHcAU-/0/1791876213355?e=2147483647&v=beta&t=8sPkeVPaxT4HJYfS0HUnMaMqUjWdkDPda1RPLdPoSvM",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/aecoproducts_aeco-aecoarrow-cylinderliners-activity-7515673576759549953-JALa",
+      "competitorName": "AECO ENGINEERING LLP FACTORY",
+      "activity_id": "7515673576759549953"
+    },
+    {
+      "id": "li_1792730057658_df0q4",
+      "company": "KRYPTON Engineering",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/krypton-engineering_precisionmachining-vmcmachining-precisionengineering-activity-7508827592138047488-dd8B",
+      "caption": "Precision Inside #01\n\nWhy does a 10 Micron Tool runout matter?\n\n#PrecisionMachining #VMCMachining #PrecisionEngineering #DieMould #Machineshop #Machining #QualityControl #Engineering #RajkotEngineering #VMCMachining #Kryptonengineering #Rajkot #PrecisionInside",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQFlX5_0hH2auA/feedshare-shrink_800/B4DaDS259uKQAc-/0/1790244004107?e=2147483647&v=beta&t=9EWI8lnND0IMVBaVu72gcxJJ3u5oWeyx_WugFNCvc-k",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQFlX5_0hH2auA/feedshare-shrink_800/B4DaDS259uKQAc-/0/1790244004107?e=2147483647&v=beta&t=9EWI8lnND0IMVBaVu72gcxJJ3u5oWeyx_WugFNCvc-k",
+      "date": "2026-09-24",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/krypton-engineering/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQFlX5_0hH2auA/feedshare-shrink_800/B4DaDS259uKQAc-/0/1790244004107?e=2147483647&v=beta&t=9EWI8lnND0IMVBaVu72gcxJJ3u5oWeyx_WugFNCvc-k",
+      "published_date": "2026-09-24",
+      "link": "https://www.linkedin.com/posts/krypton-engineering_precisionmachining-vmcmachining-precisionengineering-activity-7508827592138047488-dd8B",
+      "content": "Precision Inside #01\n\nWhy does a 10 Micron Tool runout matter?\n\n#PrecisionMachining #VMCMachining #PrecisionEngineering #DieMould #Machineshop #Machining #QualityControl #Engineering #RajkotEngineering #VMCMachining #Kryptonengineering #Rajkot #PrecisionInside",
+      "timestamp": "2026-09-24",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQFlX5_0hH2auA/feedshare-shrink_800/B4DaDS259uKQAc-/0/1790244004107?e=2147483647&v=beta&t=9EWI8lnND0IMVBaVu72gcxJJ3u5oWeyx_WugFNCvc-k",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQFlX5_0hH2auA/feedshare-shrink_800/B4DaDS259uKQAc-/0/1790244004107?e=2147483647&v=beta&t=9EWI8lnND0IMVBaVu72gcxJJ3u5oWeyx_WugFNCvc-k",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/krypton-engineering_precisionmachining-vmcmachining-precisionengineering-activity-7508827592138047488-dd8B",
+      "competitorName": "KRYPTON Engineering",
+      "activity_id": "7508827592138047488"
+    },
+    {
+      "id": "li_1792730067151_nyj2d",
+      "company": "Various Machining Solutions LLP",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/variousmachining_happybirthday-birthdaycelebration-purchasemanager-activity-7422618704359641088-MIcQ",
+      "caption": "🎉 Happy Birthday Darshit! 🎉\n\nToday, we celebrate the birthday of our valued Purchase Manager – Darshit  vadgama\nYour dedication, professionalism, and positive approach play a vital role in strengthening our procurement and vendor relationships.\n\nWishing you good health, success, and continued growth ahead.\nHave a wonderful year! 🎂✨\n\n— Team Various Machining Solutions LLP\n\n#HappyBirthday\n#BirthdayCelebration\n#PurchaseManager\n#TeamVMSL\n#VariousMachiningSolutionsLLP\n#WorkplaceCelebration\n#Leadership\n#Grateful",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQF4J1UQlIoM2A/feedshare-shrink_800/B4EZwJwYJWJUAg-/0/1769690203095?e=2147483647&v=beta&t=1WvfimpsIygjwPWpTvXoq8LeEpRCObRc4LOL33PGHz4",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQF4J1UQlIoM2A/feedshare-shrink_800/B4EZwJwYJWJUAg-/0/1769690203095?e=2147483647&v=beta&t=1WvfimpsIygjwPWpTvXoq8LeEpRCObRc4LOL33PGHz4",
+      "date": "2026-01-29",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://in.linkedin.com/company/variousmachining",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQF4J1UQlIoM2A/feedshare-shrink_800/B4EZwJwYJWJUAg-/0/1769690203095?e=2147483647&v=beta&t=1WvfimpsIygjwPWpTvXoq8LeEpRCObRc4LOL33PGHz4",
+      "published_date": "2026-01-29",
+      "link": "https://www.linkedin.com/posts/variousmachining_happybirthday-birthdaycelebration-purchasemanager-activity-7422618704359641088-MIcQ",
+      "content": "🎉 Happy Birthday Darshit! 🎉\n\nToday, we celebrate the birthday of our valued Purchase Manager – Darshit  vadgama\nYour dedication, professionalism, and positive approach play a vital role in strengthening our procurement and vendor relationships.\n\nWishing you good health, success, and continued growth ahead.\nHave a wonderful year! 🎂✨\n\n— Team Various Machining Solutions LLP\n\n#HappyBirthday\n#BirthdayCelebration\n#PurchaseManager\n#TeamVMSL\n#VariousMachiningSolutionsLLP\n#WorkplaceCelebration\n#Leadership\n#Grateful",
+      "timestamp": "2026-01-29",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQF4J1UQlIoM2A/feedshare-shrink_800/B4EZwJwYJWJUAg-/0/1769690203095?e=2147483647&v=beta&t=1WvfimpsIygjwPWpTvXoq8LeEpRCObRc4LOL33PGHz4",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQF4J1UQlIoM2A/feedshare-shrink_800/B4EZwJwYJWJUAg-/0/1769690203095?e=2147483647&v=beta&t=1WvfimpsIygjwPWpTvXoq8LeEpRCObRc4LOL33PGHz4",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/variousmachining_happybirthday-birthdaycelebration-purchasemanager-activity-7422618704359641088-MIcQ",
+      "competitorName": "Various Machining Solutions LLP",
+      "activity_id": "7422618704359641088"
+    },
+    {
+      "id": "li_1792730071762_29k7l",
+      "company": "ABRIGOR MEGACORP",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/abrigor-megacorp_leancertification-cncmachining-precisioncomponents-activity-7485251017018662912-WMD_",
+      "caption": "Raising the bar in precision manufacturing! 📈\nAbrigor Megacorp Pvt. Ltd. is now LEAN Intermediate Certified by the Ministry of MSME, Govt. of India. \nOptimizing workflows, eliminating waste, and delivering higher precision to global supply chains this milestone reinforces our dedication to building world-class components right here in Pune, Maharashtra INDIA. 🏭✨\n#LeanCertification #CNCMachining #PrecisionComponents #QualityManufacturing #IndustrialExcellence",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQHT85XBejKBag/feedshare-image-high-res/B56Z.D0ImdGQAU-/0/1784622910242?e=2147483647&v=beta&t=qklGW1r-2geqYlo7fcsscrOxvUkqnk3X1ydZJESVAd0",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQHT85XBejKBag/feedshare-image-high-res/B56Z.D0ImdGQAU-/0/1784622910242?e=2147483647&v=beta&t=qklGW1r-2geqYlo7fcsscrOxvUkqnk3X1ydZJESVAd0",
+      "date": "2026-07-21",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/abrigor-megacorp/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQHT85XBejKBag/feedshare-image-high-res/B56Z.D0ImdGQAU-/0/1784622910242?e=2147483647&v=beta&t=qklGW1r-2geqYlo7fcsscrOxvUkqnk3X1ydZJESVAd0",
+      "published_date": "2026-07-21",
+      "link": "https://www.linkedin.com/posts/abrigor-megacorp_leancertification-cncmachining-precisioncomponents-activity-7485251017018662912-WMD_",
+      "content": "Raising the bar in precision manufacturing! 📈\nAbrigor Megacorp Pvt. Ltd. is now LEAN Intermediate Certified by the Ministry of MSME, Govt. of India. \nOptimizing workflows, eliminating waste, and delivering higher precision to global supply chains this milestone reinforces our dedication to building world-class components right here in Pune, Maharashtra INDIA. 🏭✨\n#LeanCertification #CNCMachining #PrecisionComponents #QualityManufacturing #IndustrialExcellence",
+      "timestamp": "2026-07-21",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQHT85XBejKBag/feedshare-image-high-res/B56Z.D0ImdGQAU-/0/1784622910242?e=2147483647&v=beta&t=qklGW1r-2geqYlo7fcsscrOxvUkqnk3X1ydZJESVAd0",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQHT85XBejKBag/feedshare-image-high-res/B56Z.D0ImdGQAU-/0/1784622910242?e=2147483647&v=beta&t=qklGW1r-2geqYlo7fcsscrOxvUkqnk3X1ydZJESVAd0",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/abrigor-megacorp_leancertification-cncmachining-precisioncomponents-activity-7485251017018662912-WMD_",
+      "competitorName": "ABRIGOR MEGACORP",
+      "activity_id": "7485251017018662912"
+    },
+    {
+      "id": "li_1792730075153_8jklt",
+      "company": "BridgeTech Structural Solutions",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/bridgetech-structural-solutions_were-hiring-activity-7485668704345673729-TeGD",
+      "caption": "🚀 We're Hiring!",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQE7J04P1tOZJg/feedshare-shrink_1280/B56Z.JwBX4IgAM-/0/1784722495242?e=2147483647&v=beta&t=TsH5m9Zkh_xx3_EavSsaa-GpWSPFIFWZ2D0_FDdAFCw",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQE7J04P1tOZJg/feedshare-shrink_1280/B56Z.JwBX4IgAM-/0/1784722495242?e=2147483647&v=beta&t=TsH5m9Zkh_xx3_EavSsaa-GpWSPFIFWZ2D0_FDdAFCw",
+      "date": "2026-07-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/bridgetech-structural-solutions",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQE7J04P1tOZJg/feedshare-shrink_1280/B56Z.JwBX4IgAM-/0/1784722495242?e=2147483647&v=beta&t=TsH5m9Zkh_xx3_EavSsaa-GpWSPFIFWZ2D0_FDdAFCw",
+      "published_date": "2026-07-22",
+      "link": "https://www.linkedin.com/posts/bridgetech-structural-solutions_were-hiring-activity-7485668704345673729-TeGD",
+      "content": "🚀 We're Hiring!",
+      "timestamp": "2026-07-22",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQE7J04P1tOZJg/feedshare-shrink_1280/B56Z.JwBX4IgAM-/0/1784722495242?e=2147483647&v=beta&t=TsH5m9Zkh_xx3_EavSsaa-GpWSPFIFWZ2D0_FDdAFCw",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQE7J04P1tOZJg/feedshare-shrink_1280/B56Z.JwBX4IgAM-/0/1784722495242?e=2147483647&v=beta&t=TsH5m9Zkh_xx3_EavSsaa-GpWSPFIFWZ2D0_FDdAFCw",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/bridgetech-structural-solutions_were-hiring-activity-7485668704345673729-TeGD",
+      "competitorName": "BridgeTech Structural Solutions",
+      "activity_id": "7485668704345673729"
+    },
+    {
+      "id": "li_1792730077255_d9kxk",
+      "company": "MechKonnect Industrial Solutions",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/mechkonnect_manufacturing-materialsengineering-structuralintegrity-activity-7477643379464568832-N4zZ",
+      "caption": "A component can leave the manufacturing floor with no external load applied.\nAnd still be under stress.\nThis phenomenon is known as residual stress: internal stresses locked into a material even after the manufacturing process is complete.\n\nUnlike operational loads, these stresses are already present before the component is ever put into service.\nThey can originate from:\n• Rapid heating and cooling\n• Welding processes\n• Machining operations\n• Casting solidification\n• Additive manufacturing thermal cycles\n\nThe challenge?\nResidual stresses are invisible.\nA component may meet dimensional tolerances, pass inspection, and appear structurally sound. Yet beneath the surface, tensile and compressive stresses can be competing against one another.\n\nOver time, these hidden stresses can lead to:\n✓ Distortion and warpage\n✓ Reduced fatigue life\n✓ Crack initiation and propagation\n✓ Unexpected dimensional changes\n✓ Reduced structural integrity\n\nIn high-precision applications, even a few microns of deformation can affect assembly, performance, and reliability. This is why manufacturers increasingly rely on stress-relief heat treatments, simulation tools, process optimization, and non-destructive evaluation techniques.\n\nBecause manufacturing isn't only about shaping materials.\nIt's also about managing the forces trapped within them.\nAfter all, the loads that matter most aren't always the ones you can see.\n\n\n#manufacturing \n#materialsengineering \n#structuralintegrity \n#manufacturingengineering \n#qualityengineering",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQEw2OMLbEJ-mQ/feedshare-shrink_1280/B4EZ8DCmo8HMAM-/0/1782462442339?e=2147483647&v=beta&t=69Ze0v6jmxeSMQPd2YlY2dV8rbAleCTrcrluIYF30Jo",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQEw2OMLbEJ-mQ/feedshare-shrink_1280/B4EZ8DCmo8HMAM-/0/1782462442339?e=2147483647&v=beta&t=69Ze0v6jmxeSMQPd2YlY2dV8rbAleCTrcrluIYF30Jo",
+      "date": "2026-06-30",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/mechkonnect/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQEw2OMLbEJ-mQ/feedshare-shrink_1280/B4EZ8DCmo8HMAM-/0/1782462442339?e=2147483647&v=beta&t=69Ze0v6jmxeSMQPd2YlY2dV8rbAleCTrcrluIYF30Jo",
+      "published_date": "2026-06-30",
+      "link": "https://www.linkedin.com/posts/mechkonnect_manufacturing-materialsengineering-structuralintegrity-activity-7477643379464568832-N4zZ",
+      "content": "A component can leave the manufacturing floor with no external load applied.\nAnd still be under stress.\nThis phenomenon is known as residual stress: internal stresses locked into a material even after the manufacturing process is complete.\n\nUnlike operational loads, these stresses are already present before the component is ever put into service.\nThey can originate from:\n• Rapid heating and cooling\n• Welding processes\n• Machining operations\n• Casting solidification\n• Additive manufacturing thermal cycles\n\nThe challenge?\nResidual stresses are invisible.\nA component may meet dimensional tolerances, pass inspection, and appear structurally sound. Yet beneath the surface, tensile and compressive stresses can be competing against one another.\n\nOver time, these hidden stresses can lead to:\n✓ Distortion and warpage\n✓ Reduced fatigue life\n✓ Crack initiation and propagation\n✓ Unexpected dimensional changes\n✓ Reduced structural integrity\n\nIn high-precision applications, even a few microns of deformation can affect assembly, performance, and reliability. This is why manufacturers increasingly rely on stress-relief heat treatments, simulation tools, process optimization, and non-destructive evaluation techniques.\n\nBecause manufacturing isn't only about shaping materials.\nIt's also about managing the forces trapped within them.\nAfter all, the loads that matter most aren't always the ones you can see.\n\n\n#manufacturing \n#materialsengineering \n#structuralintegrity \n#manufacturingengineering \n#qualityengineering",
+      "timestamp": "2026-06-30",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQEw2OMLbEJ-mQ/feedshare-shrink_1280/B4EZ8DCmo8HMAM-/0/1782462442339?e=2147483647&v=beta&t=69Ze0v6jmxeSMQPd2YlY2dV8rbAleCTrcrluIYF30Jo",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQEw2OMLbEJ-mQ/feedshare-shrink_1280/B4EZ8DCmo8HMAM-/0/1782462442339?e=2147483647&v=beta&t=69Ze0v6jmxeSMQPd2YlY2dV8rbAleCTrcrluIYF30Jo",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/mechkonnect_manufacturing-materialsengineering-structuralintegrity-activity-7477643379464568832-N4zZ",
+      "competitorName": "MechKonnect Industrial Solutions",
+      "activity_id": "7477643379464568832"
+    },
+    {
+      "id": "li_1792730059454_5aswk",
+      "company": "AECO ENGINEERING LLP FACTORY",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/aecoproducts_aeco-aecoarrow-enginevalves-activity-7513538839513124864--qZL",
+      "caption": "When every engine demands reliability, choose components built to perform.\nAECO Arrow Engine Valves are engineered for durability, precision, and dependable performance, keeping engines running stronger for longer.\nTrusted across global markets. \n\n📩 Connect with AECO Arrow for your engine parts requirements.\n🌐 www.aecoproducts.com\n📧 sales1@aecoproducts.com\n📞 +91 70459 63530\nFollow us: @aecoproducts\n\n#AECO #AECOArrow #EngineValves #EngineParts #AutoAftermarket #AutomotiveIndustry #EngineComponents #syria #yemen #iraq #saudi #Egypt #morocco \n\n(Engine valves, automotive engine valves, diesel engine valves, engine components, engine parts, valve manufacturers, valve exporters, automotive aftermarket parts, diesel engine parts, heavy-duty engine parts, commercial vehicle parts, tractor engine parts, engine valve manufacturer India, engine parts manufacturer India, Made in India engine components)",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQE4YK4yCls29w/feedshare-image-high-res/B4EaEVzwnxGoAU-/0/1791367252830?e=2147483647&v=beta&t=JA5hig_xEE6L99OIql1RAPE3nCTkqcwX-HcJMaVHKrU",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQE4YK4yCls29w/feedshare-image-high-res/B4EaEVzwnxGoAU-/0/1791367252830?e=2147483647&v=beta&t=JA5hig_xEE6L99OIql1RAPE3nCTkqcwX-HcJMaVHKrU",
+      "date": "2026-10-07",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/aecoproducts/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQE4YK4yCls29w/feedshare-image-high-res/B4EaEVzwnxGoAU-/0/1791367252830?e=2147483647&v=beta&t=JA5hig_xEE6L99OIql1RAPE3nCTkqcwX-HcJMaVHKrU",
+      "published_date": "2026-10-07",
+      "link": "https://www.linkedin.com/posts/aecoproducts_aeco-aecoarrow-enginevalves-activity-7513538839513124864--qZL",
+      "content": "When every engine demands reliability, choose components built to perform.\nAECO Arrow Engine Valves are engineered for durability, precision, and dependable performance, keeping engines running stronger for longer.\nTrusted across global markets. \n\n📩 Connect with AECO Arrow for your engine parts requirements.\n🌐 www.aecoproducts.com\n📧 sales1@aecoproducts.com\n📞 +91 70459 63530\nFollow us: @aecoproducts\n\n#AECO #AECOArrow #EngineValves #EngineParts #AutoAftermarket #AutomotiveIndustry #EngineComponents #syria #yemen #iraq #saudi #Egypt #morocco \n\n(Engine valves, automotive engine valves, diesel engine valves, engine components, engine parts, valve manufacturers, valve exporters, automotive aftermarket parts, diesel engine parts, heavy-duty engine parts, commercial vehicle parts, tractor engine parts, engine valve manufacturer India, engine parts manufacturer India, Made in India engine components)",
+      "timestamp": "2026-10-07",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQE4YK4yCls29w/feedshare-image-high-res/B4EaEVzwnxGoAU-/0/1791367252830?e=2147483647&v=beta&t=JA5hig_xEE6L99OIql1RAPE3nCTkqcwX-HcJMaVHKrU",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQE4YK4yCls29w/feedshare-image-high-res/B4EaEVzwnxGoAU-/0/1791367252830?e=2147483647&v=beta&t=JA5hig_xEE6L99OIql1RAPE3nCTkqcwX-HcJMaVHKrU",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/aecoproducts_aeco-aecoarrow-enginevalves-activity-7513538839513124864--qZL",
+      "competitorName": "AECO ENGINEERING LLP FACTORY",
+      "activity_id": "7513538839513124864"
+    },
+    {
+      "id": "li_1792730067151_lw0g6",
+      "company": "Various Machining Solutions LLP",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/variousmachining_vasantpanchami-newbeginnings-manufacturingindustry-activity-7420402059876909056-W4Kx",
+      "caption": "🪷🌸Happy Vasant Panchami 🌸🪷\n\nOn the auspicious occasion of Vasant Panchami, we at Various Machining Solutions LLP wish happiness, prosperity, and success to all our employees, clients, and business partners.\n\nMay this season of new beginnings bring innovation, precision, growth, and long-term collaboration in our manufacturing journey.\n\n✨ Wishing everyone a bright and successful year ahead.\n\nWarm regards,\nVarious Machining Solutions LLP\n\n#VasantPanchami\n#NewBeginnings\n#ManufacturingIndustry\n#PrecisionEngineering\n#QualityAndCommitment\n#GrowthTogether\n#VariousMachiningSolutions",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGlc0s2xiYQOg/thumbnail-with-play-button-overlay-high/B4DZvqQVPKJgDQ-/0/1769161709836?e=2147483647&v=beta&t=kEp0LYFX1pfiIVeCaAKBjUQa_eGMNaKBBsxzdgwwQbk",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGlc0s2xiYQOg/thumbnail-with-play-button-overlay-high/B4DZvqQVPKJgDQ-/0/1769161709836?e=2147483647&v=beta&t=kEp0LYFX1pfiIVeCaAKBjUQa_eGMNaKBBsxzdgwwQbk",
+      "date": "2026-01-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://in.linkedin.com/company/variousmachining",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGlc0s2xiYQOg/thumbnail-with-play-button-overlay-high/B4DZvqQVPKJgDQ-/0/1769161709836?e=2147483647&v=beta&t=kEp0LYFX1pfiIVeCaAKBjUQa_eGMNaKBBsxzdgwwQbk",
+      "published_date": "2026-01-23",
+      "link": "https://www.linkedin.com/posts/variousmachining_vasantpanchami-newbeginnings-manufacturingindustry-activity-7420402059876909056-W4Kx",
+      "content": "🪷🌸Happy Vasant Panchami 🌸🪷\n\nOn the auspicious occasion of Vasant Panchami, we at Various Machining Solutions LLP wish happiness, prosperity, and success to all our employees, clients, and business partners.\n\nMay this season of new beginnings bring innovation, precision, growth, and long-term collaboration in our manufacturing journey.\n\n✨ Wishing everyone a bright and successful year ahead.\n\nWarm regards,\nVarious Machining Solutions LLP\n\n#VasantPanchami\n#NewBeginnings\n#ManufacturingIndustry\n#PrecisionEngineering\n#QualityAndCommitment\n#GrowthTogether\n#VariousMachiningSolutions",
+      "timestamp": "2026-01-23",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGlc0s2xiYQOg/thumbnail-with-play-button-overlay-high/B4DZvqQVPKJgDQ-/0/1769161709836?e=2147483647&v=beta&t=kEp0LYFX1pfiIVeCaAKBjUQa_eGMNaKBBsxzdgwwQbk",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGlc0s2xiYQOg/thumbnail-with-play-button-overlay-high/B4DZvqQVPKJgDQ-/0/1769161709836?e=2147483647&v=beta&t=kEp0LYFX1pfiIVeCaAKBjUQa_eGMNaKBBsxzdgwwQbk",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/variousmachining_vasantpanchami-newbeginnings-manufacturingindustry-activity-7420402059876909056-W4Kx",
+      "competitorName": "Various Machining Solutions LLP",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGlc0s2xiYQOg/mp4-720p-30fp-crf28/B4DZvqQVPKJgCE-/0/1769161709836?e=2147483647&v=beta&t=r1g1IeLb3VJYvo-Y4tme0ewBPzrqEOlZLlmWWhJILoQ",
+      "activity_id": "7420402059876909056"
+    },
+    {
+      "id": "li_1792730071762_12whr",
+      "company": "ABRIGOR MEGACORP",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/abrigor-megacorp_makeinindia-cncmachining-precisionengineering-activity-7474132802762874880-W9_p",
+      "caption": "In “Driving the Next Industrial Wave: How High-Tech CNC Machining is Powering Global Supply Chains from India”, Abrigor Megacorp Pvt Ltd highlights how India’s precision engineering sector has evolved into a global, technology-driven leader.\n\nAt Abrigor, this recognition reflects our commitment to precision, quality, and innovation. We manufacture ultra-high-quality CNC Sliding, CNC, VMC, and Traub-Automat components that serve critical industries — aerospace, defense, medical devices, and heavy machinery — across the global supply chain.\n\n#MakeInIndia #CNCMachining #PrecisionEngineering #ManufacturingExcellence #AbrigorMegacorp #SupplyChainResilience #IndustrialProductMonitor #VMC #B2BManufacturing #EngineeringLeaders",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQFUcsxwf5pLdg/feedshare-image-high-res/B56Z7lyi61IMAc-/0/1781971693556?e=2147483647&v=beta&t=m-u280BCndv-8eQvGfqHF9kiu9sS_Haq2PFP10a1LO4",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQFUcsxwf5pLdg/feedshare-image-high-res/B56Z7lyi61IMAc-/0/1781971693556?e=2147483647&v=beta&t=m-u280BCndv-8eQvGfqHF9kiu9sS_Haq2PFP10a1LO4",
+      "date": "2026-06-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/abrigor-megacorp/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQFUcsxwf5pLdg/feedshare-image-high-res/B56Z7lyi61IMAc-/0/1781971693556?e=2147483647&v=beta&t=m-u280BCndv-8eQvGfqHF9kiu9sS_Haq2PFP10a1LO4",
+      "published_date": "2026-06-20",
+      "link": "https://www.linkedin.com/posts/abrigor-megacorp_makeinindia-cncmachining-precisionengineering-activity-7474132802762874880-W9_p",
+      "content": "In “Driving the Next Industrial Wave: How High-Tech CNC Machining is Powering Global Supply Chains from India”, Abrigor Megacorp Pvt Ltd highlights how India’s precision engineering sector has evolved into a global, technology-driven leader.\n\nAt Abrigor, this recognition reflects our commitment to precision, quality, and innovation. We manufacture ultra-high-quality CNC Sliding, CNC, VMC, and Traub-Automat components that serve critical industries — aerospace, defense, medical devices, and heavy machinery — across the global supply chain.\n\n#MakeInIndia #CNCMachining #PrecisionEngineering #ManufacturingExcellence #AbrigorMegacorp #SupplyChainResilience #IndustrialProductMonitor #VMC #B2BManufacturing #EngineeringLeaders",
+      "timestamp": "2026-06-20",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQFUcsxwf5pLdg/feedshare-image-high-res/B56Z7lyi61IMAc-/0/1781971693556?e=2147483647&v=beta&t=m-u280BCndv-8eQvGfqHF9kiu9sS_Haq2PFP10a1LO4",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQFUcsxwf5pLdg/feedshare-image-high-res/B56Z7lyi61IMAc-/0/1781971693556?e=2147483647&v=beta&t=m-u280BCndv-8eQvGfqHF9kiu9sS_Haq2PFP10a1LO4",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/abrigor-megacorp_makeinindia-cncmachining-precisionengineering-activity-7474132802762874880-W9_p",
+      "competitorName": "ABRIGOR MEGACORP",
+      "activity_id": "7474132802762874880"
+    },
+    {
+      "id": "li_1792730077255_q4a8m",
+      "company": "MechKonnect Industrial Solutions",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/mechkonnect_materialsengineering-qualityengineering-activity-7477280962930802688-cEYN",
+      "caption": "A component doesn't fail because it has a defect.\nIt fails because the defect eventually becomes a crack.\n\nAnd often, that defect starts as a microscopic pore.\n\nWhether a part is cast, molded, sintered, welded, or additively manufactured, porosity remains one of the most overlooked factors affecting fatigue life.\nThe reason is simple.\n\nMost pores are invisible.\nThey don't show up during routine visual inspection.\nThey don't change the shape of the component.\nThey may not even affect its immediate performance.\n\nBut under repeated loading, they become stress concentrators.\nEvery cycle applies stress around the pore.\nEvery cycle increases the likelihood of crack initiation.\nAnd once a crack forms, failure becomes a matter of time.\n\nWhat's interesting is that two components can have similar tensile strength, hardness, and dimensional accuracy while exhibiting completely different fatigue performance due to differences in internal porosity.\n\nThis is why industries such as automotive, medical devices, energy, aerospace, and industrial manufacturing invest heavily in process control and non-destructive testing.\n\nBecause durability isn't determined only by what you can measure on the surface. It's often determined by what you can't see.\n\nThe challenge isn't producing a component that passes inspection today.\nThe challenge is producing one that still performs reliably after millions of cycles in the real world.\n\nIn materials engineering, some of the biggest failures begin with the smallest voids.\n\n\n\n\n#materialsengineering \n#qualityengineering \n#additivemanufacturing \n#casting \n#industrialengineering \n#productdesign",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQE0f0fy8_Oydw/feedshare-image-high-res/B4EZ8DCLQiJEAY-/0/1782462330249?e=2147483647&v=beta&t=KURXrJ_UhuLIW6uicPfkdtc2SbRORh_3FqxfdwqhXd0",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQE0f0fy8_Oydw/feedshare-image-high-res/B4EZ8DCLQiJEAY-/0/1782462330249?e=2147483647&v=beta&t=KURXrJ_UhuLIW6uicPfkdtc2SbRORh_3FqxfdwqhXd0",
+      "date": "2026-06-29",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/mechkonnect/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQE0f0fy8_Oydw/feedshare-image-high-res/B4EZ8DCLQiJEAY-/0/1782462330249?e=2147483647&v=beta&t=KURXrJ_UhuLIW6uicPfkdtc2SbRORh_3FqxfdwqhXd0",
+      "published_date": "2026-06-29",
+      "link": "https://www.linkedin.com/posts/mechkonnect_materialsengineering-qualityengineering-activity-7477280962930802688-cEYN",
+      "content": "A component doesn't fail because it has a defect.\nIt fails because the defect eventually becomes a crack.\n\nAnd often, that defect starts as a microscopic pore.\n\nWhether a part is cast, molded, sintered, welded, or additively manufactured, porosity remains one of the most overlooked factors affecting fatigue life.\nThe reason is simple.\n\nMost pores are invisible.\nThey don't show up during routine visual inspection.\nThey don't change the shape of the component.\nThey may not even affect its immediate performance.\n\nBut under repeated loading, they become stress concentrators.\nEvery cycle applies stress around the pore.\nEvery cycle increases the likelihood of crack initiation.\nAnd once a crack forms, failure becomes a matter of time.\n\nWhat's interesting is that two components can have similar tensile strength, hardness, and dimensional accuracy while exhibiting completely different fatigue performance due to differences in internal porosity.\n\nThis is why industries such as automotive, medical devices, energy, aerospace, and industrial manufacturing invest heavily in process control and non-destructive testing.\n\nBecause durability isn't determined only by what you can measure on the surface. It's often determined by what you can't see.\n\nThe challenge isn't producing a component that passes inspection today.\nThe challenge is producing one that still performs reliably after millions of cycles in the real world.\n\nIn materials engineering, some of the biggest failures begin with the smallest voids.\n\n\n\n\n#materialsengineering \n#qualityengineering \n#additivemanufacturing \n#casting \n#industrialengineering \n#productdesign",
+      "timestamp": "2026-06-29",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQE0f0fy8_Oydw/feedshare-image-high-res/B4EZ8DCLQiJEAY-/0/1782462330249?e=2147483647&v=beta&t=KURXrJ_UhuLIW6uicPfkdtc2SbRORh_3FqxfdwqhXd0",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQE0f0fy8_Oydw/feedshare-image-high-res/B4EZ8DCLQiJEAY-/0/1782462330249?e=2147483647&v=beta&t=KURXrJ_UhuLIW6uicPfkdtc2SbRORh_3FqxfdwqhXd0",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/mechkonnect_materialsengineering-qualityengineering-activity-7477280962930802688-cEYN",
+      "competitorName": "MechKonnect Industrial Solutions",
+      "activity_id": "7477280962930802688"
+    }
+  ],
   "ownSocials": {
     "linkedin": null,
     "instagram": null,
@@ -71828,7 +72519,7 @@
         "linkedin": "https://in.linkedin.com/company/delta-technocast-pvt-ltd",
         "instagram": null,
         "facebook": "https://www.facebook.com/people/Delta-Technocast-Pvt-Ltd/61564714912800/",
-        "youtube": "https://www.youtube.com/watch?v=bOfswLfxCv8"
+        "youtube": null
       },
       "products": [
         "Precision Engineering Solutions",
@@ -71849,7 +72540,25 @@
         "Quality Testing & Inspection Services",
         "Calibration Services",
         "Quality Assurance"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 1
+        }
+      }
     },
     {
       "name": "AECO ENGINEERING LLP. FACTORY",
@@ -71890,7 +72599,25 @@
         "Quality Testing & Inspection Services",
         "Calibration Services",
         "Quality Assurance"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "KRYPTON Engineering",
@@ -71931,7 +72658,25 @@
         "Quality Testing & Inspection Services",
         "Calibration Services",
         "Quality Assurance"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 2
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Various Machining Solutions LLP",
@@ -71953,7 +72698,7 @@
         "linkedin": "https://in.linkedin.com/company/variousmachining",
         "instagram": "https://www.instagram.com/various_machining/",
         "facebook": "https://www.facebook.com/variousmachining/",
-        "youtube": "https://www.youtube.com/@vmslindia"
+        "youtube": null
       },
       "products": [
         "Contract Manufacturing",
@@ -71972,7 +72717,25 @@
         "Machining Services",
         "Quality Testing & Inspection Services",
         "Quality Assurance"
-      ]
+      ],
+      "socialStatus": {
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Harshil Enterprise CNC RAJKOT",
@@ -72406,7 +73169,7 @@
       "socials": {
         "linkedin": "https://www.linkedin.com/company/abrigor-megacorp/",
         "instagram": "https://www.instagram.com/abrigor_megacorp?igsh=MWl4MHZmejk4YnNvcg==",
-        "facebook": "https://www.facebook.com/share/1ANDaW1nCr/",
+        "facebook": null,
         "youtube": null
       },
       "products": [
@@ -72430,7 +73193,25 @@
         "Quality Testing & Inspection Services",
         "Calibration Services",
         "Quality Assurance"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "BridgeTech Structural Solutions Pvt. Ltd.",
@@ -72475,7 +73256,25 @@
         "Quality Testing & Inspection Services",
         "Calibration Services",
         "Quality Assurance"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 2
+        }
+      }
     },
     {
       "name": "MechKonnect Industrial Solutions Pvt Ltd",
@@ -72518,7 +73317,25 @@
         "Quality Testing & Inspection Services",
         "Calibration Services",
         "Quality Assurance"
-      ]
+      ],
+      "socialStatus": {
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 1
+        }
+      }
     },
     {
       "name": "Prasanna Engineers Having Wire cutting machine 750 mm height ,Manufactruer Mining Tools Equipment,Rebar Coupler Manufactruer,",
@@ -72561,7 +73378,25 @@
         "Quality Testing & Inspection Services",
         "Calibration Services",
         "Quality Assurance"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "FINESSE PRECISION ENGINEERING",
@@ -73011,9 +73846,9 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/b-and-b-precision-engineering-huddersfield-ltd",
-        "instagram": "https://www.instagram.com/b_and_b_precision_engineering/?hl=en",
-        "facebook": "https://www.facebook.com/bandbprecision",
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
         "youtube": null
       },
       "products": [
@@ -73035,7 +73870,25 @@
         "Quality Testing & Inspection Services",
         "Calibration Services",
         "Quality Assurance"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Ashtead Engineering Co Ltd (AEC)",
@@ -73056,7 +73909,7 @@
       "socials": {
         "linkedin": "https://www.linkedin.com/company/ashtead-engineering-company-limited/",
         "instagram": "https://www.instagram.com/ashteadengineeringcompany",
-        "facebook": "https://www.facebook.com/pages/Ashtead-Engineering-Co-Ltd/934450649914573",
+        "facebook": null,
         "youtube": null
       },
       "products": [
@@ -73078,7 +73931,25 @@
         "Quality Testing & Inspection Services",
         "Calibration Services",
         "Quality Assurance"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "EMS LLC (Engineering Manufacturing Services LLC)",
@@ -73121,7 +73992,25 @@
         "Quality Testing & Inspection Services",
         "Calibration Services",
         "Quality Assurance"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Project Engineering GmbH",
@@ -73140,7 +74029,7 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/in/martin-braus-29056898/",
+        "linkedin": null,
         "instagram": null,
         "facebook": null,
         "youtube": null
@@ -73162,7 +74051,25 @@
         "Quality Testing & Inspection Services",
         "Calibration Services",
         "Quality Assurance"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Precision Advanced Manufacturing",
