@@ -816,7 +816,7 @@
   ],
   "socialFeed": [
     {
-      "id": "fb_1792728744337_neggf",
+      "id": "fb_1792728840190_ignc5",
       "company": "Delta Technocast",
       "platform": "Facebook",
       "post_url": "https://www.facebook.com/permalink.php?story_fbid=pfbid05ThkvegLqAp5FrRdcKheqVECcdRSQRCRk5iLCZ7D7NkT2QmwjXHCksvGc5Rk1GLrl&id=61564714912800",
@@ -844,7 +844,7 @@
       "competitorName": "Delta Technocast"
     },
     {
-      "id": "li_1792728745036_p3uny",
+      "id": "li_1792728839287_58rcx",
       "company": "Gravity Cast",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-agriculturalmachinery-casting-activity-7479872080558129152-PThM",
@@ -874,7 +874,7 @@
       "activity_id": "7479872080558129152"
     },
     {
-      "id": "li_1792728750735_8b75b",
+      "id": "li_1792728848788_zlmcy",
       "company": "SUPER QUALI CAST",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_superqualicast-sqcgroup-ecovadis-activity-7518986790213603328-i2Xb",
@@ -903,7 +903,7 @@
       "activity_id": "7518986790213603328"
     },
     {
-      "id": "li_1792728745036_ywis2",
+      "id": "li_1792728839287_kp9j0",
       "company": "Gravity Cast",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_gravitygroup-metal-plastic-activity-7466763705947607040-5oml",
@@ -933,7 +933,7 @@
       "activity_id": "7466763705947607040"
     },
     {
-      "id": "li_1792728750735_n1yuy",
+      "id": "li_1792728848788_fpwnm",
       "company": "SUPER QUALI CAST",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happydussehra-sqcgroup-victoryofgoodoverevil-activity-7518364114201583616-xlGt",
@@ -962,7 +962,7 @@
       "activity_id": "7518364114201583616"
     },
     {
-      "id": "li_1792728745036_jld2e",
+      "id": "li_1792728839287_ako38",
       "company": "Gravity Cast",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/gravity-cast-pvt-ltd_cncmachining-vmc-precisionengineering-activity-7416436373819133952-6ZHV",
@@ -991,7 +991,7 @@
       "activity_id": "7416436373819133952"
     },
     {
-      "id": "li_1792728750735_5rz6y",
+      "id": "li_1792728848788_s6shf",
       "company": "SUPER QUALI CAST",
       "platform": "LinkedIn",
       "post_url": "https://www.linkedin.com/posts/super-quali-cast-india-pvt-ltd-_happynavratri-navratri-sqcgroup-activity-7515014749223473152-4oVj",
@@ -82955,7 +82955,7 @@
         "Machining & Finishing"
       ],
       "socialStatus": {
-        "YouTube": {
+        "LinkedIn": {
           "status": "No posts found",
           "count": 0
         },
@@ -82967,7 +82967,7 @@
           "status": "No posts found",
           "count": 0
         },
-        "LinkedIn": {
+        "YouTube": {
           "status": "No posts found",
           "count": 0
         }
@@ -83024,10 +83024,6 @@
         "Machining & Finishing"
       ],
       "socialStatus": {
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
         "Instagram": {
           "status": "No posts found",
           "count": 0
@@ -83039,6 +83035,10 @@
         "LinkedIn": {
           "status": "Success",
           "count": 3
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
         }
       }
     },
@@ -83091,11 +83091,11 @@
         "Machining & Finishing"
       ],
       "socialStatus": {
-        "Instagram": {
+        "LinkedIn": {
           "status": "No posts found",
           "count": 0
         },
-        "LinkedIn": {
+        "Instagram": {
           "status": "No posts found",
           "count": 0
         },
@@ -83156,7 +83156,7 @@
         "Machining & Finishing"
       ],
       "socialStatus": {
-        "Instagram": {
+        "YouTube": {
           "status": "No posts found",
           "count": 0
         },
@@ -83164,13 +83164,13 @@
           "status": "No posts found",
           "count": 0
         },
-        "YouTube": {
-          "status": "No posts found",
-          "count": 0
-        },
         "LinkedIn": {
           "status": "Success",
           "count": 3
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
         }
       }
     },
