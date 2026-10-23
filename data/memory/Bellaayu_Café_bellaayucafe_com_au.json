@@ -544,6 +544,34 @@
   ],
   "socialFeed": [
     {
+      "id": "youtube_1792749283362_y5lkm",
+      "company": "Coffee Roasters Australia",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=UwV_AhPgPJs",
+      "caption": "Coffee Roasters Australia | Discover the Award-Winning Blacklist Coffee Experience",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/UwV_AhPgPJs/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/UwV_AhPgPJs/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": null,
+      "thumbnail_url": "https://i.ytimg.com/vi/UwV_AhPgPJs/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=UwV_AhPgPJs",
+      "content": "Coffee Roasters Australia | Discover the Award-Winning Blacklist Coffee Experience",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/UwV_AhPgPJs/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/UwV_AhPgPJs/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=UwV_AhPgPJs",
+      "competitorName": "Coffee Roasters Australia"
+    },
+    {
       "id": "yt_64dEFETfiC0",
       "company": "Koffeeone",
       "platform": "YouTube",
@@ -715,7 +743,7 @@
       "shortcode": "kj4GsFGO0rtFy48yejAHxDPIKbkA"
     },
     {
-      "id": "fb_1792740003315_gby8f",
+      "id": "fb_1792749299060_jr5iw",
       "company": "Protech Espresso",
       "platform": "Facebook",
       "post_url": "https://www.facebook.com/permalink.php?story_fbid=pfbid0uAS2u38k9TMxkgAcz2JTGaN19aXxXU99NS7r7HwsFXp6fRaV9YqDQjyciprnFH19l&id=100054213562914",
@@ -31678,15 +31706,15 @@
         "Technical Support & Lifecycle Maintenance"
       ],
       "socialStatus": {
+        "YouTube": {
+          "status": "Success",
+          "count": 1
+        },
         "LinkedIn": {
           "status": "No posts found",
           "count": 0
         },
         "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "YouTube": {
           "status": "No posts found",
           "count": 0
         },
@@ -31729,21 +31757,21 @@
         "Technical Support & Lifecycle Maintenance"
       ],
       "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
         "Facebook": {
           "status": "No posts found",
           "count": 0
         },
-        "LinkedIn": {
+        "Instagram": {
           "status": "No posts found",
           "count": 0
         },
         "YouTube": {
           "status": "No posts found",
           "count": 0
-        },
-        "Instagram": {
-          "status": "Success",
-          "count": 3
         }
       }
     },
@@ -31833,11 +31861,11 @@
           "status": "No posts found",
           "count": 0
         },
-        "YouTube": {
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         },
-        "Facebook": {
+        "YouTube": {
           "status": "No posts found",
           "count": 0
         },
@@ -31882,11 +31910,11 @@
           "status": "No posts found",
           "count": 0
         },
-        "YouTube": {
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         },
-        "Facebook": {
+        "YouTube": {
           "status": "No posts found",
           "count": 0
         },
@@ -31960,10 +31988,6 @@
           "status": "No posts found",
           "count": 0
         },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
         "Facebook": {
           "status": "No posts found",
           "count": 0
@@ -31971,6 +31995,10 @@
         "YouTube": {
           "status": "No posts found",
           "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
         }
       }
     },
@@ -32011,13 +32039,13 @@
           "status": "No posts found",
           "count": 0
         },
-        "Facebook": {
-          "status": "Success",
-          "count": 1
-        },
         "Instagram": {
           "status": "Success",
           "count": 3
+        },
+        "Facebook": {
+          "status": "Success",
+          "count": 1
         }
       }
     },
@@ -32054,15 +32082,15 @@
         "Technical Support & Lifecycle Maintenance"
       ],
       "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
         "Instagram": {
           "status": "No posts found",
           "count": 0
         },
         "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "LinkedIn": {
           "status": "No posts found",
           "count": 0
         },
@@ -32109,11 +32137,11 @@
           "status": "No posts found",
           "count": 0
         },
-        "LinkedIn": {
+        "YouTube": {
           "status": "No posts found",
           "count": 0
         },
-        "YouTube": {
+        "LinkedIn": {
           "status": "No posts found",
           "count": 0
         },
@@ -32156,11 +32184,11 @@
         "Technical Support & Lifecycle Maintenance"
       ],
       "socialStatus": {
-        "Facebook": {
+        "YouTube": {
           "status": "No posts found",
           "count": 0
         },
-        "YouTube": {
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         },
@@ -32211,11 +32239,11 @@
           "status": "No posts found",
           "count": 0
         },
-        "Facebook": {
+        "YouTube": {
           "status": "No posts found",
           "count": 0
         },
-        "YouTube": {
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         },
@@ -32260,11 +32288,11 @@
           "status": "No posts found",
           "count": 0
         },
-        "Facebook": {
+        "YouTube": {
           "status": "No posts found",
           "count": 0
         },
-        "YouTube": {
+        "Facebook": {
           "status": "No posts found",
           "count": 0
         },
@@ -32292,7 +32320,7 @@
       ],
       "socials": {
         "linkedin": "https://linkedin.com/company/coffee-machine-warehouse",
-        "instagram": "https://www.instagram.com/cmwmelbourne/",
+        "instagram": null,
         "facebook": "https://www.facebook.com/coffeemachinewarehouseaustralia",
         "youtube": null
       },
@@ -32303,7 +32331,25 @@
       "commonProducts": [
         "Café Services",
         "Technical Support & Lifecycle Maintenance"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Australian Coffee Distributors",
