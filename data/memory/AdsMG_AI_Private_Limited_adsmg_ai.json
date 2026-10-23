@@ -771,7 +771,904 @@
       "inferred": true
     }
   ],
-  "socialFeed": [],
+  "socialFeed": [
+    {
+      "id": "yt_QcAhXxDPfNU",
+      "company": "JK Branding",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=QcAhXxDPfNU",
+      "caption": "𝗢𝗻𝗲 𝗼𝗳 𝗧𝗵𝗲 𝗟𝗲𝗮𝗱𝗶𝗻𝗴 𝗕𝗿𝗮𝗻𝗱𝗶𝗻𝗴 𝗔𝗴𝗲𝗻𝗰𝘆 𝗼𝗳 𝗚𝘂𝗷𝗮𝗿𝗮𝘁.",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/QcAhXxDPfNU/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/QcAhXxDPfNU/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@JK_Branding_india",
+      "thumbnail_url": "https://i.ytimg.com/vi/QcAhXxDPfNU/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=QcAhXxDPfNU",
+      "content": "𝗢𝗻𝗲 𝗼𝗳 𝗧𝗵𝗲 𝗟𝗲𝗮𝗱𝗶𝗻𝗴 𝗕𝗿𝗮𝗻𝗱𝗶𝗻𝗴 𝗔𝗴𝗲𝗻𝗰𝘆 𝗼𝗳 𝗚𝘂𝗷𝗮𝗿𝗮𝘁.",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/QcAhXxDPfNU/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/QcAhXxDPfNU/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=QcAhXxDPfNU",
+      "competitorName": "JK Branding"
+    },
+    {
+      "id": "yt_DV70u8UiFkQ",
+      "company": "Social Circuits",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=DV70u8UiFkQ",
+      "caption": "Brand Name Meaning",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/DV70u8UiFkQ/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/DV70u8UiFkQ/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@socialcircuits",
+      "thumbnail_url": "https://i.ytimg.com/vi/DV70u8UiFkQ/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=DV70u8UiFkQ",
+      "content": "Brand Name Meaning",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/DV70u8UiFkQ/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/DV70u8UiFkQ/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=DV70u8UiFkQ",
+      "competitorName": "Social Circuits"
+    },
+    {
+      "id": "yt_kTIU5Stzu18",
+      "company": "Brand Builder Digital",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=kTIU5Stzu18",
+      "caption": "Anywhere you travel, Gotilo travels with you 🌍Find anything, anywhere — with Gotilo ✈️",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/kTIU5Stzu18/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/kTIU5Stzu18/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@brandbuilderdigital",
+      "thumbnail_url": "https://i.ytimg.com/vi/kTIU5Stzu18/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=kTIU5Stzu18",
+      "content": "Anywhere you travel, Gotilo travels with you 🌍Find anything, anywhere — with Gotilo ✈️",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/kTIU5Stzu18/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/kTIU5Stzu18/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=kTIU5Stzu18",
+      "competitorName": "Brand Builder Digital"
+    },
+    {
+      "id": "yt_OCYbs2-2OUU",
+      "company": "JK Branding",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=OCYbs2-2OUU",
+      "caption": "Our Success Story | Jk Branding (India) Pvt. Ltd.",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/OCYbs2-2OUU/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/OCYbs2-2OUU/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@JK_Branding_india",
+      "thumbnail_url": "https://i.ytimg.com/vi/OCYbs2-2OUU/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=OCYbs2-2OUU",
+      "content": "Our Success Story | Jk Branding (India) Pvt. Ltd.",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/OCYbs2-2OUU/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/OCYbs2-2OUU/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=OCYbs2-2OUU",
+      "competitorName": "JK Branding"
+    },
+    {
+      "id": "yt_skaM5OY_qPY",
+      "company": "Social Circuits",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=skaM5OY_qPY",
+      "caption": "Guilty For Breaking The Internet | Tresse Unisex Salon Launch",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/skaM5OY_qPY/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/skaM5OY_qPY/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@socialcircuits",
+      "thumbnail_url": "https://i.ytimg.com/vi/skaM5OY_qPY/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=skaM5OY_qPY",
+      "content": "Guilty For Breaking The Internet | Tresse Unisex Salon Launch",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/skaM5OY_qPY/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/skaM5OY_qPY/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=skaM5OY_qPY",
+      "competitorName": "Social Circuits"
+    },
+    {
+      "id": "yt_ytlO5_bcTt4",
+      "company": "Brand Builder Digital",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=ytlO5_bcTt4",
+      "caption": "Decoration, catering, photography, DJ, venue… jo bhi chahiye sab Gotilo par!",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/ytlO5_bcTt4/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/ytlO5_bcTt4/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@brandbuilderdigital",
+      "thumbnail_url": "https://i.ytimg.com/vi/ytlO5_bcTt4/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=ytlO5_bcTt4",
+      "content": "Decoration, catering, photography, DJ, venue… jo bhi chahiye sab Gotilo par!",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/ytlO5_bcTt4/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/ytlO5_bcTt4/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=ytlO5_bcTt4",
+      "competitorName": "Brand Builder Digital"
+    },
+    {
+      "id": "yt_i2MMaXQZQPs",
+      "company": "JK Branding",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=i2MMaXQZQPs",
+      "caption": "We Convert Your Vision and Ideas Into Brand | Mr Punit Managing Director of Green Bath Accessories",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/i2MMaXQZQPs/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/i2MMaXQZQPs/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@JK_Branding_india",
+      "thumbnail_url": "https://i.ytimg.com/vi/i2MMaXQZQPs/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=i2MMaXQZQPs",
+      "content": "We Convert Your Vision and Ideas Into Brand | Mr Punit Managing Director of Green Bath Accessories",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/i2MMaXQZQPs/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/i2MMaXQZQPs/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=i2MMaXQZQPs",
+      "competitorName": "JK Branding"
+    },
+    {
+      "id": "yt_k2ntImy_hZw",
+      "company": "Social Circuits",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=k2ntImy_hZw",
+      "caption": "\"Curiously Creative\" Social Circuits",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/k2ntImy_hZw/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/k2ntImy_hZw/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@socialcircuits",
+      "thumbnail_url": "https://i.ytimg.com/vi/k2ntImy_hZw/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=k2ntImy_hZw",
+      "content": "\"Curiously Creative\" Social Circuits",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/k2ntImy_hZw/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/k2ntImy_hZw/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=k2ntImy_hZw",
+      "competitorName": "Social Circuits"
+    },
+    {
+      "id": "yt_wmt-suCl6cI",
+      "company": "Brand Builder Digital",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=wmt-suCl6cI",
+      "caption": "Feeling like your business isn’t moving ahead?",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/wmt-suCl6cI/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/wmt-suCl6cI/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@brandbuilderdigital",
+      "thumbnail_url": "https://i.ytimg.com/vi/wmt-suCl6cI/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=wmt-suCl6cI",
+      "content": "Feeling like your business isn’t moving ahead?",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/wmt-suCl6cI/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/wmt-suCl6cI/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=wmt-suCl6cI",
+      "competitorName": "Brand Builder Digital"
+    },
+    {
+      "id": "ig_Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk",
+      "company": "11 Media Branding Marketing Agency",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/",
+      "caption": "11 Media Branding Marketing Agency on Instagram: Official Post.",
+      "media_type": "Image",
+      "thumbnail": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "media_url": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/theelevenmedia/",
+      "thumbnail_url": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "published_date": "2026-10-23",
+      "link": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/",
+      "content": "11 Media Branding Marketing Agency on Instagram: Official Post.",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/",
+      "competitorName": "11 Media Branding Marketing Agency",
+      "shortcode": "Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk"
+    },
+    {
+      "id": "ig_qTfXdjJ4Bd96T5YuJheHlVPXSqTQm",
+      "company": "11 Media Branding Marketing Agency",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/",
+      "caption": "Official Post.",
+      "media_type": "Image",
+      "thumbnail": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "media_url": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/theelevenmedia/",
+      "thumbnail_url": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "published_date": "2026-10-23",
+      "link": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/",
+      "content": "Official Post.",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/",
+      "competitorName": "11 Media Branding Marketing Agency",
+      "shortcode": "qTfXdjJ4Bd96T5YuJheHlVPXSqTQm"
+    },
+    {
+      "id": "ig_kj4GsFGO0rtFy48yejAHxDPIKbkA",
+      "company": "11 Media Branding Marketing Agency",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/",
+      "caption": "Official Post.",
+      "media_type": "Image",
+      "thumbnail": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "media_url": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/theelevenmedia/",
+      "thumbnail_url": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "published_date": "2026-10-23",
+      "link": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/",
+      "content": "Official Post.",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/",
+      "competitorName": "11 Media Branding Marketing Agency",
+      "shortcode": "kj4GsFGO0rtFy48yejAHxDPIKbkA"
+    },
+    {
+      "id": "li_1792754766107_eh8o9",
+      "company": "JK Branding",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/jk-branding-india-pvt-ltd_rakshitam-rpsfmanufacturer-petflakessupplier-activity-7511774490587107328-azv0",
+      "caption": "The Future of Industrial Materials is Recycled. ♻️⚡\n\nFrom bottle to fibre, Rakshitam Ecofibre Pvt. Ltd. delivers premium RPSF and PET Flakes designed to meet demanding industrial specifications—without harming the planet.  \n\n Empower your manufacturing with sustainable excellence. 🌿 \n\n 📩 DM or contact us for sample requests and bulk requirements.\n\n🌐 www.rakshitam.com  \n\n #Rakshitam #RPSFManufacturer #PETFlakesSupplier #RecyclingIndustry #SustainableFuture",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D4D05AQHpqWB_qxZJsw/thumbnail-with-play-button-overlay-high/B4DaD8vDDSJYC0-/0/1790946589712?e=2147483647&v=beta&t=46qqRvrkivcppUHtYvGbRPmhImbNnjLhcAxeLSym3sY",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQHpqWB_qxZJsw/thumbnail-with-play-button-overlay-high/B4DaD8vDDSJYC0-/0/1790946589712?e=2147483647&v=beta&t=46qqRvrkivcppUHtYvGbRPmhImbNnjLhcAxeLSym3sY",
+      "date": "2026-10-02",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/jk-branding-india-pvt-ltd/",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQHpqWB_qxZJsw/thumbnail-with-play-button-overlay-high/B4DaD8vDDSJYC0-/0/1790946589712?e=2147483647&v=beta&t=46qqRvrkivcppUHtYvGbRPmhImbNnjLhcAxeLSym3sY",
+      "published_date": "2026-10-02",
+      "link": "https://www.linkedin.com/posts/jk-branding-india-pvt-ltd_rakshitam-rpsfmanufacturer-petflakessupplier-activity-7511774490587107328-azv0",
+      "content": "The Future of Industrial Materials is Recycled. ♻️⚡\n\nFrom bottle to fibre, Rakshitam Ecofibre Pvt. Ltd. delivers premium RPSF and PET Flakes designed to meet demanding industrial specifications—without harming the planet.  \n\n Empower your manufacturing with sustainable excellence. 🌿 \n\n 📩 DM or contact us for sample requests and bulk requirements.\n\n🌐 www.rakshitam.com  \n\n #Rakshitam #RPSFManufacturer #PETFlakesSupplier #RecyclingIndustry #SustainableFuture",
+      "timestamp": "2026-10-02",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D4D05AQHpqWB_qxZJsw/thumbnail-with-play-button-overlay-high/B4DaD8vDDSJYC0-/0/1790946589712?e=2147483647&v=beta&t=46qqRvrkivcppUHtYvGbRPmhImbNnjLhcAxeLSym3sY",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D4D05AQHpqWB_qxZJsw/thumbnail-with-play-button-overlay-high/B4DaD8vDDSJYC0-/0/1790946589712?e=2147483647&v=beta&t=46qqRvrkivcppUHtYvGbRPmhImbNnjLhcAxeLSym3sY",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/jk-branding-india-pvt-ltd_rakshitam-rpsfmanufacturer-petflakessupplier-activity-7511774490587107328-azv0",
+      "competitorName": "JK Branding",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQHpqWB_qxZJsw/mp4-720p-30fp-crf28/B4DaD8vDDSJYB8-/0/1790946592809?e=2147483647&v=beta&t=H-_3Hig7Hqy-jerxpjfGbR4i5LDsZ_opwr0AN3smNpM",
+      "activity_id": "7511774490587107328"
+    },
+    {
+      "id": "li_1792754780202_v4ttq",
+      "company": "Social Circuits",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/socialcircuits_socialcircuits-socialcircuitskaraja-ganeshchaturthi-activity-7505522250905718784-YJNL",
+      "caption": "Bappa has arrived at Social Circuits. ✨\n\nYesterday, we welcomed Social Circuits Ka Raja with smiles, devotion, and a lot of festive energy.\n\nThe workspace feels different when Bappa is around — a little more positive, a little more joyful, and a lot more special.\n\nMoments like these remind us that culture, creativity, and togetherness are a big part of who we are as a team.\n\nHere’s to new beginnings, good energy, and blessings for everyone. 💛\nGanpati Bappa Morya!\n\n#SocialCircuits #SocialCircuitsKaRaja #GaneshChaturthi #BappaMorya #TeamCulture #OfficeCelebration #InsideTheCircuits",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D4D05AQHywq71wp6mpg/thumbnail-with-play-button-overlay-high/B4DaCj4pgkJgCw-/0/1789455935854?e=2147483647&v=beta&t=wMQcq9k4x36_gMNcxTzImmewyoWRqo7HUA2WAdAh0uA",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQHywq71wp6mpg/thumbnail-with-play-button-overlay-high/B4DaCj4pgkJgCw-/0/1789455935854?e=2147483647&v=beta&t=wMQcq9k4x36_gMNcxTzImmewyoWRqo7HUA2WAdAh0uA",
+      "date": "2026-09-15",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/socialcircuits/",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQHywq71wp6mpg/thumbnail-with-play-button-overlay-high/B4DaCj4pgkJgCw-/0/1789455935854?e=2147483647&v=beta&t=wMQcq9k4x36_gMNcxTzImmewyoWRqo7HUA2WAdAh0uA",
+      "published_date": "2026-09-15",
+      "link": "https://www.linkedin.com/posts/socialcircuits_socialcircuits-socialcircuitskaraja-ganeshchaturthi-activity-7505522250905718784-YJNL",
+      "content": "Bappa has arrived at Social Circuits. ✨\n\nYesterday, we welcomed Social Circuits Ka Raja with smiles, devotion, and a lot of festive energy.\n\nThe workspace feels different when Bappa is around — a little more positive, a little more joyful, and a lot more special.\n\nMoments like these remind us that culture, creativity, and togetherness are a big part of who we are as a team.\n\nHere’s to new beginnings, good energy, and blessings for everyone. 💛\nGanpati Bappa Morya!\n\n#SocialCircuits #SocialCircuitsKaRaja #GaneshChaturthi #BappaMorya #TeamCulture #OfficeCelebration #InsideTheCircuits",
+      "timestamp": "2026-09-15",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D4D05AQHywq71wp6mpg/thumbnail-with-play-button-overlay-high/B4DaCj4pgkJgCw-/0/1789455935854?e=2147483647&v=beta&t=wMQcq9k4x36_gMNcxTzImmewyoWRqo7HUA2WAdAh0uA",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D4D05AQHywq71wp6mpg/thumbnail-with-play-button-overlay-high/B4DaCj4pgkJgCw-/0/1789455935854?e=2147483647&v=beta&t=wMQcq9k4x36_gMNcxTzImmewyoWRqo7HUA2WAdAh0uA",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/socialcircuits_socialcircuits-socialcircuitskaraja-ganeshchaturthi-activity-7505522250905718784-YJNL",
+      "competitorName": "Social Circuits",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQHywq71wp6mpg/mp4-720p-30fp-crf28/B4DaCj4pgkJgB4-/0/1789455944435?e=2147483647&v=beta&t=eXAn0IWSJoC95pwd7FqYjOeB-X34yEFE_OrRjF0c3Hs",
+      "activity_id": "7505522250905718784"
+    },
+    {
+      "id": "li_1792754786101_6rr0o",
+      "company": "Brand Builder Digital",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/brandbuilderdigital_festival-fyp-officelife-activity-7516062960088248320-1Ian",
+      "caption": "Navratri vibes in office 🥹❤️\n.\n.\n.\n#festival #fyp #officelife #gujrati #navratri",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGdfZumdAeDIg/thumbnail-with-play-button-overlay-high/B4DaE5rZoBJoC0-/0/1791969043889?e=2147483647&v=beta&t=r_UK6XaLBAXEo4LL8U8XMJ4KLeMx3TtwKsSbl04v_Kg",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGdfZumdAeDIg/thumbnail-with-play-button-overlay-high/B4DaE5rZoBJoC0-/0/1791969043889?e=2147483647&v=beta&t=r_UK6XaLBAXEo4LL8U8XMJ4KLeMx3TtwKsSbl04v_Kg",
+      "date": "2026-10-14",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://in.linkedin.com/company/brandbuilderdigital",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGdfZumdAeDIg/thumbnail-with-play-button-overlay-high/B4DaE5rZoBJoC0-/0/1791969043889?e=2147483647&v=beta&t=r_UK6XaLBAXEo4LL8U8XMJ4KLeMx3TtwKsSbl04v_Kg",
+      "published_date": "2026-10-14",
+      "link": "https://www.linkedin.com/posts/brandbuilderdigital_festival-fyp-officelife-activity-7516062960088248320-1Ian",
+      "content": "Navratri vibes in office 🥹❤️\n.\n.\n.\n#festival #fyp #officelife #gujrati #navratri",
+      "timestamp": "2026-10-14",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGdfZumdAeDIg/thumbnail-with-play-button-overlay-high/B4DaE5rZoBJoC0-/0/1791969043889?e=2147483647&v=beta&t=r_UK6XaLBAXEo4LL8U8XMJ4KLeMx3TtwKsSbl04v_Kg",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGdfZumdAeDIg/thumbnail-with-play-button-overlay-high/B4DaE5rZoBJoC0-/0/1791969043889?e=2147483647&v=beta&t=r_UK6XaLBAXEo4LL8U8XMJ4KLeMx3TtwKsSbl04v_Kg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/brandbuilderdigital_festival-fyp-officelife-activity-7516062960088248320-1Ian",
+      "competitorName": "Brand Builder Digital",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGdfZumdAeDIg/mp4-720p-30fp-crf28/B4DaE5rZoBJoB8-/0/1791969043889?e=2147483647&v=beta&t=h1XoKWHp0fQQah9fFz6gODyoi_MuMgb6e83kPGACpVI",
+      "activity_id": "7516062960088248320"
+    },
+    {
+      "id": "li_1792754800705_lrfcw",
+      "company": "B2B Leads Corporate",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/b2bleadscorp_happynewyear2026-newyear2026-newbeginnings-activity-7411839750765989888-YbQ3",
+      "caption": "✨ Happy New Year 2026! ✨\nAs we step into 2026, we at B2B Leads Corporate would like to express our sincere gratitude to our clients, partners, and team members for your continued trust and collaboration.\n\nThe past year has been a journey of growth, learning, and meaningful partnerships. Your support motivates us to keep innovating, delivering results, and setting new benchmarks in B2B demand generation.\n\n🎯 May 2026 bring new opportunities, stronger partnerships, continued success, and shared growth for all of us.\n\nThank you for being an integral part of our journey.\n\n We look forward to achieving greater milestones together in the year ahead.\n\n🌟 Wishing you a prosperous, successful, and fulfilling New Year 2026! 🌟\n— Team B2B Leads Corporate\n#HappyNewYear2026 #NewYear2026 #NewBeginnings #Gratitude #ThankYou #B2BLeadsCorporate #B2BMarketing #DemandGeneration #BusinessGrowth #Partnerships #ClientAppreciation #Teamwork #Leadership #Success #GrowthMindset",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQFbUR9G4gJAmw/feedshare-image-high-res/B56Zs9AzcmG8Ao-/0/1766255181656?e=2147483647&v=beta&t=0rITPC9nR7tosxNFtDnciDwWuk02Gthq36A9h4Ewiws",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQFbUR9G4gJAmw/feedshare-image-high-res/B56Zs9AzcmG8Ao-/0/1766255181656?e=2147483647&v=beta&t=0rITPC9nR7tosxNFtDnciDwWuk02Gthq36A9h4Ewiws",
+      "date": "2025-12-30",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/b2bleadscorp/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQFbUR9G4gJAmw/feedshare-image-high-res/B56Zs9AzcmG8Ao-/0/1766255181656?e=2147483647&v=beta&t=0rITPC9nR7tosxNFtDnciDwWuk02Gthq36A9h4Ewiws",
+      "published_date": "2025-12-30",
+      "link": "https://www.linkedin.com/posts/b2bleadscorp_happynewyear2026-newyear2026-newbeginnings-activity-7411839750765989888-YbQ3",
+      "content": "✨ Happy New Year 2026! ✨\nAs we step into 2026, we at B2B Leads Corporate would like to express our sincere gratitude to our clients, partners, and team members for your continued trust and collaboration.\n\nThe past year has been a journey of growth, learning, and meaningful partnerships. Your support motivates us to keep innovating, delivering results, and setting new benchmarks in B2B demand generation.\n\n🎯 May 2026 bring new opportunities, stronger partnerships, continued success, and shared growth for all of us.\n\nThank you for being an integral part of our journey.\n\n We look forward to achieving greater milestones together in the year ahead.\n\n🌟 Wishing you a prosperous, successful, and fulfilling New Year 2026! 🌟\n— Team B2B Leads Corporate\n#HappyNewYear2026 #NewYear2026 #NewBeginnings #Gratitude #ThankYou #B2BLeadsCorporate #B2BMarketing #DemandGeneration #BusinessGrowth #Partnerships #ClientAppreciation #Teamwork #Leadership #Success #GrowthMindset",
+      "timestamp": "2025-12-30",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQFbUR9G4gJAmw/feedshare-image-high-res/B56Zs9AzcmG8Ao-/0/1766255181656?e=2147483647&v=beta&t=0rITPC9nR7tosxNFtDnciDwWuk02Gthq36A9h4Ewiws",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQFbUR9G4gJAmw/feedshare-image-high-res/B56Zs9AzcmG8Ao-/0/1766255181656?e=2147483647&v=beta&t=0rITPC9nR7tosxNFtDnciDwWuk02Gthq36A9h4Ewiws",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/b2bleadscorp_happynewyear2026-newyear2026-newbeginnings-activity-7411839750765989888-YbQ3",
+      "competitorName": "B2B Leads Corporate",
+      "activity_id": "7411839750765989888"
+    },
+    {
+      "id": "li_1792754807906_ns6zt",
+      "company": "Netcom business solutions digital marketing agency in pune",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/netcombusinesssolutions_engineersday-engineers-businesssolutions-activity-7505489873529638912-9rR3",
+      "caption": "At Netcom, we understand that innovation and exposure go hand-in-hand. This Engineers' Day, we salute the problem-solvers who are shaping our world. Together, we can unlock your brand's full potential. Give your brand the exposure it deserves. Connect with us to learn more. 👇\n\n\n #EngineersDay #Engineers #BusinessSolutions #Innovation #NetcomSolutions #BrandExposure #DigitalSolutions #GrowYourBusiness #EngineerMindset #Technology",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQEu6Hrf-dc0Xg/feedshare-shrink_1280/B4DaCjbRGNI4AM-/0/1789448229503?e=2147483647&v=beta&t=5XAkXN9Xv0pRqiZEHVzr5LosDW0DmfcQ9fzHW0_do08",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQEu6Hrf-dc0Xg/feedshare-shrink_1280/B4DaCjbRGNI4AM-/0/1789448229503?e=2147483647&v=beta&t=5XAkXN9Xv0pRqiZEHVzr5LosDW0DmfcQ9fzHW0_do08",
+      "date": "2026-09-15",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/netcombusinesssolutions/mycompany/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQEu6Hrf-dc0Xg/feedshare-shrink_1280/B4DaCjbRGNI4AM-/0/1789448229503?e=2147483647&v=beta&t=5XAkXN9Xv0pRqiZEHVzr5LosDW0DmfcQ9fzHW0_do08",
+      "published_date": "2026-09-15",
+      "link": "https://www.linkedin.com/posts/netcombusinesssolutions_engineersday-engineers-businesssolutions-activity-7505489873529638912-9rR3",
+      "content": "At Netcom, we understand that innovation and exposure go hand-in-hand. This Engineers' Day, we salute the problem-solvers who are shaping our world. Together, we can unlock your brand's full potential. Give your brand the exposure it deserves. Connect with us to learn more. 👇\n\n\n #EngineersDay #Engineers #BusinessSolutions #Innovation #NetcomSolutions #BrandExposure #DigitalSolutions #GrowYourBusiness #EngineerMindset #Technology",
+      "timestamp": "2026-09-15",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQEu6Hrf-dc0Xg/feedshare-shrink_1280/B4DaCjbRGNI4AM-/0/1789448229503?e=2147483647&v=beta&t=5XAkXN9Xv0pRqiZEHVzr5LosDW0DmfcQ9fzHW0_do08",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQEu6Hrf-dc0Xg/feedshare-shrink_1280/B4DaCjbRGNI4AM-/0/1789448229503?e=2147483647&v=beta&t=5XAkXN9Xv0pRqiZEHVzr5LosDW0DmfcQ9fzHW0_do08",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/netcombusinesssolutions_engineersday-engineers-businesssolutions-activity-7505489873529638912-9rR3",
+      "competitorName": "Netcom business solutions digital marketing agency in pune",
+      "activity_id": "7505489873529638912"
+    },
+    {
+      "id": "li_1792754808607_2bjk6",
+      "company": "Base2Brand Infotech",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/techbase2brand_aieverything-aieverythingdubai-dubai-activity-7507809967685652480-WDdZ",
+      "caption": "AI Everything, Dubai. Let’s meet!\n\nWe'll be in Dubai for the AI Everything Conference and would love to connect with founders, business owners, and tech leaders.\n\nIf you’re looking to:\n\n• Automate repetitive work with AI\n• Reduce operational costs\n• Improve sales and customer experience\n• Build AI-powered products\n• Modernize your business with the latest technology\n• Find practical AI solutions for your industry\n\nLet’s grab a coffee, exchange ideas, and explore what we can build together.\n\nDubai\n\ndate: 6–7 October\n\nIf you’re attending too, DM me. Let’s connect.\n\n#aieverything #aieverythingdubai #dubai #dubai2026 #ai #artificialintelligence #aitrends #aitechnology #businessai #aiinnovation #ai solutions #digitaltransformation #businessautomation",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQF9nqfqdjmppA/feedshare-image-high-res/B4DaDEZYNyJsAU-/0/1790001382691?e=2147483647&v=beta&t=MFkai2gzHuPkIjmPazsk3XEOPn6OgHNu20QL1pyWb-k",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQF9nqfqdjmppA/feedshare-image-high-res/B4DaDEZYNyJsAU-/0/1790001382691?e=2147483647&v=beta&t=MFkai2gzHuPkIjmPazsk3XEOPn6OgHNu20QL1pyWb-k",
+      "date": "2026-09-21",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://in.linkedin.com/company/techbase2brand",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQF9nqfqdjmppA/feedshare-image-high-res/B4DaDEZYNyJsAU-/0/1790001382691?e=2147483647&v=beta&t=MFkai2gzHuPkIjmPazsk3XEOPn6OgHNu20QL1pyWb-k",
+      "published_date": "2026-09-21",
+      "link": "https://www.linkedin.com/posts/techbase2brand_aieverything-aieverythingdubai-dubai-activity-7507809967685652480-WDdZ",
+      "content": "AI Everything, Dubai. Let’s meet!\n\nWe'll be in Dubai for the AI Everything Conference and would love to connect with founders, business owners, and tech leaders.\n\nIf you’re looking to:\n\n• Automate repetitive work with AI\n• Reduce operational costs\n• Improve sales and customer experience\n• Build AI-powered products\n• Modernize your business with the latest technology\n• Find practical AI solutions for your industry\n\nLet’s grab a coffee, exchange ideas, and explore what we can build together.\n\nDubai\n\ndate: 6–7 October\n\nIf you’re attending too, DM me. Let’s connect.\n\n#aieverything #aieverythingdubai #dubai #dubai2026 #ai #artificialintelligence #aitrends #aitechnology #businessai #aiinnovation #ai solutions #digitaltransformation #businessautomation",
+      "timestamp": "2026-09-21",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQF9nqfqdjmppA/feedshare-image-high-res/B4DaDEZYNyJsAU-/0/1790001382691?e=2147483647&v=beta&t=MFkai2gzHuPkIjmPazsk3XEOPn6OgHNu20QL1pyWb-k",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQF9nqfqdjmppA/feedshare-image-high-res/B4DaDEZYNyJsAU-/0/1790001382691?e=2147483647&v=beta&t=MFkai2gzHuPkIjmPazsk3XEOPn6OgHNu20QL1pyWb-k",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/techbase2brand_aieverything-aieverythingdubai-dubai-activity-7507809967685652480-WDdZ",
+      "competitorName": "Base2Brand Infotech",
+      "activity_id": "7507809967685652480"
+    },
+    {
+      "id": "li_1792754810607_jkq5e",
+      "company": "MindTech B2B",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/mindtechb2b_mindtechb2b-b2bleadgeneration-demandgeneration-activity-7519080242162954241-0J8i",
+      "caption": "𝐆𝐫𝐨𝐰𝐭𝐡 𝐃𝐨𝐞𝐬𝐧'𝐭 𝐁𝐞𝐠𝐢𝐧 𝐖𝐢𝐭𝐡 𝐚 𝐋𝐞𝐚𝐝. 𝐈𝐭 𝐁𝐞𝐠𝐢𝐧𝐬 𝐖𝐢𝐭𝐡 𝐚 𝐁𝐞𝐭𝐭𝐞𝐫 𝐐𝐮𝐞𝐬𝐭𝐢𝐨𝐧.\n\nBefore a campaign goes live, before the first email is sent, and before a sales team starts reaching out, there is a question worth asking: \n\nAre we reaching the companies that actually matter to our business ?\n\nIt's easy to get caught up in the numbers. More contacts, more outreach, more activity and more leads. But volume alone doesn't tell the whole story. \n\nThe real opportunity lies in understanding the market, identifying the right accounts and finding meaningful ways to connect with the people behind business decisions.\n\nThat's the thinking behind 𝐌𝐢𝐧𝐝𝐓𝐞𝐜𝐡𝐁𝟐𝐁.\n\nWe work at the intersection of data, demand generation and B2B engagement, helping technology companies approach growth with greater focus. From identifying relevant audiences to creating opportunities for sales conversations, our work is built around a simple idea: the right connection can be more valuable than a thousand disconnected interactions.\n\nBecause sustainable growth isn't just about reaching more people. It's about reaching the right people, with the right context, at the right time.\n𝐌𝐢𝐧𝐝𝐓𝐞𝐜𝐡𝐁𝟐𝐁. Better connections. More meaningful opportunities.\n\nRohan Manthankar Deep Jathar SWAPNIL OMBASE Snehal Asalkar Deepak Gajare\n\n#MindTechB2B #B2BLeadGeneration #DemandGeneration #B2BMarketing #AccountBasedMarketing #SalesPipeline #TechnologyMarketing #BusinessGrowth",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQEYGtcIG3tsCw/feedshare-shrink_1280/B4DaFkISELGUAM-/0/1792681255659?e=2147483647&v=beta&t=hkruvaVWZU3xXtD5nhgx-rObSz-B1DbH6crysgsg3QQ",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQEYGtcIG3tsCw/feedshare-shrink_1280/B4DaFkISELGUAM-/0/1792681255659?e=2147483647&v=beta&t=hkruvaVWZU3xXtD5nhgx-rObSz-B1DbH6crysgsg3QQ",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/mindtechb2b",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQEYGtcIG3tsCw/feedshare-shrink_1280/B4DaFkISELGUAM-/0/1792681255659?e=2147483647&v=beta&t=hkruvaVWZU3xXtD5nhgx-rObSz-B1DbH6crysgsg3QQ",
+      "published_date": "2026-10-22",
+      "link": "https://www.linkedin.com/posts/mindtechb2b_mindtechb2b-b2bleadgeneration-demandgeneration-activity-7519080242162954241-0J8i",
+      "content": "𝐆𝐫𝐨𝐰𝐭𝐡 𝐃𝐨𝐞𝐬𝐧'𝐭 𝐁𝐞𝐠𝐢𝐧 𝐖𝐢𝐭𝐡 𝐚 𝐋𝐞𝐚𝐝. 𝐈𝐭 𝐁𝐞𝐠𝐢𝐧𝐬 𝐖𝐢𝐭𝐡 𝐚 𝐁𝐞𝐭𝐭𝐞𝐫 𝐐𝐮𝐞𝐬𝐭𝐢𝐨𝐧.\n\nBefore a campaign goes live, before the first email is sent, and before a sales team starts reaching out, there is a question worth asking: \n\nAre we reaching the companies that actually matter to our business ?\n\nIt's easy to get caught up in the numbers. More contacts, more outreach, more activity and more leads. But volume alone doesn't tell the whole story. \n\nThe real opportunity lies in understanding the market, identifying the right accounts and finding meaningful ways to connect with the people behind business decisions.\n\nThat's the thinking behind 𝐌𝐢𝐧𝐝𝐓𝐞𝐜𝐡𝐁𝟐𝐁.\n\nWe work at the intersection of data, demand generation and B2B engagement, helping technology companies approach growth with greater focus. From identifying relevant audiences to creating opportunities for sales conversations, our work is built around a simple idea: the right connection can be more valuable than a thousand disconnected interactions.\n\nBecause sustainable growth isn't just about reaching more people. It's about reaching the right people, with the right context, at the right time.\n𝐌𝐢𝐧𝐝𝐓𝐞𝐜𝐡𝐁𝟐𝐁. Better connections. More meaningful opportunities.\n\nRohan Manthankar Deep Jathar SWAPNIL OMBASE Snehal Asalkar Deepak Gajare\n\n#MindTechB2B #B2BLeadGeneration #DemandGeneration #B2BMarketing #AccountBasedMarketing #SalesPipeline #TechnologyMarketing #BusinessGrowth",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQEYGtcIG3tsCw/feedshare-shrink_1280/B4DaFkISELGUAM-/0/1792681255659?e=2147483647&v=beta&t=hkruvaVWZU3xXtD5nhgx-rObSz-B1DbH6crysgsg3QQ",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQEYGtcIG3tsCw/feedshare-shrink_1280/B4DaFkISELGUAM-/0/1792681255659?e=2147483647&v=beta&t=hkruvaVWZU3xXtD5nhgx-rObSz-B1DbH6crysgsg3QQ",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/mindtechb2b_mindtechb2b-b2bleadgeneration-demandgeneration-activity-7519080242162954241-0J8i",
+      "competitorName": "MindTech B2B",
+      "activity_id": "7519080242162954241"
+    },
+    {
+      "id": "li_1792754766107_1d4pn",
+      "company": "JK Branding",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/jk-branding-india-pvt-ltd_exhibitionstall-stalldesign-stallfabrication-activity-7506238503236796416-DswF",
+      "caption": "Where Brands Come Alive, And Experiences Begin. ✨\n\nA great exhibition stall is more than just a structure — it’s your brand’s first impression.\n\nAt JK Branding, we turn your brand vision into impactful exhibition spaces with complete Stall Design & Fabrication solutions — from creative 3D concepts to fabrication, branding, installation & final execution.\n\nMake your next exhibition space stand out, engage visitors & leave a lasting impression.\n\n📍Pan India\nJK Branding (India) Pvt. Ltd.\nCall now for inquiry +91 96015 11117\nTurning Brand Vision Into Reality.\n\n#ExhibitionStall #StallDesign #StallFabrication #ExhibitionBranding #JKBranding",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4E22AQH1sCYID49QVA/feedshare-shrink_800/B4EaCuEJJNHAAg-/0/1789626717113?e=2147483647&v=beta&t=2KuNborfcAb2QFt7vyk5MTgMZM8e2qWTXUtddptoV6c",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4E22AQH1sCYID49QVA/feedshare-shrink_800/B4EaCuEJJNHAAg-/0/1789626717113?e=2147483647&v=beta&t=2KuNborfcAb2QFt7vyk5MTgMZM8e2qWTXUtddptoV6c",
+      "date": "2026-09-17",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/jk-branding-india-pvt-ltd/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4E22AQH1sCYID49QVA/feedshare-shrink_800/B4EaCuEJJNHAAg-/0/1789626717113?e=2147483647&v=beta&t=2KuNborfcAb2QFt7vyk5MTgMZM8e2qWTXUtddptoV6c",
+      "published_date": "2026-09-17",
+      "link": "https://www.linkedin.com/posts/jk-branding-india-pvt-ltd_exhibitionstall-stalldesign-stallfabrication-activity-7506238503236796416-DswF",
+      "content": "Where Brands Come Alive, And Experiences Begin. ✨\n\nA great exhibition stall is more than just a structure — it’s your brand’s first impression.\n\nAt JK Branding, we turn your brand vision into impactful exhibition spaces with complete Stall Design & Fabrication solutions — from creative 3D concepts to fabrication, branding, installation & final execution.\n\nMake your next exhibition space stand out, engage visitors & leave a lasting impression.\n\n📍Pan India\nJK Branding (India) Pvt. Ltd.\nCall now for inquiry +91 96015 11117\nTurning Brand Vision Into Reality.\n\n#ExhibitionStall #StallDesign #StallFabrication #ExhibitionBranding #JKBranding",
+      "timestamp": "2026-09-17",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4E22AQH1sCYID49QVA/feedshare-shrink_800/B4EaCuEJJNHAAg-/0/1789626717113?e=2147483647&v=beta&t=2KuNborfcAb2QFt7vyk5MTgMZM8e2qWTXUtddptoV6c",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4E22AQH1sCYID49QVA/feedshare-shrink_800/B4EaCuEJJNHAAg-/0/1789626717113?e=2147483647&v=beta&t=2KuNborfcAb2QFt7vyk5MTgMZM8e2qWTXUtddptoV6c",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/jk-branding-india-pvt-ltd_exhibitionstall-stalldesign-stallfabrication-activity-7506238503236796416-DswF",
+      "competitorName": "JK Branding",
+      "activity_id": "7506238503236796416"
+    },
+    {
+      "id": "li_1792754780202_pgd42",
+      "company": "Social Circuits",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/socialcircuits_socialcircuits-welcomeonboard-srgraphicdesigner-activity-7482761003378753537-6IWp",
+      "caption": "🎨 Great design isn't just about making things look good; it's about creating experiences that people remember. 💡✨\n\nWe're excited to welcome Meet Makwana to Social Circuits Pvt. Ltd. as our Sr. Graphic Designer! 🎉\n\nEvery project starts with an idea, but it's creativity, attention to detail, and thoughtful design that transform ideas into impactful visuals. We're thrilled to have Meet join our creative team and contribute his skills as we continue building brands that stand out.\n\nHere's to fresh ideas, meaningful collaborations, and creating designs that leave a lasting impression. 🚀💙\n\nWelcome to the Social Circuits Pvt. Ltd. Team! 🌟\n\n#SocialCircuits #WelcomeOnBoard #SrGraphicDesigner #GraphicDesign #CreativeTeam #BrandDesign #VisualCommunication #DesignExcellence  #TeamGrowth #WorkplaceCulture #PeopleFirst #DigitalMarketing #BrandBuilding #GrowingTogether",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQGD28yTr8npkw/feedshare-shrink_800/B4DZ9gbesmGYAc-/0/1784029244730?e=2147483647&v=beta&t=7jYHjkXXBwN7pj1y1McB30qdQP3Ja1M3ECtQVLmqAC4",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQGD28yTr8npkw/feedshare-shrink_800/B4DZ9gbesmGYAc-/0/1784029244730?e=2147483647&v=beta&t=7jYHjkXXBwN7pj1y1McB30qdQP3Ja1M3ECtQVLmqAC4",
+      "date": "2026-07-14",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/socialcircuits/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQGD28yTr8npkw/feedshare-shrink_800/B4DZ9gbesmGYAc-/0/1784029244730?e=2147483647&v=beta&t=7jYHjkXXBwN7pj1y1McB30qdQP3Ja1M3ECtQVLmqAC4",
+      "published_date": "2026-07-14",
+      "link": "https://www.linkedin.com/posts/socialcircuits_socialcircuits-welcomeonboard-srgraphicdesigner-activity-7482761003378753537-6IWp",
+      "content": "🎨 Great design isn't just about making things look good; it's about creating experiences that people remember. 💡✨\n\nWe're excited to welcome Meet Makwana to Social Circuits Pvt. Ltd. as our Sr. Graphic Designer! 🎉\n\nEvery project starts with an idea, but it's creativity, attention to detail, and thoughtful design that transform ideas into impactful visuals. We're thrilled to have Meet join our creative team and contribute his skills as we continue building brands that stand out.\n\nHere's to fresh ideas, meaningful collaborations, and creating designs that leave a lasting impression. 🚀💙\n\nWelcome to the Social Circuits Pvt. Ltd. Team! 🌟\n\n#SocialCircuits #WelcomeOnBoard #SrGraphicDesigner #GraphicDesign #CreativeTeam #BrandDesign #VisualCommunication #DesignExcellence  #TeamGrowth #WorkplaceCulture #PeopleFirst #DigitalMarketing #BrandBuilding #GrowingTogether",
+      "timestamp": "2026-07-14",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQGD28yTr8npkw/feedshare-shrink_800/B4DZ9gbesmGYAc-/0/1784029244730?e=2147483647&v=beta&t=7jYHjkXXBwN7pj1y1McB30qdQP3Ja1M3ECtQVLmqAC4",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQGD28yTr8npkw/feedshare-shrink_800/B4DZ9gbesmGYAc-/0/1784029244730?e=2147483647&v=beta&t=7jYHjkXXBwN7pj1y1McB30qdQP3Ja1M3ECtQVLmqAC4",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/socialcircuits_socialcircuits-welcomeonboard-srgraphicdesigner-activity-7482761003378753537-6IWp",
+      "competitorName": "Social Circuits",
+      "activity_id": "7482761003378753537"
+    },
+    {
+      "id": "li_1792754786101_odrv8",
+      "company": "Brand Builder Digital",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/brandbuilderdigital_navratri-fyp-reel-activity-7514648923303489536-rxYy",
+      "caption": "#Navratri vibes\nJay mataji 😭😂🙏💕\n\n#fyp #reel #viral #instagram #treding",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFft1nzxBlBcQ/thumbnail-with-play-button-overlay-high/B4DaEllWvnJUC4-/0/1791631913883?e=2147483647&v=beta&t=XlUG5RDnWmgnWvomEeeIoRGEHuBwd5U30PpSgTUsBeg",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFft1nzxBlBcQ/thumbnail-with-play-button-overlay-high/B4DaEllWvnJUC4-/0/1791631913883?e=2147483647&v=beta&t=XlUG5RDnWmgnWvomEeeIoRGEHuBwd5U30PpSgTUsBeg",
+      "date": "2026-10-10",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://in.linkedin.com/company/brandbuilderdigital",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFft1nzxBlBcQ/thumbnail-with-play-button-overlay-high/B4DaEllWvnJUC4-/0/1791631913883?e=2147483647&v=beta&t=XlUG5RDnWmgnWvomEeeIoRGEHuBwd5U30PpSgTUsBeg",
+      "published_date": "2026-10-10",
+      "link": "https://www.linkedin.com/posts/brandbuilderdigital_navratri-fyp-reel-activity-7514648923303489536-rxYy",
+      "content": "#Navratri vibes\nJay mataji 😭😂🙏💕\n\n#fyp #reel #viral #instagram #treding",
+      "timestamp": "2026-10-10",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFft1nzxBlBcQ/thumbnail-with-play-button-overlay-high/B4DaEllWvnJUC4-/0/1791631913883?e=2147483647&v=beta&t=XlUG5RDnWmgnWvomEeeIoRGEHuBwd5U30PpSgTUsBeg",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFft1nzxBlBcQ/thumbnail-with-play-button-overlay-high/B4DaEllWvnJUC4-/0/1791631913883?e=2147483647&v=beta&t=XlUG5RDnWmgnWvomEeeIoRGEHuBwd5U30PpSgTUsBeg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/brandbuilderdigital_navratri-fyp-reel-activity-7514648923303489536-rxYy",
+      "competitorName": "Brand Builder Digital",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFft1nzxBlBcQ/mp4-720p-30fp-crf28/B4DaEllWvnJUCA-/0/1791631913883?e=2147483647&v=beta&t=J9Pz3ndltdd3LSdxxa2_6vri5qscwmlJmdTAKXTW9GQ",
+      "activity_id": "7514648923303489536"
+    },
+    {
+      "id": "li_1792754800705_h6rxr",
+      "company": "B2B Leads Corporate",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/b2bleadscorp_merrychristmas2025-happychristmas-seasonofjoy-activity-7409665424449003520-vvQB",
+      "caption": "🎄 Merry Christmas 2025 from B2B Leads Corporate! 🎄\nThis Christmas, we extend our heartfelt wishes to our valued clients, partners, and team members who make our journey meaningful every day.\n\nMay this festive season bring joy, peace, gratitude, and new opportunities into your lives and businesses. We’re truly thankful for the trust, collaboration, and relationships we’ve built together throughout the year.\n\n✨ As we celebrate the spirit of giving and togetherness, we look forward to achieving greater milestones together in the year ahead.\n\nWishing you and your loved ones a warm, joyful, and prosperous Christmas 2025!\n\n— Team B2B Leads Corporate 🎁✨\n#MerryChristmas2025 #HappyChristmas #SeasonOfJoy #Gratitude  #B2BLeadsCorporate #BusinessCommunity #Partnerships #HolidayWishes\n #FestiveSeason",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQGmNg9NeA7Bsw/feedshare-shrink_800/B56Zs9ANjnK8Ag-/0/1766255025801?e=2147483647&v=beta&t=AcX9uAgBNuWXDHO5KQGZDAbE9Uk0sRJ43ojoPxd3rZA",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQGmNg9NeA7Bsw/feedshare-shrink_800/B56Zs9ANjnK8Ag-/0/1766255025801?e=2147483647&v=beta&t=AcX9uAgBNuWXDHO5KQGZDAbE9Uk0sRJ43ojoPxd3rZA",
+      "date": "2025-12-24",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/b2bleadscorp/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQGmNg9NeA7Bsw/feedshare-shrink_800/B56Zs9ANjnK8Ag-/0/1766255025801?e=2147483647&v=beta&t=AcX9uAgBNuWXDHO5KQGZDAbE9Uk0sRJ43ojoPxd3rZA",
+      "published_date": "2025-12-24",
+      "link": "https://www.linkedin.com/posts/b2bleadscorp_merrychristmas2025-happychristmas-seasonofjoy-activity-7409665424449003520-vvQB",
+      "content": "🎄 Merry Christmas 2025 from B2B Leads Corporate! 🎄\nThis Christmas, we extend our heartfelt wishes to our valued clients, partners, and team members who make our journey meaningful every day.\n\nMay this festive season bring joy, peace, gratitude, and new opportunities into your lives and businesses. We’re truly thankful for the trust, collaboration, and relationships we’ve built together throughout the year.\n\n✨ As we celebrate the spirit of giving and togetherness, we look forward to achieving greater milestones together in the year ahead.\n\nWishing you and your loved ones a warm, joyful, and prosperous Christmas 2025!\n\n— Team B2B Leads Corporate 🎁✨\n#MerryChristmas2025 #HappyChristmas #SeasonOfJoy #Gratitude  #B2BLeadsCorporate #BusinessCommunity #Partnerships #HolidayWishes\n #FestiveSeason",
+      "timestamp": "2025-12-24",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQGmNg9NeA7Bsw/feedshare-shrink_800/B56Zs9ANjnK8Ag-/0/1766255025801?e=2147483647&v=beta&t=AcX9uAgBNuWXDHO5KQGZDAbE9Uk0sRJ43ojoPxd3rZA",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQGmNg9NeA7Bsw/feedshare-shrink_800/B56Zs9ANjnK8Ag-/0/1766255025801?e=2147483647&v=beta&t=AcX9uAgBNuWXDHO5KQGZDAbE9Uk0sRJ43ojoPxd3rZA",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/b2bleadscorp_merrychristmas2025-happychristmas-seasonofjoy-activity-7409665424449003520-vvQB",
+      "competitorName": "B2B Leads Corporate",
+      "activity_id": "7409665424449003520"
+    },
+    {
+      "id": "li_1792754807906_glbry",
+      "company": "Netcom business solutions digital marketing agency in pune",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/netcombusinesssolutions_happyteachersday-teachersday2026-mentorshipmatters-activity-7501874553191665664-0V8q",
+      "caption": "Behind every successful mind, there is a mentor who showed the way 📚✏️✨\n\nTeachers do so much more than just teach lessons; they shape minds, inspire futures and guide us toward defining a brighter tomorrow. From classrooms to the corporate world, the lessons learned from true mentors stay with us forever.\n\nToday, Netcom Business Solutions (NBS) celebrates all the incredible teachers and mentors who guide, inspire, and push us to achieve great heights. 🌟\n\nWho was that one teacher or mentor who changed your perspective on life or career? Tag them in the comments below to express your gratitude 👇\n\n\n\n\n#HappyTeachersDay #TeachersDay2026 #MentorshipMatters #ShapingMinds #NetcomBusinessSolutions #NBS #Inspiration #Gratitude #DigitalBranding #BrandGrowth #MentorsInLife #DefiningTomorrow #PuneAgency",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQHJf1fp8jcJng/feedshare-image-high-res/B4DaBwDJySI4AU-/0/1788586270088?e=2147483647&v=beta&t=_UJ_cuS5_iA7PXwfw_gvHTfauyGT9X8tj_Meta-sWL8",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQHJf1fp8jcJng/feedshare-image-high-res/B4DaBwDJySI4AU-/0/1788586270088?e=2147483647&v=beta&t=_UJ_cuS5_iA7PXwfw_gvHTfauyGT9X8tj_Meta-sWL8",
+      "date": "2026-09-05",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/netcombusinesssolutions/mycompany/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQHJf1fp8jcJng/feedshare-image-high-res/B4DaBwDJySI4AU-/0/1788586270088?e=2147483647&v=beta&t=_UJ_cuS5_iA7PXwfw_gvHTfauyGT9X8tj_Meta-sWL8",
+      "published_date": "2026-09-05",
+      "link": "https://www.linkedin.com/posts/netcombusinesssolutions_happyteachersday-teachersday2026-mentorshipmatters-activity-7501874553191665664-0V8q",
+      "content": "Behind every successful mind, there is a mentor who showed the way 📚✏️✨\n\nTeachers do so much more than just teach lessons; they shape minds, inspire futures and guide us toward defining a brighter tomorrow. From classrooms to the corporate world, the lessons learned from true mentors stay with us forever.\n\nToday, Netcom Business Solutions (NBS) celebrates all the incredible teachers and mentors who guide, inspire, and push us to achieve great heights. 🌟\n\nWho was that one teacher or mentor who changed your perspective on life or career? Tag them in the comments below to express your gratitude 👇\n\n\n\n\n#HappyTeachersDay #TeachersDay2026 #MentorshipMatters #ShapingMinds #NetcomBusinessSolutions #NBS #Inspiration #Gratitude #DigitalBranding #BrandGrowth #MentorsInLife #DefiningTomorrow #PuneAgency",
+      "timestamp": "2026-09-05",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQHJf1fp8jcJng/feedshare-image-high-res/B4DaBwDJySI4AU-/0/1788586270088?e=2147483647&v=beta&t=_UJ_cuS5_iA7PXwfw_gvHTfauyGT9X8tj_Meta-sWL8",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQHJf1fp8jcJng/feedshare-image-high-res/B4DaBwDJySI4AU-/0/1788586270088?e=2147483647&v=beta&t=_UJ_cuS5_iA7PXwfw_gvHTfauyGT9X8tj_Meta-sWL8",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/netcombusinesssolutions_happyteachersday-teachersday2026-mentorshipmatters-activity-7501874553191665664-0V8q",
+      "competitorName": "Netcom business solutions digital marketing agency in pune",
+      "activity_id": "7501874553191665664"
+    },
+    {
+      "id": "li_1792754808607_edm03",
+      "company": "Base2Brand Infotech",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/techbase2brand_logistics-logisticsmanagement-supplychain-activity-7505590194616578049-FD8_",
+      "caption": "Running a logistics business but still managing everything manually?\n\nFrom shipments and inventory to invoices and daily operations, smarter logistics management can keep everything organised in one place.\n\nWork smarter. Move faster. Grow better.\n\n#logistics #logisticsmanagement #supplychain #transportation #logisticstech #freightmanagement #warehousemanagement #truckingbusiness #transportbusiness #businessautomation #supplychainmanagement #freight #logisticsindustry #digitaltransformation #smartlogistics",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D5605AQEaw19uH1Y_jQ/thumbnail-with-play-button-overlay-high/B56aCk2dxTIQC4-/0/1789472141337?e=2147483647&v=beta&t=9y-MgEY1lL2Z2FsCAv64pBq7m8M4xjDY42aC2_AVfjo",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQEaw19uH1Y_jQ/thumbnail-with-play-button-overlay-high/B56aCk2dxTIQC4-/0/1789472141337?e=2147483647&v=beta&t=9y-MgEY1lL2Z2FsCAv64pBq7m8M4xjDY42aC2_AVfjo",
+      "date": "2026-09-15",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://in.linkedin.com/company/techbase2brand",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQEaw19uH1Y_jQ/thumbnail-with-play-button-overlay-high/B56aCk2dxTIQC4-/0/1789472141337?e=2147483647&v=beta&t=9y-MgEY1lL2Z2FsCAv64pBq7m8M4xjDY42aC2_AVfjo",
+      "published_date": "2026-09-15",
+      "link": "https://www.linkedin.com/posts/techbase2brand_logistics-logisticsmanagement-supplychain-activity-7505590194616578049-FD8_",
+      "content": "Running a logistics business but still managing everything manually?\n\nFrom shipments and inventory to invoices and daily operations, smarter logistics management can keep everything organised in one place.\n\nWork smarter. Move faster. Grow better.\n\n#logistics #logisticsmanagement #supplychain #transportation #logisticstech #freightmanagement #warehousemanagement #truckingbusiness #transportbusiness #businessautomation #supplychainmanagement #freight #logisticsindustry #digitaltransformation #smartlogistics",
+      "timestamp": "2026-09-15",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D5605AQEaw19uH1Y_jQ/thumbnail-with-play-button-overlay-high/B56aCk2dxTIQC4-/0/1789472141337?e=2147483647&v=beta&t=9y-MgEY1lL2Z2FsCAv64pBq7m8M4xjDY42aC2_AVfjo",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D5605AQEaw19uH1Y_jQ/thumbnail-with-play-button-overlay-high/B56aCk2dxTIQC4-/0/1789472141337?e=2147483647&v=beta&t=9y-MgEY1lL2Z2FsCAv64pBq7m8M4xjDY42aC2_AVfjo",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/techbase2brand_logistics-logisticsmanagement-supplychain-activity-7505590194616578049-FD8_",
+      "competitorName": "Base2Brand Infotech",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQEaw19uH1Y_jQ/mp4-720p-30fp-crf28/B56aCk2dxTIQCA-/0/1789472141337?e=2147483647&v=beta&t=t8I1p3bkxe0JCzXQ-m_S0fUMkxa-xUMoWmSjebwP6OA",
+      "activity_id": "7505590194616578049"
+    },
+    {
+      "id": "li_1792754810607_3esjc",
+      "company": "MindTech B2B",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/mindtechb2b_happydussehra-mindtechb2b-leadership-activity-7518312116794179584-i9No",
+      "caption": "🪔 Happy Dussehra from MindTechB2B 🪔\n\nDussehra reminds us that every challenge brings an opportunity to choose courage, integrity, and the path forward. The victory of good over evil is a timeless lesson in perseverance, ethical leadership, and the power of doing what is right.\n\nIn business, too, meaningful success comes from overcoming obstacles, embracing change, and moving forward with purpose. Every challenge we face is an opportunity to learn, innovate, and build something stronger together.\n\nAt MindTechB2B, we believe that lasting growth begins with the right mindset, strong partnerships, and a commitment to creating meaningful impact.\n\nMay this Dussehra bring new opportunities, continued success, and prosperity to you and your team.\n\nWishing you and your loved ones a very Happy Dussehra !\n\nDeep Jathar Rohan Manthankar William K. M. SWAPNIL OMBASE Deepak Gajare Kunal T. Atul Gaikwad Snehal Asalkar Payal Uppal Jared Casper Vicky Das\n\n#HappyDussehra #MindTechB2B #Leadership #BusinessGrowth #Innovation #Teamwork #ProfessionalGrowth",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQG3GYfZvUWPvw/feedshare-shrink_800/B56aFZpB39G0Ag-/0/1792505290630?e=2147483647&v=beta&t=Crp-XRbw8AoX8JmtAtnHecBw8qw8ZzBcYBVWMHiT68g",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQG3GYfZvUWPvw/feedshare-shrink_800/B56aFZpB39G0Ag-/0/1792505290630?e=2147483647&v=beta&t=Crp-XRbw8AoX8JmtAtnHecBw8qw8ZzBcYBVWMHiT68g",
+      "date": "2026-10-20",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/mindtechb2b",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQG3GYfZvUWPvw/feedshare-shrink_800/B56aFZpB39G0Ag-/0/1792505290630?e=2147483647&v=beta&t=Crp-XRbw8AoX8JmtAtnHecBw8qw8ZzBcYBVWMHiT68g",
+      "published_date": "2026-10-20",
+      "link": "https://www.linkedin.com/posts/mindtechb2b_happydussehra-mindtechb2b-leadership-activity-7518312116794179584-i9No",
+      "content": "🪔 Happy Dussehra from MindTechB2B 🪔\n\nDussehra reminds us that every challenge brings an opportunity to choose courage, integrity, and the path forward. The victory of good over evil is a timeless lesson in perseverance, ethical leadership, and the power of doing what is right.\n\nIn business, too, meaningful success comes from overcoming obstacles, embracing change, and moving forward with purpose. Every challenge we face is an opportunity to learn, innovate, and build something stronger together.\n\nAt MindTechB2B, we believe that lasting growth begins with the right mindset, strong partnerships, and a commitment to creating meaningful impact.\n\nMay this Dussehra bring new opportunities, continued success, and prosperity to you and your team.\n\nWishing you and your loved ones a very Happy Dussehra !\n\nDeep Jathar Rohan Manthankar William K. M. SWAPNIL OMBASE Deepak Gajare Kunal T. Atul Gaikwad Snehal Asalkar Payal Uppal Jared Casper Vicky Das\n\n#HappyDussehra #MindTechB2B #Leadership #BusinessGrowth #Innovation #Teamwork #ProfessionalGrowth",
+      "timestamp": "2026-10-20",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQG3GYfZvUWPvw/feedshare-shrink_800/B56aFZpB39G0Ag-/0/1792505290630?e=2147483647&v=beta&t=Crp-XRbw8AoX8JmtAtnHecBw8qw8ZzBcYBVWMHiT68g",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQG3GYfZvUWPvw/feedshare-shrink_800/B56aFZpB39G0Ag-/0/1792505290630?e=2147483647&v=beta&t=Crp-XRbw8AoX8JmtAtnHecBw8qw8ZzBcYBVWMHiT68g",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/mindtechb2b_happydussehra-mindtechb2b-leadership-activity-7518312116794179584-i9No",
+      "competitorName": "MindTech B2B",
+      "activity_id": "7518312116794179584"
+    },
+    {
+      "id": "li_1792754766107_pttaa",
+      "company": "JK Branding",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/jk-branding-india-pvt-ltd_vision2036-agencytounicorn-jkbranding-activity-7504166845990748160-uJu-",
+      "caption": "A bold vision. A bigger journey. A future built to scale. 🚀\n\nIntroducing VISION 2036 — Agency to Unicorn.\n\nAt JK Branding (India) Pvt. Ltd., the next decade is about building smarter systems, embracing technology, creating meaningful impact, and growing beyond boundaries.\n\nThis is more than a vision.\nIt’s our commitment to what comes next.\n\nTHINK BIG. BUILD SYSTEMS. CREATE IMPACT. SCALE GLOBALLY.\n\nThe journey to 2036 begins now. ✨\n\n#Vision2036 #AgencyToUnicorn #JKBranding #ThinkBig #ScaleGlobally",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D5605AQGcHHjl8Y_x_Q/thumbnail-with-play-button-overlay-high/B56aCQn7cOKMC0-/0/1789132784681?e=2147483647&v=beta&t=Tc3s09leTMGAA9fQFEVPEfoaSbiazIapU635BBWdjpo",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQGcHHjl8Y_x_Q/thumbnail-with-play-button-overlay-high/B56aCQn7cOKMC0-/0/1789132784681?e=2147483647&v=beta&t=Tc3s09leTMGAA9fQFEVPEfoaSbiazIapU635BBWdjpo",
+      "date": "2026-09-11",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/jk-branding-india-pvt-ltd/",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQGcHHjl8Y_x_Q/thumbnail-with-play-button-overlay-high/B56aCQn7cOKMC0-/0/1789132784681?e=2147483647&v=beta&t=Tc3s09leTMGAA9fQFEVPEfoaSbiazIapU635BBWdjpo",
+      "published_date": "2026-09-11",
+      "link": "https://www.linkedin.com/posts/jk-branding-india-pvt-ltd_vision2036-agencytounicorn-jkbranding-activity-7504166845990748160-uJu-",
+      "content": "A bold vision. A bigger journey. A future built to scale. 🚀\n\nIntroducing VISION 2036 — Agency to Unicorn.\n\nAt JK Branding (India) Pvt. Ltd., the next decade is about building smarter systems, embracing technology, creating meaningful impact, and growing beyond boundaries.\n\nThis is more than a vision.\nIt’s our commitment to what comes next.\n\nTHINK BIG. BUILD SYSTEMS. CREATE IMPACT. SCALE GLOBALLY.\n\nThe journey to 2036 begins now. ✨\n\n#Vision2036 #AgencyToUnicorn #JKBranding #ThinkBig #ScaleGlobally",
+      "timestamp": "2026-09-11",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D5605AQGcHHjl8Y_x_Q/thumbnail-with-play-button-overlay-high/B56aCQn7cOKMC0-/0/1789132784681?e=2147483647&v=beta&t=Tc3s09leTMGAA9fQFEVPEfoaSbiazIapU635BBWdjpo",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D5605AQGcHHjl8Y_x_Q/thumbnail-with-play-button-overlay-high/B56aCQn7cOKMC0-/0/1789132784681?e=2147483647&v=beta&t=Tc3s09leTMGAA9fQFEVPEfoaSbiazIapU635BBWdjpo",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/jk-branding-india-pvt-ltd_vision2036-agencytounicorn-jkbranding-activity-7504166845990748160-uJu-",
+      "competitorName": "JK Branding",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQGcHHjl8Y_x_Q/mp4-720p-30fp-crf28/B56aCQn7cOKMB8-/0/1789132790541?e=2147483647&v=beta&t=1z_j6nKrHUszWfEO-KKsQeBiLLek2BWO8eyT6l4k_2Q",
+      "activity_id": "7504166845990748160"
+    },
+    {
+      "id": "li_1792754780202_jdror",
+      "company": "Social Circuits",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/socialcircuits_socialcircuits-welcomeonboard-newteammember-activity-7481338741618380800-SooX",
+      "caption": "🚀 Every scroll is an opportunity to create a lasting impression.\n\nWe're delighted to welcome Vaishali Vyas to Social Circuits Pvt. Ltd. as our Jr. Social Media Marketer. 🎉\n\nIn today's digital world, meaningful engagement starts with fresh ideas, thoughtful strategies, and authentic storytelling. We're excited to have a new creative mind join our team as we continue helping brands connect, engage, and grow across digital platforms.\n\nHere's to new beginnings, exciting campaigns, continuous learning, and achieving great milestones together.\n\nWelcome to the team! 💙✨\n\n#SocialCircuits #WelcomeOnBoard #NewTeamMember #SocialMediaMarketing #JrSocialMediaMarketer #ContentStrategy #DigitalMarketing #CreativeAgency #AgencyLife #WorkplaceCulture #TeamGrowth #PeopleFirst #GrowingTogether #MarketingJourney #BrandGrowth",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQGHP0JrH-AVQg/feedshare-shrink_800/B4DZ9MN8aXK0Ac-/0/1783690151904?e=2147483647&v=beta&t=o7M0blXqnnLmH_Qqj7oHVeQqm_4fQJwvtAn_UgbUbEM",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQGHP0JrH-AVQg/feedshare-shrink_800/B4DZ9MN8aXK0Ac-/0/1783690151904?e=2147483647&v=beta&t=o7M0blXqnnLmH_Qqj7oHVeQqm_4fQJwvtAn_UgbUbEM",
+      "date": "2026-07-10",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/socialcircuits/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQGHP0JrH-AVQg/feedshare-shrink_800/B4DZ9MN8aXK0Ac-/0/1783690151904?e=2147483647&v=beta&t=o7M0blXqnnLmH_Qqj7oHVeQqm_4fQJwvtAn_UgbUbEM",
+      "published_date": "2026-07-10",
+      "link": "https://www.linkedin.com/posts/socialcircuits_socialcircuits-welcomeonboard-newteammember-activity-7481338741618380800-SooX",
+      "content": "🚀 Every scroll is an opportunity to create a lasting impression.\n\nWe're delighted to welcome Vaishali Vyas to Social Circuits Pvt. Ltd. as our Jr. Social Media Marketer. 🎉\n\nIn today's digital world, meaningful engagement starts with fresh ideas, thoughtful strategies, and authentic storytelling. We're excited to have a new creative mind join our team as we continue helping brands connect, engage, and grow across digital platforms.\n\nHere's to new beginnings, exciting campaigns, continuous learning, and achieving great milestones together.\n\nWelcome to the team! 💙✨\n\n#SocialCircuits #WelcomeOnBoard #NewTeamMember #SocialMediaMarketing #JrSocialMediaMarketer #ContentStrategy #DigitalMarketing #CreativeAgency #AgencyLife #WorkplaceCulture #TeamGrowth #PeopleFirst #GrowingTogether #MarketingJourney #BrandGrowth",
+      "timestamp": "2026-07-10",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQGHP0JrH-AVQg/feedshare-shrink_800/B4DZ9MN8aXK0Ac-/0/1783690151904?e=2147483647&v=beta&t=o7M0blXqnnLmH_Qqj7oHVeQqm_4fQJwvtAn_UgbUbEM",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQGHP0JrH-AVQg/feedshare-shrink_800/B4DZ9MN8aXK0Ac-/0/1783690151904?e=2147483647&v=beta&t=o7M0blXqnnLmH_Qqj7oHVeQqm_4fQJwvtAn_UgbUbEM",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/socialcircuits_socialcircuits-welcomeonboard-newteammember-activity-7481338741618380800-SooX",
+      "competitorName": "Social Circuits",
+      "activity_id": "7481338741618380800"
+    },
+    {
+      "id": "li_1792754786101_xvjgq",
+      "company": "Brand Builder Digital",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/brandbuilderdigital_hiring-wearehiring-fieldsalesexecutive-activity-7513572021335760896-9s3Q",
+      "caption": "If you’re passionate about sales and ready to grow with us, then share your updated CV at +91 8382848488\n\n\n#Hiring #WeAreHiring #FieldSalesExecutive #SalesJobs #SalesHiring #RajkotJobs #JobsInRajkot #SalesCareer #BusinessDevelopment #DigitalMarketing #SalesOpportunity #CareerOpportunity #JobOpening #HiringNow #GujaratJobs #SalesProfessionals #JoinOurTeam #FreshersAndExperienced #Incentives #JobSearch",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQGzvb01hD6ifA/feedshare-shrink_800/B56aEWR79OIAAg-/0/1791375163910?e=2147483647&v=beta&t=-2x8V2WgrTOF286gLc-6iXiIXKEZhmGBWNIUylUDswc",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQGzvb01hD6ifA/feedshare-shrink_800/B56aEWR79OIAAg-/0/1791375163910?e=2147483647&v=beta&t=-2x8V2WgrTOF286gLc-6iXiIXKEZhmGBWNIUylUDswc",
+      "date": "2026-10-07",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://in.linkedin.com/company/brandbuilderdigital",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQGzvb01hD6ifA/feedshare-shrink_800/B56aEWR79OIAAg-/0/1791375163910?e=2147483647&v=beta&t=-2x8V2WgrTOF286gLc-6iXiIXKEZhmGBWNIUylUDswc",
+      "published_date": "2026-10-07",
+      "link": "https://www.linkedin.com/posts/brandbuilderdigital_hiring-wearehiring-fieldsalesexecutive-activity-7513572021335760896-9s3Q",
+      "content": "If you’re passionate about sales and ready to grow with us, then share your updated CV at +91 8382848488\n\n\n#Hiring #WeAreHiring #FieldSalesExecutive #SalesJobs #SalesHiring #RajkotJobs #JobsInRajkot #SalesCareer #BusinessDevelopment #DigitalMarketing #SalesOpportunity #CareerOpportunity #JobOpening #HiringNow #GujaratJobs #SalesProfessionals #JoinOurTeam #FreshersAndExperienced #Incentives #JobSearch",
+      "timestamp": "2026-10-07",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQGzvb01hD6ifA/feedshare-shrink_800/B56aEWR79OIAAg-/0/1791375163910?e=2147483647&v=beta&t=-2x8V2WgrTOF286gLc-6iXiIXKEZhmGBWNIUylUDswc",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQGzvb01hD6ifA/feedshare-shrink_800/B56aEWR79OIAAg-/0/1791375163910?e=2147483647&v=beta&t=-2x8V2WgrTOF286gLc-6iXiIXKEZhmGBWNIUylUDswc",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/brandbuilderdigital_hiring-wearehiring-fieldsalesexecutive-activity-7513572021335760896-9s3Q",
+      "competitorName": "Brand Builder Digital",
+      "activity_id": "7513572021335760896"
+    },
+    {
+      "id": "li_1792754800705_yt761",
+      "company": "B2B Leads Corporate",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/b2bleadscorp_thanksgiving2025-thanksgiving-gratitude-activity-7399552832011403264-Qcun",
+      "caption": "This Thanksgiving, we extend our heartfelt gratitude to our clients, partners, and team members who continue to trust and believe in B2B Leads Corporate.\nYour collaboration fuels our growth, inspires innovation, and motivates us to keep raising the bar in B2B marketing.\n\n🍂 Thank you for being a meaningful part of our journey.\n🍁 Wishing you and your loved ones a warm, joyful, and prosperous Thanksgiving 2025!\n\n— Team B2B Leads Corporate\n#Thanksgiving2025 #Thanksgiving #Gratitude #Thankful #B2BMarketing\n #B2BLeadsCorporate #BusinessGrowth #ClientAppreciation\n #Partnerships #Teamwork #Leadership #ThankfulForYou #Community\n #CorporateCulture",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQGLec_EA_9Gpg/feedshare-image-high-res/B4DZrB.FMsKQAo-/0/1764190870820?e=2147483647&v=beta&t=aucMCsZ3J4w0eoUIMIwp79DkSBeutV6vKOK2ckolz_k",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQGLec_EA_9Gpg/feedshare-image-high-res/B4DZrB.FMsKQAo-/0/1764190870820?e=2147483647&v=beta&t=aucMCsZ3J4w0eoUIMIwp79DkSBeutV6vKOK2ckolz_k",
+      "date": "2025-11-26",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/b2bleadscorp/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQGLec_EA_9Gpg/feedshare-image-high-res/B4DZrB.FMsKQAo-/0/1764190870820?e=2147483647&v=beta&t=aucMCsZ3J4w0eoUIMIwp79DkSBeutV6vKOK2ckolz_k",
+      "published_date": "2025-11-26",
+      "link": "https://www.linkedin.com/posts/b2bleadscorp_thanksgiving2025-thanksgiving-gratitude-activity-7399552832011403264-Qcun",
+      "content": "This Thanksgiving, we extend our heartfelt gratitude to our clients, partners, and team members who continue to trust and believe in B2B Leads Corporate.\nYour collaboration fuels our growth, inspires innovation, and motivates us to keep raising the bar in B2B marketing.\n\n🍂 Thank you for being a meaningful part of our journey.\n🍁 Wishing you and your loved ones a warm, joyful, and prosperous Thanksgiving 2025!\n\n— Team B2B Leads Corporate\n#Thanksgiving2025 #Thanksgiving #Gratitude #Thankful #B2BMarketing\n #B2BLeadsCorporate #BusinessGrowth #ClientAppreciation\n #Partnerships #Teamwork #Leadership #ThankfulForYou #Community\n #CorporateCulture",
+      "timestamp": "2025-11-26",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQGLec_EA_9Gpg/feedshare-image-high-res/B4DZrB.FMsKQAo-/0/1764190870820?e=2147483647&v=beta&t=aucMCsZ3J4w0eoUIMIwp79DkSBeutV6vKOK2ckolz_k",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQGLec_EA_9Gpg/feedshare-image-high-res/B4DZrB.FMsKQAo-/0/1764190870820?e=2147483647&v=beta&t=aucMCsZ3J4w0eoUIMIwp79DkSBeutV6vKOK2ckolz_k",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/b2bleadscorp_thanksgiving2025-thanksgiving-gratitude-activity-7399552832011403264-Qcun",
+      "competitorName": "B2B Leads Corporate",
+      "activity_id": "7399552832011403264"
+    },
+    {
+      "id": "li_1792754807906_nmidg",
+      "company": "Netcom business solutions digital marketing agency in pune",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/netcombusinesssolutions_happyjanmashtami-krishnajanmashtami-janmashtami2026-activity-7501500211442393088-Aj26",
+      "caption": "May the sweet melody of Lord Krishna’s flute carry away your worries and fill your brand’s journey with harmony, happiness, and growth 🪈✨\n\nJust as little Krishna brings joy to every home, we at Netcom Business Solutions (NBS) are here to bring your business the \"Exposure Your Brand Deserves.\" From social media management to digital strategies, we help you connect with your audience across Facebook, Instagram, LinkedIn, and beyond. 🚀📱\n\nWishing you and your family a very Happy Krishna Janmashtami 🌸\n\nWhich social media platform is your favourite for growing your business? \nTell us in the comments below 👇\n\n\n\n\n#HappyJanmashtami #KrishnaJanmashtami #Janmashtami2026 #FestiveVibes #NetcomBusinessSolutions #NBS #DigitalMarketing #SocialMediaMarketing #BrandExposure #SocialMediaStrategy #DigitalMarketingAgency #SEO #BrandGrowth #PuneDigitalMarketing #SocialMediaManagement",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D4D22AQFfgthDOhOOqA/feedshare-image-high-res/B4DaBqusRUIYAU-/0/1788497020438?e=2147483647&v=beta&t=0jiHIYbOCjdiVTkWgmjZYM7t_8PnBOBCxkR0pWVddnc",
+      "media_url": "https://media.licdn.com/dms/image/v2/D4D22AQFfgthDOhOOqA/feedshare-image-high-res/B4DaBqusRUIYAU-/0/1788497020438?e=2147483647&v=beta&t=0jiHIYbOCjdiVTkWgmjZYM7t_8PnBOBCxkR0pWVddnc",
+      "date": "2026-09-04",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/netcombusinesssolutions/mycompany/",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D4D22AQFfgthDOhOOqA/feedshare-image-high-res/B4DaBqusRUIYAU-/0/1788497020438?e=2147483647&v=beta&t=0jiHIYbOCjdiVTkWgmjZYM7t_8PnBOBCxkR0pWVddnc",
+      "published_date": "2026-09-04",
+      "link": "https://www.linkedin.com/posts/netcombusinesssolutions_happyjanmashtami-krishnajanmashtami-janmashtami2026-activity-7501500211442393088-Aj26",
+      "content": "May the sweet melody of Lord Krishna’s flute carry away your worries and fill your brand’s journey with harmony, happiness, and growth 🪈✨\n\nJust as little Krishna brings joy to every home, we at Netcom Business Solutions (NBS) are here to bring your business the \"Exposure Your Brand Deserves.\" From social media management to digital strategies, we help you connect with your audience across Facebook, Instagram, LinkedIn, and beyond. 🚀📱\n\nWishing you and your family a very Happy Krishna Janmashtami 🌸\n\nWhich social media platform is your favourite for growing your business? \nTell us in the comments below 👇\n\n\n\n\n#HappyJanmashtami #KrishnaJanmashtami #Janmashtami2026 #FestiveVibes #NetcomBusinessSolutions #NBS #DigitalMarketing #SocialMediaMarketing #BrandExposure #SocialMediaStrategy #DigitalMarketingAgency #SEO #BrandGrowth #PuneDigitalMarketing #SocialMediaManagement",
+      "timestamp": "2026-09-04",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQFfgthDOhOOqA/feedshare-image-high-res/B4DaBqusRUIYAU-/0/1788497020438?e=2147483647&v=beta&t=0jiHIYbOCjdiVTkWgmjZYM7t_8PnBOBCxkR0pWVddnc",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D4D22AQFfgthDOhOOqA/feedshare-image-high-res/B4DaBqusRUIYAU-/0/1788497020438?e=2147483647&v=beta&t=0jiHIYbOCjdiVTkWgmjZYM7t_8PnBOBCxkR0pWVddnc",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/netcombusinesssolutions_happyjanmashtami-krishnajanmashtami-janmashtami2026-activity-7501500211442393088-Aj26",
+      "competitorName": "Netcom business solutions digital marketing agency in pune",
+      "activity_id": "7501500211442393088"
+    }
+  ],
   "ownSocials": {
     "linkedin": "https://linkedin.com/company/adsmgai",
     "instagram": "https://www.instagram.com/adsmg.ai/",
@@ -70348,7 +71245,25 @@
         "Ad Creative Generation",
         "Lead Tracking",
         "Performance Dashboard"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "ADSENGINE MEDIA",
@@ -70370,7 +71285,7 @@
         "linkedin": "https://www.linkedin.com/company/adsenginemedia",
         "instagram": "https://www.instagram.com/adsenginemedia/",
         "facebook": "https://www.facebook.com/adsenginemedia/",
-        "youtube": "https://www.youtube.com/channel/UC8jBy4ba3dkHvOJXkfOVQNQ"
+        "youtube": null
       },
       "products": [
         "Meta Ads",
@@ -70387,7 +71302,25 @@
         "Audience Targeting",
         "Ad Creative Generation",
         "Lead Tracking"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "JK Branding (India) Pvt. Ltd. | Best Branding Agency in Rajkot",
@@ -70426,7 +71359,25 @@
         "Audience Targeting",
         "Ad Creative Generation",
         "Lead Tracking"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Popcorn Branding Agency | Branding & Advertising Agency in Rajkot | Digital Marketing | SEO | SMM",
@@ -70445,10 +71396,10 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/101942504",
+        "linkedin": null,
         "instagram": "https://www.instagram.com/popcorn_branding_agency",
         "facebook": "https://www.facebook.com/popcornbranding",
-        "youtube": "https://www.youtube.com/channel/UC5sLXxzO9dlfiEuR_x5qLkA"
+        "youtube": null
       },
       "products": [
         "Google Ads",
@@ -70465,7 +71416,25 @@
         "Ad Creative Generation",
         "Lead Tracking",
         "Performance Dashboard"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Social Circuits Private Limited",
@@ -70504,7 +71473,25 @@
         "Audience Targeting",
         "Ad Creative Generation",
         "Lead Tracking"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Brand Builder Digital Private Limited",
@@ -70541,7 +71528,25 @@
         "Audience Targeting",
         "Ad Creative Generation",
         "Lead Tracking"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "RV SOLUTIONS",
@@ -70576,7 +71581,25 @@
         "Google Ads",
         "Ad Creative Generation",
         "Performance Dashboard"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Nimkro Tech LLP | India's Best IT & Digital Marketing Agency",
@@ -70644,7 +71667,25 @@
         "Meta Ads",
         "Ad Creative Generation",
         "Lead Tracking"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "B2B Leads Corporate Pvt Ltd",
@@ -70665,7 +71706,7 @@
       "socials": {
         "linkedin": "https://www.linkedin.com/company/b2bleadscorp/",
         "instagram": null,
-        "facebook": "https://www.facebook.com/profile.php?id=61554626321464&mibextid=LQQJ4d",
+        "facebook": null,
         "youtube": null
       },
       "products": [
@@ -70685,7 +71726,27 @@
         "Ad Creative Generation",
         "Lead Tracking",
         "Performance Dashboard"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        }
+      },
+      "isDeadAccount": true,
+      "isInactiveSocial": true
     },
     {
       "name": "Netcom business solutions digital marketing agency in pune | website development, social media | seo company in pune",
@@ -70726,7 +71787,25 @@
         "Ad Creative Generation",
         "Lead Tracking",
         "Performance Dashboard"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Base2Brand Infotech Pvt. Ltd.",
@@ -70748,7 +71827,7 @@
         "linkedin": "https://in.linkedin.com/company/techbase2brand",
         "instagram": null,
         "facebook": "https://www.facebook.com/TechBase2Brand/",
-        "youtube": "https://www.youtube.com/channel/UCEHsjR1TFlEfsbcYQPlLW4Q"
+        "youtube": null
       },
       "products": [
         "Meta Ads",
@@ -70767,7 +71846,25 @@
         "Ad Creative Generation",
         "Lead Tracking",
         "Performance Dashboard"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 2
+        }
+      }
     },
     {
       "name": "MindTech B2B",
@@ -70806,7 +71903,25 @@
         "Ad Creative Generation",
         "Lead Tracking",
         "Performance Dashboard"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 2
+        }
+      }
     },
     {
       "name": "Arkentech Solutions | B2B Lead Generation Company | Demand Generation & Content Syndication",
@@ -71594,6 +72709,47 @@
       "commonProducts": [
         "Meta Ads",
         "Google Ads"
+      ]
+    },
+    {
+      "name": "Digiholic - B2B Branding and Marketing Agency",
+      "url": "https://www.digiholic.io/",
+      "type": "regional",
+      "location": "office no. 319, Wakad Business Bay, 3rd Floor, behind Tip Top International, Kemse Vasti, Wakad, Pimpri-Chinchwad, Maharashtra 411057, India",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 7 common products: [Meta Ads, Google Ads, Smart Campaign Creation, Audience Targeting, Ad Creative Generation, Lead Tracking, Performance Dashboard]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4 | Phone: 097622 03501",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.digiholic.io/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://www.digiholic.io/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/digiholic/",
+        "instagram": "https://www.instagram.com/digiholics",
+        "facebook": "https://www.facebook.com/search/top?q=digiholic",
+        "youtube": "https://www.youtube.com/channel/UCGipSiYnizWtBm6chUc9mpg"
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
       ]
     }
   ]
