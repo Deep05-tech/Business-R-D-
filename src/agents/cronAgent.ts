@@ -301,6 +301,26 @@ export class CronAgent {
 
       const compPosts = [...ytPosts, ...igPosts, ...fbPosts, ...liPosts];
       (comp as any).socialStatus = platformStatuses;
+
+      // Self-healing backfill: if search fallback discovered posts with a verified profile, persist it to comp.socials
+      if (!comp.socials) comp.socials = { linkedin: null, instagram: null, facebook: null, youtube: null };
+      if (!comp.socials.youtube && ytPosts.length > 0) {
+        const foundUrl = ytPosts.find(p => p.profile_url || p.profileUrl)?.profile_url || (ytPosts[0] as any).channelUrl;
+        if (foundUrl && isValidProfileUrl(foundUrl, 'YouTube', comp.name)) comp.socials.youtube = foundUrl;
+      }
+      if (!comp.socials.instagram && igPosts.length > 0) {
+        const foundUrl = igPosts.find(p => p.profile_url || p.profileUrl)?.profile_url;
+        if (foundUrl && isValidProfileUrl(foundUrl, 'Instagram', comp.name)) comp.socials.instagram = foundUrl;
+      }
+      if (!comp.socials.facebook && fbPosts.length > 0) {
+        const foundUrl = fbPosts.find(p => p.profile_url || p.profileUrl)?.profile_url;
+        if (foundUrl && isValidProfileUrl(foundUrl, 'Facebook', comp.name)) comp.socials.facebook = foundUrl;
+      }
+      if (!comp.socials.linkedin && liPosts.length > 0) {
+        const foundUrl = liPosts.find(p => p.profile_url || p.profileUrl)?.profile_url;
+        if (foundUrl && isValidProfileUrl(foundUrl, 'LinkedIn', comp.name)) comp.socials.linkedin = foundUrl;
+      }
+
       logger.info(`Extracted ${compPosts.length} verified social posts directly from accounts for ${comp.name}.`);
       return { compName: comp.name, competitor: comp, posts: compPosts };
     })));

@@ -3150,6 +3150,8 @@ window.triggerCron = async function() {
   }
 };
 
+window.runCompetitorTrackerNow = window.triggerCron;
+
 async function loadFeedUI() {
   if (!window.activeProjectUrl) return;
   if (window.currentSocialFeedSubView === 'own') {
@@ -3172,11 +3174,6 @@ async function loadFeedUI() {
     }
 
     const feed = data.feed || [];
-    
-    if (feed.length === 0) {
-      list.innerHTML = '<div class="empty-state">No recent competitor posts found yet. Click "Run Competitor Tracker Now" above to trigger a social crawl.</div>';
-      return;
-    }
     
     // Helper functions for safe rendering, proxying, and media extraction
     window.escapeHtml = function(str) {
@@ -3851,6 +3848,17 @@ async function loadFeedUI() {
       </div>
     `;
 
+    let emptyTopBannerHtml = (feed.length === 0) ? `
+      <div style="padding: 16px 20px; background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 12px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <div style="font-weight: 700; font-size: 0.95rem; color: #fff; margin-bottom: 2px;">⚡ Ready to Track Competitors Across All Platforms</div>
+          <div style="font-size: 0.82rem; color: var(--text-muted);">No competitor posts have been fetched yet for this project. Start the crawler to scan YouTube, Instagram, Facebook, and LinkedIn.</div>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm" onclick="window.runCompetitorTrackerNow()" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700; padding: 7px 16px;">
+          <span>⚡ Run Competitor Tracker Now</span>
+        </button>
+      </div>` : '';
+
     let html = `
       <style>
         .social-section-header { display: flex; align-items: center; gap: 8px; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 10px 0 6px 0; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 4px; }
@@ -3861,6 +3869,7 @@ async function loadFeedUI() {
       </style>
       <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
         ${filterBarHtml}
+        ${emptyTopBannerHtml}
     `;
 
     const renderCard = (post) => {
