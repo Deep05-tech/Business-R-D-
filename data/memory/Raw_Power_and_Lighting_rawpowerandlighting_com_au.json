@@ -832,7 +832,303 @@
       "inferred": false
     }
   ],
-  "socialFeed": [],
+  "socialFeed": [
+    {
+      "id": "ig_Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk",
+      "company": "Gold Coast Energy",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/",
+      "caption": "Official Post.",
+      "media_type": "Image",
+      "thumbnail": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "media_url": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/goldcoastenergy/",
+      "thumbnail_url": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "published_date": "2026-10-23",
+      "link": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/",
+      "content": "Official Post.",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/media/?size=l",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk/",
+      "competitorName": "Gold Coast Energy",
+      "shortcode": "Yv5Pcb2ZU36PuJz8y7iQaOsSDQWgvk"
+    },
+    {
+      "id": "ig_qTfXdjJ4Bd96T5YuJheHlVPXSqTQm",
+      "company": "Gold Coast Energy",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/",
+      "caption": "Official Post.",
+      "media_type": "Image",
+      "thumbnail": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "media_url": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/goldcoastenergy/",
+      "thumbnail_url": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "published_date": "2026-10-23",
+      "link": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/",
+      "content": "Official Post.",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/media/?size=l",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/qTfXdjJ4Bd96T5YuJheHlVPXSqTQm/",
+      "competitorName": "Gold Coast Energy",
+      "shortcode": "qTfXdjJ4Bd96T5YuJheHlVPXSqTQm"
+    },
+    {
+      "id": "ig_kj4GsFGO0rtFy48yejAHxDPIKbkA",
+      "company": "Gold Coast Energy",
+      "platform": "Instagram",
+      "post_url": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/",
+      "caption": "Official Post.",
+      "media_type": "Image",
+      "thumbnail": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "media_url": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.instagram.com/goldcoastenergy/",
+      "thumbnail_url": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "published_date": "2026-10-23",
+      "link": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/",
+      "content": "Official Post.",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "mediaUrls": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/media/?size=l",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.instagram.com/p/kj4GsFGO0rtFy48yejAHxDPIKbkA/",
+      "competitorName": "Gold Coast Energy",
+      "shortcode": "kj4GsFGO0rtFy48yejAHxDPIKbkA"
+    },
+    {
+      "id": "li_1792750596541_c4je6",
+      "company": "CNW Electrical Wholesale",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/cnw-electrical-and-data-supplies_youve-got-the-tools-for-the-job-how-about-activity-7513386523879219200-6NCk",
+      "caption": "You’ve got the tools for the job. How about the tools to grow your business? 🧰📈\n\nWe’ve partnered with Kirk Neal from Vincere Coaching to give CNW customers FREE access to 12 practical business tools built specifically for tradies.\n\nFrom quoting and tracking revenue to working out hiring costs and spotting lost margin, each tool comes with a how-to video to help you get started.\n\nBecause CNW is more than a wholesaler - we want to see your business doing well, not just your van stocked.",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D5605AQG_2-TR4OdRUA/thumbnail-with-play-button-overlay-high/B56aETpLctJoC0-/0/1791330929200?e=2147483647&v=beta&t=RaLXbYnbGxH2pMUR78dJMzNUdQgvzBR1vltlWajwxHU",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQG_2-TR4OdRUA/thumbnail-with-play-button-overlay-high/B56aETpLctJoC0-/0/1791330929200?e=2147483647&v=beta&t=RaLXbYnbGxH2pMUR78dJMzNUdQgvzBR1vltlWajwxHU",
+      "date": "2026-10-06",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://au.linkedin.com/company/cnw-electrical-and-data-supplies",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQG_2-TR4OdRUA/thumbnail-with-play-button-overlay-high/B56aETpLctJoC0-/0/1791330929200?e=2147483647&v=beta&t=RaLXbYnbGxH2pMUR78dJMzNUdQgvzBR1vltlWajwxHU",
+      "published_date": "2026-10-06",
+      "link": "https://www.linkedin.com/posts/cnw-electrical-and-data-supplies_youve-got-the-tools-for-the-job-how-about-activity-7513386523879219200-6NCk",
+      "content": "You’ve got the tools for the job. How about the tools to grow your business? 🧰📈\n\nWe’ve partnered with Kirk Neal from Vincere Coaching to give CNW customers FREE access to 12 practical business tools built specifically for tradies.\n\nFrom quoting and tracking revenue to working out hiring costs and spotting lost margin, each tool comes with a how-to video to help you get started.\n\nBecause CNW is more than a wholesaler - we want to see your business doing well, not just your van stocked.",
+      "timestamp": "2026-10-06",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D5605AQG_2-TR4OdRUA/thumbnail-with-play-button-overlay-high/B56aETpLctJoC0-/0/1791330929200?e=2147483647&v=beta&t=RaLXbYnbGxH2pMUR78dJMzNUdQgvzBR1vltlWajwxHU",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D5605AQG_2-TR4OdRUA/thumbnail-with-play-button-overlay-high/B56aETpLctJoC0-/0/1791330929200?e=2147483647&v=beta&t=RaLXbYnbGxH2pMUR78dJMzNUdQgvzBR1vltlWajwxHU",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/cnw-electrical-and-data-supplies_youve-got-the-tools-for-the-job-how-about-activity-7513386523879219200-6NCk",
+      "competitorName": "CNW Electrical Wholesale",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQG_2-TR4OdRUA/mp4-720p-30fp-crf28/B56aETpLctJoB8-/0/1791330932910?e=2147483647&v=beta&t=f7aYq7hrlhqBFMC603xKhyvvSLbKNJBlUFSFhPFg0h8",
+      "activity_id": "7513386523879219200"
+    },
+    {
+      "id": "li_1792750612142_2wn5r",
+      "company": "Energy Solution Centre",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/energy-solution-centre_energyindependence-energysolutioncentre-activity-7519188911353421825-Obgy",
+      "caption": "⚡ FROM $1,100 POWER BILLS TO $0! 🤯\nOne solar company told Andrew it couldn’t be done. Another couldn’t give him the answers.\n\nThen he found Energy Solution Centre (ESC). 👏\n\nA visit to our showroom changed everything. Ryan Seaber, our Solar & Battery Specialist, showed Andrew what was possible.\n\nThe results? 👀\n\n☀️ $0 electricity bills with solar and battery\n🚗 Tesla charging powered by solar\n🛠️ Professional installation and ongoing support\n\nThe ESC difference:\n- 6,000+ installations\n- 330+ five-star Google reviews\n- 3 local showrooms\n- 6 in-house installation crews\n- A dedicated service team\n- Local warehouse and logistics\n\n🎥 Don’t just take our word for it—watch Andrew’s story.\n\n👉 Book your FREE ESC Energy Assessment today!\n📍 Nerang • Chirn Park • Canungra\n📞 1300 217 079\n🌐 https://lnkd.in/gVEeC_FW\n\n#energyindependence, #EnergySolutionCentre, #Queensland, #GoldCoast, #solar, #battery",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D5605AQEqdYKwCJ9TPQ/thumbnail-with-play-button-overlay-high/B56aFmGYYBHgC0-/0/1792714318715?e=2147483647&v=beta&t=hRn6Ivdw2__M2Ew1_3LD4DPy_Zt5uXDJG0B3OBj76Yo",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQEqdYKwCJ9TPQ/thumbnail-with-play-button-overlay-high/B56aFmGYYBHgC0-/0/1792714318715?e=2147483647&v=beta&t=hRn6Ivdw2__M2Ew1_3LD4DPy_Zt5uXDJG0B3OBj76Yo",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://au.linkedin.com/company/energy-solution-centre",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQEqdYKwCJ9TPQ/thumbnail-with-play-button-overlay-high/B56aFmGYYBHgC0-/0/1792714318715?e=2147483647&v=beta&t=hRn6Ivdw2__M2Ew1_3LD4DPy_Zt5uXDJG0B3OBj76Yo",
+      "published_date": "2026-10-23",
+      "link": "https://www.linkedin.com/posts/energy-solution-centre_energyindependence-energysolutioncentre-activity-7519188911353421825-Obgy",
+      "content": "⚡ FROM $1,100 POWER BILLS TO $0! 🤯\nOne solar company told Andrew it couldn’t be done. Another couldn’t give him the answers.\n\nThen he found Energy Solution Centre (ESC). 👏\n\nA visit to our showroom changed everything. Ryan Seaber, our Solar & Battery Specialist, showed Andrew what was possible.\n\nThe results? 👀\n\n☀️ $0 electricity bills with solar and battery\n🚗 Tesla charging powered by solar\n🛠️ Professional installation and ongoing support\n\nThe ESC difference:\n- 6,000+ installations\n- 330+ five-star Google reviews\n- 3 local showrooms\n- 6 in-house installation crews\n- A dedicated service team\n- Local warehouse and logistics\n\n🎥 Don’t just take our word for it—watch Andrew’s story.\n\n👉 Book your FREE ESC Energy Assessment today!\n📍 Nerang • Chirn Park • Canungra\n📞 1300 217 079\n🌐 https://lnkd.in/gVEeC_FW\n\n#energyindependence, #EnergySolutionCentre, #Queensland, #GoldCoast, #solar, #battery",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D5605AQEqdYKwCJ9TPQ/thumbnail-with-play-button-overlay-high/B56aFmGYYBHgC0-/0/1792714318715?e=2147483647&v=beta&t=hRn6Ivdw2__M2Ew1_3LD4DPy_Zt5uXDJG0B3OBj76Yo",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D5605AQEqdYKwCJ9TPQ/thumbnail-with-play-button-overlay-high/B56aFmGYYBHgC0-/0/1792714318715?e=2147483647&v=beta&t=hRn6Ivdw2__M2Ew1_3LD4DPy_Zt5uXDJG0B3OBj76Yo",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/energy-solution-centre_energyindependence-energysolutioncentre-activity-7519188911353421825-Obgy",
+      "competitorName": "Energy Solution Centre",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQEqdYKwCJ9TPQ/mp4-720p-30fp-crf28/B56aFmGYYBHgB8-/0/1792714326581?e=2147483647&v=beta&t=g0HRCtB5roMZcGOSZIo0TDbAGGFnei-u096b0eR5REY",
+      "activity_id": "7519188911353421825"
+    },
+    {
+      "id": "li_1792750614135_kavb1",
+      "company": "Sure Power Industries",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/sure-power-industries_sometimes-it-is-the-simple-things-that-matter-activity-7399640228765827074-jnp3",
+      "caption": "Sometimes it is the simple things that matter most!!",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D5605AQEA_yG4V8aCcw/thumbnail-with-play-button-overlay-high/B56ZpvZ3TgJYDM-/0/1762805648470?e=2147483647&v=beta&t=y4fCEaD6SeDcEQAq0qwVKZUXeQx3LV60C9CjdyTA4q8",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQEA_yG4V8aCcw/thumbnail-with-play-button-overlay-high/B56ZpvZ3TgJYDM-/0/1762805648470?e=2147483647&v=beta&t=y4fCEaD6SeDcEQAq0qwVKZUXeQx3LV60C9CjdyTA4q8",
+      "date": "2025-11-27",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.linkedin.com/company/sure-power-industries",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQEA_yG4V8aCcw/thumbnail-with-play-button-overlay-high/B56ZpvZ3TgJYDM-/0/1762805648470?e=2147483647&v=beta&t=y4fCEaD6SeDcEQAq0qwVKZUXeQx3LV60C9CjdyTA4q8",
+      "published_date": "2025-11-27",
+      "link": "https://www.linkedin.com/posts/sure-power-industries_sometimes-it-is-the-simple-things-that-matter-activity-7399640228765827074-jnp3",
+      "content": "Sometimes it is the simple things that matter most!!",
+      "timestamp": "2025-11-27",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D5605AQEA_yG4V8aCcw/thumbnail-with-play-button-overlay-high/B56ZpvZ3TgJYDM-/0/1762805648470?e=2147483647&v=beta&t=y4fCEaD6SeDcEQAq0qwVKZUXeQx3LV60C9CjdyTA4q8",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D5605AQEA_yG4V8aCcw/thumbnail-with-play-button-overlay-high/B56ZpvZ3TgJYDM-/0/1762805648470?e=2147483647&v=beta&t=y4fCEaD6SeDcEQAq0qwVKZUXeQx3LV60C9CjdyTA4q8",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/sure-power-industries_sometimes-it-is-the-simple-things-that-matter-activity-7399640228765827074-jnp3",
+      "competitorName": "Sure Power Industries",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQEA_yG4V8aCcw/mp4-720p-30fp-crf28/B56ZpvZ3TgJYCI-/0/1762805664463?e=2147483647&v=beta&t=CzMPP_d3HnGNQ8P8y2u2lt0JUvwDdMIvZy-WgAf2r7Q",
+      "activity_id": "7399640228765827074"
+    },
+    {
+      "id": "li_1792750596541_kz70l",
+      "company": "CNW Electrical Wholesale",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/cnw-electrical-and-data-supplies_the-team-at-cnw-byron-bay-are-more-than-a-activity-7511213759445569536-o810",
+      "caption": "The team at CNW Byron Bay are more than a supplier. They’re part of your team. 🙌\n\nZach and the crew bring the energy and go the extra mile to help you get the job done. With community and loyalty at the heart of the branch, they’re all about building strong relationships and backing your business.\n\nNext time you’re in the area, drop in, meet the team and see the difference for yourself!\n\nVisit our website to find out more or give the branch a call on (02) 5633 1414.",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D5605AQHqdeh3e8La3w/thumbnail-with-play-button-overlay-high/B56aDv_G3MIQC0-/0/1790732696744?e=2147483647&v=beta&t=bxED6EEENrgKnvWSLDI6YZXmQaxEEouZuRjsvlj5OYQ",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQHqdeh3e8La3w/thumbnail-with-play-button-overlay-high/B56aDv_G3MIQC0-/0/1790732696744?e=2147483647&v=beta&t=bxED6EEENrgKnvWSLDI6YZXmQaxEEouZuRjsvlj5OYQ",
+      "date": "2026-10-01",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://au.linkedin.com/company/cnw-electrical-and-data-supplies",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQHqdeh3e8La3w/thumbnail-with-play-button-overlay-high/B56aDv_G3MIQC0-/0/1790732696744?e=2147483647&v=beta&t=bxED6EEENrgKnvWSLDI6YZXmQaxEEouZuRjsvlj5OYQ",
+      "published_date": "2026-10-01",
+      "link": "https://www.linkedin.com/posts/cnw-electrical-and-data-supplies_the-team-at-cnw-byron-bay-are-more-than-a-activity-7511213759445569536-o810",
+      "content": "The team at CNW Byron Bay are more than a supplier. They’re part of your team. 🙌\n\nZach and the crew bring the energy and go the extra mile to help you get the job done. With community and loyalty at the heart of the branch, they’re all about building strong relationships and backing your business.\n\nNext time you’re in the area, drop in, meet the team and see the difference for yourself!\n\nVisit our website to find out more or give the branch a call on (02) 5633 1414.",
+      "timestamp": "2026-10-01",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D5605AQHqdeh3e8La3w/thumbnail-with-play-button-overlay-high/B56aDv_G3MIQC0-/0/1790732696744?e=2147483647&v=beta&t=bxED6EEENrgKnvWSLDI6YZXmQaxEEouZuRjsvlj5OYQ",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D5605AQHqdeh3e8La3w/thumbnail-with-play-button-overlay-high/B56aDv_G3MIQC0-/0/1790732696744?e=2147483647&v=beta&t=bxED6EEENrgKnvWSLDI6YZXmQaxEEouZuRjsvlj5OYQ",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/cnw-electrical-and-data-supplies_the-team-at-cnw-byron-bay-are-more-than-a-activity-7511213759445569536-o810",
+      "competitorName": "CNW Electrical Wholesale",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQHqdeh3e8La3w/mp4-720p-30fp-crf28/B56aDv_G3MIQB8-/0/1790732700284?e=2147483647&v=beta&t=kETO1rK1HmhsHAiTwTrQse4QfHKXA9f7nAicmIZ_ymA",
+      "activity_id": "7511213759445569536"
+    },
+    {
+      "id": "li_1792750612142_hqfik",
+      "company": "Energy Solution Centre",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/energy-solution-centre_energysolutioncentre-solar-batterystorage-activity-7518868192983879680-vjKU",
+      "caption": "Meet Aaron Winter — Canungra Showroom Manager and Solar & Battery Specialist\n\nAfter recently buying an electric car, one of our clients visited our Canungra showroom to learn how solar and battery storage could work alongside their new EV. \n\nAt our showrooms, you can explore the technology first-hand, see solar, battery and EV charging products up close, and chat with our team about the latest options for your home. \n\nCome and visit us at one of our three Gold Coast showrooms:\n\nEnergy Solution Centre\n📍 Nerang: 19 Price St, Nerang QLD 4211\n📍 Canungra: 46 Christie St, Canungra QLD 4275\n📍 Southport: Shop 3/36 Musgrave Ave, Southport QLD 4215\n\n📞 1300 217 079\n✉️ info@energysolutioncentre.com.au\n🌐 https://lnkd.in/gu66Uf2b\n\nDrop in and discover what’s possible for your home and your energy future.\n\n#EnergySolutionCentre #Solar #BatteryStorage #EVCharging #GoldCoast \n#Canungra #Queensland",
+      "media_type": "Video",
+      "thumbnail": "https://dms.licdn.com/playlist/vid/v2/D5605AQGLGgo7DIVXtg/thumbnail-with-play-button-overlay-high/B56aFhiuwFHQC0-/0/1792637863705?e=2147483647&v=beta&t=zxoPbY283ip--288HterzFvYjYLmFtnPF_i8MpSC5dc",
+      "media_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQGLGgo7DIVXtg/thumbnail-with-play-button-overlay-high/B56aFhiuwFHQC0-/0/1792637863705?e=2147483647&v=beta&t=zxoPbY283ip--288HterzFvYjYLmFtnPF_i8MpSC5dc",
+      "date": "2026-10-22",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://au.linkedin.com/company/energy-solution-centre",
+      "thumbnail_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQGLGgo7DIVXtg/thumbnail-with-play-button-overlay-high/B56aFhiuwFHQC0-/0/1792637863705?e=2147483647&v=beta&t=zxoPbY283ip--288HterzFvYjYLmFtnPF_i8MpSC5dc",
+      "published_date": "2026-10-22",
+      "link": "https://www.linkedin.com/posts/energy-solution-centre_energysolutioncentre-solar-batterystorage-activity-7518868192983879680-vjKU",
+      "content": "Meet Aaron Winter — Canungra Showroom Manager and Solar & Battery Specialist\n\nAfter recently buying an electric car, one of our clients visited our Canungra showroom to learn how solar and battery storage could work alongside their new EV. \n\nAt our showrooms, you can explore the technology first-hand, see solar, battery and EV charging products up close, and chat with our team about the latest options for your home. \n\nCome and visit us at one of our three Gold Coast showrooms:\n\nEnergy Solution Centre\n📍 Nerang: 19 Price St, Nerang QLD 4211\n📍 Canungra: 46 Christie St, Canungra QLD 4275\n📍 Southport: Shop 3/36 Musgrave Ave, Southport QLD 4215\n\n📞 1300 217 079\n✉️ info@energysolutioncentre.com.au\n🌐 https://lnkd.in/gu66Uf2b\n\nDrop in and discover what’s possible for your home and your energy future.\n\n#EnergySolutionCentre #Solar #BatteryStorage #EVCharging #GoldCoast \n#Canungra #Queensland",
+      "timestamp": "2026-10-22",
+      "mediaUrl": "https://dms.licdn.com/playlist/vid/v2/D5605AQGLGgo7DIVXtg/thumbnail-with-play-button-overlay-high/B56aFhiuwFHQC0-/0/1792637863705?e=2147483647&v=beta&t=zxoPbY283ip--288HterzFvYjYLmFtnPF_i8MpSC5dc",
+      "mediaUrls": "https://dms.licdn.com/playlist/vid/v2/D5605AQGLGgo7DIVXtg/thumbnail-with-play-button-overlay-high/B56aFhiuwFHQC0-/0/1792637863705?e=2147483647&v=beta&t=zxoPbY283ip--288HterzFvYjYLmFtnPF_i8MpSC5dc",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/energy-solution-centre_energysolutioncentre-solar-batterystorage-activity-7518868192983879680-vjKU",
+      "competitorName": "Energy Solution Centre",
+      "video_url": "https://dms.licdn.com/playlist/vid/v2/D5605AQGLGgo7DIVXtg/mp4-720p-30fp-crf28/B56aFhiuwFHQB8-/0/1792637863705?e=2147483647&v=beta&t=AtoV3ohEMstNUoGdYsBiN4O88AshCn4tOVrdNmfAHDA",
+      "activity_id": "7518868192983879680"
+    },
+    {
+      "id": "li_1792750596541_ms9ao",
+      "company": "CNW Electrical Wholesale",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/cnw-electrical-and-data-supplies_got-old-electrical-gear-sitting-in-the-ute-activity-7510142497801543680-dCeI",
+      "caption": "Got old electrical gear sitting in the ute or van? Don’t bin it, recycle it.\n\nCNW Electrical Wholesale has partnered with Clipsal and TerraCycle to make it easier for electricians to recycle eligible electrical products at participating CNW branches across Queensland and New South Wales.\n\nThe Clipsal RE-Cycling Program accepts eligible products from any brand, including:\n✅ Assembled electrical products\n✅ Switch and socket skins\n✅ Battery-installed smoke alarms\n\nIt’s a simple way to clear out unwanted gear, keep more waste out of landfill and support a more circular electrical industry.\n\nFind out more at https://lnkd.in/g2siaDFc",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQG1IA3puSZ42w/feedshare-shrink_1280/B56aDRMkj6IwAM-/0/1790216129014?e=2147483647&v=beta&t=FHjuLP_R8J9-gKPkz4FWnSJMoNLsNyItLnDHGyw1cko",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQG1IA3puSZ42w/feedshare-shrink_1280/B56aDRMkj6IwAM-/0/1790216129014?e=2147483647&v=beta&t=FHjuLP_R8J9-gKPkz4FWnSJMoNLsNyItLnDHGyw1cko",
+      "date": "2026-09-28",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://au.linkedin.com/company/cnw-electrical-and-data-supplies",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQG1IA3puSZ42w/feedshare-shrink_1280/B56aDRMkj6IwAM-/0/1790216129014?e=2147483647&v=beta&t=FHjuLP_R8J9-gKPkz4FWnSJMoNLsNyItLnDHGyw1cko",
+      "published_date": "2026-09-28",
+      "link": "https://www.linkedin.com/posts/cnw-electrical-and-data-supplies_got-old-electrical-gear-sitting-in-the-ute-activity-7510142497801543680-dCeI",
+      "content": "Got old electrical gear sitting in the ute or van? Don’t bin it, recycle it.\n\nCNW Electrical Wholesale has partnered with Clipsal and TerraCycle to make it easier for electricians to recycle eligible electrical products at participating CNW branches across Queensland and New South Wales.\n\nThe Clipsal RE-Cycling Program accepts eligible products from any brand, including:\n✅ Assembled electrical products\n✅ Switch and socket skins\n✅ Battery-installed smoke alarms\n\nIt’s a simple way to clear out unwanted gear, keep more waste out of landfill and support a more circular electrical industry.\n\nFind out more at https://lnkd.in/g2siaDFc",
+      "timestamp": "2026-09-28",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQG1IA3puSZ42w/feedshare-shrink_1280/B56aDRMkj6IwAM-/0/1790216129014?e=2147483647&v=beta&t=FHjuLP_R8J9-gKPkz4FWnSJMoNLsNyItLnDHGyw1cko",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQG1IA3puSZ42w/feedshare-shrink_1280/B56aDRMkj6IwAM-/0/1790216129014?e=2147483647&v=beta&t=FHjuLP_R8J9-gKPkz4FWnSJMoNLsNyItLnDHGyw1cko",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/cnw-electrical-and-data-supplies_got-old-electrical-gear-sitting-in-the-ute-activity-7510142497801543680-dCeI",
+      "competitorName": "CNW Electrical Wholesale",
+      "activity_id": "7510142497801543680"
+    },
+    {
+      "id": "li_1792750612142_ap5kf",
+      "company": "Energy Solution Centre",
+      "platform": "LinkedIn",
+      "post_url": "https://www.linkedin.com/posts/energy-solution-centre_esc-quarterly-awards-night-what-a-night-activity-7517742007558193152-1iXR",
+      "caption": "🏆 ESC QUARTERLY AWARDS NIGHT — WHAT A NIGHT! 🎉\n\nAnother big quarter. Another great reason to celebrate!\nWe brought the ESC crew together at Topgolf Gold Coast ⛳ for awards, plenty of laughs, friendly competition and some well-earned celebrations.\n\nBig wins. Great energy. Even better people.\nMassive congratulations to all our award winners! Your hard work, dedication and commitment keep ESC moving forward.\n\n🤝 A huge thank you to Greentech Gold Coast for proudly sponsoring the night.\nBehind every great business is an incredible team—and what a team we’ve got! \n\nPlenty achieved. Even more ahead.\nBigger goals. Bigger wins. Team ESC!\n\n📍 Nerang • Chirn Park • Canungra\n📞 1300 217 079\n🌐 https://lnkd.in/gVEeC_FW",
+      "media_type": "Image",
+      "thumbnail": "https://media.licdn.com/dms/image/v2/D5622AQG329WrlDv_yw/feedshare-shrink_800/B56aFRig3WJEAc-/0/1792369364976?e=2147483647&v=beta&t=CCMTYNCCbh6nu0rverFI8bcxFC17CQ2d7zGAjGrC9ss",
+      "media_url": "https://media.licdn.com/dms/image/v2/D5622AQG329WrlDv_yw/feedshare-shrink_800/B56aFRig3WJEAc-/0/1792369364976?e=2147483647&v=beta&t=CCMTYNCCbh6nu0rverFI8bcxFC17CQ2d7zGAjGrC9ss",
+      "date": "2026-10-19",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://au.linkedin.com/company/energy-solution-centre",
+      "thumbnail_url": "https://media.licdn.com/dms/image/v2/D5622AQG329WrlDv_yw/feedshare-shrink_800/B56aFRig3WJEAc-/0/1792369364976?e=2147483647&v=beta&t=CCMTYNCCbh6nu0rverFI8bcxFC17CQ2d7zGAjGrC9ss",
+      "published_date": "2026-10-19",
+      "link": "https://www.linkedin.com/posts/energy-solution-centre_esc-quarterly-awards-night-what-a-night-activity-7517742007558193152-1iXR",
+      "content": "🏆 ESC QUARTERLY AWARDS NIGHT — WHAT A NIGHT! 🎉\n\nAnother big quarter. Another great reason to celebrate!\nWe brought the ESC crew together at Topgolf Gold Coast ⛳ for awards, plenty of laughs, friendly competition and some well-earned celebrations.\n\nBig wins. Great energy. Even better people.\nMassive congratulations to all our award winners! Your hard work, dedication and commitment keep ESC moving forward.\n\n🤝 A huge thank you to Greentech Gold Coast for proudly sponsoring the night.\nBehind every great business is an incredible team—and what a team we’ve got! \n\nPlenty achieved. Even more ahead.\nBigger goals. Bigger wins. Team ESC!\n\n📍 Nerang • Chirn Park • Canungra\n📞 1300 217 079\n🌐 https://lnkd.in/gVEeC_FW",
+      "timestamp": "2026-10-19",
+      "mediaUrl": "https://media.licdn.com/dms/image/v2/D5622AQG329WrlDv_yw/feedshare-shrink_800/B56aFRig3WJEAc-/0/1792369364976?e=2147483647&v=beta&t=CCMTYNCCbh6nu0rverFI8bcxFC17CQ2d7zGAjGrC9ss",
+      "mediaUrls": "https://media.licdn.com/dms/image/v2/D5622AQG329WrlDv_yw/feedshare-shrink_800/B56aFRig3WJEAc-/0/1792369364976?e=2147483647&v=beta&t=CCMTYNCCbh6nu0rverFI8bcxFC17CQ2d7zGAjGrC9ss",
+      "mediaType": "Image",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.linkedin.com/posts/energy-solution-centre_esc-quarterly-awards-night-what-a-night-activity-7517742007558193152-1iXR",
+      "competitorName": "Energy Solution Centre",
+      "activity_id": "7517742007558193152"
+    }
+  ],
   "ownSocials": {
     "linkedin": null,
     "instagram": null,
@@ -13255,8 +13551,8 @@
       "socials": {
         "linkedin": null,
         "instagram": "https://www.instagram.com/goldcoastenergy/",
-        "facebook": "https://www.facebook.com/gcenergy",
-        "youtube": "https://www.youtube.com/channel/UCgxzaSr87K4slinvPiTls_A"
+        "facebook": null,
+        "youtube": null
       },
       "products": [
         "Solar & Battery Services",
@@ -13285,7 +13581,25 @@
         "Air Conditioning (Supply, Install & Maintenance)",
         "Solar Systems & Battery Storage",
         "Maintenance for Property Managers, Strata & Businesses"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "CNW Electrical Wholesale",
@@ -13334,7 +13648,25 @@
         "Electrical Services (Residential & Commercial)",
         "Air Conditioning (Supply, Install & Maintenance)",
         "Solar Systems & Battery Storage"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Omega Solar and Batteries",
@@ -13356,7 +13688,7 @@
         "linkedin": "https://www.linkedin.com/company/omega-solar-batteries",
         "instagram": "https://www.instagram.com/omegasolarandbatteries/",
         "facebook": "https://www.facebook.com/omegasolarbatteries/",
-        "youtube": "https://www.youtube.com/channel/UChOVy0hE8gNyNrAj9r-IDSw"
+        "youtube": null
       },
       "products": [
         "Solar & Battery Services",
@@ -13383,7 +13715,25 @@
         "Electrical Services (Residential & Commercial)",
         "Solar Systems & Battery Storage",
         "Maintenance for Property Managers, Strata & Businesses"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Energy Solution Centre",
@@ -13430,7 +13780,25 @@
         "Electrical Services (Residential & Commercial)",
         "Solar Systems & Battery Storage",
         "Maintenance for Property Managers, Strata & Businesses"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Sure Power Industries",
@@ -13475,7 +13843,27 @@
         "Solar & Battery Storage Solutions",
         "Electrical Services (Residential & Commercial)",
         "Solar Systems & Battery Storage"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "Success",
+          "count": 1
+        }
+      },
+      "isDeadAccount": true,
+      "isInactiveSocial": true
     },
     {
       "name": "Vision Electrical",
@@ -13520,7 +13908,25 @@
         "Electrical Services (Residential & Commercial)",
         "Air Conditioning (Supply, Install & Maintenance)",
         "Maintenance for Property Managers, Strata & Businesses"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Gold Coast Solar Systems",
@@ -13542,7 +13948,7 @@
         "linkedin": null,
         "instagram": null,
         "facebook": null,
-        "youtube": "https://www.youtube.com/channel/UC6RxkX-WVVULxlABwEj5mJg"
+        "youtube": null
       },
       "products": [
         "Solar & Battery Services",
@@ -13565,7 +13971,25 @@
         "Air Conditioning Supply, Installation & Maintenance",
         "Solar Systems & Battery Storage",
         "Maintenance for Property Managers, Strata & Businesses"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "IPA Electrical & Automation | Commercial & Industrial Electricians",
@@ -13585,7 +14009,7 @@
       ],
       "socials": {
         "linkedin": "https://www.linkedin.com/company/ipa-electrical-automation",
-        "instagram": "https://www.instagram.com/industrial.power.automation/",
+        "instagram": null,
         "facebook": null,
         "youtube": null
       },
@@ -13608,7 +14032,25 @@
         "Air Conditioning Supply, Installation & Maintenance",
         "Electrical Services (Residential & Commercial)",
         "Maintenance for Property Managers, Strata & Businesses"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "KVA Group Pty Ltd",
@@ -13629,7 +14071,7 @@
       "socials": {
         "linkedin": null,
         "instagram": "https://www.instagram.com/kvagroup_/",
-        "facebook": "https://www.facebook.com/profile.php?id=100051831983703",
+        "facebook": null,
         "youtube": null
       },
       "products": [
@@ -13651,7 +14093,25 @@
         "Electrical Services (Residential & Commercial)",
         "Solar Systems & Battery Storage",
         "Maintenance for Property Managers, Strata & Businesses"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "CRM Electrical Industries Pty Ltd",
@@ -13709,7 +14169,7 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/7950235?trk=vsrp_companies_res_photo&trkInfo=VSRPsearchId%3A4917660141484819672910%2CVSRPtargetId%3A7950235%2CVSRPcmpt%3Aprimary",
+        "linkedin": null,
         "instagram": "https://www.instagram.com/maco_electrics",
         "facebook": "https://www.facebook.com/MacoElectrics",
         "youtube": null
@@ -13727,7 +14187,25 @@
         "Project Services",
         "Electrical Maintenance Support for Property Managers, Strata & Businesses",
         "Electrical Services (Residential & Commercial)"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Queensland Commercial Solar",
@@ -13764,7 +14242,25 @@
         "Project Services",
         "Solar & Battery Storage Solutions",
         "Solar Systems & Battery Storage"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Aussie Switchboards",
@@ -13850,9 +14346,9 @@
       ],
       "socials": {
         "linkedin": null,
-        "instagram": "https://www.instagram.com/direct_solar_wholesaler/",
-        "facebook": "https://www.facebook.com/DirectSolarWholesaler",
-        "youtube": "https://www.youtube.com/@directsolarwholesaler3227"
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
       },
       "products": [
         "Solar & Battery Services",
@@ -13881,7 +14377,25 @@
         "Air Conditioning (Supply, Install & Maintenance)",
         "Solar Systems & Battery Storage",
         "Maintenance for Property Managers, Strata & Businesses"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Sunray Power Solar Pty Ltd",
@@ -14806,6 +15320,43 @@
       ],
       "commonProducts": [
         "Electrical Services"
+      ]
+    },
+    {
+      "name": "Industrial Automation Australia",
+      "url": "https://www.iaarobotics.com.au/?utm_source=google&utm_medium=organic&utm_campaign=gmb",
+      "type": "regional",
+      "location": "15 Lavarack Ave, Eagle Farm QLD 4009, Australia",
+      "whyCompetitor": "Industry verified: Technology / Electrical Contractors. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 5 common products: [Electrical Services, Maintenance Support, Project Services, Electrical Maintenance Support for Property Managers, Strata & Businesses, Maintenance for Property Managers, Strata & Businesses]. Socials: Facebook verified. Rating: 3 | Phone: (07) 3348 3505",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.iaarobotics.com.au/?utm_source=google&utm_medium=organic&utm_campaign=gmb"
+        },
+        {
+          "title": "Product: Electrical Services",
+          "url": "https://www.iaarobotics.com.au/?utm_source=google&utm_medium=organic&utm_campaign=gmb"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/profile.php?id=61550567794334",
+        "youtube": null
+      },
+      "products": [
+        "Electrical Services",
+        "Maintenance Support",
+        "Project Services",
+        "Electrical Maintenance Support for Property Managers, Strata & Businesses",
+        "Maintenance for Property Managers, Strata & Businesses"
+      ],
+      "commonProducts": [
+        "Electrical Services",
+        "Maintenance Support",
+        "Project Services",
+        "Electrical Maintenance Support for Property Managers, Strata & Businesses",
+        "Maintenance for Property Managers, Strata & Businesses"
       ]
     }
   ]
