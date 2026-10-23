@@ -228,9 +228,17 @@ export class SocialExtractorAgent {
             const hasCoreMatch = (coreComp.length >= 3 && (coreAuthor.includes(coreComp) || coreComp.includes(coreAuthor)));
             const hasTokenMatch = compTokens.length > 0 && compTokens.some(t => authorTokens.includes(t) || cleanAuthor.includes(t));
 
-            // Strictly require author match; reject generic news broadcasters or unrelated third parties
-            const isBroadcaster = authorLower.includes('news') || authorLower.includes('nbc') || authorLower.includes('cnn') || authorLower.includes('bbc') || authorLower.includes('times');
-            const isMatch = (hasCoreMatch || hasTokenMatch) && !isBroadcaster;
+            const titleLower = title.toLowerCase();
+            const cleanTitle = titleLower.replace(/[^a-z0-9]/g, '');
+
+            // Title-based match for official corporate overview, plant/factory tour, product, or showcase videos
+            const hasTitleCoreMatch = coreComp.length >= 4 && cleanTitle.includes(coreComp);
+            const hasTitleTokenMatch = compTokens.length >= 2 && compTokens.every(t => titleLower.includes(t));
+            const hasTitleMatch = hasTitleCoreMatch || hasTitleTokenMatch;
+
+            // Strictly require author or title match; reject generic news broadcasters or unrelated third parties
+            const isBroadcaster = authorLower.includes('news') || authorLower.includes('nbc') || authorLower.includes('cnn') || authorLower.includes('bbc') || authorLower.includes('times') || titleLower.includes('news');
+            const isMatch = (hasCoreMatch || hasTokenMatch || hasTitleMatch) && !isBroadcaster;
 
             if (!isMatch) {
                 console.log(`[SocialExtractorAgent] YouTube author mismatch: Author "${author}" does not match competitor "${compName}" for video ${videoId}. Discarding.`);

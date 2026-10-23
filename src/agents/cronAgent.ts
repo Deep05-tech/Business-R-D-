@@ -1,6 +1,6 @@
 import { SocialExtractorAgent } from "./socialExtractorAgent.js";
 import { createLogger } from "../utils/logger.js";
-import type { StructuredMemory, SocialPost } from "../types.js";
+import type { StructuredMemory, SocialPost, CompetitorProfile } from "../types.js";
 import { MemoryStore } from "../memory/memoryStore.js";
 import { knowledgeIndex } from "../memory/knowledgeIndex.js";
 import { BingRssSearchEngine } from "../utils/bingRssSearchEngine.js";
@@ -21,7 +21,7 @@ export class CronAgent {
   readonly name = "cron-agent";
   readonly version = "1.0.0";
 
-  async run(memory: StructuredMemory, memoryStore: MemoryStore): Promise<SocialPost[]> {
+  async run(memory: StructuredMemory, memoryStore: MemoryStore = new MemoryStore()): Promise<SocialPost[]> {
     logger.info(`Running Direct Social Media Account Scraper for ${memory.input.websiteUrl}...`);
 
     if (!memory.competitors || memory.competitors.length === 0) {
@@ -47,19 +47,43 @@ export class CronAgent {
     const socialExtractor = new SocialExtractorAgent();
     
     // Balance top competitors across available scopes (local, regional, global)
-    // so the daily tracker completes efficiently while representing all competitor tiers
+    // while ensuring competitors with discovered social accounts are prioritized
+    // and up to 12 competitors are crawled even if all competitors share a single tier
+    const MAX_TARGET_COMPETITORS = 12;
+    const seenCompUrls = new Set<string>();
+    const targetCompetitors: CompetitorProfile[] = [];
+
+    const addComp = (c: CompetitorProfile) => {
+      if (!c) return;
+      const key = (c.url || c.name || "").toLowerCase().trim();
+      if (!key || seenCompUrls.has(key) || targetCompetitors.length >= MAX_TARGET_COMPETITORS) return;
+      seenCompUrls.add(key);
+      targetCompetitors.push(c);
+    };
+
+    // Priority 1: Competitors that already have at least one active social URL
+    for (const c of (memory.competitors || [])) {
+      const hasSocial = c.socials && Object.values(c.socials).some(v => typeof v === 'string' && v.trim().length > 0);
+      if (hasSocial) {
+        addComp(c);
+      }
+    }
+
+    // Priority 2: Balanced sampling across geographic tiers
     const localComps = (memory.competitors || []).filter(c => c.type === 'local');
     const regionalComps = (memory.competitors || []).filter(c => c.type === 'regional');
     const globalComps = (memory.competitors || []).filter(c => c.type === 'global');
     const otherComps = (memory.competitors || []).filter(c => !['local', 'regional', 'global'].includes(c.type));
 
-    const selectedCompetitors = [
-      ...localComps.slice(0, 4),
-      ...regionalComps.slice(0, 4),
-      ...globalComps.slice(0, 4),
-      ...otherComps.slice(0, 2)
-    ];
-    const targetCompetitors = selectedCompetitors.length > 0 ? selectedCompetitors : (memory.competitors || []).slice(0, 12);
+    localComps.slice(0, 4).forEach(addComp);
+    regionalComps.slice(0, 4).forEach(addComp);
+    globalComps.slice(0, 4).forEach(addComp);
+    otherComps.slice(0, 2).forEach(addComp);
+
+    // Priority 3: Fill up to MAX_TARGET_COMPETITORS from the remaining competitors
+    for (const c of (memory.competitors || [])) {
+      addComp(c);
+    }
     const MAX_POSTS_PER_COMP = 3;
     const configuredConcurrency = Number(process.env.SOCIAL_TRACKER_CONCURRENCY || 3);
     const competitorLimit = pLimit(Number.isFinite(configuredConcurrency) ? Math.max(1, Math.min(configuredConcurrency, 4)) : 3);

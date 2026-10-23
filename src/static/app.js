@@ -3844,10 +3844,10 @@ async function loadFeedUI() {
       <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; align-items: center;">
         <span style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px;">Filter Platform:</span>
         <button type="button" class="btn ${window.selectedCompPlat === 'All' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="All" onclick="window.filterCompetitorFeed('All')">🌐 All (${totalValidPosts})</button>
-        ${ytPosts.length > 0 ? `<button type="button" class="btn ${window.selectedCompPlat === 'YouTube' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="YouTube" onclick="window.filterCompetitorFeed('YouTube')">▶️ YouTube (${ytPosts.length})</button>` : ''}
-        ${igPosts.length > 0 ? `<button type="button" class="btn ${window.selectedCompPlat === 'Instagram' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="Instagram" onclick="window.filterCompetitorFeed('Instagram')">📸 Instagram (${igPosts.length})</button>` : ''}
-        ${fbPosts.length > 0 ? `<button type="button" class="btn ${window.selectedCompPlat === 'Facebook' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="Facebook" onclick="window.filterCompetitorFeed('Facebook')">📘 Facebook (${fbPosts.length})</button>` : ''}
-        ${liPosts.length > 0 ? `<button type="button" class="btn ${window.selectedCompPlat === 'LinkedIn' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="LinkedIn" onclick="window.filterCompetitorFeed('LinkedIn')">💼 LinkedIn (${liPosts.length})</button>` : ''}
+        <button type="button" class="btn ${window.selectedCompPlat === 'YouTube' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="YouTube" onclick="window.filterCompetitorFeed('YouTube')">▶️ YouTube (${ytPosts.length})</button>
+        <button type="button" class="btn ${window.selectedCompPlat === 'Instagram' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="Instagram" onclick="window.filterCompetitorFeed('Instagram')">📸 Instagram (${igPosts.length})</button>
+        <button type="button" class="btn ${window.selectedCompPlat === 'Facebook' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="Facebook" onclick="window.filterCompetitorFeed('Facebook')">📘 Facebook (${fbPosts.length})</button>
+        <button type="button" class="btn ${window.selectedCompPlat === 'LinkedIn' ? 'btn-primary' : 'btn-secondary'} comp-feed-filter-btn" data-platform="LinkedIn" onclick="window.filterCompetitorFeed('LinkedIn')">💼 LinkedIn (${liPosts.length})</button>
       </div>
     `;
 
@@ -3979,66 +3979,36 @@ async function loadFeedUI() {
       `;
     };
 
-    // Render 4 Distinct Sections (YouTube, Instagram, Facebook, LinkedIn)
-    if (ytPosts.length > 0) {
-      html += `
-        <div class="comp-feed-platform-section" data-platform="YouTube" style="display: ${(window.selectedCompPlat === 'All' || window.selectedCompPlat === 'YouTube') ? 'block' : 'none'};">
-          <div class="social-section-header">
-            <div class="social-section-icon" style="background: rgba(255, 0, 0, 0.15); color: #ff0000;">▶️</div>
-            <span>YouTube</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-left: 6px;">(${ytPosts.length} posts)</span>
-          </div>
-          <div class="social-horizontal-row">
-            ${ytPosts.map(renderCard).join('')}
-          </div>
-        </div>
-      `;
-    }
+    // Render all 4 distinct platform sections (YouTube, Instagram, Facebook, LinkedIn)
+    const sectionsConfig = [
+      { name: 'YouTube', icon: '▶️', iconBg: 'rgba(255, 0, 0, 0.15)', iconColor: '#ff0000', posts: ytPosts },
+      { name: 'Instagram', icon: '📸', iconBg: 'rgba(225, 48, 108, 0.15)', iconColor: '#e1306c', posts: igPosts },
+      { name: 'Facebook', icon: '📘', iconBg: 'rgba(24, 119, 242, 0.15)', iconColor: '#1877f2', posts: fbPosts },
+      { name: 'LinkedIn', icon: '💼', iconBg: 'rgba(10, 102, 194, 0.15)', iconColor: '#0a66c2', posts: liPosts }
+    ];
 
-    if (igPosts.length > 0) {
+    sectionsConfig.forEach(sec => {
+      const isVisible = (window.selectedCompPlat === 'All' || window.selectedCompPlat === sec.name);
       html += `
-        <div class="comp-feed-platform-section" data-platform="Instagram" style="display: ${(window.selectedCompPlat === 'All' || window.selectedCompPlat === 'Instagram') ? 'block' : 'none'};">
+        <div class="comp-feed-platform-section" data-platform="${sec.name}" style="display: ${isVisible ? 'block' : 'none'}; margin-bottom: 14px;">
           <div class="social-section-header">
-            <div class="social-section-icon" style="background: rgba(225, 48, 108, 0.15); color: #e1306c;">📸</div>
-            <span>Instagram</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-left: 6px;">(${igPosts.length} posts)</span>
+            <div class="social-section-icon" style="background: ${sec.iconBg}; color: ${sec.iconColor};">${sec.icon}</div>
+            <span>${sec.name}</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-left: 6px;">(${sec.posts.length} posts)</span>
           </div>
-          <div class="social-horizontal-row">
-            ${igPosts.map(renderCard).join('')}
-          </div>
+          ${sec.posts.length > 0 ? `
+            <div class="social-horizontal-row">
+              ${sec.posts.map(renderCard).join('')}
+            </div>
+          ` : `
+            <div style="padding: 14px 18px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.12); border-radius: 10px; color: var(--text-muted); font-size: 0.82rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+              <span>No recent ${sec.name} posts currently crawled for tracked competitors.</span>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="window.runCompetitorTrackerNow()" style="padding: 4px 12px; font-size: 11px; font-weight: 600;">Sync ${sec.name} Posts Now</button>
+            </div>
+          `}
         </div>
       `;
-    }
-
-    if (fbPosts.length > 0) {
-      html += `
-        <div class="comp-feed-platform-section" data-platform="Facebook" style="display: ${(window.selectedCompPlat === 'All' || window.selectedCompPlat === 'Facebook') ? 'block' : 'none'};">
-          <div class="social-section-header">
-            <div class="social-section-icon" style="background: rgba(24, 119, 242, 0.15); color: #1877f2;">📘</div>
-            <span>Facebook</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-left: 6px;">(${fbPosts.length} posts)</span>
-          </div>
-          <div class="social-horizontal-row">
-            ${fbPosts.map(renderCard).join('')}
-          </div>
-        </div>
-      `;
-    }
-
-    if (liPosts.length > 0) {
-      html += `
-        <div class="comp-feed-platform-section" data-platform="LinkedIn" style="display: ${(window.selectedCompPlat === 'All' || window.selectedCompPlat === 'LinkedIn') ? 'block' : 'none'};">
-          <div class="social-section-header">
-            <div class="social-section-icon" style="background: rgba(10, 102, 194, 0.15); color: #0a66c2;">💼</div>
-            <span>LinkedIn</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-left: 6px;">(${liPosts.length} posts)</span>
-          </div>
-          <div class="social-horizontal-row">
-            ${liPosts.map(renderCard).join('')}
-          </div>
-        </div>
-      `;
-    }
+    });
 
     html += '</div>';
     list.innerHTML = html;
@@ -4247,14 +4217,12 @@ async function loadOwnFeedUI() {
 
     orderedPlats.forEach(pKey => {
       const cnt = platCounts[pKey] || 0;
-      if (cnt > 0) {
-        const pMeta = platformMeta[pKey] || { icon: '🌐' };
-        filterBarHtml += `
-          <button class="btn btn-secondary own-feed-filter-btn" data-platform="${pKey}" onclick="window.filterOwnFeed('${pKey}')" style="padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 8px;">
-            ${pMeta.icon} ${pKey} (${cnt})
-          </button>
-        `;
-      }
+      const pMeta = platformMeta[pKey] || { icon: '🌐' };
+      filterBarHtml += `
+        <button class="btn btn-secondary own-feed-filter-btn" data-platform="${pKey}" onclick="window.filterOwnFeed('${pKey}')" style="padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 8px;">
+          ${pMeta.icon} ${pKey} (${cnt})
+        </button>
+      `;
     });
     filterBarHtml += '</div>';
 

@@ -1138,7 +1138,7 @@ STRICT INSTRUCTIONS:
       // Layer 2: 1 fast keyless web search query if still missing
       if (!socials.instagram && this.countSocials(socials) < 2) {
         const cleanName = (name || domain).replace(/[^\w\s.-]/g, " ").replace(/\s+/g, " ").trim();
-        const query = `"${cleanName}" "${domain}" instagram OR linkedin OR facebook`;
+        const query = `"${cleanName}" "${domain}" instagram OR linkedin OR facebook OR youtube`;
         const engine = new BingRssSearchEngine({ maxResults: 10 });
         try {
           const raw = await engine.invoke({ query });
