@@ -820,7 +820,260 @@
       "inferred": false
     }
   ],
-  "socialFeed": [],
+  "socialFeed": [
+    {
+      "id": "yt_px0SkSrP5T4",
+      "company": "Global IVF Center Gynec Hospital",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=px0SkSrP5T4",
+      "caption": "Proud to be Title Sponsor of Ek Dujhe K Liye, an inspiring event organized in Rajkot on 29/08/2026",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/px0SkSrP5T4/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/px0SkSrP5T4/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@globalivfcenter",
+      "thumbnail_url": "https://i.ytimg.com/vi/px0SkSrP5T4/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=px0SkSrP5T4",
+      "content": "Proud to be Title Sponsor of Ek Dujhe K Liye, an inspiring event organized in Rajkot on 29/08/2026",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/px0SkSrP5T4/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/px0SkSrP5T4/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=px0SkSrP5T4",
+      "competitorName": "Global IVF Center Gynec Hospital"
+    },
+    {
+      "id": "yt_1_Poe7Z8Xpc",
+      "company": "BeingMom IVF Center",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=1_Poe7Z8Xpc",
+      "caption": "Fire Safety Mock Drill | Being Mom IVF & Gynec Hospital | Rajkot",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/1_Poe7Z8Xpc/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/1_Poe7Z8Xpc/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@beingmomivfcenter",
+      "thumbnail_url": "https://i.ytimg.com/vi/1_Poe7Z8Xpc/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=1_Poe7Z8Xpc",
+      "content": "Fire Safety Mock Drill | Being Mom IVF & Gynec Hospital | Rajkot",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/1_Poe7Z8Xpc/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/1_Poe7Z8Xpc/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=1_Poe7Z8Xpc",
+      "competitorName": "BeingMom IVF Center"
+    },
+    {
+      "id": "yt_lK8TuaErKVE",
+      "company": "Ova Fertility and Women Care",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=lK8TuaErKVE",
+      "caption": "🎥 IVF vs IUI – Which Fertility Treatment Is Right for You in Thane?",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/lK8TuaErKVE/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/lK8TuaErKVE/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@ovafertilityandwomencare/",
+      "thumbnail_url": "https://i.ytimg.com/vi/lK8TuaErKVE/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=lK8TuaErKVE",
+      "content": "🎥 IVF vs IUI – Which Fertility Treatment Is Right for You in Thane?",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/lK8TuaErKVE/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/lK8TuaErKVE/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=lK8TuaErKVE",
+      "competitorName": "Ova Fertility and Women Care"
+    },
+    {
+      "id": "yt_ywIizCgKBEM",
+      "company": "Global IVF Center Gynec Hospital",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=ywIizCgKBEM",
+      "caption": "Our respected directors Dr. Darshan & Dr. Falguni Sureja, shared their valuable an insightful speech",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/ywIizCgKBEM/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/ywIizCgKBEM/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@globalivfcenter",
+      "thumbnail_url": "https://i.ytimg.com/vi/ywIizCgKBEM/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=ywIizCgKBEM",
+      "content": "Our respected directors Dr. Darshan & Dr. Falguni Sureja, shared their valuable an insightful speech",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/ywIizCgKBEM/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/ywIizCgKBEM/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=ywIizCgKBEM",
+      "competitorName": "Global IVF Center Gynec Hospital"
+    },
+    {
+      "id": "yt_th75FWrIEoQ",
+      "company": "BeingMom IVF Center",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=th75FWrIEoQ",
+      "caption": "Happy Patient Diaries - Mr. & Mrs. Jivrajani | Being Mom IVF & Gynec Hospital | Rajkot",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/th75FWrIEoQ/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/th75FWrIEoQ/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@beingmomivfcenter",
+      "thumbnail_url": "https://i.ytimg.com/vi/th75FWrIEoQ/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=th75FWrIEoQ",
+      "content": "Happy Patient Diaries - Mr. & Mrs. Jivrajani | Being Mom IVF & Gynec Hospital | Rajkot",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/th75FWrIEoQ/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/th75FWrIEoQ/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=th75FWrIEoQ",
+      "competitorName": "BeingMom IVF Center"
+    },
+    {
+      "id": "yt_h7WFNaolKbU",
+      "company": "Ova Fertility and Women Care",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=h7WFNaolKbU",
+      "caption": "Best IVF Hospital in Thane | Dr. Snehal Kohale | Ova Fertility & Women Care",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/h7WFNaolKbU/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/h7WFNaolKbU/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@ovafertilityandwomencare/",
+      "thumbnail_url": "https://i.ytimg.com/vi/h7WFNaolKbU/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=h7WFNaolKbU",
+      "content": "Best IVF Hospital in Thane | Dr. Snehal Kohale | Ova Fertility & Women Care",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/h7WFNaolKbU/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/h7WFNaolKbU/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=h7WFNaolKbU",
+      "competitorName": "Ova Fertility and Women Care"
+    },
+    {
+      "id": "yt_Ffl8EaQieM8",
+      "company": "Global IVF Center Gynec Hospital",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=Ffl8EaQieM8",
+      "caption": "👶 A Beautiful Meeting After a Beautiful Journey! ✨The little miracle is finally here…",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/Ffl8EaQieM8/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/Ffl8EaQieM8/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@globalivfcenter",
+      "thumbnail_url": "https://i.ytimg.com/vi/Ffl8EaQieM8/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=Ffl8EaQieM8",
+      "content": "👶 A Beautiful Meeting After a Beautiful Journey! ✨The little miracle is finally here…",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/Ffl8EaQieM8/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/Ffl8EaQieM8/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=Ffl8EaQieM8",
+      "competitorName": "Global IVF Center Gynec Hospital"
+    },
+    {
+      "id": "yt_ORKMHAX5GoQ",
+      "company": "BeingMom IVF Center",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=ORKMHAX5GoQ",
+      "caption": "Happy Patient Diaries - Mr. & Mrs. Parmar | Being Mom IVF & Gynec Hospital | Rajkot",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/ORKMHAX5GoQ/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/ORKMHAX5GoQ/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@beingmomivfcenter",
+      "thumbnail_url": "https://i.ytimg.com/vi/ORKMHAX5GoQ/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=ORKMHAX5GoQ",
+      "content": "Happy Patient Diaries - Mr. & Mrs. Parmar | Being Mom IVF & Gynec Hospital | Rajkot",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/ORKMHAX5GoQ/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/ORKMHAX5GoQ/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=ORKMHAX5GoQ",
+      "competitorName": "BeingMom IVF Center"
+    },
+    {
+      "id": "yt_JNtJH0NNboE",
+      "company": "Ova Fertility and Women Care",
+      "platform": "YouTube",
+      "post_url": "https://www.youtube.com/watch?v=JNtJH0NNboE",
+      "caption": "What Makes Ova Fertility the Best IVF Clinic in Thane | Real Stories, High Success Rates",
+      "media_type": "Video",
+      "thumbnail": "https://i.ytimg.com/vi/JNtJH0NNboE/hqdefault.jpg",
+      "media_url": "https://i.ytimg.com/vi/JNtJH0NNboE/hqdefault.jpg",
+      "date": "2026-10-23",
+      "engagement": {
+        "likes": "0",
+        "comments": "0"
+      },
+      "profile_url": "https://www.youtube.com/@ovafertilityandwomencare/",
+      "thumbnail_url": "https://i.ytimg.com/vi/JNtJH0NNboE/hqdefault.jpg",
+      "published_date": "2026-10-23",
+      "link": "https://www.youtube.com/watch?v=JNtJH0NNboE",
+      "content": "What Makes Ova Fertility the Best IVF Clinic in Thane | Real Stories, High Success Rates",
+      "timestamp": "2026-10-23",
+      "mediaUrl": "https://i.ytimg.com/vi/JNtJH0NNboE/hqdefault.jpg",
+      "mediaUrls": "https://i.ytimg.com/vi/JNtJH0NNboE/hqdefault.jpg",
+      "mediaType": "Video",
+      "likes": "0",
+      "comments": "0",
+      "postUrl": "https://www.youtube.com/watch?v=JNtJH0NNboE",
+      "competitorName": "Ova Fertility and Women Care"
+    }
+  ],
   "ownSocials": {
     "linkedin": null,
     "instagram": "https://www.instagram.com/venuswomenshospitalrajkot/",
@@ -51948,7 +52201,25 @@
         "In Vitro Fertilization (IVF)",
         "Fertility Assessment for Couples",
         "Matchmaker for Moms – Pregnancy Doctor Matching"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Bliss IVF Centre - Best IVF Centre in Rajkot | Male Fertility Infertility | Test Tube Baby Center | PCOS PCOD Treatment",
@@ -51967,10 +52238,10 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/login",
-        "instagram": "https://www.instagram.com/accounts/login/",
-        "facebook": "https://www.facebook.com/login/",
-        "youtube": "https://www.youtube.com/account"
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
       },
       "products": [
         "Gynecology Services",
@@ -51997,7 +52268,25 @@
         "Gynecology Consultation",
         "Fertility Assessment for Couples",
         "Matchmaker for Moms – Pregnancy Doctor Matching"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "BeingMom IVF Center",
@@ -52044,7 +52333,25 @@
         "Gynecology Consultation",
         "Fertility Assessment for Couples",
         "Matchmaker for Moms – Pregnancy Doctor Matching"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        }
+      }
     },
     {
       "name": "Cryoviva Life Sciences - Rajkot",
@@ -52091,7 +52398,25 @@
         "Gynecology Consultation",
         "Fertility Assessment for Couples",
         "Matchmaker for Moms – Pregnancy Doctor Matching"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Vatsalya IVF & Multi Specialist Hospital",
@@ -52226,7 +52551,25 @@
         "In Vitro Fertilization (IVF)",
         "Fertility Assessment for Couples",
         "Matchmaker for Moms – Pregnancy Doctor Matching"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "Success",
+          "count": 3
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "EMBRYONIC FERTILITY AND IVF CENTRE",
@@ -52245,7 +52588,7 @@
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/in/nikhil-gosavi-ab828023/",
+        "linkedin": null,
         "instagram": "https://www.instagram.com/embryonic_fertility/",
         "facebook": "https://www.facebook.com/embryonicfertility",
         "youtube": null
@@ -52281,7 +52624,25 @@
         "In Vitro Fertilization (IVF)",
         "Fertility Assessment for Couples",
         "Matchmaker for Moms – Pregnancy Doctor Matching"
-      ]
+      ],
+      "socialStatus": {
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "VARDAAN FERTILITY",
@@ -52302,7 +52663,7 @@
       "socials": {
         "linkedin": null,
         "instagram": null,
-        "facebook": "https://facebook.com/Care9FertilityClinic",
+        "facebook": null,
         "youtube": null
       },
       "products": [
@@ -52334,7 +52695,25 @@
         "Fertility Assessment for Couples",
         "Matchmaker for Moms – Pregnancy Doctor Matching",
         "Gestational Diabetes Care"
-      ]
+      ],
+      "socialStatus": {
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "Ovabliss IVF & 3D laparoscopy center. Best IVF center in PUNE.",
@@ -52355,8 +52734,8 @@
       "socials": {
         "linkedin": null,
         "instagram": null,
-        "facebook": "https://www.facebook.com/profile.php?id=100064130167757",
-        "youtube": "https://www.youtube.com/@shrikantkhetmalas-gyneclap8127"
+        "facebook": null,
+        "youtube": null
       },
       "products": [
         "Obstetrics Care",
@@ -52387,7 +52766,25 @@
         "Gynecology Consultation",
         "Fertility Assessment for Couples",
         "Matchmaker for Moms – Pregnancy Doctor Matching"
-      ]
+      ],
+      "socialStatus": {
+        "Facebook": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "LinkedIn": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "Instagram": {
+          "status": "No posts found",
+          "count": 0
+        },
+        "YouTube": {
+          "status": "No posts found",
+          "count": 0
+        }
+      }
     },
     {
       "name": "✅ Genesis Fertility Centre",
