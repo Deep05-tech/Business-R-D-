@@ -31443,5 +31443,1061 @@
         ]
       }
     ]
-  }
+  },
+  "competitors": [
+    {
+      "name": "Coffee Roasters Australia",
+      "url": "https://www.coffeeroasters.com.au/",
+      "type": "local",
+      "location": "Unit 5/8 Technology Dr, Arundel QLD 4214, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Coffee Roasters Australia operates in the Food & Beverage industry by providing coffee roasting equipment and services, which aligns with Bellaayu Café's offerings.. 3 common products: [Café Services, Custom Enterprise Solutions & Consulting, Technical Support & Lifecycle Maintenance]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4 | Phone: (07) 5529 0888",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.coffeeroasters.com.au/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "https://www.coffeeroasters.com.au/#"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/coffee-roasters-australia/",
+        "instagram": "https://www.instagram.com/coffeeroastersaustralia/",
+        "facebook": "https://www.facebook.com/coffeeroastersaustralia?fref=ts",
+        "youtube": null
+      },
+      "products": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Pacific Commercial Services",
+      "url": "https://pacificcommercialservices.com.au/",
+      "type": "local",
+      "location": "Unit 4207/9 Hamilton Ave, Surfers Paradise QLD 4217, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Pacific Commercial Services specializes in catering equipment repair, which does not directly compete with café services offered by Bellaayu Café.. 3 common products: [Custom Enterprise Solutions & Consulting, Café Services, Technical Support & Lifecycle Maintenance]. Socials: Instagram verified. Rating: 4.8 | Phone: 0469 386 800",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://pacificcommercialservices.com.au/"
+        },
+        {
+          "title": "Product: Custom Enterprise Solutions & Consulting",
+          "url": "https://pacificcommercialservices.com.au/combi-oven"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/pacific_commercial_services/?utm_source=ig_web_button_share_sheet",
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Commercial Kitchen Equipment Brisbane (Qld) | Cookon",
+      "url": "https://cookon.com.au/?utm_source=google&utm_medium=organic_gmb&utm_content=main_button&utm_campaign=gmb",
+      "type": "local",
+      "location": "20 Curtin Ave W, Eagle Farm QLD 4009, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Cookon supplies commercial kitchen equipment, which is essential for café operations, making them a direct competitor.. 3 common products: [Custom Enterprise Solutions & Consulting, Café Services, Technical Support & Lifecycle Maintenance]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.5 | Phone: (07) 2000 4134",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://cookon.com.au/?utm_source=google&utm_medium=organic_gmb&utm_content=main_button&utm_campaign=gmb"
+        },
+        {
+          "title": "Product: Custom Enterprise Solutions & Consulting",
+          "url": "https://cookon.com.au/custom/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://au.linkedin.com/company/cookon-catering-equipment-pty-ltd",
+        "instagram": "https://www.instagram.com/cookonkaybee/?hl=en",
+        "facebook": "https://www.facebook.com/CookonKayBee/",
+        "youtube": "https://www.youtube.com/channel/UC0WXCASiGWGQQpeOEHd-PIQ/videos"
+      },
+      "products": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Essential Coffee",
+      "url": "https://essentialcoffee.com.au/",
+      "type": "local",
+      "location": "32 Hutchinson St, Burleigh Heads QLD 4220, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Essential Coffee provides coffee solutions and equipment, directly competing with Bellaayu Café's café services.. 2 common products: [Café Services, Custom Enterprise Solutions & Consulting]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 3.7 | Phone: 1300 324 111",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://essentialcoffee.com.au/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "https://essentialcoffee.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/654912/",
+        "instagram": "https://www.instagram.com/essentialcoffee_/?hl=en",
+        "facebook": "https://www.facebook.com/essentialcoffeegroup/",
+        "youtube": "https://www.youtube.com/channel/UCZSNrfDpIYfOdWvT_z2MZFA"
+      },
+      "products": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ]
+    },
+    {
+      "name": "In Season Catering & Events Gold Coast",
+      "url": "http://www.inseasoncatering.com.au/",
+      "type": "local",
+      "location": "Shop 3/11 Pinter Dr, Southport QLD 4215, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: In Season Catering provides catering services for events, which directly competes with Bellaayu Café's café services.. 2 common products: [Custom Enterprise Solutions & Consulting, Café Services]. Socials: Facebook verified; Instagram verified. Rating: 5 | Phone: 0451 951 351",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.inseasoncatering.com.au/"
+        },
+        {
+          "title": "Product: Custom Enterprise Solutions & Consulting",
+          "url": "http://www.inseasoncatering.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "http://www.instagram.com/inseasoncateringgc",
+        "facebook": "http://www.facebook.com/inseasoncateringgc",
+        "youtube": null
+      },
+      "products": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services"
+      ],
+      "commonProducts": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services"
+      ]
+    },
+    {
+      "name": "Design Choice Hospitality | Commercial Kitchen Equipment, Catering & Restaurant Supplies",
+      "url": "https://dchospitality.com.au/",
+      "type": "local",
+      "location": "4/62 Hume Hwy, Lansvale NSW 2166, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: The candidate website focuses on catering equipment and commercial kitchen supplies, which does not directly compete with café services.. 2 common products: [Custom Enterprise Solutions & Consulting, Café Services]. Rating: 4.1 | Phone: 1300 007 387",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://dchospitality.com.au/"
+        },
+        {
+          "title": "Product: Custom Enterprise Solutions & Consulting",
+          "url": "https://dchospitality.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services"
+      ],
+      "commonProducts": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services"
+      ]
+    },
+    {
+      "name": "Coffee Machine Specialist",
+      "url": "https://coffeemachinespecialist.com.au/",
+      "type": "local",
+      "location": "199 Logan Rd, Woolloongabba QLD 4102, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Coffee Machine Specialist offers products and services related to coffee machines, which directly competes with Bellaayu Café's café services.. 1 common products: [Café Services]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.7 | Phone: 1300 551 626",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://coffeemachinespecialist.com.au/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "https://coffeemachinespecialist.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/67824373",
+        "instagram": "https://www.instagram.com/coffeemachinespecialist/",
+        "facebook": "https://www.facebook.com/coffeemachinespecialist",
+        "youtube": null
+      },
+      "products": [
+        "Café Services"
+      ],
+      "commonProducts": [
+        "Café Services"
+      ]
+    },
+    {
+      "name": "Protech Espresso",
+      "url": "http://www.protechespresso.com.au/",
+      "type": "local",
+      "location": "Unit 2/50 Johnston St, Southport QLD 4215, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Protech Espresso provides coffee machine repairs and sales, directly related to café services.. 1 common products: [Café Services]. Socials: Facebook verified; Instagram verified. Rating: 5 | Phone: 0420 767 058",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.protechespresso.com.au/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://www.protechespresso.com.au/coffee-machine-repairs-gold-coast/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/protechespresso/",
+        "facebook": "https://www.facebook.com/people/Protech-Espresso/100054213562914/",
+        "youtube": null
+      },
+      "products": [
+        "Café Services"
+      ],
+      "commonProducts": [
+        "Café Services"
+      ]
+    },
+    {
+      "name": "Koffeeone | Commercial Coffee Machines For Rent & Sale",
+      "url": "https://www.koffeeone.com.au/?utm_source=local&utm_medium=organic&utm_campaign=gmb&utm_content=website",
+      "type": "regional",
+      "location": "Unit 8/189A Mileham St, South Windsor NSW 2756, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Koffee One specializes in professional coffee machines, which directly relates to the café services offered by Bellaayu Café.. 3 common products: [Café Services, Custom Enterprise Solutions & Consulting, Technical Support & Lifecycle Maintenance]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: (02) 9818 4677",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.koffeeone.com.au/?utm_source=local&utm_medium=organic&utm_campaign=gmb&utm_content=website"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "https://www.instagram.com/p/C5EFlRLt_dL/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/998567/admin/",
+        "instagram": "https://www.instagram.com/reel/DDokvbqqxLY/",
+        "facebook": "https://www.facebook.com/Koffeeone",
+        "youtube": "https://www.youtube.com/@Koffeeone"
+      },
+      "products": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Xtracted Espresso Solutions Melbourne",
+      "url": "http://xtracted.com.au/",
+      "type": "regional",
+      "location": "13 Capital Ct, Braeside VIC 3195, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Xtracted specializes in coffee equipment and technical support, which directly relates to the café services offered by Bellaayu Café.. 3 common products: [Café Services, Custom Enterprise Solutions & Consulting, Technical Support & Lifecycle Maintenance]. Socials: Instagram verified. Rating: 4.2 | Phone: (03) 9681 7537",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://xtracted.com.au/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://xtracted.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/xtracted_espresso_solutions/",
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Austmont",
+      "url": "http://www.austmont.com.au/",
+      "type": "regional",
+      "location": "448-452 Victoria St, Wetherill Park NSW 2164, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: The candidate website focuses on commercial kitchen equipment manufacturing and installation, which is not directly related to café services.. 3 common products: [Café Services, Custom Enterprise Solutions & Consulting, Technical Support & Lifecycle Maintenance]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: (02) 9896 3050",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.austmont.com.au/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://www.austmont.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/austmont-australia-4280b2168/",
+        "instagram": "https://www.instagram.com/austmont_aus/",
+        "facebook": "https://www.facebook.com/austmont/",
+        "youtube": "https://www.youtube.com/channel/UC9QcGp-tjlT-H58DELzv3Fg"
+      },
+      "products": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Commercial Kitchen Victoria",
+      "url": "http://commercialkitchenvictoria.com.au/",
+      "type": "regional",
+      "location": "8 Elliot Pl, Ringwood VIC 3134, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Commercial Kitchen Victoria specializes in servicing and maintenance of kitchen equipment, not café services or food and beverage offerings.. 3 common products: [Custom Enterprise Solutions & Consulting, Café Services, Technical Support & Lifecycle Maintenance]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.4 | Phone: (03) 9729 4235",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://commercialkitchenvictoria.com.au/"
+        },
+        {
+          "title": "Product: Custom Enterprise Solutions & Consulting",
+          "url": "http://commercialkitchenvictoria.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/ckvictoria",
+        "instagram": "https://www.instagram.com/commercialkitchenvictoria/",
+        "facebook": "https://www.facebook.com/commercialkitchenvictoria",
+        "youtube": "https://www.youtube.com/channel/UCWcUJENZV3bcrx3BXNPubZA"
+      },
+      "products": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Kitchen Equipment Australia",
+      "url": "https://www.kitchenequipmentaustralia.com.au/",
+      "type": "regional",
+      "location": "6 Chaffey St, Thomastown VIC 3074, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Kitchen Equipment Australia specializes in selling kitchen equipment and supplies, which does not directly compete with Bellaayu Café's café services.. 2 common products: [Custom Enterprise Solutions & Consulting, Technical Support & Lifecycle Maintenance]. Socials: Facebook verified; Instagram verified. Rating: 3.8 | Phone: (03) 9460 8999",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.kitchenequipmentaustralia.com.au/"
+        },
+        {
+          "title": "Product: Custom Enterprise Solutions & Consulting",
+          "url": "https://www.kitchenequipmentaustralia.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/kitchenequipmentaus/",
+        "facebook": "https://www.facebook.com/kitchenequipmentaustralia/",
+        "youtube": null
+      },
+      "products": [
+        "Custom Enterprise Solutions & Consulting",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Custom Enterprise Solutions & Consulting",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Coffee Machine Warehouse",
+      "url": "http://www.coffeemachinewarehouse.com.au/",
+      "type": "regional",
+      "location": "1858 Princes Hwy, Clayton VIC 3168, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 2 common products: [Café Services, Technical Support & Lifecycle Maintenance]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.7 | Phone: 0414 909 911",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.coffeemachinewarehouse.com.au/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://www.coffeemachinewarehouse.com.au/pages/services"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://linkedin.com/company/coffee-machine-warehouse",
+        "instagram": "https://www.instagram.com/cmwmelbourne/",
+        "facebook": "https://www.facebook.com/coffeemachinewarehouseaustralia",
+        "youtube": null
+      },
+      "products": [
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Australian Coffee Distributors",
+      "url": "http://coffeedistributors.com.au/",
+      "type": "regional",
+      "location": "233 Morphett St, Adelaide SA 5000, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: They provide café equipment and supplies, which directly supports café services like Bellaayu Café.. 2 common products: [Café Services, Custom Enterprise Solutions & Consulting]. Socials: Facebook verified. Rating: 4.3 | Phone: (08) 8340 3830",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://coffeedistributors.com.au/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://coffeedistributors.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://m.facebook.com/SOHOcoffeeroasters/",
+        "youtube": null
+      },
+      "products": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ]
+    },
+    {
+      "name": "Espresso Company Australia",
+      "url": "https://espressocompany.com.au/",
+      "type": "regional",
+      "location": "2/2 Niangala Cl, Belrose NSW 2085, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Espresso Company specializes in coffee equipment supply rather than café services.. 2 common products: [Café Services, Custom Enterprise Solutions & Consulting]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 5 | Phone: 1300 326 326",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://espressocompany.com.au/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "https://espressocompany.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://au.linkedin.com/company/espresso-company-australia-pty-ltd",
+        "instagram": "https://www.instagram.com/espressocompany/",
+        "facebook": "https://www.facebook.com/espressocompany/",
+        "youtube": null
+      },
+      "products": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ]
+    },
+    {
+      "name": "Service Sphere",
+      "url": "https://servicesphere.com.au/?utm_source=gmb&utm_medium=organic&utm_campaign=gmb-click-tracker&utm_id=gmb-primary-link",
+      "type": "regional",
+      "location": "64 Sutton St, North Melbourne VIC 3051, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Service Sphere specializes in coffee equipment and repairs, directly competing with Bellaayu Café's café services.. 2 common products: [Café Services, Technical Support & Lifecycle Maintenance]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.6 | Phone: 1300 730 680",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://servicesphere.com.au/?utm_source=gmb&utm_medium=organic&utm_campaign=gmb-click-tracker&utm_id=gmb-primary-link"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "https://servicesphere.com.au/our-services"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://au.linkedin.com/company/service-sphere",
+        "instagram": "https://www.instagram.com/service_sphere/",
+        "facebook": "https://www.facebook.com/Service-Sphere-117449215257299/",
+        "youtube": "https://www.youtube.com/channel/UCdivzuwknx0jbpDm1FVJb-Q"
+      },
+      "products": [
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Snowmaster Commercial Kitchen Equipment",
+      "url": "https://www.snowmaster.com.au/",
+      "type": "regional",
+      "location": "Shop 8/191 Ramsay St, Haberfield NSW 2045, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Snowmaster specializes in commercial kitchen equipment rather than café services or food and beverage offerings.. 2 common products: [Custom Enterprise Solutions & Consulting, Café Services]. Socials: Facebook verified; Instagram verified. Rating: 4.8 | Phone: (02) 9799 9911",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.snowmaster.com.au/"
+        },
+        {
+          "title": "Product: Custom Enterprise Solutions & Consulting",
+          "url": "https://www.snowmaster.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/snowmasteraus/",
+        "facebook": "https://www.facebook.com/SnowmasterAus/",
+        "youtube": null
+      },
+      "products": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services"
+      ],
+      "commonProducts": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services"
+      ]
+    },
+    {
+      "name": "Dunbrae Bakery Solutions",
+      "url": "http://dunbraebakerysolutions.com.au/",
+      "type": "regional",
+      "location": "16 Prime Dr, Seven Hills NSW 2147, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Dunbrae Bakery Solutions specializes in commercial bakery equipment, which does not directly compete with café services.. 2 common products: [Café Services, Custom Enterprise Solutions & Consulting]. Rating: 5 | Phone: (02) 9881 2700",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://dunbraebakerysolutions.com.au/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://dunbraebakerysolutions.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ]
+    },
+    {
+      "name": "Atlantic Equipment - Hospitality & Restaurant Appliances",
+      "url": "http://www.atlanticequipment.com.au/",
+      "type": "regional",
+      "location": "151/153 Parramatta Rd, Granville NSW 2142, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Atlantic Equipment supplies commercial kitchen equipment, which directly relates to the café services offered by Bellaayu Café.. 2 common products: [Custom Enterprise Solutions & Consulting, Café Services]. Rating: 5 | Phone: (02) 8677 0751",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.atlanticequipment.com.au/"
+        },
+        {
+          "title": "Product: Custom Enterprise Solutions & Consulting",
+          "url": "http://www.atlanticequipment.com.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services"
+      ],
+      "commonProducts": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services"
+      ]
+    },
+    {
+      "name": "Commercial Kitchen Equipment",
+      "url": "https://www.ckesydney.au/",
+      "type": "regional",
+      "location": "70 Anderson Rd, Mortdale NSW 2223, Australia",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: The candidate website is a supplier of commercial kitchen equipment, which does not directly compete with café services.. 2 common products: [Custom Enterprise Solutions & Consulting, Café Services]. Rating: 4.8 | Phone: (02) 8502 9729",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.ckesydney.au/"
+        },
+        {
+          "title": "Product: Custom Enterprise Solutions & Consulting",
+          "url": "https://www.ckesydney.au/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services"
+      ],
+      "commonProducts": [
+        "Custom Enterprise Solutions & Consulting",
+        "Café Services"
+      ]
+    },
+    {
+      "name": "The Coffee Lobby UK Ltd",
+      "url": "http://www.thecoffeelobby.co.uk/",
+      "type": "global",
+      "location": "Unit 7, Space2work, Furnax Ln, Warminster BA12 8GL, UK",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: The Coffee Lobby supplies commercial coffee machines and equipment, which are essential for café services like those offered by Bellaayu Café.. 3 common products: [Café Services, Custom Enterprise Solutions & Consulting, Technical Support & Lifecycle Maintenance]. Socials: Instagram verified. Rating: 5 | Phone: 01225 436171",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.thecoffeelobby.co.uk/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://www.thecoffeelobby.co.uk/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/thecoffeelobby/",
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Metroplex Espresso Tech LLC",
+      "url": "http://www.mtxespressotech.com/",
+      "type": "global",
+      "location": "2669 Aero Dr, Grand Prairie, TX 75052, USA",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Metroplex Espresso Tech LLC provides espresso machine services which directly relate to the café industry.. 2 common products: [Café Services, Technical Support & Lifecycle Maintenance]. Socials: Facebook verified; Instagram verified. Rating: 4.9 | Phone: (214) 677-0688",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.mtxespressotech.com/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "https://www.mtxespressotech.com/service"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/metroplexespresso",
+        "facebook": "https://www.facebook.com/mtxespressotech/?ref=py_c",
+        "youtube": null
+      },
+      "products": [
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Coffee Equipment Pros",
+      "url": "https://coffeeequipmentpros.com/",
+      "type": "global",
+      "location": "115 Co Rd 423 Ste 7, Spicewood, TX 78669, USA",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: They provide coffee roasting equipment, which is relevant to the café services offered by Bellaayu Café.. 2 common products: [Café Services, Technical Support & Lifecycle Maintenance]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: (855) 585-2500",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://coffeeequipmentpros.com/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "https://coffeeequipmentpros.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/coffeeequipmentpros",
+        "facebook": "https://www.facebook.com/CoffeeEquipmentPros/",
+        "youtube": "https://www.youtube.com/channel/UCKK8baF9fbcfRmOu85M1TiQ"
+      },
+      "products": [
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Zeta Java",
+      "url": "http://www.zetajava.com/",
+      "type": "global",
+      "location": "2474 Manana Dr, Dallas, TX 75220, USA",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Zeta Java operates in the Food & Beverage industry, specifically offering coffee-related services and products, which directly competes with Bellaayu Café.. 2 common products: [Café Services, Technical Support & Lifecycle Maintenance]. Socials: Instagram verified. Rating: 5 | Phone: (972) 243-2805",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.zetajava.com/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://www.zetajava.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/zetajava/",
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Technical Support & Lifecycle Maintenance"
+      ]
+    },
+    {
+      "name": "Company Coffee Shop",
+      "url": "http://www.companycoffeeshop.com/",
+      "type": "global",
+      "location": "505 110th St, Arlington, TX 76011, USA",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Company Coffee Shop provides coffee services which directly compete with Bellaayu Café's café offerings.. 2 common products: [Café Services, Custom Enterprise Solutions & Consulting]. Socials: Facebook verified; Instagram verified. Rating: 5 | Phone: (817) 608-0836",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.companycoffeeshop.com/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "https://www.cantaloupe.com/products/services/vine-digital-studio/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/dfwcoffeelovers/",
+        "facebook": "https://www.facebook.com/dfwcoffeelovers/",
+        "youtube": null
+      },
+      "products": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ]
+    },
+    {
+      "name": "Coffee Logistics Ireland Ltd - Coffee Machines Northern Ireland",
+      "url": "http://www.coffeelogistics.com/",
+      "type": "global",
+      "location": "Unit 2, Antrim Enterprise Agency Greystone Rd, Antrim BT41 1JZ, UK",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Coffee Logistics provides coffee machines and related services, which directly compete with Bellaayu Café's café offerings.. 2 common products: [Café Services, Custom Enterprise Solutions & Consulting]. Socials: Facebook verified; Instagram verified. Rating: 5 | Phone: 07977 173861",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.coffeelogistics.com/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://www.coffeelogistics.com/#"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/coffeelogisticsireland/",
+        "facebook": "https://www.facebook.com/javadudes",
+        "youtube": null
+      },
+      "products": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ]
+    },
+    {
+      "name": "The Coffee Broker LLC",
+      "url": "http://coffeebroker.net/",
+      "type": "global",
+      "location": "4205 Cahuenga Blvd, Toluca Lake, CA 91602, USA",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: The Coffee Broker provides coffee services and equipment, which directly competes with Bellaayu Café's café offerings.. 2 common products: [Café Services, Custom Enterprise Solutions & Consulting]. Rating: 5 | Phone: (408) 455-6266",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://coffeebroker.net/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "https://coffeebroker.net/office-coffee-services.html"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ],
+      "commonProducts": [
+        "Café Services",
+        "Custom Enterprise Solutions & Consulting"
+      ]
+    },
+    {
+      "name": "BInxCorp, LLC",
+      "url": "http://www.binxcorp.com/",
+      "type": "global",
+      "location": "4717 Priem Ln Bldg. 7 Suite 701, Pflugerville, TX 78660, USA",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: BinxCorp provides coffee equipment repair and installation services, which directly supports café operations like Bellaayu Café.. 1 common products: [Café Services]. Socials: Facebook verified; Instagram verified. Rating: 4.3 | Phone: (512) 994-5969",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.binxcorp.com/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://www.binxcorp.com/services"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/binxcorpespresso/",
+        "facebook": "https://www.facebook.com/binxcorp/",
+        "youtube": null
+      },
+      "products": [
+        "Café Services"
+      ],
+      "commonProducts": [
+        "Café Services"
+      ]
+    },
+    {
+      "name": "Parks Warehouse",
+      "url": "http://www.parkscoffee.com/",
+      "type": "global",
+      "location": "1421 Mac Arthur Dr, Carrollton, TX 75007, USA",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Parks Coffee operates in the Food & Beverage industry, providing coffee services which directly compete with Bellaayu Café's offerings.. 1 common products: [Café Services]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.6 | Phone: (800) 889-7827",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.parkscoffee.com/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://www.parkscoffee.com/services"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/parks-coffee",
+        "instagram": "https://www.instagram.com/parkscoffee",
+        "facebook": "https://www.facebook.com/parkscoffee",
+        "youtube": "https://www.youtube.com/parkscoffee"
+      },
+      "products": [
+        "Café Services"
+      ],
+      "commonProducts": [
+        "Café Services"
+      ]
+    },
+    {
+      "name": "Commercial Espresso Machine and Fresh Roasted Coffees",
+      "url": "http://www.americanselectfoods.com/",
+      "type": "global",
+      "location": "11940 Goldring Rd, Arcadia, CA 91006, USA",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: American Select Foods provides coffee equipment which is directly related to the café services offered by Bellaayu Café.. 1 common products: [Café Services]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.5 | Phone: (626) 359-2220",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.americanselectfoods.com/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://www.americanselectfoods.com/products/equipment#la-marzocco"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/american-select-foods-inc/",
+        "instagram": "https://www.instagram.com/americanselectfoods/",
+        "facebook": "https://www.facebook.com/people/American-Select-Foods-Inc/100070676855069/",
+        "youtube": null
+      },
+      "products": [
+        "Café Services"
+      ],
+      "commonProducts": [
+        "Café Services"
+      ]
+    },
+    {
+      "name": "Espresso RMI, LLC",
+      "url": "http://ifyoulovecoffee.com/",
+      "type": "global",
+      "location": "9039 Vantage Point Dr, Dallas, TX 75243, USA",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: The website focuses on selling coffee machines rather than providing café services or food and beverage offerings.. 1 common products: [Café Services]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 3.8 | Phone: (972) 690-6969",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://ifyoulovecoffee.com/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://ifyoulovecoffee.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/espressormillc/",
+        "facebook": "https://www.facebook.com/pages/Espresso-RMI-Inc/678368198848828",
+        "youtube": "https://www.youtube.com/user/ifyoulovecoffee"
+      },
+      "products": [
+        "Café Services"
+      ],
+      "commonProducts": [
+        "Café Services"
+      ]
+    },
+    {
+      "name": "Kaffee 1 GmbH",
+      "url": "http://www.kaffee-1.de/",
+      "type": "global",
+      "location": "Borsteler Chaussee 11, 22453 Hamburg-Nord, Germany",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Kaffee 1 offers coffee and tea products, which directly aligns with Bellaayu Café's café services.. 1 common products: [Café Services]. Socials: Facebook verified; Instagram verified. Rating: 5 | Phone: 040 55621149",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.kaffee-1.de/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "http://www.kaffee-1.de/mahlk%c3%b6nig--hemro-group.html#top_hemro"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/kaffee.1/",
+        "facebook": "https://www.facebook.com/kaffee1.hamburg/",
+        "youtube": null
+      },
+      "products": [
+        "Café Services"
+      ],
+      "commonProducts": [
+        "Café Services"
+      ]
+    },
+    {
+      "name": "Billys Coffee Company",
+      "url": "https://www.billyscoffee.co.uk/",
+      "type": "global",
+      "location": "Unit 5, Evesham Rd, Dodwell, Stratford-upon-Avon CV37 9ST, UK",
+      "whyCompetitor": "Industry verified: Food & Beverage / Cafés & Restaurants. LLM Verdict: Billy's Coffee Company offers coffee products and equipment, making them a direct competitor in the café services sector.. 1 common products: [Café Services]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: 0800 292 2868",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.billyscoffee.co.uk/"
+        },
+        {
+          "title": "Product: Café Services",
+          "url": "https://www.billyscoffee.co.uk/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/billyscoffeeco",
+        "facebook": "https://www.facebook.com/BillysCoffeeCo",
+        "youtube": "https://www.youtube.com/channel/UCAjWj4k7L8nvmt2PcpvP6Gg"
+      },
+      "products": [
+        "Café Services"
+      ],
+      "commonProducts": [
+        "Café Services"
+      ]
+    }
+  ]
 }
