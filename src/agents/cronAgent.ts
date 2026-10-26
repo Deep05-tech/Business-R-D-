@@ -72,7 +72,7 @@ export class CronAgent {
     for (const c of (memory.competitors || [])) {
       addComp(c);
     }
-    const MAX_POSTS_PER_COMP = 3;
+    const MAX_POSTS_PER_COMP = 10;
     const configuredConcurrency = Number(process.env.SOCIAL_TRACKER_CONCURRENCY || 3);
     const competitorLimit = pLimit(Number.isFinite(configuredConcurrency) ? Math.max(1, Math.min(configuredConcurrency, 4)) : 3);
 
@@ -172,7 +172,7 @@ export class CronAgent {
             if (tavilyRes.data && Array.isArray(tavilyRes.data.results)) {
               for (const r of tavilyRes.data.results) {
                 const u = (r.url || "").trim();
-                if (isValidProfileUrl(u, platform, comp.name, r.title)) return u;
+                if (isValidProfileUrl(u, platform, cleanName, r.title)) return u;
               }
             }
           } catch (tavErr: any) {
@@ -191,7 +191,7 @@ export class CronAgent {
           const results = JSON.parse(raw || "[]");
           for (const r of results) {
             const url = (r.url || "").trim();
-            if (isValidProfileUrl(url, platform, comp.name, r.title)) {
+            if (isValidProfileUrl(url, platform, cleanName, r.title)) {
               return url;
             }
           }
@@ -205,7 +205,7 @@ export class CronAgent {
           const results = JSON.parse(raw || "[]");
           for (const r of results) {
             const url = (r.url || "").trim();
-            if (isValidProfileUrl(url, platform, comp.name, r.title)) {
+            if (isValidProfileUrl(url, platform, cleanName, r.title)) {
               return url;
             }
           }
@@ -219,7 +219,7 @@ export class CronAgent {
           const results = JSON.parse(raw || "[]");
           for (const r of results) {
             const url = (r.url || "").trim();
-            if (isValidProfileUrl(url, platform, comp.name, r.title)) {
+            if (isValidProfileUrl(url, platform, cleanName, r.title)) {
               return url;
             }
           }
@@ -228,43 +228,42 @@ export class CronAgent {
       };
 
       let ytUrl = (comp as any).socials?.youtube;
-      if (!ytUrl) {
+      if (ytUrl && typeof ytUrl === 'string' && ytUrl.startsWith('http') && isValidProfileUrl(ytUrl, 'YouTube')) {
+        // Valid existing profile URL - preserve it
+      } else if (!ytUrl || !isValidProfileUrl(ytUrl, 'YouTube')) {
         ytUrl = await searchSocialUrl('YouTube', 'youtube.com');
-      } else if (ytUrl && !isValidProfileUrl(ytUrl, 'YouTube', comp.name)) {
-        ytUrl = null;
       }
 
       let igUrl = (comp as any).socials?.instagram;
-      if (!igUrl) {
+      if (igUrl && typeof igUrl === 'string' && igUrl.startsWith('http') && isValidProfileUrl(igUrl, 'Instagram')) {
+        // Valid existing profile URL - preserve it
+      } else if (!igUrl || !isValidProfileUrl(igUrl, 'Instagram')) {
         igUrl = await searchSocialUrl('Instagram', 'instagram.com');
-      } else if (igUrl && !isValidProfileUrl(igUrl, 'Instagram', comp.name)) {
-        igUrl = null;
       }
 
       let fbUrl = (comp as any).socials?.facebook;
-      if (!fbUrl) {
+      if (fbUrl && typeof fbUrl === 'string' && fbUrl.startsWith('http') && isValidProfileUrl(fbUrl, 'Facebook')) {
+        // Valid existing profile URL - preserve it
+      } else if (!fbUrl || !isValidProfileUrl(fbUrl, 'Facebook')) {
         fbUrl = await searchSocialUrl('Facebook', 'facebook.com');
-      } else if (fbUrl && !isValidProfileUrl(fbUrl, 'Facebook', comp.name)) {
-        fbUrl = null;
       }
 
       let liUrl = (comp as any).socials?.linkedin;
-      if (!liUrl) {
+      if (liUrl && typeof liUrl === 'string' && liUrl.startsWith('http') && isValidProfileUrl(liUrl, 'LinkedIn')) {
+        // Valid existing profile URL - preserve it
+      } else if (!liUrl || !isValidProfileUrl(liUrl, 'LinkedIn')) {
         liUrl = await searchSocialUrl('LinkedIn', 'linkedin.com/company');
-      } else if (liUrl && !isValidProfileUrl(liUrl, 'LinkedIn', comp.name)) {
-        liUrl = null;
       }
 
-      // Update socials object on competitor (null if no authentic account exists)
+      // Update socials object on competitor without clearing existing authentic accounts
       if (!comp.socials) comp.socials = { linkedin: null, instagram: null, facebook: null, youtube: null };
-      comp.socials.youtube = isValidProfileUrl(ytUrl, 'YouTube', comp.name) ? ytUrl : null;
-      comp.socials.instagram = isValidProfileUrl(igUrl, 'Instagram', comp.name) ? igUrl : null;
-      comp.socials.facebook = isValidProfileUrl(fbUrl, 'Facebook', comp.name) ? fbUrl : null;
-      comp.socials.linkedin = isValidProfileUrl(liUrl, 'LinkedIn', comp.name) ? liUrl : null;
+      if (ytUrl) comp.socials.youtube = ytUrl;
+      if (igUrl) comp.socials.instagram = igUrl;
+      if (fbUrl) comp.socials.facebook = fbUrl;
+      if (liUrl) comp.socials.linkedin = liUrl;
 
-      // Extract latest 3 posts per competitor per platform for multi-competitor representation
+      // Extract up to 10 posts per competitor per platform for rich feed coverage
       const platformStatuses: Record<string, { status: string; reason?: string; count: number }> = {};
-      const MAX_POSTS_PER_COMP = 3;
 
       const [ytPosts, igPosts, fbPosts, liPosts] = await Promise.all([
         socialExtractor.extractPosts("YouTube", ytUrl, cleanName, MAX_POSTS_PER_COMP, { preferHttp: true }).then(posts => {
@@ -308,19 +307,19 @@ export class CronAgent {
       if (!comp.socials) comp.socials = { linkedin: null, instagram: null, facebook: null, youtube: null };
       if (!comp.socials.youtube && ytPosts.length > 0) {
         const foundUrl = ytPosts.find(p => p.profile_url || p.profileUrl)?.profile_url || (ytPosts[0] as any).channelUrl;
-        if (foundUrl && isValidProfileUrl(foundUrl, 'YouTube', comp.name)) comp.socials.youtube = foundUrl;
+        if (foundUrl && isValidProfileUrl(foundUrl, 'YouTube', cleanName)) comp.socials.youtube = foundUrl;
       }
       if (!comp.socials.instagram && igPosts.length > 0) {
         const foundUrl = igPosts.find(p => p.profile_url || p.profileUrl)?.profile_url;
-        if (foundUrl && isValidProfileUrl(foundUrl, 'Instagram', comp.name)) comp.socials.instagram = foundUrl;
+        if (foundUrl && isValidProfileUrl(foundUrl, 'Instagram', cleanName)) comp.socials.instagram = foundUrl;
       }
       if (!comp.socials.facebook && fbPosts.length > 0) {
         const foundUrl = fbPosts.find(p => p.profile_url || p.profileUrl)?.profile_url;
-        if (foundUrl && isValidProfileUrl(foundUrl, 'Facebook', comp.name)) comp.socials.facebook = foundUrl;
+        if (foundUrl && isValidProfileUrl(foundUrl, 'Facebook', cleanName)) comp.socials.facebook = foundUrl;
       }
       if (!comp.socials.linkedin && liPosts.length > 0) {
         const foundUrl = liPosts.find(p => p.profile_url || p.profileUrl)?.profile_url;
-        if (foundUrl && isValidProfileUrl(foundUrl, 'LinkedIn', comp.name)) comp.socials.linkedin = foundUrl;
+        if (foundUrl && isValidProfileUrl(foundUrl, 'LinkedIn', cleanName)) comp.socials.linkedin = foundUrl;
       }
 
       logger.info(`Extracted ${compPosts.length} verified social posts directly from accounts for ${comp.name}.`);
@@ -454,6 +453,40 @@ export class CronAgent {
       }
 
       const mergedFeed = Array.from(mergedMap.values());
+
+      const getPostTimestamp = (p: any): number => {
+        const raw = String(p.date || p.published_date || p.timestamp || '').trim();
+        if (!raw) return 0;
+        const lower = raw.toLowerCase();
+        if (lower === 'today' || lower === 'just now' || lower.includes('minute') || lower.includes('second')) return Date.now();
+        if (lower === 'yesterday') return Date.now() - 86400000;
+        if (lower.includes('hour') && lower.includes('ago')) {
+          const hrs = parseInt(lower) || 1;
+          return Date.now() - (hrs * 3600000);
+        }
+        if (lower.includes('day') && lower.includes('ago')) {
+          const days = parseInt(lower) || 1;
+          return Date.now() - (days * 86400000);
+        }
+        if (lower.includes('week') && lower.includes('ago')) {
+          const wks = parseInt(lower) || 1;
+          return Date.now() - (wks * 7 * 86400000);
+        }
+        if (lower.includes('month') && lower.includes('ago')) {
+          const mos = parseInt(lower) || 1;
+          return Date.now() - (mos * 30 * 86400000);
+        }
+        if (lower.includes('year') && lower.includes('ago')) {
+          const yrs = parseInt(lower) || 1;
+          return Date.now() - (yrs * 365 * 86400000);
+        }
+        if (lower === 'recent') return Date.now() - 43200000;
+        const parsed = Date.parse(raw);
+        if (!isNaN(parsed)) return parsed;
+        return 0;
+      };
+
+      mergedFeed.sort((a, b) => getPostTimestamp(b) - getPostTimestamp(a));
       (memory as any).socialFeed = mergedFeed;
 
       // Update memory store

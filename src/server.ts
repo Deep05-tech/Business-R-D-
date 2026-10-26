@@ -2430,6 +2430,39 @@ app.get("/api/social-feed", async (request, response) => {
       }
     }
 
+    const getPostTimestamp = (p: any): number => {
+      const raw = String(p.date || p.published_date || p.timestamp || '').trim();
+      if (!raw) return 0;
+      const lower = raw.toLowerCase();
+      if (lower === 'today' || lower === 'just now' || lower.includes('minute') || lower.includes('second')) return Date.now();
+      if (lower === 'yesterday') return Date.now() - 86400000;
+      if (lower.includes('hour') && lower.includes('ago')) {
+        const hrs = parseInt(lower) || 1;
+        return Date.now() - (hrs * 3600000);
+      }
+      if (lower.includes('day') && lower.includes('ago')) {
+        const days = parseInt(lower) || 1;
+        return Date.now() - (days * 86400000);
+      }
+      if (lower.includes('week') && lower.includes('ago')) {
+        const wks = parseInt(lower) || 1;
+        return Date.now() - (wks * 7 * 86400000);
+      }
+      if (lower.includes('month') && lower.includes('ago')) {
+        const mos = parseInt(lower) || 1;
+        return Date.now() - (mos * 30 * 86400000);
+      }
+      if (lower.includes('year') && lower.includes('ago')) {
+        const yrs = parseInt(lower) || 1;
+        return Date.now() - (yrs * 365 * 86400000);
+      }
+      if (lower === 'recent') return Date.now() - 43200000;
+      const parsed = Date.parse(raw);
+      if (!isNaN(parsed)) return parsed;
+      return 0;
+    };
+    filteredFeed.sort((a, b) => getPostTimestamp(b) - getPostTimestamp(a));
+
     const trackerKey = normalizeTrackerKey(url || memory.input?.websiteUrl || "");
     const isTrackerRunning = activeTrackerRuns.has(trackerKey) || activeTrackerStatus.get(trackerKey)?.running === true;
 

@@ -3842,6 +3842,41 @@ async function loadFeedUI() {
     const fbPosts = [];
     const liPosts = [];
 
+    const parsePostTimestamp = (p) => {
+      if (!p) return 0;
+      const raw = String(p.date || p.published_date || p.timestamp || '').trim();
+      if (!raw) return 0;
+      const lower = raw.toLowerCase();
+      if (lower === 'today' || lower === 'just now' || lower.includes('minute') || lower.includes('second')) return Date.now();
+      if (lower === 'yesterday') return Date.now() - 86400000;
+      if (lower.includes('hour') && lower.includes('ago')) {
+        const hrs = parseInt(lower) || 1;
+        return Date.now() - (hrs * 3600000);
+      }
+      if (lower.includes('day') && lower.includes('ago')) {
+        const days = parseInt(lower) || 1;
+        return Date.now() - (days * 86400000);
+      }
+      if (lower.includes('week') && lower.includes('ago')) {
+        const wks = parseInt(lower) || 1;
+        return Date.now() - (wks * 7 * 86400000);
+      }
+      if (lower.includes('month') && lower.includes('ago')) {
+        const mos = parseInt(lower) || 1;
+        return Date.now() - (mos * 30 * 86400000);
+      }
+      if (lower.includes('year') && lower.includes('ago')) {
+        const yrs = parseInt(lower) || 1;
+        return Date.now() - (yrs * 365 * 86400000);
+      }
+      if (lower === 'recent') return Date.now() - 43200000;
+      const parsed = Date.parse(raw);
+      if (!isNaN(parsed)) return parsed;
+      return 0;
+    };
+
+    feed.sort((a, b) => parsePostTimestamp(b) - parsePostTimestamp(a));
+
     const seenKeys = new Set();
     window.allFeedPosts = [];
 
@@ -3898,6 +3933,11 @@ async function loadFeedUI() {
         ytPosts.push({ ...post, _detectedPlatform: 'YouTube', _ytId: ytVidId });
       }
     });
+
+    ytPosts.sort((a, b) => parsePostTimestamp(b) - parsePostTimestamp(a));
+    igPosts.sort((a, b) => parsePostTimestamp(b) - parsePostTimestamp(a));
+    fbPosts.sort((a, b) => parsePostTimestamp(b) - parsePostTimestamp(a));
+    liPosts.sort((a, b) => parsePostTimestamp(b) - parsePostTimestamp(a));
 
     window.selectedCompPlat = window.selectedCompPlat || 'All';
     window.filterCompetitorFeed = function(selectedPlat) {

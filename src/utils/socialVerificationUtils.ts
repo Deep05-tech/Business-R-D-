@@ -129,6 +129,13 @@ export function extractProfileHandle(url: string, platform: string): string {
             if (segments[0].toLowerCase() === 'groups') return '';
             if (segments[0].toLowerCase() === 'p' && segments[1]) return segments[1].toLowerCase();
             if (segments[0].toLowerCase() === 'people' && segments[1]) return segments[1].toLowerCase();
+            if (segments[0].toLowerCase() === 'pages' && segments.length > 1) {
+                return segments[segments.length - 1].toLowerCase();
+            }
+            if (segments[0].toLowerCase() === 'profile.php') {
+                const idParam = parsed.searchParams.get('id');
+                if (idParam) return `id_${idParam}`;
+            }
             return segments[0].toLowerCase();
         }
         if (plat.includes('linkedin')) {
