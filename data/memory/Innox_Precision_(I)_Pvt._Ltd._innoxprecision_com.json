@@ -73109,25 +73109,113 @@
   },
   "competitors": [
     {
-      "name": "Delta Technocast Pvt. Ltd.",
-      "url": "https://www.deltatechnocast.com/",
+      "name": "Omex Engineering",
+      "url": "https://www.omexaerocomponent.in/",
       "type": "local",
-      "location": "Plot No. G-1066, Lodhika Industrial Estate, GIDC, 360 021, Metoda, Rajkot, Gujarat 360021, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Delta Technocast offers contract manufacturing and precision engineering solutions, making them a direct competitor to Innox Precision.. 8 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Contract Manufacturing & Long-term Supply Partnerships, Machining Services, Quality Testing & Inspection Services, Calibration Services...]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 4.7 | Phone: 02827 287 654",
+      "location": "PLOT NO. G - 2116-2117/A , GATE NO. - 3 NEAR KADVANI FORGE G.I.D.C. METODA (LODHIKA RAJKOT - 360021, Metoda, Gujarat 360021, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Omex Engineering offers precision machining and contract manufacturing services in aerospace, electronics, and medical sectors, directly competing with Innox Precision's precision engineering and contract manufacturing offerings.. 9 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Contract Manufacturing & Long-term Supply Partnerships, Processed Raw Materials & Treatments, Machining Services, Quality Testing & Inspection Services...]. Socials: LinkedIn verified; Facebook verified. Rating: 4.2 | Phone: 02827 299 730",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "https://www.deltatechnocast.com/"
+          "url": "https://www.omexaerocomponent.in/"
         },
         {
           "title": "Product: Precision Engineering Solutions",
-          "url": "https://deltatechnocast.com/services/investment-casting/"
+          "url": "https://www.facebook.com/pages/Omex-Engineering/1623457987902648"
         }
       ],
       "socials": {
-        "linkedin": "https://in.linkedin.com/company/delta-technocast-pvt-ltd",
+        "linkedin": "https://www.linkedin.com/in/rajnik-kuvad-b9396141",
         "instagram": null,
-        "facebook": "https://www.facebook.com/people/Delta-Technocast-Pvt-Ltd/61564714912800/",
+        "facebook": "https://www.facebook.com/pages/Omex-Engineering/1623457987902648",
+        "youtube": null
+      },
+      "products": [
+        "Precision Engineering Solutions",
+        "Contract Manufacturing",
+        "Product Development",
+        "Contract Manufacturing & Long-term Supply Partnerships",
+        "Processed Raw Materials & Treatments",
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Calibration Services",
+        "Quality Assurance"
+      ],
+      "commonProducts": [
+        "Precision Engineering Solutions",
+        "Contract Manufacturing",
+        "Product Development",
+        "Contract Manufacturing & Long-term Supply Partnerships",
+        "Processed Raw Materials & Treatments",
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Calibration Services",
+        "Quality Assurance"
+      ]
+    },
+    {
+      "name": "vodashcasting.com vodashcasting.com",
+      "url": "https://vodashcasting.com/precision-machining-parts-manufacturers",
+      "type": "local",
+      "location": "Rajkot, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Vodash Engineering offers precision machining and custom component manufacturing, directly competing with Innox Precision's precision engineering and contract manufacturing services.. 8 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Processed Raw Materials & Treatments, Machining Services, Quality Testing & Inspection Services, Calibration Services...]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: N/A | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://vodashcasting.com/precision-machining-parts-manufacturers"
+        },
+        {
+          "title": "Product: Precision Engineering Solutions",
+          "url": "https://vodashcasting.com/precision-machining-parts-manufacturers"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/vodash-engineering/",
+        "instagram": "https://www.instagram.com/vodash_engineering/",
+        "facebook": "https://www.facebook.com/vodashengineering/",
+        "youtube": "https://www.youtube.com/@vodash_engineering"
+      },
+      "products": [
+        "Precision Engineering Solutions",
+        "Contract Manufacturing",
+        "Product Development",
+        "Processed Raw Materials & Treatments",
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Calibration Services",
+        "Quality Assurance"
+      ],
+      "commonProducts": [
+        "Precision Engineering Solutions",
+        "Contract Manufacturing",
+        "Product Development",
+        "Processed Raw Materials & Treatments",
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Calibration Services",
+        "Quality Assurance"
+      ]
+    },
+    {
+      "name": "Deccanew deccanew.com",
+      "url": "https://www.deccanew.com/precision-parts-manufacturing-india.php",
+      "type": "local",
+      "location": "Rajkot, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 8 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Contract Manufacturing & Long-term Supply Partnerships, Machining Services, Quality Testing & Inspection Services, Calibration Services...]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: N/A | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.deccanew.com/precision-parts-manufacturing-india.php"
+        },
+        {
+          "title": "Product: Precision Engineering Solutions",
+          "url": "https://www.instagram.com/deccanengineeringworks/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/deccan-engineering-works/",
+        "instagram": "https://www.instagram.com/deccanengineeringworks/",
+        "facebook": "https://www.facebook.com/deccanew",
         "youtube": null
       },
       "products": [
@@ -73149,110 +73237,33 @@
         "Quality Testing & Inspection Services",
         "Calibration Services",
         "Quality Assurance"
-      ],
-      "socialStatus": {
-        "Facebook": {
-          "status": "Success",
-          "count": 1
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "YouTube": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "LinkedIn": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
-    },
-    {
-      "name": "AECO ENGINEERING LLP. FACTORY",
-      "url": "https://aecoproducts.com/",
-      "type": "local",
-      "location": "AGRA Engineering Road, Lothada, Gujarat 360022, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: They manufacture and supply engine parts, which aligns with precision engineering solutions in the automotive sector.. 7 common products: [Precision Engineering Solutions, Product Development, Contract Manufacturing, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: 022 6691 5113",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "https://aecoproducts.com/"
-        },
-        {
-          "title": "Product: Precision Engineering Solutions",
-          "url": "https://aecoproducts.com/images/iso-certificate-aeco-engineering.webp"
-        }
-      ],
-      "socials": {
-        "linkedin": "https://www.linkedin.com/company/aecoproducts/",
-        "instagram": "https://www.instagram.com/aecoproducts/",
-        "facebook": "https://www.facebook.com/aecoengg/",
-        "youtube": "https://www.youtube.com/@aecoengineering"
-      },
-      "products": [
-        "Precision Engineering Solutions",
-        "Product Development",
-        "Contract Manufacturing",
-        "Machining Services",
-        "Quality Testing & Inspection Services",
-        "Calibration Services",
-        "Quality Assurance"
-      ],
-      "commonProducts": [
-        "Precision Engineering Solutions",
-        "Product Development",
-        "Contract Manufacturing",
-        "Machining Services",
-        "Quality Testing & Inspection Services",
-        "Calibration Services",
-        "Quality Assurance"
-      ],
-      "socialStatus": {
-        "YouTube": {
-          "status": "Success",
-          "count": 3
-        },
-        "Instagram": {
-          "status": "Success",
-          "count": 3
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 3
-        },
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
+      ]
     },
     {
       "name": "Various Machining Solutions LLP",
       "url": "http://www.vmsl.co.in/",
       "type": "local",
       "location": "Sambhalpur Industrial Area, Plot No 3, behind Rolex Bearing, Kotharia, Rajkot, Gujarat 360022, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: VMSL offers CNC machining services, which are directly related to precision engineering solutions and contract manufacturing.. 7 common products: [Contract Manufacturing, Precision Engineering Solutions, Product Development, Processed Raw Materials & Treatments, Machining Services, Quality Testing & Inspection Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.6 | Phone: N/A",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: VMSL provides CNC machining and precision engineering services that directly overlap with Innox Precision’s contract manufacturing and product development offerings.. 7 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Processed Raw Materials & Treatments, Machining Services, Quality Testing & Inspection Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.6 | Phone: N/A",
       "evidenceUrls": [
         {
           "title": "Homepage",
           "url": "http://www.vmsl.co.in/"
         },
         {
-          "title": "Product: Contract Manufacturing",
-          "url": "https://www.vmsl.co.in/manufacturing-facilities/"
+          "title": "Product: Precision Engineering Solutions",
+          "url": "http://www.vmsl.co.in/#"
         }
       ],
       "socials": {
         "linkedin": "https://in.linkedin.com/company/variousmachining",
         "instagram": "https://www.instagram.com/various_machining/",
         "facebook": "https://www.facebook.com/variousmachining/",
-        "youtube": null
+        "youtube": "https://www.youtube.com/@vmslindia"
       },
       "products": [
-        "Contract Manufacturing",
         "Precision Engineering Solutions",
+        "Contract Manufacturing",
         "Product Development",
         "Processed Raw Materials & Treatments",
         "Machining Services",
@@ -73260,349 +73271,212 @@
         "Quality Assurance"
       ],
       "commonProducts": [
-        "Contract Manufacturing",
         "Precision Engineering Solutions",
+        "Contract Manufacturing",
         "Product Development",
         "Processed Raw Materials & Treatments",
         "Machining Services",
-        "Quality Testing & Inspection Services",
-        "Quality Assurance"
-      ],
-      "socialStatus": {
-        "Instagram": {
-          "status": "Success",
-          "count": 3
-        },
-        "YouTube": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Facebook": {
-          "status": "Success",
-          "count": 1
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 3
-        }
-      }
-    },
-    {
-      "name": "Prakash Engitech Pvt. Ltd.",
-      "url": "http://www.prakashmachines.com/",
-      "type": "local",
-      "location": "Rd C, Metoda, Rajkot, Gujarat 360021, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Prakash Machines manufactures industrial drilling machines, which are relevant to precision engineering and contract manufacturing.. 5 common products: [Contract Manufacturing, Precision Engineering Solutions, Product Development, Machining Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.5 | Phone: 094087 00300",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "http://www.prakashmachines.com/"
-        },
-        {
-          "title": "Product: Contract Manufacturing",
-          "url": "http://www.prakashmachines.com/"
-        }
-      ],
-      "socials": {
-        "linkedin": "https://www.linkedin.com/company/prakashmachines/",
-        "instagram": "https://www.instagram.com/prakashmachines/",
-        "facebook": "https://www.facebook.com/prakashmachines/",
-        "youtube": null
-      },
-      "products": [
-        "Contract Manufacturing",
-        "Precision Engineering Solutions",
-        "Product Development",
-        "Machining Services",
-        "Quality Assurance"
-      ],
-      "commonProducts": [
-        "Contract Manufacturing",
-        "Precision Engineering Solutions",
-        "Product Development",
-        "Machining Services",
-        "Quality Assurance"
-      ],
-      "socialStatus": {
-        "Instagram": {
-          "status": "Success",
-          "count": 3
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 1
-        },
-        "Facebook": {
-          "status": "Success",
-          "count": 1
-        },
-        "YouTube": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
-    },
-    {
-      "name": "AJANTA INDUSTRIES",
-      "url": "http://ajantamanufacture.com/",
-      "type": "local",
-      "location": "2, Gokul Dham Main Rd, Haridwar Society, Panchsheel Wadi, Samrat Industrial Area, Rajkot, Gujarat 360004, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Ajanta Industries manufactures precision metal components, which aligns with Innox Precision's offerings in precision engineering and contract manufacturing.. 4 common products: [Contract Manufacturing, Product Development, Precision Engineering Solutions, Quality Assurance]. Socials: LinkedIn verified; Facebook verified. Rating: 4.8 | Phone: 078199 99975",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "http://ajantamanufacture.com/"
-        },
-        {
-          "title": "Product: Contract Manufacturing",
-          "url": "http://ajantamanufacture.com/"
-        }
-      ],
-      "socials": {
-        "linkedin": "https://www.linkedin.com/in/nikhil-hirani-087283208/",
-        "instagram": null,
-        "facebook": "https://www.facebook.com/JayAmbeIndustries111/",
-        "youtube": null
-      },
-      "products": [
-        "Contract Manufacturing",
-        "Product Development",
-        "Precision Engineering Solutions",
-        "Quality Assurance"
-      ],
-      "commonProducts": [
-        "Contract Manufacturing",
-        "Product Development",
-        "Precision Engineering Solutions",
-        "Quality Assurance"
-      ]
-    },
-    {
-      "name": "NUTECH MECHATRONICS PVT. LTD",
-      "url": "https://allgearedlathemachine.com/",
-      "type": "local",
-      "location": "Marg, No-1, Dhebar Rd, nr. Weldor Enterprise, Atika Industrial Area, Bhakti Nagar, Rajkot, Gujarat 360002, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: All Geared Lathe Machine Manufacturer produces precision engineering solutions relevant to Innox Precision's offerings.. 4 common products: [Contract Manufacturing, Product Development, Quality Testing & Inspection Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 5 | Phone: 098242 12384",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "https://allgearedlathemachine.com/"
-        },
-        {
-          "title": "Product: Contract Manufacturing",
-          "url": "https://allgearedlathemachine.com/"
-        }
-      ],
-      "socials": {
-        "linkedin": "https://www.linkedin.com/in/allgearedlathemachines",
-        "instagram": null,
-        "facebook": "https://www.facebook.com/allgearedlathemachine",
-        "youtube": "https://www.youtube.com/user/allgearedlathemachin"
-      },
-      "products": [
-        "Contract Manufacturing",
-        "Product Development",
-        "Quality Testing & Inspection Services",
-        "Quality Assurance"
-      ],
-      "commonProducts": [
-        "Contract Manufacturing",
-        "Product Development",
         "Quality Testing & Inspection Services",
         "Quality Assurance"
       ]
     },
     {
-      "name": "ABRIGOR MEGACORP PRIVATE LIMITED",
-      "url": "https://www.abrigor.com/",
-      "type": "regional",
-      "location": "Sr. No. 136/2, Pune - Nashik Hwy, Hanuman Colony, Sadgurunagar, Bhosari, Pimpri-Chinchwad, Maharashtra 411039, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Abrigor Megacorp manufactures CNC machined components, which aligns with Innox Precision's offerings in precision engineering and contract manufacturing.. 9 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Contract Manufacturing & Long-term Supply Partnerships, Processed Raw Materials & Treatments, Machining Services, Quality Testing & Inspection Services...]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 5 | Phone: 079722 01504",
+      "name": "Akron Ring Forge Pvt. Ltd.",
+      "url": "http://www.akronringforge.com/",
+      "type": "local",
+      "location": "Plot No.: 39 & 40, Survey No.: 275, Ankur Industrial Estate, NH-27, Shapar, Gujarat 360026, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Akron Ring Forge manufactures forged and rolled ring components, overlapping with Innox Precision's precision engineering and contract manufacturing services. 7 common products: [Contract Manufacturing, Precision Engineering Solutions, Product Development, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.2 | Phone: 094269 98013",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "https://www.abrigor.com/"
+          "url": "http://www.akronringforge.com/"
         },
         {
-          "title": "Product: Precision Engineering Solutions",
-          "url": "https://www.abrigor.com/precision-machine-component-manufacturers-in-pune.html"
+          "title": "Product: Contract Manufacturing",
+          "url": "http://www.akronringforge.com/"
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/abrigor-megacorp/",
-        "instagram": "https://www.instagram.com/abrigor_megacorp?igsh=MWl4MHZmejk4YnNvcg==",
-        "facebook": null,
+        "linkedin": "https://www.linkedin.com/company/millennium-ring-mfg-company",
+        "instagram": "https://www.instagram.com/millennium_ring_mfg.co/",
+        "facebook": "https://www.facebook.com/profile.php?id=61550079624825",
+        "youtube": null
+      },
+      "products": [
+        "Contract Manufacturing",
+        "Precision Engineering Solutions",
+        "Product Development",
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Calibration Services",
+        "Quality Assurance"
+      ],
+      "commonProducts": [
+        "Contract Manufacturing",
+        "Precision Engineering Solutions",
+        "Product Development",
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Calibration Services",
+        "Quality Assurance"
+      ]
+    },
+    {
+      "name": "PRECISE TECHNOCAST PVT. LTD.",
+      "url": "http://www.precisetechnocast.com/",
+      "type": "local",
+      "location": "PLOT NO. G-1931, B/H ALMIGHTY AGRO PRODUCT, ALMIGHTY GATE, METODA TA: LODHIKA, DIST:, GIDC, Rajkot, Gujarat 360021, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Precise Technocast offers precision investment casting and related component manufacturing, directly overlapping Innox Precision's precision engineering and contract manufacturing services.. 6 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Processed Raw Materials & Treatments, Machining Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 5 | Phone: 090999 17765",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.precisetechnocast.com/"
+        },
+        {
+          "title": "Product: Precision Engineering Solutions",
+          "url": "https://precisetechnocast.com/general-engineering-castings/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/invent-cast-pvt-ltd/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/inventcast/?skip_nax_wizard=true",
+        "youtube": "https://www.youtube.com/watch?v=8b-0HYuDhO8"
+      },
+      "products": [
+        "Precision Engineering Solutions",
+        "Contract Manufacturing",
+        "Product Development",
+        "Processed Raw Materials & Treatments",
+        "Machining Services",
+        "Quality Assurance"
+      ],
+      "commonProducts": [
+        "Precision Engineering Solutions",
+        "Contract Manufacturing",
+        "Product Development",
+        "Processed Raw Materials & Treatments",
+        "Machining Services",
+        "Quality Assurance"
+      ]
+    },
+    {
+      "name": "Shree Surya Engineers-Die Forging, Forged Steel Ring, Bearing Races, Bearing Ring, Forging Manufacturer, Rajkot, India",
+      "url": "https://suryaengi.com/",
+      "type": "local",
+      "location": "Atika Industrial Area, Bhakti Nagar, Rajkot, Gujarat 360002, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Shree Surya Engineers is a forging manufacturing company offering similar precision engineering and contract manufacturing services, making it a direct competitor.. 6 common products: [Contract Manufacturing, Precision Engineering Solutions, Product Development, Machining Services, Quality Testing & Inspection Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.3 | Phone: 094095 01042",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://suryaengi.com/"
+        },
+        {
+          "title": "Product: Contract Manufacturing",
+          "url": "https://suryaengi.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "http://www.linkedin.com/company/shree-surya-engineers/",
+        "instagram": "https://www.instagram.com/shree_surya_engineers/",
+        "facebook": "https://www.facebook.com/people/Shree-Surya-Engineers/61559842683888/",
+        "youtube": "https://www.youtube.com/channel/UCpvt11wLUQy5f5DBfg5ugrg"
+      },
+      "products": [
+        "Contract Manufacturing",
+        "Precision Engineering Solutions",
+        "Product Development",
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Quality Assurance"
+      ],
+      "commonProducts": [
+        "Contract Manufacturing",
+        "Precision Engineering Solutions",
+        "Product Development",
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Quality Assurance"
+      ]
+    },
+    {
+      "name": "Aris Global Forging & Machining LLP",
+      "url": "http://arisglobalforging.com/",
+      "type": "local",
+      "location": "Plot No. 4 & 5, R S No. 34/1 Sardar Industrial Area National Highway 27, Bharudi, Rajkot, Bharudi, Gujarat 360311, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Aris Global Forging & Machining LLP offers forging, heat‑treatment and machining services, directly competing in precision component manufacturing and contract machining.. 5 common products: [Contract Manufacturing, Precision Engineering Solutions, Product Development, Machining Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified. Rating: 4.6 | Phone: 097255 87206",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://arisglobalforging.com/"
+        },
+        {
+          "title": "Product: Contract Manufacturing",
+          "url": "http://arisglobalforging.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/aris-global-forging-machining-llp/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/profile.php?id=100064160581885",
+        "youtube": null
+      },
+      "products": [
+        "Contract Manufacturing",
+        "Precision Engineering Solutions",
+        "Product Development",
+        "Machining Services",
+        "Quality Assurance"
+      ],
+      "commonProducts": [
+        "Contract Manufacturing",
+        "Precision Engineering Solutions",
+        "Product Development",
+        "Machining Services",
+        "Quality Assurance"
+      ]
+    },
+    {
+      "name": "PRIME PRECISION ENGINEERING LLP",
+      "url": "https://www.primegroup.in/",
+      "type": "local",
+      "location": "6QXW+PFR MARUTI INDUSTRIAL AREA, Gondal Rd, behind GLOW TECH STEEL, opp. SURYADEEP TRANSPORT, Samrat Industrial Area, Rajkot, Gujarat 360004, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 4 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Quality Assurance]. Socials: LinkedIn verified; Facebook verified. Rating: 5 | Phone: 0281 236 8827",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.primegroup.in/"
+        },
+        {
+          "title": "Product: Precision Engineering Solutions",
+          "url": "https://www.primegroup.in/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://in.linkedin.com/pub/vipul-mehta/37/77/761",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/prime.gujarat",
         "youtube": null
       },
       "products": [
         "Precision Engineering Solutions",
         "Contract Manufacturing",
         "Product Development",
-        "Contract Manufacturing & Long-term Supply Partnerships",
-        "Processed Raw Materials & Treatments",
-        "Machining Services",
-        "Quality Testing & Inspection Services",
-        "Calibration Services",
         "Quality Assurance"
       ],
       "commonProducts": [
         "Precision Engineering Solutions",
         "Contract Manufacturing",
         "Product Development",
-        "Contract Manufacturing & Long-term Supply Partnerships",
-        "Processed Raw Materials & Treatments",
-        "Machining Services",
-        "Quality Testing & Inspection Services",
-        "Calibration Services",
         "Quality Assurance"
-      ],
-      "socialStatus": {
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "YouTube": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 3
-        }
-      }
-    },
-    {
-      "name": "MechKonnect Industrial Solutions Pvt Ltd",
-      "url": "https://mechkonnect.com/",
-      "type": "regional",
-      "location": "CIBA,6th Floor,Agnel Technical Complex, Juhu Nagar, Sector 9A, Vashi, Navi Mumbai, Maharashtra 400703, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: MechKonnect offers on-demand manufacturing and engineering solutions, including precision casting and metal fabrication, which are directly relevant to Innox Precision's offerings.. 8 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Processed Raw Materials & Treatments, Machining Services, Quality Testing & Inspection Services, Calibration Services...]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.7 | Phone: 098190 30700",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "https://mechkonnect.com/"
-        },
-        {
-          "title": "Product: Precision Engineering Solutions",
-          "url": "tel:17186186133%20"
-        }
-      ],
-      "socials": {
-        "linkedin": "https://www.linkedin.com/company/mechkonnect/",
-        "instagram": "https://www.instagram.com/mech.konnect/",
-        "facebook": "https://www.facebook.com/people/MechKonnect/100089281849632/",
-        "youtube": null
-      },
-      "products": [
-        "Precision Engineering Solutions",
-        "Contract Manufacturing",
-        "Product Development",
-        "Processed Raw Materials & Treatments",
-        "Machining Services",
-        "Quality Testing & Inspection Services",
-        "Calibration Services",
-        "Quality Assurance"
-      ],
-      "commonProducts": [
-        "Precision Engineering Solutions",
-        "Contract Manufacturing",
-        "Product Development",
-        "Processed Raw Materials & Treatments",
-        "Machining Services",
-        "Quality Testing & Inspection Services",
-        "Calibration Services",
-        "Quality Assurance"
-      ],
-      "socialStatus": {
-        "YouTube": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 3
-        },
-        "Facebook": {
-          "status": "Success",
-          "count": 1
-        }
-      }
-    },
-    {
-      "name": "Prasanna Engineers Having Wire cutting machine 750 mm height ,Manufactruer Mining Tools Equipment,Rebar Coupler Manufactruer,",
-      "url": "https://www.prasannaengineers.com/",
-      "type": "regional",
-      "location": "Plot No J-478/1, Khande Wasti, Pimpri Chinchwad New Twp Development Authority, MIDC, Bhosari, Pimpri-Chinchwad, Maharashtra 411026, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Prasanna Engineers offers precision engineering and CNC machining services, which align with Innox Precision's offerings.. 8 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Contract Manufacturing & Long-term Supply Partnerships, Machining Services, Quality Testing & Inspection Services, Calibration Services...]. Socials: Instagram verified; YouTube verified. Rating: 4.9 | Phone: 098508 89144",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "https://www.prasannaengineers.com/"
-        },
-        {
-          "title": "Product: Precision Engineering Solutions",
-          "url": "https://www.prasannaengineers.com/aerospace-and-defense-precision-prototype-parts.php"
-        }
-      ],
-      "socials": {
-        "linkedin": null,
-        "instagram": "https://www.instagram.com/prasanna_bisht/",
-        "facebook": null,
-        "youtube": "https://www.youtube.com/@prasanna2.0"
-      },
-      "products": [
-        "Precision Engineering Solutions",
-        "Contract Manufacturing",
-        "Product Development",
-        "Contract Manufacturing & Long-term Supply Partnerships",
-        "Machining Services",
-        "Quality Testing & Inspection Services",
-        "Calibration Services",
-        "Quality Assurance"
-      ],
-      "commonProducts": [
-        "Precision Engineering Solutions",
-        "Contract Manufacturing",
-        "Product Development",
-        "Contract Manufacturing & Long-term Supply Partnerships",
-        "Machining Services",
-        "Quality Testing & Inspection Services",
-        "Calibration Services",
-        "Quality Assurance"
-      ],
-      "socialStatus": {
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "LinkedIn": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "YouTube": {
-          "status": "Success",
-          "count": 3
-        }
-      }
+      ]
     },
     {
       "name": "FINESSE PRECISION ENGINEERING",
       "url": "https://finesseprecision.com/",
       "type": "regional",
       "location": "Door No: 11/2, Keeranatham Road, VGP Prem Nagar, Saravanampatti, Coimbatore, Tamil Nadu 641035, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Finesse Precision manufactures components for defense and aerospace, which aligns with Innox Precision's focus on precision engineering solutions.. 8 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Contract Manufacturing & Long-term Supply Partnerships, Machining Services, Quality Testing & Inspection Services, Calibration Services...]. Socials: LinkedIn verified; Instagram verified. Rating: 4.2 | Phone: 080560 77474",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Finesse Precision is a defense/aerospace component manufacturer offering precision engineering and machining services, matching Innox Precision's offerings and thus a direct competitor.. 8 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Contract Manufacturing & Long-term Supply Partnerships, Machining Services, Quality Testing & Inspection Services, Calibration Services...]. Socials: LinkedIn verified; Instagram verified. Rating: 4.2 | Phone: 080560 77474",
       "evidenceUrls": [
         {
           "title": "Homepage",
@@ -73641,25 +73515,25 @@
       ]
     },
     {
-      "name": "FORWARD ENGINEERS",
-      "url": "http://www.forwardengineers.co.in/",
+      "name": "Sterling Precision Private Limited",
+      "url": "http://www.sterlingauto.in/",
       "type": "regional",
-      "location": "Gabriel Industrial Estate, 3, off LBS Marg, opp. IND Colony, Ambedkar Nagar, Kanjurmarg West, Bhandup West, Mumbai, Maharashtra 400078, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Forward Engineers offers precision machining and fabrication services, which align with Innox Precision's offerings in precision engineering solutions and contract manufacturing.. 7 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Processed Raw Materials & Treatments, Machining Services, Quality Testing & Inspection Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified. Rating: 4.9 | Phone: 098333 80283",
+      "location": "Plot No-84, Sector 7, IMT Manesar, Gurugram, Haryana 122052, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Sterling Precision offers CNC machining and sub‑contract manufacturing services that directly overlap with Innox Precision’s precision engineering and contract manufacturing offerings.. 8 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Processed Raw Materials & Treatments, Machining Services, Quality Testing & Inspection Services, Calibration Services...]. Socials: LinkedIn verified; Facebook verified. Rating: 4.5 | Phone: N/A",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "http://www.forwardengineers.co.in/"
+          "url": "http://www.sterlingauto.in/"
         },
         {
           "title": "Product: Precision Engineering Solutions",
-          "url": "http://www.forwardengineers.co.in/precision-machining.php"
+          "url": "http://www.sterlingauto.in/services/#precision-assembly"
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/forward-engineers-mumbai",
+        "linkedin": "https://www.linkedin.com/company/qode-themes/",
         "instagram": null,
-        "facebook": "https://m.facebook.com/306072819490662/",
+        "facebook": "https://www.facebook.com/QodeInteractive/",
         "youtube": null
       },
       "products": [
@@ -73669,6 +73543,7 @@
         "Processed Raw Materials & Treatments",
         "Machining Services",
         "Quality Testing & Inspection Services",
+        "Calibration Services",
         "Quality Assurance"
       ],
       "commonProducts": [
@@ -73678,30 +73553,113 @@
         "Processed Raw Materials & Treatments",
         "Machining Services",
         "Quality Testing & Inspection Services",
+        "Calibration Services",
         "Quality Assurance"
       ]
     },
     {
-      "name": "Preet Engineering Works",
-      "url": "https://preetenggworks.com/",
+      "name": "Precise Engineering Company",
+      "url": "http://www.precisediecast.com/",
       "type": "regional",
-      "location": "Preet Engineering Works, Mohan Ke Rd, Guru Har Sahai, Punjab 152022, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Preet Engineering Works manufactures industrial machines, which aligns with Innox Precision's focus on precision engineering solutions and contract manufacturing.. 7 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: Facebook verified; YouTube verified. Rating: 5 | Phone: 098555 51572",
+      "location": "Plot no 2 A35, 1/A, MIDC Ambad, Nashik, Maharashtra 422010, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Precise Diecast is an operating die‑casting and precision engineering company supplying automotive, industrial and aeronautic components, matching Innox Precision's manufacturing focus. 7 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified. Rating: 4.4 | Phone: 0253 294 7449",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "https://preetenggworks.com/"
+          "url": "http://www.precisediecast.com/"
         },
         {
           "title": "Product: Precision Engineering Solutions",
-          "url": "https://preetenggworks.com/"
+          "url": "https://m.facebook.com/Precise-Engineering-Company-1494348177531082/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://in.linkedin.com/in/milind-borade-884519111",
+        "instagram": null,
+        "facebook": "https://m.facebook.com/Precise-Engineering-Company-1494348177531082/",
+        "youtube": null
+      },
+      "products": [
+        "Precision Engineering Solutions",
+        "Contract Manufacturing",
+        "Product Development",
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Calibration Services",
+        "Quality Assurance"
+      ],
+      "commonProducts": [
+        "Precision Engineering Solutions",
+        "Contract Manufacturing",
+        "Product Development",
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Calibration Services",
+        "Quality Assurance"
+      ]
+    },
+    {
+      "name": "Precision Engineering Technologies India Pvt. Ltd.",
+      "url": "https://www.petechglobal.com/",
+      "type": "regional",
+      "location": "202/1-1, Wasuli, Tal-khed, Phase - 2, Industrial Area, Chakan, Wasuli, Maharashtra 410501, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Provides CNC machining, EDM, forging and 3D printing services, matching Innox Precision's precision engineering and contract manufacturing offerings. 7 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 3.6 | Phone: N/A",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.petechglobal.com/"
+        },
+        {
+          "title": "Product: Precision Engineering Solutions",
+          "url": "https://www.facebook.com/PrecisionEngineeringTechnologies?mibextid=LQQJ4d"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/precision-engineering-technologies/",
+        "instagram": "https://www.instagram.com/precision_engineering_tech/",
+        "facebook": "https://www.facebook.com/PrecisionEngineeringTechnologies?mibextid=LQQJ4d",
+        "youtube": "https://www.youtube.com/@precisionengineeringtechnology"
+      },
+      "products": [
+        "Precision Engineering Solutions",
+        "Contract Manufacturing",
+        "Product Development",
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Calibration Services",
+        "Quality Assurance"
+      ],
+      "commonProducts": [
+        "Precision Engineering Solutions",
+        "Contract Manufacturing",
+        "Product Development",
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Calibration Services",
+        "Quality Assurance"
+      ]
+    },
+    {
+      "name": "Metro Precision Aerospace",
+      "url": "https://www.metroprecision.co.in/,%20%20Instagram:https:%20//www.instagram.com/metro_precision_aerospace?igsh=MWZjcTZ6OWJoODhjYw==,%20%20Youtube:%20https://youtube.com/@metroprecision-123?si=chSU4EfAvqwBcYiF",
+      "type": "regional",
+      "location": "19, Anna St, Mathiyazhagan Nagar, TMP Nagar, Padi, Chennai, Tamil Nadu 600050, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Metro Precision Aerospace is an operating CNC machining and aerospace component manufacturer offering precision engineering and contract manufacturing services similar to Innox Precision. 7 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 4.7 | Phone: 07397 486 649",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.metroprecision.co.in/,%20%20Instagram:https:%20//www.instagram.com/metro_precision_aerospace?igsh=MWZjcTZ6OWJoODhjYw==,%20%20Youtube:%20https://youtube.com/@metroprecision-123?si=chSU4EfAvqwBcYiF"
+        },
+        {
+          "title": "Product: Precision Engineering Solutions",
+          "url": "https://metroprecision.co.in/"
         }
       ],
       "socials": {
         "linkedin": null,
-        "instagram": null,
-        "facebook": "https://www.facebook.com/profile.php?id=100077086088964&mibextid=ZbWKwL",
-        "youtube": "https://www.youtube.com/@preetenggworks74"
+        "instagram": "https://www.instagram.com/metro_precision_aerospace/",
+        "facebook": "https://www.facebook.com/people/Metroprecision-Aerospace/61560792243434/",
+        "youtube": "https://www.youtube.com/@MetroPrecision-123/shorts"
       },
       "products": [
         "Precision Engineering Solutions",
@@ -73723,29 +73681,30 @@
       ]
     },
     {
-      "name": "BTECH PRECISION ENGINEERING INDIA PRIVATE LIMITED",
-      "url": "http://www.btechprecision.com/",
+      "name": "RM Engineering Technologies",
+      "url": "https://rmtes.com/",
       "type": "regional",
-      "location": "Industrial Estate, Thirumudivakkam, Tamil Nadu 600132, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: BTech Precision offers precision engineering solutions and contract manufacturing services, making them a direct competitor to Innox Precision.. 6 common products: [Precision Engineering Solutions, Product Development, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified. Rating: 4.7 | Phone: 073059 67239",
+      "location": "5B, Poomagal 4th St, Ambal Nagar, Ekkatuthangal, Chennai, Tamil Nadu 600032, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: RM Engineering offers 3D scanning, reverse engineering, inspection and precision manufacturing services, which align with Innox Precision's contract manufacturing and engineering solutions.. 7 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 5 | Phone: 098408 62525",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "http://www.btechprecision.com/"
+          "url": "https://rmtes.com/"
         },
         {
           "title": "Product: Precision Engineering Solutions",
-          "url": "https://www.linkedin.com/company/btech-precision-engineering-india-pvt-ltd/posts/?feedView=all"
+          "url": "https://www.linkedin.com/company/r-m-engineering-technologies/"
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/btech-precision-engineering-india-pvt-ltd/posts/?feedView=all",
-        "instagram": null,
-        "facebook": "https://www.facebook.com/share/14fssB2f6y/?mibextid=LQQJ4d",
+        "linkedin": "https://www.linkedin.com/company/r-m-engineering-technologies/",
+        "instagram": "https://www.instagram.com/rmengineeringtechnologies/",
+        "facebook": "https://www.facebook.com/profile.php?id=100086082536597",
         "youtube": null
       },
       "products": [
         "Precision Engineering Solutions",
+        "Contract Manufacturing",
         "Product Development",
         "Machining Services",
         "Quality Testing & Inspection Services",
@@ -73754,6 +73713,7 @@
       ],
       "commonProducts": [
         "Precision Engineering Solutions",
+        "Contract Manufacturing",
         "Product Development",
         "Machining Services",
         "Quality Testing & Inspection Services",
@@ -73766,7 +73726,7 @@
       "url": "http://ckbpreci.com/",
       "type": "regional",
       "location": "DP 32/2, Sidco Industrial Estate, Chembarambakkam, Tamil Nadu 600124, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: CKB Group specializes in precision engineering and heavy fabrication, which aligns with Innox Precision's offerings.. 6 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Processed Raw Materials & Treatments, Machining Services, Quality Assurance]. Socials: LinkedIn verified; YouTube verified. Rating: 4 | Phone: 044 2681 0999",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: CKB Group offers precision engineering, machining, steel casting and forging services, matching Innox Precision's manufacturing and contract production offerings.. 6 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Processed Raw Materials & Treatments, Machining Services, Quality Assurance]. Socials: LinkedIn verified; YouTube verified. Rating: 4 | Phone: 044 2681 0999",
       "evidenceUrls": [
         {
           "title": "Homepage",
@@ -73801,93 +73761,95 @@
       ]
     },
     {
-      "name": "Airbornics Defence And Space Private Limited (ADSL)",
-      "url": "https://adslglobal.com/",
+      "name": "C-Tech Engineers Pvt Ltd - Precision Machined Components, Hardened and Ground Bushes Manufacturer",
+      "url": "http://www.ctechengineers.com/",
       "type": "regional",
-      "location": "Ambala - Chandigarh Expy, Sitarpur, Lalru, Punjab 140501, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: ADSL specializes in manufacturing and servicing aerospace systems, which aligns with precision engineering solutions in the manufacturing sector.. 4 common products: [Precision Engineering Solutions, Product Development, Machining Services, Calibration Services]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.7 | Phone: 098759 20664",
+      "location": "Sr. No. 25, Hissa No. 5/1 & 5, 2, Narhe Industrial Estate Rd, near Shree control chowk, Mokarwadi, Narhe, Pune, Maharashtra 411041, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: C-Tech Engineers appears to be an operating engineering/manufacturing company offering industrial products and services, making it a direct competitor in precision engineering and contract manufacturing.. 4 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Quality Assurance]. Socials: LinkedIn verified; Facebook verified. Rating: 4.4 | Phone: 093253 15982",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "https://adslglobal.com/"
+          "url": "http://www.ctechengineers.com/"
         },
         {
           "title": "Product: Precision Engineering Solutions",
-          "url": "https://adslglobal.com/"
+          "url": "https://www.ctechengineers.com/product-category/precision-machined-components/"
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/airbornics-defence-space-pvt-ltd-adsl/",
-        "instagram": "https://www.instagram.com/jcblgroup",
-        "facebook": "https://hi-in.facebook.com/jcblgroup",
-        "youtube": "https://www.youtube.com/c/JCBLGroupChandigarh"
-      },
-      "products": [
-        "Precision Engineering Solutions",
-        "Product Development",
-        "Machining Services",
-        "Calibration Services"
-      ],
-      "commonProducts": [
-        "Precision Engineering Solutions",
-        "Product Development",
-        "Machining Services",
-        "Calibration Services"
-      ]
-    },
-    {
-      "name": "JCBL Group",
-      "url": "http://www.jcblgroup.com/",
-      "type": "regional",
-      "location": "Plot no. 580, Industrial Area Phase 9, Sahibzada Ajit Singh Nagar, Punjab 160062, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: JCBL Group focuses on mobility solutions and vehicle assembly rather than precision engineering and contract manufacturing.. 3 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.9 | Phone: 090569 05695",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "http://www.jcblgroup.com/"
-        },
-        {
-          "title": "Product: Precision Engineering Solutions",
-          "url": "https://adslglobal.com/"
-        }
-      ],
-      "socials": {
-        "linkedin": "https://www.linkedin.com/company/jcbl-group/",
-        "instagram": "https://www.instagram.com/jcblgroup/",
-        "facebook": "https://hi-in.facebook.com/jcblgroup/",
-        "youtube": "https://www.youtube.com/c/JCBLGroupChandigarh"
+        "linkedin": "https://www.linkedin.com/company/c-tech-engineers-pvt-ltd/?viewAsMember=true",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/ctechengineers/?ref=aymt_homepage_panel&eid=ARAlLDo3md_bSzSUQA8hlpm4kVT3GJslYIfy2TXLwsBuACtm3iLcpcQgsty7KTPZeio5ZgFB8FrTjpU0",
+        "youtube": null
       },
       "products": [
         "Precision Engineering Solutions",
         "Contract Manufacturing",
-        "Product Development"
+        "Product Development",
+        "Quality Assurance"
       ],
       "commonProducts": [
         "Precision Engineering Solutions",
         "Contract Manufacturing",
-        "Product Development"
+        "Product Development",
+        "Quality Assurance"
       ]
     },
     {
-      "name": "Ashtead Engineering Co Ltd (AEC)",
-      "url": "https://ashteadeng.co.uk/?utm_source=google&utm_medium=gmb",
+      "name": "Ramani Precision Machines Private Limited",
+      "url": "http://www.ramaniprecisionmachines.com/",
+      "type": "regional",
+      "location": "Plot No. 162, Ramani Precision Machines, Sector 82, JLPL Industrial Area, Sahibzada Ajit Singh Nagar, Punjab 140306, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Ramani Precision Machines appears to be an operating precision machining company offering manufacturing services similar to Innox Precision.. 4 common products: [Precision Engineering Solutions, Product Development, Quality Testing & Inspection Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified. Rating: 4.2 | Phone: 0172 292 0262",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.ramaniprecisionmachines.com/"
+        },
+        {
+          "title": "Product: Precision Engineering Solutions",
+          "url": "https://www.facebook.com/Ramani-Precision-Machines-1486584534893367/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/ramani-precision-machines-private-limited/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Ramani-Precision-Machines-1486584534893367/",
+        "youtube": null
+      },
+      "products": [
+        "Precision Engineering Solutions",
+        "Product Development",
+        "Quality Testing & Inspection Services",
+        "Quality Assurance"
+      ],
+      "commonProducts": [
+        "Precision Engineering Solutions",
+        "Product Development",
+        "Quality Testing & Inspection Services",
+        "Quality Assurance"
+      ]
+    },
+    {
+      "name": "Advanced Engineering (UK) Ltd",
+      "url": "https://ae-uk.net/",
       "type": "global",
-      "location": "Camphill Industrial Estate, Camphill Rd, West Byfleet KT14 6EW, UK",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Ashtead Engineering offers precision engineering solutions and contract manufacturing services, making them a direct competitor to Innox Precision.. 8 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Contract Manufacturing & Long-term Supply Partnerships, Machining Services, Quality Testing & Inspection Services, Calibration Services...]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 5 | Phone: 01932 353121",
+      "location": "100 Unett St N, Birmingham B19 3BZ, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: The site belongs to a precision engineering/CNC machining firm offering multi‑axis machining services, directly overlapping Innox Precision's manufacturing offerings.. 8 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Contract Manufacturing & Long-term Supply Partnerships, Machining Services, Quality Testing & Inspection Services, Calibration Services...]. Socials: LinkedIn verified; Facebook verified. Rating: 4.2 | Phone: 0121 523 4363",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "https://ashteadeng.co.uk/?utm_source=google&utm_medium=gmb"
+          "url": "https://ae-uk.net/"
         },
         {
           "title": "Product: Precision Engineering Solutions",
-          "url": "https://ashteadeng.co.uk/industries/aerospace/"
+          "url": "https://ae-uk.net/services/precision-machining/"
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/ashtead-engineering-company-limited/",
-        "instagram": "https://www.instagram.com/ashteadengineeringcompany",
-        "facebook": null,
+        "linkedin": "https://www.linkedin.com/company/advanced-engineering-uk-ltd/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/profile.php?id=61559388820929",
         "youtube": null
       },
       "products": [
@@ -73909,50 +73871,33 @@
         "Quality Testing & Inspection Services",
         "Calibration Services",
         "Quality Assurance"
-      ],
-      "socialStatus": {
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "YouTube": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "LinkedIn": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
+      ]
     },
     {
-      "name": "mb3DEngineering",
-      "url": "https://mb3dengineering.de/",
+      "name": "Precision Engineering LLC",
+      "url": "http://www.precision-eng.net/",
       "type": "global",
-      "location": "Babenhäuser Str. 57, 63128 Dietzenbach, Germany",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Mb3dengineering offers product development and manufacturing services, which align with Innox Precision's offerings in precision engineering solutions.. 6 common products: [Precision Engineering Solutions, Product Development, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: LinkedIn verified; Instagram verified. Rating: 5 | Phone: N/A",
+      "location": "5638 Manchester Hwy, Morrison, TN 37357, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: The site represents a precision engineering firm offering cost‑effective manufacturing solutions, matching Innox Precision's core services.. 7 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: N/A | Phone: (931) 507-6666",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "https://mb3dengineering.de/"
+          "url": "http://www.precision-eng.net/"
         },
         {
           "title": "Product: Precision Engineering Solutions",
-          "url": "https://www.mb3dengineering.de/"
+          "url": "https://www.precision-eng.net/"
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/mb3dengineering/",
-        "instagram": "https://www.instagram.com/mbprototyping/",
-        "facebook": null,
+        "linkedin": "https://www.linkedin.com/company/precision-engineering-tn",
+        "instagram": "https://www.instagram.com/precisionengineeringtn/",
+        "facebook": "https://www.facebook.com/PrecisionEngineeringTN",
         "youtube": null
       },
       "products": [
         "Precision Engineering Solutions",
+        "Contract Manufacturing",
         "Product Development",
         "Machining Services",
         "Quality Testing & Inspection Services",
@@ -73961,6 +73906,7 @@
       ],
       "commonProducts": [
         "Precision Engineering Solutions",
+        "Contract Manufacturing",
         "Product Development",
         "Machining Services",
         "Quality Testing & Inspection Services",
@@ -73969,30 +73915,31 @@
       ]
     },
     {
-      "name": "PT Engineers",
-      "url": "https://www.pt-engineers.co.uk/?utm_source=Google&utm_medium=GMB&utm_campaign=GMBWebsiteButton",
+      "name": "Precision Technologies",
+      "url": "http://www.precisiontechnologies.co.uk/",
       "type": "global",
-      "location": "38 Somers Rd, Rugby CV22 7DH, UK",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: PT Engineers offers precision CNC machining services, which aligns with Innox Precision's focus on precision engineering solutions and contract manufacturing.. 6 common products: [Precision Engineering Solutions, Contract Manufacturing, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.8 | Phone: 01788 543661",
+      "location": "22 Mariner, Tamworth B79 7UL, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: They provide CNC gear grinding, cutting and machining services, offering precision engineering solutions that directly compete with Innox Precision's offerings.. 7 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.4 | Phone: 01827 315050",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "https://www.pt-engineers.co.uk/?utm_source=Google&utm_medium=GMB&utm_campaign=GMBWebsiteButton"
+          "url": "http://www.precisiontechnologies.co.uk/"
         },
         {
           "title": "Product: Precision Engineering Solutions",
-          "url": "https://www.pt-engineers.co.uk/precision-machining-services/"
+          "url": "https://twitter.com/precisiontecltd"
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/pt-engineers-limited/",
-        "instagram": "https://www.instagram.com/ptengineers/",
-        "facebook": "https://www.facebook.com/ptengineers38/",
+        "linkedin": "https://www.linkedin.com/company/precision-technologies-international-limited",
+        "instagram": "https://www.instagram.com/precision.technologies/",
+        "facebook": "https://www.facebook.com/people/Precision-Technologies/100089333456392/",
         "youtube": null
       },
       "products": [
         "Precision Engineering Solutions",
         "Contract Manufacturing",
+        "Product Development",
         "Machining Services",
         "Quality Testing & Inspection Services",
         "Calibration Services",
@@ -74001,6 +73948,7 @@
       "commonProducts": [
         "Precision Engineering Solutions",
         "Contract Manufacturing",
+        "Product Development",
         "Machining Services",
         "Quality Testing & Inspection Services",
         "Calibration Services",
@@ -74008,66 +73956,31 @@
       ]
     },
     {
-      "name": "Principal Technology, Inc",
-      "url": "https://www.principaltechnology.com/",
+      "name": "Cambridge Precision Ltd",
+      "url": "http://cambridgeprecision.com/",
       "type": "global",
-      "location": "1901 10th St #400, Plano, TX 75074, USA",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Principal Technology offers engineering and design services that align with precision engineering solutions and contract manufacturing.. 5 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Machining Services, Calibration Services]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 5 | Phone: (214) 239-3900",
+      "location": "1 Alington Rd, Eynesbury, St. Neots PE19 6YH, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Cambridge Precision Engineering offers multi-axis CNC machining and precision engineering services, directly competing with Innox Precision's manufacturing solutions.. 7 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.4 | Phone: 01480 215196",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "https://www.principaltechnology.com/"
+          "url": "http://cambridgeprecision.com/"
         },
         {
           "title": "Product: Precision Engineering Solutions",
-          "url": "https://www.principaltechnology.com/services/engineering-design-services/"
+          "url": "https://cambridgeprecision.com/"
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/principal-technology/about/",
-        "instagram": null,
-        "facebook": "https://www.facebook.com/PrincipalTechnologyInc",
-        "youtube": "https://www.youtube.com/user/PrincipalTechnology"
+        "linkedin": "https://www.linkedin.com/company/cambridge-precision-ltd/",
+        "instagram": "https://www.instagram.com/cambridgeprecisionltd/",
+        "facebook": "https://www.facebook.com/profile.php?id=61581817522174",
+        "youtube": "https://www.youtube.com/channel/UC-x_ZSXj9H7R2WOBmTrwpZQ/videos"
       },
       "products": [
         "Precision Engineering Solutions",
         "Contract Manufacturing",
         "Product Development",
-        "Machining Services",
-        "Calibration Services"
-      ],
-      "commonProducts": [
-        "Precision Engineering Solutions",
-        "Contract Manufacturing",
-        "Product Development",
-        "Machining Services",
-        "Calibration Services"
-      ]
-    },
-    {
-      "name": "MV Engineering, Inc.",
-      "url": "http://www.mv-engineering.com/",
-      "type": "global",
-      "location": "14850 Quorum Dr #120, Dallas, TX 75254, USA",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: MVE Engineering appears to offer solutions in precision engineering and manufacturing, making them a direct competitor to Innox Precision.. 5 common products: [Precision Engineering Solutions, Machining Services, Quality Testing & Inspection Services, Calibration Services, Quality Assurance]. Socials: LinkedIn verified; Facebook verified. Rating: 3 | Phone: (972) 733-3618",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "http://www.mv-engineering.com/"
-        },
-        {
-          "title": "Product: Precision Engineering Solutions",
-          "url": "http://www.mv-engineering.com/"
-        }
-      ],
-      "socials": {
-        "linkedin": "https://www.linkedin.com/company/mv-engineering/",
-        "instagram": null,
-        "facebook": "https://www.facebook.com/MVEngineers",
-        "youtube": null
-      },
-      "products": [
-        "Precision Engineering Solutions",
         "Machining Services",
         "Quality Testing & Inspection Services",
         "Calibration Services",
@@ -74075,6 +73988,8 @@
       ],
       "commonProducts": [
         "Precision Engineering Solutions",
+        "Contract Manufacturing",
+        "Product Development",
         "Machining Services",
         "Quality Testing & Inspection Services",
         "Calibration Services",
@@ -74082,133 +73997,40 @@
       ]
     },
     {
-      "name": "IBS Precision Engineering Deutschland GmbH",
-      "url": "http://www.ibspe.com/",
+      "name": "CCT Precision Machining",
+      "url": "https://www.cctprecision.com/",
       "type": "global",
-      "location": "Leitzstraße 45, 70469 Stuttgart-Feuerbach, Germany",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: IBS Precision Engineering offers precision engineering solutions and systems, which directly align with Innox Precision's offerings.. 4 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development, Calibration Services]. Socials: LinkedIn verified; YouTube verified. Rating: N/A | Phone: 0711 49066230",
+      "location": "804 Port America Pl, Grapevine, TX 76051, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: CCT Precision Machining provides precision CNC machining and contract manufacturing services similar to Innox Precision, making it a direct competitor.. 5 common products: [Precision Engineering Solutions, Product Development, Machining Services, Quality Testing & Inspection Services, Quality Assurance]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 3.4 | Phone: (817) 410-1222",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "http://www.ibspe.com/"
+          "url": "https://www.cctprecision.com/"
         },
         {
           "title": "Product: Precision Engineering Solutions",
-          "url": "https://www.ibspe.com/engineering"
+          "url": "https://www.cctprecision.com/"
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/ibs-precision-engineering/",
-        "instagram": null,
-        "facebook": null,
-        "youtube": "https://www.youtube.com/user/IBSPrecision/"
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/cct_precision_machining/",
+        "facebook": "https://www.facebook.com/cctmachining/",
+        "youtube": "https://www.youtube.com/feed/my_videos"
       },
       "products": [
         "Precision Engineering Solutions",
-        "Contract Manufacturing",
         "Product Development",
-        "Calibration Services"
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Quality Assurance"
       ],
       "commonProducts": [
         "Precision Engineering Solutions",
-        "Contract Manufacturing",
         "Product Development",
-        "Calibration Services"
-      ]
-    },
-    {
-      "name": "BR Technologies GmbH & Co. KG",
-      "url": "http://www.br-tech.de/",
-      "type": "global",
-      "location": "Wohlenbergstraße 6, 30179 Hannover-Nord, Germany",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: BR Tech focuses on winding technology and transformers, which are not direct competitors to precision engineering solutions and contract manufacturing.. 3 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.6 | Phone: 0511 6554870",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "http://www.br-tech.de/"
-        },
-        {
-          "title": "Product: Precision Engineering Solutions",
-          "url": "http://www.br-tech.de/"
-        }
-      ],
-      "socials": {
-        "linkedin": "https://de.linkedin.com/company/br-technologies-gmbh-&-co-kg",
-        "instagram": "https://www.instagram.com/brtech_winding/",
-        "facebook": "https://www.facebook.com/people/BR-Technologies/100093929362642/",
-        "youtube": null
-      },
-      "products": [
-        "Precision Engineering Solutions",
-        "Contract Manufacturing",
-        "Product Development"
-      ],
-      "commonProducts": [
-        "Precision Engineering Solutions",
-        "Contract Manufacturing",
-        "Product Development"
-      ]
-    },
-    {
-      "name": "Isar Aerospace",
-      "url": "https://www.isaraerospace.com/",
-      "type": "global",
-      "location": "Caroline-Herschel-Straße 2, 85521 Ottobrunn, Germany",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: Isar Aerospace focuses on aerospace launch vehicles, which is not directly related to precision engineering or contract manufacturing.. 3 common products: [Precision Engineering Solutions, Contract Manufacturing, Product Development]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.7 | Phone: 089 889950000",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "https://www.isaraerospace.com/"
-        },
-        {
-          "title": "Product: Precision Engineering Solutions",
-          "url": "https://www.isaraerospace.com/"
-        }
-      ],
-      "socials": {
-        "linkedin": "https://www.linkedin.com/company/isaraerospace/",
-        "instagram": "https://www.instagram.com/isaraerospace/",
-        "facebook": "https://www.facebook.com/isaraerospace/",
-        "youtube": null
-      },
-      "products": [
-        "Precision Engineering Solutions",
-        "Contract Manufacturing",
-        "Product Development"
-      ],
-      "commonProducts": [
-        "Precision Engineering Solutions",
-        "Contract Manufacturing",
-        "Product Development"
-      ]
-    },
-    {
-      "name": "BPlan System Engineering GmbH & Co.Kg",
-      "url": "https://bplan-engineering.com/",
-      "type": "global",
-      "location": "Siemensstraße 1, 71088 Holzgerlingen, Germany",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Engineering. LLM Verdict: BPlan System Engineering offers engineering and manufacturing services that align with precision engineering solutions and contract manufacturing.. 1 common products: [Precision Engineering Solutions]. Socials: LinkedIn verified; Instagram verified. Rating: 5 | Phone: 07031 6581990",
-      "evidenceUrls": [
-        {
-          "title": "Homepage",
-          "url": "https://bplan-engineering.com/"
-        },
-        {
-          "title": "Product: Precision Engineering Solutions",
-          "url": "https://www.bplan-engineering.com/"
-        }
-      ],
-      "socials": {
-        "linkedin": "https://www.linkedin.com/company/bplan-system-engineering/",
-        "instagram": "https://www.instagram.com/bplan_system_engineering/",
-        "facebook": null,
-        "youtube": null
-      },
-      "products": [
-        "Precision Engineering Solutions"
-      ],
-      "commonProducts": [
-        "Precision Engineering Solutions"
+        "Machining Services",
+        "Quality Testing & Inspection Services",
+        "Quality Assurance"
       ]
     }
   ]
