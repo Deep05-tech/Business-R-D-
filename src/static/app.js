@@ -3342,6 +3342,25 @@ async function loadFeedUI() {
       const postsArray = customPosts || window.allFeedPosts;
       const post = postsArray && postsArray[idx];
       if (!post) return;
+      if (!videoEl.dataset.retried) {
+        videoEl.dataset.retried = 'true';
+        const pLink = (post.link || post.post_url || post.postUrl || '').trim();
+        if (pLink) {
+          fetch('/api/social-video-url?url=' + encodeURIComponent(pLink))
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.success && data.videoUrl) {
+                videoEl.src = window.getSocialMediaProxyUrl(data.videoUrl);
+                videoEl.load();
+                videoEl.play().catch(() => {});
+                return;
+              }
+              window.renderFbVideoFallback(videoEl.parentElement, post);
+            })
+            .catch(() => window.renderFbVideoFallback(videoEl.parentElement, post));
+          return;
+        }
+      }
       window.renderFbVideoFallback(videoEl.parentElement, post);
     };
 
@@ -3662,46 +3681,26 @@ async function loadFeedUI() {
             </div>`;
         }
       } else if (isFbVid) {
-        // Facebook video player: Play verified direct MP4 stream via proxy, or dynamically resolve and play
-        let directVid = post.video_url || (firstMediaUrl && firstMediaUrl.includes('.mp4') ? firstMediaUrl : '');
+        // Facebook video player: Stream video directly in dashboard modal via /api/facebook-video-stream
         let fbCanonicalUrl = postLink;
         if (!fbCanonicalUrl && post.fb_video_id) {
           fbCanonicalUrl = `https://www.facebook.com/watch/?v=${post.fb_video_id}`;
         }
+        const videoTarget = fbCanonicalUrl || post.video_url || firstMediaUrl;
 
-        if (directVid) {
-          const videoSrc = window.getSocialMediaProxyUrl(directVid);
+        if (videoTarget) {
+          const videoStreamSrc = `/api/facebook-video-stream?url=${encodeURIComponent(videoTarget)}`;
+          const thumb = post.thumbnail || post.thumbnail_url || post.media_url || firstMediaUrl || '';
+          const posterAttr = (thumb && !thumb.includes('.mp4')) ? `poster="${window.getSocialMediaProxyUrl(thumb)}"` : '';
+
           leftMediaHtml = `
             <div id="fb-video-container-${globalIndex}" style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; overflow:hidden;">
-              <video src="${videoSrc}" controls autoplay preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;" onerror="window.handleFbVideoError(this, ${globalIndex}, ${customPosts ? 'customPosts' : 'null'});"></video>
+              <video src="${videoStreamSrc}" ${posterAttr} controls autoplay preload="auto" playsinline style="max-width: 100%; max-height: 100%; object-fit: contain; background: #000; border-radius: 8px;" onerror="window.handleFbVideoError(this, ${globalIndex}, ${customPosts ? 'customPosts' : 'null'});"></video>
               <div style="position: absolute; top: 16px; left: 16px; background: #1877f2; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase; pointer-events: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4);">📹 FACEBOOK VIDEO</div>
               ${fbCanonicalUrl ? `
                 <div style="position: absolute; bottom: 12px; right: 12px; z-index: 10;">
                   <a href="${fbCanonicalUrl}" target="_blank" rel="noopener noreferrer" style="background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 5px 12px; font-size: 11px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">Watch on Facebook ↗</a>
                 </div>` : ''}
-            </div>`;
-        } else if (fbCanonicalUrl) {
-          // Trigger instant background extraction while showing video thumbnail preview
-          setTimeout(() => window.resolveFbVideo(globalIndex, customPosts), 10);
-          const thumb = post.thumbnail || post.thumbnail_url || post.media_url || firstMediaUrl || '';
-          const proxiedThumb = thumb ? window.getSocialMediaProxyUrl(thumb) : '';
-
-          leftMediaHtml = `
-            <div id="fb-video-container-${globalIndex}" style="width: 100%; height: 100%; background: #040814; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; overflow:hidden; padding: 24px; box-sizing: border-box; text-align: center;">
-              ${proxiedThumb ? `
-                <div style="position: relative; width: 100%; max-width: 480px; max-height: 60%; aspect-ratio: 16/9; margin-bottom: 20px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 24px rgba(0,0,0,0.6);">
-                  <img src="${proxiedThumb}" referrerpolicy="no-referrer" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none';" />
-                  <a href="${fbCanonicalUrl}" target="_blank" rel="noopener noreferrer" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 56px; height: 56px; background: rgba(24, 119, 242, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; box-shadow: 0 4px 16px rgba(0,0,0,0.6); transition: transform 0.2s;" onmouseover="this.style.transform='translate(-50%, -50%) scale(1.1)'" onmouseout="this.style.transform='translate(-50%, -50%) scale(1)'">▶</a>
-                </div>` : `
-                <div style="width: 76px; height: 76px; border-radius: 50%; background: rgba(24, 119, 242, 0.2); border: 2px solid rgba(24, 119, 242, 0.5); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 18px; color: #1877f2;">
-                  📹
-                </div>`}
-              <div style="position: absolute; top: 16px; left: 16px; background: #1877f2; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">📹 FACEBOOK VIDEO</div>
-              <h4 style="font-size: 1.15rem; font-weight: 700; color: #ffffff; margin: 0 0 8px 0;">${window.escapeHtml(compName)}</h4>
-              <p style="font-size: 0.88rem; color: #94a3b8; margin: 0 0 20px 0; max-width: 360px;">To watch this official video, view it directly on Facebook.</p>
-              <a href="${fbCanonicalUrl}" target="_blank" rel="noopener noreferrer" style="background: #1877f2; color: #ffffff; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 0.92rem; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(24, 119, 242, 0.4); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
-                <span>▶ Watch Video on Facebook</span> ↗
-              </a>
             </div>`;
         } else {
           leftMediaHtml = `

@@ -342,7 +342,7 @@ app.delete("/api/admin/projects", requireAuth, requireAdmin, async (req, res) =>
 app.use("/api", (req, res, next) => {
   // Browser media elements cannot attach Authorization headers. These routes
   // expose only the already-validated remote asset proxy, not workspace data.
-  if (req.path === "/proxy-media" || req.path === "/proxy-video" || req.path === "/linkedin-embed-player" || req.path === "/facebook-embed-player" || req.path === "/instagram-embed" || req.path === "/social-video-url") return next();
+  if (req.path === "/proxy-media" || req.path === "/proxy-video" || req.path === "/linkedin-embed-player" || req.path === "/facebook-embed-player" || req.path === "/facebook-video-stream" || req.path === "/instagram-embed" || req.path === "/social-video-url") return next();
   return requireAuth(req, res, next);
 });
 app.use("/memory", requireAuth);
@@ -651,6 +651,110 @@ app.get('/api/social-video-url', async (req, res) => {
         return res.json({ success: false, message: 'No direct video stream found' });
     } catch (e: any) {
         return res.status(500).json({ success: false, error: e.message });
+    }
+});
+
+app.get('/api/facebook-video-stream', async (req: express.Request, res: express.Response) => {
+    const rawPostUrl = (req.query.url as string || '').trim();
+    if (!rawPostUrl || (!rawPostUrl.startsWith('http://') && !rawPostUrl.startsWith('https://'))) {
+        return res.status(400).send('Valid Facebook URL required');
+    }
+
+    try {
+        let streamUrl = '';
+        if (rawPostUrl.includes('.mp4') && (rawPostUrl.includes('fbcdn.net') || rawPostUrl.includes('fbsbx.com'))) {
+            streamUrl = rawPostUrl;
+        }
+
+        // If not a direct mp4, extract fresh CDN stream URL from Facebook HTML
+        if (!streamUrl) {
+            const fetchRes = await axios.get(rawPostUrl, {
+                headers: {
+                    'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                    'Accept-Language': 'en-US,en;q=0.9'
+                },
+                timeout: 7000
+            });
+            const html = fetchRes.data || '';
+            const regex = /https:[\\/]+[a-zA-Z0-9._-]+(?:fbcdn\.net|fbsbx\.com)[\\/]+[^\s"']+\.mp4[^\s"']*/g;
+            const matches = html.match(regex) || [];
+            if (matches.length > 0) {
+                let clean = matches[0].replace(/\\\/|\//g, '/').replace(/\\u0026/g, '&').replace(/&amp;/g, '&');
+                clean = clean.split('<')[0].split('\\')[0].split('"')[0];
+                streamUrl = clean;
+            }
+        }
+
+        if (!streamUrl) {
+            return sendPlatformSvgPlaceholder(res, rawPostUrl);
+        }
+
+        const headers: Record<string, string> = {
+            'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+            'Accept': 'video/webm,video/mp4,video/*;q=0.9,*/*;q=0.8'
+        };
+        if (req.headers.range) {
+            headers['Range'] = req.headers.range as string;
+        }
+
+        let cdnRes;
+        try {
+            cdnRes = await axios({
+                method: 'GET',
+                url: streamUrl,
+                responseType: 'stream',
+                headers: headers,
+                timeout: 10000,
+                maxRedirects: 5,
+                validateStatus: (status) => status >= 200 && status < 400
+            });
+        } catch (streamErr: any) {
+            // If the direct streamUrl was region-locked or expired, re-fetch fresh CDN link from the post URL
+            if (!rawPostUrl.endsWith('.mp4')) {
+                const freshFetch = await axios.get(rawPostUrl, {
+                    headers: {
+                        'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                    },
+                    timeout: 7000
+                });
+                const freshHtml = freshFetch.data || '';
+                const regex = /https:[\\/]+[a-zA-Z0-9._-]+(?:fbcdn\.net|fbsbx\.com)[\\/]+[^\s"']+\.mp4[^\s"']*/g;
+                const matches = freshHtml.match(regex) || [];
+                if (matches.length > 0) {
+                    let clean = matches[0].replace(/\\\/|\//g, '/').replace(/\\u0026/g, '&').replace(/&amp;/g, '&');
+                    clean = clean.split('<')[0].split('\\')[0].split('"')[0];
+                    cdnRes = await axios({
+                        method: 'GET',
+                        url: clean,
+                        responseType: 'stream',
+                        headers: headers,
+                        timeout: 10000,
+                        maxRedirects: 5,
+                        validateStatus: (status) => status >= 200 && status < 400
+                    });
+                }
+            }
+        }
+
+        if (!cdnRes) {
+            return sendPlatformSvgPlaceholder(res, rawPostUrl);
+        }
+
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+        res.setHeader('Cache-Control', 'public, max-age=86400');
+        if (cdnRes.headers['content-type']) res.setHeader('Content-Type', String(cdnRes.headers['content-type']));
+        if (cdnRes.headers['accept-ranges']) res.setHeader('Accept-Ranges', String(cdnRes.headers['accept-ranges']));
+        if (cdnRes.headers['content-range']) res.setHeader('Content-Range', String(cdnRes.headers['content-range']));
+        if (cdnRes.headers['content-length']) res.setHeader('Content-Length', String(cdnRes.headers['content-length']));
+
+        res.status(cdnRes.status);
+        return cdnRes.data.pipe(res);
+    } catch (err: any) {
+        logger.warn(`[Facebook-Video-Stream] Stream failed for ${rawPostUrl}: ${err.message}`);
+        return sendPlatformSvgPlaceholder(res, rawPostUrl);
     }
 });
 
