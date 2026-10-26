@@ -3267,8 +3267,6 @@ async function loadFeedUI() {
       }
 
       // If no valid media thumbnail was found, but it is an Instagram post with a shortcode:
-      const pUrl = (post.post_url || post.link || post.postUrl || '').trim();
-      const sc = post.shortcode || (pUrl.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i) || [])[1];
       if (sc && (post.platform === 'Instagram' || post._detectedPlatform === 'Instagram' || pUrl.includes('instagram.com'))) {
         return `https://www.instagram.com/p/${sc}/media/?size=l`;
       }
