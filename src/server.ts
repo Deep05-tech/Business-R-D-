@@ -342,7 +342,7 @@ app.delete("/api/admin/projects", requireAuth, requireAdmin, async (req, res) =>
 app.use("/api", (req, res, next) => {
   // Browser media elements cannot attach Authorization headers. These routes
   // expose only the already-validated remote asset proxy, not workspace data.
-  if (req.path === "/proxy-media" || req.path === "/proxy-video" || req.path === "/linkedin-embed-player" || req.path === "/facebook-embed-player" || req.path === "/facebook-video-stream" || req.path === "/instagram-embed" || req.path === "/social-video-url") return next();
+  if (req.path === "/proxy-media" || req.path === "/proxy-video" || req.path === "/linkedin-embed-player" || req.path === "/facebook-embed-player" || req.path === "/facebook-video-stream" || req.path === "/instagram-video-stream" || req.path === "/instagram-embed" || req.path === "/social-video-url") return next();
   return requireAuth(req, res, next);
 });
 app.use("/memory", requireAuth);
@@ -640,12 +640,21 @@ app.get('/api/social-video-url', async (req, res) => {
         });
 
         const html = fetchRes.data || '';
-        const regex = /https:[\\/]+[a-zA-Z0-9._-]+(?:fbcdn\.net|fbsbx\.com)[\\/]+[^\s"']+\.mp4[^\s"']*/g;
-        const matches = html.match(regex) || [];
-        if (matches.length > 0) {
-            let clean = matches[0].replace(/\\\/|\//g, '/').replace(/\\u0026/g, '&').replace(/&amp;/g, '&');
+        const re = /(https:[^"'<>\s]+?\.mp4[^"'<>\s]*)/gi;
+        let m;
+        const allCandidates: string[] = [];
+        while ((m = re.exec(html)) !== null) {
+            let clean = m[1].replace(/\\\//g, '/').replace(/\\u0026/g, '&').replace(/&amp;/g, '&');
             clean = clean.split('<')[0].split('\\')[0].split('"')[0];
-            return res.json({ success: true, videoUrl: clean });
+            allCandidates.push(clean);
+        }
+        const progressive = allCandidates.find(u =>
+            (u.includes('xpv_progressive') || u.includes('progressive_recipe') || u.includes('_nc_vs=') || u.includes('dash_baseline')) &&
+            !u.includes('BaseURL') && !u.includes('<') && u.includes('.mp4')
+        );
+        const best = progressive || allCandidates.find(u => !u.includes('BaseURL') && !u.includes('audio_dash') && !u.includes('<')) || allCandidates[0];
+        if (best) {
+            return res.json({ success: true, videoUrl: best });
         }
 
         return res.json({ success: false, message: 'No direct video stream found' });
@@ -754,6 +763,126 @@ app.get('/api/facebook-video-stream', async (req: express.Request, res: express.
         return cdnRes.data.pipe(res);
     } catch (err: any) {
         logger.warn(`[Facebook-Video-Stream] Stream failed for ${rawPostUrl}: ${err.message}`);
+        return sendPlatformSvgPlaceholder(res, rawPostUrl);
+    }
+});
+
+app.get('/api/instagram-video-stream', async (req: express.Request, res: express.Response) => {
+    const rawPostUrl = (req.query.url as string || '').trim();
+    if (!rawPostUrl || (!rawPostUrl.startsWith('http://') && !rawPostUrl.startsWith('https://'))) {
+        return res.status(400).send('Valid Instagram URL required');
+    }
+
+    try {
+        let streamUrl = '';
+        if (rawPostUrl.includes('.mp4') && (rawPostUrl.includes('fbcdn.net') || rawPostUrl.includes('cdninstagram.com') || rawPostUrl.includes('fbsbx.com'))) {
+            streamUrl = rawPostUrl;
+        }
+
+        // If not direct mp4, extract fresh progressive CDN stream from Instagram HTML
+        if (!streamUrl) {
+            const fetchRes = await axios.get(rawPostUrl, {
+                headers: {
+                    'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                    'Accept-Language': 'en-US,en;q=0.9'
+                },
+                timeout: 8000
+            });
+            const html = fetchRes.data || '';
+            const re = /(https:[^"'<>\s]+?\.mp4[^"'<>\s]*)/gi;
+            let m;
+            const allCandidates: string[] = [];
+            while ((m = re.exec(html)) !== null) {
+                let clean = m[1].replace(/\\\//g, '/').replace(/\\u0026/g, '&').replace(/&amp;/g, '&');
+                clean = clean.split('<')[0].split('\\')[0].split('"')[0];
+                allCandidates.push(clean);
+            }
+            const progressive = allCandidates.find(u =>
+                (u.includes('xpv_progressive') || u.includes('progressive_recipe') || u.includes('_nc_vs=') || u.includes('dash_baseline')) &&
+                !u.includes('BaseURL') && !u.includes('<') && u.includes('.mp4')
+            );
+            streamUrl = progressive || allCandidates.find(u => !u.includes('BaseURL') && !u.includes('audio_dash') && !u.includes('<')) || allCandidates[0] || '';
+        }
+
+        if (!streamUrl) {
+            return sendPlatformSvgPlaceholder(res, rawPostUrl);
+        }
+
+        const headers: Record<string, string> = {
+            'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+            'Accept': 'video/webm,video/mp4,video/*;q=0.9,*/*;q=0.8'
+        };
+        if (req.headers.range) {
+            headers['Range'] = req.headers.range as string;
+        }
+
+        let cdnRes;
+        try {
+            cdnRes = await axios({
+                method: 'GET',
+                url: streamUrl,
+                responseType: 'stream',
+                headers: headers,
+                timeout: 10000,
+                maxRedirects: 5,
+                validateStatus: (status) => status >= 200 && status < 400
+            });
+        } catch (streamErr: any) {
+            // If the direct streamUrl was region-locked or expired (e.g. 403), re-scrape the post URL directly
+            const postUrlToScrape = rawPostUrl.includes('.mp4') ? (req.query.post_url as string || '') : rawPostUrl;
+            if (postUrlToScrape) {
+                const freshFetch = await axios.get(postUrlToScrape, {
+                    headers: {
+                        'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                    },
+                    timeout: 8000
+                });
+                const html = freshFetch.data || '';
+                const re = /(https:[^"'<>\s]+?\.mp4[^"'<>\s]*)/gi;
+                let m;
+                const allCandidates: string[] = [];
+                while ((m = re.exec(html)) !== null) {
+                    let clean = m[1].replace(/\\\//g, '/').replace(/\\u0026/g, '&').replace(/&amp;/g, '&');
+                    clean = clean.split('<')[0].split('\\')[0].split('"')[0];
+                    allCandidates.push(clean);
+                }
+                const progressive = allCandidates.find(u =>
+                    (u.includes('xpv_progressive') || u.includes('progressive_recipe') || u.includes('_nc_vs=') || u.includes('dash_baseline')) &&
+                    !u.includes('BaseURL') && !u.includes('<') && u.includes('.mp4')
+                );
+                const freshCandidate = progressive || allCandidates.find(u => !u.includes('BaseURL') && !u.includes('audio_dash') && !u.includes('<')) || allCandidates[0];
+                if (freshCandidate) {
+                    cdnRes = await axios({
+                        method: 'GET',
+                        url: freshCandidate,
+                        responseType: 'stream',
+                        headers: headers,
+                        timeout: 10000,
+                        maxRedirects: 5,
+                        validateStatus: (status) => status >= 200 && status < 400
+                    });
+                }
+            }
+        }
+
+        if (!cdnRes) {
+            return sendPlatformSvgPlaceholder(res, rawPostUrl);
+        }
+
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+        res.setHeader('Cache-Control', 'public, max-age=86400');
+        if (cdnRes.headers['content-type']) res.setHeader('Content-Type', String(cdnRes.headers['content-type']));
+        if (cdnRes.headers['accept-ranges']) res.setHeader('Accept-Ranges', String(cdnRes.headers['accept-ranges']));
+        if (cdnRes.headers['content-range']) res.setHeader('Content-Range', String(cdnRes.headers['content-range']));
+        if (cdnRes.headers['content-length']) res.setHeader('Content-Length', String(cdnRes.headers['content-length']));
+
+        res.status(cdnRes.status);
+        return cdnRes.data.pipe(res);
+    } catch (err: any) {
+        logger.warn(`[Instagram-Video-Stream] Stream failed for ${rawPostUrl}: ${err.message}`);
         return sendPlatformSvgPlaceholder(res, rawPostUrl);
     }
 });
