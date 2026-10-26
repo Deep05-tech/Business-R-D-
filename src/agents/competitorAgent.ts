@@ -38,7 +38,7 @@ const PLATFORM_PROVIDER_HANDLES = new Set([
 //   2. Minimum number of common products (deep scraped overlap).
 //   3. Minimum number of distinct social accounts.
 //   4. At least one checkable social account must be active (recent post within the window).
-const MIN_SOCIAL_ACCOUNTS = 1;
+const MIN_SOCIAL_ACCOUNTS = 2;
 const SOCIAL_ACTIVITY_WINDOW_DAYS = 180;
 
 // Strong tell-tale markers of verticals that are NOT the user's target industry. Used to reject
@@ -713,14 +713,6 @@ STRICT INSTRUCTIONS:
 
         // Evaluate candidates per target scope (top scored candidates)
         const candidatePool = sortedCandidates.slice(0, Math.max(45, targetQuota * 3));
-
-        const pendingFallbacks: Array<{
-            candidate: any;
-            scrapeResult: any;
-            deepMatchedOfferings: Set<string>;
-            socials: SocialLinks;
-        }> = [];
-
         // Phase 1.3 & 2 & 3: Verify in parallel batches (concurrency 3 prevents Groq rate limit spikes)
         const BATCH_SIZE = 3;
         for (let batchIdx = 0; batchIdx < candidatePool.length; batchIdx += BATCH_SIZE) {
@@ -755,15 +747,15 @@ STRICT INSTRUCTIONS:
                         if (!candidate.isSeed && deepMatchedOfferings.size < 1) return;
 
                         let socials = scrapeResult.socials;
-                        let socialLinksCount = Object.values(socials).filter(v => v !== null).length;
+                        let socialLinksCount = Object.values(socials).filter(v => v !== null && v !== "").length;
 
                         if (socialLinksCount < MIN_SOCIAL_ACCOUNTS) {
                             const fallback = await this.findSocialLinksFallback(domain, place.displayName?.text || domain, place.websiteUri, combinedIndKws);
                             socials = { ...socials, ...fallback };
-                            socialLinksCount = Object.values(socials).filter(v => v !== null).length;
+                            socialLinksCount = Object.values(socials).filter(v => v !== null && v !== "").length;
                         }
 
-                        if (socialLinksCount >= 1) {
+                        if (socialLinksCount >= MIN_SOCIAL_ACCOUNTS) {
                             if (foundForTarget >= targetQuota) return;
                             foundForTarget++;
                             uniqueDomains.add(rootDomain);
@@ -794,56 +786,17 @@ STRICT INSTRUCTIONS:
                             onProgress?.(newComp, `Discovered ${target.type} competitor: ${newComp.name}`);
                             logger.info(`✅ Added ${domain} as ${target.type} (Deep Overlap: ${deepMatchedOfferings.size}, Socials: ${Object.values(socials).filter(v => v).length}). Target Progress: ${foundForTarget}/${targetQuota}`);
                         } else {
-                            pendingFallbacks.push({ candidate, scrapeResult, deepMatchedOfferings, socials });
+                            logger.info(`Candidate ${domain} discarded: only has ${socialLinksCount} social media accounts (minimum ${MIN_SOCIAL_ACCOUNTS} required).`);
                         }
                     })(),
                     new Promise<void>((resolve) => setTimeout(resolve, 15000))
                 ]);
             }));
         }
-
-        // Secondary Pass: If target quota not reached, accept verified candidates that cleared the industry gate
-        if (foundForTarget < targetQuota && pendingFallbacks.length > 0) {
-            logger.info(`Fulfilling remaining quota for ${target.type} (${foundForTarget}/${targetQuota}) from ${pendingFallbacks.length} verified candidates...`);
-            for (const fb of pendingFallbacks) {
-                if (foundForTarget >= targetQuota) break;
-                const { place, matchedOfferings } = fb.candidate;
-                if (isNonOperatingOrInformationalUrl(place.websiteUri, place.displayName?.text)) continue;
-                const rootDomain = getRootDomain(place.websiteUri);
-                let domain = "";
-                try { domain = new URL(place.websiteUri).hostname.replace(/^www\./, ''); } catch {}
-                if (!rootDomain || uniqueDomains.has(rootDomain)) continue;
-
-                foundForTarget++;
-                uniqueDomains.add(rootDomain);
-
-                const commonProductList = cleanAndDeduplicateProductNames(Array.from(fb.deepMatchedOfferings));
-                const overlapStr = commonProductList.slice(0, 7).join(", ") + (commonProductList.length > 7 ? '...' : '');
-                const industryEvidence = `${targetIndustry}${targetSubIndustry ? ` / ${targetSubIndustry}` : ""}`;
-                const primaryOffering = Array.from(matchedOfferings)[0];
-                const llmReason = fb.scrapeResult.whyCompetitorText ? ` LLM Verdict: ${fb.scrapeResult.whyCompetitorText}.` : "";
-
-                const newComp: CompetitorProfile = {
-                    name: place.displayName?.text || domain,
-                    url: place.websiteUri,
-                    type: target.type,
-                    location: place.formattedAddress || "Unknown",
-                    whyCompetitor: `Industry verified: ${industryEvidence}.${llmReason} ${commonProductList.length} common products: [${overlapStr}]. Rating: ${place.rating || 'N/A'} | Phone: ${place.nationalPhoneNumber || 'N/A'}`,
-                    evidenceUrls: [
-                        { title: "Homepage", url: place.websiteUri },
-                        { title: `Product: ${primaryOffering}`, url: fb.scrapeResult.productUrl }
-                    ],
-                    socials: fb.socials || { linkedin: null, instagram: null, facebook: null, youtube: null },
-                    products: commonProductList,
-                    commonProducts: commonProductList
-                };
-
-                finalCompetitors.push(newComp);
-                onProgress?.(newComp, `Discovered ${target.type} competitor: ${newComp.name}`);
-                logger.info(`✅ Added ${domain} as ${target.type} via verified industry gate. Target Progress: ${foundForTarget}/${targetQuota}`);
-            }
-        }
     }
+
+    // Strictly enforce minimum social accounts requirement for all discovered competitors
+    const qualifiedCompetitors = finalCompetitors.filter(c => this.countSocials(c.socials) >= MIN_SOCIAL_ACCOUNTS);
 
     // Sort final competitors by maximum common product overlap (descending)
     const norm = (t: string) => (t || '').toLowerCase().trim();
@@ -854,10 +807,10 @@ STRICT INSTRUCTIONS:
     };
 
     const MAX_PER_CATEGORY = 15;
-    const local = finalCompetitors.filter(c => norm(c.type) === 'local').sort(byOverlap).slice(0, MAX_PER_CATEGORY);
-    const regional = finalCompetitors.filter(c => norm(c.type) === 'regional').sort(byOverlap).slice(0, MAX_PER_CATEGORY);
-    const global = finalCompetitors.filter(c => norm(c.type) === 'global').sort(byOverlap).slice(0, MAX_PER_CATEGORY);
-    const other = finalCompetitors.filter(c => !['local', 'regional', 'global'].includes(norm(c.type))).sort(byOverlap).slice(0, MAX_PER_CATEGORY);
+    const local = qualifiedCompetitors.filter(c => norm(c.type) === 'local').sort(byOverlap).slice(0, MAX_PER_CATEGORY);
+    const regional = qualifiedCompetitors.filter(c => norm(c.type) === 'regional').sort(byOverlap).slice(0, MAX_PER_CATEGORY);
+    const global = qualifiedCompetitors.filter(c => norm(c.type) === 'global').sort(byOverlap).slice(0, MAX_PER_CATEGORY);
+    const other = qualifiedCompetitors.filter(c => !['local', 'regional', 'global'].includes(norm(c.type))).sort(byOverlap).slice(0, MAX_PER_CATEGORY);
     const cappedCompetitors = [...local, ...regional, ...global, ...other];
 
     if (cappedCompetitors.length === 0) {
@@ -1105,14 +1058,14 @@ STRICT INSTRUCTIONS:
       logger.debug(`Social scrape failed for manual competitor ${comp.url}: ${e.message}`);
     }
 
-    if (Object.values(socials).filter(v => v !== null).length < 1) {
-      logger.info(`No social links on homepage for manual competitor ${comp.name}, running search-based fallback...`);
+    if (Object.values(socials).filter(v => v !== null && v !== "").length < MIN_SOCIAL_ACCOUNTS) {
+      logger.info(`Fewer than ${MIN_SOCIAL_ACCOUNTS} social links on homepage for manual competitor ${comp.name}, running search-based fallback...`);
       socials = { ...socials, ...await this.findSocialLinksFallback(domain, comp.name, comp.url) };
     }
 
     const count = Object.values(socials).filter(v => v !== null && v !== "").length;
-    if (count === 0) {
-      logger.info(`Manual competitor ${comp.name} has 0 social media accounts, discarding...`);
+    if (count < MIN_SOCIAL_ACCOUNTS) {
+      logger.info(`Manual competitor ${comp.name} has only ${count} social media accounts (minimum required: ${MIN_SOCIAL_ACCOUNTS}), discarding...`);
       return null;
     }
 
@@ -1274,7 +1227,7 @@ STRICT INSTRUCTIONS:
   }
 
   private countSocials(socials: SocialLinks): number {
-    return Object.values(socials).filter(v => v !== null).length;
+    return Object.values(socials || {}).filter(v => typeof v === 'string' && v.trim().length > 0).length;
   }
 
   // Verifies an Instagram profile bio against the target industry. Returns true (accept) when the bio

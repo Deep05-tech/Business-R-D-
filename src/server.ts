@@ -47,6 +47,11 @@ import { ProjectSocialAgent } from "./agents/projectSocialAgent.js";
 import { AuthStore, type AuthUser } from "./auth/authStore.js";
 import { extractDistinctiveBrandTokens } from "./utils/socialVerificationUtils.js";
 
+export const countValidSocials = (socials: any): number => {
+  if (!socials || typeof socials !== 'object') return 0;
+  return Object.values(socials).filter(v => typeof v === 'string' && v.trim().length > 0).length;
+};
+
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 
@@ -368,7 +373,7 @@ app.get("/api/projects", async (req, res) => {
         url: m.input.websiteUrl,
         name: m.businessIdentity?.officialName || m.input.websiteUrl.replace(/^https?:\/\//, '').replace(/\/$/, ''),
         industry: m.businessIdentity?.industry || "Business Intelligence",
-        competitorCount: m.competitors?.length || 0,
+        competitorCount: (m.competitors || []).filter((c: any) => countValidSocials(c?.socials) >= 2).length,
         postCount: m.socialFeed?.length || 0,
         lastAnalyzed: "Active Intelligence",
         assigned: isAssigned,
@@ -1252,17 +1257,18 @@ app.get("/api/competitor-status", async (req, res) => {
   const memory = knowledgeIndex.get(rawUrl) || await memoryStore.loadBySite(rawUrl);
   if (memory && Array.isArray(memory.competitors) && memory.competitors.length > 0) {
     const normType = (t: string) => (t || '').toLowerCase().trim();
+    const validCompetitors = memory.competitors.filter((c: any) => countValidSocials(c?.socials) >= 2);
     return res.json({
       url: rawUrl,
       running: false,
       completed: true,
       step: "Competitor discovery completed",
       elapsedSec: 0,
-      discoveredCount: memory.competitors.length,
-      localCount: memory.competitors.filter((c: any) => normType(c.type) === 'local').length,
-      regionalCount: memory.competitors.filter((c: any) => normType(c.type) === 'regional').length,
-      globalCount: memory.competitors.filter((c: any) => normType(c.type) === 'global').length,
-      competitors: memory.competitors
+      discoveredCount: validCompetitors.length,
+      localCount: validCompetitors.filter((c: any) => normType(c.type) === 'local').length,
+      regionalCount: validCompetitors.filter((c: any) => normType(c.type) === 'regional').length,
+      globalCount: validCompetitors.filter((c: any) => normType(c.type) === 'global').length,
+      competitors: validCompetitors
     });
   }
 
@@ -1789,7 +1795,7 @@ app.get("/api/competitors", async (request, response) => {
 
     const norm = (t: string) => (t || '').toLowerCase().trim();
     const byOverlap = (a: any, b: any) => ((b.commonProducts?.length || b.products?.length || 0) - (a.commonProducts?.length || a.products?.length || 0));
-    const all = memory.competitors || [];
+    const all = (memory.competitors || []).filter((c: any) => countValidSocials(c?.socials) >= 2);
     const local = all.filter((c: any) => norm(c.type) === 'local').sort(byOverlap).slice(0, 15);
     const regional = all.filter((c: any) => norm(c.type) === 'regional').sort(byOverlap).slice(0, 15);
     const global = all.filter((c: any) => norm(c.type) === 'global').sort(byOverlap).slice(0, 15);
@@ -1823,13 +1829,13 @@ app.post("/api/competitors", async (request, response) => {
     const competitorAgentToUse = competitorAgent;
     const competitors = await (competitorAgentToUse as any).run(memory, scope || "all");
     
-    // Merge newly discovered competitors with existing competitors without dropping any
+    // Merge newly discovered competitors with existing competitors without dropping any (only those with >= 2 socials)
     const compMap = new Map<string, any>();
     for (const c of (memory.competitors || [])) {
-      if (c && c.url) compMap.set(getRootDomain(c.url) || c.url.toLowerCase(), c);
+      if (c && c.url && countValidSocials(c.socials) >= 2) compMap.set(getRootDomain(c.url) || c.url.toLowerCase(), c);
     }
     for (const c of (competitors || [])) {
-      if (c && c.url) compMap.set(getRootDomain(c.url) || c.url.toLowerCase(), c);
+      if (c && c.url && countValidSocials(c.socials) >= 2) compMap.set(getRootDomain(c.url) || c.url.toLowerCase(), c);
     }
     const norm = (t: string) => (t || '').toLowerCase().trim();
     const byOverlap = (a: any, b: any) => ((b.commonProducts?.length || b.products?.length || 0) - (a.commonProducts?.length || a.products?.length || 0));
@@ -1947,7 +1953,7 @@ app.post("/api/competitors-stream", async (request, response) => {
       (comp, statusMsg) => {
         currentJob.step = statusMsg;
         currentJob.updatedAt = Date.now();
-        if (comp) {
+        if (comp && countValidSocials(comp.socials) >= 2) {
           const normType = (t: string) => (t || '').toLowerCase().trim();
           if (!currentJob.competitors.some((c: any) => c.url === comp.url)) {
             currentJob.competitors.push(comp);
@@ -1968,7 +1974,7 @@ app.post("/api/competitors-stream", async (request, response) => {
           }
         }
         if (!response.writableEnded) {
-          if (comp) {
+          if (comp && countValidSocials(comp.socials) >= 2) {
             response.write(`data: ${JSON.stringify({ type: 'competitor', competitor: comp, status: statusMsg })}\n\n`);
           } else {
             response.write(`data: ${JSON.stringify({ type: 'progress', status: statusMsg })}\n\n`);
@@ -1982,17 +1988,17 @@ app.post("/api/competitors-stream", async (request, response) => {
       Boolean(force)
     );
 
-    // Merge newly discovered competitors with existing competitors without dropping any
+    // Merge newly discovered competitors with existing competitors without dropping any (only those with >= 2 socials)
     const existingComps = force ? [] : (memory.competitors || []);
     const compMap = new Map<string, any>();
     for (const c of existingComps) {
-      if (c && c.url) {
+      if (c && c.url && countValidSocials(c.socials) >= 2) {
         const key = getRootDomain(c.url) || c.url.toLowerCase();
         compMap.set(key, c);
       }
     }
     for (const c of (competitors || [])) {
-      if (c && c.url) {
+      if (c && c.url && countValidSocials(c.socials) >= 2) {
         const key = getRootDomain(c.url) || c.url.toLowerCase();
         compMap.set(key, c);
       }
@@ -2115,23 +2121,39 @@ app.post("/api/competitors/add", async (request, response) => {
       forceKeep: true
     });
 
-    if (newComp) {
-      if (!newComp.socials) {
-        newComp.socials = { linkedin: null, instagram: null, facebook: null, youtube: null };
-      }
-      if (youtube) newComp.socials.youtube = youtube;
-      if (instagram) newComp.socials.instagram = instagram;
-      if (facebook) newComp.socials.facebook = facebook;
-      if (linkedin) newComp.socials.linkedin = linkedin;
+    const candidateSocials = newComp?.socials || { linkedin: null, instagram: null, facebook: null, youtube: null };
+    if (youtube) candidateSocials.youtube = youtube;
+    if (instagram) candidateSocials.instagram = instagram;
+    if (facebook) candidateSocials.facebook = facebook;
+    if (linkedin) candidateSocials.linkedin = linkedin;
 
-      if (!memory.competitors) memory.competitors = [];
-      memory.competitors.push(newComp);
-      await memoryStore.save(memory);
-      knowledgeIndex.add(memory);
+    const totalSocials = countValidSocials(candidateSocials);
+    if (totalSocials < 2) {
+      return response.status(400).json({ 
+        error: `Competitor must have at least 2 social media accounts. Found: ${totalSocials}. Please provide valid social profile links.` 
+      });
     }
 
+    const finalManualComp = newComp || {
+      name: compName,
+      url: compUrl,
+      type: "local",
+      location: memory.businessIdentity?.location || "Unknown",
+      whyCompetitor: "Manually added competitor",
+      evidenceUrls: [{ title: "Homepage", url: compUrl }],
+      socials: candidateSocials,
+      products: [],
+      commonProducts: []
+    };
+    finalManualComp.socials = candidateSocials;
+
+    if (!memory.competitors) memory.competitors = [];
+    memory.competitors.push(finalManualComp);
+    await memoryStore.save(memory);
+    knowledgeIndex.add(memory);
+
     logger.success(`✅ Successfully scraped and added manual competitor with custom socials: ${compName}`);
-    response.json({ success: true, competitor: newComp });
+    response.json({ success: true, competitor: finalManualComp });
   } catch (error: any) {
     logger.error(`Add competitor error: ${error.message}`);
     response.status(500).json({ error: error.message });
@@ -2162,21 +2184,19 @@ app.post("/api/competitors/backfill-socials", async (request, response) => {
     let stillMissing = 0;
 
     for (const comp of (memory.competitors || [])) {
-      const existingCount = Object.values(comp.socials || {}).filter(v => v).length;
-      if (existingCount >= 1) {
+      const existingCount = countValidSocials(comp.socials);
+      if (existingCount >= 2) {
         updated.push(comp);
         continue;
       }
 
       const enhanced = await compAgent.scrapeCompetitorSocials(comp);
-      if (enhanced) {
-        const newCount = Object.values(enhanced.socials || {}).filter(v => v).length;
-        if (newCount > existingCount) fixed++;
-        else stillMissing++;
+      if (enhanced && countValidSocials(enhanced.socials) >= 2) {
+        fixed++;
         updated.push(enhanced);
       } else {
         stillMissing++;
-        updated.push(comp);
+        logger.info(`Pruned competitor ${comp.name} during backfill: fewer than 2 verified social accounts`);
       }
     }
 

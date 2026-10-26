@@ -2091,7 +2091,11 @@ async function loadCompetitorsUI(isLivePartial = false, fallbackCompetitors = nu
       if (k) compMap.set(k, c);
     }
 
-    let competitors = Array.from(compMap.values());
+    let competitors = Array.from(compMap.values()).filter(c => {
+      if (!c || !c.socials) return false;
+      const count = Object.values(c.socials).filter(v => typeof v === 'string' && v.trim().length > 0).length;
+      return count >= 2;
+    });
     if (competitors.length > 0) {
       if (!window.projectMemory) window.projectMemory = {};
       window.projectMemory.competitors = competitors;
