@@ -3192,13 +3192,23 @@ async function loadFeedUI() {
       return match ? match[1] : null;
     };
 
-    window.getSocialMediaProxyUrl = function(url) {
-      return `/api/proxy-media?url=${encodeURIComponent(url)}&mediaCache=4`;
+    window.getSocialMediaProxyUrl = function(url, postUrl) {
+      if (!url) return '';
+      const p = postUrl ? `&post_url=${encodeURIComponent(postUrl)}` : '';
+      return `/api/proxy-media?url=${encodeURIComponent(url)}${p}&mediaCache=4`;
     };
 
     window.extractSingleMediaUrl = function(post) {
       if (!post) return null;
       let candidates = [];
+
+      // If it is an Instagram post with a shortcode, prioritize the authentic uncropped full-size photo
+      const pUrl = (post.post_url || post.link || post.postUrl || '').trim();
+      const sc = post.shortcode || (pUrl.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i) || [])[1];
+      if (sc && (post.platform === 'Instagram' || post._detectedPlatform === 'Instagram' || pUrl.includes('instagram.com'))) {
+        candidates.push(`https://www.instagram.com/p/${sc}/media/?size=l`);
+      }
+
       if (post.thumbnail) candidates.push(post.thumbnail);
       if (post.thumbnail_url) candidates.push(post.thumbnail_url);
       if (post.media_url) candidates.push(post.media_url);
@@ -3313,9 +3323,10 @@ async function loadFeedUI() {
 
     window.renderIgVideoFallback = function(container, post) {
       if (!container) return;
-      const thumb = post.thumbnail || post.thumbnail_url || post.media_url || (post.shortcode ? `https://www.instagram.com/p/${post.shortcode}/media/?size=l` : '');
-      const proxiedThumb = thumb ? window.getSocialMediaProxyUrl(thumb) : '';
       const pLink = (post.link || post.post_url || post.postUrl || '').trim();
+      const sc = post.shortcode || (pLink.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i) || [])[1];
+      const thumb = (sc ? `https://www.instagram.com/p/${sc}/media/?size=l` : '') || post.thumbnail || post.thumbnail_url || post.media_url || '';
+      const proxiedThumb = thumb ? window.getSocialMediaProxyUrl(thumb, pLink) : '';
       const compName = post.company || post.competitorName || post.competitor_name || 'Competitor';
       container.innerHTML = `
         <div style="width: 100%; height: 100%; background: #040814; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 24px; box-sizing: border-box; text-align: center;">
@@ -3366,9 +3377,9 @@ async function loadFeedUI() {
 
     window.renderFbVideoFallback = function(container, post) {
       if (!container) return;
-      const thumb = post.thumbnail || post.media_url || (post.media_urls && post.media_urls[0]) || '';
-      const proxiedThumb = thumb ? window.getSocialMediaProxyUrl(thumb) : '';
       const pLink = (post.link || post.post_url || post.postUrl || '').trim();
+      const thumb = post.thumbnail || post.media_url || (post.media_urls && post.media_urls[0]) || pLink || '';
+      const proxiedThumb = thumb ? window.getSocialMediaProxyUrl(thumb, pLink) : '';
       const compName = post.company || post.competitorName || post.competitor_name || 'Competitor';
       container.innerHTML = `
         <div style="width: 100%; height: 100%; background: #040814; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 24px; box-sizing: border-box; text-align: center;">
@@ -3591,7 +3602,8 @@ async function loadFeedUI() {
             </div>`;
         }
       } else if (isIgPost) {
-        // Instagram Post Preview (Clean high-resolution photo with optional embed toggle)
+        // Instagram Post Preview (Clean high-resolution uncropped full photo with optional embed toggle)
+        const fullIgImgUrl = igShortcode ? `https://www.instagram.com/p/${igShortcode}/media/?size=l` : firstMediaUrl;
         if (activeMode === 'embed' && igShortcode) {
           leftMediaHtml = `
             <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 12px; box-sizing: border-box;">
@@ -3600,17 +3612,17 @@ async function loadFeedUI() {
                 frameborder="0" scrolling="no" allowtransparency="true" 
                 allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
                 allowfullscreen></iframe>
-              ${firstMediaUrl ? `
+              ${fullIgImgUrl ? `
                 <div style="position: absolute; bottom: 8px; left: 8px; z-index: 10;">
                   <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'image')" style="background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer;">Clean Image View 🖼️</button>
                 </div>` : ''}
             </div>`;
-        } else if (firstMediaUrl) {
-          let imgSrc = window.getSocialMediaProxyUrl(firstMediaUrl);
+        } else if (fullIgImgUrl) {
+          let imgSrc = window.getSocialMediaProxyUrl(fullIgImgUrl, postLink);
           leftMediaHtml = `
-            <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px; box-sizing: border-box;">
+            <div style="width: 100%; height: 100%; background: #080d1a; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 16px; box-sizing: border-box;">
               <div style="position: absolute; top: 16px; left: 16px; background: ${meta.badgeBg || '#e1306c'}; color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; z-index: 10; text-transform: uppercase;">📸 INSTAGRAM</div>
-              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 90% !important; max-height: 85% !important; width: auto !important; height: auto !important; object-fit: contain !important; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);" onerror="this.onerror=null; ${igShortcode ? `this.parentElement.innerHTML = '<iframe src=\\'https://www.instagram.com/p/${igShortcode}/embed/\\' style=\\'width:100%;max-width:480px;height:90%;max-height:650px;border:0;border-radius:12px;margin:auto;background:#fff;\\' frameborder=\\'0\\' scrolling=\\'no\\' allowtransparency=\\'true\\' allowfullscreen></iframe>';` : `this.src='${firstMediaUrl}';`}" />
+              <img src="${imgSrc}" referrerpolicy="no-referrer" style="max-width: 96% !important; max-height: 92% !important; width: auto !important; height: auto !important; object-fit: contain !important; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);" onerror="this.onerror=null; ${igShortcode ? `this.parentElement.innerHTML = '<iframe src=\\'https://www.instagram.com/p/${igShortcode}/embed/\\' style=\\'width:100%;max-width:480px;height:90%;max-height:650px;border:0;border-radius:12px;margin:auto;background:#fff;\\' frameborder=\\'0\\' scrolling=\\'no\\' allowtransparency=\\'true\\' allowfullscreen></iframe>';` : (firstMediaUrl ? `this.src='${firstMediaUrl}';` : '')}" />
               ${igShortcode ? `
                 <div style="position: absolute; bottom: 12px; left: 12px; z-index: 10;">
                   <button type="button" onclick="window.openFeedItemModal(${globalIndex}, 'embed')" style="background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer;">Switch to IG Embed ↗</button>
@@ -3729,8 +3741,8 @@ async function loadFeedUI() {
 
         if (videoTarget) {
           const videoStreamSrc = `/api/facebook-video-stream?url=${encodeURIComponent(videoTarget)}`;
-          const thumb = post.thumbnail || post.thumbnail_url || post.media_url || firstMediaUrl || '';
-          const posterAttr = (thumb && !thumb.includes('.mp4')) ? `poster="${window.getSocialMediaProxyUrl(thumb)}"` : '';
+          const thumb = post.thumbnail || post.thumbnail_url || post.media_url || firstMediaUrl || fbCanonicalUrl || '';
+          const posterAttr = (thumb && !thumb.includes('.mp4')) ? `poster="${window.getSocialMediaProxyUrl(thumb, fbCanonicalUrl)}"` : (fbCanonicalUrl ? `poster="${window.getSocialMediaProxyUrl(fbCanonicalUrl, fbCanonicalUrl)}"` : '');
 
           leftMediaHtml = `
             <div id="fb-video-container-${globalIndex}" style="width: 100%; height: 100%; background: #000; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; overflow:hidden;">
@@ -3974,6 +3986,10 @@ async function loadFeedUI() {
       const isFacebookVideoCard = (platform === 'Facebook' || post._detectedPlatform === 'Facebook') &&
                                   (Boolean(post.video_url) || Boolean(post.fb_video_id) || post.media_type === 'Video' || post.mediaType === 'Video' || /\/(?:videos|reel|watch)\b/i.test(pLink));
 
+      if (!firstMediaUrl && isFacebookVideoCard && pLink) {
+        firstMediaUrl = pLink;
+      }
+
       if (ytVidId) {
         const ytThumb = `https://img.youtube.com/vi/${ytVidId}/hqdefault.jpg`;
         cardThumbHtml = `
@@ -3982,7 +3998,7 @@ async function loadFeedUI() {
             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:15px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
           </div>`;
       } else if (firstMediaUrl) {
-        let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl);
+        let proxiedThumb = window.getSocialMediaProxyUrl(firstMediaUrl, pLink);
         let badgeText = isIgReelCard ? '📹 REEL' : ((isLiVidCard || isFacebookVideoCard) ? '📹 VIDEO' : '');
         let playBtn = (isIgReelCard || isLiVidCard || isFacebookVideoCard) ? `<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;background:rgba(0,0,0,0.6);border:2px solid rgba(255,255,255,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>` : '';
         let badgeHtml = badgeText ? `<div style="position:absolute; top:6px; right:6px; background:${meta.badgeBg}; color:white; font-size:8.5px; font-weight:800; padding:2px 5px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; box-shadow:0 2px 6px rgba(0,0,0,0.5); pointer-events:none;">${badgeText}</div>` : '';
@@ -3991,7 +4007,7 @@ async function loadFeedUI() {
         const imgClass = isInstagramCard ? 'feed-card-thumb-contain' : '';
 
         const igSc = post.shortcode || (pLink.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i) || [])[1];
-        const igFallbackSrc = igSc ? `/api/proxy-media?url=${encodeURIComponent('https://www.instagram.com/p/' + igSc + '/media/?size=l')}` : '';
+        const igFallbackSrc = igSc ? window.getSocialMediaProxyUrl('https://www.instagram.com/p/' + igSc + '/media/?size=l', pLink) : '';
         const fbIframeFallback = isFacebookVideoCard ? `this.parentElement.innerHTML = '<iframe src=\\'https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(pLink)}&show_text=false&width=280\\' style=\\'width:100%;height:100%;border:0;pointer-events:none;background:#000;border-radius:8px;\\' frameborder=\\'0\\' scrolling=\\'no\\'></iframe><div style=\\'position:absolute;top:6px;right:6px;background:#1877f2;color:white;font-size:8.5px;font-weight:800;padding:2px 5px;border-radius:4px;pointer-events:none;\\'>📹 VIDEO</div>';` : `window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');`;
 
         cardThumbHtml = `
@@ -4001,11 +4017,12 @@ async function loadFeedUI() {
             ${playBtn}
           </div>`;
       } else if (isFacebookVideoCard && pLink) {
+        let fbThumb = window.getSocialMediaProxyUrl(pLink, pLink);
         cardThumbHtml = `
-          <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #000; flex-shrink: 0; position: relative; padding: 0;">
-            <iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(pLink)}&show_text=false&width=280" style="width: 100%; height: 100%; border: 0; pointer-events: none; border-radius: 8px; background: #000;" frameborder="0" scrolling="no"></iframe>
+          <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
+            <img src="${fbThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.parentElement.innerHTML = '<iframe src=\\'https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(pLink)}&show_text=false&width=280\\' style=\\'width:100%;height:100%;border:0;pointer-events:none;background:#000;border-radius:8px;\\' frameborder=\\'0\\' scrolling=\\'no\\'></iframe><div style=\\'position:absolute;top:6px;right:6px;background:#1877f2;color:white;font-size:8.5px;font-weight:800;padding:2px 5px;border-radius:4px;pointer-events:none;\\'>📹 VIDEO</div>';" />
             <div style="position:absolute; top:6px; right:6px; background:#1877f2; color:white; font-size:8.5px; font-weight:800; padding:2px 5px; border-radius:4px; text-transform:uppercase; pointer-events:none;">📹 VIDEO</div>
-            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;background:rgba(24,119,242,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:15px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;background:rgba(0,0,0,0.6);border:2px solid rgba(255,255,255,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
           </div>`;
       } else if (isIgReelCard && igSc) {
         cardThumbHtml = `

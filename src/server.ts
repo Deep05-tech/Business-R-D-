@@ -1,4 +1,6 @@
 import "dotenv/config";
+import dns from "node:dns";
+try { dns.setDefaultResultOrder("ipv4first"); } catch(e) {}
 import express from "express";
 import axios from "axios";
 import * as cheerio from "cheerio";
@@ -514,6 +516,32 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
             targetUrl = `https://www.instagram.com/p/${igMatch[1]}/media/?size=l`;
         }
 
+        // If post_url is an Instagram post/reel URL and targetUrl is a cropped thumbnail or CDN image, upgrade to full-size uncropped photo
+        const igScFromPost = (req.query.post_url as string || '').match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i);
+        if (igScFromPost && igScFromPost[1] && !targetUrl.includes('.mp4') && !targetUrl.includes('/playlist/vid/')) {
+            if (targetUrl.includes('cdninstagram.com') || targetUrl.includes('fbcdn.net') || targetUrl.includes('/media/')) {
+                targetUrl = `https://www.instagram.com/p/${igScFromPost[1]}/media/?size=l`;
+            }
+        }
+
+        // 3. If targetUrl is a Facebook video/post webpage URL, resolve its fresh og:image thumbnail
+        const isFbPostPage = targetUrl.includes('facebook.com') && (targetUrl.includes('/videos/') || targetUrl.includes('/reel/') || targetUrl.includes('/watch') || targetUrl.includes('/posts/'));
+        if (isFbPostPage) {
+            try {
+                const freshFetch = await axios.get(targetUrl, {
+                    headers: {
+                        'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                    },
+                    timeout: 7000
+                });
+                const ogMatch = (freshFetch.data || '').match(/<meta property="og:image" content="([^"]+)"/i);
+                if (ogMatch && ogMatch[1]) {
+                    targetUrl = ogMatch[1].replace(/&amp;/g, '&');
+                }
+            } catch (e) {}
+        }
+
         const lowerTarget = targetUrl.toLowerCase();
         const isDirectMedia = lowerTarget.includes('.jpg') || lowerTarget.includes('.jpeg') ||
                               lowerTarget.includes('.png') || lowerTarget.includes('.webp') ||
@@ -593,8 +621,8 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
         response.data.pipe(res);
     } catch (error: any) {
         logger.warn(`[Proxy-Media] Direct stream failed for ${rawUrl}: ${error.message}`);
-        // If an Instagram direct stream failed, try resolving via shortcode /media/?size=l
-        const scMatch = rawUrl.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i);
+        // 1. If an Instagram direct stream failed, try resolving via shortcode /media/?size=l
+        const scMatch = rawUrl.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i) || (req.query.post_url as string || '').match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i);
         if (scMatch && scMatch[1] && !rawUrl.toLowerCase().includes('/media/')) {
             try {
                 const igMediaRes = await axios({
@@ -616,6 +644,42 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
                 return igMediaRes.data.pipe(res);
             } catch (igErr) {}
         }
+
+        // 2. If a Facebook direct stream failed (e.g. 403 Forbidden or expired token), re-resolve fresh og:image from the post URL
+        const fbPostUrl = (req.query.post_url as string || '').trim() || ((rawUrl.includes('facebook.com') || rawUrl.includes('fb.watch')) ? rawUrl : '');
+        if (fbPostUrl && (fbPostUrl.includes('facebook.com') || fbPostUrl.includes('fb.watch'))) {
+            try {
+                const freshFetch = await axios.get(fbPostUrl, {
+                    headers: {
+                        'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                    },
+                    timeout: 7000
+                });
+                const ogMatch = (freshFetch.data || '').match(/<meta property="og:image" content="([^"]+)"/i);
+                if (ogMatch && ogMatch[1]) {
+                    const freshImgUrl = ogMatch[1].replace(/&amp;/g, '&');
+                    const freshImgRes = await axios({
+                        method: 'GET',
+                        url: freshImgUrl,
+                        responseType: 'stream',
+                        headers: {
+                            'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+                            'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8'
+                        },
+                        timeout: 8000,
+                        maxRedirects: 5,
+                        validateStatus: (status) => status >= 200 && status < 400
+                    });
+                    res.setHeader('Access-Control-Allow-Origin', '*');
+                    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+                    res.setHeader('Cache-Control', 'public, max-age=86400');
+                    if (freshImgRes.headers['content-type']) res.setHeader('Content-Type', String(freshImgRes.headers['content-type']));
+                    return freshImgRes.data.pipe(res);
+                }
+            } catch (fbErr) {}
+        }
+
         return sendPlatformSvgPlaceholder(res, rawUrl);
     }
 };
