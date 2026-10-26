@@ -730,7 +730,7 @@ app.get('/api/linkedin-embed-player', async (req, res) => {
     }
 });
 
-app.get('/api/facebook-embed-player', (req, res) => {
+app.get('/api/facebook-embed-player', async (req, res) => {
     const rawVidId = req.query.id as string;
     const postUrl = req.query.url as string || '';
     let vidId = rawVidId;
@@ -742,6 +742,44 @@ app.get('/api/facebook-embed-player', (req, res) => {
     if (!vidId && !postUrl) return res.status(400).send('Facebook Video ID or URL required');
 
     const canonicalUrl = postUrl || (vidId ? `https://www.facebook.com/watch/?v=${vidId}` : '');
+
+    // Try extracting direct mp4 stream first so we avoid Meta's "Unavailable: content owned by someone else" embed block
+    if (canonicalUrl) {
+        try {
+            const fetchRes = await axios.get(canonicalUrl, {
+                headers: {
+                    'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                    'Accept-Language': 'en-US,en;q=0.9'
+                },
+                timeout: 5000
+            });
+            const html = fetchRes.data || '';
+            const regex = /https:[\\/]+[a-zA-Z0-9._-]+(?:fbcdn\.net|fbsbx\.com)[\\/]+[^\s"']+\.mp4[^\s"']*/g;
+            const matches = html.match(regex) || [];
+            if (matches.length > 0) {
+                let clean = matches[0].replace(/\\\/|\//g, '/').replace(/\\u0026/g, '&').replace(/&amp;/g, '&');
+                clean = clean.split('<')[0].split('\\')[0].split('"')[0];
+                const proxiedVideo = `/api/proxy-media?url=${encodeURIComponent(clean)}`;
+                res.setHeader('Content-Type', 'text/html; charset=utf-8');
+                return res.send(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body, html { margin: 0 !important; padding: 0 !important; width: 100vw !important; height: 100vh !important; background: #000 !important; overflow: hidden !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+    video { width: 100vw !important; height: 100vh !important; object-fit: contain !important; background: #000 !important; }
+  </style>
+</head>
+<body>
+  <video src="${proxiedVideo}" controls autoplay playsinline></video>
+</body>
+</html>`);
+            }
+        } catch {}
+    }
+
     const pluginUrl = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(canonicalUrl)}&show_text=false&width=500`;
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
