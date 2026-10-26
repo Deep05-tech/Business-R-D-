@@ -83598,11 +83598,66 @@
   },
   "competitors": [
     {
+      "name": "Tamboli Castings Limited",
+      "url": "http://tambolicastingslimited.com/",
+      "type": "local",
+      "location": "P3QC+MRX, Sidsar Road, Vartej, Gujarat 364060, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Tamboli Castings Limited produces investment castings and related components, directly competing with PrimeSeal in the same manufacturing niche.. 14 common products: [Pump Castings & Impellers, High-Precision Investment Castings, Valve Castings, Oil & Gas Castings, 3D Printed Parts, Automobile Parts, Fire Fighting Equipment Castings...]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.5 | Phone: 0278 254 1000",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://tambolicastingslimited.com/"
+        },
+        {
+          "title": "Product: Pump Castings & Impellers",
+          "url": "http://tambolicastingslimited.com/applications-turbo-castings-in-india"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/tambolicastings/",
+        "instagram": "https://www.instagram.com/tambolicastingslimited",
+        "facebook": "https://www.facebook.com/TamboliCastingsLtd/",
+        "youtube": "https://www.youtube.com/user/tambolicastings"
+      },
+      "products": [
+        "Pump Castings & Impellers",
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Fire Fighting Equipment Castings",
+        "Defence and Rolling Mill Castings",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting",
+        "Heat Treatment",
+        "Machining & Finishing"
+      ],
+      "commonProducts": [
+        "Pump Castings & Impellers",
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Fire Fighting Equipment Castings",
+        "Defence and Rolling Mill Castings",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting",
+        "Heat Treatment",
+        "Machining & Finishing"
+      ]
+    },
+    {
       "name": "Gravity Cast Pvt. Ltd.",
       "url": "http://www.gravitycastindia.com/",
       "type": "local",
       "location": "Survey No. 275 Galaxy ind. Est. - 2, Rajkot shapar(Veraval), Shapar, Gujarat 360026, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Gravity Group offers investment casting and forging services similar to PrimeSeal's high‑precision castings.. 12 common products: [High-Precision Investment Castings, Valve Castings, Oil & Gas Castings, 3D Printed Parts, Automobile Parts, Fire Fighting Equipment Castings, Defence and Rolling Mill Castings...]. Socials: LinkedIn verified; Facebook verified. Rating: 4.3 | Phone: 084691 60029",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: They provide investment casting and forging services, directly competing with PrimeSeal’s high‑precision castings.. 12 common products: [High-Precision Investment Castings, Valve Castings, Oil & Gas Castings, 3D Printed Parts, Automobile Parts, Fire Fighting Equipment Castings, Defence and Rolling Mill Castings...]. Socials: LinkedIn verified; Facebook verified. Rating: 4.3 | Phone: 084691 60029",
       "evidenceUrls": [
         {
           "title": "Homepage",
@@ -83646,32 +83701,14 @@
         "Tooling & Pattern Development",
         "Investment Casting",
         "Machining & Finishing"
-      ],
-      "socialStatus": {
-        "Facebook": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 3
-        },
-        "YouTube": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
+      ]
     },
     {
       "name": "SUPER QUALI CAST (INDIA) PVT. LTD.",
       "url": "http://www.superqualicast.com/",
       "type": "local",
       "location": "behind RajKamal Petrol Pump, off Gondal Road, Samrat Industrial Area, Rajkot, Gujarat 360004, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Super Quali Cast India manufactures investment castings, directly competing with PrimeSeal’s high‑precision casting offerings.. 10 common products: [High-Precision Investment Castings, Pump Castings & Impellers, Valve Castings, 3D Printed Parts, Automobile Parts, Fire Fighting Equipment Castings, General Engineering Castings...]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.9 | Phone: 099090 44501",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Super Quali Cast India manufactures and exports premium investment castings, directly overlapping PrimeSeal’s core casting offerings.. 10 common products: [High-Precision Investment Castings, Pump Castings & Impellers, Valve Castings, 3D Printed Parts, Automobile Parts, Fire Fighting Equipment Castings, General Engineering Castings...]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.9 | Phone: 099090 44501",
       "evidenceUrls": [
         {
           "title": "Homepage",
@@ -83711,155 +83748,101 @@
         "Hardware Castings",
         "Investment Casting",
         "Machining & Finishing"
-      ],
-      "socialStatus": {
-        "Facebook": {
-          "status": "Success",
-          "count": 1
-        },
-        "YouTube": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Instagram": {
-          "status": "Success",
-          "count": 3
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 3
-        }
-      }
+      ]
     },
     {
-      "name": "AMCON CASTINGS PVT. LTD.",
-      "url": "http://www.amconcastings.com/",
+      "name": "Delta Technocast Pvt. Ltd.",
+      "url": "https://www.deltatechnocast.com/",
       "type": "local",
-      "location": "R.S. No. 118,119 At Balsar, Kalavad Rd, Lodhika, Gujarat 360004, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Both companies manufacture high‑precision investment castings for industrial applications.. 10 common products: [High-Precision Investment Castings, Pump Castings & Impellers, Valve Castings, Oil & Gas Castings, 3D Printed Parts, Automobile Parts, General Engineering Castings...]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.4 | Phone: 095661 88349",
+      "location": "Plot No. G-1066, Lodhika Industrial Estate, GIDC, 360 021, Metoda, Rajkot, Gujarat 360021, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Delta Technocast offers high-precision investment castings similar to PrimeSeal's core services.. 10 common products: [High-Precision Investment Castings, Valve Castings, Oil & Gas Castings, 3D Printed Parts, Automobile Parts, General Engineering Castings, Hardware Castings...]. Socials: Facebook verified; YouTube verified. Rating: 4.7 | Phone: 02827 287 654",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "http://www.amconcastings.com/"
+          "url": "https://www.deltatechnocast.com/"
         },
         {
           "title": "Product: High-Precision Investment Castings",
-          "url": "https://amconcastings.com/"
+          "url": "https://deltatechnocast.com/services/investment-casting/"
         }
       ],
       "socials": {
-        "linkedin": "https://in.linkedin.com/company/amcon-castings-pvt-ltd",
-        "instagram": "https://www.instagram.com/amcon_castings_pvt_ltd/",
-        "facebook": "https://www.facebook.com/AMCONCASTINGSPvtLtd/",
-        "youtube": null
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "https://www.facebook.com/people/Delta-Technocast-Pvt-Ltd/61564714912800/",
+        "youtube": "https://www.youtube.com/watch?v=bOfswLfxCv8"
       },
       "products": [
         "High-Precision Investment Castings",
-        "Pump Castings & Impellers",
         "Valve Castings",
         "Oil & Gas Castings",
         "3D Printed Parts",
         "Automobile Parts",
         "General Engineering Castings",
         "Hardware Castings",
+        "Tooling & Pattern Development",
         "Investment Casting",
         "Machining & Finishing"
       ],
       "commonProducts": [
         "High-Precision Investment Castings",
-        "Pump Castings & Impellers",
         "Valve Castings",
         "Oil & Gas Castings",
         "3D Printed Parts",
         "Automobile Parts",
         "General Engineering Castings",
         "Hardware Castings",
+        "Tooling & Pattern Development",
         "Investment Casting",
         "Machining & Finishing"
-      ],
-      "socialStatus": {
-        "Instagram": {
-          "status": "Success",
-          "count": 3
-        },
-        "Facebook": {
-          "status": "Success",
-          "count": 1
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 3
-        },
-        "YouTube": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
+      ]
     },
     {
-      "name": "VHV Precision Engineering",
-      "url": "https://vhvprecision.com/",
+      "name": "Sterling Technocast LLP",
+      "url": "http://sterlingtechnocast.com/",
       "type": "local",
-      "location": "KRANTI GATE, Plot No. G-2511, H-1 Road, GIDC, Metoda, Rajkot, Gujarat 360021, India",
-      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 10 common products: [Pump Castings & Impellers, Valve Castings, Oil & Gas Castings, 3D Printed Parts, Automobile Parts, General Engineering Castings, Hardware Castings...]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: 079929 09999",
+      "location": "Shivam Industrial Zone-2, Bus stop, Plot no: 13-19/1-2-3, Kalavad Rd, near Emerald club, Devda, Rajkot, Gujarat 360021, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Sterling Technocast produces investment castings for valves and pumps, overlapping PrimeSeal's core offerings.. 10 common products: [Pump Castings & Impellers, High-Precision Investment Castings, Valve Castings, 3D Printed Parts, Automobile Parts, Defence and Rolling Mill Castings, General Engineering Castings...]. Socials: LinkedIn verified; Facebook verified. Rating: 4.5 | Phone: 090237 32260",
       "evidenceUrls": [
         {
           "title": "Homepage",
-          "url": "https://vhvprecision.com/"
+          "url": "http://sterlingtechnocast.com/"
         },
         {
           "title": "Product: Pump Castings & Impellers",
-          "url": "https://vhvprecision.com/"
+          "url": "http://sterlingtechnocast.com/pumps-industries.html"
         }
       ],
       "socials": {
-        "linkedin": "https://www.linkedin.com/company/vhv-precision-engineering/",
-        "instagram": "https://www.instagram.com/vhvprecision/",
-        "facebook": "https://www.facebook.com/vhvprecision",
+        "linkedin": "https://www.linkedin.com/company/54136507/admin/dashboard/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/sterlingtechnocast2019/",
         "youtube": null
       },
       "products": [
         "Pump Castings & Impellers",
+        "High-Precision Investment Castings",
         "Valve Castings",
-        "Oil & Gas Castings",
         "3D Printed Parts",
         "Automobile Parts",
+        "Defence and Rolling Mill Castings",
         "General Engineering Castings",
         "Hardware Castings",
         "Investment Casting",
-        "Heat Treatment",
         "Machining & Finishing"
       ],
       "commonProducts": [
         "Pump Castings & Impellers",
+        "High-Precision Investment Castings",
         "Valve Castings",
-        "Oil & Gas Castings",
         "3D Printed Parts",
         "Automobile Parts",
+        "Defence and Rolling Mill Castings",
         "General Engineering Castings",
         "Hardware Castings",
         "Investment Casting",
-        "Heat Treatment",
         "Machining & Finishing"
-      ],
-      "socialStatus": {
-        "Instagram": {
-          "status": "Success",
-          "count": 3
-        },
-        "Facebook": {
-          "status": "Success",
-          "count": 1
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 3
-        },
-        "YouTube": {
-          "status": "No posts found",
-          "count": 0
-        }
-      }
+      ]
     },
     {
       "name": "Prevail Casting Pvt. Ltd.",
@@ -83904,25 +83887,701 @@
         "General Engineering Castings",
         "Investment Casting",
         "Machining & Finishing"
-      ],
-      "socialStatus": {
-        "LinkedIn": {
-          "status": "Success",
-          "count": 1
+      ]
+    },
+    {
+      "name": "LUMINOUS TECHNOCAST PVT. LTD.",
+      "url": "http://www.luminoustechnocast.com/",
+      "type": "local",
+      "location": "Luminous Industrial area, Survey No. 349/4/5, Plot no. 1 Shitla Mata mandir road, Dholra road, Shapar, Gujarat 360026, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: They manufacture investment castings and pump components similar to PrimeSeal's offerings.. 8 common products: [High-Precision Investment Castings, Pump Castings & Impellers, Valve Castings, 3D Printed Parts, Automobile Parts, General Engineering Castings, Hardware Castings...]. Socials: LinkedIn verified; Instagram verified. Rating: 4.5 | Phone: 097370 67409",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.luminoustechnocast.com/"
         },
-        "Facebook": {
-          "status": "Success",
-          "count": 1
-        },
-        "YouTube": {
-          "status": "No posts found",
-          "count": 0
-        },
-        "Instagram": {
-          "status": "No posts found",
-          "count": 0
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "http://www.luminoustechnocast.com/"
         }
-      }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/luminous-technocast-pvt-ltd/",
+        "instagram": "https://instagram.com/luminous_technocast_pvt.ltd?igshid=N2ZiY2E3YmU=",
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Investment Casting"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Investment Casting"
+      ]
+    },
+    {
+      "name": "INDIA VALVES AUTOMATION PRIVATE LIMITED",
+      "url": "http://www.spiralvalve.com/",
+      "type": "local",
+      "location": "SAMRUDDHI 5 pipariya, PLOT NO D1, Gujarat 360311, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Spiral Valve manufactures and sells industrial valves, overlapping with PrimeSeal’s valve casting offerings.. 7 common products: [Pump Castings & Impellers, Valve Castings, Oil & Gas Castings, 3D Printed Parts, Automobile Parts, Heat Treatment, Machining & Finishing]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: N/A | Phone: 099041 77886",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.spiralvalve.com/"
+        },
+        {
+          "title": "Product: Pump Castings & Impellers",
+          "url": "http://www.spiralvalve.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/spiral-valve/",
+        "instagram": "https://www.instagram.com/indiavalvesandautomation/",
+        "facebook": "https://www.facebook.com/indiavalves?mibextid=ZbWKwL",
+        "youtube": null
+      },
+      "products": [
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Heat Treatment",
+        "Machining & Finishing"
+      ],
+      "commonProducts": [
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Heat Treatment",
+        "Machining & Finishing"
+      ]
+    },
+    {
+      "name": "Marshall Technocast Pvt. Ltd.",
+      "url": "http://marshalltechnocast.com/",
+      "type": "local",
+      "location": "Survey No. 171/1, Plot No. 22/23/24, S.I.D.C. Road Veraval, Shapar, Veraval, Gujarat 360024, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: They offer investment casting services similar to PrimeSeal's high‑precision castings.. 7 common products: [Pump Castings & Impellers, Valve Castings, 3D Printed Parts, Automobile Parts, General Engineering Castings, Hardware Castings, Investment Casting]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 4.3 | Phone: 090999 31091",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://marshalltechnocast.com/"
+        },
+        {
+          "title": "Product: Pump Castings & Impellers",
+          "url": "http://marshalltechnocast.com/product.php?pgno=1&catid=5"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/marshall-technocast-pvt-ltd",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/MarshallTechnocastPvtLtd/",
+        "youtube": "https://www.youtube.com/watch?v=YMGq35YtTyk&t=11s"
+      },
+      "products": [
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Investment Casting"
+      ],
+      "commonProducts": [
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Investment Casting"
+      ]
+    },
+    {
+      "name": "Gujarat Precision Cast Pvt. Ltd. (GPCL GROUP)",
+      "url": "http://www.gpclgroup.com/",
+      "type": "local",
+      "location": "Survey, No. 188, Plot No, 3, NH 27, Shapar, Gujarat 360024, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: GPCL Group is a casting company that offers steel and alloy castings, which directly competes with PrimeSeal’s high‑precision investment castings and related manufacturing services.. 4 common products: [High-Precision Investment Castings, Pump Castings & Impellers, Valve Castings, Investment Casting]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.2 | Phone: 075750 11422",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.gpclgroup.com/"
+        },
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "https://gpclgroup.com/gtcl/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://in.linkedin.com/company/gpclgroup",
+        "instagram": "https://www.instagram.com/gpclgroup/",
+        "facebook": "https://www.facebook.com/gpclgroup/",
+        "youtube": "https://www.youtube.com/@gpcl_group"
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "Investment Casting"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "Investment Casting"
+      ]
+    },
+    {
+      "name": "Victory Precisions Pvt Ltd",
+      "url": "http://www.victoryprecisions.com/",
+      "type": "regional",
+      "location": "Plot-A-11, Phase-IV, Nighoje, Maharashtra 410501, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Victory Precisions operates an aluminum foundry and precision machining facility that produces castings similar to PrimeSeal’s offerings.. 13 common products: [High-Precision Investment Castings, Valve Castings, Oil & Gas Castings, 3D Printed Parts, Automobile Parts, Fire Fighting Equipment Castings, Defence and Rolling Mill Castings...]. Socials: LinkedIn verified; Instagram verified; YouTube verified. Rating: 4.7 | Phone: 077989 82045",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.victoryprecisions.com/"
+        },
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "http://www.victoryprecisions.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/victory-precisions-engineering-limited/?viewAsMember=true ",
+        "instagram": "https://www.instagram.com/victory_precisions/ ",
+        "facebook": null,
+        "youtube": "https://www.youtube.com/@VictoryPrecisions/videos "
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Fire Fighting Equipment Castings",
+        "Defence and Rolling Mill Castings",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting",
+        "Heat Treatment",
+        "Machining & Finishing"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Fire Fighting Equipment Castings",
+        "Defence and Rolling Mill Castings",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting",
+        "Heat Treatment",
+        "Machining & Finishing"
+      ]
+    },
+    {
+      "name": "Fortune Foundries Pvt. Ltd. : Steel Casting Manufacturers in India, Steel Foundry",
+      "url": "https://www.fortunefoundries.com/",
+      "type": "regional",
+      "location": "B83, Hupari - Kolhapur Rd, Kagal 5 Star MIDC Industrial Area, Halsavade, Maharashtra 416202, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Fortune Foundries manufactures steel castings, including pump and valve castings, directly competing with PrimeSeal’s offerings.. 10 common products: [High-Precision Investment Castings, Pump Castings & Impellers, Valve Castings, Fire Fighting Equipment Castings, General Engineering Castings, Hardware Castings, Tooling & Pattern Development...]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 4.6 | Phone: 0231 230 5225",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.fortunefoundries.com/"
+        },
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "https://www.fortunefoundries.com/power-transmission-casting.php"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/fortunefoundries",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Fortune-Foundries-Pvt-Ltd-106498494956274",
+        "youtube": "https://www.youtube.com/channel/UCE0EGWExLEd6Y4YbybNhO3Q"
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "Fire Fighting Equipment Castings",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting",
+        "Heat Treatment",
+        "Machining & Finishing"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "Fire Fighting Equipment Castings",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting",
+        "Heat Treatment",
+        "Machining & Finishing"
+      ]
+    },
+    {
+      "name": "THE SOUTHERN PRESSURE CASTINGS",
+      "url": "http://www.tspcindia.com/",
+      "type": "regional",
+      "location": "5th Cross St, Kalaimagal Nagar, Ekkatuthangal, Chennai, Tamil Nadu 600032, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: They manufacture high-pressure die castings and machined parts for industrial components, overlapping with PrimeSeal’s casting offerings.. 8 common products: [High-Precision Investment Castings, Valve Castings, 3D Printed Parts, Automobile Parts, Fire Fighting Equipment Castings, Hardware Castings, Investment Casting...]. Socials: Facebook verified; Instagram verified. Rating: 4.2 | Phone: 078457 80999",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.tspcindia.com/"
+        },
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "https://www.linkedin.com/company/the-southern-pressure-castings/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/tspc_india/?igshid=MzRlODBiNWFlZA%3D%3D",
+        "facebook": "https://www.facebook.com/profile.php?id=100067575300109",
+        "youtube": null
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Fire Fighting Equipment Castings",
+        "Hardware Castings",
+        "Investment Casting",
+        "Machining & Finishing"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Fire Fighting Equipment Castings",
+        "Hardware Castings",
+        "Investment Casting",
+        "Machining & Finishing"
+      ]
+    },
+    {
+      "name": "Ratnadeep Castings \" Born To Cast With Quality:\"",
+      "url": "https://www.ratnadeepcastings.com/",
+      "type": "regional",
+      "location": "Kasurdi, Khedshivapur, Pune - Bengaluru Hwy, Pune, Kasurdi, Maharashtra 412205, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 7 common products: [High-Precision Investment Castings, Valve Castings, Oil & Gas Castings, Automobile Parts, Fire Fighting Equipment Castings, Hardware Castings, Investment Casting]. Socials: LinkedIn verified; Facebook verified; YouTube verified. Rating: 4.6 | Phone: 098229 68395",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.ratnadeepcastings.com/"
+        },
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "https://www.ratnadeepcastings.com/enquiry.php"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/96413538/admin/feed/posts/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/people/Ratnadeep-Catings/100094408087056/",
+        "youtube": "https://www.youtube.com/watch?v=g1t-fEO2D28"
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "Automobile Parts",
+        "Fire Fighting Equipment Castings",
+        "Hardware Castings",
+        "Investment Casting"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "Automobile Parts",
+        "Fire Fighting Equipment Castings",
+        "Hardware Castings",
+        "Investment Casting"
+      ]
+    },
+    {
+      "name": "Euro Casts And Forge Private Limited, Ludhiana",
+      "url": "http://www.eurocastforge.com/",
+      "type": "regional",
+      "location": "Mansrovar Chowk, Near Sua Road, Village Kanganwal, Industrial Area - C, Jugiana, Ludhiana, Khakat, Punjab 141003, India",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: They manufacture and export castings and forging, overlapping with PrimeSeal's casting offerings.. 3 common products: [High-Precision Investment Castings, Automobile Parts, Investment Casting]. Socials: Facebook verified; YouTube verified. Rating: 3.3 | Phone: 097797 00072",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.eurocastforge.com/"
+        },
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "http://www.eurocastforge.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": null,
+        "facebook": "http://www.facebook.com/eurocastforge",
+        "youtube": "http://www.youtube.com/eurocastforge"
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "Automobile Parts",
+        "Investment Casting"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "Automobile Parts",
+        "Investment Casting"
+      ]
+    },
+    {
+      "name": "Milwaukee Precision Casting, Inc.",
+      "url": "https://www.milwaukeeprec.com/",
+      "type": "global",
+      "location": "3400 S Nevada St, Milwaukee, WI 53207, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Milwaukee Precision Casting offers investment castings and precision metal castings, directly competing with PrimeSeal's high-precision casting services.. 14 common products: [High-Precision Investment Castings, Pump Castings & Impellers, Valve Castings, Oil & Gas Castings, 3D Printed Parts, Automobile Parts, Fire Fighting Equipment Castings...]. Socials: LinkedIn verified; YouTube verified. Rating: 4.2 | Phone: (414) 483-7111",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.milwaukeeprec.com/"
+        },
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "https://www.milwaukeeprec.com/investment-casting/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/milwaukee-precision-casting-inc",
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/@theinvestmentcasting"
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Fire Fighting Equipment Castings",
+        "Defence and Rolling Mill Castings",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting",
+        "Heat Treatment",
+        "Machining & Finishing"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Fire Fighting Equipment Castings",
+        "Defence and Rolling Mill Castings",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting",
+        "Heat Treatment",
+        "Machining & Finishing"
+      ]
+    },
+    {
+      "name": "Invest Cast Inc.",
+      "url": "https://www.investcastinc.com/",
+      "type": "global",
+      "location": "10936 Martin St, Balch Springs, TX 75180, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: They provide metal investment casting services similar to PrimeSeal's core offerings.. 11 common products: [High-Precision Investment Castings, Valve Castings, 3D Printed Parts, Automobile Parts, Fire Fighting Equipment Castings, Defence and Rolling Mill Castings, General Engineering Castings...]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: N/A | Phone: (972) 288-6103",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.investcastinc.com/"
+        },
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "https://www.linkedin.com/company/investment-casting-engineering/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/investment-casting-engineering/",
+        "instagram": "https://www.instagram.com/investcastinc/",
+        "facebook": "https://www.facebook.com/investcastinc/",
+        "youtube": "https://www.youtube.com/channel/UC7CQms5xSx0cOpL7vgZyuVQ"
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Fire Fighting Equipment Castings",
+        "Defence and Rolling Mill Castings",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting",
+        "Machining & Finishing"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Fire Fighting Equipment Castings",
+        "Defence and Rolling Mill Castings",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting",
+        "Machining & Finishing"
+      ]
+    },
+    {
+      "name": "Investment Castings (Congleton) Ltd",
+      "url": "https://www.investment-castings.co.uk/",
+      "type": "global",
+      "location": "Greenfield Farm Industrial Estate, Congleton CW12 4TR, UK",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: They provide precision investment casting services similar to PrimeSeal's offerings.. 10 common products: [High-Precision Investment Castings, Valve Castings, 3D Printed Parts, Automobile Parts, Defence and Rolling Mill Castings, Hardware Castings, Tooling & Pattern Development...]. Socials: Facebook verified; Instagram verified. Rating: 5 | Phone: 01260 280181",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.investment-castings.co.uk/"
+        },
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "https://www.investment-castings.co.uk/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/investmentcastingscongleton?igsh=Z2pnbjh6bDIxYWRs",
+        "facebook": "https://www.facebook.com/invcastcongltd/",
+        "youtube": null
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Defence and Rolling Mill Castings",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting",
+        "Heat Treatment",
+        "Machining & Finishing"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Defence and Rolling Mill Castings",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting",
+        "Heat Treatment",
+        "Machining & Finishing"
+      ]
+    },
+    {
+      "name": "Bescast Inc",
+      "url": "http://www.bescast.com/",
+      "type": "global",
+      "location": "4600 E 355th St, Willoughby, OH 44094, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Bescast is a high‑precision investment casting foundry producing thin‑wall and alloy castings for aerospace, defense, and industrial sectors, directly competing with PrimeSeal’s offerings.. 9 common products: [High-Precision Investment Castings, Pump Castings & Impellers, Valve Castings, Oil & Gas Castings, 3D Printed Parts, Automobile Parts, General Engineering Castings...]. Socials: LinkedIn verified; Facebook verified. Rating: 4.6 | Phone: (440) 946-5300",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.bescast.com/"
+        },
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "https://bescast.com/capabilities/thin-wall-precision-castings/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/bescast-inc",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/Bescast-Inc-106731038694182",
+        "youtube": null
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Investment Casting"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "Pump Castings & Impellers",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Investment Casting"
+      ]
+    },
+    {
+      "name": "Zollern GmbH & Co. KG",
+      "url": "http://www.zollern.com/",
+      "type": "global",
+      "location": "Hitzkofer Str. 1, 72517 Sigmaringendorf-Laucherthal, Germany",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: ZOLLERN offers investment casting services, matching PrimeSeal's core offerings.. 9 common products: [High-Precision Investment Castings, Valve Castings, Oil & Gas Castings, 3D Printed Parts, Automobile Parts, Defence and Rolling Mill Castings, General Engineering Castings...]. Socials: LinkedIn verified; Instagram verified; YouTube verified. Rating: 4.4 | Phone: 07571 700",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.zollern.com/"
+        },
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "http://www.zollern.com/en/products/castings/castings/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://de.linkedin.com/company/zollern-gmbh-&-co-kg",
+        "instagram": "https://www.instagram.com/zollern_gmbh/",
+        "facebook": null,
+        "youtube": "https://www.youtube.com/channel/UCW_tYV7MZphmP9SzhemhHSw?view_as=subscriber"
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Defence and Rolling Mill Castings",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Investment Casting"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "Oil & Gas Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Defence and Rolling Mill Castings",
+        "General Engineering Castings",
+        "Hardware Castings",
+        "Investment Casting"
+      ]
+    },
+    {
+      "name": "Aristo Cast Inc",
+      "url": "https://aristo-cast.com/",
+      "type": "global",
+      "location": "7400 Research Dr, Almont, MI 48003, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Aristo-Cast Inc. offers metal investment casting and additive manufacturing services similar to PrimeSeal's high-precision castings and 3D printed parts.. 7 common products: [High-Precision Investment Castings, Valve Castings, 3D Printed Parts, Automobile Parts, Hardware Castings, Tooling & Pattern Development, Investment Casting]. Socials: LinkedIn verified; YouTube verified. Rating: 5 | Phone: (810) 798-2900",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://aristo-cast.com/"
+        },
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "https://admateceurope.com/precision-investment-casting"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/aristo-cast7400/",
+        "instagram": null,
+        "facebook": null,
+        "youtube": "https://www.youtube.com/watch?v=gVGqKxMz-2s"
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "Valve Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Hardware Castings",
+        "Tooling & Pattern Development",
+        "Investment Casting"
+      ]
+    },
+    {
+      "name": "Creative Casting Inc",
+      "url": "http://www.creativecastinginc.com/",
+      "type": "global",
+      "location": "1827 S Armstrong Ave, Denison, TX 75020, USA",
+      "whyCompetitor": "Industry verified: Manufacturing / Precision Casting. LLM Verdict: Verified operating manufacturing company with confirmed commercial infrastructure. 4 common products: [High-Precision Investment Castings, 3D Printed Parts, Automobile Parts, Investment Casting]. Socials: Facebook verified; Instagram verified. Rating: 4.3 | Phone: (903) 463-6160",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.creativecastinginc.com/"
+        },
+        {
+          "title": "Product: High-Precision Investment Castings",
+          "url": "http://www.creativecastinginc.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/creativecastinginc",
+        "facebook": "https://www.facebook.com/creativecastinginc/?fref=ts",
+        "youtube": null
+      },
+      "products": [
+        "High-Precision Investment Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Investment Casting"
+      ],
+      "commonProducts": [
+        "High-Precision Investment Castings",
+        "3D Printed Parts",
+        "Automobile Parts",
+        "Investment Casting"
+      ]
     }
   ]
 }
