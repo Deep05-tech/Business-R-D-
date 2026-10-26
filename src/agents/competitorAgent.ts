@@ -1135,11 +1135,11 @@ STRICT INSTRUCTIONS:
         }));
       }
 
-      // Layer 2: 1 fast keyless web search query if still missing
-      if (!socials.instagram && this.countSocials(socials) < 2) {
+      // Layer 2: 1 fast keyless web search query if still missing any social channel
+      if (this.countSocials(socials) < 4) {
         const cleanName = (name || domain).replace(/[^\w\s.-]/g, " ").replace(/\s+/g, " ").trim();
-        const query = `"${cleanName}" "${domain}" instagram OR linkedin OR facebook OR youtube`;
-        const engine = new BingRssSearchEngine({ maxResults: 10 });
+        const query = `${cleanName} ${domain} instagram OR linkedin OR facebook OR youtube`;
+        const engine = new FreeSearchEngine({ maxResults: 10 });
         try {
           const raw = await engine.invoke({ query });
           const results = JSON.parse(raw);
@@ -1159,7 +1159,7 @@ STRICT INSTRUCTIONS:
     })();
 
     const timeoutPromise = new Promise<SocialLinks>((resolve) => {
-      setTimeout(() => resolve(socials), 3500);
+      setTimeout(() => resolve(socials), 6000);
     });
 
     return Promise.race([fallbackPromise, timeoutPromise]);

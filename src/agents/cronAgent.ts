@@ -5,6 +5,7 @@ import { MemoryStore } from "../memory/memoryStore.js";
 import { knowledgeIndex } from "../memory/knowledgeIndex.js";
 import { BingRssSearchEngine } from "../utils/bingRssSearchEngine.js";
 import { BraveSearchEngine } from "../utils/braveSearchEngine.js";
+import { FreeSearchEngine } from "../utils/freeSearchEngine.js";
 import { isTavilyAvailable, markTavilyQuotaExhausted } from "../utils/tavilyClient.js";
 import { CompetitorAgent } from "./competitorAgent.js";
 import { isAuthenticCompetitorProfile } from "../utils/socialVerificationUtils.js";
@@ -46,10 +47,8 @@ export class CronAgent {
     let allPosts: SocialPost[] = [];
     const socialExtractor = new SocialExtractorAgent();
     
-    // Balance top competitors across available scopes (local, regional, global)
-    // while ensuring competitors with discovered social accounts are prioritized
-    // and up to 12 competitors are crawled even if all competitors share a single tier
-    const MAX_TARGET_COMPETITORS = 12;
+    // Track all project competitors (up to 45 competitors) to ensure full footprint coverage
+    const MAX_TARGET_COMPETITORS = Math.min(45, Math.max(25, (memory.competitors || []).length));
     const seenCompUrls = new Set<string>();
     const targetCompetitors: CompetitorProfile[] = [];
 
@@ -69,18 +68,7 @@ export class CronAgent {
       }
     }
 
-    // Priority 2: Balanced sampling across geographic tiers
-    const localComps = (memory.competitors || []).filter(c => c.type === 'local');
-    const regionalComps = (memory.competitors || []).filter(c => c.type === 'regional');
-    const globalComps = (memory.competitors || []).filter(c => c.type === 'global');
-    const otherComps = (memory.competitors || []).filter(c => !['local', 'regional', 'global'].includes(c.type));
-
-    localComps.slice(0, 4).forEach(addComp);
-    regionalComps.slice(0, 4).forEach(addComp);
-    globalComps.slice(0, 4).forEach(addComp);
-    otherComps.slice(0, 2).forEach(addComp);
-
-    // Priority 3: Fill up to MAX_TARGET_COMPETITORS from the remaining competitors
+    // Priority 2: All remaining competitors up to MAX_TARGET_COMPETITORS
     for (const c of (memory.competitors || [])) {
       addComp(c);
     }
@@ -209,7 +197,21 @@ export class CronAgent {
           }
         } catch {}
 
-        // Fallback 2: Bing RSS Search Engine
+        // Fallback 2: Free DuckDuckGo Search Engine
+        try {
+          const engine = new FreeSearchEngine({ maxResults: 5 });
+          const query = `${cleanName} site:${searchSite}`;
+          const raw = await engine.invoke({ query });
+          const results = JSON.parse(raw || "[]");
+          for (const r of results) {
+            const url = (r.url || "").trim();
+            if (isValidProfileUrl(url, platform, comp.name, r.title)) {
+              return url;
+            }
+          }
+        } catch {}
+
+        // Fallback 3: Bing RSS Search Engine
         try {
           const engine = new BingRssSearchEngine({ maxResults: 5 });
           const query = `"${cleanName}" site:${searchSite}`;
@@ -226,28 +228,28 @@ export class CronAgent {
       };
 
       let ytUrl = (comp as any).socials?.youtube;
-      if (ytUrl === undefined) {
+      if (!ytUrl) {
         ytUrl = await searchSocialUrl('YouTube', 'youtube.com');
       } else if (ytUrl && !isValidProfileUrl(ytUrl, 'YouTube', comp.name)) {
         ytUrl = null;
       }
 
       let igUrl = (comp as any).socials?.instagram;
-      if (igUrl === undefined) {
+      if (!igUrl) {
         igUrl = await searchSocialUrl('Instagram', 'instagram.com');
       } else if (igUrl && !isValidProfileUrl(igUrl, 'Instagram', comp.name)) {
         igUrl = null;
       }
 
       let fbUrl = (comp as any).socials?.facebook;
-      if (fbUrl === undefined) {
+      if (!fbUrl) {
         fbUrl = await searchSocialUrl('Facebook', 'facebook.com');
       } else if (fbUrl && !isValidProfileUrl(fbUrl, 'Facebook', comp.name)) {
         fbUrl = null;
       }
 
       let liUrl = (comp as any).socials?.linkedin;
-      if (liUrl === undefined) {
+      if (!liUrl) {
         liUrl = await searchSocialUrl('LinkedIn', 'linkedin.com/company');
       } else if (liUrl && !isValidProfileUrl(liUrl, 'LinkedIn', comp.name)) {
         liUrl = null;
@@ -421,6 +423,7 @@ export class CronAgent {
 
       const normalizePostKey = (p: any): string => {
         const plat = String(p.platform || p._detectedPlatform || '').trim().toLowerCase();
+        const cleanComp = String(p.company || p.competitorName || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
         const rawUrl = String(p.post_url || p.link || p.postUrl || '').trim().toLowerCase();
         const ytMatch = rawUrl.match(/(?:v=|\/vi\/|shorts\/)([\w-]{11})/);
         if (ytMatch && ytMatch[1]) {
@@ -431,7 +434,7 @@ export class CronAgent {
           .replace(/[?&]$/, '')
           .replace(/\/+$/, '');
         const id = String(p.id || '').trim().toLowerCase();
-        return `${plat}_${cleanUrl || id}`;
+        return `${plat}_${cleanComp}_${cleanUrl || id}`;
       };
 
       // Add fresh crawled posts first

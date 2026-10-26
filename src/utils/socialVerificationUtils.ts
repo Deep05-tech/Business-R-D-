@@ -263,37 +263,12 @@ export function verifyPostAuthor(
         return false; // Group and casting agency posts are never official company posts
     }
 
-    const fullText = [
-        postDetails.ogTitle || '',
-        postDetails.ogDesc || '',
-        postDetails.caption || '',
-        postDetails.authorName || '',
-        postDetails.authorHandle || ''
-    ].join(' ').toLowerCase();
-
-    // 2. Foreign vertical blacklist in post content
-    const FOREIGN_POST_MARKERS = [
-        'bollywood', 'casting call', 'casting calls', 'audition', 'auditions', 'acting workshop',
-        'perfume vending', 'vending machine', 'fragrancecollection', 'pradaparadoxe',
-        'rooftop bar', 'lush rooftop', 'visiting card design', 'visitingcard', 'brandingwala',
-        'ayurvedic', 'ayurvedics', 'city council', 'city budget', 'city offices will be closed',
-        'asbury church', 'luxury fashion brand', 'exploring our tiles', 'jewelry collection',
-        'performance artist', 'nationallottery', 'heritagefund', 'brick associates', 'acme brick',
-        'marble and granite', 'marble & granite', 'tile selection', 'premium tile', 'homerenovation', 'interiordesign'
-    ];
-
-    for (const marker of FOREIGN_POST_MARKERS) {
-        if (fullText.includes(marker)) {
-            return false;
-        }
-    }
-
     const { primaryTokens, coreBrandKey } = extractDistinctiveBrandTokens(competitorName);
     if (primaryTokens.length === 0 && coreBrandKey.length === 0) {
         return false;
     }
 
-    // 3. If a verified profile URL is known, first ensure the profile itself is authentic
+    // 2. High-confidence: If a verified profile URL is known and matches the post, author is guaranteed authentic
     const isProfileAuthentic = verifiedProfileUrl ? isAuthenticCompetitorProfile(verifiedProfileUrl, platform, competitorName) : false;
     const effectiveProfileUrl = isProfileAuthentic ? verifiedProfileUrl : null;
 
@@ -309,8 +284,6 @@ export function verifyPostAuthor(
                 if (cleanAuthor.length >= 4 && (cleanAuthor.includes(cleanVerified) || cleanVerified.includes(cleanAuthor))) {
                     return true;
                 }
-                // If author handle is present and completely conflicts with verified handle, reject
-                return false;
             }
 
             // For Facebook: check URL slug or numerical page ID
@@ -326,6 +299,38 @@ export function verifyPostAuthor(
                     return true;
                 }
             }
+
+            // For LinkedIn: check company slug in URL
+            if (platform.toLowerCase().includes('linkedin')) {
+                const verifiedLiHandle = extractProfileHandle(effectiveProfileUrl, 'LinkedIn');
+                const postLiHandle = extractProfileHandle(lowerUrl, 'LinkedIn');
+                if (verifiedLiHandle && postLiHandle && verifiedLiHandle.toLowerCase() === postLiHandle.toLowerCase()) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    // 3. Content checking for non-verified or secondary discovery posts
+    const fullText = [
+        postDetails.ogTitle || '',
+        postDetails.ogDesc || '',
+        postDetails.caption || '',
+        postDetails.authorName || '',
+        postDetails.authorHandle || ''
+    ].join(' ').toLowerCase();
+
+    // Foreign vertical blacklist in post content (only specific non-commercial / actor audition noise)
+    const FOREIGN_POST_MARKERS = [
+        'casting call', 'casting calls', 'audition for actor', 'acting auditions', 'acting workshop',
+        'perfume vending', 'vending machine', 'fragrancecollection', 'pradaparadoxe',
+        'visiting card design', 'visitingcard', 'brandingwala',
+        'asbury church', 'nationallottery', 'heritagefund'
+    ];
+
+    for (const marker of FOREIGN_POST_MARKERS) {
+        if (fullText.includes(marker)) {
+            return false;
         }
     }
 

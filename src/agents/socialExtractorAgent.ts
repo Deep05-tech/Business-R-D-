@@ -367,9 +367,11 @@ export class SocialExtractorAgent {
                 const targetHandle = targetHandleMatch[1].toLowerCase().replace(/[-_.]/g, '');
                 const candHandleMatch = lowerUrl.match(/(?:instagram\.com|facebook\.com|linkedin\.com\/(?:company|in|posts)|youtube\.com\/@|\/channel\/)\/([a-zA-Z0-9._-]+)/i);
                 if (candHandleMatch && candHandleMatch[1]) {
-                    const candHandle = candHandleMatch[1].toLowerCase().replace(/[-_.]/g, '');
-                    const ROUTE_KEYWORDS = new Set(['p', 'reel', 'reels', 'share', 'posts', 'videos', 'watch', 'photo', 'photos', 'permalink', 'story', 'popular', 'groups']);
-                    if (!ROUTE_KEYWORDS.has(candHandle) && targetHandle.length >= 4 && !candHandle.includes(targetHandle) && !targetHandle.includes(candHandle)) {
+                    const rawCand = candHandleMatch[1].toLowerCase();
+                    const cleanCandHandle = rawCand.replace(/\.php$/i, '').replace(/[-_.]/g, '');
+                    const ROUTE_KEYWORDS = new Set(['p', 'reel', 'reels', 'share', 'posts', 'videos', 'watch', 'photo', 'photos', 'permalink', 'story', 'popular', 'groups', 'events']);
+                    const isKnownRoute = ROUTE_KEYWORDS.has(cleanCandHandle) || lowerUrl.includes('story.php') || lowerUrl.includes('permalink.php') || lowerUrl.includes('fbid=');
+                    if (!isKnownRoute && targetHandle.length >= 4 && !cleanCandHandle.includes(targetHandle) && !targetHandle.includes(cleanCandHandle)) {
                         return null;
                     }
                 }
@@ -619,16 +621,23 @@ export class SocialExtractorAgent {
                         }
                     }
                     const html = res?.data || "";
-                    const matches = html.match(/(?:[a-zA-Z0-9._-]+\/)?(?:p|reel|reels)\/([A-Za-z0-9_-]{8,30})\/?/g) || [];
+                    // Real Instagram post/reel shortcodes are strictly 10 to 13 characters
+                    const matches = html.match(/(?:[a-zA-Z0-9._-]+\/)?(?:p|reel)\/([A-Za-z0-9_-]{10,13})\/?/g) || [];
+                    const STATIC_BUNDLE_HASHES = new Set([
+                        'yv5pcb2zu36pujz8y7iqaossdqwgvk',
+                        'qtfxdjj4bd96t5yujhehlvpxsqtqm',
+                        'kj4gsfgo0rtfy48yejahxdpikbka',
+                        'rpztimpb7jilh325ll7qwl46t9zrxp'
+                    ]);
                     const seenShortcodes = new Set<string>();
                     for (const m of matches) {
-                        const scMatch = m.match(/(?:p|reel|reels)\/([A-Za-z0-9_-]{8,30})/);
+                        const scMatch = m.match(/(?:p|reel)\/([A-Za-z0-9_-]{10,13})/);
                         if (scMatch && scMatch[1] && !seenShortcodes.has(scMatch[1])) {
                             const code = scMatch[1];
                             const codeLower = code.toLowerCase();
-                            if (codeLower === 'instagram' || codeLower.includes('explore') || codeLower.includes('stories') || codeLower.includes('accounts') || codeLower === 'category' || codeLower.includes('join') || code.length < 9) continue;
+                            if (codeLower === 'instagram' || codeLower.includes('explore') || codeLower.includes('stories') || codeLower.includes('accounts') || codeLower === 'category' || codeLower.includes('join') || code.length < 10 || code.length > 13 || STATIC_BUNDLE_HASHES.has(codeLower)) continue;
                             seenShortcodes.add(code);
-                            const isReel = m.includes('/reel/') || m.includes('/reels/');
+                            const isReel = m.includes('/reel/');
                             const postLink = `https://www.instagram.com/${isReel ? 'reel' : 'p'}/${code}/`;
                             posts.push({
                                 id: `ig_${code}`,
@@ -663,32 +672,25 @@ export class SocialExtractorAgent {
                     try {
                         res = await axios.get(normalizedProfileUrl, {
                             headers: {
-                                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-                                'Accept-Language': 'en-US,en;q=0.9',
-                                'Sec-Fetch-Dest': 'document',
-                                'Sec-Fetch-Mode': 'navigate',
-                                'Sec-Fetch-Site': 'none',
-                                'Sec-Fetch-User': '?1',
-                                'Upgrade-Insecure-Requests': '1'
+                                'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+                                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                                'Accept-Language': 'en-US,en;q=0.9'
                             },
-                            timeout: 10000,
+                            timeout: 8000,
                             maxRedirects: 5
                         });
                     } catch (fbErr: any) {
-                        if (fbErr.response?.status === 429) {
-                            await new Promise(r => setTimeout(r, 1500));
+                        try {
                             res = await axios.get(normalizedProfileUrl, {
                                 headers: {
-                                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-                                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                                    'Accept-Language': 'en-US,en;q=0.9'
+                                    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1',
+                                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
                                 },
-                                timeout: 10000,
+                                timeout: 8000,
                                 maxRedirects: 5
                             });
-                        } else {
-                            throw fbErr;
+                        } catch {
+                            // Proceed to permalink/search fallback
                         }
                     }
                     const html = res?.data || "";
@@ -698,7 +700,7 @@ export class SocialExtractorAgent {
                     const permalinks = html.matchAll(/"permalink_url":"([^"]+)"/g);
                     for (const m of permalinks) {
                         const rawUrl = m[1].replace(/\\\//g, "/");
-                        if (!rawUrl.includes("/permalink.php") && !rawUrl.match(/\/(?:reel|videos|photos|posts)\/[a-zA-Z0-9_-]+/)) continue;
+                        if (!rawUrl.includes("/permalink.php") && !rawUrl.match(/\/(?:reel|reels|videos|photos|posts)\/[a-zA-Z0-9_-]+/)) continue;
                         if (seenUrls.has(rawUrl)) continue;
                         seenUrls.add(rawUrl);
 
@@ -901,6 +903,8 @@ export class SocialExtractorAgent {
                     .trim() || cleanCompName;
 
                 let results: any[] = [];
+                const handleMatch = profileUrl ? profileUrl.match(/(?:facebook\.com|instagram\.com|linkedin\.com\/(?:company|in)|youtube\.com\/@|\/channel\/)\/([a-zA-Z0-9._-]+)/i) : null;
+                const handle = handleMatch && !['pages', 'people', 'groups', 'p', 'reel', 'reels', 'watch', 'videos', 'popular', 'share', 'sharer', 'login'].includes(handleMatch[1].toLowerCase()) ? handleMatch[1] : '';
 
                 // 1. Try Tavily Search API first if available and within quota limits
                 if (isTavilyAvailable()) {
@@ -912,8 +916,6 @@ export class SocialExtractorAgent {
                             "LinkedIn": ["linkedin.com"],
                             "YouTube": ["youtube.com"]
                         };
-                        const handleMatch = profileUrl ? profileUrl.match(/(?:facebook\.com|instagram\.com|linkedin\.com\/(?:company|in)|youtube\.com\/@|\/channel\/)\/([a-zA-Z0-9._-]+)/i) : null;
-                        const handle = handleMatch && !['pages', 'people', 'groups', 'p', 'reel', 'reels', 'watch', 'videos', 'popular', 'share', 'sharer', 'login'].includes(handleMatch[1].toLowerCase()) ? handleMatch[1] : '';
 
                         let tavilyQuery = "";
                         if (platform === "Instagram") {
@@ -952,52 +954,81 @@ export class SocialExtractorAgent {
                     }
                 }
 
+                const isDomainMatch = (u: string) => {
+                    if (!u) return false;
+                    const l = u.toLowerCase();
+                    if (platform === "Instagram") return l.includes("instagram.com/p/") || l.includes("instagram.com/reel/");
+                    if (platform === "Facebook") return l.includes("facebook.com/") && (l.includes("/posts/") || l.includes("/photos/") || l.includes("/videos/") || l.includes("/reel/") || l.includes("story.php") || l.includes("permalink.php") || l.includes("fbid="));
+                    if (platform === "LinkedIn") return l.includes("linkedin.com/posts/") || l.includes("linkedin.com/feed/update/") || l.includes("linkedin.com/pulse/");
+                    if (platform === "YouTube") return l.includes("youtube.com/watch") || l.includes("youtu.be/") || l.includes("youtube.com/shorts/");
+                    return false;
+                };
+
                 // 2. Fallback to BraveSearchEngine (fast, keyless, reliable HTML search)
                 if (!results || results.length === 0) {
-                    let query = "";
+                    let braveQuery = "";
                     if (platform === "Instagram") {
-                        query = `"${searchBrand}" site:instagram.com`;
+                        braveQuery = handle ? `site:instagram.com/p/ OR site:instagram.com/reel/ "${handle}"` : `site:instagram.com/p/ OR site:instagram.com/reel/ "${searchBrand}"`;
                     } else if (platform === "Facebook") {
-                        query = `"${searchBrand}" site:facebook.com`;
+                        braveQuery = handle ? `"${handle}" site:facebook.com` : `"${searchBrand}" site:facebook.com`;
                     } else if (platform === "LinkedIn") {
-                        query = `"${searchBrand}" site:linkedin.com/posts/ OR site:linkedin.com/feed/update/ OR site:linkedin.com/company/`;
+                        braveQuery = `"${searchBrand}" site:linkedin.com/posts/ OR site:linkedin.com/feed/update/`;
                     } else if (platform === "YouTube") {
-                        query = `"${searchBrand}" site:youtube.com/watch OR site:youtube.com/@`;
+                        braveQuery = `"${searchBrand}" site:youtube.com/watch`;
                     }
 
-                    if (query) {
+                    if (braveQuery) {
                         try {
                             const brave = new BraveSearchEngine({ maxResults: 15 });
-                            const rawBrave = await brave.invoke({ query });
+                            const rawBrave = await brave.invoke({ query: braveQuery });
                             const braveResults = JSON.parse(rawBrave || "[]");
                             if (Array.isArray(braveResults) && braveResults.length > 0) {
-                                results.push(...braveResults);
+                                for (const r of braveResults) {
+                                    if (isDomainMatch(r.url)) results.push(r);
+                                }
                             }
                         } catch {}
+                    }
 
-                        // 3. Fallback to BingRssSearchEngine if Brave had no results
-                        if (!results || results.length === 0) {
-                            try {
-                                const bing = new BingRssSearchEngine({ maxResults: 12 });
-                                const rawBing = await bing.invoke({ query });
-                                const bingResults = JSON.parse(rawBing || "[]");
-                                if (Array.isArray(bingResults) && bingResults.length > 0) {
-                                    results.push(...bingResults);
-                                }
-                            } catch {}
+                    // 3. Fallback to FreeSearchEngine (DuckDuckGo) with unquoted brand syntax (reliable and free)
+                    if (!results || results.length === 0) {
+                        let ddgQuery = "";
+                        if (platform === "Instagram") {
+                            ddgQuery = handle ? `site:instagram.com "${handle}"` : `site:instagram.com "${searchBrand}"`;
+                        } else if (platform === "Facebook") {
+                            ddgQuery = `${searchBrand} site:facebook.com`;
+                        } else if (platform === "LinkedIn") {
+                            ddgQuery = `${searchBrand} site:linkedin.com/posts/`;
+                        } else if (platform === "YouTube") {
+                            ddgQuery = `${searchBrand} site:youtube.com/watch`;
                         }
 
-                        // 4. Tertiary Fallback to FreeSearchEngine
-                        if (!results || results.length === 0) {
+                        if (ddgQuery) {
                             try {
-                                const ddg = new FreeSearchEngine({ maxResults: 8 });
-                                const rawDDG = await ddg.invoke({ query });
+                                const ddg = new FreeSearchEngine({ maxResults: 10 });
+                                const rawDDG = await ddg.invoke({ query: ddgQuery });
                                 const ddgResults = JSON.parse(rawDDG || "[]");
                                 if (Array.isArray(ddgResults) && ddgResults.length > 0) {
-                                    results.push(...ddgResults);
+                                    for (const r of ddgResults) {
+                                        if (isDomainMatch(r.url)) results.push(r);
+                                    }
                                 }
                             } catch {}
                         }
+                    }
+
+                    // 4. Fallback to BingRssSearchEngine with strict domain matching
+                    if (!results || results.length === 0 && braveQuery) {
+                        try {
+                            const bing = new BingRssSearchEngine({ maxResults: 12 });
+                            const rawBing = await bing.invoke({ query: braveQuery });
+                            const bingResults = JSON.parse(rawBing || "[]");
+                            if (Array.isArray(bingResults) && bingResults.length > 0) {
+                                for (const r of bingResults) {
+                                    if (isDomainMatch(r.url)) results.push(r);
+                                }
+                            }
+                        } catch {}
                     }
                 }
 
