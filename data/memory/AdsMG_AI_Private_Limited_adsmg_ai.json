@@ -80765,15 +80765,15 @@
       "url": "https://jkbrandingindia.com/",
       "type": "local",
       "location": "Wings Business Bay, Office No.1104, Nr. fortune Hotel, 150 Feet Ring Rd, Jasraj Nagar, Mavdi, Rajkot, Gujarat 360004, India",
-      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: JK Branding is a branding and advertising agency that offers digital marketing services similar to AdsMG AI.. 4 common products: [Google Ads, Meta Ads, Ad Creative Generation, Lead Tracking]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.8 | Phone: 091049 63161",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: JK Branding offers digital advertising services, including branding and marketing, which are similar to AdsMG AI's offerings.. 6 common products: [Meta Ads, Google Ads, Smart Campaign Creation, Audience Targeting, Ad Creative Generation, Lead Tracking]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.8 | Phone: 091049 63161",
       "evidenceUrls": [
         {
           "title": "Homepage",
           "url": "https://jkbrandingindia.com/"
         },
         {
-          "title": "Product: Google Ads",
-          "url": "https://jkbrandingindia.com/"
+          "title": "Product: Meta Ads",
+          "url": "https://jkbrandingindia.com/service/google-ads/"
         }
       ],
       "socials": {
@@ -80783,35 +80783,171 @@
         "youtube": "https://www.youtube.com/@JK_Branding_india"
       },
       "products": [
-        "Google Ads",
         "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Audience Targeting",
         "Ad Creative Generation",
         "Lead Tracking"
       ],
       "commonProducts": [
-        "Google Ads",
         "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking"
+      ]
+    },
+    {
+      "name": "ADSENGINE MEDIA",
+      "url": "https://adsenginemedia.com/",
+      "type": "local",
+      "location": "Office No. 306, Pride Sapphire, Vidhya Kunj Main Rd, opp. Golden Super Market, off Amin Marg, Sirvar Park, Madhur Nagar, Rajkot, Gujarat 360001, India",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: AdsEngine Media offers digital marketing services including PPC campaigns, which directly compete with AdsMG AI's offerings.. 6 common products: [Meta Ads, Google Ads, Smart Campaign Creation, Audience Targeting, Ad Creative Generation, Lead Tracking]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: 098252 55265",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://adsenginemedia.com/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://adsenginemedia.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/adsenginemedia",
+        "instagram": "https://www.instagram.com/adsenginemedia/",
+        "facebook": "https://www.facebook.com/adsenginemedia/",
+        "youtube": "https://www.youtube.com/channel/UC8jBy4ba3dkHvOJXkfOVQNQ"
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Audience Targeting",
         "Ad Creative Generation",
         "Lead Tracking"
       ],
-      "socialStatus": {
-        "YouTube": {
-          "status": "Success",
-          "count": 9
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking"
+      ]
+    },
+    {
+      "name": "Popcorn Branding Agency | Branding & Advertising Agency in Rajkot | Digital Marketing | SEO | SMM",
+      "url": "https://popcornbranding.in/branding-agency-rajkot",
+      "type": "local",
+      "location": "Atika Industrial Area, Bhakti Nagar, Rajkot, Gujarat 360002, India",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: Popcorn Branding Agency offers digital marketing and advertising services, which directly compete with AdsMG AI's offerings.. 6 common products: [Meta Ads, Google Ads, Audience Targeting, Ad Creative Generation, Lead Tracking, Performance Dashboard]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.9 | Phone: 077780 85757",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://popcornbranding.in/branding-agency-rajkot"
         },
-        "Instagram": {
-          "status": "Success",
-          "count": 10
-        },
-        "Facebook": {
-          "status": "Success",
-          "count": 10
-        },
-        "LinkedIn": {
-          "status": "Success",
-          "count": 9
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://popcornbranding.in/branding-agency-rajkot"
         }
-      }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/101942504",
+        "instagram": "https://www.instagram.com/popcorn_branding_agency",
+        "facebook": "https://www.facebook.com/popcornbranding",
+        "youtube": "https://www.youtube.com/channel/UC5sLXxzO9dlfiEuR_x5qLkA"
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
+      ]
+    },
+    {
+      "name": "Brand Builder Digital Private Limited",
+      "url": "https://brandbuilderdigital.in/",
+      "type": "local",
+      "location": "shree hari empire, 401, Raiya Rd, opp. tulsi supermarket, nr. Savan Signet, Rameshvar Park, Radhika Park, Rajkot, Gujarat 360007, India",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: Brand Builder Digital Pvt. Ltd. offers digital marketing services, including ad campaign management, which directly competes with AdsMG AI Private Limited's offerings.. 5 common products: [Meta Ads, Google Ads, Audience Targeting, Ad Creative Generation, Lead Tracking]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.6 | Phone: 083828 48488",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://brandbuilderdigital.in/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://brandbuilderdigital.in/uploads/event_img/1749630934-event_img_1.png"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://in.linkedin.com/company/brandbuilderdigital",
+        "instagram": "https://www.instagram.com/brandbuilderdigital/",
+        "facebook": "https://www.facebook.com/BrandBuilderDigital",
+        "youtube": "https://www.youtube.com/@brandbuilderdigital"
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking"
+      ]
+    },
+    {
+      "name": "Creative 7 Branding",
+      "url": "https://www.creative7branding.com/",
+      "type": "local",
+      "location": "510, Shashwat World, nr. Shiv Bhawani Chowk, Kotharia, Rajkot, Gujarat 360022, India",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: Creative 7 Branding focuses on branding and design services rather than digital advertising solutions like Meta Ads and Google Ads.. 4 common products: [Meta Ads, Google Ads, Audience Targeting, Ad Creative Generation]. Socials: Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: 088665 42744",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.creative7branding.com/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://www.creative7branding.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": null,
+        "instagram": "https://www.instagram.com/creative7branding/",
+        "facebook": "https://www.facebook.com/Creative.7.graphics",
+        "youtube": "https://www.youtube.com/watch?v=5L0c2eVaYGA"
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Audience Targeting",
+        "Ad Creative Generation"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Audience Targeting",
+        "Ad Creative Generation"
+      ]
     },
     {
       "name": "Asense Branding",
@@ -80914,6 +81050,273 @@
       }
     },
     {
+      "name": "Coleda Pvt Ltd.",
+      "url": "http://coledab2b.com/",
+      "type": "regional",
+      "location": "Building Alpha 2, Giga Space Condominium, S.no. 198/1B, Lohegoan, Viman Nagar, Pune, Maharashtra 411014, India",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: Coleda B2B offers lead generation and demand generation services that align with digital advertising and marketing, making them a competitor to AdsMG AI Private Limited.. 7 common products: [Meta Ads, Google Ads, Smart Campaign Creation, Audience Targeting, Ad Creative Generation, Lead Tracking, Performance Dashboard]. Socials: LinkedIn verified; Instagram verified; YouTube verified. Rating: 4.4 | Phone: 090224 55292",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://coledab2b.com/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://coledab2b.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/coleda-pvt-ltd/",
+        "instagram": "https://www.instagram.com/_coledab2b_",
+        "facebook": null,
+        "youtube": "https://www.youtube.com/channel/UCrqdnv_ERCyQuzrOonaae1g"
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
+      ]
+    },
+    {
+      "name": "Arkentech Solutions | B2B Lead Generation Company | Demand Generation & Content Syndication",
+      "url": "http://www.arkentechsolutions.com/",
+      "type": "regional",
+      "location": "Office No. 612, Orville Business Port Wing A, Konark Nagar, Mhada Colony, Viman Nagar, Pune, Maharashtra 411014, India",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: Arkentech offers B2B lead generation services that include advertising, which aligns with AdsMG AI's focus on digital advertising solutions.. 6 common products: [Meta Ads, Google Ads, Audience Targeting, Ad Creative Generation, Lead Tracking, Performance Dashboard]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.8 | Phone: 097661 15291",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://www.arkentechsolutions.com/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://arkentechsolutions.com/high-value-leads-for-voip-leader/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/arken-tech-solutions/",
+        "instagram": "https://www.instagram.com/_arkentechsolution_?igsh=YWdnbDl1ankwbnZk",
+        "facebook": "https://www.facebook.com/people/ArkenTech-Solutions/100071803205582/",
+        "youtube": "https://www.youtube.com/@arkentechsolutions"
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
+      ]
+    },
+    {
+      "name": "OKKO Global Services Pvt. Ltd.",
+      "url": "https://www.okkoglobal.com/",
+      "type": "regional",
+      "location": "Okko Global Services Private Limited, Emaar Hills, Office No: 235 2nd Floor, CPM 35B, Central Plaza, Emaar MGF Mohali Sector 105, Sector 105, Sahibzada Ajit Singh Nagar, Punjab 140306, India",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: OKKO Global LLC focuses on B2B lead generation services rather than advertising services like Meta Ads and Google Ads.. 6 common products: [Meta Ads, Google Ads, Smart Campaign Creation, Audience Targeting, Ad Creative Generation, Lead Tracking]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.3 | Phone: 0172 411 0152",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.okkoglobal.com/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://www.okkoglobal.com/webinar-registration-leads/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/okkoglobal/",
+        "instagram": "https://www.instagram.com/okko.global/",
+        "facebook": "https://www.facebook.com/OkkoGlobal/",
+        "youtube": "https://www.youtube.com/channel/UC74_Y3-xWD09Eqi5xH8TKsw"
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking"
+      ]
+    },
+    {
+      "name": "Manlitics B2B Ites Private Limited",
+      "url": "https://www.manlitics.com/",
+      "type": "regional",
+      "location": "1st Floor, Park, Phase 1, Rajiv Gandhi Infotech Park, Hinjawadi, Pimpri-Chinchwad, Maharashtra 411057, India",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: Manlitics focuses on B2B lead generation rather than advertising services like Meta Ads or Google Ads.. 4 common products: [Meta Ads, Google Ads, Ad Creative Generation, Lead Tracking]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4 | Phone: 077588 86468",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.manlitics.com/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://www.manlitics.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/manlitics-b2b-ites-pvt-ltd/",
+        "instagram": "https://www.instagram.com/manlitics?igsh=bXpsbm9lbjQ3YmVw",
+        "facebook": "https://www.facebook.com/profile.php?id=100064033175565",
+        "youtube": null
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Ad Creative Generation",
+        "Lead Tracking"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Ad Creative Generation",
+        "Lead Tracking"
+      ]
+    },
+    {
+      "name": "Tech2Edge Technology Solutions LLP",
+      "url": "https://tech2edge.co/",
+      "type": "regional",
+      "location": "Office 1902, Arihant Aura, Station, opp. Turbhe, MIDC Industrial Area, Turbhe, Navi Mumbai, Maharashtra 400703, India",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: Tech2Edge offers marketing services that include digital advertising, which directly competes with AdsMG AI's offerings.. 2 common products: [Meta Ads, Lead Tracking]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 4.5 | Phone: 099302 49947",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://tech2edge.co/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://tech2edge.co/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/tech2edge/",
+        "instagram": "https://www.instagram.com/tech2edge/",
+        "facebook": "https://www.facebook.com/tech2edge",
+        "youtube": null
+      },
+      "products": [
+        "Meta Ads",
+        "Lead Tracking"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Lead Tracking"
+      ]
+    },
+    {
+      "name": "Vende Digital",
+      "url": "https://vendedigital.com/",
+      "type": "global",
+      "location": "1011 Clint St, Carrollton, TX 75006, USA",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: Vende Digital offers online advertising and marketing services that directly compete with AdsMG AI's offerings.. 7 common products: [Meta Ads, Google Ads, Smart Campaign Creation, Audience Targeting, Ad Creative Generation, Lead Tracking, Performance Dashboard]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 4.6 | Phone: (800) 515-0349",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://vendedigital.com/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://vendedigital.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/vende-digital/",
+        "instagram": "https://www.instagram.com/vendedigitalb2b/",
+        "facebook": "https://www.facebook.com/vendedigitalb2b",
+        "youtube": "https://www.youtube.com/channel/UCEpj6-BmJ15PpE0n5gQmS8A"
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
+      ]
+    },
+    {
+      "name": "B2B Media Group GmbH",
+      "url": "http://b2bmg.com/",
+      "type": "global",
+      "location": "Innere Wiener Straße 5, 81667 München-Au-Haidhausen, Germany",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: B2B Media Group offers lead generation services that align with digital advertising and marketing, making them a competitor in the technology industry.. 7 common products: [Meta Ads, Google Ads, Smart Campaign Creation, Ad Creative Generation, Lead Tracking, Performance Dashboard, AI Forecasting]. Socials: LinkedIn verified; Facebook verified. Rating: 5 | Phone: 089 189659421",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "http://b2bmg.com/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://www.b2bmg.com/en/download-conditions?hsLang=en"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/b2b-media-group/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/B2BMediaGroup/",
+        "youtube": null
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard",
+        "AI Forecasting"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard",
+        "AI Forecasting"
+      ]
+    },
+    {
       "name": "AMI - Marketing For Manufacturing",
       "url": "http://www.amiweb.co.uk/",
       "type": "global",
@@ -80969,6 +81372,156 @@
           "count": 10
         }
       }
+    },
+    {
+      "name": "Triad B2B Agency",
+      "url": "https://triadb2bagency.com/?utm_source=LOCAL&utm_medium=organic&utm_campaign=GMB",
+      "type": "global",
+      "location": "300 N Coit Rd #1275, Richardson, TX 75080, USA",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: Triad B2B Agency focuses on B2B marketing and sales enablement rather than direct advertising services like Meta Ads or Google Ads.. 6 common products: [Meta Ads, Google Ads, Smart Campaign Creation, Ad Creative Generation, Lead Tracking, Performance Dashboard]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 5 | Phone: (214) 953-6223",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://triadb2bagency.com/?utm_source=LOCAL&utm_medium=organic&utm_campaign=GMB"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://triadb2bagency.com/?utm_source=LOCAL&utm_medium=organic&utm_campaign=GMB"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/triad-b2b-agency",
+        "instagram": "https://www.instagram.com/triadb2bagency/",
+        "facebook": "https://www.facebook.com/triadb2bagency/",
+        "youtube": null
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
+      ]
+    },
+    {
+      "name": "Awarity",
+      "url": "https://www.awarity.com/",
+      "type": "global",
+      "location": "2600 Network Blvd #270, Frisco, TX 75034, USA",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: Awarity offers advertising services that include banner ads and demand generation, which are similar to AdsMG's offerings in digital advertising.. 6 common products: [Meta Ads, Google Ads, Audience Targeting, Ad Creative Generation, Lead Tracking, Performance Dashboard]. Socials: LinkedIn verified; Facebook verified. Rating: 4.9 | Phone: (469) 305-7576",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.awarity.com/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://www.awarity.com/banner-ads"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/sophos-marketing/",
+        "instagram": null,
+        "facebook": "https://www.facebook.com/AwarityAdvertising",
+        "youtube": null
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Audience Targeting",
+        "Ad Creative Generation",
+        "Lead Tracking",
+        "Performance Dashboard"
+      ]
+    },
+    {
+      "name": "B2M Creative GmbH",
+      "url": "https://www.b2m-creative.com/",
+      "type": "global",
+      "location": "Franz-Joseph-Straße 1, 80801 München-Schwabing-Freimann, Germany",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: B2M focuses on sports marketing rather than digital advertising services like Meta Ads and Google Ads.. 5 common products: [Meta Ads, Google Ads, Smart Campaign Creation, Ad Creative Generation, Lead Tracking]. Socials: LinkedIn verified; Facebook verified; Instagram verified. Rating: 5 | Phone: 01512 4170412",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.b2m-creative.com/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://www.b2m-creative.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/b2m-creative/posts/?feedView=all",
+        "instagram": "https://www.instagram.com/mysportspassion/",
+        "facebook": "https://www.facebook.com/b2mcreative/",
+        "youtube": null
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Ad Creative Generation",
+        "Lead Tracking"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Smart Campaign Creation",
+        "Ad Creative Generation",
+        "Lead Tracking"
+      ]
+    },
+    {
+      "name": "TEAMBBDO The Marketing Group GmbH",
+      "url": "https://www.teambbdo.de/en/",
+      "type": "global",
+      "location": "Königsallee 92, 40212 Düsseldorf-Stadtbezirk 1, Germany",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: BBDO Germany operates in the advertising and marketing sector, providing services that include digital advertising, which directly competes with AdsMG AI's offerings.. 4 common products: [Meta Ads, Google Ads, Ad Creative Generation, Performance Dashboard]. Socials: LinkedIn verified; Instagram verified. Rating: 4.8 | Phone: 0211 13790",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.teambbdo.de/en/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://www.teambbdo.de/en/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/bbdo-holding-germany",
+        "instagram": "https://www.instagram.com/bbdo_germany",
+        "facebook": null,
+        "youtube": null
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Ad Creative Generation",
+        "Performance Dashboard"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Ad Creative Generation",
+        "Performance Dashboard"
+      ]
     },
     {
       "name": "Accenture Technology Solutions",
@@ -81073,6 +81626,39 @@
       }
     },
     {
+      "name": "Lead Gear Digital Marketing",
+      "url": "https://www.leadgear.com/",
+      "type": "global",
+      "location": "3400 N Central Expy Ste 110 - 244, Richardson, TX 75080, USA",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: LeadGear offers digital marketing services that include audience targeting and ad campaign creation, making them a direct competitor to AdsMG AI.. 3 common products: [Meta Ads, Google Ads, Lead Tracking]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: (469) 726-4321",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://www.leadgear.com/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://ecosystem.hubspot.com/marketplace/solutions/leadgear"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/leadgear/",
+        "instagram": "https://www.instagram.com/leadgear_b2b/",
+        "facebook": "https://www.facebook.com/leadgear1",
+        "youtube": "https://www.youtube.com/@leadgear"
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads",
+        "Lead Tracking"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads",
+        "Lead Tracking"
+      ]
+    },
+    {
       "name": "PDF Compressor",
       "url": "https://pdf.pi7.org/pdf-compressor",
       "type": "global",
@@ -81120,6 +81706,37 @@
           "count": 1
         }
       }
+    },
+    {
+      "name": "SYNBRAND I The B2B Tech Brand Agency",
+      "url": "https://synbrand.de/",
+      "type": "global",
+      "location": "Nordendstraße 64, 80801 München-Schwabing-West, Germany",
+      "whyCompetitor": "Industry verified: Technology / Advertising Technology. LLM Verdict: SYNBRAND offers branding and marketing services that include digital advertising, which directly competes with AdsMG AI's offerings.. 2 common products: [Meta Ads, Google Ads]. Socials: LinkedIn verified; Facebook verified; Instagram verified; YouTube verified. Rating: 5 | Phone: 089 326673470",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://synbrand.de/"
+        },
+        {
+          "title": "Product: Meta Ads",
+          "url": "https://synbrand.de/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/agentusynbrand-gmbh/",
+        "instagram": "https://www.instagram.com/agentursynbrand",
+        "facebook": "https://www.facebook.com/agentursynektar",
+        "youtube": "https://www.youtube.com/channel/UCiVBGFoKfU_rODXQqiXOhdg"
+      },
+      "products": [
+        "Meta Ads",
+        "Google Ads"
+      ],
+      "commonProducts": [
+        "Meta Ads",
+        "Google Ads"
+      ]
     }
   ]
 }
