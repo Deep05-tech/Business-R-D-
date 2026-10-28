@@ -660,7 +660,7 @@ window.deleteAdminProject = async function(encodedUrl, projectName = '') {
     if (window.activeProjectUrl === url || localStorage.getItem('activeProjectUrl') === url) {
       window.activeProjectUrl = null;
       localStorage.removeItem('activeProjectUrl');
-      window.selectProject(null, false);
+      window.selectProject(null, false, true);
     }
 
     window.showSuccess('Project and all associated data deleted successfully.');
@@ -1091,7 +1091,7 @@ window.addOrUpdateProjectInSidebar = function(url, name) {
   if (select.value !== url) {
     select.value = url;
   }
-  window.selectProject(url, false);
+  window.selectProject(url, false, true);
 };
 
 window.loadProjects = async function(isSilent = false) {
@@ -1160,22 +1160,22 @@ window.loadProjects = async function(isSilent = false) {
     }
 
     if (activeSiteUrl && siteMap.has(activeSiteUrl)) {
-      window.selectProject(activeSiteUrl, false);
+      window.selectProject(activeSiteUrl, false, isSilent);
     } else if (!window.isAnalyzingBusiness && sites.length === 0) {
       select.value = "";
       select.dispatchEvent(new CustomEvent('optionsUpdated'));
-      window.selectProject(null, false);
+      window.selectProject(null, false, isSilent);
     }
   } catch (err) {
     console.error("Failed to load projects:", err);
   }
 };
 
-window.selectProject = function(url, autoSwitchTab = false) {
+window.selectProject = function(url, autoSwitchTab = false, isSilent = false) {
   window.activeProjectUrl = url;
   if (url) localStorage.setItem('activeProjectUrl', url);
   else localStorage.removeItem('activeProjectUrl');
-  
+
   const deleteBtn = document.getElementById('btn-global-delete');
 
   if (!url) {
@@ -1185,7 +1185,7 @@ window.selectProject = function(url, autoSwitchTab = false) {
       el.classList.add('disabled');
       el.onclick = (e) => { e.preventDefault(); return false; };
     });
-    switchTab('analyse', 'New Analysis');
+    if (!isSilent) switchTab('analyse', 'New Analysis');
     return;
   }
 
@@ -1205,7 +1205,8 @@ window.selectProject = function(url, autoSwitchTab = false) {
 
   if (autoSwitchTab) {
     switchTab('details', 'Project Details & Review');
-  } else {
+  } else if (!isSilent) {
+    // Only reload tab-specific UI when NOT in silent mode (i.e., not from live sync)
     const activeTab = localStorage.getItem('activeTab');
     if (!activeTab || activeTab === 'details') {
       if (typeof loadProjectDetails === 'function') loadProjectDetails();
@@ -1239,7 +1240,7 @@ function startLiveSync() {
           // Project was deleted or unassigned! Clean up state immediately
           window.activeProjectUrl = null;
           localStorage.removeItem('activeProjectUrl');
-          window.selectProject(null, false);
+          window.selectProject(null, false, true);
           await window.loadProjects(true);
           if (window.renderProjectsDirectoryUI) await window.renderProjectsDirectoryUI();
         }
@@ -1550,7 +1551,7 @@ window.runIntelligence = async function() {
         await loadProjects(true);
         const globalProj = document.getElementById('global-project');
         if (globalProj) globalProj.value = finalUrl;
-        window.selectProject(finalUrl, false);
+        window.selectProject(finalUrl, false, false);
         switchTab('details', 'Project Details & Review');
       }
     };
@@ -1620,7 +1621,7 @@ window.runIntelligence = async function() {
               await loadProjects(true);
               const globalProj = document.getElementById('global-project');
               if (globalProj) globalProj.value = finalUrl;
-              window.selectProject(finalUrl, false);
+              window.selectProject(finalUrl, false, false);
               switchTab('details', 'Project Details & Review');
               window.showSuccess("Business intelligence fully analyzed and saved!");
               return;
@@ -1642,7 +1643,7 @@ window.runIntelligence = async function() {
             hasCompleted = true;
             window.isAnalyzingBusiness = false;
             if (projectSelect) projectSelect.value = match.value;
-            window.selectProject(match.value, false);
+            window.selectProject(match.value, false, false);
             switchTab('details', 'Project Details & Review');
             window.showSuccess("Business intelligence analyzed and saved!");
             return;
@@ -1677,7 +1678,7 @@ window.runIntelligence = async function() {
           await loadProjects(true);
           const projectSelect = document.getElementById('global-project');
           if (projectSelect) projectSelect.value = url;
-          window.selectProject(url, false);
+          window.selectProject(url, false, true);
           switchTab('details', 'Project Details & Review');
           window.showSuccess("Analysis was saved successfully!");
           return;
@@ -1691,7 +1692,7 @@ window.runIntelligence = async function() {
         if (match) {
           window.isAnalyzingBusiness = false;
           projectSelect.value = match.value;
-          window.selectProject(match.value, false);
+          window.selectProject(match.value, false, true);
           switchTab('details', 'Project Details & Review');
           window.showSuccess("Analysis was saved successfully!");
           return;
