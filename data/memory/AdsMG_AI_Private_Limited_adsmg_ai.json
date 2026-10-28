@@ -88143,6 +88143,27 @@
           "count": 10
         }
       }
+    },
+    {
+      "name": "Vispan Solutions PVT LTD",
+      "url": "https://vispansolutions.com/",
+      "type": "local",
+      "location": "Rajkot, Gujarat, India",
+      "whyCompetitor": "Manually added competitor",
+      "evidenceUrls": [
+        {
+          "title": "Homepage",
+          "url": "https://vispansolutions.com/"
+        }
+      ],
+      "socials": {
+        "linkedin": "https://www.linkedin.com/company/vispan-solutions/",
+        "instagram": "https://www.instagram.com/vispan_solutions/",
+        "facebook": "https://www.facebook.com/VispanSolutions/",
+        "youtube": "https://www.youtube.com/user/vispansolutions"
+      },
+      "products": [],
+      "commonProducts": []
     }
   ]
 }
