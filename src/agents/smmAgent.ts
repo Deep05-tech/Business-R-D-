@@ -656,6 +656,19 @@ CORE RULES FOR POWERFUL & GROUNDED CONTENT:
    - Replace generic fluff with hard nouns, verifiable metrics, real materials, real use-cases, and concrete business outcomes.
 4. EXACT COUNT: You must generate EXACTLY ${postCount} posts.
 5. LANGUAGE REQUIREMENT: You must write the entire output exclusively in the **${language}** language.
+${language === "Hinglish" ? `
+   HINGLISH RULES:
+   - Write in a natural conversational mix of Hindi (Devanagari script) and English.
+   - Use English for technical terms, product names, specifications, metrics, hashtags, and industry jargon (e.g., "CNC machining", "tolerance", "ISO certified").
+   - Use Hindi (Devanagari) for connective words, verbs, emotions, hooks, and everyday phrasing (e.g., "हमारी precision engineering ने बदल दी इस industry की कहानी").
+   - The tone should feel like an Indian engineer or founder speaking confidently on LinkedIn — professional yet culturally grounded.
+   - Do NOT write pure Hindi or pure English. Every post must blend both naturally.` : ""}${language === "Gujlish" ? `
+   GUJLISH RULES:
+   - Write in a natural conversational mix of Gujarati (Gujarati script) and English.
+   - Use English for technical terms, product names, specifications, metrics, hashtags, and industry jargon (e.g., "forged components", "surface finish", "DIN standards").
+   - Use Gujarati (ગુજરાતી) for connective words, verbs, emotions, hooks, and everyday phrasing (e.g., "અમારી forging technology એ global market માં નવો standard સેટ કર્યો").
+   - The tone should feel like a Gujarati business owner or engineer speaking proudly and professionally — blending local warmth with global engineering authority.
+   - Do NOT write pure Gujarati or pure English. Every post must blend both naturally.` : ""}
 
 ${personaDirective}
 ${platformDirective}
