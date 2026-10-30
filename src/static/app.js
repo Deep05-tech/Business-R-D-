@@ -2878,6 +2878,208 @@ window.formatSmmContent = function(text) {
     .replace(/\n/g, '<br>');
 };
 
+// 1080x1080 High-Res Social Card Canvas Renderer
+window.renderSocialCardToCanvas = function(canvas, post, companyName) {
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  
+  canvas.width = 1080;
+  canvas.height = 1080;
+  
+  // Base deep modern gradient
+  const grad = ctx.createLinearGradient(0, 0, 1080, 1080);
+  grad.addColorStop(0, '#0a0e1a');
+  grad.addColorStop(0.45, '#1e1b4b');
+  grad.addColorStop(1, '#0f172a');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 1080, 1080);
+  
+  // Ambient radial glow in top right
+  const radial = ctx.createRadialGradient(900, 180, 10, 900, 180, 500);
+  radial.addColorStop(0, 'rgba(99, 102, 241, 0.32)');
+  radial.addColorStop(1, 'rgba(99, 102, 241, 0)');
+  ctx.fillStyle = radial;
+  ctx.fillRect(0, 0, 1080, 1080);
+  
+  // Top Header Bar
+  const brandName = (companyName || 'BUSINESS INTELLIGENCE').toUpperCase();
+  ctx.font = '700 24px Inter, -apple-system, sans-serif';
+  const brandWidth = ctx.measureText(`⚡ ${brandName}`).width;
+  
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  if (typeof ctx.roundRect === 'function') {
+    ctx.roundRect(80, 70, brandWidth + 36, 48, 24);
+  } else {
+    ctx.rect(80, 70, brandWidth + 36, 48);
+  }
+  ctx.fill();
+  ctx.stroke();
+  
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillText(`⚡ ${brandName}`, 98, 103);
+  
+  // 1080x1080 Ratio Indicator
+  ctx.font = '600 20px Inter, -apple-system, sans-serif';
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+  ctx.fillText('1080 × 1080 · DIRECT POST', 760, 102);
+  
+  // Decorative Accent Divider Line
+  const lineGrad = ctx.createLinearGradient(80, 145, 1000, 145);
+  lineGrad.addColorStop(0, 'rgba(99, 102, 241, 0.8)');
+  lineGrad.addColorStop(0.5, 'rgba(56, 189, 248, 0.8)');
+  lineGrad.addColorStop(1, 'rgba(99, 102, 241, 0)');
+  ctx.strokeStyle = lineGrad;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(80, 145);
+  ctx.lineTo(1000, 145);
+  ctx.stroke();
+  
+  // Main Headline (50px Bold)
+  const headline = post.heading || post.title || 'Transforming Business Through Precision';
+  ctx.font = '800 50px Inter, -apple-system, sans-serif';
+  ctx.fillStyle = '#FFFFFF';
+  
+  const wrapText = (text, x, y, maxWidth, lineHeight, maxLines = 4) => {
+    const words = text.split(' ');
+    let line = '';
+    let currentY = y;
+    let linesDrawn = 0;
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + ' ';
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth && n > 0) {
+        ctx.fillText(line.trim(), x, currentY);
+        linesDrawn++;
+        line = words[n] + ' ';
+        currentY += lineHeight;
+        if (linesDrawn >= maxLines) break;
+      } else {
+        line = testLine;
+      }
+    }
+    if (linesDrawn < maxLines && line.trim()) {
+      ctx.fillText(line.trim(), x, currentY);
+    }
+    return currentY + lineHeight;
+  };
+  
+  let nextY = wrapText(headline, 80, 235, 920, 64, 3);
+  
+  // Proof Metric Pill (Level 2 Hierarchy)
+  if (post.subText) {
+    const metricText = post.subText.trim();
+    ctx.font = '700 28px Inter, -apple-system, sans-serif';
+    const metricWidth = ctx.measureText(`✓  ${metricText}`).width;
+    
+    ctx.fillStyle = 'rgba(56, 189, 248, 0.14)';
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    if (typeof ctx.roundRect === 'function') {
+      ctx.roundRect(80, nextY + 10, metricWidth + 44, 56, 12);
+    } else {
+      ctx.rect(80, nextY + 10, metricWidth + 44, 56);
+    }
+    ctx.fill();
+    ctx.stroke();
+    
+    ctx.fillStyle = '#38BDF8';
+    ctx.fillText(`✓  ${metricText}`, 102, nextY + 48);
+    nextY += 95;
+  } else {
+    nextY += 25;
+  }
+  
+  // ELI5 Kid-Friendly Analogy / Simple Truth Card
+  const simpleText = post.simpleExplanation || post.hook || 'High performance engineering built with zero compromises.';
+  
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  if (typeof ctx.roundRect === 'function') {
+    ctx.roundRect(80, nextY + 20, 920, 280, 20);
+  } else {
+    ctx.rect(80, nextY + 20, 920, 280);
+  }
+  ctx.fill();
+  ctx.stroke();
+  
+  // Card Header Label
+  ctx.font = '800 22px Inter, -apple-system, sans-serif';
+  ctx.fillStyle = '#F59E0B';
+  ctx.fillText('💡 THE SIMPLE TRUTH (ELI5):', 115, nextY + 70);
+  
+  // Card Metaphor Text
+  ctx.font = '500 28px Inter, -apple-system, sans-serif';
+  ctx.fillStyle = '#E2E8F0';
+  wrapText(`"${simpleText}"`, 115, nextY + 125, 850, 44, 4);
+  
+  // Footer Area
+  const footerY = 1000;
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(80, footerY - 40);
+  ctx.lineTo(1000, footerY - 40);
+  ctx.stroke();
+  
+  ctx.font = '600 22px Inter, -apple-system, sans-serif';
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+  ctx.fillText(`🏢 ${brandName}`, 80, footerY);
+  
+  ctx.font = '500 20px Inter, -apple-system, sans-serif';
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+  ctx.fillText('Direct Social Post · High Resolution 1080p', 610, footerY);
+};
+
+// 1-Click Native Image and Canvas Download Handlers
+window.downloadCanvasAsImage = function(canvas, filename) {
+  if (!canvas) return;
+  canvas.toBlob((blob) => {
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || 'social-media-post.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    if (typeof window.showGlobalToast === 'function') {
+      window.showGlobalToast('✓ Downloaded 1080x1080 social graphic to your device!');
+    }
+  }, 'image/png');
+};
+
+window.downloadDirectImage = async function(imageUrl, filename) {
+  if (!imageUrl) return;
+  try {
+    const proxyUrl = `/api/proxy-media?url=${encodeURIComponent(imageUrl)}`;
+    const res = await fetch(proxyUrl);
+    if (!res.ok) throw new Error('Proxy fetch failed');
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || 'social-image.jpg';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    if (typeof window.showGlobalToast === 'function') {
+      window.showGlobalToast('✓ Photo visual downloaded to your device!');
+    }
+  } catch (err) {
+    window.open(imageUrl, '_blank');
+  }
+};
+
 window.renderSmmResults = function(postsData, type) {
     const ansDiv = document.getElementById('smm-answer');
     const textDiv = document.getElementById('smm-text');
@@ -3000,6 +3202,9 @@ window.renderSmmResults = function(postsData, type) {
               postImageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPrompt)}?width=1024&height=1024&seed=${seed}&nologo=true&model=flux`;
             }
             p.imageUrl = postImageUrl;
+            const fallbackImageUrl = p.fallbackImageUrl || 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1080&h=1080&fit=crop&q=85';
+            const simpleExplanation = (p.simpleExplanation || p.kidExplanation || p.eli5 || '').trim() ||
+              `Think of ${heading ? heading.toLowerCase() : 'this'} in simple terms: how small hidden details make a huge difference in performance and reliability.`;
 
             const companyName = window.projectMemory?.businessIdentity?.officialName || 'Company';
             const companyInitial = companyName.charAt(0).toUpperCase() || 'C';
@@ -3055,17 +3260,28 @@ window.renderSmmResults = function(postsData, type) {
                       <span class="smm-live-badge">Live Preview</span>
                     </div>
 
-                    <!-- VISUAL DISPLAY (AI GENERATED VISUAL & 3-TIER BANNER TOGGLE) -->
+                    <!-- VISUAL DISPLAY (CANVAS GRAPHIC, AI PHOTO & 3-TIER BANNER TOGGLE) -->
                     <div class="smm-visual-container">
                       <div class="smm-visual-toggle-bar">
-                        <button type="button" class="smm-toggle-tab active" data-view="image">🖼️ AI Generated Visual</button>
-                        <button type="button" class="smm-toggle-tab" data-view="banner">📐 3-Tier Graphic Banner</button>
+                        <button type="button" class="smm-toggle-tab active" data-view="card">🎨 1080x1080 Graphic</button>
+                        <button type="button" class="smm-toggle-tab" data-view="photo">📸 AI / Studio Photo</button>
+                        <button type="button" class="smm-toggle-tab" data-view="banner">📐 3-Tier Banner</button>
                       </div>
 
-                      <!-- VIEW 1: PHOTOREALISTIC AI GENERATED IMAGE -->
-                      <div class="smm-image-view">
+                      <!-- VIEW 1: 1080x1080 HIGH-RES BRANDED CANVAS GRAPHIC -->
+                      <div class="smm-canvas-view">
+                        <div class="smm-canvas-wrapper">
+                          <canvas class="smm-social-canvas"></canvas>
+                        </div>
+                        <div class="smm-image-actions">
+                          <button type="button" class="btn btn-primary smm-img-btn smm-dl-canvas-btn">⬇️ Download 1080x1080 Graphic</button>
+                        </div>
+                      </div>
+
+                      <!-- VIEW 2: PHOTOREALISTIC AI GENERATED IMAGE -->
+                      <div class="smm-image-view" style="display: none;">
                         <div class="smm-image-wrapper">
-                          <img class="smm-generated-image" src="${postImageUrl}" alt="${window.escapeHtml(heading)}" loading="lazy" onerror="this.onerror=null; const vc = this.closest('.smm-visual-container'); if (vc) { const b = vc.querySelector('.smm-graphic-banner'); const iv = vc.querySelector('.smm-image-view'); const tabs = vc.querySelectorAll('.smm-toggle-tab'); if (b) b.style.display='flex'; if (iv) iv.style.display='none'; tabs.forEach(t => t.classList.toggle('active', t.getAttribute('data-view') === 'banner')); }" />
+                          <img class="smm-generated-image" src="${postImageUrl}" alt="${window.escapeHtml(heading)}" loading="lazy" onerror="if (!this.dataset.triedFallback && '${fallbackImageUrl}') { this.dataset.triedFallback='true'; this.src='${fallbackImageUrl}'; } else { const vc = this.closest('.smm-visual-container'); if (vc) { const cv = vc.querySelector('.smm-canvas-view'); const iv = vc.querySelector('.smm-image-view'); const tabs = vc.querySelectorAll('.smm-toggle-tab'); if (cv) cv.style.display='flex'; if (iv) iv.style.display='none'; tabs.forEach(t => t.classList.toggle('active', t.getAttribute('data-view') === 'card')); } }" />
                           <div class="smm-image-overlay-badge">
                             <span class="smm-image-brand-tag">⚡ ${window.escapeHtml(companyName)}</span>
                             <span class="smm-banner-ratio-badge">${window.escapeHtml(aspectRatio)}</span>
@@ -3073,11 +3289,11 @@ window.renderSmmResults = function(postsData, type) {
                         </div>
                         <div class="smm-image-actions">
                           <a href="${postImageUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary smm-img-btn">🔍 View Full Image</a>
-                          <a href="${postImageUrl}" download="social-post-${idx+1}.jpg" target="_blank" class="btn btn-secondary smm-img-btn">⬇️ Download Image</a>
+                          <button type="button" class="btn btn-primary smm-img-btn smm-dl-photo-btn">⬇️ Download Photo</button>
                         </div>
                       </div>
 
-                      <!-- VIEW 2: ON-GRAPHIC VISUAL CARD BANNER (3-TIER VISUAL HIERARCHY) -->
+                      <!-- VIEW 3: ON-GRAPHIC VISUAL CARD BANNER (3-TIER VISUAL HIERARCHY) -->
                       <div class="smm-graphic-banner" style="display: none;">
                         <div class="smm-banner-top">
                           <span class="smm-banner-brand-tag">⚡ ${window.escapeHtml(companyName)}</span>
@@ -3105,6 +3321,17 @@ window.renderSmmResults = function(postsData, type) {
 
                   <!-- COLUMN 2: FULL STRUCTURED SCHEMA BREAKDOWN -->
                   <div class="smm-schema-grid">
+                    <!-- 0. ELI5 / SCHOOL-KID EXPLANATION -->
+                    <div class="smm-eli5-card">
+                      <div class="smm-eli5-header">
+                        <span style="font-weight: 700; color: #f59e0b; display: flex; align-items: center; gap: 6px;">
+                          <span>👶</span> ELI5 Concept (School-Kid Explanation)
+                        </span>
+                        <span class="smm-eli5-badge">Simple & Clear</span>
+                      </div>
+                      <p class="smm-eli5-text">"${window.escapeHtml(simpleExplanation)}"</p>
+                    </div>
+
                     <!-- 1. STRATEGY ANGLE & HOOK ARCHETYPE -->
                     <div class="smm-schema-card">
                       <div class="smm-schema-card-header">
@@ -3196,24 +3423,52 @@ window.renderSmmResults = function(postsData, type) {
               </div>
             `;
 
-            // Setup Visual Switcher Toggle Tabs
+            // Render 1080x1080 Canvas Graphic
+            const canvasEl = detailsDiv.querySelector('.smm-social-canvas');
+            if (canvasEl && window.renderSocialCardToCanvas) {
+              window.renderSocialCardToCanvas(canvasEl, p, companyName);
+            }
+
+            // Setup Visual Switcher Toggle Tabs (3 Views: card, photo, banner)
             const toggleTabs = detailsDiv.querySelectorAll('.smm-toggle-tab');
             toggleTabs.forEach(tab => {
               tab.addEventListener('click', () => {
                 toggleTabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
                 const view = tab.getAttribute('data-view');
+                const canvasView = detailsDiv.querySelector('.smm-canvas-view');
                 const imgView = detailsDiv.querySelector('.smm-image-view');
                 const bannerView = detailsDiv.querySelector('.smm-graphic-banner');
-                if (view === 'image') {
+                if (view === 'card') {
+                  if (canvasView) canvasView.style.display = 'flex';
+                  if (imgView) imgView.style.display = 'none';
+                  if (bannerView) bannerView.style.display = 'none';
+                } else if (view === 'photo') {
+                  if (canvasView) canvasView.style.display = 'none';
                   if (imgView) imgView.style.display = 'flex';
                   if (bannerView) bannerView.style.display = 'none';
                 } else {
+                  if (canvasView) canvasView.style.display = 'none';
                   if (imgView) imgView.style.display = 'none';
                   if (bannerView) bannerView.style.display = 'flex';
                 }
               });
             });
+
+            // Setup 1-Click Native Downloads
+            const dlCanvasBtn = detailsDiv.querySelector('.smm-dl-canvas-btn');
+            if (dlCanvasBtn && canvasEl) {
+              dlCanvasBtn.onclick = () => {
+                window.downloadCanvasAsImage(canvasEl, `social-post-graphic-${idx+1}.png`);
+              };
+            }
+
+            const dlPhotoBtn = detailsDiv.querySelector('.smm-dl-photo-btn');
+            if (dlPhotoBtn) {
+              dlPhotoBtn.onclick = () => {
+                window.downloadDirectImage(postImageUrl, `social-post-photo-${idx+1}.jpg`);
+              };
+            }
 
             const editBtn = detailsDiv.querySelector('.edit-btn');
             const captionDiv = detailsDiv.querySelector('.smm-post-caption');

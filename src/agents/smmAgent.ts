@@ -1070,14 +1070,15 @@ ${assignedArchetypes.map((arch, i) => `  {
     "hookType": "[Curiosity Gap | Contrarian Claim | Pain Point Callout | Relatable Transformation]",
     "heading": "[Level 1 Visual Hierarchy: Bold, scroll-stopping headline for graphic banner, strictly 5 to 8 words max. Passes the 3-second squint test]",
     "subText": "[Level 2 Visual Hierarchy: Single quantified proof point, metric or badge e.g. '+42% ROAS' or 'DIN-5 Verified']",
-    "hook": "[HVC Step 1 - Pattern Interrupt Hook: 1-2 lines that stop the scroll before '...see more'. Zero corporate fluff or pleasantries]",
-    "body": "[HVC Step 2 - The Value Delivery: Structured narrative in 1-3 line micro-paragraphs separated by blank lines. Use bullet points with emojis (🔹, 📊, ⚙️, 💡), and real specs/metrics from memory. High information density, zero text walls]",
-    "callToAction": "[HVC Step 3 - Single-Outcome Rule: Exactly ONE clear, specific action to take (e.g. Save for reference, drop a comment with your spec, or DM for CAD audit)]",
+    "simpleExplanation": "[ELI5 / School-Kid Analogy: 1-2 sentence crystal-clear, relatable everyday metaphor explaining this concept so easily that a 10-year-old school student immediately understands it without getting confused]",
+    "hook": "[HVC Step 1 - Pattern Interrupt Hook: 1-2 lines that stop the scroll before '...see more'. Fascinating question, relatable mystery or everyday challenge. Zero corporate fluff or pleasantries]",
+    "body": "[HVC Step 2 - The Value Delivery: Structured narrative in 1-3 line micro-paragraphs separated by blank lines. Use simple everyday language, intuitive analogies, and bullet points with emojis (🔹, 📊, ⚙️, 💡). Explain how it works step-by-step. Zero dense academic/corporate jargon walls. High clarity and readability]",
+    "callToAction": "[HVC Step 3 - Single-Outcome Rule: Exactly ONE clear, friendly, specific action to take (e.g. Save for reference, drop a comment with your spec, or DM for CAD audit)]",
     "fullPost": "[THE COMPLETE, READY-TO-PUBLISH POST: Impeccably formatted copy combining Hook + blank line + Body + blank line + Call to Action + blank line + Hashtags. 100% self-contained for 1-click publishing directly to LinkedIn, Instagram, or Facebook without manual cleanup]",
     "visualIdea": "[Detailed creative concept for the image / carousel graphic adhering to Post ${i + 1} visual direction]",
     "elements": "[Specific design elements, callout boxes, CAD schematics, diagrams, color palette guidance]",
     "aspectRatio": "1:1 Square (Feed)",
-    "imagePrompt": "[Production-ready Midjourney v7 / DALL-E 3 prompt: Subject in action + environment + composition with generous negative space + studio lighting & corporate palette + photorealistic commercial style --ar 1:1 --style raw --v 7. Banish all generic AI clichés like floating blue brains, robot handshakes, or digital meshes]",
+    "imagePrompt": "[Production-ready Midjourney v7 / FLUX prompt: High-end commercial studio photography of the real physical subject with clean lighting, high tactile detail, zero text/labels/watermarks, aesthetic composition ready to be posted directly to social media --ar 1:1 --style raw --v 7]",
     "hashtags": "[Strictly 3 to 5 hyper-relevant niche hashtags, space separated]"
   }`).join(',\n')}
 ]
@@ -1131,10 +1132,17 @@ CORE RULES FOR POWERFUL & GROUNDED CONTENT:
    - Post 3 must start with a commercial / procurement calculation.
    - Post 4 must start with a provocative comparative question or bold statement.
    - Post 5 must start in the middle of shop-floor action.
-3. BAN BUZZWORD FLUFF & GROUND EVERY DETAIL:
-   - Strictly ban generic marketing fluff and buzzwords: "redefining excellence", "crafting the future", "unparalleled synergy", "passion for quality", "game changer", "unlocking potential", "striving for perfection".
-   - Replace generic fluff with hard nouns, verifiable technical metrics, real materials, certified machine tolerances (e.g. ±0.01mm, DIN-5), real manufacturing equipment (CNC machines, forging presses, spectrometers), and specific customer use cases from memory.
-   - Every post must read like it was written by the lead engineer or domain expert who built the product, not a generic marketing agency.
+3. THE 5th-GRADER / SCHOOL-KID SIMPLICITY RULE (ELI5) & AUTHENTIC GROUNDING:
+   - Make the core idea so crystal-clear, intuitive, and engaging that a 10-year-old school kid can understand it immediately!
+   - Ground every post in the company's real products, machinery, and services from memory, but translate complex engineering, software, or business concepts into vivid everyday analogies:
+     * e.g., For precision casting/forging: "Think of baking bread: if air bubbles get trapped inside, the crust snaps easily. In giant machinery, a tiny invisible bubble inside metal can make a 10-ton machine crack! Here is how we make solid steel with zero bubbles."
+     * e.g., For digital advertising / marketing: "Imagine shouting in a noisy cafeteria where no one hears you. That is what bad ads do. Instead, imagine tapping the exact 3 people who need your help right now on the shoulder."
+     * e.g., For high-precision tolerances: "Carving steel with accuracy thinner than a single strand of hair."
+   - BAN IMPENETRABLE JARGON: Strictly ban dense academic or corporate jargon walls ("sub-surface micro-porosity", "catastrophic shear planes", "synergistic paradigm"). If a technical term or industry metric (like CNC, DIN-5, or ROAS) is mentioned, IMMEDIATELY decode it with a simple 3-to-5 word plain English explanation so any reader grasps it instantly.
+   - 3-STEP UNIVERSAL STORYTELLING:
+     1. The Simple Mystery / Everyday Problem: "Ever wonder why...?" or "Imagine if..."
+     2. The Simple Solution: How the company solves it, explained step-by-step with clear analogies and emoji bullets.
+     3. The Big Takeaway: What this means for the customer in plain everyday English.
 4. EXACT COUNT: You must generate EXACTLY ${postCount} posts.
 5. LANGUAGE REQUIREMENT: You must write the entire output exclusively in the **${language}** language.
 ${language === "Hinglish" ? `
@@ -1164,9 +1172,11 @@ ${language === "Hinglish" ? `
    - Level 2 (Context/Proof): A single quantified metric or proof pill badge (e.g. "+42% ROAS", "DIN-5 Verified Standard").
    - Level 3 (Anchor): Official brand tag and aspect ratio indicator.
    - Text overlay constraint: Graphics must NEVER contain paragraphs or dense sentences. The graphic's only job is to stop the scroll in under 3 seconds; reading happens in the caption.
-9. COMMERCIAL AI IMAGE PROMPTS (MIDJOURNEY v7 / DALL-E 3):
-   - Every imagePrompt must follow the formula: Subject & Action + Setting/Environment + Composition with generous negative space for text overlay + Studio Lighting & Palette + Style + Parameters (--ar 1:1 --style raw --v 7).
-   - BAN ALL AI CLICHÉS: Absolutely no floating glowing brains, robot handshakes over cyber grids, blue digital network lines, or generic futuristic corporate holograms. Prompts must depict real industrial, commercial, or professional environments with tactile realism.
+9. DIRECT-TO-SOCIAL READY COMMERCIAL AI IMAGES (FLUX / MIDJOURNEY):
+   - Every imagePrompt must produce a clean, stunning, professional visual that looks like high-end commercial editorial photography ready to be posted directly to Instagram, LinkedIn, or Facebook without needing any graphic designer or Photoshop edits.
+   - Subject MUST be crystal-clear, realistic, tactile, and aesthetically beautiful (e.g., sleek machined stainless steel component gleaming under soft studio rim lighting on a dark stone podium; or a clean modern architectural agency workspace bathed in warm morning daylight).
+   - ABSOLUTELY NO TEXT, NO LABELS, NO WATERMARKS in the generated photo. Text belongs in the caption or on the branded graphic overlay.
+   - Banish all cheap AI clichés: no glowing blue brains, no cyber grid handshakes, no abstract neon wires, no deformed hands. Pure, tangible, award-winning editorial commercial photography.
 10. READY-TO-PUBLISH FULL POST INTEGRITY:
    - The 'fullPost' field must be completely self-contained, seamless, and flawless, combining Hook + Body + CTA + Hashtags, ready for the user to copy with 1-click and publish directly to LinkedIn, Instagram, or Facebook without any manual editing.
 
@@ -1304,12 +1314,27 @@ Begin generating the posts now:`;
                 const seed = Math.floor(Math.random() * 1000000);
                 const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPromptForUrl)}?width=1024&height=1024&seed=${seed}&nologo=true&model=flux${pollinationsKey}`;
 
+                const simpleExplanation = (p.simpleExplanation || p.kidExplanation || p.eli5 || '').trim() ||
+                  `Think of ${heading ? heading.toLowerCase() : 'this'} in simple terms: how careful attention to hidden details makes a huge difference in performance and reliability.`;
+
+                // Pick high-resolution curated photography fallback by industry
+                const industryStr = (memory.businessIdentity?.industry || '').toLowerCase();
+                let fallbackImageUrl = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1080&h=1080&fit=crop&q=85';
+                if (industryStr.includes('ad') || industryStr.includes('market') || industryStr.includes('media') || industryStr.includes('brand')) {
+                  fallbackImageUrl = 'https://images.unsplash.com/photo-1542744094-3a31f272c490?w=1080&h=1080&fit=crop&q=85';
+                } else if (industryStr.includes('tech') || industryStr.includes('software') || industryStr.includes('ai') || industryStr.includes('cloud') || industryStr.includes('it')) {
+                  fallbackImageUrl = 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1080&h=1080&fit=crop&q=85';
+                } else if (industryStr.includes('valve') || industryStr.includes('cast') || industryStr.includes('steel') || industryStr.includes('manufactur') || industryStr.includes('machin') || industryStr.includes('forg')) {
+                  fallbackImageUrl = 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=1080&h=1080&fit=crop&q=85';
+                }
+
                 return JSON.stringify({
                   ...p,
                   angle,
                   hookType,
                   heading,
                   subText,
+                  simpleExplanation,
                   hook,
                   content: hook, // for backwards-compatibility
                   body: rawBody,
@@ -1320,6 +1345,7 @@ Begin generating the posts now:`;
                   aspectRatio,
                   imagePrompt,
                   imageUrl,
+                  fallbackImageUrl,
                   hashtags
                 });
               });
