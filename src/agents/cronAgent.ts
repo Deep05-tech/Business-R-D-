@@ -438,6 +438,29 @@ export class CronAgent {
 
       // Add fresh crawled posts first
       for (const p of updatedFeed) {
+        if (!p) continue;
+        const u = String(p.post_url || p.link || p.postUrl || '').toLowerCase();
+        const id = String(p.id || '').toLowerCase();
+        if (isInstagramBundleHash(u) || isInstagramBundleHash(id)) continue;
+
+        // Auto-heal Facebook posts if thumbnail is missing
+        if (p.platform === 'Facebook' && (!p.thumbnail || !p.thumbnail.startsWith('http'))) {
+          const photoMatch = u.match(/(?:fbid=|\/photos\/(?:[^\/]+\/)?|\/photo\/?\?fbid=|\bmedia_id=)(\d{8,25})/i);
+          if (photoMatch && photoMatch[1]) {
+            p.thumbnail = `https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${photoMatch[1]}`;
+            p.media_url = p.thumbnail;
+          }
+        }
+
+        // Auto-heal Instagram posts if thumbnail is missing
+        if (p.platform === 'Instagram' && (!p.thumbnail || !p.thumbnail.startsWith('http'))) {
+          const scMatch = u.match(/\/(?:p|reel|tv)\/([A-Za-z0-9_-]{10,13})/);
+          if (scMatch && scMatch[1] && !isInstagramBundleHash(scMatch[1])) {
+            p.thumbnail = `https://www.instagram.com/p/${scMatch[1]}/media/?size=l`;
+            p.media_url = p.thumbnail;
+          }
+        }
+
         const k = normalizePostKey(p);
         if (k && !mergedMap.has(k)) {
           mergedMap.set(k, p);
@@ -456,6 +479,15 @@ export class CronAgent {
           const photoMatch = u.match(/(?:fbid=|\/photos\/(?:[^\/]+\/)?|\/photo\/?\?fbid=|\bmedia_id=)(\d{8,25})/i);
           if (photoMatch && photoMatch[1]) {
             p.thumbnail = `https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${photoMatch[1]}`;
+            p.media_url = p.thumbnail;
+          }
+        }
+
+        // Auto-heal Instagram posts if thumbnail is missing
+        if (p.platform === 'Instagram' && (!p.thumbnail || !p.thumbnail.startsWith('http'))) {
+          const scMatch = u.match(/\/(?:p|reel|tv)\/([A-Za-z0-9_-]{10,13})/);
+          if (scMatch && scMatch[1] && !isInstagramBundleHash(scMatch[1])) {
+            p.thumbnail = `https://www.instagram.com/p/${scMatch[1]}/media/?size=l`;
             p.media_url = p.thumbnail;
           }
         }
