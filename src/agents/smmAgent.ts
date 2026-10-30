@@ -13,238 +13,690 @@ interface ContentArchetype {
   bodyStyle: string;
 }
 
-function getArchetypesForCampaign(
-  totalPosts: number,
-  theme: string,
-  subTheme?: string,
-  customGoal?: string,
-  memory?: StructuredMemory
-): ContentArchetype[] {
+const MANUFACTURING_ARCHETYPES: Record<string, ContentArchetype[]> = {
+  product: [
+    {
+      angle: "Failure Mode & Engineering Solution",
+      role: "Problem-Solver",
+      objective: "Highlight how ${companyName}'s product prevents a costly failure mode in the manufacturing process.",
+      hookRule: "Start with a real-world failure scenario that ${companyName}'s product solves.",
+      visualRule: "Show the failure first, then the solution with ${companyName}'s product.",
+      bodyStyle: "Technical problem-solution format with before/after metrics."
+    },
+    {
+      angle: "Technical Spec Teardown & Micron Precision",
+      role: "Technical Expert",
+      objective: "Demonstrate ${companyName}'s product's micron-level precision and how it meets exacting specs.",
+      hookRule: "Start with a challenging spec requirement that ${companyName}'s product meets.",
+      visualRule: "Show CAD drawings, measurement tools, and inspection results.",
+      bodyStyle: "Technical specification breakdown with visual proof."
+    },
+    {
+      angle: "Procurement ROI & Scrap Reduction",
+      role: "Cost-Saver",
+      objective: "Show how ${companyName}'s product reduces procurement costs and scrap rates.",
+      hookRule: "Start with a procurement challenge that ${companyName}'s product solves.",
+      visualRule: "Show inventory management systems and cost comparison charts.",
+      bodyStyle: "Cost-benefit analysis with ROI calculations."
+    },
+    {
+      angle: "Technical Face-Off",
+      role: "Competitive Analyst",
+      objective: "Compare ${companyName}'s product to competitors' offerings in a technical showdown.",
+      hookRule: "Start with a competitive advantage that ${companyName}'s product has.",
+      visualRule: "Show side-by-side comparisons of ${companyName}'s product vs competitors.",
+      bodyStyle: "Technical comparison table with key differentiators."
+    },
+    {
+      angle: "Shop-Floor Execution",
+      role: "Operations Expert",
+      objective: "Show how ${companyName}'s product enables efficient shop-floor execution.",
+      hookRule: "Start with a shop-floor challenge that ${companyName}'s product solves.",
+      visualRule: "Show shop-floor workers using ${companyName}'s product in action.",
+      bodyStyle: "Process flow diagram with time savings metrics."
+    }
+  ],
+  brand: [
+    {
+      angle: "Company Mission & Market Category Leadership",
+      role: "Brand Storyteller",
+      objective: "Position ${companyName} as a leader in the manufacturing industry.",
+      hookRule: "Start with ${companyName}'s mission statement or industry leadership claim.",
+      visualRule: "Show ${companyName}'s facilities, employees, or industry awards.",
+      bodyStyle: "Mission statement with supporting industry data."
+    },
+    {
+      angle: "Technical Legacy & Innovation",
+      role: "Innovation Advocate",
+      objective: "Show ${companyName}'s history of technical innovation in manufacturing.",
+      hookRule: "Start with ${companyName}'s founding story or first major innovation.",
+      visualRule: "Show historical photos, patents, or product evolution timelines.",
+      bodyStyle: "Historical timeline with key innovation milestones."
+    },
+    {
+      angle: "Customer Success Stories",
+      role: "Success Storyteller",
+      objective: "Share a customer success story featuring ${companyName}'s products.",
+      hookRule: "Start with a customer challenge that ${companyName} solved.",
+      visualRule: "Show customer logos, before/after results, or testimonials.",
+      bodyStyle: "Customer case study with quantifiable results."
+    },
+    {
+      angle: "Industry Recognition",
+      role: "Awards Champion",
+      objective: "Highlight ${companyName}'s industry awards and recognitions.",
+      hookRule: "Start with a recent award or recognition that ${companyName} received.",
+      visualRule: "Show award certificates, trophies, or press releases.",
+      bodyStyle: "List of awards with brief descriptions."
+    },
+    {
+      angle: "Behind the Build",
+      role: "Process Transparency Advocate",
+      objective: "Show the manufacturing process behind ${companyName}'s products.",
+      hookRule: "Start with a behind-the-scenes look at ${companyName}'s manufacturing process.",
+      visualRule: "Show factory tours, process diagrams, or equipment in use.",
+      bodyStyle: "Process flow diagram with key equipment and materials."
+    }
+  ],
+  technical: [
+    {
+      angle: "API Design & Developer Experience",
+      role: "Developer Advocate",
+      objective: "Show how ${companyName}'s API enables seamless integration.",
+      hookRule: "Start with a developer challenge that ${companyName}'s API solves.",
+      visualRule: "Show code snippets, API documentation, or integration examples.",
+      bodyStyle: "Technical API documentation with code examples."
+    },
+    {
+      angle: "Data-Driven Manufacturing",
+      role: "Data Scientist",
+      objective: "Show how ${companyName} uses data to optimize manufacturing.",
+      hookRule: "Start with a data challenge that ${companyName} solved.",
+      visualRule: "Show data dashboards, analytics charts, or predictive models.",
+      bodyStyle: "Data analysis with key insights and recommendations."
+    },
+    {
+      angle: "IIoT & Smart Manufacturing",
+      role: "Industrial IoT Expert",
+      objective: "Show how ${companyName} uses IIoT to improve manufacturing.",
+      hookRule: "Start with an IIoT challenge that ${companyName} solved.",
+      visualRule: "Show IIoT sensors, data flows, or smart factory layouts.",
+      bodyStyle: "IIoT architecture diagram with key components."
+    },
+    {
+      angle: "Predictive Maintenance",
+      role: "Maintenance Engineer",
+      objective: "Show how ${companyName} uses predictive maintenance to reduce downtime.",
+      hookRule: "Start with a maintenance challenge that ${companyName} solved.",
+      visualRule: "Show predictive maintenance dashboards, alerts, or maintenance schedules.",
+      bodyStyle: "Predictive maintenance workflow with key metrics."
+    },
+    {
+      angle: "Quality Control & Certification",
+      role: "Quality Assurance Expert",
+      objective: "Show how ${companyName} ensures quality and compliance.",
+      hookRule: "Start with a quality challenge that ${companyName} solved.",
+      visualRule: "Show quality control processes, certifications, or inspection reports.",
+      bodyStyle: "Quality control workflow with key metrics."
+    }
+  ],
+  educative: [
+    {
+      angle: "Industry Diagnostic: Signs You've Outgrown Your Current Tool",
+      role: "Industry Analyst",
+      objective: "Help manufacturers identify when they need to upgrade their tools.",
+      hookRule: "Start with a common manufacturing challenge that indicates a tool upgrade is needed.",
+      visualRule: "Show outdated equipment, inefficient processes, or quality issues.",
+      bodyStyle: "Industry diagnostic checklist with key warning signs."
+    },
+    {
+      angle: "Technical Training & Certification",
+      role: "Training Specialist",
+      objective: "Show how ${companyName} provides technical training and certification.",
+      hookRule: "Start with a technical skill gap that ${companyName}'s training addresses.",
+      visualRule: "Show training programs, certifications, or training materials.",
+      bodyStyle: "Training program overview with key benefits."
+    },
+    {
+      angle: "Industry Trends & Future Outlook",
+      role: "Industry Futurist",
+      objective: "Share insights on the future of manufacturing and how ${companyName} is preparing.",
+      hookRule: "Start with a current industry trend that ${companyName} is addressing.",
+      visualRule: "Show industry reports, market forecasts, or technology roadmaps.",
+      bodyStyle: "Industry trend analysis with key insights."
+    },
+    {
+      angle: "Manufacturing Cost Optimization",
+      role: "Cost Optimization Expert",
+      objective: "Show how ${companyName} helps manufacturers optimize their costs.",
+      hookRule: "Start with a cost challenge that ${companyName} solved.",
+      visualRule: "Show cost comparison charts, savings reports, or cost optimization strategies.",
+      bodyStyle: "Cost optimization workflow with key metrics."
+    },
+    {
+      angle: "Sustainable Manufacturing",
+      role: "Sustainability Advocate",
+      objective: "Show how ${companyName} promotes sustainable manufacturing practices.",
+      hookRule: "Start with a sustainability challenge that ${companyName} addressed.",
+      visualRule: "Show sustainable manufacturing processes, certifications, or case studies.",
+      bodyStyle: "Sustainability program overview with key benefits."
+    }
+  ],
+  default: [
+    {
+      angle: "Behind the Build: How a Feature Ships",
+      role: "Process Transparency Advocate",
+      objective: "Show the manufacturing process behind ${companyName}'s products.",
+      hookRule: "Start with a behind-the-scenes look at ${companyName}'s manufacturing process.",
+      visualRule: "Show factory tours, process diagrams, or equipment in use.",
+      bodyStyle: "Process flow diagram with key equipment and materials."
+    },
+    {
+      angle: "Customer Success Stories",
+      role: "Success Storyteller",
+      objective: "Share a customer success story featuring ${companyName}'s products.",
+      hookRule: "Start with a customer challenge that ${companyName} solved.",
+      visualRule: "Show customer logos, before/after results, or testimonials.",
+      bodyStyle: "Customer case study with quantifiable results."
+    },
+    {
+      angle: "Industry Recognition",
+      role: "Awards Champion",
+      objective: "Highlight ${companyName}'s industry awards and recognitions.",
+      hookRule: "Start with a recent award or recognition that ${companyName} received.",
+      visualRule: "Show award certificates, trophies, or press releases.",
+      bodyStyle: "List of awards with brief descriptions."
+    },
+    {
+      angle: "Technical Legacy & Innovation",
+      role: "Innovation Advocate",
+      objective: "Show ${companyName}'s history of technical innovation in manufacturing.",
+      hookRule: "Start with ${companyName}'s founding story or first major innovation.",
+      visualRule: "Show historical photos, patents, or product evolution timelines.",
+      bodyStyle: "Historical timeline with key innovation milestones."
+    },
+    {
+      angle: "Company Mission & Market Category Leadership",
+      role: "Brand Storyteller",
+      objective: "Position ${companyName} as a leader in the manufacturing industry.",
+      hookRule: "Start with ${companyName}'s mission statement or industry leadership claim.",
+      visualRule: "Show ${companyName}'s facilities, employees, or industry awards.",
+      bodyStyle: "Mission statement with supporting industry data."
+    }
+  ]
+};
+
+const TECHNOLOGY_ARCHETYPES: Record<string, ContentArchetype[]> = {
+  product: [
+    {
+      angle: "Problem-Solution Deep Dive",
+      role: "Problem-Solver",
+      objective: "Show how ${companyName}'s product solves a specific problem in the technology industry.",
+      hookRule: "Start with a real-world problem that ${companyName}'s product solves.",
+      visualRule: "Show the problem first, then the solution with ${companyName}'s product.",
+      bodyStyle: "Problem-solution format with before/after metrics."
+    },
+    {
+      angle: "Feature Technical Teardown",
+      role: "Technical Expert",
+      objective: "Demonstrate ${companyName}'s product's key features and technical specifications.",
+      hookRule: "Start with a challenging technical requirement that ${companyName}'s product meets.",
+      visualRule: "Show technical diagrams, specifications, and feature demonstrations.",
+      bodyStyle: "Technical specification breakdown with visual proof."
+    },
+    {
+      angle: "ROI & Cost Savings Analysis",
+      role: "Cost-Saver",
+      objective: "Show how ${companyName}'s product reduces costs and increases ROI.",
+      hookRule: "Start with a cost challenge that ${companyName}'s product solves.",
+      visualRule: "Show cost comparison charts and savings reports.",
+      bodyStyle: "Cost-benefit analysis with ROI calculations."
+    },
+    {
+      angle: "Competitive Comparison",
+      role: "Competitive Analyst",
+      objective: "Compare ${companyName}'s product to competitors' offerings.",
+      hookRule: "Start with a competitive advantage that ${companyName}'s product has.",
+      visualRule: "Show side-by-side comparisons of ${companyName}'s product vs competitors.",
+      bodyStyle: "Technical comparison table with key differentiators."
+    },
+    {
+      angle: "Implementation & Onboarding Success",
+      role: "Implementation Expert",
+      objective: "Show how ${companyName}'s product enables successful implementation.",
+      hookRule: "Start with an implementation challenge that ${companyName}'s product solves.",
+      visualRule: "Show implementation workflows, training materials, or success stories.",
+      bodyStyle: "Implementation workflow with key metrics."
+    }
+  ],
+  brand: [
+    {
+      angle: "Company Mission & Market Category Leadership",
+      role: "Brand Storyteller",
+      objective: "Position ${companyName} as a leader in the technology industry.",
+      hookRule: "Start with ${companyName}'s mission statement or industry leadership claim.",
+      visualRule: "Show ${companyName}'s facilities, employees, or industry awards.",
+      bodyStyle: "Mission statement with supporting industry data."
+    },
+    {
+      angle: "Technical Legacy & Innovation",
+      role: "Innovation Advocate",
+      objective: "Show ${companyName}'s history of technical innovation in technology.",
+      hookRule: "Start with ${companyName}'s founding story or first major innovation.",
+      visualRule: "Show historical photos, patents, or product evolution timelines.",
+      bodyStyle: "Historical timeline with key innovation milestones."
+    },
+    {
+      angle: "Customer Success Stories",
+      role: "Success Storyteller",
+      objective: "Share a customer success story featuring ${companyName}'s products.",
+      hookRule: "Start with a customer challenge that ${companyName} solved.",
+      visualRule: "Show customer logos, before/after results, or testimonials.",
+      bodyStyle: "Customer case study with quantifiable results."
+    },
+    {
+      angle: "Industry Recognition",
+      role: "Awards Champion",
+      objective: "Highlight ${companyName}'s industry awards and recognitions.",
+      hookRule: "Start with a recent award or recognition that ${companyName} received.",
+      visualRule: "Show award certificates, trophies, or press releases.",
+      bodyStyle: "List of awards with brief descriptions."
+    },
+    {
+      angle: "Behind the Build",
+      role: "Process Transparency Advocate",
+      objective: "Show the development process behind ${companyName}'s products.",
+      hookRule: "Start with a behind-the-scenes look at ${companyName}'s development process.",
+      visualRule: "Show development workflows, code reviews, or feature demos.",
+      bodyStyle: "Development process diagram with key milestones."
+    }
+  ],
+  technical: [
+    {
+      angle: "API Design & Developer Experience",
+      role: "Developer Advocate",
+      objective: "Show how ${companyName}'s API enables seamless integration.",
+      hookRule: "Start with a developer challenge that ${companyName}'s API solves.",
+      visualRule: "Show code snippets, API documentation, or integration examples.",
+      bodyStyle: "Technical API documentation with code examples."
+    },
+    {
+      angle: "Data-Driven Development",
+      role: "Data Scientist",
+      objective: "Show how ${companyName} uses data to optimize development.",
+      hookRule: "Start with a data challenge that ${companyName} solved.",
+      visualRule: "Show data dashboards, analytics charts, or predictive models.",
+      bodyStyle: "Data analysis with key insights and recommendations."
+    },
+    {
+      angle: "DevOps & Continuous Integration",
+      role: "DevOps Engineer",
+      objective: "Show how ${companyName} uses DevOps to improve development.",
+      hookRule: "Start with a DevOps challenge that ${companyName} solved.",
+      visualRule: "Show CI/CD pipelines, deployment workflows, or monitoring dashboards.",
+      bodyStyle: "DevOps workflow with key metrics."
+    },
+    {
+      angle: "Security & Compliance",
+      role: "Security Expert",
+      objective: "Show how ${companyName} ensures security and compliance.",
+      hookRule: "Start with a security challenge that ${companyName} solved.",
+      visualRule: "Show security processes, certifications, or compliance reports.",
+      bodyStyle: "Security workflow with key metrics."
+    },
+    {
+      angle: "Scalability & Performance Optimization",
+      role: "Performance Engineer",
+      objective: "Show how ${companyName} optimizes performance and scalability.",
+      hookRule: "Start with a performance challenge that ${companyName} solved.",
+      visualRule: "Show performance benchmarks, load tests, or optimization strategies.",
+      bodyStyle: "Performance optimization workflow with key metrics."
+    }
+  ],
+  educative: [
+    {
+      angle: "Industry Diagnostic: Signs You've Outgrown Your Current Tool",
+      role: "Industry Analyst",
+      objective: "Help technology companies identify when they need to upgrade their tools.",
+      hookRule: "Start with a common technology challenge that indicates a tool upgrade is needed.",
+      visualRule: "Show outdated tools, inefficient processes, or quality issues.",
+      bodyStyle: "Industry diagnostic checklist with key warning signs."
+    },
+    {
+      angle: "Technical Training & Certification",
+      role: "Training Specialist",
+      objective: "Show how ${companyName} provides technical training and certification.",
+      hookRule: "Start with a technical skill gap that ${companyName}'s training addresses.",
+      visualRule: "Show training programs, certifications, or training materials.",
+      bodyStyle: "Training program overview with key benefits."
+    },
+    {
+      angle: "Industry Trends & Future Outlook",
+      role: "Industry Futurist",
+      objective: "Share insights on the future of technology and how ${companyName} is preparing.",
+      hookRule: "Start with a current industry trend that ${companyName} is addressing.",
+      visualRule: "Show industry reports, market forecasts, or technology roadmaps.",
+      bodyStyle: "Industry trend analysis with key insights."
+    },
+    {
+      angle: "Technology Cost Optimization",
+      role: "Cost Optimization Expert",
+      objective: "Show how ${companyName} helps technology companies optimize their costs.",
+      hookRule: "Start with a cost challenge that ${companyName} solved.",
+      visualRule: "Show cost comparison charts, savings reports, or cost optimization strategies.",
+      bodyStyle: "Cost optimization workflow with key metrics."
+    },
+    {
+      angle: "Sustainable Technology",
+      role: "Sustainability Advocate",
+      objective: "Show how ${companyName} promotes sustainable technology practices.",
+      hookRule: "Start with a sustainability challenge that ${companyName} addressed.",
+      visualRule: "Show sustainable technology processes, certifications, or case studies.",
+      bodyStyle: "Sustainability program overview with key benefits."
+    }
+  ],
+  default: [
+    {
+      angle: "Behind the Build: How a Feature Ships",
+      role: "Process Transparency Advocate",
+      objective: "Show the development process behind ${companyName}'s products.",
+      hookRule: "Start with a behind-the-scenes look at ${companyName}'s development process.",
+      visualRule: "Show development workflows, code reviews, or feature demos.",
+      bodyStyle: "Development process diagram with key milestones."
+    },
+    {
+      angle: "Customer Success Stories",
+      role: "Success Storyteller",
+      objective: "Share a customer success story featuring ${companyName}'s products.",
+      hookRule: "Start with a customer challenge that ${companyName} solved.",
+      visualRule: "Show customer logos, before/after results, or testimonials.",
+      bodyStyle: "Customer case study with quantifiable results."
+    },
+    {
+      angle: "Industry Recognition",
+      role: "Awards Champion",
+      objective: "Highlight ${companyName}'s industry awards and recognitions.",
+      hookRule: "Start with a recent award or recognition that ${companyName} received.",
+      visualRule: "Show award certificates, trophies, or press releases.",
+      bodyStyle: "List of awards with brief descriptions."
+    },
+    {
+      angle: "Technical Legacy & Innovation",
+      role: "Innovation Advocate",
+      objective: "Show ${companyName}'s history of technical innovation in technology.",
+      hookRule: "Start with ${companyName}'s founding story or first major innovation.",
+      visualRule: "Show historical photos, patents, or product evolution timelines.",
+      bodyStyle: "Historical timeline with key innovation milestones."
+    },
+    {
+      angle: "Company Mission & Market Category Leadership",
+      role: "Brand Storyteller",
+      objective: "Position ${companyName} as a leader in the technology industry.",
+      hookRule: "Start with ${companyName}'s mission statement or industry leadership claim.",
+      visualRule: "Show ${companyName}'s facilities, employees, or industry awards.",
+      bodyStyle: "Mission statement with supporting industry data."
+    }
+  ]
+};
+
+const AGRICULTURE_ARCHETYPES: Record<string, ContentArchetype[]> = {
+  product: [
+    {
+      angle: "Crop Problem & Solution",
+      role: "Agricultural Expert",
+      objective: "Show how ${companyName}'s product solves a specific crop problem.",
+      hookRule: "Start with a real-world crop problem that ${companyName}'s product solves.",
+      visualRule: "Show the crop problem first, then the solution with ${companyName}'s product.",
+      bodyStyle: "Problem-solution format with before/after metrics."
+    },
+    {
+      angle: "Product Specification & Application",
+      role: "Technical Expert",
+      objective: "Demonstrate ${companyName}'s product's specifications and application.",
+      hookRule: "Start with a challenging application requirement that ${companyName}'s product meets.",
+      visualRule: "Show product specifications, application diagrams, and usage examples.",
+      bodyStyle: "Technical specification breakdown with visual proof."
+    },
+    {
+      angle: "ROI & Yield Improvement",
+      role: "Farm Manager",
+      objective: "Show how ${companyName}'s product improves yields and ROI.",
+      hookRule: "Start with a yield challenge that ${companyName}'s product solves.",
+      visualRule: "Show yield comparison charts and savings reports.",
+      bodyStyle: "Cost-benefit analysis with ROI calculations."
+    },
+    {
+      angle: "Product Comparison",
+      role: "Competitive Analyst",
+      objective: "Compare ${companyName}'s product to competitors' offerings.",
+      hookRule: "Start with a competitive advantage that ${companyName}'s product has.",
+      visualRule: "Show side-by-side comparisons of ${companyName}'s product vs competitors.",
+      bodyStyle: "Technical comparison table with key differentiators."
+    },
+    {
+      angle: "Field Application & Best Practices",
+      role: "Field Specialist",
+      objective: "Show how ${companyName}'s product enables successful field application.",
+      hookRule: "Start with a field application challenge that ${companyName}'s product solves.",
+      visualRule: "Show field application workflows, training materials, or success stories.",
+      bodyStyle: "Field application workflow with key metrics."
+    }
+  ],
+  brand: [
+    {
+      angle: "Company Mission & Market Category Leadership",
+      role: "Brand Storyteller",
+      objective: "Position ${companyName} as a leader in the agriculture industry.",
+      hookRule: "Start with ${companyName}'s mission statement or industry leadership claim.",
+      visualRule: "Show ${companyName}'s facilities, employees, or industry awards.",
+      bodyStyle: "Mission statement with supporting industry data."
+    },
+    {
+      angle: "Technical Legacy & Innovation",
+      role: "Innovation Advocate",
+      objective: "Show ${companyName}'s history of technical innovation in agriculture.",
+      hookRule: "Start with ${companyName}'s founding story or first major innovation.",
+      visualRule: "Show historical photos, patents, or product evolution timelines.",
+      bodyStyle: "Historical timeline with key innovation milestones."
+    },
+    {
+      angle: "Customer Success Stories",
+      role: "Success Storyteller",
+      objective: "Share a customer success story featuring ${companyName}'s products.",
+      hookRule: "Start with a customer challenge that ${companyName} solved.",
+      visualRule: "Show customer logos, before/after results, or testimonials.",
+      bodyStyle: "Customer case study with quantifiable results."
+    },
+    {
+      angle: "Industry Recognition",
+      role: "Awards Champion",
+      objective: "Highlight ${companyName}'s industry awards and recognitions.",
+      hookRule: "Start with a recent award or recognition that ${companyName} received.",
+      visualRule: "Show award certificates, trophies, or press releases.",
+      bodyStyle: "List of awards with brief descriptions."
+    },
+    {
+      angle: "Behind the Build",
+      role: "Process Transparency Advocate",
+      objective: "Show the development process behind ${companyName}'s products.",
+      hookRule: "Start with a behind-the-scenes look at ${companyName}'s development process.",
+      visualRule: "Show development workflows, quality control processes, or product demos.",
+      bodyStyle: "Development process diagram with key milestones."
+    }
+  ],
+  technical: [
+    {
+      angle: "Product Formulation & Application",
+      role: "Formulation Scientist",
+      objective: "Show how ${companyName}'s product is formulated and applied.",
+      hookRule: "Start with a formulation challenge that ${companyName}'s product solves.",
+      visualRule: "Show formulation processes, application diagrams, or usage examples.",
+      bodyStyle: "Technical formulation breakdown with visual proof."
+    },
+    {
+      angle: "Data-Driven Agriculture",
+      role: "Data Scientist",
+      objective: "Show how ${companyName} uses data to optimize agriculture.",
+      hookRule: "Start with a data challenge that ${companyName} solved.",
+      visualRule: "Show data dashboards, analytics charts, or predictive models.",
+      bodyStyle: "Data analysis with key insights and recommendations."
+    },
+    {
+      angle: "Precision Agriculture",
+      role: "Precision Agriculture Expert",
+      objective: "Show how ${companyName} uses precision agriculture to improve yields.",
+      hookRule: "Start with a precision agriculture challenge that ${companyName} solved.",
+      visualRule: "Show precision agriculture tools, data flows, or field layouts.",
+      bodyStyle: "Precision agriculture workflow with key metrics."
+    },
+    {
+      angle: "Quality Control & Certification",
+      role: "Quality Assurance Expert",
+      objective: "Show how ${companyName} ensures quality and compliance.",
+      hookRule: "Start with a quality challenge that ${companyName} solved.",
+      visualRule: "Show quality control processes, certifications, or inspection reports.",
+      bodyStyle: "Quality control workflow with key metrics."
+    },
+    {
+      angle: "Sustainable Agriculture",
+      role: "Sustainability Advocate",
+      objective: "Show how ${companyName} promotes sustainable agriculture practices.",
+      hookRule: "Start with a sustainability challenge that ${companyName} addressed.",
+      visualRule: "Show sustainable agriculture processes, certifications, or case studies.",
+      bodyStyle: "Sustainability program overview with key benefits."
+    }
+  ],
+  educative: [
+    {
+      angle: "Industry Diagnostic: Signs You've Outgrown Your Current Tool",
+      role: "Industry Analyst",
+      objective: "Help farmers identify when they need to upgrade their tools.",
+      hookRule: "Start with a common agriculture challenge that indicates a tool upgrade is needed.",
+      visualRule: "Show outdated tools, inefficient processes, or quality issues.",
+      bodyStyle: "Industry diagnostic checklist with key warning signs."
+    },
+    {
+      angle: "Technical Training & Certification",
+      role: "Training Specialist",
+      objective: "Show how ${companyName} provides technical training and certification.",
+      hookRule: "Start with a technical skill gap that ${companyName}'s training addresses.",
+      visualRule: "Show training programs, certifications, or training materials.",
+      bodyStyle: "Training program overview with key benefits."
+    },
+    {
+      angle: "Industry Trends & Future Outlook",
+      role: "Industry Futurist",
+      objective: "Share insights on the future of agriculture and how ${companyName} is preparing.",
+      hookRule: "Start with a current industry trend that ${companyName} is addressing.",
+      visualRule: "Show industry reports, market forecasts, or technology roadmaps.",
+      bodyStyle: "Industry trend analysis with key insights."
+    },
+    {
+      angle: "Agriculture Cost Optimization",
+      role: "Cost Optimization Expert",
+      objective: "Show how ${companyName} helps farmers optimize their costs.",
+      hookRule: "Start with a cost challenge that ${companyName} solved.",
+      visualRule: "Show cost comparison charts, savings reports, or cost optimization strategies.",
+      bodyStyle: "Cost optimization workflow with key metrics."
+    },
+    {
+      angle: "Sustainable Agriculture",
+      role: "Sustainability Advocate",
+      objective: "Show how ${companyName} promotes sustainable agriculture practices.",
+      hookRule: "Start with a sustainability challenge that ${companyName} addressed.",
+      visualRule: "Show sustainable agriculture processes, certifications, or case studies.",
+      bodyStyle: "Sustainability program overview with key benefits."
+    }
+  ],
+  default: [
+    {
+      angle: "Behind the Build: How a Product is Made",
+      role: "Process Transparency Advocate",
+      objective: "Show the development process behind ${companyName}'s products.",
+      hookRule: "Start with a behind-the-scenes look at ${companyName}'s development process.",
+      visualRule: "Show development workflows, quality control processes, or product demos.",
+      bodyStyle: "Development process diagram with key milestones."
+    },
+    {
+      angle: "Customer Success Stories",
+      role: "Success Storyteller",
+      objective: "Share a customer success story featuring ${companyName}'s products.",
+      hookRule: "Start with a customer challenge that ${companyName} solved.",
+      visualRule: "Show customer logos, before/after results, or testimonials.",
+      bodyStyle: "Customer case study with quantifiable results."
+    },
+    {
+      angle: "Industry Recognition",
+      role: "Awards Champion",
+      objective: "Highlight ${companyName}'s industry awards and recognitions.",
+      hookRule: "Start with a recent award or recognition that ${companyName} received.",
+      visualRule: "Show award certificates, trophies, or press releases.",
+      bodyStyle: "List of awards with brief descriptions."
+    },
+    {
+      angle: "Technical Legacy & Innovation",
+      role: "Innovation Advocate",
+      objective: "Show ${companyName}'s history of technical innovation in agriculture.",
+      hookRule: "Start with ${companyName}'s founding story or first major innovation.",
+      visualRule: "Show historical photos, patents, or product evolution timelines.",
+      bodyStyle: "Historical timeline with key innovation milestones."
+    },
+    {
+      angle: "Company Mission & Market Category Leadership",
+      role: "Brand Storyteller",
+      objective: "Position ${companyName} as a leader in the agriculture industry.",
+      hookRule: "Start with ${companyName}'s mission statement or industry leadership claim.",
+      visualRule: "Show ${companyName}'s facilities, employees, or industry awards.",
+      bodyStyle: "Mission statement with supporting industry data."
+    }
+  ]
+};
+
+function getArchetypesForCampaign(totalPosts: number, theme: string, subTheme?: string, customGoal?: string, memory?: StructuredMemory): ContentArchetype[] {
+  const ind = memory?.businessIdentity?.industry || "";
   const companyName = memory?.businessIdentity?.officialName || "The Company";
-  const targetProduct = subTheme || "Core Offerings";
+  const targetProduct = subTheme || memory?.offerings?.products?.[0]?.name || "our product";
 
-  let archetypes: ContentArchetype[] = [];
+  const isMfg = /manufactur|forg|machin|casting|steel|metal|industrial|engineering|auto|component|bearing|valve/i.test(ind);
+  const isTech = /software|technology|it|saas|cloud|data|platform/i.test(ind);
+  const isAgri = /seed|agri|crop|farming|fertilizer/i.test(ind);
 
-  if (theme === "product" || subTheme) {
-    archetypes = [
-      {
-        angle: "Failure Mode & Engineering Solution",
-        role: "The Diagnostic Forensic Metallurgist",
-        objective: `Analyze an expensive mechanical or operational failure point in client machinery/assemblies (e.g. tooth root fatigue under cyclic torque, thermal wear, micro-cracks in castings, hydraulic seal blowouts). Detail the continuous grain flow, metallurgical integrity, and exact forged specifications of ${targetProduct} that eliminate this failure mode.`,
-        hookRule: "Start immediately in media res with the exact failure point, machine breakdown risk, or costly downtime scenario. Zero generic intros.",
-        visualRule: "Split-screen CAD diagram or macro teardown photo: cracked generic alternative vs continuous forged grain flow with stress-vector overlay.",
-        bodyStyle: "Diagnostic cause-and-effect breakdown: Problem -> Metallurgical Root Cause -> Engineering Solution -> Client Machine Reliability."
-      },
-      {
-        angle: "Technical Spec Teardown & Micron Precision",
-        role: "The Chief Metrologist / Tooling Director",
-        objective: `Unpack the raw engineering numbers from memory for ${targetProduct}: exact DIN tolerances, surface finish (e.g. Ra ≤ 0.8 µm), CNC multi-axis tooling, induction heating temperatures, and 3D CMM coordinate inspection. Zero fluff, pure engineering authority.`,
-        hookRule: "Start with an unassailable engineering metric, tolerance threshold, or material grade from memory. Cite hard numbers immediately.",
-        visualRule: "Exploded CAD schematic with dimensional tolerance callouts, surface roughness graph, or 3D CMM ruby coordinate probe measuring the component.",
-        bodyStyle: "Data-dense specification sheet formatted with technical bullet points, machine verification stages, and material chemistry."
-      },
-      {
-        angle: "Procurement ROI & Scrap Reduction",
-        role: "The Supply Chain & Commercial Strategist",
-        objective: `Address the OEM Procurement Director and Plant Manager's financial bottom-line: near-net shape forming reducing machining cycle times by 20-30%, 15% raw material savings, zero assembly rework, and guaranteed batch-to-batch traceability for global supply chains.`,
-        hookRule: "Start with a hard commercial calculation: CNC machining hours wasted, raw billet scrap disposal costs, or supply-chain audit penalties.",
-        visualRule: "Dynamic ROI dashboard, cycle-time comparison bar chart, or cost-per-part savings breakdown comparing near-net shape vs traditional machining.",
-        bodyStyle: "Executive business case detailing machining cycle reduction, scrap cost savings, batch traceability, and Year-1 ROI."
-      },
-      {
-        angle: "Technical Face-Off / Myth vs Engineering Reality",
-        role: "The Industry Challenger",
-        objective: `Directly challenge an accepted industry shortcut (e.g. 'Why Standard Castings Crack Under Dynamic Shock While Closed-Die Forgings Endure 10x Fatigue Life' or 'Standard Bar Machining vs Near-Net Broached Blanks'). Provide an unapologetic technical comparison.`,
-        hookRule: "Start with a provocative comparative question or bold statement busting an industry compromise.",
-        visualRule: "Side-by-side split comparison visual ('Standard Market Shortcut' vs 'Our Certified Engineering Standard').",
-        bodyStyle: "Direct comparison table or side-by-side analysis contrasting material density, cycle life, and total cost of ownership."
-      },
-      {
-        angle: "Shop-Floor Execution & Zero-Defect Quality Gate",
-        role: "The Master Craftsman & Quality Director",
-        objective: `Take the reader inside the actual manufacturing facility at the moment of truth: induction heating, 2000-ton forging impact, or optical emission spectro testing where any part off by 0.02mm is scrapped on the spot. Showcase true manufacturing pride and verifiable quality control.`,
-        hookRule: "Start in the visceral heat of the action on the plant floor. The sound, temperature, or exact laser measurement.",
-        visualRule: "Raw, dynamic photography: glowing red billet under the 2000T press, coolant flood in a CNC milling center, or laser-guided CMM inspection.",
-        bodyStyle: "Step-by-step walkthrough of the internal inspection milestones: raw billet testing -> closed-die forming -> CNC finishing -> final coordinate metrology."
-      }
-    ];
-  } else if (theme === "brand") {
-    archetypes = [
-      {
-        angle: "Global Supply Chain Role & Mission Reliability",
-        role: "The Executive Vice President of Global Operations",
-        objective: `Position ${companyName} not just as a vendor, but as an indispensable engineering partner powering critical mobility, aerospace, and energy infrastructure across global supply networks.`,
-        hookRule: "Start with the high-stakes reality of critical mechanical assemblies operating thousands of miles away.",
-        visualRule: "Global supply chain map with interconnected logistics nodes and high-precision components highlighted in aerospace/automotive assemblies.",
-        bodyStyle: "Strategic thought-leadership narrative connecting engineering precision to global infrastructure stability."
-      },
-      {
-        angle: "Infrastructure & Heavy Machinery Investment",
-        role: "The Director of Plant Modernization & IIoT",
-        objective: `Showcase the sheer scale and technological firepower inside the facility: closed-die hammer lines, automated induction heating, multi-axis CNC cells, and digital quality monitoring.`,
-        hookRule: "Start with a striking stat about plant capacity, press tonnage, or capital reinvestment in next-generation machinery.",
-        visualRule: "Wide-angle architectural/industrial view of the plant floor featuring multi-ton presses and robotic automation.",
-        bodyStyle: "Infrastructure spotlight detailing equipment specifications, daily capacity, and digital manufacturing capabilities."
-      },
-      {
-        angle: "Zero-Defect Culture & Certified Standards",
-        role: "The Head of Global Quality & Compliance",
-        objective: `Highlight rigorous quality management (ISO, IATF 16949, DIN standards), transparent audit trails, and the uncompromising standard that governs every batch.`,
-        hookRule: "Start with the threshold where other suppliers compromise, but ${companyName} draws the line.",
-        visualRule: "Certified inspection report overlay on a finished component with quality stamps and dimensional verification checks.",
-        bodyStyle: "Quality charter breaking down the testing protocols (ultrasonic, spectro, dimensional) that protect client reputation."
-      },
-      {
-        angle: "Engineering Heritage Meets Modern IIoT",
-        role: "The Chief Technology Evangelist",
-        objective: "Contrast foundational manufacturing craftsmanship with modern Industry 4.0 data traceability—sensors on presses, automated tool wear tracking, and digital certificates.",
-        hookRule: "Start with the evolution of precision manufacturing from art to predictive digital science.",
-        visualRule: "Dual imagery showing classic forging fire seamlessly merging with digital telemetry overlays and sensor data.",
-        bodyStyle: "Compelling narrative on modernizing manufacturing without losing physical metallurgical mastery."
-      },
-      {
-        angle: "Client Partnership Proof & OEM Export Footprint",
-        role: "The Global Accounts Director",
-        objective: "Prove reliability through export performance: delivering to Tier-1 OEMs and demanding international markets with on-time predictability and zero line disruptions.",
-        hookRule: "Start with a milestone metric: thousands of parts delivered across continents with zero assembly rejections.",
-        visualRule: "Clean infographic showcasing export destinations, container shipments, and long-term partnership retention stats.",
-        bodyStyle: "Case-study style summary of supplier reliability and long-term supply chain security for international buyers."
-      }
-    ];
-  } else if (theme === "technical") {
-    archetypes = [
-      {
-        angle: "Micro-Tolerances & 5-Axis CNC Precision",
-        role: "The Chief Machinist",
-        objective: "Deep-dive into CNC toolpaths, spindle dynamics, live tooling, and holding ±0.01mm across high-volume production batches.",
-        hookRule: "Start with the physics of machining deflection and how proper tooling eliminates dimensional drift.",
-        visualRule: "Close-up action macro: high-speed carbide endmill shaving hardened alloy steel with high-pressure coolant stream.",
-        bodyStyle: "Machining case study: tooling selection, spindle speed, feeds, and surface finish metrics."
-      },
-      {
-        angle: "Metallurgical Grain-Flow & Thermal Quenching",
-        role: "The Senior Metallurgical Engineer",
-        objective: "Explain how induction billet heating and closed-die forging align molecular grain flow along the component's contours to multiply fatigue life.",
-        hookRule: "Start with the microscopic difference between cast crystalline structures and forged grain alignment under stress.",
-        visualRule: "Etched metallurgical cross-section showing continuous grain flow lines under microscopic magnification.",
-        bodyStyle: "Material science breakdown: heat-treatment curves, grain flow comparison, and Rockwell hardness consistency."
-      },
-      {
-        angle: "Metrology Lab & Coordinate Measurement (CMM)",
-        role: "The Quality Metrologist",
-        objective: "Highlight non-destructive testing (NDT), 3D CMM coordinate inspection, optical emission spectrometry, and ultrasonic scanning.",
-        hookRule: "Start with the exact micron threshold that separates an acceptable part from a scrapped part in the testing lab.",
-        visualRule: "Ruby-tipped CMM touch probe making contact with an intricate machined surface with digital coordinate overlay.",
-        bodyStyle: "Testing protocol breakdown: raw material verification -> in-process gauging -> final 3D coordinate mapping."
-      },
-      {
-        angle: "Design for Manufacturability (DFM) & Tooling",
-        role: "The Application Engineering Lead",
-        objective: "Demonstrate how early engineering collaboration with clients refines part geometry to eliminate stress concentrations and reduce machining time.",
-        hookRule: "Start with an engineering design tweak that saved 25% in cycle time without compromising strength.",
-        visualRule: "CAD wireframe comparison highlighting draft angles, fillet radii, and near-net forging contours.",
-        bodyStyle: "Collaborative engineering story: from client 2D/3D print to optimized tooling and rapid first-article inspection."
-      },
-      {
-        angle: "Near-Net Shape Forming & Energy Efficiency",
-        role: "The Process Optimization Engineer",
-        objective: "Detail the near-net shape broaching and closed-die process that minimizes scrap steel and slashes final machining hours.",
-        hookRule: "Start with the exact kilograms of steel saved per thousand components through near-net precision.",
-        visualRule: "Step-by-step progressive forging stages from raw billet to finished broached blank.",
-        bodyStyle: "Process efficiency breakdown: material utilization rates, energy optimization, and cycle-time savings."
-      }
-    ];
-  } else if (theme === "educative") {
-    archetypes = [
-      {
-        angle: "Industry Diagnostic: 3 Failure Signs in High-Torque Drivetrains",
-        role: "The Senior Industry Consultant",
-        objective: "Educate mechanical engineers on the early warning indicators of fatigue wear, micro-cracking, and backlash in heavy assemblies.",
-        hookRule: "Start with a direct warning sign that mechanical designers frequently overlook until field failure occurs.",
-        visualRule: "Technical diagnostic checklist graphic with illustrative component wear schematics.",
-        bodyStyle: "Educational breakdown of symptom -> underlying physics -> component selection criteria."
-      },
-      {
-        angle: "Grain Flow vs Porosity: The Metallurgist's Guide",
-        role: "The Materials Science Educator",
-        objective: "Demystify why internal porosity in castings causes catastrophic shear, while forged grain flow distributes load.",
-        hookRule: "Start with the invisible flaw inside metal that ultrasonic testing reveals immediately.",
-        visualRule: "High-contrast infographic comparing cast internal porosity vs forged dense molecular alignment.",
-        bodyStyle: "Authoritative educational explanation breaking down fatigue thresholds and fracture mechanics."
-      },
-      {
-        angle: "DIN-5 vs DIN-7: What Gear Accuracy Actually Costs in Energy Loss",
-        role: "The Powertrain Efficiency Specialist",
-        objective: "Showcase the mathematical link between gear tooth profile accuracy, friction heat, vibration, and total mechanical efficiency.",
-        hookRule: "Start with the percentage of energy wasted when gear tooth accuracy drops by just two DIN classes.",
-        visualRule: "Efficiency curve chart plotting transmission energy loss against gear tolerance classes.",
-        bodyStyle: "Engineering analysis explaining tooth contact pattern, noise reduction, and lifetime energy savings."
-      },
-      {
-        angle: "Near-Net Broaching Explained: Why Machining from Solid Bar Is Outdated",
-        role: "The Modern Manufacturing Analyst",
-        objective: "Educate procurement and engineering teams on how near-net shape blanks eliminate 70% of redundant machining passes.",
-        hookRule: "Start with the hidden machine-hour cost of cutting away expensive alloy steel from solid billets.",
-        visualRule: "Cross-sectional comparison showing solid bar machining waste vs near-net shape forging contours.",
-        bodyStyle: "Educational guide comparing cycle times, tool wear, and material utilization."
-      },
-      {
-        angle: "The 5-Point Quality Checklist Before Approving Custom Tooling",
-        role: "The Tooling & Sourcing Auditor",
-        objective: "Provide procurement managers and lead engineers with a practical audit checklist for evaluating component manufacturing partners.",
-        hookRule: "Start with the 5 questions that protect your supply chain from delayed tooling and out-of-spec batches.",
-        visualRule: "Numbered audit checklist card with clear verification icons and inspection milestones.",
-        bodyStyle: "Actionable 5-point checklist covering raw material traceability, tooling draft angles, CMM inspection, and heat-treat certificates."
-      }
-    ];
+  let archetypeSet: Record<string, ContentArchetype[]>;
+  if (isMfg) {
+    archetypeSet = MANUFACTURING_ARCHETYPES;
+  } else if (isTech) {
+    archetypeSet = TECHNOLOGY_ARCHETYPES;
+  } else if (isAgri) {
+    archetypeSet = AGRICULTURE_ARCHETYPES;
   } else {
-    // UGC / Behind-the-Scenes & Authentic
-    archetypes = [
-      {
-        angle: "Behind the Controls: 5-Axis CNC Toolpaths with Zero Runout",
-        role: "The Senior CNC Machinist",
-        objective: "An authentic, first-person look at what it takes to dial in a high-speed milling setup for complex automotive components.",
-        hookRule: "Start with the sound of the spindle spinning up to speed and the precision dial reading zero runout.",
-        visualRule: "First-person perspective photo looking into the CNC enclosure: carbide cutter poised above component with digital readout.",
-        bodyStyle: "Authentic craftsman story detailing tool calibration, surface finish pride, and zero tolerance for vibration."
-      },
-      {
-        angle: "The Red-Hot Forge: 2000-Ton Press Strike at 850°C",
-        role: "The Forge Master",
-        objective: "Visceral, raw shop-floor authenticity: transferring white-hot induction-heated billets into the forging die under massive tonnage.",
-        hookRule: "Start with the intense heat, the glowing orange billet, and the ground-shaking impact of the press.",
-        visualRule: "Action shot with sparks flying as the closed-die hammer strikes the glowing steel billet.",
-        bodyStyle: "First-person operational narrative on controlling billet temperature, die lubrication, and forging cadence."
-      },
-      {
-        angle: "Inside the Metrology Room: Measuring Down to the Micron",
-        role: "The Quality Metrologist",
-        objective: "Showcase the quiet, temperature-controlled inspection laboratory where parts are measured with laser and ruby probes.",
-        hookRule: "Start with the absolute stillness of the metrology lab where a 1-degree temperature change alters measurements.",
-        visualRule: "Close-up photo of ruby CMM stylus touching a pristine machined ring with green tolerance check on screen.",
-        bodyStyle: "Behind-the-scenes walkthrough of 100% dimensional verification before packing."
-      },
-      {
-        angle: "The Metallurgist's Bench: Spectrometry Before Billet Release",
-        role: "The Laboratory Chemist",
-        objective: "Take readers into the chemical testing lab where raw steel melts undergo optical emission spectrometry to verify alloy composition.",
-        hookRule: "Start with the test burn: a flash of electrical arc revealing the exact carbon and chromium percentages.",
-        visualRule: "Photo of laboratory spectrometer spark stand with live spectral chemical readout on monitor.",
-        bodyStyle: "Insider look at chemical certificate verification ensuring raw steel meets exact DIN/ASTM specifications."
-      },
-      {
-        angle: "The Dispatch Bay: Crating Precision for International OEMs",
-        role: "The Export Logistics Lead",
-        objective: "Follow the final stage: corrosion-inhibiting packaging, ultrasonic batch certificates, and container loading for European OEMs.",
-        hookRule: "Start with the final barcode scan that confirms an international batch is sealed, certified, and ready for transit.",
-        visualRule: "Neatly crated, shrink-wrapped batches of precision components with international shipping labels and quality tags.",
-        bodyStyle: "Operational pride in zero shipping damage, vacuum packaging, and guaranteed on-time port delivery."
-      }
-    ];
+    // Default to manufacturing if industry is unclear
+    if (/industrial|engineering|mechanical|precision/i.test(ind)) {
+      archetypeSet = MANUFACTURING_ARCHETYPES;
+    } else {
+      archetypeSet = TECHNOLOGY_ARCHETYPES;
+    }
+  }
+
+  let archetypes = archetypeSet[theme] || archetypeSet.default;
+
+  // Replace placeholders with actual values
+  archetypes = archetypes.map(a => ({
+    ...a,
+    objective: a.objective.replace(/\$\{targetProduct\}/g, targetProduct).replace(/\$\{companyName\}/g, companyName),
+    hookRule: a.hookRule.replace(/\$\{targetProduct\}/g, targetProduct).replace(/\$\{companyName\}/g, companyName),
+    visualRule: a.visualRule.replace(/\$\{targetProduct\}/g, targetProduct).replace(/\$\{companyName\}/g, companyName),
+    bodyStyle: a.bodyStyle.replace(/\$\{targetProduct\}/g, targetProduct).replace(/\$\{companyName\}/g, companyName)
+  }));
+
+  // Ensure we have enough archetypes
+  if (archetypes.length < totalPosts) {
+    archetypes = [...archetypes, ...archetypeSet.default.slice(0, totalPosts - archetypes.length)];
   }
 
   return archetypes.slice(0, Math.min(Math.max(totalPosts, 1), 5));
 }
+
+// Rest of the file will continue with the SmmAgent class...
 
 export class SmmAgent {
   readonly name = "smm-agent";
