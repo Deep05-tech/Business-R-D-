@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/styles.css?v=55">
+  <link rel="stylesheet" href="/static/styles.css?v=57">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
@@ -29,12 +29,12 @@
       <form id="login-form" onsubmit="return false;" style="text-align: left;">
         <div class="form-group" style="margin-bottom: 20px;">
           <label style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #cbd5e1; margin-bottom: 8px;">Username</label>
-          <input id="login-username" type="text" value="admin" required placeholder="Enter username" autocomplete="username" style="width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(15, 23, 42, 0.6); color: #ffffff; font-size: 15px;" />
+          <input id="login-username" type="text" value="" required placeholder="Enter username" autocomplete="username" style="width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(15, 23, 42, 0.6); color: #ffffff; font-size: 15px;" />
         </div>
 
         <div class="form-group" style="margin-bottom: 28px;">
           <label style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #cbd5e1; margin-bottom: 8px;">Password</label>
-          <input id="login-password" type="password" value="admin123" required placeholder="Enter password" autocomplete="current-password" style="width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(15, 23, 42, 0.6); color: #ffffff; font-size: 15px;" />
+          <input id="login-password" type="password" value="" required placeholder="Enter password" autocomplete="current-password" style="width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(15, 23, 42, 0.6); color: #ffffff; font-size: 15px;" />
         </div>
 
         <div id="login-error" style="display: none; margin-bottom: 20px; padding: 12px; border-radius: 10px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; font-size: 13px; text-align: center;">
@@ -95,7 +95,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a href="#" class="nav-item active" onclick="switchTab('projects', 'Projects Directory'); return false;" id="nav-projects">
+      <a href="#" class="nav-item active" onclick="switchTab('projects', 'Projects Overview'); return false;" id="nav-projects">
         <span class="icon">📁</span> Projects Overview
       </a>
 
@@ -146,7 +146,7 @@
         <button id="nav-toggle" class="nav-toggle" type="button" onclick="window.toggleNavigation()" aria-label="Open navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
-        <h1 id="page-title">New Business Analysis</h1>
+        <h1 id="page-title">Projects Overview</h1>
       </div>
       <div class="topbar-actions">
         <div id="live-indicator" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #22c55e; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2); padding: 4px 12px; border-radius: 20px;">
@@ -633,7 +633,7 @@
   </main>
   </div>
 
-  <script src="/static/app.js?v=52"></script>
+  <script src="/static/app.js?v=54"></script>
 </body>
 
 </html>

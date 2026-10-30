@@ -72,29 +72,152 @@ window.applyCurrentUser = function(user) {
   if (deleteProject && !isAdmin) deleteProject.style.display = 'none';
 };
 
+window.clearSessionWorkspaceState = function() {
+  // 1. Remove project and tab state from localStorage
+  localStorage.removeItem('activeProjectUrl');
+  localStorage.removeItem('activeTab');
+  localStorage.removeItem('activeTabTitle');
+  localStorage.removeItem('smmLastResult');
+  localStorage.removeItem('smmLastProjectUrl');
+
+  // 2. Clear JavaScript runtime globals
+  window.activeProjectUrl = null;
+  window.projectMemory = null;
+  window.lastTrendingTopic = null;
+  window.selectedTrendingTopic = null;
+
+  // 3. Clear URL hash
+  if (window.location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+
+  // 4. Reset sidebar project select and delete button
+  const globalProjectSelect = document.getElementById('global-project');
+  if (globalProjectSelect) {
+    globalProjectSelect.value = '';
+    globalProjectSelect.dispatchEvent(new CustomEvent('optionsUpdated'));
+  }
+  const deleteBtn = document.getElementById('btn-global-delete');
+  if (deleteBtn) deleteBtn.style.display = 'none';
+
+  // 5. Disable project-specific sidebar tabs until a project is explicitly opened
+  document.querySelectorAll('.sidebar-nav .nav-item').forEach(item => {
+    const id = item.id;
+    if (id !== 'nav-projects' && id !== 'nav-analyse') {
+      item.classList.add('disabled');
+      item.onclick = (e) => { e.preventDefault(); return false; };
+    }
+    item.classList.remove('active');
+  });
+  const navProjects = document.getElementById('nav-projects');
+  if (navProjects) {
+    navProjects.classList.remove('disabled');
+    navProjects.classList.add('active');
+    navProjects.onclick = () => { window.switchTab('projects', 'Projects Overview'); return false; };
+  }
+  const navAnalyse = document.getElementById('nav-analyse');
+  if (navAnalyse) {
+    navAnalyse.classList.remove('disabled');
+    navAnalyse.onclick = () => { window.switchTab('analyse', 'New Analysis'); return false; };
+  }
+
+  // 6. Reset form inputs
+  const businessForm = document.getElementById('business-form');
+  if (businessForm && typeof businessForm.reset === 'function') businessForm.reset();
+  const detailsForm = document.getElementById('details-form');
+  if (detailsForm && typeof detailsForm.reset === 'function') detailsForm.reset();
+
+  const websiteUrlInput = document.getElementById('website-url');
+  if (websiteUrlInput) websiteUrlInput.value = '';
+  const siteUrlInput = document.getElementById('siteUrl');
+  if (siteUrlInput) siteUrlInput.value = '';
+  const searchInput = document.getElementById('search-projects-input');
+  if (searchInput) searchInput.value = '';
+  const smmGoal = document.getElementById('smm-custom-goal');
+  if (smmGoal) smmGoal.value = '';
+  const addCompDetails = document.getElementById('add-competitor-details');
+  if (addCompDetails) addCompDetails.open = false;
+
+  // 7. Clear SMM answer container & text
+  const smmAnswer = document.getElementById('smm-answer');
+  if (smmAnswer) smmAnswer.style.display = 'none';
+  const smmText = document.getElementById('smm-text');
+  if (smmText) smmText.innerHTML = '';
+  const trendingCont = document.getElementById('smm-trending-topics');
+  if (trendingCont) {
+    trendingCont.style.display = 'none';
+    trendingCont.innerHTML = '';
+  }
+
+  // 8. Clear SEO container & text
+  const seoAnswer = document.getElementById('seo-answer');
+  if (seoAnswer) seoAnswer.style.display = 'none';
+  const seoText = document.getElementById('seo-text');
+  if (seoText) seoText.innerHTML = '';
+
+  // 9. Clear Details, Competitors, and Social Feed containers
+  const detailsContent = document.getElementById('details-content');
+  if (detailsContent) {
+    detailsContent.innerHTML = '<div class="empty-state">Select a project from the Projects Overview to view detailed intelligence.</div>';
+  }
+  const compList = document.getElementById('competitor-list');
+  if (compList) {
+    compList.innerHTML = '<div class="empty-state">Click "Find Competitors" to begin market research.</div>';
+  }
+  const compResults = document.getElementById('competitors-results');
+  if (compResults) compResults.innerHTML = '';
+  const feedList = document.getElementById('feed-list');
+  if (feedList) feedList.innerHTML = '<div class="empty-state">Run the daily tracker to find recent competitor posts.</div>';
+  const ownFeedList = document.getElementById('own-feed-list');
+  if (ownFeedList) ownFeedList.innerHTML = '<div class="empty-state">Loading company feed...</div>';
+  const brandVoice = document.getElementById('brand-voice-pattern-container');
+  if (brandVoice) brandVoice.innerHTML = '';
+};
+
 window.showRoleHome = async function() {
   const isAdmin = window.currentUser?.role === 'admin';
   const adminCenter = document.getElementById('admin-control-center');
   const dashboard = document.getElementById('dashboard-shell');
-  if (adminCenter) adminCenter.style.display = isAdmin ? 'block' : 'none';
-  if (dashboard) dashboard.style.display = isAdmin ? 'none' : '';
+  if (adminCenter) adminCenter.style.display = 'none';
+  if (dashboard) dashboard.style.display = '';
+
+  const returnToAdmin = document.getElementById('return-admin-center');
+  if (returnToAdmin) returnToAdmin.style.display = isAdmin ? 'inline-flex' : 'none';
+
   if (isAdmin) {
-    await Promise.all([window.loadDashboardUsers(), window.loadAdminProjects()]);
-  } else {
-    window.restoreActiveTab();
+    Promise.all([window.loadDashboardUsers(), window.loadAdminProjects()]).catch(() => {});
+  }
+
+  // DEFAULT VIEW ON LOGIN FOR EVERYONE: Projects Overview
+  window.switchTab('projects', 'Projects Overview');
+  if (typeof window.renderProjectsDirectoryUI === 'function') {
+    await window.renderProjectsDirectoryUI();
   }
 };
 
-window.openDashboardWorkspace = function() {
+window.openAdminControlCenter = async function() {
   if (window.currentUser?.role !== 'admin') return;
+  const adminCenter = document.getElementById('admin-control-center');
+  const dashboard = document.getElementById('dashboard-shell');
+  if (adminCenter) adminCenter.style.display = 'block';
+  if (dashboard) dashboard.style.display = 'none';
+  await Promise.all([window.loadDashboardUsers(), window.loadAdminProjects()]);
+};
+
+window.returnToAdminCenter = function() {
+  window.openAdminControlCenter();
+};
+
+window.openDashboardWorkspace = function() {
   const adminCenter = document.getElementById('admin-control-center');
   const dashboard = document.getElementById('dashboard-shell');
   if (adminCenter) adminCenter.style.display = 'none';
   if (dashboard) dashboard.style.display = '';
-  window.switchTab('projects', 'Projects Directory');
+  window.switchTab('projects', 'Projects Overview');
+  if (typeof window.renderProjectsDirectoryUI === 'function') {
+    window.renderProjectsDirectoryUI();
+  }
 };
-
-window.returnToAdminCenter = function() { window.showRoleHome(); };
 
 window.getYouTubeId = function(link) {
   if (!link || typeof link !== 'string') return null;
@@ -242,19 +365,23 @@ window.handleAdminLogin = async function(event) {
     }
 
     if (res.ok && data.success) {
+      // 1. Wipe any state from previous user session
+      window.clearSessionWorkspaceState();
+
       localStorage.setItem('dashboardToken', data.token);
       localStorage.removeItem('adminToken');
       window.applyCurrentUser(data.user);
       const overlay = document.getElementById('login-overlay');
       if (overlay) overlay.style.display = 'none';
+
+      // Clear login inputs so credentials never leak or persist in DOM
+      usernameInput.value = '';
+      passwordInput.value = '';
+
       if (typeof window.showSuccess === 'function') window.showSuccess(`Welcome, ${data.user.username}!`);
       try {
         if (typeof window.loadProjects === 'function') await window.loadProjects();
-        if (data.user.role !== 'admin' && typeof window.renderProjectsDirectoryUI === 'function') await window.renderProjectsDirectoryUI();
         await window.showRoleHome();
-        if (data.user.role !== 'admin' && window.activeProjectUrl && typeof loadProjectDetails === 'function') {
-          loadProjectDetails();
-        }
       } catch (postLoginErr) {
         console.warn('[LOGIN] Post-login UI load warning:', postLoginErr);
       }
@@ -281,6 +408,11 @@ window.checkAuthStatus = async function() {
   const token = localStorage.getItem('dashboardToken') || localStorage.getItem('adminToken');
   const overlay = document.getElementById('login-overlay');
   if (!token) {
+    window.clearSessionWorkspaceState();
+    const uInput = document.getElementById('login-username');
+    if (uInput) uInput.value = '';
+    const pInput = document.getElementById('login-password');
+    if (pInput) pInput.value = '';
     if (overlay) overlay.style.display = 'flex';
     return false;
   }
@@ -295,9 +427,14 @@ window.checkAuthStatus = async function() {
       if (overlay) overlay.style.display = 'none';
       return true;
     } else {
+      window.clearSessionWorkspaceState();
       localStorage.removeItem('dashboardToken');
       localStorage.removeItem('adminToken');
       window.applyCurrentUser(null);
+      const uInput = document.getElementById('login-username');
+      if (uInput) uInput.value = '';
+      const pInput = document.getElementById('login-password');
+      if (pInput) pInput.value = '';
       if (overlay) overlay.style.display = 'flex';
       return false;
     }
@@ -310,17 +447,29 @@ window.checkAuthStatus = async function() {
 window.handleLogout = async function() {
   const token = localStorage.getItem('dashboardToken');
   if (token) await nativeFetch('/api/auth/logout', { method: 'POST', headers: { Authorization: `Bearer ${token}` } }).catch(() => {});
+  
+  // Wipe session and workspace state completely
+  window.clearSessionWorkspaceState();
+
   localStorage.removeItem('dashboardToken');
   localStorage.removeItem('adminToken');
   window.applyCurrentUser(null);
+
   const adminCenter = document.getElementById('admin-control-center');
   if (adminCenter) adminCenter.style.display = 'none';
   const dashboard = document.getElementById('dashboard-shell');
   if (dashboard) dashboard.style.display = 'none';
+
   const overlay = document.getElementById('login-overlay');
   if (overlay) overlay.style.display = 'flex';
+
+  const userInput = document.getElementById('login-username');
+  if (userInput) userInput.value = '';
   const pwdInput = document.getElementById('login-password');
   if (pwdInput) pwdInput.value = '';
+  const errorDiv = document.getElementById('login-error');
+  if (errorDiv) errorDiv.style.display = 'none';
+
   if (typeof window.showSuccess === 'function') window.showSuccess('Logged out successfully');
 };
 
@@ -997,7 +1146,7 @@ window.addEventListener('resize', () => {
 });
 
 const TAB_TITLES = {
-  'projects': 'Projects Directory',
+  'projects': 'Projects Overview',
   'analyse': 'New Analysis',
   'details': 'Project Details & Review',
   'competitors': 'Competitor Intelligence',
@@ -1010,22 +1159,22 @@ window.restoreActiveTab = function() {
   const hash = window.location.hash ? window.location.hash.replace('#', '') : null;
   let savedTab = hash || localStorage.getItem('activeTab');
 
-  // If the user has an active project and tab is 'analyse' or unset,
-  // immediately show their project data rather than leaving them on an empty form.
-  if (window.activeProjectUrl && (!savedTab || savedTab === 'analyse')) {
+  // If the user has an active project and tab is unset,
+  // show their project data. Otherwise default to Projects Overview.
+  if (window.activeProjectUrl && !savedTab) {
     savedTab = 'details';
   } else if (!savedTab) {
-    savedTab = 'analyse';
+    savedTab = 'projects';
   }
 
-  const savedTitle = TAB_TITLES[savedTab] || localStorage.getItem('activeTabTitle') || 'New Analysis';
+  const savedTitle = TAB_TITLES[savedTab] || localStorage.getItem('activeTabTitle') || 'Projects Overview';
 
   const navEl = document.getElementById('nav-' + savedTab);
-  if (!navEl || (savedTab !== 'analyse' && navEl.classList.contains('disabled'))) {
+  if (!navEl || (savedTab !== 'analyse' && savedTab !== 'projects' && navEl.classList.contains('disabled'))) {
     if (window.activeProjectUrl) {
       window.switchTab('details', TAB_TITLES['details']);
     } else {
-      window.switchTab('analyse', 'New Analysis');
+      window.switchTab('projects', 'Projects Overview');
     }
   } else {
     window.switchTab(savedTab, savedTitle);
@@ -1117,13 +1266,6 @@ window.loadProjects = async function(isSilent = false) {
       localStorage.removeItem('activeProjectUrl');
     }
 
-    // Default to the first available project if none is active
-    if (!window.isAnalyzingBusiness && !activeSiteUrl && sites.length > 0) {
-      activeSiteUrl = sites[0].url;
-      window.activeProjectUrl = activeSiteUrl;
-      localStorage.setItem('activeProjectUrl', activeSiteUrl);
-    }
-
     const existingOptions = Array.from(select.options).filter(o => o.value !== "");
     const isSameList = existingOptions.length === siteMap.size &&
       existingOptions.every(o => siteMap.has(o.value) && siteMap.get(o.value) === o.text);
@@ -1161,10 +1303,10 @@ window.loadProjects = async function(isSilent = false) {
 
     if (activeSiteUrl && siteMap.has(activeSiteUrl)) {
       window.selectProject(activeSiteUrl, false, isSilent);
-    } else if (!window.isAnalyzingBusiness && sites.length === 0) {
+    } else {
       select.value = "";
       select.dispatchEvent(new CustomEvent('optionsUpdated'));
-      window.selectProject(null, false, isSilent);
+      window.selectProject(null, false, true);
     }
   } catch (err) {
     console.error("Failed to load projects:", err);
@@ -1180,12 +1322,21 @@ window.selectProject = function(url, autoSwitchTab = false, isSilent = false) {
 
   if (!url) {
     if (deleteBtn) deleteBtn.style.display = 'none';
-    // Disable tabs
-    document.querySelectorAll('.sidebar-nav .nav-item:not(#nav-analyse)').forEach(el => {
+    // Disable project-specific tabs, leaving nav-projects and nav-analyse enabled
+    document.querySelectorAll('.sidebar-nav .nav-item:not(#nav-analyse):not(#nav-projects)').forEach(el => {
       el.classList.add('disabled');
       el.onclick = (e) => { e.preventDefault(); return false; };
     });
-    if (!isSilent) switchTab('analyse', 'New Analysis');
+    const navProjects = document.getElementById('nav-projects');
+    if (navProjects) {
+      navProjects.classList.remove('disabled');
+      navProjects.onclick = () => { switchTab('projects', 'Projects Overview'); return false; };
+    }
+    const navAnalyse = document.getElementById('nav-analyse');
+    if (navAnalyse) {
+      navAnalyse.classList.remove('disabled');
+      navAnalyse.onclick = () => { switchTab('analyse', 'New Analysis'); return false; };
+    }
     return;
   }
 
@@ -1197,11 +1348,20 @@ window.selectProject = function(url, autoSwitchTab = false, isSilent = false) {
   });
 
   // Re-bind onclick
-  document.getElementById('nav-details').onclick = () => { switchTab('details', 'Project Details & Review'); return false; };
-  document.getElementById('nav-competitors').onclick = () => { switchTab('competitors', 'Competitor Intelligence'); return false; };
-  document.getElementById('nav-smm').onclick = () => { switchTab('smm', 'SMM Generation'); return false; };
-  document.getElementById('nav-seo').onclick = () => { switchTab('seo', 'Website & SEO'); return false; };
-  document.getElementById('nav-social-feed').onclick = () => { switchTab('social-feed', 'Competitor Feed'); return false; };
+  const navProjects = document.getElementById('nav-projects');
+  if (navProjects) navProjects.onclick = () => { switchTab('projects', 'Projects Overview'); return false; };
+  const navAnalyse = document.getElementById('nav-analyse');
+  if (navAnalyse) navAnalyse.onclick = () => { switchTab('analyse', 'New Analysis'); return false; };
+  const navDetails = document.getElementById('nav-details');
+  if (navDetails) navDetails.onclick = () => { switchTab('details', 'Project Details & Review'); return false; };
+  const navComp = document.getElementById('nav-competitors');
+  if (navComp) navComp.onclick = () => { switchTab('competitors', 'Competitor Intelligence'); return false; };
+  const navSmm = document.getElementById('nav-smm');
+  if (navSmm) navSmm.onclick = () => { switchTab('smm', 'SMM Generation'); return false; };
+  const navSeo = document.getElementById('nav-seo');
+  if (navSeo) navSeo.onclick = () => { switchTab('seo', 'Website & SEO'); return false; };
+  const navFeed = document.getElementById('nav-social-feed');
+  if (navFeed) navFeed.onclick = () => { switchTab('social-feed', 'Competitor Feed'); return false; };
 
   if (autoSwitchTab) {
     switchTab('details', 'Project Details & Review');
