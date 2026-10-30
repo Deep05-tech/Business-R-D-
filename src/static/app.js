@@ -2864,14 +2864,26 @@ window.fallbackCopyText = function(text) {
   document.body.removeChild(ta);
 };
 
+window.cleanRawLabels = function(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/(^|[\n\r]+|\s*[•\-–*🔹⚙️💡📊🚀]\s*)\*\*(?:Before|After|Problem|Solution|Result|Challenge|Impact|Outcome|Metric|Status|Benefit|Takeaway):\*\*\s*/gi, '$1')
+    .replace(/(^|[\n\r]+|\s*[•\-–*🔹⚙️💡📊🚀]\s*)(?:Before|After|Problem|Solution|Result|Challenge|Impact|Outcome):\s*/gi, '$1')
+    .replace(/\*\*(?:Before|After|Problem|Solution|Result|Challenge|Impact|Outcome)\*\*/gi, '')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/^[ \t]*[•\-–*][ \t]*[•\-–*][ \t]*/gm, '🔹 ')
+    .trim();
+};
+
 window.formatSmmContent = function(text) {
   if (!text) return '';
+  const cleaned = window.cleanRawLabels(text);
   // Normalize unicode bullets to markdown list dashes for uniform list rendering
-  const normalized = text.replace(/^[ \t]*[•●][ \t]*/gm, '- ');
+  const normalized = cleaned.replace(/^[ \t]*[•●][ \t]*/gm, '- ');
   if (window.marked && typeof window.marked.parse === 'function') {
     return window.marked.parse(normalized);
   }
-  return window.escapeHtml(text)
+  return window.escapeHtml(cleaned)
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
     .replace(/\n\n/g, '<p></p>')
@@ -3102,7 +3114,7 @@ window.renderSmmResults = function(postsData, type) {
       let html = '<div class="smm-studio-container">';
       html += trendingBadge;
       html += '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">';
-      html += '  <h4 style="margin: 0; color: var(--primary); font-size: 1.05rem; font-weight: 700;">✨ Choose a Content Angle & Visual Concept</h4>';
+      html += '  <h4 style="margin: 0; color: var(--primary); font-size: 1.05rem; font-weight: 700;">✨ Choose a Content Angle & Post Concept</h4>';
       html += `  <span style="font-size: 0.85rem; color: var(--text-muted);">${parsedPosts.length} post concept${parsedPosts.length > 1 ? 's' : ''} generated</span>`;
       html += '</div>';
       
@@ -3112,7 +3124,7 @@ window.renderSmmResults = function(postsData, type) {
          const angleBadge = post.angle ? `<span class="smm-tag-angle">${window.escapeHtml(post.angle)}</span>` : '';
          const hookTypeBadge = post.hookType ? `<span class="smm-hook-badge">⚡ ${window.escapeHtml(post.hookType)}</span>` : '';
          const previewTitle = post.heading || post.title || `Concept ${idx + 1}`;
-         const previewIdea = post.visualIdea || post.visual_idea || post.hook || post.content || '';
+         const previewIdea = post.hook || post.visualIdea || post.content || '';
 
          html += `
          <div class="idea-card" data-idx="${idx}">
@@ -3152,27 +3164,35 @@ window.renderSmmResults = function(postsData, type) {
               return String(str).replace(/\b(jumped|increased|rose|boosted|grew|surged|improved|up to)\s+([^\n.]+?)\s*\(-(\d+(?:\.\d+)?%)\s*(?:change|increase)?\)/gi, '$1 $2 (+$3)');
             };
 
-            const heading = (p.heading || p.title || '').trim();
-            const subText = (p.subText || p.subtitle || '').trim();
+            const cleanRawLabels = window.cleanRawLabels || function(str) {
+              if (!str) return '';
+              return String(str)
+                .replace(/(^|[\n\r]+|\s*[•\-–*🔹⚙️💡📊🚀]\s*)\*\*(?:Before|After|Problem|Solution|Result|Challenge|Impact|Outcome|Metric|Status|Benefit|Takeaway):\*\*\s*/gi, '$1')
+                .replace(/(^|[\n\r]+|\s*[•\-–*🔹⚙️💡📊🚀]\s*)(?:Before|After|Problem|Solution|Result|Challenge|Impact|Outcome):\s*/gi, '$1')
+                .replace(/\*\*(?:Before|After|Problem|Solution|Result|Challenge|Impact|Outcome)\*\*/gi, '')
+                .replace(/\*\*([^*]+)\*\*/g, '$1')
+                .replace(/^[ \t]*[•\-–*][ \t]*[•\-–*][ \t]*/gm, '🔹 ')
+                .trim();
+            };
+
+            const heading = cleanRawLabels(p.heading || p.title || '').trim();
+            const subText = cleanRawLabels(p.subText || p.subtitle || '').trim();
             const hookType = (p.hookType || '').trim();
-            const hook = sanitizeMath(p.hook || p.content || '');
-            const body = sanitizeMath(p.body || '');
-            const cta = (p.callToAction || p.cta || '').trim();
+            const hook = cleanRawLabels(sanitizeMath(p.hook || p.content || ''));
+            const body = cleanRawLabels(sanitizeMath(p.body || ''));
+            const cta = cleanRawLabels(p.callToAction || p.cta || '').trim();
             const hashtags = (p.hashtags || '').trim();
-            const visualIdea = p.visualIdea || p.visual_idea || '';
-            const elements = p.elements || p.designElements || '';
-            const aspectRatio = p.aspectRatio || '1:1 Square (Feed)';
             const angle = p.angle || '';
 
-            // Ensure 3 to 5 hashtags
+            // Ensure 3 to 4 hashtags
             let tagList = [];
             if (hashtags) {
               tagList = hashtags.split(/\s+/).filter(t => t.length > 0).map(t => t.startsWith('#') ? t : `#${t}`);
-              if (tagList.length > 5) tagList = tagList.slice(0, 5);
+              if (tagList.length > 4) tagList = tagList.slice(0, 4);
             }
             const cleanHashtags = tagList.join(' ');
 
-            let fullPost = p.fullPost ? sanitizeMath(p.fullPost.trim()) : '';
+            let fullPost = p.fullPost ? cleanRawLabels(sanitizeMath(p.fullPost.trim())) : '';
             if (!fullPost) {
               const parts = [];
               if (hook) parts.push(hook);
@@ -3184,32 +3204,15 @@ window.renderSmmResults = function(postsData, type) {
                 parts.push(cleanHashtags);
               }
               fullPost = parts.join('\n\n').trim();
+            } else {
+              fullPost = cleanRawLabels(fullPost);
             }
             p.fullPost = fullPost;
-
-            let imagePrompt = (p.imagePrompt || '').trim();
-            if (!imagePrompt) {
-              imagePrompt = `Professional commercial visual for ${heading || 'Business'}, concept: ${visualIdea || 'precision engineering'}, modern industrial aesthetic, studio lighting, crisp contrast, generous negative space on left for typography, photorealistic, 8k resolution --ar 1:1 --style raw --v 7`;
-            } else if (!imagePrompt.includes('--ar')) {
-              imagePrompt = `${imagePrompt} --ar 1:1 --style raw --v 7`;
-            }
-            p.imagePrompt = imagePrompt;
-
-            let postImageUrl = (p.imageUrl || '').trim();
-            if (!postImageUrl && imagePrompt) {
-              const cleanPrompt = imagePrompt.replace(/--[a-z0-9\s:.-]+/gi, '').replace(/\s+/g, ' ').trim().slice(0, 280);
-              const seed = Math.floor(Math.random() * 1000000);
-              postImageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPrompt)}?width=1024&height=1024&seed=${seed}&nologo=true&model=flux`;
-            }
-            p.imageUrl = postImageUrl;
-            const fallbackImageUrl = p.fallbackImageUrl || 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1080&h=1080&fit=crop&q=85';
-            const simpleExplanation = (p.simpleExplanation || p.kidExplanation || p.eli5 || '').trim() ||
-              `Think of ${heading ? heading.toLowerCase() : 'this'} in simple terms: how small hidden details make a huge difference in performance and reliability.`;
 
             const companyName = window.projectMemory?.businessIdentity?.officialName || 'Company';
             const companyInitial = companyName.charAt(0).toUpperCase() || 'C';
 
-            // Structured HVC caption markup
+            // Structured caption markup
             let formattedCaption = '';
             if (body) {
               let partsHtml = '';
@@ -3235,18 +3238,17 @@ window.renderSmmResults = function(postsData, type) {
                   <div class="smm-toolbar-tags">
                     ${angle ? `<span class="smm-tag-angle">🎯 ${window.escapeHtml(angle)}</span>` : ''}
                     ${hookType ? `<span class="smm-hook-badge">⚡ ${window.escapeHtml(hookType)}</span>` : ''}
-                    <span class="smm-tag-ratio">📐 ${window.escapeHtml(aspectRatio)}</span>
+                    <span class="smm-tag-ratio" style="background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3);">📄 Text Post</span>
                   </div>
                   <div class="smm-toolbar-actions">
                     <button class="btn btn-primary copy-post-btn" type="button">📋 Copy Full Post</button>
-                    <button class="btn btn-secondary copy-prompt-btn" type="button">🎨 Copy Image Prompt</button>
                     <button class="btn btn-secondary edit-btn" type="button">✏️ Edit Content</button>
                   </div>
                 </div>
 
                 <!-- MAIN STUDIO GRID: 2 COLUMNS ON DESKTOP -->
                 <div class="smm-studio-grid">
-                  <!-- COLUMN 1: AUTHENTIC SOCIAL MEDIA FEED MOCKUP -->
+                  <!-- COLUMN 1: AUTHENTIC SOCIAL MEDIA FEED MOCKUP (TEXT-FIRST) -->
                   <div class="smm-post-card">
                     <!-- SOCIAL POST HEADER -->
                     <div class="smm-post-header">
@@ -3260,54 +3262,7 @@ window.renderSmmResults = function(postsData, type) {
                       <span class="smm-live-badge">Live Preview</span>
                     </div>
 
-                    <!-- VISUAL DISPLAY (CANVAS GRAPHIC, AI PHOTO & 3-TIER BANNER TOGGLE) -->
-                    <div class="smm-visual-container">
-                      <div class="smm-visual-toggle-bar">
-                        <button type="button" class="smm-toggle-tab active" data-view="card">🎨 1080x1080 Graphic</button>
-                        <button type="button" class="smm-toggle-tab" data-view="photo">📸 AI / Studio Photo</button>
-                        <button type="button" class="smm-toggle-tab" data-view="banner">📐 3-Tier Banner</button>
-                      </div>
-
-                      <!-- VIEW 1: 1080x1080 HIGH-RES BRANDED CANVAS GRAPHIC -->
-                      <div class="smm-canvas-view">
-                        <div class="smm-canvas-wrapper">
-                          <canvas class="smm-social-canvas"></canvas>
-                        </div>
-                        <div class="smm-image-actions">
-                          <button type="button" class="btn btn-primary smm-img-btn smm-dl-canvas-btn">⬇️ Download 1080x1080 Graphic</button>
-                        </div>
-                      </div>
-
-                      <!-- VIEW 2: PHOTOREALISTIC AI GENERATED IMAGE -->
-                      <div class="smm-image-view" style="display: none;">
-                        <div class="smm-image-wrapper">
-                          <img class="smm-generated-image" src="${postImageUrl}" alt="${window.escapeHtml(heading)}" loading="lazy" onerror="if (!this.dataset.triedFallback && '${fallbackImageUrl}') { this.dataset.triedFallback='true'; this.src='${fallbackImageUrl}'; } else { const vc = this.closest('.smm-visual-container'); if (vc) { const cv = vc.querySelector('.smm-canvas-view'); const iv = vc.querySelector('.smm-image-view'); const tabs = vc.querySelectorAll('.smm-toggle-tab'); if (cv) cv.style.display='flex'; if (iv) iv.style.display='none'; tabs.forEach(t => t.classList.toggle('active', t.getAttribute('data-view') === 'card')); } }" />
-                          <div class="smm-image-overlay-badge">
-                            <span class="smm-image-brand-tag">⚡ ${window.escapeHtml(companyName)}</span>
-                            <span class="smm-banner-ratio-badge">${window.escapeHtml(aspectRatio)}</span>
-                          </div>
-                        </div>
-                        <div class="smm-image-actions">
-                          <a href="${postImageUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary smm-img-btn">🔍 View Full Image</a>
-                          <button type="button" class="btn btn-primary smm-img-btn smm-dl-photo-btn">⬇️ Download Photo</button>
-                        </div>
-                      </div>
-
-                      <!-- VIEW 3: ON-GRAPHIC VISUAL CARD BANNER (3-TIER VISUAL HIERARCHY) -->
-                      <div class="smm-graphic-banner" style="display: none;">
-                        <div class="smm-banner-top">
-                          <span class="smm-banner-brand-tag">⚡ ${window.escapeHtml(companyName)}</span>
-                          <span class="smm-banner-ratio-badge">${window.escapeHtml(aspectRatio)}</span>
-                        </div>
-                        <div class="smm-banner-headline">${window.escapeHtml(heading)}</div>
-                        ${subText ? `<div class="smm-banner-subtext">${window.escapeHtml(subText)}</div>` : ''}
-                        <div class="smm-banner-footer">
-                          <span>🏢 Verified Strategic Intelligence</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- POST CAPTION & NARRATIVE (HVC ARCHITECTURE) -->
+                    <!-- POST CAPTION & NARRATIVE -->
                     <div class="smm-post-caption">${formattedCaption}</div>
 
                     <!-- SOCIAL INTERACTION BAR -->
@@ -3319,20 +3274,9 @@ window.renderSmmResults = function(postsData, type) {
                     </div>
                   </div>
 
-                  <!-- COLUMN 2: FULL STRUCTURED SCHEMA BREAKDOWN -->
+                  <!-- COLUMN 2: STRUCTURED SCHEMA & COPY BREAKDOWN -->
                   <div class="smm-schema-grid">
-                    <!-- 0. ELI5 / SCHOOL-KID EXPLANATION -->
-                    <div class="smm-eli5-card">
-                      <div class="smm-eli5-header">
-                        <span style="font-weight: 700; color: #f59e0b; display: flex; align-items: center; gap: 6px;">
-                          <span>👶</span> ELI5 Concept (School-Kid Explanation)
-                        </span>
-                        <span class="smm-eli5-badge">Simple & Clear</span>
-                      </div>
-                      <p class="smm-eli5-text">"${window.escapeHtml(simpleExplanation)}"</p>
-                    </div>
-
-                    <!-- 1. STRATEGY ANGLE & HOOK ARCHETYPE -->
+                    <!-- 1. STRATEGY ANGLE & HOOK -->
                     <div class="smm-schema-card">
                       <div class="smm-schema-card-header">
                         <span class="smm-schema-label">📌 Strategy Angle & Hook</span>
@@ -3343,22 +3287,21 @@ window.renderSmmResults = function(postsData, type) {
                       </div>
                     </div>
 
-                    <!-- 2. VISUAL HIERARCHY (HEADLINE & METRIC PROOF) -->
+                    <!-- 2. CORE FOCUS & VALUE METRIC -->
                     <div class="smm-schema-card">
                       <div class="smm-schema-card-header">
-                        <span class="smm-schema-label">🏷️ Visual Hierarchy (Banner Overlays)</span>
-                        <span class="smm-tag-ratio">📐 ${window.escapeHtml(aspectRatio)}</span>
+                        <span class="smm-schema-label">🏷️ Key Focus & Value Metric</span>
                       </div>
                       <div class="smm-schema-val" style="display:flex; flex-direction:column; gap:6px;">
-                        <div><strong style="color:var(--text-light);">Level 1 Headline (5-8 words):</strong> ${window.escapeHtml(heading || 'Precision Engineering Excellence')}</div>
-                        ${subText ? `<div><strong style="color:var(--text-light);">Level 2 Metric Proof Subtext:</strong> <span style="background:rgba(99,102,241,0.15); padding:2px 6px; border-radius:4px; font-weight:600; color:var(--primary);">${window.escapeHtml(subText)}</span></div>` : ''}
+                        <div><strong style="color:var(--text-light);">Core Insight:</strong> ${window.escapeHtml(heading || 'Technical Precision & Reliability')}</div>
+                        ${subText ? `<div><strong style="color:var(--text-light);">Proof Metric:</strong> <span style="background:rgba(99,102,241,0.15); padding:2px 6px; border-radius:4px; font-weight:600; color:var(--primary);">${window.escapeHtml(subText)}</span></div>` : ''}
                       </div>
                     </div>
 
-                    <!-- 3. HVC CAPTION BREAKDOWN -->
+                    <!-- 3. HOOK, VALUE & CTA BREAKDOWN -->
                     <div class="smm-schema-card">
                       <div class="smm-schema-card-header">
-                        <span class="smm-schema-label">✍️ HVC Architecture Breakdown</span>
+                        <span class="smm-schema-label">✍️ Hook, Value & CTA Breakdown</span>
                         <span style="font-size:11px; font-weight:700; color:#10b981;">3-Step Formula</span>
                       </div>
                       <div class="smm-schema-val" style="display:flex; flex-direction:column; gap:8px;">
@@ -3367,11 +3310,11 @@ window.renderSmmResults = function(postsData, type) {
                           <div style="font-style:italic; margin-top:2px; color:var(--text-muted); padding-left:8px; border-left:2px solid var(--primary);">${window.escapeHtml(hook || 'Pattern interrupt hook')}</div>
                         </div>
                         <div>
-                          <strong style="color:var(--text-light);">💡 Value Delivery Body:</strong>
+                          <strong style="color:var(--text-light);">💡 Value Delivery (Bullet Points):</strong>
                           <div style="margin-top:2px; font-size:12.5px; color:var(--text-muted); line-height:1.5; max-height:120px; overflow-y:auto;">${window.escapeHtml(body || 'Structured technical insights and data')}</div>
                         </div>
                         <div>
-                          <strong style="color:var(--text-light);">👉 Single-Outcome CTA:</strong>
+                          <strong style="color:var(--text-light);">👉 Single-Outcome Call-to-Action:</strong>
                           <div style="margin-top:2px; color:var(--primary); font-weight:600;">${window.escapeHtml(cta || 'Comment or DM for details')}</div>
                         </div>
                         ${tagList.length > 0 ? `
@@ -3384,98 +3327,23 @@ window.renderSmmResults = function(postsData, type) {
                       </div>
                     </div>
 
-                    <!-- 4. CREATIVE DIRECTION & DESIGN BLUEPRINT -->
-                    <div class="smm-schema-card">
-                      <div class="smm-schema-card-header">
-                        <span class="smm-schema-label">🎨 Creative Direction & Assets</span>
-                      </div>
-                      <div class="smm-schema-val" style="display:flex; flex-direction:column; gap:6px;">
-                        <div><strong style="color:var(--text-light);">Visual Concept:</strong> ${window.escapeHtml(visualIdea || 'Professional commercial visual')}</div>
-                        ${elements ? `<div><strong style="color:var(--text-light);">Design Elements:</strong> ${window.escapeHtml(elements)}</div>` : ''}
-                      </div>
-                    </div>
-
-                    <!-- 5. AI IMAGE GENERATION PROMPT -->
-                    <div class="smm-prompt-card">
-                      <div class="smm-prompt-header">
-                        <div class="smm-prompt-title">
-                          <span style="font-size: 16px;">🤖</span>
-                          <strong>AI Image Prompt (Midjourney v7 / FLUX / DALL-E)</strong>
-                        </div>
-                        <button class="btn btn-secondary copy-prompt-inline-btn" type="button" style="padding: 3px 10px; font-size: 11.5px; height: 28px;">📋 Copy Prompt</button>
-                      </div>
-                      <div class="smm-prompt-box">${window.escapeHtml(imagePrompt)}</div>
-                      <div class="smm-prompt-tip">
-                        💡 Production-grade prompt with commercial composition, negative space balance, studio lighting, and zero AI clichés.
-                      </div>
-                    </div>
-
-                    <!-- 6. COMPLETE READY-TO-PUBLISH POST -->
+                    <!-- 4. COMPLETE READY-TO-PUBLISH POST -->
                     <div class="smm-schema-card" style="border: 1px solid rgba(99,102,241,0.3); background: rgba(99,102,241,0.03);">
                       <div class="smm-schema-card-header">
                         <span class="smm-schema-label" style="color:var(--primary);">📋 Ready-to-Publish Copy</span>
                         <button class="btn btn-primary copy-post-inline-btn" type="button" style="padding: 3px 10px; font-size: 11.5px; height: 28px;">📋 Copy Post</button>
                       </div>
-                      <div class="smm-schema-val" style="font-size:12px; color:var(--text-muted); line-height:1.45; max-height:100px; overflow-y:auto; white-space:pre-wrap;">${window.escapeHtml(fullPost)}</div>
+                      <div class="smm-schema-val" style="font-size:12px; color:var(--text-muted); line-height:1.45; max-height:120px; overflow-y:auto; white-space:pre-wrap;">${window.escapeHtml(fullPost)}</div>
                     </div>
                   </div>
                 </div>
               </div>
             `;
 
-            // Render 1080x1080 Canvas Graphic
-            const canvasEl = detailsDiv.querySelector('.smm-social-canvas');
-            if (canvasEl && window.renderSocialCardToCanvas) {
-              window.renderSocialCardToCanvas(canvasEl, p, companyName);
-            }
-
-            // Setup Visual Switcher Toggle Tabs (3 Views: card, photo, banner)
-            const toggleTabs = detailsDiv.querySelectorAll('.smm-toggle-tab');
-            toggleTabs.forEach(tab => {
-              tab.addEventListener('click', () => {
-                toggleTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                const view = tab.getAttribute('data-view');
-                const canvasView = detailsDiv.querySelector('.smm-canvas-view');
-                const imgView = detailsDiv.querySelector('.smm-image-view');
-                const bannerView = detailsDiv.querySelector('.smm-graphic-banner');
-                if (view === 'card') {
-                  if (canvasView) canvasView.style.display = 'flex';
-                  if (imgView) imgView.style.display = 'none';
-                  if (bannerView) bannerView.style.display = 'none';
-                } else if (view === 'photo') {
-                  if (canvasView) canvasView.style.display = 'none';
-                  if (imgView) imgView.style.display = 'flex';
-                  if (bannerView) bannerView.style.display = 'none';
-                } else {
-                  if (canvasView) canvasView.style.display = 'none';
-                  if (imgView) imgView.style.display = 'none';
-                  if (bannerView) bannerView.style.display = 'flex';
-                }
-              });
-            });
-
-            // Setup 1-Click Native Downloads
-            const dlCanvasBtn = detailsDiv.querySelector('.smm-dl-canvas-btn');
-            if (dlCanvasBtn && canvasEl) {
-              dlCanvasBtn.onclick = () => {
-                window.downloadCanvasAsImage(canvasEl, `social-post-graphic-${idx+1}.png`);
-              };
-            }
-
-            const dlPhotoBtn = detailsDiv.querySelector('.smm-dl-photo-btn');
-            if (dlPhotoBtn) {
-              dlPhotoBtn.onclick = () => {
-                window.downloadDirectImage(postImageUrl, `social-post-photo-${idx+1}.jpg`);
-              };
-            }
-
             const editBtn = detailsDiv.querySelector('.edit-btn');
             const captionDiv = detailsDiv.querySelector('.smm-post-caption');
             const copyPostBtn = detailsDiv.querySelector('.copy-post-btn');
             const copyPostInlineBtn = detailsDiv.querySelector('.copy-post-inline-btn');
-            const copyPromptBtn = detailsDiv.querySelector('.copy-prompt-btn');
-            const copyPromptInlineBtn = detailsDiv.querySelector('.copy-prompt-inline-btn');
 
             if (copyPostBtn) {
               copyPostBtn.onclick = () => {
@@ -3488,18 +3356,6 @@ window.renderSmmResults = function(postsData, type) {
               copyPostInlineBtn.onclick = () => {
                 const textToCopy = (p.fullPost || '').trim();
                 window.copySmmText(textToCopy, copyPostInlineBtn, 'Full social post copied to clipboard!');
-              };
-            }
-
-            if (copyPromptBtn) {
-              copyPromptBtn.onclick = () => {
-                window.copySmmText(imagePrompt, copyPromptBtn, 'AI Image prompt copied to clipboard!');
-              };
-            }
-
-            if (copyPromptInlineBtn) {
-              copyPromptInlineBtn.onclick = () => {
-                window.copySmmText(imagePrompt, copyPromptInlineBtn, 'AI Image prompt copied to clipboard!');
               };
             }
 
@@ -3530,6 +3386,7 @@ window.renderSmmResults = function(postsData, type) {
                   const textarea = captionDiv.querySelector('.smm-edit-textarea');
                   if (textarea) {
                     textarea.focus();
+                    textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
                     textarea.style.height = Math.max(160, textarea.scrollHeight + 10) + 'px';
                   }
                 }

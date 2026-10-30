@@ -2158,42 +2158,6 @@ body:not(.dark-theme) .smm-live-badge {
   display: block;
 }
 
-/* SMM ELI5 / KID-FRIENDLY CONCEPT CARD */
-.smm-eli5-card {
-  padding: 14px 16px;
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.03));
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  border-radius: var(--radius-md);
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.smm-eli5-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-}
-
-.smm-eli5-badge {
-  font-size: 11px;
-  font-weight: 700;
-  color: #f59e0b;
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  padding: 2px 8px;
-  border-radius: 9999px;
-  text-transform: uppercase;
-}
-
-.smm-eli5-text {
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: var(--text-color);
-  margin: 0;
-}
 
 /* SMM SCHEMA BREAKDOWN CARDS */
 .smm-schema-grid {

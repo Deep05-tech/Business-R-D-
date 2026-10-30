@@ -21,7 +21,7 @@ const MANUFACTURING_ARCHETYPES: Record<string, ContentArchetype[]> = {
       objective: "Highlight how ${companyName}'s product prevents a costly failure mode in the manufacturing process.",
       hookRule: "Start with a real-world failure scenario that ${companyName}'s product solves.",
       visualRule: "Show the failure first, then the solution with ${companyName}'s product.",
-      bodyStyle: "Technical problem-solution format with before/after metrics."
+      bodyStyle: "Clear, punchy bullet points showing real-world results and quantifiable metrics. Never use labels like '**Before**' or '**After**'."
     },
     {
       angle: "Technical Spec Teardown & Micron Precision",
@@ -78,7 +78,7 @@ const MANUFACTURING_ARCHETYPES: Record<string, ContentArchetype[]> = {
       role: "Success Storyteller",
       objective: "Share a customer success story featuring ${companyName}'s products.",
       hookRule: "Start with a customer challenge that ${companyName} solved.",
-      visualRule: "Show customer logos, before/after results, or testimonials.",
+      visualRule: "Show customer logos, quantified performance metrics, or testimonials.",
       bodyStyle: "Customer case study with quantifiable results."
     },
     {
@@ -196,7 +196,7 @@ const MANUFACTURING_ARCHETYPES: Record<string, ContentArchetype[]> = {
       role: "Success Storyteller",
       objective: "Share a customer success story featuring ${companyName}'s products.",
       hookRule: "Start with a customer challenge that ${companyName} solved.",
-      visualRule: "Show customer logos, before/after results, or testimonials.",
+      visualRule: "Show customer logos, quantified performance metrics, or testimonials.",
       bodyStyle: "Customer case study with quantifiable results."
     },
     {
@@ -234,7 +234,7 @@ const TECHNOLOGY_ARCHETYPES: Record<string, ContentArchetype[]> = {
       objective: "Show how ${companyName}'s product solves a specific problem in the technology industry.",
       hookRule: "Start with a real-world problem that ${companyName}'s product solves.",
       visualRule: "Show the problem first, then the solution with ${companyName}'s product.",
-      bodyStyle: "Problem-solution format with before/after metrics."
+      bodyStyle: "Clear, punchy bullet points showing real-world results and quantifiable metrics. Never use labels like '**Before**' or '**After**'."
     },
     {
       angle: "Feature Technical Teardown",
@@ -291,7 +291,7 @@ const TECHNOLOGY_ARCHETYPES: Record<string, ContentArchetype[]> = {
       role: "Success Storyteller",
       objective: "Share a customer success story featuring ${companyName}'s products.",
       hookRule: "Start with a customer challenge that ${companyName} solved.",
-      visualRule: "Show customer logos, before/after results, or testimonials.",
+      visualRule: "Show customer logos, quantified performance metrics, or testimonials.",
       bodyStyle: "Customer case study with quantifiable results."
     },
     {
@@ -409,7 +409,7 @@ const TECHNOLOGY_ARCHETYPES: Record<string, ContentArchetype[]> = {
       role: "Success Storyteller",
       objective: "Share a customer success story featuring ${companyName}'s products.",
       hookRule: "Start with a customer challenge that ${companyName} solved.",
-      visualRule: "Show customer logos, before/after results, or testimonials.",
+      visualRule: "Show customer logos, quantified performance metrics, or testimonials.",
       bodyStyle: "Customer case study with quantifiable results."
     },
     {
@@ -447,7 +447,7 @@ const AGRICULTURE_ARCHETYPES: Record<string, ContentArchetype[]> = {
       objective: "Show how ${companyName}'s product solves a specific crop problem.",
       hookRule: "Start with a real-world crop problem that ${companyName}'s product solves.",
       visualRule: "Show the crop problem first, then the solution with ${companyName}'s product.",
-      bodyStyle: "Problem-solution format with before/after metrics."
+      bodyStyle: "Clear, punchy bullet points showing real-world results and quantifiable metrics. Never use labels like '**Before**' or '**After**'."
     },
     {
       angle: "Product Specification & Application",
@@ -504,7 +504,7 @@ const AGRICULTURE_ARCHETYPES: Record<string, ContentArchetype[]> = {
       role: "Success Storyteller",
       objective: "Share a customer success story featuring ${companyName}'s products.",
       hookRule: "Start with a customer challenge that ${companyName} solved.",
-      visualRule: "Show customer logos, before/after results, or testimonials.",
+      visualRule: "Show customer logos, quantified performance metrics, or testimonials.",
       bodyStyle: "Customer case study with quantifiable results."
     },
     {
@@ -622,7 +622,7 @@ const AGRICULTURE_ARCHETYPES: Record<string, ContentArchetype[]> = {
       role: "Success Storyteller",
       objective: "Share a customer success story featuring ${companyName}'s products.",
       hookRule: "Start with a customer challenge that ${companyName} solved.",
-      visualRule: "Show customer logos, before/after results, or testimonials.",
+      visualRule: "Show customer logos, quantified performance metrics, or testimonials.",
       bodyStyle: "Customer case study with quantifiable results."
     },
     {
@@ -1042,7 +1042,7 @@ Format each script explicitly as follows (keep visual directions and voiceover p
 `;
     } else {
       formatInstructions = `
-You must generate EXACTLY ${postCount} highly engaging, deeply researched, and radically unique image post concepts for social media following modern copywriting and visual design standards.
+You must generate EXACTLY ${postCount} crisp, high-performing, and authoritative text-first social media posts for platforms like LinkedIn, X, and Instagram.
 
 CRITICAL ANTI-SAMENESS MANDATE:
 Under NO circumstances may any two posts share the same opening structure, rhetorical pattern, or theme!
@@ -1055,8 +1055,7 @@ POST ${i + 1} MANDATE:
 - Creative Role: ${arch.role}
 - Objective: ${arch.objective}
 - Hook Requirement: ${arch.hookRule}
-- Visual Direction: ${arch.visualRule}
-- Body Formatting Style: ${arch.bodyStyle}
+- Caption Body Style: ${arch.bodyStyle}
 ======================================================================
 `).join('\n')}
 
@@ -1067,19 +1066,14 @@ Output ONLY the raw JSON array. Do not include markdown codeblocks or extra text
 [
 ${assignedArchetypes.map((arch, i) => `  {
     "angle": "${arch.angle}",
-    "hookType": "[Curiosity Gap | Contrarian Claim | Pain Point Callout | Relatable Transformation]",
-    "heading": "[Level 1 Visual Hierarchy: Bold, scroll-stopping headline for graphic banner, strictly 5 to 8 words max. Passes the 3-second squint test]",
-    "subText": "[Level 2 Visual Hierarchy: Single quantified proof point, metric or badge e.g. '+42% ROAS' or 'DIN-5 Verified']",
-    "simpleExplanation": "[ELI5 / School-Kid Analogy: 1-2 sentence crystal-clear, relatable everyday metaphor explaining this concept so easily that a 10-year-old school student immediately understands it without getting confused]",
-    "hook": "[HVC Step 1 - Pattern Interrupt Hook: 1-2 lines that stop the scroll before '...see more'. Fascinating question, relatable mystery or everyday challenge. Zero corporate fluff or pleasantries]",
-    "body": "[HVC Step 2 - The Value Delivery: Structured narrative in 1-3 line micro-paragraphs separated by blank lines. Use simple everyday language, intuitive analogies, and bullet points with emojis (🔹, 📊, ⚙️, 💡). Explain how it works step-by-step. Zero dense academic/corporate jargon walls. High clarity and readability]",
-    "callToAction": "[HVC Step 3 - Single-Outcome Rule: Exactly ONE clear, friendly, specific action to take (e.g. Save for reference, drop a comment with your spec, or DM for CAD audit)]",
-    "fullPost": "[THE COMPLETE, READY-TO-PUBLISH POST: Impeccably formatted copy combining Hook + blank line + Body + blank line + Call to Action + blank line + Hashtags. 100% self-contained for 1-click publishing directly to LinkedIn, Instagram, or Facebook without manual cleanup]",
-    "visualIdea": "[Detailed creative concept for the image / carousel graphic adhering to Post ${i + 1} visual direction]",
-    "elements": "[Specific design elements, callout boxes, CAD schematics, diagrams, color palette guidance]",
-    "aspectRatio": "1:1 Square (Feed)",
-    "imagePrompt": "[Production-ready Midjourney v7 / FLUX prompt: High-end commercial studio photography of the real physical subject with clean lighting, high tactile detail, zero text/labels/watermarks, aesthetic composition ready to be posted directly to social media --ar 1:1 --style raw --v 7]",
-    "hashtags": "[Strictly 3 to 5 hyper-relevant niche hashtags, space separated]"
+    "hookType": "[Operational Challenge | Contrarian Insight | Direct Metric / Spec | Problem-Solver]",
+    "heading": "[Crisp 4 to 7 word core takeaway headline summarizing the insight]",
+    "subText": "[Single quantified proof point or metric e.g. '+42% Throughput' or 'DIN-5 Verified']",
+    "hook": "[HVC Step 1 - Pattern Interrupt Hook: Exactly 1 sharp, compelling line (15-20 words max) that immediately stops the scroll with a real operational challenge, costly failure point, or surprising engineering truth. Zero greetings, zero pleasantries, zero fluff]",
+    "body": "[HVC Step 2 - The Value Delivery: Exactly 2 to 3 crisp, punchy bullet points starting with emojis (🔹, ⚙️, 💡, 📊). Each bullet must be 1 concise sentence stating a concrete fact, spec, or measurable result. Never use paragraphs longer than 2 lines. Zero fluff]",
+    "callToAction": "[HVC Step 3 - Single-Outcome Rule: Exactly ONE clear, direct, professional next step (e.g. 'Send us a DM with your CAD drawings for a free tolerance review' or 'Save this post for your next project cycle')]",
+    "fullPost": "[THE COMPLETE, READY-TO-PUBLISH SOCIAL POST: Impeccably formatted copy combining Hook + blank line + Body + blank line + Call to Action + blank line + Hashtags. 100% self-contained for 1-click publishing directly to LinkedIn or Instagram without manual editing]",
+    "hashtags": "[Strictly 3 to 4 hyper-relevant niche hashtags, space separated]"
   }`).join(',\n')}
 ]
 `;
@@ -1132,19 +1126,21 @@ CORE RULES FOR POWERFUL & GROUNDED CONTENT:
    - Post 3 must start with a commercial / procurement calculation.
    - Post 4 must start with a provocative comparative question or bold statement.
    - Post 5 must start in the middle of shop-floor action.
-3. THE 5th-GRADER / SCHOOL-KID SIMPLICITY RULE (ELI5) & AUTHENTIC GROUNDING:
-   - Make the core idea so crystal-clear, intuitive, and engaging that a 10-year-old school kid can understand it immediately!
-   - Ground every post in the company's real products, machinery, and services from memory, but translate complex engineering, software, or business concepts into vivid everyday analogies:
-     * e.g., For precision casting/forging: "Think of baking bread: if air bubbles get trapped inside, the crust snaps easily. In giant machinery, a tiny invisible bubble inside metal can make a 10-ton machine crack! Here is how we make solid steel with zero bubbles."
-     * e.g., For digital advertising / marketing: "Imagine shouting in a noisy cafeteria where no one hears you. That is what bad ads do. Instead, imagine tapping the exact 3 people who need your help right now on the shoulder."
-     * e.g., For high-precision tolerances: "Carving steel with accuracy thinner than a single strand of hair."
-   - BAN IMPENETRABLE JARGON: Strictly ban dense academic or corporate jargon walls ("sub-surface micro-porosity", "catastrophic shear planes", "synergistic paradigm"). If a technical term or industry metric (like CNC, DIN-5, or ROAS) is mentioned, IMMEDIATELY decode it with a simple 3-to-5 word plain English explanation so any reader grasps it instantly.
-   - 3-STEP UNIVERSAL STORYTELLING:
-     1. The Simple Mystery / Everyday Problem: "Ever wonder why...?" or "Imagine if..."
-     2. The Simple Solution: How the company solves it, explained step-by-step with clear analogies and emoji bullets.
-     3. The Big Takeaway: What this means for the customer in plain everyday English.
-4. EXACT COUNT: You must generate EXACTLY ${postCount} posts.
-5. LANGUAGE REQUIREMENT: You must write the entire output exclusively in the **${language}** language.
+3. CRYSTAL-CLEAR, CONCISE, AND ON-POINT COPYWRITING:
+   - Make every caption razor-sharp, concise, and straight to the point. No rambling, no filler words, and absolutely no childish metaphors (NO baking bread, NO school cafeterias, NO 10-year-old analogies).
+   - Write with the authoritative clarity of a senior technical director speaking directly to prospective clients, engineers, or procurement heads.
+   - High information density with zero fluff: state the operational problem, state the precise engineering/technical solution, and state the quantified business outcome.
+   - Ban dense academic/corporate jargon walls ('synergistic paradigm', 'sub-surface micro-porosity'). Keep language crisp, professional, and directly actionable.
+4. STRICT NEGATIVE CONSTRAINT - NEVER USE RAW LABELS OR MARKDOWN ASTERISKS:
+   - NEVER write raw labels like '**Before**', '**After**', '**Problem:**', '**Solution:**', '**Result:**', or '**Challenge:**'.
+   - NEVER output unrendered markdown asterisks like \`**text\` or \`*text*\` inside bullet points. Social platforms display these as literal asterisks, which looks broken.
+   - Express comparisons and results naturally without artificial label tags. For example:
+     * NEVER WRITE: '• **Before:** 14-day turnaround. • **After:** 48-hour delivery.'
+     * WRITE INSTEAD: '🔹 Cut component turnaround from 14 days down to 48 hours with automated CNC scheduling.'
+     * NEVER WRITE: '• **Problem:** High thermal wear on standard valves.'
+     * WRITE INSTEAD: '⚙️ Standard valves fail under 600°C thermal shock within 3 months; our inconel alloys run 24+ months continuous.'
+5. EXACT COUNT: You must generate EXACTLY ${postCount} posts.
+6. LANGUAGE REQUIREMENT: You must write the entire output exclusively in the **${language}** language.
 ${language === "Hinglish" ? `
    HINGLISH RULES:
    - Write in a natural conversational mix of Hindi (Devanagari script) and English.
@@ -1158,26 +1154,16 @@ ${language === "Hinglish" ? `
    - Use Gujarati (ગુજરાતી) for connective words, verbs, emotions, hooks, and everyday phrasing (e.g., "અમારી forging technology એ global market માં નવો standard સેટ કર્યો").
    - The tone should feel like a Gujarati business owner or engineer speaking proudly and professionally — blending local warmth with global engineering authority.
    - Do NOT write pure Gujarati or pure English. Every post must blend both naturally.` : ""}
-6. MATHEMATICAL AND LOGICAL SANITY:
+7. MATHEMATICAL AND LOGICAL SANITY:
    - Metric improvements or percentage INCREASES must NEVER have a minus sign (e.g. write "+320% increase" or "jumped by 320%", NEVER "-320%").
    - Negative signs or "cut by / reduced by" should ONLY be used for cost, downtime, or defect reductions (e.g. "reduced CPC by 58%").
    - Ensure all percentages and calculations are mathematically coherent and realistic.
-7. MODERN HVC COPYWRITING ARCHITECTURE (HOOK - VALUE - CTA):
-   - Hook: 1-2 lines maximum. Curiosity Gap, Contrarian Claim, Pain Point Callout, or Relatable Transformation. Zero preamble or pleasantries ("In today's fast-paced world...", "We are proud to share..."). Must act as a pattern interrupt before "...see more".
-   - Value (Body): Break into 1-3 line micro-paragraphs separated by blank lines. Organize actionable insights with emoji bullet points (🔹, 📊, 🚀, 💡, ⚙️). Natural keyword placement for algorithmic social search SEO. No dense text walls.
-   - Call to Action: The Single-Outcome Rule. Ask for strictly ONE outcome (e.g. Save this post, comment your spec, or DM for CAD review). Never dilute with multiple conflicting calls to action.
-   - Hashtag Discipline: Strictly 3 to 5 hyper-relevant niche hashtags at the very bottom.
-8. THE 3-SECOND RULE & 3-TIER VISUAL HIERARCHY:
-   - Level 1 (Headline): 5 to 8 bold, high-contrast words passing the "squint test".
-   - Level 2 (Context/Proof): A single quantified metric or proof pill badge (e.g. "+42% ROAS", "DIN-5 Verified Standard").
-   - Level 3 (Anchor): Official brand tag and aspect ratio indicator.
-   - Text overlay constraint: Graphics must NEVER contain paragraphs or dense sentences. The graphic's only job is to stop the scroll in under 3 seconds; reading happens in the caption.
-9. DIRECT-TO-SOCIAL READY COMMERCIAL AI IMAGES (FLUX / MIDJOURNEY):
-   - Every imagePrompt must produce a clean, stunning, professional visual that looks like high-end commercial editorial photography ready to be posted directly to Instagram, LinkedIn, or Facebook without needing any graphic designer or Photoshop edits.
-   - Subject MUST be crystal-clear, realistic, tactile, and aesthetically beautiful (e.g., sleek machined stainless steel component gleaming under soft studio rim lighting on a dark stone podium; or a clean modern architectural agency workspace bathed in warm morning daylight).
-   - ABSOLUTELY NO TEXT, NO LABELS, NO WATERMARKS in the generated photo. Text belongs in the caption or on the branded graphic overlay.
-   - Banish all cheap AI clichés: no glowing blue brains, no cyber grid handshakes, no abstract neon wires, no deformed hands. Pure, tangible, award-winning editorial commercial photography.
-10. READY-TO-PUBLISH FULL POST INTEGRITY:
+8. MODERN HVC COPYWRITING ARCHITECTURE (HOOK - VALUE - CTA):
+   - Hook: Exactly 1 sharp, compelling line (15-20 words max). Operational challenge, counter-intuitive truth, or key metric. Zero preamble, zero greeting ('Hello connections', 'Hope you are well'). Must act as a pattern interrupt before '...see more'.
+   - Value (Body): Exactly 2 to 3 concise, high-impact bullet points with clean emojis (🔹, ⚙️, 💡, 📊). Each bullet must be 1 clear sentence with real facts, specs, or metrics. No text walls.
+   - Call to Action: The Single-Outcome Rule. Exactly ONE direct, professional action (e.g. 'Send us a DM with your drawings for a free tolerance review' or 'Save this post for your next project cycle'). Never dilute with multiple conflicting calls to action.
+   - Hashtag Discipline: Strictly 3 to 4 clean, targeted niche hashtags at the bottom.
+9. READY-TO-PUBLISH FULL POST INTEGRITY:
    - The 'fullPost' field must be completely self-contained, seamless, and flawless, combining Hook + Body + CTA + Hashtags, ready for the user to copy with 1-click and publish directly to LinkedIn, Instagram, or Facebook without any manual editing.
 
 ${personaDirective}
@@ -1258,26 +1244,37 @@ Begin generating the posts now:`;
                 return str.replace(/\b(jumped|increased|rose|boosted|grew|surged|improved|up to)\s+([^\n.]+?)\s*\(-(\d+(?:\.\d+)?%)\s*(?:change|increase)?\)/gi, '$1 $2 (+$3)');
               };
 
-              posts = parsed.map((p: any) => {
-                const heading = (p.heading || p.title || '').trim();
-                const subText = (p.subText || p.subtitle || '').trim();
-                const hookType = (p.hookType || 'Curiosity Gap').trim();
-                const hook = sanitizeMath((p.hook || p.content || '').trim());
-                const rawBody = sanitizeMath((p.body || '').trim());
-                const cta = (p.callToAction || p.cta || '').trim();
+              const cleanRawLabels = (str: string): string => {
+                if (!str || typeof str !== 'string') return str || '';
+                return str
+                  .replace(/(^|[\n\r]+|\s*[•\-–*🔹⚙️💡📊🚀]\s*)\*\*(?:Before|After|Problem|Solution|Result|Challenge|Impact|Outcome|Metric|Status|Benefit|Takeaway):\*\*\s*/gi, '$1')
+                  .replace(/(^|[\n\r]+|\s*[•\-–*🔹⚙️💡📊🚀]\s*)(?:Before|After|Problem|Solution|Result|Challenge|Impact|Outcome):\s*/gi, '$1')
+                  .replace(/\*\*(?:Before|After|Problem|Solution|Result|Challenge|Impact|Outcome)\*\*/gi, '')
+                  .replace(/\*\*([^*]+)\*\*/g, '$1')
+                  .replace(/^[ \t]*[•\-–*][ \t]*[•\-–*][ \t]*/gm, '🔹 ')
+                  .trim();
+              };
 
-                // Normalize hashtags: strictly 3-5 tags
+              posts = parsed.map((p: any) => {
+                const heading = cleanRawLabels(p.heading || p.title || '').trim();
+                const subText = cleanRawLabels(p.subText || p.subtitle || '').trim();
+                const hookType = (p.hookType || 'Operational Challenge').trim();
+                const hook = cleanRawLabels(sanitizeMath((p.hook || p.content || '').trim()));
+                const rawBody = cleanRawLabels(sanitizeMath((p.body || '').trim()));
+                const cta = cleanRawLabels((p.callToAction || p.cta || '').trim());
+
+                // Normalize hashtags: strictly 3-4 tags
                 let rawTags = (p.hashtags || '').trim();
                 let tagArray = rawTags.split(/\s+/).filter((t: string) => t.length > 0).map((t: string) => t.startsWith('#') ? t : `#${t}`);
-                if (tagArray.length > 5) tagArray = tagArray.slice(0, 5);
+                if (tagArray.length > 4) tagArray = tagArray.slice(0, 4);
                 const hashtags = tagArray.join(' ');
 
                 const angle = (p.angle || '').trim();
-                const visualIdea = (p.visualIdea || p.visual_idea || p.concept || '').trim();
-                const elements = (p.elements || p.designElements || p.design_elements || '').trim();
+                const visualIdea = cleanRawLabels(p.visualIdea || p.visual_idea || p.concept || '').trim();
+                const elements = cleanRawLabels(p.elements || p.designElements || p.design_elements || '').trim();
                 const aspectRatio = p.aspectRatio || '1:1 Square (Feed)';
                 
-                let fullPost = p.fullPost ? sanitizeMath(p.fullPost.trim()) : '';
+                let fullPost = p.fullPost ? cleanRawLabels(sanitizeMath(p.fullPost.trim())) : '';
                 if (!fullPost) {
                   const parts: string[] = [];
                   if (hook) parts.push(hook);
@@ -1289,43 +1286,9 @@ Begin generating the posts now:`;
                     parts.push(hashtags);
                   }
                   fullPost = parts.join('\n\n').trim();
-                }
-
-                let imagePrompt = (p.imagePrompt || '').trim();
-                if (!imagePrompt) {
-                  imagePrompt = `Professional commercial marketing visual for ${heading || 'Brand'}, concept: ${visualIdea || 'technical excellence'}, clean modern aesthetic, dramatic studio lighting, crisp contrast, generous negative space on left for typography, photorealistic, 8k resolution --ar 1:1 --style raw --v 7`;
-                } else if (!imagePrompt.includes('--ar')) {
-                  imagePrompt = `${imagePrompt} --ar 1:1 --style raw --v 7`;
-                }
-
-                // Construct instant photorealistic image URL via Pollinations FLUX
-                let cleanPromptForUrl = (imagePrompt || visualIdea || heading || 'commercial marketing visual')
-                  .replace(/--ar\s+[^\s]+/gi, '')
-                  .replace(/--style\s+[^\s]+/gi, '')
-                  .replace(/--v\s+[^\s]+/gi, '')
-                  .replace(/--[a-z0-9]+/gi, '')
-                  .replace(/[^\w\s,.-]/gi, ' ')
-                  .replace(/\s+/g, ' ')
-                  .trim();
-                if (cleanPromptForUrl.length > 280) {
-                  cleanPromptForUrl = cleanPromptForUrl.slice(0, 280);
-                }
-                const pollinationsKey = process.env.POLLINATIONS_API_KEY ? `&key=${encodeURIComponent(process.env.POLLINATIONS_API_KEY)}` : '';
-                const seed = Math.floor(Math.random() * 1000000);
-                const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPromptForUrl)}?width=1024&height=1024&seed=${seed}&nologo=true&model=flux${pollinationsKey}`;
-
-                const simpleExplanation = (p.simpleExplanation || p.kidExplanation || p.eli5 || '').trim() ||
-                  `Think of ${heading ? heading.toLowerCase() : 'this'} in simple terms: how careful attention to hidden details makes a huge difference in performance and reliability.`;
-
-                // Pick high-resolution curated photography fallback by industry
-                const industryStr = (memory.businessIdentity?.industry || '').toLowerCase();
-                let fallbackImageUrl = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1080&h=1080&fit=crop&q=85';
-                if (industryStr.includes('ad') || industryStr.includes('market') || industryStr.includes('media') || industryStr.includes('brand')) {
-                  fallbackImageUrl = 'https://images.unsplash.com/photo-1542744094-3a31f272c490?w=1080&h=1080&fit=crop&q=85';
-                } else if (industryStr.includes('tech') || industryStr.includes('software') || industryStr.includes('ai') || industryStr.includes('cloud') || industryStr.includes('it')) {
-                  fallbackImageUrl = 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1080&h=1080&fit=crop&q=85';
-                } else if (industryStr.includes('valve') || industryStr.includes('cast') || industryStr.includes('steel') || industryStr.includes('manufactur') || industryStr.includes('machin') || industryStr.includes('forg')) {
-                  fallbackImageUrl = 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=1080&h=1080&fit=crop&q=85';
+                } else {
+                  // Ensure fullPost is cleanly sanitized
+                  fullPost = cleanRawLabels(fullPost);
                 }
 
                 return JSON.stringify({
@@ -1334,7 +1297,7 @@ Begin generating the posts now:`;
                   hookType,
                   heading,
                   subText,
-                  simpleExplanation,
+                  simpleExplanation: "",
                   hook,
                   content: hook, // for backwards-compatibility
                   body: rawBody,
@@ -1343,9 +1306,9 @@ Begin generating the posts now:`;
                   visualIdea,
                   elements,
                   aspectRatio,
-                  imagePrompt,
-                  imageUrl,
-                  fallbackImageUrl,
+                  imagePrompt: "",
+                  imageUrl: "",
+                  fallbackImageUrl: "",
                   hashtags
                 });
               });
