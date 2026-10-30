@@ -11,7 +11,7 @@ import { BingRssSearchEngine } from '../utils/bingRssSearchEngine.js';
 import { FreeSearchEngine } from '../utils/freeSearchEngine.js';
 import { BraveSearchEngine } from '../utils/braveSearchEngine.js';
 import { isTavilyAvailable, markTavilyQuotaExhausted } from '../utils/tavilyClient.js';
-import { verifyPostAuthor, isAuthenticCompetitorProfile } from '../utils/socialVerificationUtils.js';
+import { verifyPostAuthor, isAuthenticCompetitorProfile, isInstagramBundleHash } from '../utils/socialVerificationUtils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -392,9 +392,30 @@ export class SocialExtractorAgent {
             return null;
         }
 
+        // Reject Instagram bundle hashes immediately
+        if (platform === "Instagram" && (isInstagramBundleHash(lowerUrl) || isInstagramBundleHash(String(post.id || '')))) {
+            return null;
+        }
+
         let thumbUrl = String(post.thumbnail || post.thumbnail_url || post.mediaUrls || post.mediaUrl || "").trim();
         if (thumbUrl.includes(',')) {
             thumbUrl = thumbUrl.split(',')[0].trim();
+        }
+
+        // Auto-heal Facebook photo posts if thumbnail is missing
+        if (platform === "Facebook" && !thumbUrl) {
+            const fbPhotoMatch = postUrl.match(/(?:fbid=|\/photos\/(?:[^\/]+\/)?|\/photo\/?\?fbid=|\bmedia_id=)(\d{8,25})/i);
+            if (fbPhotoMatch && fbPhotoMatch[1]) {
+                thumbUrl = `https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${fbPhotoMatch[1]}`;
+            }
+        }
+
+        // Auto-heal Instagram posts with valid shortcodes if thumbnail is missing
+        if (platform === "Instagram" && !thumbUrl) {
+            const scMatch = postUrl.match(/\/(?:p|reel|tv)\/([A-Za-z0-9_-]{10,13})/);
+            if (scMatch && scMatch[1] && !isInstagramBundleHash(scMatch[1])) {
+                thumbUrl = `https://www.instagram.com/p/${scMatch[1]}/media/?size=l`;
+            }
         }
         
         const lowerThumb = thumbUrl.toLowerCase();
@@ -621,21 +642,25 @@ export class SocialExtractorAgent {
                         }
                     }
                     const html = res?.data || "";
-                    // Real Instagram post/reel shortcodes are strictly 10 to 13 characters
-                    const matches = html.match(/(?:[a-zA-Z0-9._-]+\/)?(?:p|reel)\/([A-Za-z0-9_-]{10,13})\/?/g) || [];
-                    const STATIC_BUNDLE_HASHES = new Set([
-                        'yv5pcb2zu36pujz8y7iqaossdqwgvk',
-                        'qtfxdjj4bd96t5yujhehlvpxsqtqm',
-                        'kj4gsfgo0rtfy48yejahxdpikbka',
-                        'rpztimpb7jilh325ll7qwl46t9zrxp'
-                    ]);
+                    // Real Instagram post/reel shortcodes:
+                    // 1. Strict regex: preceded by quote, slash, or full URL to avoid base64 noise
+                    const matches: string[] = [];
+                    const hrefMatches = html.matchAll(/(?:href=["']|(?:https?:\/\/(?:www\.)?instagram\.com)?)\/(?:p|reel)\/([A-Za-z0-9_-]{10,13})(?:[/?#"'&]|\s|$)/g);
+                    for (const hm of hrefMatches) {
+                        if (hm[1]) matches.push(`/p/${hm[1]}/`);
+                    }
+                    const jsonMatches = html.matchAll(/"(?:shortcode|code)":"([A-Za-z0-9_-]{10,13})"/g);
+                    for (const jm of jsonMatches) {
+                        if (jm[1]) matches.push(`/p/${jm[1]}/`);
+                    }
+
                     const seenShortcodes = new Set<string>();
                     for (const m of matches) {
                         const scMatch = m.match(/(?:p|reel)\/([A-Za-z0-9_-]{10,13})/);
                         if (scMatch && scMatch[1] && !seenShortcodes.has(scMatch[1])) {
                             const code = scMatch[1];
                             const codeLower = code.toLowerCase();
-                            if (codeLower === 'instagram' || codeLower.includes('explore') || codeLower.includes('stories') || codeLower.includes('accounts') || codeLower === 'category' || codeLower.includes('join') || code.length < 10 || code.length > 13 || STATIC_BUNDLE_HASHES.has(codeLower)) continue;
+                            if (codeLower === 'instagram' || codeLower.includes('explore') || codeLower.includes('stories') || codeLower.includes('accounts') || codeLower === 'category' || codeLower.includes('join') || code.length < 10 || code.length > 13 || isInstagramBundleHash(code)) continue;
                             seenShortcodes.add(code);
                             const isReel = m.includes('/reel/');
                             const postLink = `https://www.instagram.com/${isReel ? 'reel' : 'p'}/${code}/`;
@@ -745,20 +770,29 @@ export class SocialExtractorAgent {
                     if (posts.length < maxPosts) {
                         const urlMatches = html.matchAll(/https?:\/\/(?:www|m)\.facebook\.com\/([a-zA-Z0-9._-]+)\/(?:posts|videos|photos|reel)\/([a-zA-Z0-9_-]+)/g);
                         for (const m of urlMatches) {
-                            const fullUrl = `https://www.facebook.com/${m[1]}/${m[0].includes('/reel/') ? 'reel' : (m[0].includes('/videos/') ? 'videos' : (m[0].includes('/photos/') ? 'photos' : 'posts'))}/${m[2]}/`;
+                            const isReel = m[0].includes('/reel/');
+                            const isVideoRoute = m[0].includes('/videos/');
+                            const isPhotos = m[0].includes('/photos/');
+                            const routeType = isReel ? 'reel' : (isVideoRoute ? 'videos' : (isPhotos ? 'photos' : 'posts'));
+                            const fullUrl = `https://www.facebook.com/${m[1]}/${routeType}/${m[2]}/`;
                             if (seenUrls.has(fullUrl)) continue;
                             seenUrls.add(fullUrl);
 
-                            const isVideo = fullUrl.includes("/reel/") || fullUrl.includes("/videos/");
+                            const isVideo = isReel || isVideoRoute;
+                            const photoId = m[2];
+                            let thumb = "";
+                            if (isPhotos && /^\d{8,25}$/.test(photoId)) {
+                                thumb = `https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${photoId}`;
+                            }
                             posts.push({
                                 id: `fb_${m[2]}`,
                                 company: cleanCompName,
                                 platform: "Facebook",
                                 post_url: fullUrl,
                                 caption: `${cleanCompName} on Facebook: Official Post.`,
-                                media_type: isVideo ? "Video" : "Text",
-                                thumbnail: "",
-                                media_url: fullUrl,
+                                media_type: isVideo ? "Video" : (thumb ? "Image" : "Text"),
+                                thumbnail: thumb,
+                                media_url: thumb || fullUrl,
                                 date: new Date().toISOString().split("T")[0],
                                 engagement: { likes: 0, comments: 0 },
                                 isDirectProfilePost: true
@@ -1185,7 +1219,26 @@ export class SocialExtractorAgent {
         if (platform === 'Instagram') {
             const scMatch = postUrl.match(/\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/);
             if (scMatch && scMatch[1]) {
+                if (isInstagramBundleHash(scMatch[1])) {
+                    post._invalidAuthor = true;
+                    return post;
+                }
                 post.shortcode = scMatch[1];
+            }
+        }
+
+        // Auto-extract lookaside thumbnail for Facebook photo posts
+        if (platform === 'Facebook') {
+            const fbPhotoMatch = postUrl.match(/(?:fbid=|\/photos\/(?:[^\/]+\/)?|\/photo\/?\?fbid=|\bmedia_id=)(\d{8,25})/i);
+            if (fbPhotoMatch && fbPhotoMatch[1] && (!post.thumbnail || post.thumbnail.includes('favicon'))) {
+                const fbThumb = `https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${fbPhotoMatch[1]}`;
+                post.thumbnail = fbThumb;
+                post.thumbnail_url = fbThumb;
+                post.media_url = fbThumb;
+                post.mediaUrl = fbThumb;
+                post.mediaUrls = fbThumb;
+                post.media_type = "Image";
+                post.mediaType = "Image";
             }
         }
 
@@ -1203,7 +1256,7 @@ export class SocialExtractorAgent {
             const res = await axios.get(postUrl, { headers, timeout: 6000 }).catch(() => null);
             if (!res || !res.data) {
                 // If direct scrape timed out or failed, ensure fallback thumbnail for Instagram
-                if (platform === 'Instagram' && post.shortcode && !post.thumbnail) {
+                if (platform === 'Instagram' && post.shortcode && !isInstagramBundleHash(post.shortcode) && !post.thumbnail) {
                     const igThumb = `https://www.instagram.com/p/${post.shortcode}/media/?size=l`;
                     post.thumbnail = igThumb;
                     post.thumbnail_url = igThumb;
@@ -1389,7 +1442,7 @@ export class SocialExtractorAgent {
                         post.media_type = "Video";
                         post.mediaType = "Video";
                     }
-                    const fbIdMatch = postUrl.match(/(?:fbid=|\/photos\/[^\/]+\/|\/photo\/?\?fbid=|\bmedia_id=)(\d{10,25})/);
+                    const fbIdMatch = postUrl.match(/(?:fbid=|\/photos\/(?:[^\/]+\/)?|\/photo\/?\?fbid=|\bmedia_id=)(\d{8,25})/);
                     if (fbIdMatch && fbIdMatch[1]) {
                         const fbThumb = `https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${fbIdMatch[1]}`;
                         post.thumbnail = fbThumb;
@@ -1400,7 +1453,7 @@ export class SocialExtractorAgent {
                     }
                 } else if (platform === 'Instagram') {
                     const scMatch = post.shortcode || (postUrl.match(/\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/) || [])[1];
-                    if (scMatch) {
+                    if (scMatch && !isInstagramBundleHash(scMatch)) {
                         post.shortcode = scMatch;
                         const igThumb = `https://www.instagram.com/p/${scMatch}/media/?size=l`;
                         post.thumbnail = igThumb;

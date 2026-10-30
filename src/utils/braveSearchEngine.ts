@@ -57,7 +57,7 @@ export class BraveSearchEngine {
         if (!title) return;
 
         const content = $(el)
-          .find(".snippet-description, .snippet-content")
+          .find(".content, .generic-snippet, .snippet-description, .snippet-content")
           .first()
           .text()
           .replace(/\s+/g, " ")

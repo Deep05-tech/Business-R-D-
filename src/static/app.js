@@ -3207,11 +3207,25 @@ async function loadFeedUI() {
       if (!post) return null;
       let candidates = [];
 
-      // If it is an Instagram post with a shortcode, prioritize the authentic uncropped full-size photo
       const pUrl = (post.post_url || post.link || post.postUrl || '').trim();
+      const platform = post.platform || post._detectedPlatform || '';
       const sc = post.shortcode || (pUrl.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i) || [])[1];
-      if (sc && (post.platform === 'Instagram' || post._detectedPlatform === 'Instagram' || pUrl.includes('instagram.com'))) {
+      const isBundle = sc && (sc.toLowerCase().startsWith('yv5pcb') || sc.toLowerCase().startsWith('qtfxdj') || sc.toLowerCase().startsWith('kj4gsf') || sc.toLowerCase().startsWith('rpztim'));
+
+      // If it is an Instagram post with a valid shortcode, prioritize the authentic photo/thumbnail
+      if (sc && !isBundle && (platform === 'Instagram' || post._detectedPlatform === 'Instagram' || pUrl.includes('instagram.com'))) {
+        if (post.thumbnail && (post.thumbnail.includes('cdninstagram.com') || post.thumbnail.includes('fbcdn.net'))) {
+          candidates.push(post.thumbnail);
+        }
         candidates.push(`https://www.instagram.com/p/${sc}/media/?size=l`);
+      }
+
+      // If Facebook, check for numeric photo ID to resolve crisp lookaside image
+      if (platform === 'Facebook' || post._detectedPlatform === 'Facebook' || pUrl.includes('facebook.com')) {
+        const fbPhotoMatch = pUrl.match(/(?:fbid=|\/photos\/[^\/]+\/|\/photo\/?\?fbid=|\bmedia_id=)(\d{8,25})/i);
+        if (fbPhotoMatch && fbPhotoMatch[1]) {
+          candidates.push(`https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${fbPhotoMatch[1]}`);
+        }
       }
 
       if (post.thumbnail) candidates.push(post.thumbnail);
@@ -3221,6 +3235,11 @@ async function loadFeedUI() {
       if (Array.isArray(post.mediaUrls)) candidates.push(...post.mediaUrls);
       if (typeof post.mediaUrl === 'string') candidates.push(...post.mediaUrl.split(','));
       if (typeof post.mediaUrls === 'string') candidates.push(...post.mediaUrls.split(','));
+
+      // If Facebook post page (videos, reel, posts, permalink), allow pUrl so proxy can resolve fresh og:image
+      if ((platform === 'Facebook' || pUrl.includes('facebook.com')) && pUrl && (pUrl.includes('/videos/') || pUrl.includes('/reel/') || pUrl.includes('/posts/') || pUrl.includes('permalink.php') || pUrl.includes('story.php'))) {
+        candidates.push(pUrl);
+      }
 
       for (let c of candidates) {
         if (!c || typeof c !== 'string') continue;
@@ -3242,7 +3261,7 @@ async function loadFeedUI() {
             continue;
           }
 
-          // Exclude HTML webpage/profile links (but ALLOW /media/ endpoints)
+          // Exclude HTML webpage/profile links (but ALLOW /media/ endpoints and supported FB post pages)
           try {
             const parsed = new URL(trimmed);
             const host = parsed.hostname.toLowerCase();
@@ -3250,7 +3269,7 @@ async function loadFeedUI() {
 
             if (
               ((host === 'instagram.com' || host === 'www.instagram.com') && !path.includes('/media/') && (path.includes('/p/') || path.includes('/reel/') || path.includes('/stories/') || path.split('/').filter(Boolean).length <= 1)) ||
-              ((host === 'facebook.com' || host === 'www.facebook.com' || host === 'm.facebook.com' || host === 'web.facebook.com') && (path.includes('/posts/') || path.includes('/photos/') || path.includes('/videos/') || path.includes('story.php') || path.includes('permalink.php') || path.split('/').filter(Boolean).length <= 1)) ||
+              ((host === 'facebook.com' || host === 'www.facebook.com' || host === 'm.facebook.com' || host === 'web.facebook.com') && !path.includes('permalink.php') && !path.includes('story.php') && (path.split('/').filter(Boolean).length <= 1)) ||
               ((host === 'linkedin.com' || host === 'www.linkedin.com') && (path.includes('/posts/') || path.includes('/feed/update/') || path.includes('/in/') || path.includes('/company/'))) ||
               (host === 'youtube.com' || host === 'www.youtube.com' || host === 'youtu.be')
             ) {
@@ -3260,9 +3279,10 @@ async function loadFeedUI() {
             continue;
           }
 
-          // Accept media CDN domains, /media/ endpoints, or files with image/video extensions
+          // Accept media CDN domains, /media/ endpoints, FB post pages, or files with image/video extensions
           if (lower.includes('cdninstagram') || lower.includes('fbcdn') || lower.includes('fbsbx') ||
               lower.includes('lookaside') || lower.includes('/media/?size=') || lower.includes('/media/') ||
+              lower.includes('permalink.php') || lower.includes('/posts/') || lower.includes('/videos/') || lower.includes('/photos/') ||
               lower.includes('media.licdn.com') || lower.includes('dms.licdn.com') || lower.includes('licdn.com/dms') ||
               lower.includes('ytimg') || lower.includes('googleusercontent.com') || lower.includes('unsplash.com') ||
               lower.match(/\.(jpeg|jpg|png|gif|webp|svg|mp4)(\?|$)/i)) {
@@ -3271,8 +3291,8 @@ async function loadFeedUI() {
         }
       }
 
-      // If no valid media thumbnail was found, but it is an Instagram post with a shortcode:
-      if (sc && (post.platform === 'Instagram' || post._detectedPlatform === 'Instagram' || pUrl.includes('instagram.com'))) {
+      // If no valid media thumbnail was found, but it is an Instagram post with a valid shortcode:
+      if (sc && !isBundle && (platform === 'Instagram' || post._detectedPlatform === 'Instagram' || pUrl.includes('instagram.com'))) {
         return `https://www.instagram.com/p/${sc}/media/?size=l`;
       }
 
@@ -4016,28 +4036,51 @@ async function loadFeedUI() {
       }
       if (!dateStr || dateStr === 'undefined' || dateStr === 'null') dateStr = 'Recent';
 
-      let cardThumbHtml = '';
-      const ytVidId = post._ytVidId || post._ytId || window.getYouTubeId(post.post_url || post.link || '') || window.getYouTubeId(post.thumbnail_url || post.mediaUrl || '') || window.getYouTubeId(post.caption || post.content || '');
-      let firstMediaUrl = post._mediaResolved || window.extractSingleMediaUrl(post);
+      let displayContent = (post.caption || post.content || '').trim();
+      const isBoilerplate = !displayContent ||
+        displayContent === 'No caption' || displayContent === 'No caption.' ||
+        displayContent.includes('Welcome back to Instagram') ||
+        displayContent.includes('Sign in to check out') ||
+        displayContent.includes('Log in to see photos') ||
+        displayContent.includes('No photo description available') ||
+        displayContent.includes('Commenting has been turned off') ||
+        displayContent.includes('May be an image of') ||
+        displayContent.toLowerCase() === 'instagram' ||
+        displayContent.toLowerCase() === 'facebook';
 
       const pLink = post.post_url || post.link || '';
       const isIgReelCard = (platform === 'Instagram' || post._detectedPlatform === 'Instagram') &&
                            (pLink.includes('/reel/') || post.media_type === 'Video' || post.mediaType === 'Video');
       const isInstagramCard = (platform === 'Instagram' || post._detectedPlatform === 'Instagram');
       const isLiVidCard = (platform === 'LinkedIn' || post._detectedPlatform === 'LinkedIn') &&
-                          (Boolean(post.video_url) || post.media_type === 'Video' || post.mediaType === 'Video' || (firstMediaUrl && (firstMediaUrl.includes('/playlist/vid/') || firstMediaUrl.includes('video.licdn.com') || firstMediaUrl.includes('thumbnail-with-play-button'))));
+                          (Boolean(post.video_url) || post.media_type === 'Video' || post.mediaType === 'Video');
       const isFacebookVideoCard = (platform === 'Facebook' || post._detectedPlatform === 'Facebook') &&
                                   (Boolean(post.video_url) || Boolean(post.fb_video_id) || post.media_type === 'Video' || post.mediaType === 'Video' || /\/(?:videos|reel|watch)\b/i.test(pLink));
+
+      if (isBoilerplate) {
+        displayContent = platform === 'Facebook' ? `${compName} - Facebook Update` : (platform === 'Instagram' ? `${compName} - Instagram ${isIgReelCard ? 'Reel' : 'Post'}` : `${compName} - ${platform}`);
+      }
+
+      let cardThumbHtml = '';
+      const ytVidId = post._ytVidId || post._ytId || window.getYouTubeId(pLink) || window.getYouTubeId(post.thumbnail_url || post.mediaUrl || '') || window.getYouTubeId(post.caption || post.content || '');
+      let firstMediaUrl = post._mediaResolved || window.extractSingleMediaUrl(post);
 
       if (!firstMediaUrl && isFacebookVideoCard && pLink) {
         firstMediaUrl = pLink;
       }
 
+      const rawIgSc = post.shortcode || (pLink.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i) || [])[1];
+      const isIgBundle = rawIgSc && (rawIgSc.toLowerCase().startsWith('yv5pcb') || rawIgSc.toLowerCase().startsWith('qtfxdj') || rawIgSc.toLowerCase().startsWith('kj4gsf') || rawIgSc.toLowerCase().startsWith('rpztim'));
+      const validIgSc = isIgBundle ? '' : rawIgSc;
+
+      const escapedSnippet = window.escapeHtml(displayContent).replace(/'/g, "\\'");
+      const snippetFallbackHtml = `<div style=\\'width:100%;height:100%;background:${meta.bg};border-radius:8px;padding:10px 12px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;\\'><div style=\\'display:flex;align-items:center;gap:6px;\\'><span style=\\'font-size:14px;\\'>${meta.icon}</span><span style=\\'font-size:10px;font-weight:700;color:#fff;text-transform:uppercase;\\'>${platform}</span></div><div style=\\'font-size:10.5px;line-height:1.35;color:rgba(255,255,255,0.9);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;\\'>&ldquo;${escapedSnippet}&rdquo;</div><span style=\\'font-size:9.5px;font-weight:600;color:#93c5fd;\\'>View on ${platform} ↗</span></div>`;
+
       if (ytVidId) {
         const ytThumb = `https://img.youtube.com/vi/${ytVidId}/hqdefault.jpg`;
         cardThumbHtml = `
           <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
-            <img src="${ytThumb}" referrerpolicy="no-referrer" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');" />
+            <img src="${ytThumb}" referrerpolicy="no-referrer" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.parentElement.innerHTML = '${snippetFallbackHtml}';" />
             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:15px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
           </div>`;
       } else if (firstMediaUrl) {
@@ -4049,54 +4092,47 @@ async function loadFeedUI() {
         const fitStyle = isInstagramCard ? 'object-fit: contain !important; background: #080d1a !important;' : 'object-fit: cover;';
         const imgClass = isInstagramCard ? 'feed-card-thumb-contain' : '';
 
-        const igSc = post.shortcode || (pLink.match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i) || [])[1];
-        const igFallbackSrc = igSc ? window.getSocialMediaProxyUrl('https://www.instagram.com/p/' + igSc + '/media/?size=l', pLink) : '';
-        const fbIframeFallback = isFacebookVideoCard ? `this.parentElement.innerHTML = '<iframe src=\\'https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(pLink)}&show_text=false&width=280\\' style=\\'width:100%;height:100%;border:0;pointer-events:none;background:#000;border-radius:8px;\\' frameborder=\\'0\\' scrolling=\\'no\\'></iframe><div style=\\'position:absolute;top:6px;right:6px;background:#1877f2;color:white;font-size:8.5px;font-weight:800;padding:2px 5px;border-radius:4px;pointer-events:none;\\'>📹 VIDEO</div>';` : `window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}');`;
+        let onErrAction = '';
+        if (isInstagramCard && validIgSc) {
+          onErrAction = `this.parentElement.innerHTML = '<iframe src=\\'https://www.instagram.com/${isIgReelCard ? 'reel' : 'p'}/${validIgSc}/embed/\\' style=\\'width:100%;height:100%;border:0;background:#080d1a;border-radius:8px;pointer-events:none;\\' frameborder=\\'0\\' scrolling=\\'no\\'></iframe>';`;
+        } else if (isFacebookVideoCard && pLink) {
+          onErrAction = `this.parentElement.innerHTML = '<iframe src=\\'https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(pLink)}&show_text=false&width=280\\' style=\\'width:100%;height:100%;border:0;pointer-events:none;background:#000;border-radius:8px;\\' frameborder=\\'0\\' scrolling=\\'no\\'></iframe><div style=\\'position:absolute;top:6px;right:6px;background:#1877f2;color:white;font-size:8.5px;font-weight:800;padding:2px 5px;border-radius:4px;pointer-events:none;\\'>📹 VIDEO</div>';`;
+        } else {
+          onErrAction = `this.parentElement.innerHTML = '${snippetFallbackHtml}';`;
+        }
 
         cardThumbHtml = `
           <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
-            <img src="${proxiedThumb}" class="${imgClass}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; ${fitStyle} object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; ${igFallbackSrc ? `this.src='${igFallbackSrc}'; this.onerror=function(){ window.gridVideoFailed(this, '${platform}', '${meta.icon}', '${encodeURIComponent(meta.bg)}'); };` : fbIframeFallback}" />
+            <img src="${proxiedThumb}" class="${imgClass}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; ${fitStyle} object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; ${onErrAction}" />
             ${badgeHtml}
             ${playBtn}
           </div>`;
-      } else if (isFacebookVideoCard && pLink) {
-        let fbThumb = window.getSocialMediaProxyUrl(pLink, pLink);
+      } else if (isInstagramCard && validIgSc) {
         cardThumbHtml = `
           <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
-            <img src="${fbThumb}" referrerpolicy="no-referrer" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 8px;" onerror="this.onerror=null; this.parentElement.innerHTML = '<iframe src=\\'https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(pLink)}&show_text=false&width=280\\' style=\\'width:100%;height:100%;border:0;pointer-events:none;background:#000;border-radius:8px;\\' frameborder=\\'0\\' scrolling=\\'no\\'></iframe><div style=\\'position:absolute;top:6px;right:6px;background:#1877f2;color:white;font-size:8.5px;font-weight:800;padding:2px 5px;border-radius:4px;pointer-events:none;\\'>📹 VIDEO</div>';" />
-            <div style="position:absolute; top:6px; right:6px; background:#1877f2; color:white; font-size:8.5px; font-weight:800; padding:2px 5px; border-radius:4px; text-transform:uppercase; pointer-events:none;">📹 VIDEO</div>
-            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;background:rgba(0,0,0,0.6);border:2px solid rgba(255,255,255,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.6);">▶</div>
+            <iframe src="https://www.instagram.com/${isIgReelCard ? 'reel' : 'p'}/${validIgSc}/embed/" style="width: 100%; height: 100%; border: 0; pointer-events: none; border-radius: 8px; background: #080d1a;" frameborder="0" scrolling="no"></iframe>
+            <div style="position:absolute; top:6px; right:6px; background:#e1306c; color:white; font-size:8.5px; font-weight:800; padding:2px 5px; border-radius:4px; text-transform:uppercase; pointer-events:none;">📸 INSTAGRAM</div>
           </div>`;
-      } else if (isIgReelCard && igSc) {
+      } else if (isFacebookVideoCard && pLink) {
         cardThumbHtml = `
-          <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #000; flex-shrink: 0; position: relative; padding: 0;">
-            <iframe src="https://www.instagram.com/reel/${igSc}/embed/" style="width: 100%; height: 100%; border: 0; pointer-events: none; border-radius: 8px; background: #000;" frameborder="0" scrolling="no"></iframe>
-            <div style="position:absolute; top:6px; right:6px; background:#e1306c; color:white; font-size:8.5px; font-weight:800; padding:2px 5px; border-radius:4px; text-transform:uppercase; pointer-events:none;">📹 REEL</div>
+          <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #080d1a; flex-shrink: 0; position: relative; padding: 0;">
+            <iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(pLink)}&show_text=false&width=280" style="width: 100%; height: 100%; border: 0; pointer-events: none; background: #000; border-radius: 8px;" frameborder="0" scrolling="no"></iframe>
+            <div style="position:absolute; top:6px; right:6px; background:#1877f2; color:white; font-size:8.5px; font-weight:800; padding:2px 5px; border-radius:4px; text-transform:uppercase; pointer-events:none;">📹 VIDEO</div>
           </div>`;
       }
 
       if (!cardThumbHtml) {
         cardThumbHtml = `
-          <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: ${meta.bg}; flex-shrink: 0; position: relative; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <div style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.16);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:4px;">${meta.icon}</div>
-            <span style="font-size:11px;font-weight:700;color:#ffffff;letter-spacing:0.02em;">${platform}</span>
-            <span style="font-size:10px;font-weight:500;color:rgba(255,255,255,0.78);margin-top:2px;">Preview Post ↗</span>
+          <div style="margin: 0 0 6px 0; width: 100%; height: 115px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: ${meta.bg}; flex-shrink: 0; position: relative; padding: 10px 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 14px;">${meta.icon}</span>
+              <span style="font-size: 10px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.05em;">${platform}</span>
+            </div>
+            <div style="font-size: 10.5px; line-height: 1.35; color: rgba(255,255,255,0.9); overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+              &ldquo;${window.escapeHtml(displayContent)}&rdquo;
+            </div>
+            <span style="font-size: 9.5px; font-weight: 600; color: #93c5fd;">View on ${platform} ↗</span>
           </div>`;
-      }
-
-      let displayContent = (post.caption || post.content || '').trim();
-      const isBoilerplate = !displayContent ||
-        displayContent === 'No caption' || displayContent === 'No caption.' ||
-        displayContent.includes('Welcome back to Instagram') ||
-        displayContent.includes('Sign in to check out') ||
-        displayContent.includes('Log in to see photos') ||
-        displayContent.includes('No photo description available') ||
-        displayContent.includes('May be an image of') ||
-        displayContent.toLowerCase() === 'instagram' ||
-        displayContent.toLowerCase() === 'facebook';
-
-      if (isBoilerplate) {
-        displayContent = platform === 'Facebook' ? `${compName} - Facebook Update` : (platform === 'Instagram' ? `${compName} - Instagram ${isIgReelCard ? 'Reel' : 'Post'}` : `${compName} - ${platform}`);
       }
 
       return `

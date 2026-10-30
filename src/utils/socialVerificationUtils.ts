@@ -270,6 +270,10 @@ export function verifyPostAuthor(
         return false; // Group and casting agency posts are never official company posts
     }
 
+    if ((platform || '').toLowerCase().includes('instagram') && isInstagramBundleHash(lowerUrl)) {
+        return false; // Discard Instagram static JS bundle chunk paths
+    }
+
     const { primaryTokens, coreBrandKey } = extractDistinctiveBrandTokens(competitorName);
     if (primaryTokens.length === 0 && coreBrandKey.length === 0) {
         return false;
@@ -465,4 +469,15 @@ export function verifyPostAuthor(
     }
 
     return hasBrandMention;
+}
+
+const KNOWN_BUNDLE_PREFIXES = ['yv5pcb', 'qtfxdj', 'kj4gsf', 'rpztim'];
+
+/**
+ * Checks whether an Instagram URL or shortcode originates from Instagram's static compiled JS bundles.
+ */
+export function isInstagramBundleHash(str: string): boolean {
+    if (!str || typeof str !== 'string') return false;
+    const l = str.toLowerCase();
+    return KNOWN_BUNDLE_PREFIXES.some(p => l.includes(p));
 }

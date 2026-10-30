@@ -521,30 +521,31 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
             targetUrl = `https://www.instagram.com/p/${igMatch[1]}/media/?size=l`;
         }
 
-        // If post_url is an Instagram post/reel URL and targetUrl is a cropped thumbnail or CDN image, upgrade to full-size uncropped photo
-        const igScFromPost = (req.query.post_url as string || '').match(/instagram\.com\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/i);
-        if (igScFromPost && igScFromPost[1] && !targetUrl.includes('.mp4') && !targetUrl.includes('/playlist/vid/')) {
-            if (targetUrl.includes('cdninstagram.com') || targetUrl.includes('fbcdn.net') || targetUrl.includes('/media/')) {
-                targetUrl = `https://www.instagram.com/p/${igScFromPost[1]}/media/?size=l`;
-            }
-        }
-
-        // 3. If targetUrl is a Facebook video/post webpage URL, resolve its fresh og:image thumbnail
-        const isFbPostPage = targetUrl.includes('facebook.com') && (targetUrl.includes('/videos/') || targetUrl.includes('/reel/') || targetUrl.includes('/watch') || targetUrl.includes('/posts/'));
+        // 3. If targetUrl is a Facebook video/post webpage URL, resolve its fresh og:image thumbnail or photo lookaside
+        const isFbPostPage = targetUrl.includes('facebook.com') && (
+            targetUrl.includes('/videos/') || targetUrl.includes('/reel/') || targetUrl.includes('/watch') ||
+            targetUrl.includes('/posts/') || targetUrl.includes('/photos/') || targetUrl.includes('permalink.php') ||
+            targetUrl.includes('story.php') || targetUrl.includes('photo.php') || targetUrl.includes('fbid=')
+        );
         if (isFbPostPage) {
-            try {
-                const freshFetch = await axios.get(targetUrl, {
-                    headers: {
-                        'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
-                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-                    },
-                    timeout: 7000
-                });
-                const ogMatch = (freshFetch.data || '').match(/<meta property="og:image" content="([^"]+)"/i);
-                if (ogMatch && ogMatch[1]) {
-                    targetUrl = ogMatch[1].replace(/&amp;/g, '&');
-                }
-            } catch (e) {}
+            const photoIdM = targetUrl.match(/(?:fbid=|\/photos\/(?:[^\/]+\/)?|\/photo\/?\?fbid=|\bmedia_id=)(\d{8,25})/i);
+            if (photoIdM && photoIdM[1]) {
+                targetUrl = `https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${photoIdM[1]}`;
+            } else {
+                try {
+                    const freshFetch = await axios.get(targetUrl, {
+                        headers: {
+                            'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+                            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                        },
+                        timeout: 7000
+                    });
+                    const ogMatch = (freshFetch.data || '').match(/<meta property="og:image" content="([^"]+)"/i);
+                    if (ogMatch && ogMatch[1]) {
+                        targetUrl = ogMatch[1].replace(/&amp;/g, '&');
+                    }
+                } catch (e) {}
+            }
         }
 
         const lowerTarget = targetUrl.toLowerCase();
@@ -558,10 +559,10 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
                               lowerTarget.includes('/media/?size=') || lowerTarget.includes('/media/') ||
                               lowerTarget.includes('ytimg') || lowerTarget.includes('unsplash.com');
 
-        // If targetUrl is an HTML webpage rather than a direct image/media file, immediately serve the fast SVG placeholder
-        // to avoid blocking the server with hanging external webpage scrapes.
+        // If targetUrl is an HTML webpage rather than a direct image/media file, return 404 or SVG fallback
         if (!isDirectMedia && !lowerTarget.includes('.mp4')) {
-            return sendPlatformSvgPlaceholder(res, rawUrl);
+            if (req.query.fallback === 'svg') return sendPlatformSvgPlaceholder(res, rawUrl);
+            return res.status(404).send('Direct media unavailable');
         }
 
         let ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
@@ -603,7 +604,8 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
         const contentType = String(response.headers['content-type'] || '').toLowerCase();
         if (contentType.includes('text/html') && !isVideoReq) {
             logger.warn(`[Proxy-Media] Target URL ${targetUrl} returned HTML content-type instead of image.`);
-            return sendPlatformSvgPlaceholder(res, rawUrl);
+            if (req.query.fallback === 'svg') return sendPlatformSvgPlaceholder(res, rawUrl);
+            return res.status(404).send('Image unavailable');
         }
 
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -685,7 +687,10 @@ const handleProxyMedia = async (req: express.Request, res: express.Response) => 
             } catch (fbErr) {}
         }
 
-        return sendPlatformSvgPlaceholder(res, rawUrl);
+        if (req.query.fallback === 'svg') {
+            return sendPlatformSvgPlaceholder(res, rawUrl);
+        }
+        return res.status(404).send('Image stream failed');
     }
 };
 

@@ -8,7 +8,7 @@ import { BraveSearchEngine } from "../utils/braveSearchEngine.js";
 import { FreeSearchEngine } from "../utils/freeSearchEngine.js";
 import { isTavilyAvailable, markTavilyQuotaExhausted } from "../utils/tavilyClient.js";
 import { CompetitorAgent } from "./competitorAgent.js";
-import { isAuthenticCompetitorProfile } from "../utils/socialVerificationUtils.js";
+import { isAuthenticCompetitorProfile, isInstagramBundleHash } from "../utils/socialVerificationUtils.js";
 import axios from "axios";
 import pLimit from "p-limit";
 
@@ -446,6 +446,20 @@ export class CronAgent {
 
       // Preserve previously verified posts that were not re-scraped in this run
       for (const p of existingFeed) {
+        if (!p) continue;
+        const u = String(p.post_url || p.link || p.postUrl || '').toLowerCase();
+        const id = String(p.id || '').toLowerCase();
+        if (isInstagramBundleHash(u) || isInstagramBundleHash(id)) continue;
+
+        // Auto-heal Facebook posts if thumbnail is missing
+        if (p.platform === 'Facebook' && (!p.thumbnail || !p.thumbnail.startsWith('http'))) {
+          const photoMatch = u.match(/(?:fbid=|\/photos\/(?:[^\/]+\/)?|\/photo\/?\?fbid=|\bmedia_id=)(\d{8,25})/i);
+          if (photoMatch && photoMatch[1]) {
+            p.thumbnail = `https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${photoMatch[1]}`;
+            p.media_url = p.thumbnail;
+          }
+        }
+
         const k = normalizePostKey(p);
         if (k && !mergedMap.has(k)) {
           mergedMap.set(k, p);
