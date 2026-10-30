@@ -1044,12 +1044,16 @@ Output ONLY the raw JSON array. Do not include markdown codeblocks or extra text
 [
 ${assignedArchetypes.map((arch, i) => `  {
     "angle": "${arch.angle}",
-    "heading": "[Scroll-stopping headline strictly matching Post ${i + 1} angle: ${arch.angle}]",
-    "subText": "[Quantified supporting metric or benefit for Post ${i + 1}]",
-    "visualIdea": "[Detailed visual concept adhering to Post ${i + 1} visual direction]",
-    "content": "[Short punchy caption hook that starts in media res adhering to Post ${i + 1} hook requirement]",
-    "body": "[Concise yet information-dense post copy (~120-180 words) with real data points, specs, and metrics from memory adhering to Post ${i + 1} body style]",
-    "elements": "[Specific design elements, callout boxes, CAD schematics, diagrams]",
+    "heading": "[Scroll-stopping on-graphic headline strictly matching Post ${i + 1} angle: ${arch.angle}]",
+    "subText": "[Quantified supporting metric or benefit for the graphic banner]",
+    "hook": "[High-converting 1-2 line opening hook that grabs attention immediately]",
+    "body": "[Structured post narrative (100-150 words) with clean line breaks, bullet points with relevant emojis (🔹, 📊, ⚙️, 💡), and real specs/metrics from memory]",
+    "callToAction": "[Direct, compelling call to action line (e.g. 👉 DM us or drop a comment below to get our full audit/specs)]",
+    "fullPost": "[THE COMPLETE, READY-TO-PUBLISH POST: An impeccably formatted single copy combining the hook, the structured body with emoji bullets, the call to action, and the hashtags. Ready for 1-click copying directly to LinkedIn, Instagram, or Facebook]",
+    "visualIdea": "[Detailed creative concept for the image / carousel graphic adhering to Post ${i + 1} visual direction]",
+    "elements": "[Specific design elements, callout boxes, CAD schematics, diagrams, color palette guidance]",
+    "aspectRatio": "1:1 Square (Feed)",
+    "imagePrompt": "[Detailed, production-ready AI image generation prompt for Midjourney / DALL-E describing the scene, lighting, composition, and style without generic corporate clichés]",
     "hashtags": "[5-7 targeted B2B hashtags matching the company and industry, space separated]"
   }`).join(',\n')}
 ]
@@ -1121,6 +1125,16 @@ ${language === "Hinglish" ? `
    - Use Gujarati (ગુજરાતી) for connective words, verbs, emotions, hooks, and everyday phrasing (e.g., "અમારી forging technology એ global market માં નવો standard સેટ કર્યો").
    - The tone should feel like a Gujarati business owner or engineer speaking proudly and professionally — blending local warmth with global engineering authority.
    - Do NOT write pure Gujarati or pure English. Every post must blend both naturally.` : ""}
+6. MATHEMATICAL AND LOGICAL SANITY:
+   - Metric improvements or percentage INCREASES must NEVER have a minus sign (e.g. write "+320% increase" or "jumped by 320%", NEVER "-320%").
+   - Negative signs or "cut by / reduced by" should ONLY be used for cost, downtime, or defect reductions (e.g. "reduced CPC by 58%").
+   - Ensure all percentages and calculations are mathematically coherent and realistic.
+7. SOCIAL MEDIA COPYWRITING QUALITY & READY-TO-PUBLISH FORMAT:
+   - Write like a top-tier B2B content creator with high authority and engaging rhythm.
+   - Use punchy, short sentences with generous whitespace between paragraphs.
+   - Organize the core body with clean bullet points and relevant emojis (🔹, 📊, 🚀, 💡, ⚙️) to make value propositions easily scannable.
+   - Every post MUST conclude with a clear, compelling Call to Action (CTA) before the hashtags.
+   - The 'fullPost' field must be completely self-contained, seamless, and flawless, ready for the user to copy with 1-click and publish directly to LinkedIn, Instagram, or Facebook without any manual editing.
 
 ${personaDirective}
 ${platformDirective}
@@ -1195,7 +1209,60 @@ Begin generating the posts now:`;
             }
 
             if (Array.isArray(parsed) && parsed.length > 0) {
-              posts = parsed.map((p: any) => JSON.stringify(p));
+              const sanitizeMath = (str: string): string => {
+                if (!str || typeof str !== 'string') return str || '';
+                return str.replace(/\b(jumped|increased|rose|boosted|grew|surged|improved|up to)\s+([^\n.]+?)\s*\(-(\d+(?:\.\d+)?%)\s*(?:change|increase)?\)/gi, '$1 $2 (+$3)');
+              };
+
+              posts = parsed.map((p: any) => {
+                const heading = (p.heading || p.title || '').trim();
+                const subText = (p.subText || p.subtitle || '').trim();
+                const hook = sanitizeMath((p.hook || p.content || '').trim());
+                const rawBody = sanitizeMath((p.body || '').trim());
+                const cta = (p.callToAction || p.cta || '').trim();
+                const hashtags = (p.hashtags || '').trim();
+                const angle = (p.angle || '').trim();
+                const visualIdea = (p.visualIdea || p.visual_idea || p.concept || '').trim();
+                const elements = (p.elements || p.designElements || p.design_elements || '').trim();
+                const aspectRatio = p.aspectRatio || '1:1 Square (Feed)';
+                
+                let fullPost = p.fullPost ? sanitizeMath(p.fullPost.trim()) : '';
+                if (!fullPost) {
+                  const parts: string[] = [];
+                  if (heading && !hook.toLowerCase().includes(heading.toLowerCase())) {
+                    parts.push(heading);
+                  }
+                  if (hook) parts.push(hook);
+                  if (rawBody) parts.push(rawBody);
+                  if (cta && !rawBody.toLowerCase().includes(cta.toLowerCase())) {
+                    parts.push(cta);
+                  }
+                  if (hashtags && !rawBody.includes(hashtags)) {
+                    parts.push(hashtags);
+                  }
+                  fullPost = parts.join('\n\n').trim();
+                }
+
+                const imagePrompt = (p.imagePrompt || '').trim() ||
+                  `Professional high-end B2B creative visual for ${heading || 'Brand'}, concept: ${visualIdea || 'technical excellence'}, style: minimalist modern commercial aesthetic, studio lighting, crisp contrast, 8k resolution, editorial quality`;
+
+                return JSON.stringify({
+                  ...p,
+                  angle,
+                  heading,
+                  subText,
+                  hook,
+                  content: hook, // for backwards-compatibility
+                  body: rawBody,
+                  callToAction: cta,
+                  fullPost,
+                  visualIdea,
+                  elements,
+                  aspectRatio,
+                  imagePrompt,
+                  hashtags
+                });
+              });
             } else {
               logger.error(`Parsed JSON was empty. Length: ${content.length}. Preview: ${content.slice(0, 300)}`);
               posts = [];

@@ -2822,6 +2822,45 @@ window.generateSMM = async function() {
   }
 };
 
+window.copySmmText = function(text, btn, label = 'Copied to clipboard!') {
+  if (!text) return;
+  const doFeedback = () => {
+    if (btn) {
+      const origHtml = btn.innerHTML;
+      btn.innerHTML = '✓ Copied!';
+      btn.style.color = '#4ade80';
+      btn.style.borderColor = '#4ade80';
+      setTimeout(() => {
+        btn.innerHTML = origHtml;
+        btn.style.color = '';
+        btn.style.borderColor = '';
+      }, 2000);
+    }
+    if (window.showSuccess) window.showSuccess(label);
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(doFeedback).catch(() => {
+      window.fallbackCopyText(text);
+      doFeedback();
+    });
+  } else {
+    window.fallbackCopyText(text);
+    doFeedback();
+  }
+};
+
+window.fallbackCopyText = function(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch(e) {}
+  document.body.removeChild(ta);
+};
+
 window.renderSmmResults = function(postsData, type) {
     const ansDiv = document.getElementById('smm-answer');
     const textDiv = document.getElementById('smm-text');
@@ -2831,35 +2870,43 @@ window.renderSmmResults = function(postsData, type) {
     
     if (type === 'image') {
       const parsedPosts = postsData.map(p => {
-        try { return JSON.parse(p); } catch(e) { return null; }
+        try { return typeof p === 'object' ? p : JSON.parse(p); } catch(e) { return null; }
       }).filter(Boolean);
       
       const trendingBadge = window.lastTrendingTopic && window.lastTrendingTopic.title
         ? `<div style="margin-bottom:12px; padding:10px 14px; background:rgba(77,171,247,0.1); border:1px solid rgba(77,171,247,0.4); border-radius:8px; font-size:0.9em;">
-             <strong style="color:var(--primary-color);">Trending Topic:</strong> <span style="color:var(--text-light);">${window.lastTrendingTopic.title}</span>
-             ${window.lastTrendingTopic.sources && window.lastTrendingTopic.sources.length ? `<div style="font-size:0.75em; color:var(--text-muted); margin-top:4px;">${window.lastTrendingTopic.sources.join(' · ')}</div>` : ''}
+             <strong style="color:var(--primary-color);">Trending Topic:</strong> <span style="color:var(--text-light);">${window.escapeHtml(window.lastTrendingTopic.title)}</span>
+             ${window.lastTrendingTopic.sources && window.lastTrendingTopic.sources.length ? `<div style="font-size:0.75em; color:var(--text-muted); margin-top:4px;">${window.escapeHtml(window.lastTrendingTopic.sources.join(' · '))}</div>` : ''}
            </div>`
         : '';
 
-      let html = '<div style="display:flex; flex-direction:column; gap:10px;">';
+      let html = '<div style="display:flex; flex-direction:column; gap:12px;">';
       html += trendingBadge;
-      html += '<h4 style="margin: 0; color: var(--primary-color);">Select a Visual Idea</h4>';
-      html += '<div id="smm-idea-cards" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:15px; margin-top: 10px;">';
+      html += '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">';
+      html += '  <h4 style="margin: 0; color: var(--primary); font-size: 1.05rem; font-weight: 700;">✨ Choose a Content Angle & Visual Concept</h4>';
+      html += `  <span style="font-size: 0.85rem; color: var(--text-muted);">${parsedPosts.length} post concept${parsedPosts.length > 1 ? 's' : ''} generated</span>`;
+      html += '</div>';
+      
+      html += '<div id="smm-idea-cards" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:12px; margin-top: 4px;">';
       
       parsedPosts.forEach((post, idx) => {
-         const angleBadge = post.angle ? `<span style="display:inline-block; font-size:0.75em; padding:2px 8px; border-radius:12px; background:rgba(77,171,247,0.15); color:var(--primary-color); border:1px solid rgba(77,171,247,0.3); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">${post.angle}</span>` : '';
+         const angleBadge = post.angle ? `<span style="display:inline-block; font-size:0.75em; padding:2px 8px; border-radius:12px; background:rgba(99,102,241,0.15); color:var(--primary); border:1px solid rgba(99,102,241,0.3); font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">${window.escapeHtml(post.angle)}</span>` : '';
+         const previewTitle = post.heading || post.title || `Concept ${idx + 1}`;
+         const previewIdea = post.visualIdea || post.visual_idea || post.hook || post.content || '';
+
          html += `
-         <div class="idea-card" data-idx="${idx}" style="padding:15px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; cursor:pointer; transition: 0.2s; display: flex; flex-direction: column; gap: 8px;">
-           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
-             <strong style="color: var(--text-light); font-size: 1.05em;">Option ${idx + 1}</strong>
+         <div class="idea-card" data-idx="${idx}" style="padding:14px; background:var(--surface); border:1px solid var(--border); border-radius:10px; cursor:pointer; transition: all 0.2s ease; display: flex; flex-direction: column; gap: 8px;">
+           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+             <strong style="color: var(--text-color); font-size: 0.95em;">Concept ${idx + 1}</strong>
              ${angleBadge}
            </div>
-           <span style="font-size: 0.9em; line-height: 1.4; color: var(--text-muted);">${post.visualIdea}</span>
+           <div style="font-weight: 700; font-size: 0.9em; line-height: 1.35; color: #fff;">${window.escapeHtml(previewTitle)}</div>
+           <span style="font-size: 0.82em; line-height: 1.4; color: var(--text-muted); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${window.escapeHtml(previewIdea)}</span>
          </div>`;
       });
       html += '</div>';
       
-      html += '<div id="smm-post-details" style="margin-top:20px; display:none; padding:15px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:8px; white-space: normal;"></div>';
+      html += '<div id="smm-post-details" style="margin-top:20px; display:none;"></div>';
       html += '</div>';
       
       textDiv.innerHTML = html;
@@ -2869,48 +2916,210 @@ window.renderSmmResults = function(postsData, type) {
       
       cards.forEach(card => {
         card.addEventListener('click', () => {
-           cards.forEach(c => c.style.border = '1px solid rgba(255,255,255,0.1)');
-           card.style.border = '1px solid var(--primary-color)';
+           cards.forEach(c => {
+             c.style.border = '1px solid var(--border)';
+             c.style.background = 'var(--surface)';
+           });
+           card.style.border = '2px solid var(--primary)';
+           card.style.background = 'rgba(99, 102, 241, 0.08)';
            
            const idx = parseInt(card.getAttribute('data-idx'), 10);
            const p = parsedPosts[idx];
            detailsDiv.style.display = 'block';
-           if (p._editedHtml) {
-             detailsDiv.innerHTML = p._editedHtml;
-           } else {
-             detailsDiv.innerHTML = `
-               <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:15px;">
-                 <div>
-                   ${p.angle ? `<div style="display:inline-block; font-size:0.8em; font-weight:700; color:var(--primary-color); background:rgba(77,171,247,0.15); border:1px solid rgba(77,171,247,0.3); padding:2px 10px; border-radius:12px; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">Angle: ${p.angle}</div>` : ''}
-                   <h3 style="margin:0; color:var(--text-light); flex:1;">${p.heading || 'No Heading'}</h3>
-                 </div>
-                 <button class="btn btn-secondary edit-btn" style="padding:4px 10px; font-size:12px; margin-left:10px;">Edit Content</button>
-               </div>
-               <div class="editable-content">
-                 ${p.subText ? `<h5 style="color:var(--text-muted); margin-bottom:15px;">${p.subText}</h5>` : ''}
-                 <div style="margin-bottom:15px;">
-                   <strong style="color:var(--primary-color);">Caption Context:</strong>
-                   <p style="margin-top:5px;">${p.content || ''}</p>
-                 </div>
-                 <div style="margin-bottom:15px; padding:15px; background:rgba(255,255,255,0.05); border-radius:6px;">
-                   <strong style="color:var(--primary-color);">Body:</strong>
-                   <div style="margin-top:10px;">${window.marked ? window.marked.parse(p.body || '') : p.body}</div>
-                 </div>
-                 <div style="margin-bottom:10px;">
-                   <strong style="color:var(--primary-color);">Design Elements:</strong>
-                   <p style="margin-top:5px;">${p.elements || ''}</p>
-                 </div>
-                 <div>
-                   <strong style="color:var(--primary-color);">Hashtags:</strong>
-                   <p style="margin-top:5px; color:#4dabf7;">${p.hashtags || ''}</p>
-                 </div>
-               </div>
-             `;
+
+           // Sanitize math
+           const sanitizeMath = (str) => {
+             if (!str) return '';
+             return String(str).replace(/\b(jumped|increased|rose|boosted|grew|surged|improved|up to)\s+([^\n.]+?)\s*\(-(\d+(?:\.\d+)?%)\s*(?:change|increase)?\)/gi, '$1 $2 (+$3)');
+           };
+
+           const heading = (p.heading || p.title || '').trim();
+           const subText = (p.subText || p.subtitle || '').trim();
+           const hook = sanitizeMath(p.hook || p.content || '');
+           const body = sanitizeMath(p.body || '');
+           const cta = (p.callToAction || p.cta || '').trim();
+           const hashtags = (p.hashtags || '').trim();
+           const visualIdea = p.visualIdea || p.visual_idea || '';
+           const elements = p.elements || p.designElements || '';
+           const aspectRatio = p.aspectRatio || '1:1 Square (Feed)';
+           const angle = p.angle || '';
+
+           let fullPost = p.fullPost ? sanitizeMath(p.fullPost.trim()) : '';
+           if (!fullPost) {
+             const parts = [];
+             if (heading && !hook.toLowerCase().includes(heading.toLowerCase())) {
+               parts.push(heading);
+             }
+             if (hook) parts.push(hook);
+             if (body) parts.push(body);
+             if (cta && !body.toLowerCase().includes(cta.toLowerCase())) {
+               parts.push(cta);
+             }
+             if (hashtags && !body.includes(hashtags)) {
+               parts.push(hashtags);
+             }
+             fullPost = parts.join('\n\n').trim();
            }
-           
+
+           const imagePrompt = p.imagePrompt || `Modern high-end B2B marketing graphic for ${heading || 'Brand'}, concept: ${visualIdea || 'technical excellence'}, style: minimalist commercial aesthetic, studio lighting, crisp contrast, 8k resolution, editorial quality`;
+
+           const companyName = window.projectMemory?.businessIdentity?.officialName || 'Company';
+           const companyInitial = companyName.charAt(0).toUpperCase() || 'C';
+
+           detailsDiv.innerHTML = `
+             <div style="display: flex; flex-direction: column; gap: 16px;">
+               <!-- TOP TOOLBAR -->
+               <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding: 12px 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px;">
+                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                   ${angle ? `<span style="display:inline-block; font-size:11px; font-weight:700; color:var(--primary); background:rgba(99,102,241,0.15); border:1px solid rgba(99,102,241,0.3); padding:4px 10px; border-radius:12px; text-transform:uppercase; letter-spacing:0.5px;">🎯 ${window.escapeHtml(angle)}</span>` : ''}
+                   <span style="font-size:11px; font-weight:600; color:var(--text-muted); background:rgba(255,255,255,0.06); padding:4px 10px; border-radius:12px;">📐 ${window.escapeHtml(aspectRatio)}</span>
+                 </div>
+                 <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                   <button class="btn btn-primary copy-post-btn" style="padding: 6px 14px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(99,102,241,0.3);">
+                     📋 Copy Full Post
+                   </button>
+                   <button class="btn btn-secondary copy-prompt-btn" style="padding: 6px 14px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                     🎨 Copy Image Prompt
+                   </button>
+                   <button class="btn btn-secondary edit-btn" style="padding: 6px 14px; font-size: 12px; font-weight: 600;">
+                     ✏️ Edit Content
+                   </button>
+                 </div>
+               </div>
+
+               <!-- MAIN STUDIO GRID: 2 COLUMNS ON DESKTOP -->
+               <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; align-items: start;">
+                 
+                 <!-- COLUMN 1: AUTHENTIC SOCIAL MEDIA FEED MOCKUP -->
+                 <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
+                   
+                   <!-- SOCIAL POST HEADER -->
+                   <div style="padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between;">
+                     <div style="display: flex; align-items: center; gap: 10px;">
+                       <div style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #818cf8); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; color: white;">
+                         ${companyInitial}
+                       </div>
+                       <div>
+                         <div style="font-size: 13.5px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 5px;">
+                           ${window.escapeHtml(companyName)}
+                           <span style="font-size: 12px; color: #38bdf8;">✓</span>
+                         </div>
+                         <div style="font-size: 11px; color: var(--text-muted);">
+                           Promoted · Just now · 🌐
+                         </div>
+                       </div>
+                     </div>
+                     <span style="font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,0.08); color: var(--text-muted);">Live Preview</span>
+                   </div>
+
+                   <!-- ON-GRAPHIC VISUAL CARD BANNER -->
+                   <div style="margin: 14px 16px 8px 16px; padding: 22px 18px; border-radius: 10px; background: linear-gradient(135deg, #090d16 0%, #1e1b4b 60%, #312e81 100%); border: 1px solid rgba(99,102,241,0.25); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; min-height: 130px;">
+                     <div style="position: absolute; top: 10px; right: 12px; font-size: 9px; font-weight: 800; background: rgba(99,102,241,0.4); color: #c7d2fe; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase;">
+                       ${window.escapeHtml(aspectRatio)}
+                     </div>
+                     <div style="font-size: 15.5px; font-weight: 800; line-height: 1.35; color: #ffffff; text-shadow: 0 2px 8px rgba(0,0,0,0.5); max-width: 90%;">
+                       ${window.escapeHtml(heading)}
+                     </div>
+                     ${subText ? `
+                     <div style="font-size: 12px; font-weight: 600; color: #a5b4fc; margin-top: 8px; line-height: 1.4;">
+                       ${window.escapeHtml(subText)}
+                     </div>` : ''}
+                     <div style="margin-top: 14px; display: flex; align-items: center; gap: 6px; font-size: 10px; color: rgba(255,255,255,0.6);">
+                       <span>🏢 ${window.escapeHtml(companyName)}</span>
+                       <span>·</span>
+                       <span>Verified B2B Intelligence</span>
+                     </div>
+                   </div>
+
+                   <!-- POST CAPTION & NARRATIVE -->
+                   <div style="padding: 14px 16px 16px 16px;">
+                     <div class="editable-content" style="font-size: 13.5px; line-height: 1.65; color: #e2e8f0; white-space: pre-wrap; word-break: break-word;">${window.escapeHtml(fullPost)}</div>
+                   </div>
+
+                   <!-- SOCIAL INTERACTION BAR -->
+                   <div style="padding: 10px 16px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-around; font-size: 12px; color: var(--text-muted); background: rgba(0,0,0,0.2);">
+                     <span style="display:flex; align-items:center; gap:5px; cursor:default;">👍 Like</span>
+                     <span style="display:flex; align-items:center; gap:5px; cursor:default;">💬 Comment</span>
+                     <span style="display:flex; align-items:center; gap:5px; cursor:default;">🔁 Repost</span>
+                     <span style="display:flex; align-items:center; gap:5px; cursor:default;">🚀 Send</span>
+                   </div>
+                 </div>
+
+                 <!-- COLUMN 2: CREATIVE DIRECTION & PRODUCTION BRIEF -->
+                 <div style="display: flex; flex-direction: column; gap: 14px;">
+                   
+                   <!-- VISUAL CONCEPT CARD -->
+                   <div style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;">
+                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                       <span style="font-size: 16px;">🎨</span>
+                       <strong style="font-size: 12.5px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.05em;">Creative Visual Direction</strong>
+                     </div>
+                     <p style="margin: 0; font-size: 13px; line-height: 1.5; color: var(--text-muted);">
+                       ${window.escapeHtml(visualIdea || 'Clean professional visual layout highlighting key engineering metrics')}
+                     </p>
+                   </div>
+
+                   <!-- DESIGN ELEMENTS & SPECIFICATIONS -->
+                   ${elements ? `
+                   <div style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;">
+                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                       <span style="font-size: 16px;">🧩</span>
+                       <strong style="font-size: 12.5px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.05em;">Design Blueprint & Assets</strong>
+                     </div>
+                     <p style="margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--text-muted);">
+                       ${window.escapeHtml(elements)}
+                     </p>
+                   </div>` : ''}
+
+                   <!-- AI IMAGE GENERATION PROMPT -->
+                   <div style="padding: 16px; background: rgba(99, 102, 241, 0.04); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 12px;">
+                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                       <div style="display: flex; align-items: center; gap: 8px;">
+                         <span style="font-size: 16px;">🤖</span>
+                         <strong style="font-size: 12px; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em;">AI Image Generation Prompt</strong>
+                       </div>
+                       <button class="btn btn-secondary copy-prompt-inline-btn" style="padding: 3px 8px; font-size: 11px;">
+                         📋 Copy Prompt
+                       </button>
+                     </div>
+                     <div class="image-prompt-text" style="font-family: monospace; font-size: 11.5px; line-height: 1.45; color: #cbd5e1; background: rgba(0,0,0,0.3); padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); word-break: break-word;">
+                       ${window.escapeHtml(imagePrompt)}
+                     </div>
+                     <div style="margin-top: 8px; font-size: 11px; color: var(--text-muted);">
+                       💡 Use this prompt with Midjourney, DALL-E 3, or Fal.ai to generate the marketing graphic.
+                     </div>
+                   </div>
+
+                 </div>
+               </div>
+             </div>
+           `;
+
            const editBtn = detailsDiv.querySelector('.edit-btn');
            const contentDiv = detailsDiv.querySelector('.editable-content');
-           
+           const copyPostBtn = detailsDiv.querySelector('.copy-post-btn');
+           const copyPromptBtn = detailsDiv.querySelector('.copy-prompt-btn');
+           const copyPromptInlineBtn = detailsDiv.querySelector('.copy-prompt-inline-btn');
+
+           if (copyPostBtn) {
+             copyPostBtn.onclick = () => {
+               const textToCopy = contentDiv ? contentDiv.innerText : fullPost;
+               window.copySmmText(textToCopy, copyPostBtn, 'Full social post copied to clipboard!');
+             };
+           }
+
+           if (copyPromptBtn) {
+             copyPromptBtn.onclick = () => {
+               window.copySmmText(imagePrompt, copyPromptBtn, 'AI Image prompt copied to clipboard!');
+             };
+           }
+
+           if (copyPromptInlineBtn) {
+             copyPromptInlineBtn.onclick = () => {
+               window.copySmmText(imagePrompt, copyPromptInlineBtn, 'AI Image prompt copied to clipboard!');
+             };
+           }
+
            if (editBtn && contentDiv) {
              editBtn.onclick = () => {
                const isEditing = contentDiv.contentEditable === 'true';
@@ -2918,21 +3127,22 @@ window.renderSmmResults = function(postsData, type) {
                  contentDiv.contentEditable = 'false';
                  contentDiv.style.border = 'none';
                  contentDiv.style.padding = '0';
-                 editBtn.innerText = 'Edit Content';
+                 editBtn.innerText = '✏️ Edit Content';
                  editBtn.classList.remove('btn-primary');
                  editBtn.classList.add('btn-secondary');
                  
                  // Save state
-                 p._editedHtml = detailsDiv.innerHTML;
+                 p.fullPost = contentDiv.innerText;
                  const newPosts = parsedPosts.map(pp => JSON.stringify(pp));
                  localStorage.setItem('smmLastResult', JSON.stringify({ posts: newPosts, type: 'image' }));
+                 if (window.showSuccess) window.showSuccess('Post edits saved!');
                } else {
                  contentDiv.contentEditable = 'true';
-                 contentDiv.style.border = '1px dashed var(--primary-color)';
-                 contentDiv.style.padding = '10px';
-                 contentDiv.style.borderRadius = '4px';
+                 contentDiv.style.border = '1px dashed var(--primary)';
+                 contentDiv.style.padding = '8px';
+                 contentDiv.style.borderRadius = '6px';
                  contentDiv.focus();
-                 editBtn.innerText = 'Save Changes';
+                 editBtn.innerText = '💾 Save Changes';
                  editBtn.classList.remove('btn-secondary');
                  editBtn.classList.add('btn-primary');
                }
@@ -2949,53 +3159,64 @@ window.renderSmmResults = function(postsData, type) {
       if (type === 'video_edited') {
         rawHtml = postsData[0];
       } else {
-        const joined = postsData.join('\\n\\n---\\n\\n');
+        const joined = postsData.join('\n\n---\n\n');
         rawHtml = window.marked ? window.marked.parse(joined) : joined;
       }
       
       const trendingBadge = window.lastTrendingTopic && window.lastTrendingTopic.title
         ? `<div style="margin-bottom:12px; padding:10px 14px; background:rgba(77,171,247,0.1); border:1px solid rgba(77,171,247,0.4); border-radius:8px; font-size:0.9em;">
-             <strong style="color:var(--primary-color);">Trending Topic:</strong> <span style="color:var(--text-light);">${window.lastTrendingTopic.title}</span>
-             ${window.lastTrendingTopic.sources && window.lastTrendingTopic.sources.length ? `<div style="font-size:0.75em; color:var(--text-muted); margin-top:4px;">${window.lastTrendingTopic.sources.join(' · ')}</div>` : ''}
+             <strong style="color:var(--primary-color);">Trending Topic:</strong> <span style="color:var(--text-light);">${window.escapeHtml(window.lastTrendingTopic.title)}</span>
+             ${window.lastTrendingTopic.sources && window.lastTrendingTopic.sources.length ? `<div style="font-size:0.75em; color:var(--text-muted); margin-top:4px;">${window.escapeHtml(window.lastTrendingTopic.sources.join(' · '))}</div>` : ''}
            </div>`
         : '';
 
       textDiv.innerHTML = `
         ${trendingBadge}
-        <div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
-          <button class="btn btn-secondary edit-btn" style="padding:4px 10px; font-size:12px;">Edit Content</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+          <h4 style="margin:0; color:var(--primary);">🎬 Cinematic Video Scripts</h4>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-primary copy-video-btn" style="padding:6px 14px; font-size:12px; font-weight:600;">📋 Copy Video Scripts</button>
+            <button class="btn btn-secondary edit-btn" style="padding:6px 14px; font-size:12px; font-weight:600;">✏️ Edit Scripts</button>
+          </div>
         </div>
-        <div class="editable-content">
+        <div class="editable-content" style="background: rgba(15,23,42,0.6); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); line-height: 1.6;">
           ${rawHtml}
         </div>
       `;
       
       const editBtn = textDiv.querySelector('.edit-btn');
       const contentDiv = textDiv.querySelector('.editable-content');
+      const copyVideoBtn = textDiv.querySelector('.copy-video-btn');
+
+      if (copyVideoBtn && contentDiv) {
+        copyVideoBtn.onclick = () => {
+          window.copySmmText(contentDiv.innerText, copyVideoBtn, 'Video scripts copied to clipboard!');
+        };
+      }
       
-      editBtn.onclick = () => {
-         const isEditing = contentDiv.contentEditable === 'true';
-         if (isEditing) {
-           contentDiv.contentEditable = 'false';
-           contentDiv.style.border = 'none';
-           contentDiv.style.padding = '0';
-           editBtn.innerText = 'Edit Content';
-           editBtn.classList.remove('btn-primary');
-           editBtn.classList.add('btn-secondary');
-           
-           const newHtml = contentDiv.innerHTML;
-           localStorage.setItem('smmLastResult', JSON.stringify({ posts: [newHtml], type: 'video_edited' }));
-         } else {
-           contentDiv.contentEditable = 'true';
-           contentDiv.style.border = '1px dashed var(--primary-color)';
-           contentDiv.style.padding = '10px';
-           contentDiv.style.borderRadius = '4px';
-           contentDiv.focus();
-           editBtn.innerText = 'Save Changes';
-           editBtn.classList.remove('btn-secondary');
-           editBtn.classList.add('btn-primary');
-         }
-      };
+      if (editBtn && contentDiv) {
+        editBtn.onclick = () => {
+           const isEditing = contentDiv.contentEditable === 'true';
+           if (isEditing) {
+             contentDiv.contentEditable = 'false';
+             contentDiv.style.border = '1px solid rgba(255,255,255,0.08)';
+             editBtn.innerText = '✏️ Edit Scripts';
+             editBtn.classList.remove('btn-primary');
+             editBtn.classList.add('btn-secondary');
+             
+             const newHtml = contentDiv.innerHTML;
+             localStorage.setItem('smmLastResult', JSON.stringify({ posts: [newHtml], type: 'video_edited' }));
+             if (window.showSuccess) window.showSuccess('Video script edits saved!');
+           } else {
+             contentDiv.contentEditable = 'true';
+             contentDiv.style.border = '1px dashed var(--primary)';
+             contentDiv.focus();
+             editBtn.innerText = '💾 Save Changes';
+             editBtn.classList.remove('btn-secondary');
+             editBtn.classList.add('btn-primary');
+           }
+        };
+      }
     }
 };
 
