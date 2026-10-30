@@ -882,33 +882,44 @@ Every post hook, body, and CTA must speak directly to this specific persona's da
         case "linkedin":
           platformDirective = `
 TARGET PLATFORM DIRECTIVE: LINKEDIN (B2B Thought Leadership & Executive Decision-Making)
-- Tone: Highly professional, authoritative, strategic, and data-driven.
-- Structure: Start with a crisp insight hook. Use single-line spacing between short paragraphs. Integrate hard facts, specifications, or proven business ROI.
-- Call-to-action: Professional invite for technical drawing review, RFQ, or consultative engineering discussion.
-- Hashtags: 4-6 high-impact B2B and engineering hashtags.
+- Copywriting Framework: Modern HVC (Hook - Value - CTA).
+- Hook Rule: First 1-2 lines MUST be a pattern-interrupt hook (Curiosity Gap, Contrarian Claim, or High-Stakes Business Metric) that stops the scroll before "...see more". Zero corporate pleasantries or greetings.
+- Body Rule: 1-3 line micro-paragraphs with double line spacing. Use bullet points with emojis (🔹, 📊, ⚙️, 💡) for high-density value. Weave technical specifications and natural social SEO keywords naturally.
+- Visual Banner: 3-tier visual hierarchy with 5-8 word bold headline and single metric proof pill.
+- Call-to-action: Strictly ONE outcome (Single-Outcome Rule) e.g. "Save this for your next technical review", "Drop your component specs in comments", or "DM for our engineering teardown".
+- Hashtags: Strictly 3 to 5 hyper-relevant B2B niche hashtags at the bottom.
 `;
           break;
         case "instagram":
           platformDirective = `
-TARGET PLATFORM DIRECTIVE: INSTAGRAM (Visual-First & High Engagement)
-- Tone: Visually descriptive, punchy, credible, highlighting raw craftsmanship and precision engineering.
-- Structure: Punchy first sentence before the fold. Use bullet points with emojis for readability. 
-- Visual Idea: Describe bold, high-contrast imagery (red-hot forging, macro component finish, CAD cross-sections).
-- Hashtags: 6-9 targeted niche and industry hashtags.
+TARGET PLATFORM DIRECTIVE: INSTAGRAM (Visual-First & High Save-Rate Engagement)
+- Copywriting Framework: Modern HVC (Hook - Value - CTA).
+- Hook Rule: Punchy, curiosity-driven opening sentence that interrupts feed scrolling immediately.
+- Body Rule: Crisp micro-paragraphs with clean spacing and bullet points. Zero unbroken walls of text.
+- Visual Direction: 3-tier visual hierarchy for 1:1 square feed graphic passing the 3-second squint test.
+- Call-to-action: Single clear outcome (e.g. "Save this breakdown for your next project", "Tap the link in bio for full specs", or "Drop a comment below").
+- Hashtags: Strictly 3 to 5 targeted niche hashtags. Zero hashtag stuffing.
 `;
           break;
         case "facebook":
           platformDirective = `
-TARGET PLATFORM DIRECTIVE: FACEBOOK (Community, Trust & Storytelling)
-- Tone: Relatable, customer-centric, emphasizing long-term partnership, trust, and local/global heritage.
-- Structure: Clear narrative arc demonstrating how the company solves real problems.
+TARGET PLATFORM DIRECTIVE: FACEBOOK (Community, Trust & Practical Case Studies)
+- Copywriting Framework: Modern HVC (Hook - Value - CTA).
+- Hook Rule: High-relatability operational challenge or customer dilemma.
+- Body Rule: Conversational storytelling showing how real challenges were solved with specific engineering data.
+- Call-to-action: Single conversation-starting prompt.
+- Hashtags: Strictly 3 to 5 relevant industry hashtags.
 `;
           break;
         case "twitter":
         case "x":
           platformDirective = `
 TARGET PLATFORM DIRECTIVE: TWITTER / X (Punchy & High Signal)
-- Tone: Fast, concise, high signal-to-noise ratio. Maximum insight per word.
+- Copywriting Framework: High-density HVC.
+- Hook Rule: Sharp, contrarian or provocative one-liner pattern interrupt.
+- Body Rule: Maximum insight per word. Micro-sentences.
+- Call-to-action: Single reply or bookmark prompt.
+- Hashtags: Strictly 1 to 2 targeted tags.
 `;
           break;
         case "youtube":
@@ -1019,7 +1030,7 @@ Format each script explicitly as follows (keep visual directions and voiceover p
 `;
     } else {
       formatInstructions = `
-You must generate EXACTLY ${postCount} highly engaging, deeply researched, and radically unique image post concepts for social media.
+You must generate EXACTLY ${postCount} highly engaging, deeply researched, and radically unique image post concepts for social media following modern copywriting and visual design standards.
 
 CRITICAL ANTI-SAMENESS MANDATE:
 Under NO circumstances may any two posts share the same opening structure, rhetorical pattern, or theme!
@@ -1044,17 +1055,18 @@ Output ONLY the raw JSON array. Do not include markdown codeblocks or extra text
 [
 ${assignedArchetypes.map((arch, i) => `  {
     "angle": "${arch.angle}",
-    "heading": "[Scroll-stopping on-graphic headline strictly matching Post ${i + 1} angle: ${arch.angle}]",
-    "subText": "[Quantified supporting metric or benefit for the graphic banner]",
-    "hook": "[High-converting 1-2 line opening hook that grabs attention immediately]",
-    "body": "[Structured post narrative (100-150 words) with clean line breaks, bullet points with relevant emojis (🔹, 📊, ⚙️, 💡), and real specs/metrics from memory]",
-    "callToAction": "[Direct, compelling call to action line (e.g. 👉 DM us or drop a comment below to get our full audit/specs)]",
-    "fullPost": "[THE COMPLETE, READY-TO-PUBLISH POST: An impeccably formatted single copy combining the hook, the structured body with emoji bullets, the call to action, and the hashtags. Ready for 1-click copying directly to LinkedIn, Instagram, or Facebook]",
+    "hookType": "[Curiosity Gap | Contrarian Claim | Pain Point Callout | Relatable Transformation]",
+    "heading": "[Level 1 Visual Hierarchy: Bold, scroll-stopping headline for graphic banner, strictly 5 to 8 words max. Passes the 3-second squint test]",
+    "subText": "[Level 2 Visual Hierarchy: Single quantified proof point, metric or badge e.g. '+42% ROAS' or 'DIN-5 Verified']",
+    "hook": "[HVC Step 1 - Pattern Interrupt Hook: 1-2 lines that stop the scroll before '...see more'. Zero corporate fluff or pleasantries]",
+    "body": "[HVC Step 2 - The Value Delivery: Structured narrative in 1-3 line micro-paragraphs separated by blank lines. Use bullet points with emojis (🔹, 📊, ⚙️, 💡), and real specs/metrics from memory. High information density, zero text walls]",
+    "callToAction": "[HVC Step 3 - Single-Outcome Rule: Exactly ONE clear, specific action to take (e.g. Save for reference, drop a comment with your spec, or DM for CAD audit)]",
+    "fullPost": "[THE COMPLETE, READY-TO-PUBLISH POST: Impeccably formatted copy combining Hook + blank line + Body + blank line + Call to Action + blank line + Hashtags. 100% self-contained for 1-click publishing directly to LinkedIn, Instagram, or Facebook without manual cleanup]",
     "visualIdea": "[Detailed creative concept for the image / carousel graphic adhering to Post ${i + 1} visual direction]",
     "elements": "[Specific design elements, callout boxes, CAD schematics, diagrams, color palette guidance]",
     "aspectRatio": "1:1 Square (Feed)",
-    "imagePrompt": "[Detailed, production-ready AI image generation prompt for Midjourney / DALL-E describing the scene, lighting, composition, and style without generic corporate clichés]",
-    "hashtags": "[5-7 targeted B2B hashtags matching the company and industry, space separated]"
+    "imagePrompt": "[Production-ready Midjourney v7 / DALL-E 3 prompt: Subject in action + environment + composition with generous negative space + studio lighting & corporate palette + photorealistic commercial style --ar 1:1 --style raw --v 7. Banish all generic AI clichés like floating blue brains, robot handshakes, or digital meshes]",
+    "hashtags": "[Strictly 3 to 5 hyper-relevant niche hashtags, space separated]"
   }`).join(',\n')}
 ]
 `;
@@ -1129,12 +1141,21 @@ ${language === "Hinglish" ? `
    - Metric improvements or percentage INCREASES must NEVER have a minus sign (e.g. write "+320% increase" or "jumped by 320%", NEVER "-320%").
    - Negative signs or "cut by / reduced by" should ONLY be used for cost, downtime, or defect reductions (e.g. "reduced CPC by 58%").
    - Ensure all percentages and calculations are mathematically coherent and realistic.
-7. SOCIAL MEDIA COPYWRITING QUALITY & READY-TO-PUBLISH FORMAT:
-   - Write like a top-tier B2B content creator with high authority and engaging rhythm.
-   - Use punchy, short sentences with generous whitespace between paragraphs.
-   - Organize the core body with clean bullet points and relevant emojis (🔹, 📊, 🚀, 💡, ⚙️) to make value propositions easily scannable.
-   - Every post MUST conclude with a clear, compelling Call to Action (CTA) before the hashtags.
-   - The 'fullPost' field must be completely self-contained, seamless, and flawless, ready for the user to copy with 1-click and publish directly to LinkedIn, Instagram, or Facebook without any manual editing.
+7. MODERN HVC COPYWRITING ARCHITECTURE (HOOK - VALUE - CTA):
+   - Hook: 1-2 lines maximum. Curiosity Gap, Contrarian Claim, Pain Point Callout, or Relatable Transformation. Zero preamble or pleasantries ("In today's fast-paced world...", "We are proud to share..."). Must act as a pattern interrupt before "...see more".
+   - Value (Body): Break into 1-3 line micro-paragraphs separated by blank lines. Organize actionable insights with emoji bullet points (🔹, 📊, 🚀, 💡, ⚙️). Natural keyword placement for algorithmic social search SEO. No dense text walls.
+   - Call to Action: The Single-Outcome Rule. Ask for strictly ONE outcome (e.g. Save this post, comment your spec, or DM for CAD review). Never dilute with multiple conflicting calls to action.
+   - Hashtag Discipline: Strictly 3 to 5 hyper-relevant niche hashtags at the very bottom.
+8. THE 3-SECOND RULE & 3-TIER VISUAL HIERARCHY:
+   - Level 1 (Headline): 5 to 8 bold, high-contrast words passing the "squint test".
+   - Level 2 (Context/Proof): A single quantified metric or proof pill badge (e.g. "+42% ROAS", "DIN-5 Verified Standard").
+   - Level 3 (Anchor): Official brand tag and aspect ratio indicator.
+   - Text overlay constraint: Graphics must NEVER contain paragraphs or dense sentences. The graphic's only job is to stop the scroll in under 3 seconds; reading happens in the caption.
+9. COMMERCIAL AI IMAGE PROMPTS (MIDJOURNEY v7 / DALL-E 3):
+   - Every imagePrompt must follow the formula: Subject & Action + Setting/Environment + Composition with generous negative space for text overlay + Studio Lighting & Palette + Style + Parameters (--ar 1:1 --style raw --v 7).
+   - BAN ALL AI CLICHÉS: Absolutely no floating glowing brains, robot handshakes over cyber grids, blue digital network lines, or generic futuristic corporate holograms. Prompts must depict real industrial, commercial, or professional environments with tactile realism.
+10. READY-TO-PUBLISH FULL POST INTEGRITY:
+   - The 'fullPost' field must be completely self-contained, seamless, and flawless, combining Hook + Body + CTA + Hashtags, ready for the user to copy with 1-click and publish directly to LinkedIn, Instagram, or Facebook without any manual editing.
 
 ${personaDirective}
 ${platformDirective}
@@ -1217,10 +1238,17 @@ Begin generating the posts now:`;
               posts = parsed.map((p: any) => {
                 const heading = (p.heading || p.title || '').trim();
                 const subText = (p.subText || p.subtitle || '').trim();
+                const hookType = (p.hookType || 'Curiosity Gap').trim();
                 const hook = sanitizeMath((p.hook || p.content || '').trim());
                 const rawBody = sanitizeMath((p.body || '').trim());
                 const cta = (p.callToAction || p.cta || '').trim();
-                const hashtags = (p.hashtags || '').trim();
+
+                // Normalize hashtags: strictly 3-5 tags
+                let rawTags = (p.hashtags || '').trim();
+                let tagArray = rawTags.split(/\s+/).filter((t: string) => t.length > 0).map((t: string) => t.startsWith('#') ? t : `#${t}`);
+                if (tagArray.length > 5) tagArray = tagArray.slice(0, 5);
+                const hashtags = tagArray.join(' ');
+
                 const angle = (p.angle || '').trim();
                 const visualIdea = (p.visualIdea || p.visual_idea || p.concept || '').trim();
                 const elements = (p.elements || p.designElements || p.design_elements || '').trim();
@@ -1229,9 +1257,6 @@ Begin generating the posts now:`;
                 let fullPost = p.fullPost ? sanitizeMath(p.fullPost.trim()) : '';
                 if (!fullPost) {
                   const parts: string[] = [];
-                  if (heading && !hook.toLowerCase().includes(heading.toLowerCase())) {
-                    parts.push(heading);
-                  }
                   if (hook) parts.push(hook);
                   if (rawBody) parts.push(rawBody);
                   if (cta && !rawBody.toLowerCase().includes(cta.toLowerCase())) {
@@ -1243,12 +1268,17 @@ Begin generating the posts now:`;
                   fullPost = parts.join('\n\n').trim();
                 }
 
-                const imagePrompt = (p.imagePrompt || '').trim() ||
-                  `Professional high-end B2B creative visual for ${heading || 'Brand'}, concept: ${visualIdea || 'technical excellence'}, style: minimalist modern commercial aesthetic, studio lighting, crisp contrast, 8k resolution, editorial quality`;
+                let imagePrompt = (p.imagePrompt || '').trim();
+                if (!imagePrompt) {
+                  imagePrompt = `Professional commercial marketing visual for ${heading || 'Brand'}, concept: ${visualIdea || 'technical excellence'}, clean modern aesthetic, dramatic studio lighting, crisp contrast, generous negative space on left for typography, photorealistic, 8k resolution --ar 1:1 --style raw --v 7`;
+                } else if (!imagePrompt.includes('--ar')) {
+                  imagePrompt = `${imagePrompt} --ar 1:1 --style raw --v 7`;
+                }
 
                 return JSON.stringify({
                   ...p,
                   angle,
+                  hookType,
                   heading,
                   subText,
                   hook,

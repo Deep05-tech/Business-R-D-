@@ -2905,6 +2905,7 @@ window.renderSmmResults = function(postsData, type) {
       
       parsedPosts.forEach((post, idx) => {
          const angleBadge = post.angle ? `<span class="smm-tag-angle">${window.escapeHtml(post.angle)}</span>` : '';
+         const hookTypeBadge = post.hookType ? `<span class="smm-hook-badge">⚡ ${window.escapeHtml(post.hookType)}</span>` : '';
          const previewTitle = post.heading || post.title || `Concept ${idx + 1}`;
          const previewIdea = post.visualIdea || post.visual_idea || post.hook || post.content || '';
 
@@ -2912,7 +2913,10 @@ window.renderSmmResults = function(postsData, type) {
          <div class="idea-card" data-idx="${idx}">
            <div class="idea-card-header">
              <strong style="color: var(--text-color); font-size: 0.95em;">Concept ${idx + 1}</strong>
-             ${angleBadge}
+             <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+               ${angleBadge}
+               ${hookTypeBadge}
+             </div>
            </div>
            <div class="idea-card-title">${window.escapeHtml(previewTitle)}</div>
            <span class="idea-card-desc">${window.escapeHtml(previewIdea)}</span>
@@ -2945,6 +2949,7 @@ window.renderSmmResults = function(postsData, type) {
 
             const heading = (p.heading || p.title || '').trim();
             const subText = (p.subText || p.subtitle || '').trim();
+            const hookType = (p.hookType || '').trim();
             const hook = sanitizeMath(p.hook || p.content || '');
             const body = sanitizeMath(p.body || '');
             const cta = (p.callToAction || p.cta || '').trim();
@@ -2954,29 +2959,58 @@ window.renderSmmResults = function(postsData, type) {
             const aspectRatio = p.aspectRatio || '1:1 Square (Feed)';
             const angle = p.angle || '';
 
+            // Ensure 3 to 5 hashtags
+            let tagList = [];
+            if (hashtags) {
+              tagList = hashtags.split(/\s+/).filter(t => t.length > 0).map(t => t.startsWith('#') ? t : `#${t}`);
+              if (tagList.length > 5) tagList = tagList.slice(0, 5);
+            }
+            const cleanHashtags = tagList.join(' ');
+
             let fullPost = p.fullPost ? sanitizeMath(p.fullPost.trim()) : '';
             if (!fullPost) {
               const parts = [];
-              if (heading && !hook.toLowerCase().includes(heading.toLowerCase())) {
-                parts.push(heading);
-              }
               if (hook) parts.push(hook);
               if (body) parts.push(body);
               if (cta && !body.toLowerCase().includes(cta.toLowerCase())) {
                 parts.push(cta);
               }
-              if (hashtags && !body.includes(hashtags)) {
-                parts.push(hashtags);
+              if (cleanHashtags && !body.includes(cleanHashtags)) {
+                parts.push(cleanHashtags);
               }
               fullPost = parts.join('\n\n').trim();
             }
+            p.fullPost = fullPost;
 
-            const imagePrompt = p.imagePrompt || `Modern high-end B2B marketing graphic for ${heading || 'Brand'}, concept: ${visualIdea || 'technical excellence'}, style: minimalist commercial aesthetic, studio lighting, crisp contrast, 8k resolution, editorial quality`;
+            let imagePrompt = (p.imagePrompt || '').trim();
+            if (!imagePrompt) {
+              imagePrompt = `Professional commercial visual for ${heading || 'Business'}, concept: ${visualIdea || 'precision engineering'}, modern industrial aesthetic, studio lighting, crisp contrast, generous negative space on left for typography, photorealistic, 8k resolution --ar 1:1 --style raw --v 7`;
+            } else if (!imagePrompt.includes('--ar')) {
+              imagePrompt = `${imagePrompt} --ar 1:1 --style raw --v 7`;
+            }
+            p.imagePrompt = imagePrompt;
 
             const companyName = window.projectMemory?.businessIdentity?.officialName || 'Company';
             const companyInitial = companyName.charAt(0).toUpperCase() || 'C';
 
-            const formattedCaption = window.formatSmmContent(fullPost);
+            // Structured HVC caption markup
+            let formattedCaption = '';
+            if (body) {
+              let partsHtml = '';
+              if (hook) {
+                partsHtml += `<div class="smm-caption-hook">${window.escapeHtml(hook)}</div>`;
+              }
+              partsHtml += `<div class="smm-caption-body">${window.formatSmmContent(body)}</div>`;
+              if (cta) {
+                partsHtml += `<div class="smm-cta-block"><span style="font-size: 1.15em;">👉</span> <span>${window.escapeHtml(cta)}</span></div>`;
+              }
+              if (tagList.length > 0) {
+                partsHtml += `<div class="smm-hashtags-container">${tagList.map(t => `<span class="smm-hashtag-pill">${window.escapeHtml(t)}</span>`).join('')}</div>`;
+              }
+              formattedCaption = partsHtml;
+            } else {
+              formattedCaption = window.formatSmmContent(fullPost);
+            }
 
             detailsDiv.innerHTML = `
               <div class="smm-studio-container">
@@ -2984,6 +3018,7 @@ window.renderSmmResults = function(postsData, type) {
                 <div class="smm-studio-toolbar">
                   <div class="smm-toolbar-tags">
                     ${angle ? `<span class="smm-tag-angle">🎯 ${window.escapeHtml(angle)}</span>` : ''}
+                    ${hookType ? `<span class="smm-hook-badge">⚡ ${window.escapeHtml(hookType)}</span>` : ''}
                     <span class="smm-tag-ratio">📐 ${window.escapeHtml(aspectRatio)}</span>
                   </div>
                   <div class="smm-toolbar-actions">
@@ -3009,7 +3044,7 @@ window.renderSmmResults = function(postsData, type) {
                       <span class="smm-live-badge">Live Preview</span>
                     </div>
 
-                    <!-- ON-GRAPHIC VISUAL CARD BANNER -->
+                    <!-- ON-GRAPHIC VISUAL CARD BANNER (3-TIER VISUAL HIERARCHY) -->
                     <div class="smm-graphic-banner">
                       <div class="smm-banner-top">
                         <span class="smm-banner-brand-tag">⚡ ${window.escapeHtml(companyName)}</span>
@@ -3022,7 +3057,7 @@ window.renderSmmResults = function(postsData, type) {
                       </div>
                     </div>
 
-                    <!-- POST CAPTION & NARRATIVE -->
+                    <!-- POST CAPTION & NARRATIVE (HVC ARCHITECTURE) -->
                     <div class="smm-post-caption">${formattedCaption}</div>
 
                     <!-- SOCIAL INTERACTION BAR -->
@@ -3060,13 +3095,13 @@ window.renderSmmResults = function(postsData, type) {
                       <div class="smm-prompt-header">
                         <div class="smm-prompt-title">
                           <span style="font-size: 16px;">🤖</span>
-                          <strong>AI Image Generation Prompt</strong>
+                          <strong>AI Image Prompt (Midjourney v7 / DALL-E 3)</strong>
                         </div>
                         <button class="btn btn-secondary copy-prompt-inline-btn" type="button" style="padding: 3px 10px; font-size: 11.5px; height: 28px;">📋 Copy Prompt</button>
                       </div>
                       <div class="smm-prompt-box">${window.escapeHtml(imagePrompt)}</div>
                       <div class="smm-prompt-tip">
-                        💡 Use this prompt with Midjourney, DALL-E 3, or Fal.ai to generate the marketing graphic.
+                        💡 Production prompt with photorealistic commercial parameters, negative space balance, and zero AI clichés. Use with Midjourney v7, DALL-E 3, or Fal.ai.
                       </div>
                     </div>
                   </div>
