@@ -738,14 +738,14 @@ export class SmmAgent {
 
     const subThemeLower = (subTheme || "").toLowerCase().trim();
 
-    // Select targeted products (prioritize selected subTheme, max 4 total to keep context punchy)
+    // Select targeted products (prioritize selected subTheme, max 5)
     const allRawProducts = memory.offerings?.products || [];
     const matchedProduct = allRawProducts.find(p => (typeof p === 'string' ? p : p.name).toLowerCase() === subThemeLower);
-    const otherProducts = allRawProducts.filter(p => (typeof p === 'string' ? p : p.name).toLowerCase() !== subThemeLower).slice(0, 3);
-    const selectedProducts = matchedProduct ? [matchedProduct, ...otherProducts] : allRawProducts.slice(0, 4);
+    const otherProducts = allRawProducts.filter(p => (typeof p === 'string' ? p : p.name).toLowerCase() !== subThemeLower).slice(0, 4);
+    const selectedProducts = matchedProduct ? [matchedProduct, ...otherProducts] : allRawProducts.slice(0, 5);
 
-    // Select targeted services (max 3)
-    const allRawServices = (memory.offerings?.services || []).slice(0, 3);
+    // Select targeted services (max 4)
+    const allRawServices = (memory.offerings?.services || []).slice(0, 4);
 
     const memoryContext = JSON.stringify({
       businessIdentity: {
@@ -754,38 +754,50 @@ export class SmmAgent {
         subIndustry: memory.businessIdentity?.subIndustry,
         location: memory.businessIdentity?.location,
         vision: memory.businessIdentity?.vision,
-        description: (memory.businessIdentity?.description || "").slice(0, 450),
+        description: memory.businessIdentity?.description || "",
       },
       offerings: {
         products: selectedProducts.map(p => typeof p === 'string' ? { name: p } : {
           name: p.name,
           category: p.category,
-          description: p.description?.slice(0, 250),
-          summary: p.aiLaymanSummary?.slice(0, 350),
-          keyFeatures: (p.keyFeatures || []).slice(0, 4),
+          description: p.description || "",
+          summary: p.aiLaymanSummary || p.aiSocialSummary || "",
+          keyFeatures: p.keyFeatures || [],
           technicalSpecs: p.technicalSpecs || {},
-          useCases: (p.useCases || []).slice(0, 3)
+          useCases: p.useCases || [],
+          exportMarkets: p.exportMarkets || [],
+          subProducts: (p.subProducts || []).map(sp => ({ name: sp.name, description: sp.description }))
         }),
         services: allRawServices.map(s => typeof s === 'string' ? { name: s } : {
           name: s.name,
-          description: s.description?.slice(0, 200),
-          applications: (s.applications || []).slice(0, 2)
+          description: s.description || "",
+          applications: s.applications || [],
+          processes: s.processes || []
         }),
-        valuePropositions: (memory.offerings?.valuePropositions || []).slice(0, 4)
+        valuePropositions: memory.offerings?.valuePropositions || []
       },
       targetAudience: {
         buyerPersonas: memory.audience?.buyerPersonas || [],
-        targetIndustries: (memory.audience?.targetIndustries || []).slice(0, 4)
+        targetIndustries: memory.audience?.targetIndustries || [],
+        geographies: memory.audience?.geographies || []
       },
       brandPositioning: {
         tone: memory.brandPositioning?.tone,
-        usps: (memory.brandPositioning?.usps || []).slice(0, 4)
+        positioning: memory.brandPositioning?.positioning,
+        messagingStyle: memory.brandPositioning?.messagingStyle,
+        usps: memory.brandPositioning?.usps || []
       },
-      processes: (memory.processes?.processes || []).slice(0, 3).map(pr => ({
+      processes: (memory.processes?.processes || []).slice(0, 5).map(pr => ({
         name: pr.name,
-        description: pr.description?.slice(0, 150),
-        machineryUsed: (pr.machineryUsed || []).slice(0, 3)
-      }))
+        description: pr.description || "",
+        workflow: pr.workflow || [],
+        capacity: pr.capacity || "",
+        machineryUsed: pr.machineryUsed || []
+      })),
+      rdInsights: {
+        improvements: memory.rdInsights?.improvements || [],
+        opportunities: memory.rdInsights?.opportunities || []
+      }
     }, null, 2);
 
     let competitorContext = "";
@@ -1119,9 +1131,10 @@ CORE RULES FOR POWERFUL & GROUNDED CONTENT:
    - Post 3 must start with a commercial / procurement calculation.
    - Post 4 must start with a provocative comparative question or bold statement.
    - Post 5 must start in the middle of shop-floor action.
-3. BAN BUZZWORD FLUFF:
-   - Ban generic corporate clichés like "redefining excellence", "crafting the future", "unparalleled synergy", or "passion for quality".
-   - Replace generic fluff with hard nouns, verifiable metrics, real materials, real use-cases, and concrete business outcomes.
+3. BAN BUZZWORD FLUFF & GROUND EVERY DETAIL:
+   - Strictly ban generic marketing fluff and buzzwords: "redefining excellence", "crafting the future", "unparalleled synergy", "passion for quality", "game changer", "unlocking potential", "striving for perfection".
+   - Replace generic fluff with hard nouns, verifiable technical metrics, real materials, certified machine tolerances (e.g. ±0.01mm, DIN-5), real manufacturing equipment (CNC machines, forging presses, spectrometers), and specific customer use cases from memory.
+   - Every post must read like it was written by the lead engineer or domain expert who built the product, not a generic marketing agency.
 4. EXACT COUNT: You must generate EXACTLY ${postCount} posts.
 5. LANGUAGE REQUIREMENT: You must write the entire output exclusively in the **${language}** language.
 ${language === "Hinglish" ? `
@@ -1275,6 +1288,22 @@ Begin generating the posts now:`;
                   imagePrompt = `${imagePrompt} --ar 1:1 --style raw --v 7`;
                 }
 
+                // Construct instant photorealistic image URL via Pollinations FLUX
+                let cleanPromptForUrl = (imagePrompt || visualIdea || heading || 'commercial marketing visual')
+                  .replace(/--ar\s+[^\s]+/gi, '')
+                  .replace(/--style\s+[^\s]+/gi, '')
+                  .replace(/--v\s+[^\s]+/gi, '')
+                  .replace(/--[a-z0-9]+/gi, '')
+                  .replace(/[^\w\s,.-]/gi, ' ')
+                  .replace(/\s+/g, ' ')
+                  .trim();
+                if (cleanPromptForUrl.length > 280) {
+                  cleanPromptForUrl = cleanPromptForUrl.slice(0, 280);
+                }
+                const pollinationsKey = process.env.POLLINATIONS_API_KEY ? `&key=${encodeURIComponent(process.env.POLLINATIONS_API_KEY)}` : '';
+                const seed = Math.floor(Math.random() * 1000000);
+                const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPromptForUrl)}?width=1024&height=1024&seed=${seed}&nologo=true&model=flux${pollinationsKey}`;
+
                 return JSON.stringify({
                   ...p,
                   angle,
@@ -1290,6 +1319,7 @@ Begin generating the posts now:`;
                   elements,
                   aspectRatio,
                   imagePrompt,
+                  imageUrl,
                   hashtags
                 });
               });

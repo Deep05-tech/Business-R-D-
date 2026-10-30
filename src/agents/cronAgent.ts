@@ -445,10 +445,28 @@ export class CronAgent {
 
         // Auto-heal Facebook posts if thumbnail is missing
         if (p.platform === 'Facebook' && (!p.thumbnail || !p.thumbnail.startsWith('http'))) {
-          const photoMatch = u.match(/(?:fbid=|\/photos\/(?:[^\/]+\/)?|\/photo\/?\?fbid=|\bmedia_id=)(\d{8,25})/i);
+          const photoMatch = u.match(/(?:fbid=|\/photos\/(?:[^\/]+\/)?|\/photo\/?\?fbid=|\bmedia_id=|\/videos\/(?:[^\/]+\/)?|\/posts\/)(\d{8,25})/i);
           if (photoMatch && photoMatch[1]) {
             p.thumbnail = `https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${photoMatch[1]}`;
             p.media_url = p.thumbnail;
+          }
+        }
+
+        // Clean Facebook boilerplate captions
+        if (p.platform === 'Facebook') {
+          const cap = String(p.caption || p.content || '').trim().toLowerCase();
+          if (cap.includes('see posts, photos and more on facebook') || cap.includes('log into facebook') || cap.includes('see more posts')) {
+            let slugTitle = "";
+            const slugMatch = u.match(/\/(?:videos|posts|reel)\/([a-zA-Z0-9_-]{10,})/i);
+            if (slugMatch && slugMatch[1] && !/^\d+$/.test(slugMatch[1])) {
+              slugTitle = slugMatch[1].replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+              if (slugTitle.length > 5) {
+                slugTitle = slugTitle.charAt(0).toUpperCase() + slugTitle.slice(1);
+              }
+            }
+            const cleanCap = slugTitle || `${p.company || p.competitorName || 'Competitor'} - Facebook Update`;
+            p.caption = cleanCap;
+            p.content = cleanCap;
           }
         }
 
@@ -476,10 +494,28 @@ export class CronAgent {
 
         // Auto-heal Facebook posts if thumbnail is missing
         if (p.platform === 'Facebook' && (!p.thumbnail || !p.thumbnail.startsWith('http'))) {
-          const photoMatch = u.match(/(?:fbid=|\/photos\/(?:[^\/]+\/)?|\/photo\/?\?fbid=|\bmedia_id=)(\d{8,25})/i);
+          const photoMatch = u.match(/(?:fbid=|\/photos\/(?:[^\/]+\/)?|\/photo\/?\?fbid=|\bmedia_id=|\/videos\/(?:[^\/]+\/)?|\/posts\/)(\d{8,25})/i);
           if (photoMatch && photoMatch[1]) {
             p.thumbnail = `https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${photoMatch[1]}`;
             p.media_url = p.thumbnail;
+          }
+        }
+
+        // Clean Facebook boilerplate captions
+        if (p.platform === 'Facebook') {
+          const cap = String(p.caption || p.content || '').trim().toLowerCase();
+          if (cap.includes('see posts, photos and more on facebook') || cap.includes('log into facebook') || cap.includes('see more posts')) {
+            let slugTitle = "";
+            const slugMatch = u.match(/\/(?:videos|posts|reel)\/([a-zA-Z0-9_-]{10,})/i);
+            if (slugMatch && slugMatch[1] && !/^\d+$/.test(slugMatch[1])) {
+              slugTitle = slugMatch[1].replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+              if (slugTitle.length > 5) {
+                slugTitle = slugTitle.charAt(0).toUpperCase() + slugTitle.slice(1);
+              }
+            }
+            const cleanCap = slugTitle || `${p.company || p.competitorName || 'Competitor'} - Facebook Update`;
+            p.caption = cleanCap;
+            p.content = cleanCap;
           }
         }
 

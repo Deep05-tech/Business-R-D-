@@ -49,7 +49,12 @@ const DISQUALIFIED_SUBSTRINGS = [
     'cityof',
     'tourism',
     'police',
-    'indiamart.com'
+    'indiamart.com',
+    'merriam-webster.com',
+    'dictionary.com',
+    'thesaurus.com',
+    'wikipedia.org',
+    'wiktionary.org'
 ];
 
 /**

@@ -2282,15 +2282,6 @@ window.loadSmmUI = async function() {
     window.selectedTrendingTopic = null;
     const trendingCont = document.getElementById('smm-trending-topics');
     if (trendingCont) trendingCont.style.display = 'none';
-  } else if (savedResult && window.renderSmmResults) {
-    try {
-      const parsed = JSON.parse(savedResult);
-      if (parsed && parsed.posts) {
-        window.renderSmmResults(parsed.posts, parsed.type);
-      }
-    } catch(e) {
-      console.error("Failed to restore SMM results:", e);
-    }
   }
   
   try {
@@ -2324,6 +2315,18 @@ window.loadSmmUI = async function() {
     }
   } catch (e) {
     console.error("Failed to load memory for SMM:", e);
+  }
+
+  // Restore saved SMM results now that project memory is loaded
+  if (savedProjectUrl === window.activeProjectUrl && savedResult && window.renderSmmResults) {
+    try {
+      const parsed = JSON.parse(savedResult);
+      if (parsed && parsed.posts) {
+        window.renderSmmResults(parsed.posts, parsed.type);
+      }
+    } catch(e) {
+      console.error("Failed to restore SMM results:", e);
+    }
   }
 };
 
@@ -2990,6 +2993,14 @@ window.renderSmmResults = function(postsData, type) {
             }
             p.imagePrompt = imagePrompt;
 
+            let postImageUrl = (p.imageUrl || '').trim();
+            if (!postImageUrl && imagePrompt) {
+              const cleanPrompt = imagePrompt.replace(/--[a-z0-9\s:.-]+/gi, '').replace(/\s+/g, ' ').trim().slice(0, 280);
+              const seed = Math.floor(Math.random() * 1000000);
+              postImageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPrompt)}?width=1024&height=1024&seed=${seed}&nologo=true&model=flux`;
+            }
+            p.imageUrl = postImageUrl;
+
             const companyName = window.projectMemory?.businessIdentity?.officialName || 'Company';
             const companyInitial = companyName.charAt(0).toUpperCase() || 'C';
 
@@ -3044,16 +3055,39 @@ window.renderSmmResults = function(postsData, type) {
                       <span class="smm-live-badge">Live Preview</span>
                     </div>
 
-                    <!-- ON-GRAPHIC VISUAL CARD BANNER (3-TIER VISUAL HIERARCHY) -->
-                    <div class="smm-graphic-banner">
-                      <div class="smm-banner-top">
-                        <span class="smm-banner-brand-tag">⚡ ${window.escapeHtml(companyName)}</span>
-                        <span class="smm-banner-ratio-badge">${window.escapeHtml(aspectRatio)}</span>
+                    <!-- VISUAL DISPLAY (AI GENERATED VISUAL & 3-TIER BANNER TOGGLE) -->
+                    <div class="smm-visual-container">
+                      <div class="smm-visual-toggle-bar">
+                        <button type="button" class="smm-toggle-tab active" data-view="image">🖼️ AI Generated Visual</button>
+                        <button type="button" class="smm-toggle-tab" data-view="banner">📐 3-Tier Graphic Banner</button>
                       </div>
-                      <div class="smm-banner-headline">${window.escapeHtml(heading)}</div>
-                      ${subText ? `<div class="smm-banner-subtext">${window.escapeHtml(subText)}</div>` : ''}
-                      <div class="smm-banner-footer">
-                        <span>🏢 Verified Strategic Intelligence</span>
+
+                      <!-- VIEW 1: PHOTOREALISTIC AI GENERATED IMAGE -->
+                      <div class="smm-image-view">
+                        <div class="smm-image-wrapper">
+                          <img class="smm-generated-image" src="${postImageUrl}" alt="${window.escapeHtml(heading)}" loading="lazy" onerror="this.onerror=null; const vc = this.closest('.smm-visual-container'); if (vc) { const b = vc.querySelector('.smm-graphic-banner'); const iv = vc.querySelector('.smm-image-view'); const tabs = vc.querySelectorAll('.smm-toggle-tab'); if (b) b.style.display='flex'; if (iv) iv.style.display='none'; tabs.forEach(t => t.classList.toggle('active', t.getAttribute('data-view') === 'banner')); }" />
+                          <div class="smm-image-overlay-badge">
+                            <span class="smm-image-brand-tag">⚡ ${window.escapeHtml(companyName)}</span>
+                            <span class="smm-banner-ratio-badge">${window.escapeHtml(aspectRatio)}</span>
+                          </div>
+                        </div>
+                        <div class="smm-image-actions">
+                          <a href="${postImageUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary smm-img-btn">🔍 View Full Image</a>
+                          <a href="${postImageUrl}" download="social-post-${idx+1}.jpg" target="_blank" class="btn btn-secondary smm-img-btn">⬇️ Download Image</a>
+                        </div>
+                      </div>
+
+                      <!-- VIEW 2: ON-GRAPHIC VISUAL CARD BANNER (3-TIER VISUAL HIERARCHY) -->
+                      <div class="smm-graphic-banner" style="display: none;">
+                        <div class="smm-banner-top">
+                          <span class="smm-banner-brand-tag">⚡ ${window.escapeHtml(companyName)}</span>
+                          <span class="smm-banner-ratio-badge">${window.escapeHtml(aspectRatio)}</span>
+                        </div>
+                        <div class="smm-banner-headline">${window.escapeHtml(heading)}</div>
+                        ${subText ? `<div class="smm-banner-subtext">${window.escapeHtml(subText)}</div>` : ''}
+                        <div class="smm-banner-footer">
+                          <span>🏢 Verified Strategic Intelligence</span>
+                        </div>
                       </div>
                     </div>
 
@@ -3069,49 +3103,122 @@ window.renderSmmResults = function(postsData, type) {
                     </div>
                   </div>
 
-                  <!-- COLUMN 2: CREATIVE DIRECTION & PRODUCTION BRIEF -->
-                  <div style="display: flex; flex-direction: column; gap: 14px;">
-                    <!-- VISUAL CONCEPT CARD -->
-                    <div class="smm-brief-card">
-                      <div class="smm-brief-title">
-                        <span style="font-size: 16px;">🎨</span>
-                        <strong>Creative Visual Direction</strong>
+                  <!-- COLUMN 2: FULL STRUCTURED SCHEMA BREAKDOWN -->
+                  <div class="smm-schema-grid">
+                    <!-- 1. STRATEGY ANGLE & HOOK ARCHETYPE -->
+                    <div class="smm-schema-card">
+                      <div class="smm-schema-card-header">
+                        <span class="smm-schema-label">📌 Strategy Angle & Hook</span>
+                        ${hookType ? `<span class="smm-hook-badge">⚡ ${window.escapeHtml(hookType)}</span>` : ''}
                       </div>
-                      <p class="smm-brief-content">${window.escapeHtml(visualIdea || 'Clean professional visual layout highlighting key business metrics')}</p>
+                      <div class="smm-schema-val">
+                        <strong>Angle:</strong> ${window.escapeHtml(angle || 'Brand Authority & Problem-Solving')}
+                      </div>
                     </div>
 
-                    <!-- DESIGN ELEMENTS & SPECIFICATIONS -->
-                    ${elements ? `
-                    <div class="smm-brief-card">
-                      <div class="smm-brief-title">
-                        <span style="font-size: 16px;">🧩</span>
-                        <strong>Design Blueprint & Assets</strong>
+                    <!-- 2. VISUAL HIERARCHY (HEADLINE & METRIC PROOF) -->
+                    <div class="smm-schema-card">
+                      <div class="smm-schema-card-header">
+                        <span class="smm-schema-label">🏷️ Visual Hierarchy (Banner Overlays)</span>
+                        <span class="smm-tag-ratio">📐 ${window.escapeHtml(aspectRatio)}</span>
                       </div>
-                      <p class="smm-brief-content">${window.escapeHtml(elements)}</p>
-                    </div>` : ''}
+                      <div class="smm-schema-val" style="display:flex; flex-direction:column; gap:6px;">
+                        <div><strong style="color:var(--text-light);">Level 1 Headline (5-8 words):</strong> ${window.escapeHtml(heading || 'Precision Engineering Excellence')}</div>
+                        ${subText ? `<div><strong style="color:var(--text-light);">Level 2 Metric Proof Subtext:</strong> <span style="background:rgba(99,102,241,0.15); padding:2px 6px; border-radius:4px; font-weight:600; color:var(--primary);">${window.escapeHtml(subText)}</span></div>` : ''}
+                      </div>
+                    </div>
 
-                    <!-- AI IMAGE GENERATION PROMPT -->
+                    <!-- 3. HVC CAPTION BREAKDOWN -->
+                    <div class="smm-schema-card">
+                      <div class="smm-schema-card-header">
+                        <span class="smm-schema-label">✍️ HVC Architecture Breakdown</span>
+                        <span style="font-size:11px; font-weight:700; color:#10b981;">3-Step Formula</span>
+                      </div>
+                      <div class="smm-schema-val" style="display:flex; flex-direction:column; gap:8px;">
+                        <div>
+                          <strong style="color:var(--text-light);">🪝 Hook (Pattern Interrupt):</strong>
+                          <div style="font-style:italic; margin-top:2px; color:var(--text-muted); padding-left:8px; border-left:2px solid var(--primary);">${window.escapeHtml(hook || 'Pattern interrupt hook')}</div>
+                        </div>
+                        <div>
+                          <strong style="color:var(--text-light);">💡 Value Delivery Body:</strong>
+                          <div style="margin-top:2px; font-size:12.5px; color:var(--text-muted); line-height:1.5; max-height:120px; overflow-y:auto;">${window.escapeHtml(body || 'Structured technical insights and data')}</div>
+                        </div>
+                        <div>
+                          <strong style="color:var(--text-light);">👉 Single-Outcome CTA:</strong>
+                          <div style="margin-top:2px; color:var(--primary); font-weight:600;">${window.escapeHtml(cta || 'Comment or DM for details')}</div>
+                        </div>
+                        ${tagList.length > 0 ? `
+                        <div>
+                          <strong style="color:var(--text-light);">🏷️ Targeted Hashtags (${tagList.length}):</strong>
+                          <div style="margin-top:4px; display:flex; flex-wrap:wrap; gap:4px;">
+                            ${tagList.map(t => `<span class="smm-hashtag-pill">${window.escapeHtml(t)}</span>`).join('')}
+                          </div>
+                        </div>` : ''}
+                      </div>
+                    </div>
+
+                    <!-- 4. CREATIVE DIRECTION & DESIGN BLUEPRINT -->
+                    <div class="smm-schema-card">
+                      <div class="smm-schema-card-header">
+                        <span class="smm-schema-label">🎨 Creative Direction & Assets</span>
+                      </div>
+                      <div class="smm-schema-val" style="display:flex; flex-direction:column; gap:6px;">
+                        <div><strong style="color:var(--text-light);">Visual Concept:</strong> ${window.escapeHtml(visualIdea || 'Professional commercial visual')}</div>
+                        ${elements ? `<div><strong style="color:var(--text-light);">Design Elements:</strong> ${window.escapeHtml(elements)}</div>` : ''}
+                      </div>
+                    </div>
+
+                    <!-- 5. AI IMAGE GENERATION PROMPT -->
                     <div class="smm-prompt-card">
                       <div class="smm-prompt-header">
                         <div class="smm-prompt-title">
                           <span style="font-size: 16px;">🤖</span>
-                          <strong>AI Image Prompt (Midjourney v7 / DALL-E 3)</strong>
+                          <strong>AI Image Prompt (Midjourney v7 / FLUX / DALL-E)</strong>
                         </div>
                         <button class="btn btn-secondary copy-prompt-inline-btn" type="button" style="padding: 3px 10px; font-size: 11.5px; height: 28px;">📋 Copy Prompt</button>
                       </div>
                       <div class="smm-prompt-box">${window.escapeHtml(imagePrompt)}</div>
                       <div class="smm-prompt-tip">
-                        💡 Production prompt with photorealistic commercial parameters, negative space balance, and zero AI clichés. Use with Midjourney v7, DALL-E 3, or Fal.ai.
+                        💡 Production-grade prompt with commercial composition, negative space balance, studio lighting, and zero AI clichés.
                       </div>
+                    </div>
+
+                    <!-- 6. COMPLETE READY-TO-PUBLISH POST -->
+                    <div class="smm-schema-card" style="border: 1px solid rgba(99,102,241,0.3); background: rgba(99,102,241,0.03);">
+                      <div class="smm-schema-card-header">
+                        <span class="smm-schema-label" style="color:var(--primary);">📋 Ready-to-Publish Copy</span>
+                        <button class="btn btn-primary copy-post-inline-btn" type="button" style="padding: 3px 10px; font-size: 11.5px; height: 28px;">📋 Copy Post</button>
+                      </div>
+                      <div class="smm-schema-val" style="font-size:12px; color:var(--text-muted); line-height:1.45; max-height:100px; overflow-y:auto; white-space:pre-wrap;">${window.escapeHtml(fullPost)}</div>
                     </div>
                   </div>
                 </div>
               </div>
             `;
 
+            // Setup Visual Switcher Toggle Tabs
+            const toggleTabs = detailsDiv.querySelectorAll('.smm-toggle-tab');
+            toggleTabs.forEach(tab => {
+              tab.addEventListener('click', () => {
+                toggleTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const view = tab.getAttribute('data-view');
+                const imgView = detailsDiv.querySelector('.smm-image-view');
+                const bannerView = detailsDiv.querySelector('.smm-graphic-banner');
+                if (view === 'image') {
+                  if (imgView) imgView.style.display = 'flex';
+                  if (bannerView) bannerView.style.display = 'none';
+                } else {
+                  if (imgView) imgView.style.display = 'none';
+                  if (bannerView) bannerView.style.display = 'flex';
+                }
+              });
+            });
+
             const editBtn = detailsDiv.querySelector('.edit-btn');
             const captionDiv = detailsDiv.querySelector('.smm-post-caption');
             const copyPostBtn = detailsDiv.querySelector('.copy-post-btn');
+            const copyPostInlineBtn = detailsDiv.querySelector('.copy-post-inline-btn');
             const copyPromptBtn = detailsDiv.querySelector('.copy-prompt-btn');
             const copyPromptInlineBtn = detailsDiv.querySelector('.copy-prompt-inline-btn');
 
@@ -3119,6 +3226,13 @@ window.renderSmmResults = function(postsData, type) {
               copyPostBtn.onclick = () => {
                 const textToCopy = (p.fullPost || '').trim();
                 window.copySmmText(textToCopy, copyPostBtn, 'Full social post copied to clipboard!');
+              };
+            }
+
+            if (copyPostInlineBtn) {
+              copyPostInlineBtn.onclick = () => {
+                const textToCopy = (p.fullPost || '').trim();
+                window.copySmmText(textToCopy, copyPostInlineBtn, 'Full social post copied to clipboard!');
               };
             }
 
@@ -3459,9 +3573,9 @@ async function loadFeedUI() {
         candidates.push(`https://www.instagram.com/p/${sc}/media/?size=l`);
       }
 
-      // If Facebook, check for numeric photo ID to resolve crisp lookaside image
+      // If Facebook, check for numeric photo or video ID to resolve crisp lookaside image
       if (platform === 'Facebook' || post._detectedPlatform === 'Facebook' || pUrl.includes('facebook.com')) {
-        const fbPhotoMatch = pUrl.match(/(?:fbid=|\/photos\/[^\/]+\/|\/photo\/?\?fbid=|\bmedia_id=)(\d{8,25})/i);
+        const fbPhotoMatch = pUrl.match(/(?:fbid=|\/photos\/(?:[^\/]+\/)?|\/photo\/?\?fbid=|\bmedia_id=|\/videos\/(?:[^\/]+\/)?|\/posts\/)(\d{8,25})/i);
         if (fbPhotoMatch && fbPhotoMatch[1]) {
           candidates.push(`https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${fbPhotoMatch[1]}`);
         }
@@ -3781,11 +3895,24 @@ async function loadFeedUI() {
         rawText.includes('Log in to see photos') ||
         rawText.includes('No photo description available') ||
         rawText.includes('May be an image of') ||
+        rawText.includes('See posts, photos and more on Facebook') ||
+        rawText.includes('Log into Facebook') ||
+        rawText.includes('See more posts') ||
+        rawText.includes('merriam-webster') ||
+        rawText.includes('dictionary.com') ||
         rawText.toLowerCase() === 'instagram' ||
         rawText.toLowerCase() === 'facebook';
 
       if (isBoilerplateModal) {
-        rawText = platform === 'Facebook' ? `${compName} - Official Facebook Post` : (platform === 'Instagram' ? `${compName} - Official Instagram Post` : `${compName} - Official ${platform} Post`);
+        let slugTitle = "";
+        const slugMatch = postLink.match(/\/(?:videos|posts|reel)\/([a-zA-Z0-9_-]{10,})/i);
+        if (slugMatch && slugMatch[1] && !/^\d+$/.test(slugMatch[1])) {
+          slugTitle = slugMatch[1].replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+          if (slugTitle.length > 5) {
+            slugTitle = slugTitle.charAt(0).toUpperCase() + slugTitle.slice(1);
+          }
+        }
+        rawText = slugTitle || (platform === 'Facebook' ? `${compName} - Official Facebook Post` : (platform === 'Instagram' ? `${compName} - Official Instagram Post` : `${compName} - Official ${platform} Post`));
       }
       const displayDate = post.date || post.published_date || post.timestamp || 'Recent';
 
@@ -4284,6 +4411,11 @@ async function loadFeedUI() {
         displayContent.includes('No photo description available') ||
         displayContent.includes('Commenting has been turned off') ||
         displayContent.includes('May be an image of') ||
+        displayContent.includes('See posts, photos and more on Facebook') ||
+        displayContent.includes('Log into Facebook') ||
+        displayContent.includes('See more posts') ||
+        displayContent.includes('merriam-webster') ||
+        displayContent.includes('dictionary.com') ||
         displayContent.toLowerCase() === 'instagram' ||
         displayContent.toLowerCase() === 'facebook';
 
@@ -4297,7 +4429,15 @@ async function loadFeedUI() {
                                   (Boolean(post.video_url) || Boolean(post.fb_video_id) || post.media_type === 'Video' || post.mediaType === 'Video' || /\/(?:videos|reel|watch)\b/i.test(pLink));
 
       if (isBoilerplate) {
-        displayContent = platform === 'Facebook' ? `${compName} - Facebook Update` : (platform === 'Instagram' ? `${compName} - Instagram ${isIgReelCard ? 'Reel' : 'Post'}` : `${compName} - ${platform}`);
+        let slugTitle = "";
+        const slugMatch = pLink.match(/\/(?:videos|posts|reel)\/([a-zA-Z0-9_-]{10,})/i);
+        if (slugMatch && slugMatch[1] && !/^\d+$/.test(slugMatch[1])) {
+          slugTitle = slugMatch[1].replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+          if (slugTitle.length > 5) {
+            slugTitle = slugTitle.charAt(0).toUpperCase() + slugTitle.slice(1);
+          }
+        }
+        displayContent = slugTitle || (platform === 'Facebook' ? `${compName} - Facebook Update` : (platform === 'Instagram' ? `${compName} - Instagram ${isIgReelCard ? 'Reel' : 'Post'}` : `${compName} - ${platform}`));
       }
 
       let cardThumbHtml = '';

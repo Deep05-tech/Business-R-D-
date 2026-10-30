@@ -1068,12 +1068,29 @@ export class SocialExtractorAgent {
 
                 for (const r of results) {
                     const url = (r.url || "").trim();
+                    const urlLower = url.toLowerCase();
+                    if (urlLower.includes('merriam-webster.com') || urlLower.includes('dictionary.com') || urlLower.includes('thesaurus.com') || urlLower.includes('wikipedia.org')) continue;
+
                     let content = (r.content || r.title || "").trim();
 
                     if (platform === "Instagram") {
                         content = content.replace(/^.*?\bon Instagram:\s*["“]?/i, '').replace(/["”]$/, '').replace(/\s+/g, ' ').trim();
+                        if (content.toLowerCase().includes('welcome back to instagram') || content.toLowerCase().includes('sign in to check out')) {
+                            content = `${cleanCompName} - Instagram Update`;
+                        }
                     } else if (platform === "Facebook") {
                         content = content.replace(/^.*?\bon Facebook:\s*["“]?/i, '').replace(/["”]$/, '').replace(/\s+/g, ' ').trim();
+                        if (content.toLowerCase().includes('see posts, photos and more on facebook') || content.toLowerCase().includes('log into facebook') || content.toLowerCase().includes('see more posts')) {
+                            let slugTitle = "";
+                            const slugMatch = url.match(/\/(?:videos|posts|reel)\/([a-zA-Z0-9_-]{10,})/i);
+                            if (slugMatch && slugMatch[1] && !/^\d+$/.test(slugMatch[1])) {
+                                slugTitle = slugMatch[1].replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+                                if (slugTitle.length > 5) {
+                                    slugTitle = slugTitle.charAt(0).toUpperCase() + slugTitle.slice(1);
+                                }
+                            }
+                            content = slugTitle || `${cleanCompName} - Facebook Update`;
+                        }
                     }
 
                     if (url) {
@@ -1096,6 +1113,18 @@ export class SocialExtractorAgent {
                                 vidTitle = verified.title;
                             } else {
                                 continue;
+                            }
+                        } else if (platform === "Facebook") {
+                            const photoMatch = url.match(/(?:fbid=|\/photos\/(?:[^\/]+\/)?|\/photo\/?\?fbid=|\bmedia_id=|\/videos\/(?:[^\/]+\/)?|\/posts\/)(\d{8,25})/i);
+                            if (photoMatch && photoMatch[1]) {
+                                thumb = `https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=${photoMatch[1]}`;
+                                med = thumb;
+                            }
+                        } else if (platform === "Instagram") {
+                            const scMatch = url.match(/\/(?:p|reel|tv)\/([A-Za-z0-9_-]{10,13})/);
+                            if (scMatch && scMatch[1] && !isInstagramBundleHash(scMatch[1])) {
+                                thumb = `https://www.instagram.com/p/${scMatch[1]}/media/?size=l`;
+                                med = thumb;
                             }
                         }
 
@@ -1161,6 +1190,14 @@ export class SocialExtractorAgent {
         s = s.replace(/Don't have an account\? Sign up/gis, '');
 
         // 2. Strip Facebook accessibility / photo description boilerplates
+        s = s.replace(/See posts, photos and more on Facebook\.?/gis, '');
+        s = s.replace(/See posts, photos and more on Facebook/gis, '');
+        s = s.replace(/Log into Facebook to start sharing and connecting with your friends, family, and people you know\.?/gis, '');
+        s = s.replace(/Log into Facebook to start sharing.*?$/gis, '');
+        s = s.replace(/Log into Facebook/gis, '');
+        s = s.replace(/Log In or Sign Up to View/gis, '');
+        s = s.replace(/Connect with friends and the world around you on Facebook\.?/gis, '');
+        s = s.replace(/See photos, profile pictures and albums from.*?$/gis, '');
         s = s.replace(/No photo description available\.?/gis, '');
         s = s.replace(/May be an image of.*$/gis, '');
         s = s.replace(/May be a graphic of.*$/gis, '');
@@ -1177,11 +1214,16 @@ export class SocialExtractorAgent {
         s = s.replace(/^.*?\bon (?:Instagram|Facebook):\s*["“]?/is, '');
         s = s.replace(/^[\d,kK]+\s*likes,\s*[\d,kK]+\s*comments\s*-\s*[^\s:]+(?:\s+on\s+[A-Za-z]+\s+\d{1,2},\s*\d{4})?:\s*["“]?/is, '');
 
-        if (s.toLowerCase().includes('welcome back to instagram') ||
-            s.toLowerCase().includes('sign in to check out') ||
-            s.toLowerCase().includes('no photo description available') ||
-            s.toLowerCase() === 'around the world.' ||
-            s.toLowerCase() === 'around the world') {
+        const lower = s.toLowerCase();
+        if (lower.includes('welcome back to instagram') ||
+            lower.includes('sign in to check out') ||
+            lower.includes('no photo description available') ||
+            lower.includes('see posts, photos and more on facebook') ||
+            lower.includes('log into facebook') ||
+            lower.includes('merriam-webster') ||
+            lower.includes('dictionary.com') ||
+            lower === 'around the world.' ||
+            lower === 'around the world') {
             s = '';
         }
 
@@ -1281,6 +1323,11 @@ export class SocialExtractorAgent {
                        lower.includes('log in to see photos') ||
                        lower.includes('no photo description available') ||
                        lower.includes('may be an image of') ||
+                       lower.includes('see posts, photos and more on facebook') ||
+                       lower.includes('log into facebook') ||
+                       lower.includes('see more posts') ||
+                       lower.includes('merriam-webster') ||
+                       lower.includes('dictionary.com') ||
                        lower === 'instagram' ||
                        lower === 'facebook';
             };
@@ -1395,11 +1442,30 @@ export class SocialExtractorAgent {
 
             const hasBoilerplate = (cap: string) => {
                 if (!cap) return true;
-                return cap.includes('Log In') || cap.includes('Sign Up') || cap.includes('profile picture') ||
-                       cap.includes('Start the conversation') || cap.includes('Never miss a post') ||
-                       cap.includes('Welcome back to Instagram') || cap.includes('Sign in to check out') ||
-                       cap.includes('No photo description available') ||
-                       cap.includes('May be an image') || cap.includes('Photo by ') || cap.includes('Video by ');
+                const lower = cap.toLowerCase();
+                return lower.includes('log in') || lower.includes('sign up') || lower.includes('profile picture') ||
+                       lower.includes('start the conversation') || lower.includes('never miss a post') ||
+                       lower.includes('welcome back to instagram') || lower.includes('sign in to check out') ||
+                       lower.includes('no photo description available') ||
+                       lower.includes('may be an image') || lower.includes('photo by ') || lower.includes('video by ') ||
+                       lower.includes('see posts, photos and more on facebook') ||
+                       lower.includes('log into facebook') ||
+                       lower.includes('see more posts') ||
+                       lower.includes('merriam-webster') ||
+                       lower.includes('dictionary.com');
+            };
+
+            const getCleanFallbackTitle = () => {
+                let slugTitle = "";
+                const slugMatch = postUrl.match(/\/(?:videos|posts|reel)\/([a-zA-Z0-9_-]{10,})/i);
+                if (slugMatch && slugMatch[1] && !/^\d+$/.test(slugMatch[1])) {
+                    slugTitle = slugMatch[1].replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+                    if (slugTitle.length > 5) {
+                        slugTitle = slugTitle.charAt(0).toUpperCase() + slugTitle.slice(1);
+                    }
+                }
+                if (slugTitle) return slugTitle;
+                return platform === 'Instagram' ? `${compName} - Instagram ${postUrl.includes('/reel/') ? 'Reel' : 'Post'}` : (platform === 'Facebook' ? `${compName} - Facebook Update` : `${compName} - ${platform}`);
             };
 
             if (extractedCaption && !hasBoilerplate(extractedCaption) && (hasBoilerplate(post.caption) || extractedCaption.length > (post.caption ? post.caption.length : 0))) {
@@ -1408,11 +1474,11 @@ export class SocialExtractorAgent {
             } else if (post.caption) {
                 post.caption = SocialExtractorAgent.cleanSocialCaption(post.caption, platform);
                 if (hasBoilerplate(post.caption) || !post.caption) {
-                    post.caption = platform === 'Instagram' ? `${compName} - Instagram ${postUrl.includes('/reel/') ? 'Reel' : 'Post'}` : (platform === 'Facebook' ? `${compName} - Facebook Update` : `${compName} - ${platform}`);
+                    post.caption = getCleanFallbackTitle();
                 }
                 post.content = post.caption;
             } else {
-                post.caption = platform === 'Instagram' ? `${compName} - Instagram ${postUrl.includes('/reel/') ? 'Reel' : 'Post'}` : (platform === 'Facebook' ? `${compName} - Facebook Update` : `${compName} - ${platform}`);
+                post.caption = getCleanFallbackTitle();
                 post.content = post.caption;
             }
 
